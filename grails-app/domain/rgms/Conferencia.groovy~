@@ -1,0 +1,14 @@
+package rgms
+
+class Conferencia {
+
+	String author
+	String conference
+	int year
+
+	int pages
+	int month
+
+	static constraints = {
+	}
+}
