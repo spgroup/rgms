@@ -16,7 +16,37 @@ class ResearchGroupController {
     }
 
     def create() {
-        [researchGroupInstance: new ResearchGroup(params)]
+        def members = [] as Set
+        def entrou1 = false
+        def entrou2 = false
+        def entrou3 = false
+        if (request.post == false){
+            session["groups"] = ResearchGroup.list().collect{it.id}
+            entrou1 = true
+        }else{
+            if (session["groups"].contains(params.groups as Long)){
+                session["groups"].remove(params.groups as Long)
+                entrou2 = true
+            }else{
+               session["groups"].add(params.groups as Long)
+               entrou3 = true
+            }
+            
+        }
+        
+        for(groupId in session["groups"] ){
+            def rGroup = ResearchGroup.get(groupId as Long)
+            if(rGroup){
+                members.addAll(rGroup?.members)
+            }
+            
+        }
+        def map = [researchGroupInstance: new ResearchGroup(params), membersInstance: members]
+        if(request.xhr){
+             render(view: "/researchGroup/editMembers", model: map)
+        }
+        //def deb = [session["groups"],session["groups"].contains(params.groups),entrou1,entrou2,entrou3,params]
+        [researchGroupInstance: new ResearchGroup(params) , membersInstance: members]
     }
 
     def save() {
@@ -45,11 +75,40 @@ class ResearchGroupController {
         def researchGroupInstance = ResearchGroup.get(params.id)
         if (!researchGroupInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
-            redirect(action: "list")
-            return
+            //redirect(action: "list")
+            //return
         }
-
-        [researchGroupInstance: researchGroupInstance]
+        def members = [] as Set
+        def entrou1 = false
+        def entrou2 = false
+        def entrou3 = false
+        if (request.post == false){
+            session["groups"] = ResearchGroup.list().collect{it.id}
+            entrou1 = true
+        }else{
+            if (session["groups"].contains(params.groups as Long)){
+                session["groups"].remove(params.groups as Long)
+                entrou2 = true
+            }else{
+               session["groups"].add(params.groups as Long)
+               entrou3 = true
+            }
+            
+        }
+        
+        for(groupId in session["groups"] ){
+            def rGroup = ResearchGroup.get(groupId as Long)
+            if(rGroup){
+                members.addAll(rGroup?.members)
+            }
+            
+        }
+        def map = [researchGroupInstance: researchGroupInstance, membersInstance: members]
+        if(request.xhr){
+             render(view: "/researchGroup/editMembers", model: map)
+        }
+        //def deb = [session["groups"],session["groups"].contains(params.groups),entrou1,entrou2,entrou3,params]
+        [researchGroupInstance: researchGroupInstance, membersInstance: members]
     }
 
     def update() {
@@ -100,4 +159,6 @@ class ResearchGroupController {
             redirect(action: "show", id: params.id)
         }
     }
+        
+   
 }
