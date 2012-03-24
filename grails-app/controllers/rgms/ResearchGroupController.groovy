@@ -22,6 +22,12 @@ class ResearchGroupController {
 
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
+		def membershipList = Membership.addMembersToResearchGroup(params.members, params.name)
+		if(researchGroupInstance.members){
+			researchGroupInstance.members.addAll(membershipList)
+		}else{
+			researchGroupInstance.members = membershipList
+		}
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return
@@ -38,7 +44,7 @@ class ResearchGroupController {
             redirect(action: "list")
             return
         }
-
+		ResearchGroup.findBy
         [researchGroupInstance: researchGroupInstance]
     }
 
@@ -116,13 +122,16 @@ class ResearchGroupController {
                session["groups"].add(params.groups as Long)         
             }            
         }
-        
         for(groupId in session["groups"] ){
             def rGroup = ResearchGroup.get(groupId as Long)
             if(rGroup){
                 members.addAll(rGroup?.members)
             }            
         }
+		
+		if(members.empty){
+			members = Member.list()
+		}
         def map = [researchGroupInstance: new ResearchGroup(params), membersInstance: members]
         if(request.xhr){
              render(view: "/researchGroup/editMembers", model: map)
