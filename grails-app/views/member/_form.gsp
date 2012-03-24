@@ -72,5 +72,14 @@
 		
 	</label>
 	<g:checkBox name="active" value="${memberInstance?.active}" />
+        
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'researchGroups', 'error')} ">
+	<label for="researchGroups">
+		<g:message code="member.researchGroups.label" default="Research Groups" />
+		
+	</label>
+	
 </div>
 

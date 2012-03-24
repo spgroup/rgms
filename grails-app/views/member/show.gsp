@@ -104,6 +104,17 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${memberInstance?.researchGroups}">
+				<li class="fieldcontain">
+					<span id="researchGroups-label" class="property-label"><g:message code="member.researchGroups.label" default="Research Groups" /></span>
+					
+						<g:each in="${memberInstance.researchGroups}" var="r">
+						<span class="property-value" aria-labelledby="researchGroups-label"><g:link controller="researchGroup" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
