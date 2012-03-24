@@ -1,6 +1,8 @@
 
 <%@ page import="rgms.ResearchGroup" %>
+
 <g:javascript library="jquery" />
+
 
 <div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'name', 'error')} required">
 	<label for="name">
@@ -17,17 +19,28 @@
 	</label>
 	<g:textArea name="description" cols="40" rows="5" maxlength="1000" required="" value="${researchGroupInstance?.description}"/>
 </div>
+
 <div>
-  <g:each in="${rgms.ResearchGroup.list()}" var="group">
-    
-    <g:checkBox name="${group.id}" value="${true}" 
-                onclick="${remoteFunction(action: 'edit',
-                       update: [success: 'members_id'],
-                       params: '\'groups=\' + this.name')}"/>
-    <label>${group.name}</label>
-  </g:each>
+
+	<label>
+		Research Groups		
+	</label>
+	<ul class="checklist">
+           <g:each in="${rgms.ResearchGroup.list()}" var="group">
+            <li>
+            <label for="${group.id}">
+            <g:checkBox name="${group.id}" value="${true}" 
+                          onclick="${remoteFunction(action: 'edit',
+                                  update: [success: 'members_id'],
+                                params: '\'groups=\' + this.name')}"/>
+              ${group.name}
+            </label>
+              </li>
+            </g:each>
+        
+        </ul>
 </div>
-<label>${deb}</label>
+<!--<label>${deb}</label>-->
 <div id="members_id" class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'members', 'error')} ">
 	<label for="members">
 		<g:message code="researchGroup.members.label" default="Members" />
