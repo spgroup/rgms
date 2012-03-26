@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <%@ page import="rgms.Conferencia" %>
 <%@ page import="rgms.Periodico" %>
 <%@ page import="rgms.Ferramenta" %>
+=======
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 =======
 >>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 <!doctype html>
@@ -14,6 +17,7 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+<<<<<<< HEAD
 <<<<<<< HEAD
 				<li><a href='/rgms/periodico/list'> Periodico </a></li>
 				<li><a href='/rgms/conferencia/list'> Conferencia </a></li>
@@ -70,6 +74,8 @@
 				</tbody>
 			</table>
 =======
+=======
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 			</ul>
 		</div>	
 		<div class="content">
@@ -83,6 +89,9 @@
 		<div class="content">
 			<h1>Listagem, busca, edição e remoção de publicações</h1>
 		</div>
+<<<<<<< HEAD
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
+=======
 >>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 	</body>
 </html>

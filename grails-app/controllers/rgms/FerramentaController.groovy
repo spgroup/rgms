@@ -1,6 +1,7 @@
 package rgms
 
 <<<<<<< HEAD
+
 import org.springframework.dao.DataIntegrityViolationException
 
 class FerramentaController {
@@ -101,9 +102,14 @@ class FerramentaController {
             redirect(action: "show", id: params.id)
         }
     }
-=======
-class FerramentaController {
 
-	def scaffold = true
->>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
+
+
+
+
+
+
+
+
+
 }

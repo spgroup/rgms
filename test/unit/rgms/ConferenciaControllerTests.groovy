@@ -3,6 +3,7 @@ package rgms
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.junit.*
 import grails.test.mixin.*
 
@@ -157,6 +158,8 @@ class ConferenciaControllerTests {
         assert Conferencia.get(conferencia.id) == null
         assert response.redirectedUrl == '/conferencia/list'
 =======
+=======
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 import grails.test.mixin.*
 import org.junit.*
 
@@ -168,6 +171,9 @@ class ConferenciaControllerTests {
 
     void testSomething() {
        fail "Implement me"
+<<<<<<< HEAD
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
+=======
 >>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
     }
 }
