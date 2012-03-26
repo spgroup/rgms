@@ -1,5 +1,7 @@
 package rgms
 
+import java.lang.reflect.Member;
+
 import org.springframework.dao.DataIntegrityViolationException
 
 class ResearchGroupController {
@@ -22,16 +24,11 @@ class ResearchGroupController {
 
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
-		def membershipList = Membership.addMembersToResearchGroup(params.members, params.name)
-		if(researchGroupInstance.members){
-			researchGroupInstance.members.addAll(membershipList)
-		}else{
-			researchGroupInstance.members = membershipList
-		}
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return
         }
+        Membership.addMembersToResearchGroup(params.members, researchGroupInstance)
 
 	flash.message = message(code: 'default.created.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), researchGroupInstance.id])
         redirect(action: "show", id: researchGroupInstance.id)
@@ -44,7 +41,7 @@ class ResearchGroupController {
             redirect(action: "list")
             return
         }
-		ResearchGroup.findBy
+		
         [researchGroupInstance: researchGroupInstance]
     }
 
@@ -56,6 +53,7 @@ class ResearchGroupController {
             //return
         }
         def members = refreshMemberList()
+		
         //def deb = [session["groups"],session["groups"].contains(params.groups),entrou1,entrou2,entrou3,params]
         [researchGroupInstance: researchGroupInstance, membersInstance: members]
     }
@@ -67,7 +65,7 @@ class ResearchGroupController {
             redirect(action: "list")
             return
         }
-
+		Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
         if (params.version) {
             def version = params.version.toLong()
             if (researchGroupInstance.version > version) {
@@ -97,7 +95,7 @@ class ResearchGroupController {
             redirect(action: "list")
             return
         }
-
+		Membership.removeMemberFromResearchGroup(researchGroupInstance)
         try {
             researchGroupInstance.delete(flush: true)
 			flash.message = message(code: 'default.deleted.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
@@ -125,7 +123,7 @@ class ResearchGroupController {
         for(groupId in session["groups"] ){
             def rGroup = ResearchGroup.get(groupId as Long)
             if(rGroup){
-                members.addAll(rGroup?.members)
+                members.addAll(rGroup?.memberships.collect{it.member})
             }            
         }
 		
@@ -137,5 +135,21 @@ class ResearchGroupController {
              render(view: "/researchGroup/editMembers", model: map)
         }
         return members        
+   }
+   
+   def listPublicationByGroup(){
+	  
+	  def publicationSet = [] as Set
+	  def group = new ResearchGroup( id: params.groupId)
+	  def members = Membership.findByResearchGroup(group).collect{[member: it.member, dateJoined: it.dateJoined, dateLeft: it.dateLeft]}
+	  for(member in members){
+		  
+		  def listPub = Publication.findAll{
+			 member.member inList: authors && between('publicationDate', member.dateJoined, member.dateLeft)
+			 publicationSet.addAll(listPub)
+		  }
+	  }
+	  
+	   
    }
 }

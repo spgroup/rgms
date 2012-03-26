@@ -41,18 +41,22 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${researchGroupInstance?.members}">
+				<g:if test="${researchGroupInstance?.memberships}">
 				<li class="fieldcontain">
 					<span id="members-label" class="property-label"><g:message code="researchGroup.members.label" default="Members" /></span>
 					
-						<g:each in="${researchGroupInstance.members}" var="m">
-						<span class="property-value" aria-labelledby="members-label"><g:link controller="member" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						<g:each in="${researchGroupInstance.memberships}" var="m">
+						<span class="property-value" aria-labelledby="members-label"><g:link controller="member" action="show" id="${m.member.id}">${m.member?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>
 				</g:if>
 			
 			</ol>
+			<g:remoteLink>
+				
+			</g:remoteLink>
+			
 			<g:form>
 				<fieldset class="buttons">
 					<g:hiddenField name="id" value="${researchGroupInstance?.id}" />

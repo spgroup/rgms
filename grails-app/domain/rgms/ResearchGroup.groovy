@@ -3,8 +3,8 @@ package rgms
 class ResearchGroup {
     String name
     String description
-	String macaco
-    static hasMany = [members : Membership]
+	
+    static hasMany = [memberships : Membership]
     
     public String toString()
     {

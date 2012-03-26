@@ -10,8 +10,8 @@ class Member {
 	String city
 	String country
 	Boolean active
-        static belongsTo = ResearchGroup
-        static hasMany = [researchGroups : Membership]
+    static hasMany = [memberships : Membership, publications: Publication]
+	
     public String toString()
     {
         return this.name

@@ -104,12 +104,23 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${memberInstance?.researchGroups}">
+				<g:if test="${memberInstance?.memberships}">
 				<li class="fieldcontain">
-					<span id="researchGroups-label" class="property-label"><g:message code="member.researchGroups.label" default="Research Groups" /></span>
+					<span id="memberships-label" class="property-label"><g:message code="member.memberships.label" default="Memberships" /></span>
 					
-						<g:each in="${memberInstance.researchGroups}" var="r">
-						<span class="property-value" aria-labelledby="researchGroups-label"><g:link controller="researchGroup" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
+						<g:each in="${memberInstance.memberships}" var="m">
+						<span class="property-value" aria-labelledby="memberships-label"><g:link controller="membership" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${memberInstance?.publications}">
+				<li class="fieldcontain">
+					<span id="publications-label" class="property-label"><g:message code="member.publications.label" default="Publications" /></span>
+					
+						<g:each in="${memberInstance.publications}" var="p">
+						<span class="property-value" aria-labelledby="publications-label"><g:link controller="publication" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>
