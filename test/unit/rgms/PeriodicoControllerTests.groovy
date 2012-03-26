@@ -2,6 +2,7 @@ package rgms
 
 
 
+<<<<<<< HEAD
 import org.junit.*
 import grails.test.mixin.*
 
@@ -155,5 +156,18 @@ class PeriodicoControllerTests {
         assert Periodico.count() == 0
         assert Periodico.get(periodico.id) == null
         assert response.redirectedUrl == '/periodico/list'
+=======
+import grails.test.mixin.*
+import org.junit.*
+
+/**
+ * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
+ */
+@TestFor(PeriodicoController)
+class PeriodicoControllerTests {
+
+    void testSomething() {
+       fail "Implement me"
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
     }
 }

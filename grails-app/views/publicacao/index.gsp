@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 <%@ page import="rgms.Conferencia" %>
 <%@ page import="rgms.Periodico" %>
 <%@ page import="rgms.Ferramenta" %>
+=======
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 <!doctype html>
 <html>
 	<head>
@@ -11,6 +14,7 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+<<<<<<< HEAD
 				<li><a href='/rgms/periodico/list'> Periodico </a></li>
 				<li><a href='/rgms/conferencia/list'> Conferencia </a></li>
 				<li><a href='/rgms/ferramenta/list'> Ferramenta </a></li>
@@ -65,5 +69,20 @@
 				</g:each>
 				</tbody>
 			</table>
+=======
+			</ul>
+		</div>	
+		<div class="content">
+			<h1>RGMS</h1>
+			<br>
+			<p>Que tipo de publicação deseja cadastrar?</p> <br>
+			<a href='/rgms/periodico/list'> Periodico </a> <br> 
+			<a href='/rgms/conferencia/list'> Conferencia </a> <br> 
+			<a href='/rgms/ferramenta/list'> Ferramenta </a>
+		</div>
+		<div class="content">
+			<h1>Listagem, busca, edição e remoção de publicações</h1>
+		</div>
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 	</body>
 </html>

@@ -9,7 +9,11 @@ class Periodico {
 
 	int volume
 	int number
+<<<<<<< HEAD
 	int pages
+=======
+	int pages	
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 
 	static constraints = {
 	}

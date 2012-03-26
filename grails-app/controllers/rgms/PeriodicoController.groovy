@@ -1,5 +1,6 @@
 package rgms
 
+<<<<<<< HEAD
 import org.springframework.dao.DataIntegrityViolationException
 
 class PeriodicoController {
@@ -100,4 +101,15 @@ class PeriodicoController {
             redirect(action: "show", id: params.id)
         }
     }
+=======
+class PeriodicoController {
+
+	def scaffold = true
+	def index(){
+		redirect (action: home)
+	}
+	def home(){
+		render "<b><center>Olah Mundo!!!</center></b>"
+	}
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 }

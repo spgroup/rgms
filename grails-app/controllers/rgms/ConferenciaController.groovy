@@ -1,5 +1,6 @@
 package rgms
 
+<<<<<<< HEAD
 import org.springframework.dao.DataIntegrityViolationException
 
 class ConferenciaController {
@@ -100,4 +101,9 @@ class ConferenciaController {
             redirect(action: "show", id: params.id)
         }
     }
+=======
+class ConferenciaController {
+
+	def scaffold = true
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 }
