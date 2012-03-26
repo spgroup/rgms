@@ -1,0 +1,6 @@
+package rgms
+
+class FerramentaController {
+
+    def index() { }
+}

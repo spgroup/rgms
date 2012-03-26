@@ -1,0 +1,11 @@
+package rgms
+
+class PeriodicoController {
+
+	def index(){
+		redirect (action: home)
+	}
+	def home(){
+		render "<b><center>Olah Mundo!!!</center></b>"
+	}
+}

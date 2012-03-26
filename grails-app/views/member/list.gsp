@@ -62,5 +62,6 @@
 				<g:paginate total="${memberInstanceTotal}" />
 			</div>
 		</div>
+		<p>Date: <input type="text" id="datepicker"/></p>
 	</body>
 </html>
