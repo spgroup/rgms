@@ -1,7 +1,0 @@
-package rgms
-
-class Periodico {
-
-    static constraints = {
-    }
-}
