@@ -11,7 +11,11 @@ class Periodico {
 	int number
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int pages
+=======
+	int pages	
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 =======
 	int pages	
 >>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086

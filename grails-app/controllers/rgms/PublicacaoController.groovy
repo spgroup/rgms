@@ -6,6 +6,7 @@ class PublicacaoController {
 		//redirect (action: home)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		def listaPeriodico = Periodico.getAll();
 		def listaFerramenta = Ferramenta.getAll();
 		def listaConferencia = Conferencia.getAll();
@@ -30,11 +31,16 @@ class PublicacaoController {
 =======
 =======
 >>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
+=======
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 	}
 	/*def home(){
 		render "<a href='/rgms/periodico/list'> Periodico </a> <br> <a href='/rgms/conferencia/list'> Conferencia </a> <br> <a href='/rgms/ferramenta/list'> Ferramenta </a>"
 	}*/
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
+=======
 >>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
 =======
 >>>>>>> 4dc8467add37a91b09033139da8c2e6bbaa43086
