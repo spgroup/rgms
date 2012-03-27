@@ -20,6 +20,14 @@
 	<g:textArea name="description" cols="40" rows="5" maxlength="1000" required="" value="${researchGroupInstance?.description}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'childOf', 'error')} required">
+	<label for="childOf">
+		<g:message code="researchGroup.childOf.label" default="Child Of" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="childOf" name="childOf.id" from="${rgms.ResearchGroup.list()}" optionKey="id" required="" value="${researchGroupInstance?.childOf?.id}" class="many-to-one"/>
+</div>
+
 <div>
 
 	<label>

@@ -40,6 +40,15 @@
 					
 				</li>
 				</g:if>
+                          
+                              <g:if test="${researchGroupInstance?.childOf}">
+				<li class="fieldcontain">
+					<span id="childOf-label" class="property-label"><g:message code="researchGroup.childOf.label" default="Child Of" /></span>
+					
+						<span class="property-value" aria-labelledby="childOf-label"><g:link controller="researchGroup" action="show" id="${researchGroupInstance?.childOf?.id}">${researchGroupInstance?.childOf?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
 			
 				<g:if test="${researchGroupInstance?.memberships}">
 				<li class="fieldcontain">

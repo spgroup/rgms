@@ -27,6 +27,8 @@
 						<g:sortableColumn property="name" title="${message(code: 'researchGroup.name.label', default: 'Name')}" />
 					
 						<g:sortableColumn property="description" title="${message(code: 'researchGroup.description.label', default: 'Description')}" />
+                                                
+                                                <th><g:message code="researchGroup.childOf.label" default="Child Of" /></th>
 					
 					</tr>
 				</thead>
@@ -37,6 +39,8 @@
 						<td><g:link action="show" id="${researchGroupInstance.id}">${fieldValue(bean: researchGroupInstance, field: "name")}</g:link></td>
 					
 						<td>${fieldValue(bean: researchGroupInstance, field: "description")}</td>
+                                                
+                                                <td>${fieldValue(bean: researchGroupInstance, field: "childOf")}</td>
 					
 					</tr>
 				</g:each>

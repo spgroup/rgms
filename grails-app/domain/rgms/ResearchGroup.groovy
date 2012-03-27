@@ -3,7 +3,7 @@ package rgms
 class ResearchGroup {
     String name
     String description
-	
+    ResearchGroup childOf;
     static hasMany = [memberships : Membership]
     
     public String toString()
