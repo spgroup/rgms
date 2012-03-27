@@ -14,6 +14,7 @@ class Member {
 	
     public String toString()
     {
+        
         return this.name
     }
     static constraints = {

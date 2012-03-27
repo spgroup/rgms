@@ -1,6 +1,5 @@
 package rgms
 
-import java.lang.reflect.Member;
 
 import org.springframework.dao.DataIntegrityViolationException
 
@@ -42,7 +41,7 @@ class ResearchGroupController {
             return
         }
 		
-        [researchGroupInstance: researchGroupInstance]
+        [researchGroupInstance: researchGroupInstance, publicationsInstance : listPublicationByGroup()]
     }
 
     def edit() {
@@ -58,7 +57,7 @@ class ResearchGroupController {
         [researchGroupInstance: researchGroupInstance, membersInstance: members]
     }
 
-    def update() {
+    def update() {        
         def researchGroupInstance = ResearchGroup.get(params.id)
         if (!researchGroupInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
@@ -112,7 +111,7 @@ class ResearchGroupController {
        def members = [] as Set
         
         if (request.post == false){
-            session["groups"] = ResearchGroup.list().collect{it.id}            
+            session["groups"] = ResearchGroup.list()?.collect{it.id}            
         }else{
             if (session["groups"].contains(params.groups as Long)){
                 session["groups"].remove(params.groups as Long)                
@@ -123,13 +122,13 @@ class ResearchGroupController {
         for(groupId in session["groups"] ){
             def rGroup = ResearchGroup.get(groupId as Long)
             if(rGroup){
-                members.addAll(rGroup?.memberships.collect{it.member})
+                members.addAll(rGroup?.memberships?.collect{it.member})
             }            
         }
 		
-		if(members.empty){
-			members = Member.list()
-		}
+        if(members.empty){
+                members = Member.list()
+        }
         def map = [researchGroupInstance: new ResearchGroup(params), membersInstance: members]
         if(request.xhr){
              render(view: "/researchGroup/editMembers", model: map)
@@ -137,19 +136,28 @@ class ResearchGroupController {
         return members        
    }
    
-   def listPublicationByGroup(){
-	  
-	  def publicationSet = [] as Set
-	  def group = new ResearchGroup( id: params.groupId)
-	  def members = Membership.findByResearchGroup(group).collect{[member: it.member, dateJoined: it.dateJoined, dateLeft: it.dateLeft]}
-	  for(member in members){
-		  
-		  def listPub = Publication.findAll{
-			 member.member inList: authors && between('publicationDate', member.dateJoined, member.dateLeft)
-			 publicationSet.addAll(listPub)
-		  }
-	  }
-	  
+   def Set listPublicationByGroup(){
+       def researchGroupInstance = ResearchGroup.get(params.id)
+	//def g = rgms.ResearchGroup.findById(researchGroupInstance.id)
+        def l = [] as Set
+        def memberships = researchGroupInstance.memberships.findAll{
+            researchGroupInstance.id = it.researchGroup.id
+        }
+
+        memberships.each{
+            
+            def dateJoined =  it.dateJoined
+            for(publication in it.member.publications)
+            {
+                
+                if( publication.publicationDate.compareTo(it.dateJoined) > 0)
+                {
+                    l.add(publication);
+                } 
+            }
+        }
+        return l  
 	   
    }
+   
 }
