@@ -591,3 +591,21 @@ a.skip {
 	position: absolute;
 	left: -9999px;
 }
+
+
+
+/* Undo some styles from the master stylesheet */
+.checklist li { background: none; padding-left: 0; }
+
+/* CSS for checklists */
+.checklist {
+        border: 1px solid #ccc;
+        list-style: none;
+        height: 200px;
+        overflow-y: scroll;
+        width: 200px;
+}
+.checklist, .checklist li { margin: 0; padding: 0; }
+.checklist label { display: block; padding: 0 0.2em 0 25px; text-indent: -25px; }
+.checklist label:hover, .checklist label.hover { background: #777; color: #fff; }
+* html .checklist label { height: 1%; }
