@@ -10,6 +10,13 @@ class Member {
 	String city
 	String country
 	Boolean active
+    static hasMany = [memberships : Membership, publications: Publication]
+	
+    public String toString()
+    {
+        
+        return this.name
+    }
     static constraints = {
     	name(blank:false)
     	email(email:true,blank:false)

@@ -74,3 +74,28 @@
 	<g:checkBox name="active" value="${memberInstance?.active}" />
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'memberships', 'error')} ">
+	<label for="memberships">
+		<g:message code="member.memberships.label" default="Memberships" />
+		
+	</label>
+	
+<ul class="one-to-many">
+<g:each in="${memberInstance?.memberships?}" var="m">
+    <li><g:link controller="membership" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></li>
+</g:each>
+<li class="add">
+<g:link controller="membership" action="create" params="['member.id': memberInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'membership.label', default: 'Membership')])}</g:link>
+</li>
+</ul>
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: memberInstance, field: 'publications', 'error')} ">
+	<label for="publications">
+		<g:message code="member.publications.label" default="Publications" />
+		
+	</label>
+	<g:select name="publications" from="${rgms.Publication.list()}" multiple="multiple" optionKey="id" size="5" value="${memberInstance?.publications*.id}" class="many-to-many"/>
+</div>
+

@@ -104,6 +104,28 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${memberInstance?.memberships}">
+				<li class="fieldcontain">
+					<span id="memberships-label" class="property-label"><g:message code="member.memberships.label" default="Memberships" /></span>
+					
+						<g:each in="${memberInstance.memberships}" var="m">
+						<span class="property-value" aria-labelledby="memberships-label"><g:link controller="membership" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${memberInstance?.publications}">
+				<li class="fieldcontain">
+					<span id="publications-label" class="property-label"><g:message code="member.publications.label" default="Publications" /></span>
+					
+						<g:each in="${memberInstance.publications}" var="p">
+						<span class="property-value" aria-labelledby="publications-label"><g:link controller="publication" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
