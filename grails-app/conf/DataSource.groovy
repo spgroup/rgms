@@ -4,6 +4,18 @@ dataSource {
     username = "sa"
     password = ""
 }
+
+//changed
+//dataSource {
+//    pooled = true
+//    dbCreate = "create-drop"
+//    url = "jdbc:mysql://localhost/rgms?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&characterSetResults=UTF-8"
+//    driverClassName = "com.mysql.jdbc.Driver"
+//    dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+//    username = "root"
+//    password = "1234567"
+//}
+
 hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = true
@@ -14,7 +26,7 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:file:devDb;MVCC=TRUE"
+            url = "jdbc:h2:mem:devDb;MVCC=TRUE"
         }
     }
     test {
