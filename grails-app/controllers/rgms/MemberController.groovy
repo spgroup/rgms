@@ -37,6 +37,15 @@ class MemberController {
         }
         memberInstance.passwordChangeRequiredOnNextLogon = true
         
+        //feature record
+        def hist = new Record(start:new Date(),status_H:memberInstance.status)
+        hist.save()
+            
+        memberInstance.addToHistorics(hist)
+        memberInstance.save()
+        
+       //end feature record
+        
         if (!memberInstance.save(flush: true)) { 
             render(view: "create", model: [memberInstance: memberInstance])
             return
@@ -95,6 +104,8 @@ class MemberController {
             }
         }
 
+        //feature record
+        def status0 = memberInstance.status //pega o status anterior do usuario
         
         memberInstance.properties = params //atualiza todos os parametros
 
@@ -103,8 +114,31 @@ class MemberController {
             return
         }
         
+        //feature record
         
-
+        //salva o historico se o status mudar
+        String newStatus = memberInstance.status
+        
+        if (newStatus != status0){
+            try{
+                def hist = Record.findWhere(end: null, status_H:status0)
+                hist.end = new Date()
+            
+                def h = Record.merge(hist)
+                h.save()
+                memberInstance.addToHistorics(h)    
+            } catch(Exception ex){
+                render "You do not have permission to access this account."
+//                flash.message = message(code: 'historic.failed')
+            }
+            
+            def historic = new Record(start: new Date(), status_H: newStatus)
+            historic.save();
+            memberInstance.addToHistorics(historic)
+            memberInstance.save()
+        }
+        //end feature record
+        
         flash.message = message(code: 'default.updated.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
     }

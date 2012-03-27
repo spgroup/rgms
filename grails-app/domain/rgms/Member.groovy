@@ -19,7 +19,7 @@ class Member {
         lastUpdated = new Date()
     }
     boolean passwordChangeRequiredOnNextLogon
-    static hasMany = [ roles: Role, permissions: String]
+    static hasMany = [ roles: Role, permissions: String, historics: Record]
     
     static constraints = {
         firstName(nullable: false, blank: false)

@@ -26,6 +26,13 @@ class BootStrap {
             adminRole.addToUsers(admin)
             adminRole.save()
             
+            //feature record
+            def hist = new Record(start:new Date(),status_H:"MSc Student")
+            hist.save()
+            
+            admin.addToHistorics(hist)
+            admin.save()
+            
             print("Instancia de Admin = "+Member.findByUsername('admin').toString())
         }
 
