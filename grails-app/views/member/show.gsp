@@ -22,17 +22,24 @@
       <table>
         <tbody>
 
-          <tr class="prop">
+<!--          <tr class="prop">
             <td valign="top" class="name"><g:message code="member.firstName.label" default="First Name" /></td>
 
-        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "firstName")}</td>
+        <td valign="top" class="value">{fieldValue(bean: memberInstance, field: "firstName")}</td>
 
         </tr>
 
         <tr class="prop">
           <td valign="top" class="name"><g:message code="member.lastName.label" default="Last Name" /></td>
 
-        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "lastName")}</td>
+        <td valign="top" class="value">{fieldValue(bean: memberInstance, field: "lastName")}</td>
+
+        </tr>-->
+        
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.name.label" default="Name" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "name")}</td>
 
         </tr>
 

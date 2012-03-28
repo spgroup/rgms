@@ -1,8 +1,7 @@
 package rgms
 
 class Member {
-    String firstName
-    String lastName
+    String name
     String username
     String passwordHash
     String email
@@ -22,8 +21,7 @@ class Member {
     static hasMany = [ roles: Role, permissions: String, historics: Record]
     
     static constraints = {
-        firstName(nullable: false, blank: false)
-        lastName(nullable: false, blank: false)
+        name(nullable: false, blank: false)
         username(unique:true,nullable: false, blank: false,size: 5..20)
         email(unique:true,email: true)
         additionalInfo(nullable:true)

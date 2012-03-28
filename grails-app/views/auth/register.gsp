@@ -109,13 +109,13 @@ margin-top: 0;
         <table>
           <tbody>
             <tr>
-              <td style="text-align: right; font-size: 14px;">First Name: </td>
-              <td><input type="text" name="firstName" required="true" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+              <td style="text-align: right; font-size: 14px;">Name: </td>
+              <td><input type="text" name="name" required="true" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
             </tr>
-            <tr>
+<!--            <tr>
               <td style="text-align: right; font-size: 14px;">Last Name: </td>
               <td><input type="text" name="lastName" required="true" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
-            </tr>
+            </tr>-->
             <tr>
               <td style="text-align: right; font-size: 14px;">Username: </td>
               <td><input type="text" name="username" required="true" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>

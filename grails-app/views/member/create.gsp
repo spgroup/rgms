@@ -28,30 +28,30 @@
                     <table>
                         <tbody>
                         
-                            <tr class="prop">
+<!--                            <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="firstName"><g:message code="member.firstName.label" default="First Name" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'firstName', 'errors')}">
-                                    <g:textField name="firstName" value="${memberInstance?.firstName}" />
+                                <td valign="top" class="value {hasErrors(bean: memberInstance, field: 'firstName', 'errors')}">
+                                    <g:textField name="firstName" value="{memberInstance?.firstName}" />
                                 </td>
                             </tr>
-                            
-<!--                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="middleName"><g:message code="member.middleName.label" default="Middle Name" /></label>
-                                </td>
-                                <td valign="top" class="value {hasErrors(bean: memberInstance, field: 'middleName', 'errors')}">
-                                    <g:textField name="middleName" value="{memberInstance?.middleName}" />
-                                </td>
-                            </tr>-->
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="lastName"><g:message code="member.lastName.label" default="Last Name" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'lastName', 'errors')}">
-                                    <g:textField name="lastName" value="${memberInstance?.lastName}" />
+                                <td valign="top" class="value {hasErrors(bean: memberInstance, field: 'lastName', 'errors')}">
+                                    <g:textField name="lastName" value="{memberInstance?.lastName}" />
+                                </td>
+                            </tr>-->
+                            
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="name"><g:message code="member.name.label" default="Name" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'name', 'errors')}">
+                                    <g:textField name="name" value="${memberInstance?.name}" />
                                 </td>
                             </tr>
                         
