@@ -7,6 +7,12 @@ class Member {
     String email
     String additionalInfo
     String status
+    String university
+    String phone
+    String website
+    String city
+    String country
+    Boolean active
     Boolean enabled
     
     Date dateCreated
@@ -27,6 +33,13 @@ class Member {
         additionalInfo(nullable:true)
         status(nullable: false, inList: ["Graduate Student", "MSc Student", "PhD Student", "Professor", "Researcher"])
         enabled(blank: false)
+        university(nullable: false, blank: false)
+        phone(nullable:true, blank: true)
+        website(nullable:true, url:true, blank: true)
+        city(nullable:true, blank: true)
+        country(nullable:true, blank: true)
+        active(nullable:true, blank: true)
+        
     }
 
     static mapping = {

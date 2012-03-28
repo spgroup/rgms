@@ -20,7 +20,7 @@ class BootStrap {
 
             admin = new Member(name:"Administrator",
                 username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),
-                email:"jccmelo@gmail.com", status:"MSc Student", enabled:true)
+                email:"jccmelo@gmail.com", status:"MSc Student", enabled:true, university:"UFPE")
             
             admin.save()
             adminRole.addToUsers(admin)

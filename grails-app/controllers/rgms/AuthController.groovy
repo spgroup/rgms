@@ -32,8 +32,6 @@ class AuthController {
         
         def authToken = new UsernamePasswordToken(params.username, params.password as String)
 
-        print(authToken.toString())
-        
         // Support for "remember me"
         if (params.rememberMe) {
             authToken.rememberMe = true
@@ -198,11 +196,15 @@ class AuthController {
         redirect(uri:'/')
     }
     
+//    def doRegister = {
+//        return [name: params.name, username: params.username, passwordtargetUri: params.targetUri ]
+//    }
+    
     def register = {
         
         print("ENTROU no register")
         
-        if (params.password1!=params.password2) {
+        if (params.password1 != params.password2) {
             flash.message = "Please enter same passwords."
             flash.status = "error"
             return
@@ -217,13 +219,11 @@ class AuthController {
             return
         }
 
-        print(params.toString())
-        
         def enabled = false
         
-        def pwdHash = new Sha256Hash(params.passwordHash).toHex()
+        def pwdHash = new Sha256Hash(params.password1).toHex()
         
-        def memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled)
+        def memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university)
         def username = memberInstance?.username
         def password = params.passwordHash
         def name = memberInstance?.name

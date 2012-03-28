@@ -26,8 +26,6 @@
                         
                             <g:sortableColumn property="name" title="${message(code: 'member.name.label', default: 'Name')}" />
                         
-<!--                            <g:sortableColumn property="lastName" title="{message(code: 'member.lastName.label', default: 'Last Name')}" />-->
-                        
                             <g:sortableColumn property="username" title="${message(code: 'member.username.label', default: 'Username')}" />
                             
                             <g:sortableColumn property="enabled" title="${message(code: 'member.enabled.label', default: 'Enabled')}" />

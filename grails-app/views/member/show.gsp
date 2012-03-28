@@ -21,20 +21,6 @@
     <div class="dialog">
       <table>
         <tbody>
-
-<!--          <tr class="prop">
-            <td valign="top" class="name"><g:message code="member.firstName.label" default="First Name" /></td>
-
-        <td valign="top" class="value">{fieldValue(bean: memberInstance, field: "firstName")}</td>
-
-        </tr>
-
-        <tr class="prop">
-          <td valign="top" class="name"><g:message code="member.lastName.label" default="Last Name" /></td>
-
-        <td valign="top" class="value">{fieldValue(bean: memberInstance, field: "lastName")}</td>
-
-        </tr>-->
         
         <tr class="prop">
           <td valign="top" class="name"><g:message code="member.name.label" default="Name" /></td>
@@ -88,11 +74,57 @@
         <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "additionalInfo")}</td>
 
         </tr>
+        
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.university.label" default="University" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "university")}</td>
+
+        </tr>
+        
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.phone.label" default="Phone" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "phone")}</td>
+
+        </tr>
+        
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.additionalInfo.label" default="Additional Info" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "additionalInfo")}</td>
+
+        </tr>
 
         <tr class="prop">
-          <td valign="top" class="name"><g:message code="member.status.label" default="Status" /></td>
+          <td valign="top" class="name"><g:message code="member.website.label" default="Website" /></td>
 
-        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "status")}</td>
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "website")}</td>
+
+        </tr>
+        
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.city.label" default="City" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "city")}</td>
+
+        </tr>
+        
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.country.label" default="Country" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "country")}</td>
+
+        </tr>
+        
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.active.label" default="Active" /></td>
+
+        <td valign="top" style="text-align: left;" class="value">
+        <g:if test="${memberInstance?.active}">
+          <li><g:formatBoolean boolean="${memberInstance?.active}" /></li>
+        </g:if>
+        </td>
 
         </tr>
 
