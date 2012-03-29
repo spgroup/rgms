@@ -35,6 +35,7 @@ class FerramentaController {
 
     def show() {
         def ferramentaInstance = Ferramenta.get(params.id)
+		
         if (!ferramentaInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), params.id])
             redirect(action: "list")

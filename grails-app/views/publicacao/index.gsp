@@ -1,6 +1,8 @@
 <%@ page import="rgms.Conferencia" %>
 <%@ page import="rgms.Periodico" %>
 <%@ page import="rgms.Ferramenta" %>
+<%@ page import="rgms.Dissertacao" %>
+<%@ page import="rgms.Tese" %>
 <!doctype html>
 <html>
 	<head>
@@ -14,6 +16,8 @@
 				<li><a href='/rgms/periodico/list'> Periodico </a></li>
 				<li><a href='/rgms/conferencia/list'> Conferencia </a></li>
 				<li><a href='/rgms/ferramenta/list'> Ferramenta </a></li>
+				<li><a href='/rgms/dissertacao/list'> Dissertacao </a></li>
+				<li><a href='/rgms/tese/list'> Tese </a></li>
 			</ul>
 		</div>	
 		<div class="content">
@@ -22,8 +26,8 @@
 		
 		<g:form>
 			<div>
-				<h1 margin="0.8em 1em 0.3em">Search: </h1>
-				<g:textField name="busca" type="text" size='55' id="search"/>
+				<h1 style="float:left; margin-left:20px">Search: </h1>
+				<g:textField style="margin: 12px" name="busca" type="text" size='55' id="search"/>
 			</div>
 		</g:form>
 		</br>
@@ -46,6 +50,8 @@
 						<% Conferencia conf = new Conferencia() %>
 						<% Periodico per = new Periodico() %>
 						<% Ferramenta fer = new Ferramenta() %>
+						<% Dissertacao diss = new Dissertacao() %>
+						<% Tese tese = new Tese() %>
 					
 						<g:if test = "${oneitem.class == conf.class}">
 							<td><g:link action="show" controller="conferencia" id="${oneitem.id}">${oneitem.title}</g:link></td>
@@ -55,6 +61,12 @@
 						</g:if>
 						<g:if test = "${oneitem.class == fer.class}">
 							<td><g:link action="show" controller="ferramenta" id="${oneitem.id}">${oneitem.title}</g:link></td>
+						</g:if>
+						<g:if test = "${oneitem.class == diss.class}">
+							<td><g:link action="show" controller="dissertacao" id="${oneitem.id}">${oneitem.title}</g:link></td>
+						</g:if>
+						<g:if test = "${oneitem.class == tese.class}">
+							<td><g:link action="show" controller="tese" id="${oneitem.id}">${oneitem.title}</g:link></td>
 						</g:if>
 					
 						<td>${oneitem.author}</td>

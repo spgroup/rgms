@@ -52,7 +52,7 @@
 			
 				<g:if test="${periodicoInstance?.pageInitial}">
 				<li class="fieldcontain">
-					<span id="pageInitial-label" class="property-label"><g:message code="periodico.pageInitial.label" default="PageInitial" /></span>
+					<span id="pages-label" class="property-label"><g:message code="periodico.pages.label" default="Pages" /></span>
 					
 						<span class="property-value" aria-labelledby="pageInitial-label"><g:fieldValue bean="${periodicoInstance}" field="pageInitial"/></span>
 					

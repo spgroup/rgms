@@ -45,7 +45,6 @@
 						<td><g:link action="show" id="${ferramentaInstance.id}">${fieldValue(bean: ferramentaInstance, field: "author")}</g:link></td>
 					
 						<td>${fieldValue(bean: ferramentaInstance, field: "descricao")}</td>
-						
 						<td><a href = "${fieldValue(bean: ferramentaInstance, field: "link")}"> ${fieldValue(bean: ferramentaInstance, field: "link")} </a></td>
 					
 						<td>${fieldValue(bean: ferramentaInstance, field: "publicacaoAssociada")}</td>

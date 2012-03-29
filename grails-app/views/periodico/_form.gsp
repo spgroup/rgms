@@ -19,10 +19,10 @@
 			<tr>
 				<td>			
 					<label for="author">
-						<g:message code="ferramenta.author.label" default="Author" />
+						<g:message code="periodico.author.label" default="Author" />
 		
 					</label>
-					<g:textField name="author" value="${ferramentaInstance?.author}"/>
+					<g:textField name="author" value="${periodicoInstance?.author}"/>
 				</td>
 			</tr>
 		</tbody>
@@ -37,12 +37,20 @@
 	<g:textField name="journal" value="${periodicoInstance?.journal}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'year', 'error')} required">
+	<label for="year">
+		<g:message code="periodico.year.label" default="Year" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field type="number" name="year" required="" id="year" value="${fieldValue(bean: periodicoInstance, field: 'year')}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'number', 'error')} required">
 	<label for="number">
 		<g:message code="periodico.number.label" default="Number" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="number" required="" value="${fieldValue(bean: periodicoInstance, field: 'number')}"/>
+	<g:field type="number" id="num" name="number" required="" value="${fieldValue(bean: periodicoInstance, field: 'number')}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'pageInitial', 'error')} required">
@@ -66,14 +74,7 @@
 		<g:message code="periodico.volume.label" default="Volume" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="volume" required="" value="${fieldValue(bean: periodicoInstance, field: 'volume')}"/>
+	<g:field type="number" id="num" name="volume" required="" value="${fieldValue(bean: periodicoInstance, field: 'volume')}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'year', 'error')} required">
-	<label for="year">
-		<g:message code="periodico.year.label" default="Year" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="number" name="year" required="" value="${fieldValue(bean: periodicoInstance, field: 'year')}"/>
-</div>
 

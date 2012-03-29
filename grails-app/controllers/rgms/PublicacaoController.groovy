@@ -1,5 +1,7 @@
 package rgms
 
+import java.awt.event.ItemEvent;
+
 class PublicacaoController {
 
 	def index() { 
@@ -7,6 +9,8 @@ class PublicacaoController {
 		def listaPeriodico = Periodico.getAll();
 		def listaFerramenta = Ferramenta.getAll();
 		def listaConferencia = Conferencia.getAll();
+		def listaDissertacao = Dissertacao.getAll();
+		def listaTese = Tese.getAll();
 		def listaGeral = []
 		for(item in listaPeriodico){
 			listaGeral.add(item)
@@ -15,6 +19,12 @@ class PublicacaoController {
 			listaGeral.add(item)
 		}
 		for(item in listaConferencia){
+			listaGeral.add(item)
+		}
+		for(item in listaDissertacao){
+			listaGeral.add(item)
+		}
+		for(item in listaTese){
 			listaGeral.add(item)
 		}
 		
