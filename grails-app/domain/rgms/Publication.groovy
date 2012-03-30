@@ -5,14 +5,19 @@ class Publication {
 	
     Date publicationDate
     String title
+    ResearchLine researchLine
 
     static belongsTo = Member
     static hasMany = [members : Member]
-    public String toString()
-    {
-        
-        return title
-    }
+    
     static constraints = {
+        title()
+        publicationDate()
+        researchLine(nullable:true)
+    }
+    
+    public String toString()
+    {        
+        return title
     }
 }

@@ -18,14 +18,13 @@ class AuthController {
         return [ username: params.username, rememberMe: (params.rememberMe != null), targetUri: params.targetUri ]
     }
 
-    def signIn = {
-        
+    def signIn = {        
 //        def subject = SecurityUtils.getSubject();
         Member member = Member.findByUsername(params.username)
         
-        print("ENTROU no signIn\nEnabled == "+member.enabled)
+        print("ENTROU no signIn\nEnabled == "+member?.enabled)
         
-        if(member.enabled == false){
+        if(member?.enabled == false){
             render "Please wait the administrator to unlock your access to system.\n\nThanks."
             return
         }
