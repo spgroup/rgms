@@ -23,11 +23,11 @@
 			</g:if>
 			<ol class="property-list publication">
 			
-				<g:if test="${publicationInstance?.members}">
+				<g:if test="${publicationInstance?.title}">
 				<li class="fieldcontain">
-					<span id="members-label" class="property-label"><g:message code="publication.members.label" default="Members" /></span>
+					<span id="title-label" class="property-label"><g:message code="publication.title.label" default="Title" /></span>
 					
-						<span class="property-value" aria-labelledby="members-label"><g:fieldValue bean="${publicationInstance}" field="members"/></span>
+						<span class="property-value" aria-labelledby="title-label"><g:fieldValue bean="${publicationInstance}" field="title"/></span>
 					
 				</li>
 				</g:if>
@@ -41,11 +41,22 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${publicationInstance?.title}">
+				<g:if test="${publicationInstance?.researchLine}">
 				<li class="fieldcontain">
-					<span id="title-label" class="property-label"><g:message code="publication.title.label" default="Title" /></span>
+					<span id="researchLine-label" class="property-label"><g:message code="publication.researchLine.label" default="Research Line" /></span>
 					
-						<span class="property-value" aria-labelledby="title-label"><g:fieldValue bean="${publicationInstance}" field="title"/></span>
+						<span class="property-value" aria-labelledby="researchLine-label"><g:link controller="researchLine" action="show" id="${publicationInstance?.researchLine?.id}">${publicationInstance?.researchLine?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${publicationInstance?.members}">
+				<li class="fieldcontain">
+					<span id="members-label" class="property-label"><g:message code="publication.members.label" default="Members" /></span>
+					
+						<g:each in="${publicationInstance.members}" var="m">
+						<span class="property-value" aria-labelledby="members-label"><g:link controller="member" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
 					
 				</li>
 				</g:if>

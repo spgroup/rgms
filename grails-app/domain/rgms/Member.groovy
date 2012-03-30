@@ -9,13 +9,14 @@ class Member {
     String email
     String additionalInfo
     String status
-	String university
-	String phone
-	String website
-	String city
+    String university
+    String phone
+    String website
+    String city
+    String country
     Boolean enabled
-	Boolean active
-    static hasMany = [memberships : Membership, publications: Publication]
+    Boolean active
+    static hasMany = [memberships : Membership, publications: Publication,roles: Role, permissions: String, historics: Record]
     
     Date dateCreated
     Date lastUpdated
@@ -26,7 +27,7 @@ class Member {
         lastUpdated = new Date()
     }
     boolean passwordChangeRequiredOnNextLogon
-    static hasMany = [ roles: Role, permissions: String, historics: Record]
+    
     
     static constraints = {
         firstName(nullable: false, blank: false)

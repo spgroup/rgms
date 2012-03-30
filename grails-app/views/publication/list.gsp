@@ -24,9 +24,11 @@
 				<thead>
 					<tr>
 					
+						<g:sortableColumn property="title" title="${message(code: 'publication.title.label', default: 'Title')}" />
+					
 						<g:sortableColumn property="publicationDate" title="${message(code: 'publication.publicationDate.label', default: 'Publication Date')}" />
 					
-						<g:sortableColumn property="title" title="${message(code: 'publication.title.label', default: 'Title')}" />
+						<th><g:message code="publication.researchLine.label" default="Research Line" /></th>
 					
 					</tr>
 				</thead>
@@ -34,9 +36,11 @@
 				<g:each in="${publicationInstanceList}" status="i" var="publicationInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${publicationInstance.id}">${fieldValue(bean: publicationInstance, field: "publicationDate")}</g:link></td>
+						<td><g:link action="show" id="${publicationInstance.id}">${fieldValue(bean: publicationInstance, field: "title")}</g:link></td>
 					
-						<td>${fieldValue(bean: publicationInstance, field: "title")}</td>
+						<td><g:formatDate date="${publicationInstance.publicationDate}" /></td>
+					
+						<td>${fieldValue(bean: publicationInstance, field: "researchLine")}</td>
 					
 					</tr>
 				</g:each>
