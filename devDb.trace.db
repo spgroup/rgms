@@ -1769,3 +1769,118 @@ java.lang.Exception: Stack Trace
 	at groovy.lang.Closure.call(Closure.java:406)
 	at groovy.lang.Closure.run(Closure.java:490)
 	at java.lang.Thread.run(Thread.java:662)
+03-31 14:28:02 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: NULL not allowed for column "DATE_CREATED"; SQL statement:
+alter table member add column date_created timestamp not null [90006-147]
+03-31 14:28:02 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: NULL not allowed for column "ENABLED"; SQL statement:
+alter table member add column enabled boolean not null [90006-147]
+03-31 14:28:02 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: NULL not allowed for column "LAST_UPDATED"; SQL statement:
+alter table member add column last_updated timestamp not null [90006-147]
+03-31 14:28:02 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: NULL not allowed for column "PASSWORD_CHANGE_REQUIRED_ON_NEXT_LOGON"; SQL statement:
+alter table member add column password_change_required_on_next_logon boolean not null [90006-147]
+03-31 14:28:02 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: NULL not allowed for column "PASSWORD_HASH"; SQL statement:
+alter table member add column password_hash varchar(255) not null [90006-147]
+03-31 14:28:02 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: NULL not allowed for column "STATUS"; SQL statement:
+alter table member add column status varchar(16) not null [90006-147]
+03-31 14:28:02 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE MEMBER ADD COLUMN USERNAME VARCHAR(20) NOT NULL UNIQUE[*] "; SQL statement:
+alter table member add column username varchar(20) not null unique [42000-147]
+03-31 14:28:22 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Column "THIS_.DATE_CREATED" not found; SQL statement:
+select this_.id as id0_0_, this_.version as version0_0_, this_.active as active0_0_, this_.additional_info as additional4_0_0_, this_.city as city0_0_, this_.country as country0_0_, this_.date_created as date7_0_0_, this_.email as email0_0_, this_.enabled as enabled0_0_, this_.last_updated as last10_0_0_, this_.name as name0_0_, this_.password_change_required_on_next_logon as password12_0_0_, this_.password_hash as password13_0_0_, this_.phone as phone0_0_, this_.status as status0_0_, this_.university as university0_0_, this_.username as username0_0_, this_.website as website0_0_, historics2_.member_historics_id as member1_0_2_, historics2_.record_id as record2_2_ from member this_ left outer join member_record historics2_ on this_.id=historics2_.member_historics_id where this_.username=? limit ? [42122-147]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:327)
+	at org.h2.message.DbException.get(DbException.java:167)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:126)
+	at org.h2.expression.Alias.optimize(Alias.java:47)
+	at org.h2.command.dml.Select.prepare(Select.java:773)
+	at org.h2.command.Parser.prepare(Parser.java:202)
+	at org.h2.command.Parser.prepareCommand(Parser.java:214)
+	at org.h2.engine.Session.prepareLocal(Session.java:425)
+	at org.h2.engine.Session.prepareCommand(Session.java:374)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1056)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:71)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:233)
+	at org.apache.commons.dbcp.DelegatingConnection.prepareStatement(DelegatingConnection.java:281)
+	at org.apache.commons.dbcp.PoolingDataSource$PoolGuardConnectionWrapper.prepareStatement(PoolingDataSource.java:313)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at com.springsource.loaded.ri.ReflectiveInterceptor.jlrMethodInvoke(ReflectiveInterceptor.java:1231)
+	at org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy$TransactionAwareInvocationHandler.invoke(TransactionAwareDataSourceProxy.java:239)
+	at $Proxy15.prepareStatement(Unknown Source)
+	at org.hibernate.jdbc.AbstractBatcher.getPreparedStatement(AbstractBatcher.java:534)
+	at org.hibernate.jdbc.AbstractBatcher.getPreparedStatement(AbstractBatcher.java:452)
+	at org.hibernate.jdbc.AbstractBatcher.prepareQueryStatement(AbstractBatcher.java:161)
+	at org.hibernate.loader.Loader.prepareQueryStatement(Loader.java:1700)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:801)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2533)
+	at org.hibernate.loader.Loader.listUsingQueryCache(Loader.java:2319)
+	at org.hibernate.loader.Loader.list(Loader.java:2268)
+	at org.hibernate.loader.criteria.CriteriaLoader.list(CriteriaLoader.java:119)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1716)
+	at org.hibernate.impl.CriteriaImpl.list(CriteriaImpl.java:347)
+	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractFindByPersistentMethod.getResult(AbstractFindByPersistentMethod.java:49)
+	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractFindByPersistentMethod$1.doInHibernate(AbstractFindByPersistentMethod.java:43)
+	at org.springframework.orm.hibernate3.HibernateTemplate.doExecute(HibernateTemplate.java:406)
+	at org.springframework.orm.hibernate3.HibernateTemplate.execute(HibernateTemplate.java:339)
+	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractFindByPersistentMethod.doInvokeInternalWithExpressions(AbstractFindByPersistentMethod.java:38)
+	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractClausedStaticPersistentMethod.doInvokeInternal(AbstractClausedStaticPersistentMethod.java:574)
+	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractClausedStaticPersistentMethod.doInvokeInternal(AbstractClausedStaticPersistentMethod.java:450)
+	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractStaticPersistentMethod.invoke(AbstractStaticPersistentMethod.java:72)
+	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractStaticPersistentMethod.invoke(AbstractStaticPersistentMethod.java:65)
+	at org.codehaus.groovy.grails.commons.metaclass.StaticMethodInvocation$invoke.call(Unknown Source)
+	at org.grails.datastore.gorm.GormStaticApi.methodMissing(GormStaticApi.groovy:108)
+	at rgms.Member.$static_methodMissing(Member.groovy)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at com.springsource.loaded.ri.ReflectiveInterceptor.jlrMethodInvoke(ReflectiveInterceptor.java:1231)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+	at groovy.lang.MetaClassImpl.invokeStaticMissingMethod(MetaClassImpl.java:1333)
+	at groovy.lang.MetaClassImpl.invokeStaticMethod(MetaClassImpl.java:1321)
+	at groovy.lang.ExpandoMetaClass.invokeStaticMethod(ExpandoMetaClass.java:1123)
+	at org.codehaus.groovy.runtime.callsite.StaticMetaClassSite.call(StaticMetaClassSite.java:50)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at BootStrap$_closure1.doCall(BootStrap.groovy:17)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at com.springsource.loaded.ri.ReflectiveInterceptor.jlrMethodInvoke(ReflectiveInterceptor.java:1231)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:921)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+	at groovy.lang.Closure.call(Closure.java:412)
+	at groovy.lang.Closure.call(Closure.java:406)
+	at grails.util.Environment.evaluateEnvironmentSpecificBlock(Environment.java:300)
+	at grails.util.Environment.executeForEnvironment(Environment.java:293)
+	at grails.util.Environment.executeForCurrentEnvironment(Environment.java:269)
+	at org.codehaus.groovy.grails.commons.DefaultGrailsBootstrapClass.callInit(DefaultGrailsBootstrapClass.java:60)
+	at org.codehaus.groovy.grails.web.context.GrailsConfigUtils.executeGrailsBootstraps(GrailsConfigUtils.java:74)
+	at org.codehaus.groovy.grails.web.context.GrailsContextLoader.initWebApplicationContext(GrailsContextLoader.java:105)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:111)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4779)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5273)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1568)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1558)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)

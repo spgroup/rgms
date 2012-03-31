@@ -32,8 +32,6 @@ class AuthController {
         
         def authToken = new UsernamePasswordToken(params.username, params.password as String)
 
-        print(authToken.toString())
-        
         // Support for "remember me"
         if (params.rememberMe) {
             authToken.rememberMe = true
@@ -190,7 +188,7 @@ class AuthController {
                 to memberInstance.email
                 from mailSender
                 subject "[GRMS] Reset your password"
-                body "Hello ${memberInstance.firstName} ${memberInstance.lastName},\n\nYou have requested resetting your password. Please ignore this message if it's not you who have made the request.\n\nIn order to reset your password, please follow this link :\n\n ${createLink(absolute:true,controller:'auth',action:'resetPassword',id:resetRequest.token)}\n\nBest Regards".toString()
+                body "Hello ${memberInstance.name},\n\nYou have requested resetting your password. Please ignore this message if it's not you who have made the request.\n\nIn order to reset your password, please follow this link :\n\n ${createLink(absolute:true,controller:'auth',action:'resetPassword',id:resetRequest.token)}\n\nBest Regards".toString()
             }
         } else {
             flash.message = "No such user, please try again."
@@ -198,11 +196,15 @@ class AuthController {
         redirect(uri:'/')
     }
     
+//    def doRegister = {
+//        return [name: params.name, username: params.username, passwordtargetUri: params.targetUri ]
+//    }
+    
     def register = {
         
         print("ENTROU no register")
         
-        if (params.password1!=params.password2) {
+        if (params.password1 != params.password2) {
             flash.message = "Please enter same passwords."
             flash.status = "error"
             return
@@ -217,17 +219,14 @@ class AuthController {
             return
         }
 
-        print(params.toString())
-        
         def enabled = false
         
-        def pwdHash = new Sha256Hash(params.passwordHash).toHex()
+        def pwdHash = new Sha256Hash(params.password1).toHex()
         
-        def memberInstance = new Member(username:params.username,firstName:params.firstName, lastName:params.lastName, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled)
+        def memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university)
         def username = memberInstance?.username
         def password = params.passwordHash
-        def firstName = memberInstance?.firstName
-        def lastName = memberInstance?.lastName
+        def name = memberInstance?.name
         def emailAddress = memberInstance?.email
         
         if (!memberInstance.save(flush: true)) {
@@ -235,7 +234,7 @@ class AuthController {
             return
         }
         
-        def Admin = Member.findAllByFirstName("Administrator")
+        def Admin = Member.findAllByName("Administrator")
         def emailAdmin = Admin?.email
         print("Email Admin : "+emailAdmin)
         
@@ -243,7 +242,7 @@ class AuthController {
             to emailAdmin
             from grailsApplication.config.grails.mail.username
             subject "[GRMS] You received a request to authenticate an account."
-            body "Hello Administrator,\n\nYou received a request to authenticate an account.\n\nWho requested was ${firstName} ${lastName}. His/Her email address is ${emailAddress}\n\n${createLink(absolute:true,uri:'/member/list')}\n\nBest Regards,\nResearch Group Management System".toString()
+            body "Hello Administrator,\n\nYou received a request to authenticate an account.\n\nWho requested was ${name}. His/Her email address is ${emailAddress}\n\n${createLink(absolute:true,uri:'/member/list')}\n\nBest Regards,\nResearch Group Management System".toString()
         }
         
 //        sendMail {
