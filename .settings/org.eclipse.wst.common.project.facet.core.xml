@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
   <installed facet="grails.app" version="1.0"/>
 </faceted-project>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<faceted-project>
+  <installed facet="grails.app" version="1.0"/>
+</faceted-project>
+>>>>>>> 96503a0705c278455d8d5e715433ea8145e2bf95
