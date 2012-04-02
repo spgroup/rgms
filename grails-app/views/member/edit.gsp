@@ -33,28 +33,10 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="firstName"><g:message code="member.firstName.label" default="First Name" /></label>
+                                    <label for="name"><g:message code="member.name.label" default="Name" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'firstName', 'errors')}">
-                                    <g:textField name="firstName" value="${memberInstance?.firstName}" />
-                                </td>
-                            </tr>
-                            
-<!--                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="middleName"><g:message code="member.middleName.label" default="Middle Name" /></label>
-                                </td>
-                                <td valign="top" class="value {hasErrors(bean: memberInstance, field: 'middleName', 'errors')}">
-                                    <g:textField name="middleName" value="{memberInstance?.middleName}" />
-                                </td>
-                            </tr>-->
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="lastName"><g:message code="member.lastName.label" default="Last Name" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'lastName', 'errors')}">
-                                    <g:textField name="lastName" value="${memberInstance?.lastName}" />
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'name', 'errors')}">
+                                    <g:textField name="name" value="${memberInstance?.name}" />
                                 </td>
                             </tr>
                         
@@ -94,12 +76,12 @@
                                 </td>
                             </tr>
                         
-<!--                            <tr class="prop">
+                            <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="university"><g:message code="member.university.label" default="University" /></label>
                                 </td>
-                                <td valign="top" class="value {hasErrors(bean: memberInstance, field: 'university', 'errors')}">
-                                    <g:textField name="university" value="{memberInstance?.university}" />
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'university', 'errors')}">
+                                    <g:textField name="university" value="${memberInstance?.university}" />
                                 </td>
                             </tr>
                             
@@ -107,8 +89,8 @@
                                 <td valign="top" class="name">
                                     <label for="phone"><g:message code="member.phone.label" default="Phone" /></label>
                                 </td>
-                                <td valign="top" class="value {hasErrors(bean: memberInstance, field: 'phone', 'errors')}">
-                                    <g:textField name="phone" value="{memberInstance?.phone}" />
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'phone', 'errors')}">
+                                    <g:textField name="phone" value="${memberInstance?.phone}" />
                                 </td>
                             </tr>
                             
@@ -116,8 +98,8 @@
                                 <td valign="top" class="name">
                                     <label for="website"><g:message code="member.website.label" default="Website" /></label>
                                 </td>
-                                <td valign="top" class="value {hasErrors(bean: memberInstance, field: 'website', 'errors')}">
-                                    <g:textField name="website" value="{memberInstance?.website}" />
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'website', 'errors')}">
+                                    <g:textField name="website" value="${memberInstance?.website}" />
                                 </td>
                             </tr>
                             
@@ -125,8 +107,8 @@
                                 <td valign="top" class="name">
                                     <label for="city"><g:message code="member.city.label" default="City" /></label>
                                 </td>
-                                <td valign="top" class="value {hasErrors(bean: memberInstance, field: 'city', 'errors')}">
-                                    <g:textField name="city" value="{memberInstance?.city}" />
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'city', 'errors')}">
+                                    <g:textField name="city" value="${memberInstance?.city}" />
                                 </td>
                             </tr>
                             
@@ -134,10 +116,19 @@
                                 <td valign="top" class="name">
                                     <label for="country"><g:message code="member.country.label" default="Country" /></label>
                                 </td>
-                                <td valign="top" class="value {hasErrors(bean: memberInstance, field: 'country', 'errors')}">
-                                    <g:textField name="country" value="{memberInstance?.country}" />
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'country', 'errors')}">
+                                    <g:textField name="country" value="${memberInstance?.country}" />
                                 </td>
-                            </tr>-->
+                            </tr>
+                            
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="active"><g:message code="member.active.label" default="Active" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'active', 'errors')}">
+                                    <g:checkBox name="active" value="${memberInstance?.active}" />
+                                </td>
+                            </tr>
                             
                             <tr class="prop">
                                 <td valign="top" class="name">
