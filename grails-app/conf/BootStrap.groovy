@@ -18,11 +18,10 @@ class BootStrap {
 
         if(!admin){
 
-            admin = new Member(name:"Administrator",
-                username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),
-                email:"jccmelo@gmail.com", status:"MSc Student", enabled:true, university:"UFPE")
-            
-            admin.save()
+            admin = new Member(name:"Jefferson Almeida",username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),
+                email:"jra@cin.ufpe.br", status:"MSc Student", enabled:true, university:"UFPE")
+                  
+                      
             adminRole.addToUsers(admin)
             adminRole.save()
             

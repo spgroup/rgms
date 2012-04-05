@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="142"/>
+	<subDataset name="dataset2">
+		<queryString>
+			<![CDATA[SELECT
+     *,
+     publication.`title` AS publication_title,
+     publication.`publication_date` AS publication_publication_date
+FROM
+     `publication` publication]]>
+		</queryString>
+		<field name="id" class="java.lang.Long"/>
+		<field name="version" class="java.lang.Long"/>
+		<field name="publication_date" class="java.sql.Timestamp"/>
+		<field name="title" class="java.lang.String"/>
+		<field name="publication_title" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Jefferson\\Documents\\workspace\\rgms\\web-app\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM rgms.research_group;]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="version" class="java.lang.Long"/>
+	<field name="child_of_id" class="java.lang.Long"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="158" splitType="Stretch">
+			<image>
+				<reportElement x="45" y="30" width="114" height="50"/>
+				<imageExpression><![CDATA["C:\\Users\\Jefferson\\Documents\\workspace\\rgms\\web-app\\images\\logoSPG.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="207" y="30" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="207" y="53" width="348" height="103"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="2" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="143" splitType="Stretch">
+			<staticText>
+				<reportElement x="45" y="4" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[MEMBROS]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="45" y="24" width="114" height="39"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report1.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="332" y="4" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PUBLICAÇÕES]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="332" y="24" width="136" height="39"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "publications.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="332" y="77" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[FERRAMENTAS]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="332" y="97" width="200" height="43"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ferramentas.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

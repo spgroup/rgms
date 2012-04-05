@@ -4,7 +4,7 @@ class Ferramenta {
 
 	String author
 	String title
-	int year
+	String year
 	String link
 
 	String descricao
