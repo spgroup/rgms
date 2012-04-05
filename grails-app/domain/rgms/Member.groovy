@@ -14,6 +14,7 @@ class Member {
     String country
     Boolean active
     Boolean enabled
+    static hasMany = [roles: Role, permissions: String, historics: Record, memberships : Membership, publications: Publication]
     
     Date dateCreated
     Date lastUpdated
@@ -24,7 +25,6 @@ class Member {
         lastUpdated = new Date()
     }
     boolean passwordChangeRequiredOnNextLogon
-    static hasMany = [ roles: Role, permissions: String, historics: Record]
     
     static constraints = {
         name(nullable: false, blank: false)
@@ -52,5 +52,5 @@ class Member {
         //        historics joinTable: [name: 'USER_HIST',column: 'HIST_ID',key: 'id']
     }
 
-    String toString(){username}
+    String toString(){return this.name}
 }

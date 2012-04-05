@@ -21,9 +21,9 @@
     <div class="dialog">
       <table>
         <tbody>
-        
-        <tr class="prop">
-          <td valign="top" class="name"><g:message code="member.name.label" default="Name" /></td>
+
+          <tr class="prop">
+            <td valign="top" class="name"><g:message code="member.name.label" default="Name" /></td>
 
         <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "name")}</td>
 
