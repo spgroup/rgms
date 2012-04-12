@@ -15,4 +15,8 @@ class ResearchGroup {
         description(maxSize:1000,blank:false)
         
     }
+	static getPublications(researchGroup){
+		def memberships = Membership.getAllMembers(researchGroup)
+		return Publication.getPublicationsByMembershipList(memberships)
+	}
 }
