@@ -14,7 +14,9 @@ class Member {
     String country
     Boolean active
     Boolean enabled
+    
     static hasMany = [roles: Role, permissions: String, historics: Record, memberships : Membership, publications: Publication]
+
     
     Date dateCreated
     Date lastUpdated

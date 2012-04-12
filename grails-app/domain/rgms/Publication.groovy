@@ -7,7 +7,9 @@ class Publication {
     String title
 
     static belongsTo = Member
+    
     static hasMany = [members : Member]
+    
     public String toString()
     {
         

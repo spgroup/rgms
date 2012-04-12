@@ -32,33 +32,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${ferramentaInstance?.descricao}">
-				<li class="fieldcontain">
-					<span id="descricao-label" class="property-label"><g:message code="ferramenta.descricao.label" default="Descricao" /></span>
-					
-						<span class="property-value" aria-labelledby="descricao-label"><g:fieldValue bean="${ferramentaInstance}" field="descricao"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${ferramentaInstance?.link}">
-				<li class="fieldcontain">
-					<span id="link-label" class="property-label"><g:message code="ferramenta.link.label" default="Link" /></span>
-					
-						<span class="property-value" aria-labelledby="link-label"><a href = <g:fieldValue bean="${ferramentaInstance}" field="link"/>><g:fieldValue bean="${ferramentaInstance}" field="link"/></a></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${ferramentaInstance?.publicacaoAssociada}">
-				<li class="fieldcontain">
-					<span id="publicacaoAssociada-label" class="property-label"><g:message code="ferramenta.publicacaoAssociada.label" default="Publicacao Associada" /></span>
-					
-						<span class="property-value" aria-labelledby="publicacaoAssociada-label"><g:fieldValue bean="${ferramentaInstance}" field="publicacaoAssociada"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${ferramentaInstance?.title}">
 				<li class="fieldcontain">
 					<span id="title-label" class="property-label"><g:message code="ferramenta.title.label" default="Title" /></span>
@@ -73,6 +46,33 @@
 					<span id="year-label" class="property-label"><g:message code="ferramenta.year.label" default="Year" /></span>
 					
 						<span class="property-value" aria-labelledby="year-label"><g:fieldValue bean="${ferramentaInstance}" field="year"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${ferramentaInstance?.link}">
+				<li class="fieldcontain">
+					<span id="link-label" class="property-label"><g:message code="ferramenta.link.label" default="Link" /></span>
+					
+						<span class="property-value" aria-labelledby="link-label"><g:fieldValue bean="${ferramentaInstance}" field="link"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${ferramentaInstance?.descricao}">
+				<li class="fieldcontain">
+					<span id="descricao-label" class="property-label"><g:message code="ferramenta.descricao.label" default="Descricao" /></span>
+					
+						<span class="property-value" aria-labelledby="descricao-label"><g:fieldValue bean="${ferramentaInstance}" field="descricao"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${ferramentaInstance?.publicacaoAssociada}">
+				<li class="fieldcontain">
+					<span id="publicacaoAssociada-label" class="property-label"><g:message code="ferramenta.publicacaoAssociada.label" default="Publicacao Associada" /></span>
+					
+						<span class="property-value" aria-labelledby="publicacaoAssociada-label"><g:fieldValue bean="${ferramentaInstance}" field="publicacaoAssociada"/></span>
 					
 				</li>
 				</g:if>
