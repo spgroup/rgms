@@ -1,8 +1,8 @@
 package rgms
 
 class Member {
-    String firstName
-    String lastName
+//    String firstName
+//    String lastName
     String name
     String username
     String passwordHash
@@ -30,18 +30,17 @@ class Member {
     
     
     static constraints = {
-        firstName(nullable: false, blank: false)
-        lastName(nullable: false, blank: false)
+        name(nullable: false, blank: false)
         username(unique:true,nullable: false, blank: false,size: 5..20)
-        email(unique:true,email: true)
+        email(unique:true,email: true, nullable: false)
         additionalInfo(nullable:true)
         status(nullable: false, inList: ["Graduate Student", "MSc Student", "PhD Student", "Professor", "Researcher"])
     	university(blank:false)
-    	phone()
-    	website(url:true)
-    	city()
-    	country()
-    	active()
+    	phone(nullable: true)
+    	website(nullable:true, url:true)
+    	city(nullable: true)
+    	country(nullable: true)
+    	active(nullable: true)
         enabled(blank: false)
     }
 

@@ -1,5 +1,7 @@
 package rgms
 
+import java.util.List;
+
 
 class Publication {
 	
@@ -20,4 +22,20 @@ class Publication {
     {        
         return title
     }
+	
+	static List getPublicationsByMembershipList(membershipList){
+		def set = [] as Set
+		for(membership in membershipList){
+			set.addAll(Publication.getPublicationsByMembership(membership))
+		}
+	}
+	
+	static List getPublicationsByMembership(membership){
+		def publications = membership?.member.publications
+		def query = !membership.dateLeft ?
+					{ it.publicationDate?.compareTo(membership.dateJoined) > 0 }:
+					{ it.publicationDate?.compareTo(membership.dateJoined) > 0  &&
+						it.publicationDate?.compareTo(membership.dateLeft) < 0}
+		return publications.findAll(query)
+	}
 }

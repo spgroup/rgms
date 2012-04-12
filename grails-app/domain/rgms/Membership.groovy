@@ -1,5 +1,7 @@
 package rgms
 
+import java.util.List;
+
 class Membership {
 	Member member
 	ResearchGroup researchGroup
@@ -12,29 +14,37 @@ class Membership {
 		dateLeft(nullable:true)
     }
 	
-	static void addMembersToResearchGroup(memberList, researchGroup){
-		def listMembership = []	
-		for(memberId in memberList){
-				def member = Member.findById(memberId)
-				def membershipInstance = new Membership(member: member, researchGroup: researchGroup, dateJoined: new Date(), dateLeft: null)
-				if(!Membership.findByMemberAndResearchGroup(member, researchGroup)){
-					def membership = membershipInstance.save(flush: true)
-				}
-//				member.researchGroups.add(membership)
-//				member.save(flush: true)
-//				listMembership.add(membershipInstance)
-			}
+	static List getCurrentMemberships(researchGroup){
+		def list = Membership.findAllByResearchGroupAndDateLeft(researchGroup, null)
+		return list
+	}
+	
+	static List getAllMembers(researchGroup){
+		def list = Membership.findAllByResearchGroup(researchGroup)
+		return list
 	}
 	
 	static void editMembersToResearchGroup(memberList, researchGroup){
-		Membership.removeMemberFromResearchGroup(researchGroup)
-		Membership.addMembersToResearchGroup(memberList, researchGroup)
-	}
-	
-	static List removeMemberFromResearchGroup(researchGroup){
-		def listMembership = Membership.findByResearchGroup(researchGroup)
-		for(membership in listMembership){
-				membership.delete(flush: true)
+		def researchGroupCurrentMemberships = Membership.findAllByResearchGroupAndDateLeft(researchGroup, null)
+		for(memberId in memberList){
+				def memberInstance = Member.findById(memberId)
+				def membership = researchGroupCurrentMemberships.find{ it.member.id == (memberId as Long)}
+				researchGroupCurrentMemberships.each { println("Id "+it.member.id)}
+				println("Membership"+membership)
+				println("MemberId"+memberId)
+				println("research"+researchGroupCurrentMemberships)
+				if(!membership){
+					def membershipInstance = new Membership(member: memberInstance, researchGroup: researchGroup, dateJoined: new Date(), dateLeft: null)
+					membership = membershipInstance?.save(flush: true)
+				}else{
+					println("Member already in")
+					
+					researchGroupCurrentMemberships.remove(membership)
+				}
+		}
+		for(membership in researchGroupCurrentMemberships){
+			membership.dateLeft = new Date()
+			membership.save(flush: true)
 		}
 	}
 }
