@@ -30,12 +30,16 @@
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="1" y="0" width="44" height="20" forecolor="#666666"/>
-				<textElement/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{year}]]></textFieldExpression>
 			</textField>
 			<textField hyperlinkType="Reference">
-				<reportElement x="34" y="0" width="278" height="20" forecolor="#0000CC"/>
-				<textElement/>
+				<reportElement x="45" y="0" width="278" height="20" forecolor="#0000CC"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 				<hyperlinkReferenceExpression><![CDATA[$F{link}]]></hyperlinkReferenceExpression>
 			</textField>

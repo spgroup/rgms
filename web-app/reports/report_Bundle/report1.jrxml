@@ -34,17 +34,23 @@
 		<band height="60" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="-1" width="100" height="20" forecolor="#0000CC" backcolor="#99FF99"/>
-				<textElement/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="27" y="19" width="100" height="20" forecolor="#666666"/>
-				<textElement/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="27" y="39" width="100" height="20" forecolor="#666666"/>
-				<textElement/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 		</band>

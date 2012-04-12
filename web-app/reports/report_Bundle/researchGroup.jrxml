@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="142"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset2">
 		<queryString>
 			<![CDATA[SELECT
@@ -19,10 +19,11 @@ FROM
 		<field name="publication_title" class="java.lang.String"/>
 	</subDataset>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Jefferson\\Documents\\workspace\\rgms\\web-app\\reports\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\Jefferson\\Documents\\workspace\\rgms\\web-app\\reports\\report_Bundle\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="research_group_id" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM rgms.research_group;]]>
+		<![CDATA[SELECT * FROM rgms.research_group where research_group.id=$P{research_group_id};]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="version" class="java.lang.Long"/>
@@ -35,60 +36,70 @@ FROM
 	<title>
 		<band height="158" splitType="Stretch">
 			<image>
-				<reportElement x="45" y="30" width="114" height="50"/>
+				<reportElement x="22" y="17" width="167" height="139"/>
 				<imageExpression><![CDATA["C:\\Users\\Jefferson\\Documents\\workspace\\rgms\\web-app\\images\\logoSPG.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="207" y="30" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="207" y="17" width="100" height="33"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="207" y="53" width="348" height="103"/>
-				<textElement/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="2" splitType="Stretch"/>
+		<band height="147" splitType="Stretch">
+			<subreport>
+				<reportElement x="35" y="31" width="114" height="39"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report1.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="322" y="32" width="136" height="38"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "publications.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="322" y="104" width="200" height="43"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ferramentas.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="35" y="0" width="114" height="31"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[MEMBROS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="0" width="171" height="32"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[PUBLICAÇÕES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="79" width="174" height="25"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[FERRAMENTAS]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="143" splitType="Stretch">
-			<staticText>
-				<reportElement x="45" y="4" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[MEMBROS]]></text>
-			</staticText>
-			<subreport>
-				<reportElement x="45" y="24" width="114" height="39"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report1.jasper"]]></subreportExpression>
-			</subreport>
-			<staticText>
-				<reportElement x="332" y="4" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[PUBLICAÇÕES]]></text>
-			</staticText>
-			<subreport>
-				<reportElement x="332" y="24" width="136" height="39"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "publications.jasper"]]></subreportExpression>
-			</subreport>
-			<staticText>
-				<reportElement x="332" y="77" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[FERRAMENTAS]]></text>
-			</staticText>
-			<subreport>
-				<reportElement x="332" y="97" width="200" height="43"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ferramentas.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
+		<band height="1" splitType="Stretch"/>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
