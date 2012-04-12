@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Jefferson\\Documents\\workspace\\rgms\\web-app\\reports\\report_Bundle\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["..\\rgms\\web-app\\reports\\report_Bundle\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="member_id" class="java.lang.String"/>
 	<queryString>
@@ -35,7 +35,7 @@
 		<band height="86" splitType="Stretch">
 			<image>
 				<reportElement x="29" y="0" width="84" height="85"/>
-				<imageExpression><![CDATA["C:\\Users\\Jefferson\\Documents\\workspace\\rgms\\web-app\\images\\bart.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["..\\rgms\\web-app\\images\\bart.jpg"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="129" y="5" width="100" height="20"/>

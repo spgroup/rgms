@@ -19,7 +19,7 @@ FROM
 		<field name="publication_title" class="java.lang.String"/>
 	</subDataset>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Jefferson\\Documents\\workspace\\rgms\\web-app\\reports\\report_Bundle\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["..\\rgms\\web-app\\reports\\report_Bundle\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="research_group_id" class="java.lang.String"/>
 	<queryString>
@@ -37,7 +37,7 @@ FROM
 		<band height="158" splitType="Stretch">
 			<image>
 				<reportElement x="22" y="17" width="167" height="139"/>
-				<imageExpression><![CDATA["C:\\Users\\Jefferson\\Documents\\workspace\\rgms\\web-app\\images\\logoSPG.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["..\\rgms\\web-app\\images\\logoSPG.jpg"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="207" y="17" width="100" height="33"/>
