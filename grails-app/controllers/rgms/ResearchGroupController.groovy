@@ -27,7 +27,7 @@ class ResearchGroupController {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return
         }
-        Membership.addMembersToResearchGroup(params.members, researchGroupInstance)
+        Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
 
 	flash.message = message(code: 'default.created.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), researchGroupInstance.id])
         redirect(action: "show", id: researchGroupInstance.id)
@@ -94,7 +94,7 @@ class ResearchGroupController {
             redirect(action: "list")
             return
         }
-        Membership.removeMemberFromResearchGroup(researchGroupInstance)
+        Membership.editMembersToResearchGroup([], researchGroupInstance)
         try {
             researchGroupInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
@@ -137,27 +137,33 @@ class ResearchGroupController {
     }
    
     def Set listPublicationByGroup(){
-        def researchGroupInstance = ResearchGroup.get(params.id)
-	//def g = rgms.ResearchGroup.findById(researchGroupInstance.id)
-        def l = [] as Set
-        def memberships = researchGroupInstance.memberships.findAll{
-            researchGroupInstance.id = it.researchGroup.id
-        }
-
-        memberships.each{
-            
-            def dateJoined =  it.dateJoined
-            for(publication in it.member.publications)
-            {
-                
-                if( publication.publicationDate.compareTo(it.dateJoined) > 0)
-                {
-                    l.add(publication);
-                } 
-            }
-        }
-        return l  
-	   
+    	def researchGroupInstance = ResearchGroup.get(params.id)
+    	def list = ResearchGroup.getPublications(researchGroupInstance)
+    	return list  
+    			
     }
+//    def Set listPublicationByGroup(){
+//    	def researchGroupInstance = ResearchGroup.get(params.id)
+//    			//def g = rgms.ResearchGroup.findById(researchGroupInstance.id)
+//    			def l = [] as Set
+//    			def memberships = researchGroupInstance.memberships.findAll{
+//    		researchGroupInstance.id = it.researchGroup.id
+//    	}
+//    	
+//    	memberships.each{
+//    		
+//    		def dateJoined =  it.dateJoined
+//    				for(publication in it.member.publications)
+//    				{
+//    					
+//    					if( publication.publicationDate.compareTo(it.dateJoined) > 0)
+//    					{
+//    						l.add(publication);
+//    					} 
+//    				}
+//    	}
+//    	return l  
+//    			
+//    }
    
 }
