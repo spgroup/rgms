@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="report">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -58,12 +58,12 @@ FROM
 	<pageHeader>
 		<band height="147" splitType="Stretch">
 			<subreport>
-				<reportElement x="35" y="31" width="114" height="39"/>
+				<reportElement x="35" y="38" width="114" height="39"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report1.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="322" y="32" width="136" height="38"/>
+				<reportElement x="322" y="36" width="136" height="38"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "publications.jasper"]]></subreportExpression>
 			</subreport>
@@ -72,27 +72,27 @@ FROM
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ferramentas.jasper"]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement x="35" y="0" width="114" height="31"/>
+			<textField>
+				<reportElement x="322" y="79" width="171" height="30"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
-				<text><![CDATA[MEMBROS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="322" y="0" width="171" height="32"/>
+				<textFieldExpression><![CDATA[$R{ferramentas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="35" y="8" width="159" height="27"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
-				<text><![CDATA[PUBLICAÇÕES]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="322" y="79" width="174" height="25"/>
+				<textFieldExpression><![CDATA[$R{membros}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="322" y="5" width="171" height="30"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
-				<text><![CDATA[FERRAMENTAS]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$R{pubs}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
