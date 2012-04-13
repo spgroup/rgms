@@ -23,19 +23,21 @@ class Publication {
         return title
     }
 	
-	static List getPublicationsByMembershipList(membershipList){
+	static Set getPublicationsByMembershipList(membershipList){
 		def set = [] as Set
 		for(membership in membershipList){
 			set.addAll(Publication.getPublicationsByMembership(membership))
 		}
+                return set
 	}
 	
-	static List getPublicationsByMembership(membership){
+	static Set getPublicationsByMembership(membership){
 		def publications = membership?.member.publications
 		def query = !membership.dateLeft ?
 					{ it.publicationDate?.compareTo(membership.dateJoined) > 0 }:
 					{ it.publicationDate?.compareTo(membership.dateJoined) > 0  &&
 						it.publicationDate?.compareTo(membership.dateLeft) < 0}
-		return publications.findAll(query)
+                def p = publications?.findAll(query)
+		return p
 	}
 }

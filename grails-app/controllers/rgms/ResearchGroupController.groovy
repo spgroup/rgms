@@ -40,8 +40,8 @@ class ResearchGroupController {
             redirect(action: "list")
             return
         }
-		
-        [researchGroupInstance: researchGroupInstance, publicationsInstance : listPublicationByGroup()]
+		//def cm = Membership.getCurrentMemberships(researchGroupInstance)
+        [researchGroupInstance: researchGroupInstance, publicationsInstance : listPublicationByGroup(), currentMemberships: Membership.getCurrentMemberships(researchGroupInstance)]
     }
 
     def edit() {
