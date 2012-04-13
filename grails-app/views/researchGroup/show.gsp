@@ -50,11 +50,11 @@
         </li>
       </g:if>
 
-      <g:if test="${Membership.getCurrentMemberships(researchGroupInstance)}">
+      <g:if test="${currentMemberships}">
         <li class="fieldcontain">
           <span id="members-label" class="property-label"><g:message code="researchGroup.members.label" default="Members" /></span>
 
-        <g:each in="${Membership.getCurrentMemberships(researchGroupInstance)}" var="m">
+        <g:each in="${currentMemberships}" var="m">
           <span class="property-value" aria-labelledby="members-label"><g:link controller="member" action="show" id="${m.member.id}">${m.member?.encodeAsHTML()}</g:link></span>
         </g:each>
 
