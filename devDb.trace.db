@@ -3538,3 +3538,54 @@ org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic c
 	at groovy.lang.Closure.call(Closure.java:406)
 	at groovy.lang.Closure.run(Closure.java:490)
 	at java.lang.Thread.run(Thread.java:722)
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PERMISSIONS" not found; SQL statement:
+alter table member_permissions drop constraint FK6794C65FBD354E4D [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PUBLICATIONS" not found; SQL statement:
+alter table member_publications drop constraint FK93F10D4C9BB6E347 [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PUBLICATIONS" not found; SQL statement:
+alter table member_publications drop constraint FK93F10D4CBD354E4D [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_RECORD" not found; SQL statement:
+alter table member_record drop constraint FKAB599D9639642C38 [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_RECORD" not found; SQL statement:
+alter table member_record drop constraint FKAB599D96B0F0DEED [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_ROLES" not found; SQL statement:
+alter table member_roles drop constraint FKFD49A0D8BD354E4D [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_ROLES" not found; SQL statement:
+alter table member_roles drop constraint FKFD49A0D87117C98D [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBERSHIP" not found; SQL statement:
+alter table membership drop constraint FKB01D87D6BD354E4D [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBERSHIP" not found; SQL statement:
+alter table membership drop constraint FKB01D87D6704B3470 [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PASSWORD_RESET_REQUEST" not found; SQL statement:
+alter table password_reset_request drop constraint FK492958FB646F937C [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "RESEARCH_GROUP" not found; SQL statement:
+alter table research_group drop constraint FKC9643ADB111BC311 [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "ROLE_PERMISSIONS" not found; SQL statement:
+alter table role_permissions drop constraint FKEAD9D23B7117C98D [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_PASSWORD_RESET_REQUEST" not found; SQL statement:
+alter table shiro_password_reset_request drop constraint FK2CB8AB09B8207B4B [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_ROLE_PERMISSIONS" not found; SQL statement:
+alter table shiro_role_permissions drop constraint FK389B46C98BA4B1D [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_PERMISSIONS" not found; SQL statement:
+alter table shiro_user_permissions drop constraint FK34555A9EADE50EFD [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_ROLES" not found; SQL statement:
+alter table shiro_user_roles drop constraint FKBA221057ADE50EFD [42102-147]
+04-16 18:03:21 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_ROLES" not found; SQL statement:
+alter table shiro_user_roles drop constraint FKBA2210578BA4B1D [42102-147]
