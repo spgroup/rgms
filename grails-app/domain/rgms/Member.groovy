@@ -10,6 +10,11 @@ class Member {
 	String city
 	String country
 	Boolean active
+	
+	//Dissertacao dissertacao
+	
+	static belongsTo = Member
+	
     static constraints = {
     	name(blank:false)
     	email(email:true,blank:false)
@@ -21,4 +26,8 @@ class Member {
     	country()
     	active()
     }
+	
+	String toString(){
+		return name	
+	}
 }

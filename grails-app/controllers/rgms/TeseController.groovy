@@ -1,0 +1,114 @@
+package rgms
+
+import org.springframework.dao.DataIntegrityViolationException
+
+class TeseController {
+
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
+    def index() {
+        redirect(action: "list", params: params)
+    }
+	
+	def bibtex(){
+		Tese tese = Tese.get(params.id)
+		String bibtexTese = "@phdthesis{author=\""+${tese.author}+"\" title=\""+${tese.title}+"\" school=\""+${tese.school}+"\" year=\""+${tese.year}+"\" month=\""+${tese.month}+"\"}"
+	}
+	
+    def list() {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        [teseInstanceList: Tese.list(params), teseInstanceTotal: Tese.count()]
+    }
+
+    def create() {
+        [teseInstance: new Tese(params)]
+    }
+
+    def save() {
+        def teseInstance = new Tese(params)
+		
+		PublicacaoController pb = new PublicacaoController()
+		String bibTex = pb.bibTex(teseInstance)
+		teseInstance.bibTex = bibTex
+		
+        if (!teseInstance.save(flush: true)) {
+            render(view: "create", model: [teseInstance: teseInstance])
+            return
+        }
+		pb.upload(teseInstance)
+		flash.message = message(code: 'default.created.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
+        redirect(action: "show", id: teseInstance.id)
+    }
+
+    def show() {
+        def teseInstance = Tese.get(params.id)
+
+        if (!teseInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [teseInstance: teseInstance]
+    }
+
+    def edit() {
+        def teseInstance = Tese.get(params.id)
+        if (!teseInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [teseInstance: teseInstance]
+    }
+
+    def update() {
+        def teseInstance = Tese.get(params.id)
+        if (!teseInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        if (params.version) {
+            def version = params.version.toLong()
+            if (teseInstance.version > version) {
+                teseInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                          [message(code: 'tese.label', default: 'Tese')] as Object[],
+                          "Another user has updated this Tese while you were editing")
+                render(view: "edit", model: [teseInstance: teseInstance])
+                return
+            }
+        }
+
+        teseInstance.properties = params
+
+        if (!teseInstance.save(flush: true)) {
+            render(view: "edit", model: [teseInstance: teseInstance])
+            return
+        }
+
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
+        redirect(action: "show", id: teseInstance.id)
+    }
+
+    def delete() {
+        def teseInstance = Tese.get(params.id)
+        if (!teseInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        try {
+            teseInstance.delete(flush: true)
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
+            redirect(action: "list")
+        }
+        catch (DataIntegrityViolationException e) {
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
+            redirect(action: "show", id: params.id)
+        }
+    }
+}

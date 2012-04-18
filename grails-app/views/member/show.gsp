@@ -14,6 +14,9 @@
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="" action="pdfPeriodico" id="${memberInstance.id}">PDF Periodico</g:link></li>
+				<li><g:link class="" action="pdfConferencia" id="${memberInstance.id}">PDF Conferencia</g:link></li>
+				<li><g:link class="" action="pdfFerramenta" id="${memberInstance.id}">PDF Ferramenta</g:link></li>
 			</ul>
 		</div>
 		<div id="show-member" class="content scaffold-show" role="main">
