@@ -1,12 +1,19 @@
 <%@ page import="rgms.Conferencia" %>
 
-
 <div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="conferencia.title.label" default="Title" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="title" required="" value="${conferenciaInstance?.title}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'members', 'error')} ">
+	<label for="members">
+		<g:message code="conferencia.members.label" default="Authors Members" />
+		
+	</label>
+	<g:select name="members" from="${rgms.Member.list()}" multiple="multiple" optionKey="id" size="5" value="${conferenciaInstance?.members*.id}" class="many-to-many"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'author', 'error')}">
@@ -69,4 +76,10 @@
 	</label>
 	<g:field type="number" id="num" name="month" required="" value="${fieldValue(bean: conferenciaInstance, field: 'month')}"/>
 </div>
-
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'arquivo', 'error')} required">
+	<label for="arquivo">
+		<g:message code="conferencia.arquivo.label" default="Arquivo" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field type="file" name="arquivo" id="arquivo" required="" value="${fieldValue(bean: conferenciaInstance, field: 'arquivo')}"/>
+</div>

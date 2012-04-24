@@ -41,6 +41,17 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${periodicoInstance?.members}">
+				<li class="fieldcontain">
+					<span id="members-label" class="property-label"><g:message code="periodico.members.label" default="Members" /></span>
+					
+						<g:each in="${periodicoInstance.members}" var="m">
+						<span class="property-value" aria-labelledby="members-label"><g:link controller="member" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${periodicoInstance?.number}">
 				<li class="fieldcontain">
 					<span id="number-label" class="property-label"><g:message code="periodico.number.label" default="Number" /></span>
@@ -95,6 +106,20 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${periodicoInstance?.bibTex}">
+				<li class="fieldcontain">
+					<span id="year-label" class="property-label"><g:message code="periodico.bibTex.label" default="BibTex" /></span>
+					
+						<span class="property-value" aria-labelledby="bibTex-label"><g:fieldValue bean="${periodicoInstance}" field="bibTex"/></span>
+					
+				</li>
+				</g:if>
+				<li class="fieldcontain">
+					<span id="month-label" class="property-label">Arquivo</span>
+					<span class="property-value" aria-labelledby="arquivo-label">
+					<a href="${(resource(dir: 'uploads', file: periodicoInstance.arquivo)).replaceAll('static','')}">${periodicoInstance?.arquivo}</a>
+					</span>
+				</li>
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

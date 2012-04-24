@@ -29,7 +29,18 @@
 
 						<span class="property-value" aria-labelledby="author-label"><g:fieldValue bean="${conferenciaInstance}" field="author"/></span>
 				</li>
-			</g:if>
+				</g:if>
+			
+				<g:if test="${conferenciaInstance?.members}">
+				<li class="fieldcontain">
+					<span id="members-label" class="property-label"><g:message code="conferencia.members.label" default="Members" /></span>
+					
+						<g:each in="${conferenciaInstance.members}" var="m">
+						<span class="property-value" aria-labelledby="members-label"><g:link controller="member" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
 			
 				<g:if test="${conferenciaInstance?.title}">
 				<li class="fieldcontain">
@@ -78,7 +89,20 @@
 					
 				</li>
 				</g:if>
-			
+				<g:if test="${conferenciaInstance?.bibTex}">
+				<li class="fieldcontain">
+					<span id="year-label" class="property-label"><g:message code="conferencia.bibTex.label" default="BibTex" /></span>
+					
+						<span class="property-value" aria-labelledby="bibTex-label"><g:fieldValue bean="${conferenciaInstance}" field="bibTex"/></span>
+					
+				</li>
+				</g:if>
+				<li class="fieldcontain">
+					<span id="month-label" class="property-label">Arquivo</span>
+					<span class="property-value" aria-labelledby="arquivo-label">
+					<a href="${(resource(dir: 'uploads', file: conferenciaInstance.arquivo)).replaceAll('static','')}">${conferenciaInstance?.arquivo}</a>
+					</span>
+				</li>
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
