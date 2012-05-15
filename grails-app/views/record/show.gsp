@@ -1,4 +1,4 @@
-
+ #if($History)
 
 <!doctype html>
 <html>
@@ -61,3 +61,4 @@
 		</div>
 	</body>
 </html>
+#end

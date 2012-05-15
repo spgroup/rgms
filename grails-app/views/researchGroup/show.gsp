@@ -8,10 +8,24 @@
   <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
-  
-    <br><g:jasperReport jasper="researchGroup" format="PDF,HTML,XML" name="export" >
+ 
+  #if($XML)
+    <br><g:jasperReport jasper="researchGroup" format="XML" name="export" >
          <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
    </g:jasperReport>
+  #end
+  
+    #if($HTML)
+    <br><g:jasperReport jasper="researchGroup" format="HTML" name="export" >
+         <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
+   </g:jasperReport>
+  #end
+  
+    #if($PDF)
+    <br><g:jasperReport jasper="researchGroup" format="PDF" name="export" >
+         <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
+   </g:jasperReport>
+  #end
   
   <a href="#show-researchGroup" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
   <div class="nav" role="navigation">
