@@ -1,8 +1,9 @@
 package rgms
-
+import org.codehaus.groovy.grails.io.support.GrailsResourceUtils;
 public class DefaultValueManager {
 	
-	private static final filePath = "..//..//conf//DefaultValues.properties"
+	private static final filePath = GrailsResourceUtils.GRAILS_APP_DIR+"/conf/DefaultValues.properties"
+        
 	
 	public static final Univeristy = "University"
 	public static final City = "City"
