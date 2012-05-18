@@ -8,7 +8,7 @@
   <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
- 
+#if($Website) 
   #if($XML)
     <br><g:jasperReport jasper="researchGroup" format="XML" name="export" >
          <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
@@ -26,7 +26,7 @@
          <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
    </g:jasperReport>
   #end
-  
+#end
   <a href="#show-researchGroup" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
   <div class="nav" role="navigation">
     <ul>

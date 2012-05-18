@@ -54,7 +54,9 @@ class Member {
         cache roles : true
         cache permissions : true
         
+        #if($History)
         historics fetch: 'join'
+        #end
         
         //        historics joinTable: [name: 'USER_HIST',column: 'HIST_ID',key: 'id']
     }
