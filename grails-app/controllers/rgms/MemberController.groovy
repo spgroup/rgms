@@ -20,11 +20,11 @@ class MemberController {
 
     def create = {
 		def member = new Member(params)
-//		def defaultValues = DefaultValueManager.getInstance()
-//		member.setEmail("@"+defaultValues.getPropertyValue(DefaultValueManager.Domain))
-//		member.setUniversity(defaultValues.getPropertyValue(DefaultValueManager.Univeristy))
-//		member.setCountry(defaultValues.getPropertyValue(DefaultValueManager.Country))
-//		member.setCity(defaultValues.getPropertyValue(DefaultValueManager.City))
+		def defaultValues = DefaultValueManager.getInstance()
+		member.setEmail("@"+defaultValues.getPropertyValue(DefaultValueManager.Domain))
+		member.setUniversity(defaultValues.getPropertyValue(DefaultValueManager.Univeristy))
+		member.setCountry(defaultValues.getPropertyValue(DefaultValueManager.Country))
+		member.setCity(defaultValues.getPropertyValue(DefaultValueManager.City))
 		
         [memberInstance: member]
     }
