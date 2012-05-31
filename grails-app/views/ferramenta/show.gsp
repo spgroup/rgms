@@ -32,6 +32,17 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${ferramentaInstance?.members}">
+				<li class="fieldcontain">
+					<span id="members-label" class="property-label"><g:message code="ferramenta.members.label" default="Members" /></span>
+					
+						<g:each in="${ferramentaInstance.members}" var="m">
+						<span class="property-value" aria-labelledby="members-label"><g:link controller="member" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${ferramentaInstance?.descricao}">
 				<li class="fieldcontain">
 					<span id="descricao-label" class="property-label"><g:message code="ferramenta.descricao.label" default="Descricao" /></span>
@@ -76,7 +87,14 @@
 					
 				</li>
 				</g:if>
-			
+				<g:if test="${ferramentaInstance?.bibTex}">
+				<li class="fieldcontain">
+					<span id="year-label" class="property-label"><g:message code="ferramenta.bibTex.label" default="BibTex" /></span>
+					
+						<span class="property-value" aria-labelledby="bibTex-label"><g:fieldValue bean="${ferramentaInstance}" field="bibTex"/></span>
+					
+				</li>
+				</g:if>
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

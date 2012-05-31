@@ -67,7 +67,21 @@
 					
 				</li>
 				</g:if>
-							
+				
+				<g:if test="${dissertacaoInstance?.bibTex}">
+				<li class="fieldcontain">
+					<span id="year-label" class="property-label"><g:message code="dissertacao.bibTex.label" default="BibTex" /></span>
+					
+						<span class="property-value" aria-labelledby="bibTex-label"><g:fieldValue bean="${dissertacaoInstance}" field="bibTex"/></span>
+					
+				</li>
+				</g:if>
+				<li class="fieldcontain">
+					<span id="month-label" class="property-label">Arquivo</span>
+					<span class="property-value" aria-labelledby="arquivo-label">
+					<a href="${(resource(dir: 'uploads', file: dissertacaoInstance.arquivo)).replaceAll('static','')}">${dissertacaoInstance?.arquivo}</a>
+					</span>
+				</li>
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

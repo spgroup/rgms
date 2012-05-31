@@ -1,8 +1,6 @@
 package rgms
 
 class Member {
-//    String firstName
-//    String lastName
     String name
     String username
     String passwordHash
@@ -14,9 +12,11 @@ class Member {
     String website
     String city
     String country
-    Boolean enabled
     Boolean active
-    static hasMany = [memberships : Membership, publications: Publication,roles: Role, permissions: String, historics: Record]
+    Boolean enabled
+    
+    static hasMany = [roles: Role, permissions: String, historics: Record, memberships : Membership, publications: Publication]
+
     
     Date dateCreated
     Date lastUpdated
@@ -27,7 +27,6 @@ class Member {
         lastUpdated = new Date()
     }
     boolean passwordChangeRequiredOnNextLogon
-    
     
     static constraints = {
         name(nullable: false, blank: false)

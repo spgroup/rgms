@@ -8,6 +8,14 @@
 	<g:textField name="title" value="${periodicoInstance?.title}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'members', 'error')} ">
+	<label for="members">
+		<g:message code="periodico.members.label" default="Authors Members" />
+		
+	</label>
+	<g:select name="members" from="${rgms.Member.list()}" multiple="multiple" optionKey="id" size="5" value="${periodicoInstance?.members*.id}" class="many-to-many"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'author', 'error')} ">
 	<table>	
 		<tr>
@@ -19,10 +27,10 @@
 			<tr>
 				<td>			
 					<label for="author">
-						<g:message code="periodico.author.label" default="Author" />
+						<g:message code="ferramenta.author.label" default="Author" />
 		
 					</label>
-					<g:textField name="author" value="${periodicoInstance?.author}"/>
+					<g:textField name="author" value="${ferramentaInstance?.author}"/>
 				</td>
 			</tr>
 		</tbody>
@@ -37,20 +45,12 @@
 	<g:textField name="journal" value="${periodicoInstance?.journal}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'year', 'error')} required">
-	<label for="year">
-		<g:message code="periodico.year.label" default="Year" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="number" name="year" required="" id="year" value="${fieldValue(bean: periodicoInstance, field: 'year')}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'number', 'error')} required">
 	<label for="number">
 		<g:message code="periodico.number.label" default="Number" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" id="num" name="number" required="" value="${fieldValue(bean: periodicoInstance, field: 'number')}"/>
+	<g:field type="number" name="number" required="" value="${fieldValue(bean: periodicoInstance, field: 'number')}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'pageInitial', 'error')} required">
@@ -74,7 +74,21 @@
 		<g:message code="periodico.volume.label" default="Volume" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" id="num" name="volume" required="" value="${fieldValue(bean: periodicoInstance, field: 'volume')}"/>
+	<g:field type="number" name="volume" required="" value="${fieldValue(bean: periodicoInstance, field: 'volume')}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'year', 'error')} required">
+	<label for="year">
+		<g:message code="periodico.year.label" default="Year" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field type="number" name="year" required="" value="${fieldValue(bean: periodicoInstance, field: 'year')}"/>
+</div>
 
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'arquivo', 'error')} required">
+	<label for="arquivo">
+		<g:message code="periodico.arquivo.label" default="Arquivo" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field type="file" name="arquivo" id="arquivo" required="" value="${fieldValue(bean: periodicoInstance, field: 'arquivo')}"/>
+</div>

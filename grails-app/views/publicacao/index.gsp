@@ -18,12 +18,13 @@
 				<li><a href='/rgms/ferramenta/list'> Ferramenta </a></li>
 				<li><a href='/rgms/dissertacao/list'> Dissertacao </a></li>
 				<li><a href='/rgms/tese/list'> Tese </a></li>
+				<li><g:link action="pdftodasPublicacoes" controller="publicacao">BibTex de Publicacoes</g:link></li>
 			</ul>
 		</div>	
 		<div class="content">
 			<h1>Listagem, busca, edição e remoção de publicações</h1>
 		</div>
-		
+
 		<g:form>
 			<div>
 				<h1 style="float:left; margin-left:20px">Search: </h1>

@@ -1,6 +1,12 @@
 <%@ page import="rgms.Ferramenta" %>
 
-
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'members', 'error')} ">
+	<label for="members">
+		<g:message code="conferencia.members.label" default="Authors Members" />
+		
+	</label>
+	<g:select name="members" from="${rgms.Member.list()}" multiple="multiple" optionKey="id" size="5" value="${conferenciaInstance?.members*.id}" class="many-to-many"/>
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'author', 'error')} ">
 	<table>	
