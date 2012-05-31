@@ -1,4 +1,3 @@
-#literal()
 <%@ page import="rgms.ResearchGroup" %>
 <!doctype html>
 <html>
@@ -40,9 +39,7 @@
 
         </li>
       </g:if>
-	  #end
-      #if($researchGroupHierarchy)
-      <g:if test="${  researchGroupInstance?.childOf  }">
+	              <g:if test="${  researchGroupInstance?.childOf  }">
         <li class="fieldcontain">
           <span id="childOf-label" class="property-label"><g:message code="researchGroup.childOf.label" default="Child Of" /></span>
 
@@ -50,9 +47,7 @@
 
         </li>
       </g:if>
-    #end
-	#literal()
-      <g:if test="${ currentMemberships }">
+    	      <g:if test="${ currentMemberships }">
         <li class="fieldcontain">
           <span id="members-label" class="property-label"><g:message code="researchGroup.members.label" default="Members" /></span>
 
@@ -81,4 +76,3 @@
   </div>
 </body>
 </html>
-#end

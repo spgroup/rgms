@@ -21,13 +21,11 @@ class MemberController {
     def create = {
 		def member = new Member(params)
                 
-#if($default_values)             
 		def defaultValues = DefaultValueManager.getInstance()
                 member.setEmail("@"+defaultValues.getPropertyValue(DefaultValueManager.Domain))
 		member.setUniversity(defaultValues.getPropertyValue(DefaultValueManager.Univeristy))
 		member.setCountry(defaultValues.getPropertyValue(DefaultValueManager.Country))
 		member.setCity(defaultValues.getPropertyValue(DefaultValueManager.City))
-#end		
         [memberInstance: member]
     }
 
@@ -65,10 +63,8 @@ class MemberController {
             to memberInstance.email
             from grailsApplication.config.grails.mail.username
             subject "[GRMS] Your account was successfully created!"
-			#literal()
-			body "Hello ${memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${username} and password: ${password}\n\n ${ createLink(absolute:true,uri:'/') }\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
-			#end
-		}
+						body "Hello ${memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${username} and password: ${password}\n\n ${ createLink(absolute:true,uri:'/') }\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
+					}
         
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
