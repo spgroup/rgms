@@ -1,4 +1,3 @@
-#literal()
 <%@ page import="rgms.ResearchGroup" %>
 <!doctype html>
 <html>
@@ -8,11 +7,6 @@
   <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
-  
-    <br><g:jasperReport jasper="researchGroup" format="PDF,HTML,XML" name="export" >
-         <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
-   </g:jasperReport>
-  
   <a href="#show-researchGroup" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
   <div class="nav" role="navigation">
     <ul>
@@ -45,9 +39,7 @@
 
         </li>
       </g:if>
-#end
-#if($researchGroupHierarchy)
-      <g:if test="${  researchGroupInstance?.childOf  }">
+	              <g:if test="${  researchGroupInstance?.childOf  }">
         <li class="fieldcontain">
           <span id="childOf-label" class="property-label"><g:message code="researchGroup.childOf.label" default="Child Of" /></span>
 
@@ -55,17 +47,12 @@
 
         </li>
       </g:if>
-
-     
-#end
-#literal()
-      <g:if test="${ currentMemberships }">
+    	      <g:if test="${ currentMemberships }">
         <li class="fieldcontain">
           <span id="members-label" class="property-label"><g:message code="researchGroup.members.label" default="Members" /></span>
 
         <g:each in="${ currentMemberships }" var="m">
           <span class="property-value" aria-labelledby="members-label"><g:link controller="member" action="show" id="${ m.member.id }">${ m.member?.encodeAsHTML() }</g:link></span>
-
         </g:each>
 
         </li>
@@ -89,4 +76,3 @@
   </div>
 </body>
 </html>
-#end
