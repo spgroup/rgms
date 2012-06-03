@@ -26,14 +26,7 @@ class BootStrap {
             adminRole.addToUsers(admin)
             adminRole.save()
             
-            #if($Parents)
-                Member.mixin Parents
-            #end
-            #if($Addres)
-                 Member.mixin Addres
-            #end
-            
-            #if($History)
+            #if( $History )
             //feature record
             def hist = new Record(start:new Date(),status_H:"MSc Student")
             hist.save()                        

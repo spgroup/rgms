@@ -23,9 +23,12 @@ class MemberController {
     }
 
     def save = {
+		#if( $Auth )
         if (!grailsApplication.config.grails.mail.username) {
             throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
         }
+		#end
+		
         def memberInstance = new Member(params)
         def username = memberInstance?.username
         def password = ""
@@ -38,7 +41,7 @@ class MemberController {
         memberInstance.passwordChangeRequiredOnNextLogon = true
         
         //feature record
-        #if($History)
+        #if( $History )
             def hist = new Record(start:new Date(),status_H:memberInstance.status)
             hist.save()
 
@@ -56,7 +59,7 @@ class MemberController {
             to memberInstance.email
             from grailsApplication.config.grails.mail.username
             subject "[GRMS] Your account was successfully created!"
-            body "Hello ${memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${username} and password: ${password}\n\n${createLink(absolute:true,uri:'/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
+            body "Hello ${ memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${ username} and password: ${ password}\n\n${ createLink(absolute:true,uri:'/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
         }
         
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])

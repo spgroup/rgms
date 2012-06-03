@@ -18,7 +18,7 @@ class Member {
     Boolean active
     Boolean enabled
     
-    static hasMany = [roles: Role, permissions: String, #if($History) historics: Record,#end memberships : Membership, publications: Publication]
+    static hasMany = [roles: Role, permissions: String, #if( $History ) historics: Record,#end memberships : Membership, publications: Publication]
     
 
     

@@ -1,15 +1,15 @@
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
-// grails.config.locations = [ "classpath:${appName}-config.properties",
-//                             "classpath:${appName}-config.groovy",
-//                             "file:${userHome}/.grails/${appName}-config.properties",
-//                             "file:${userHome}/.grails/${appName}-config.groovy"]
+// grails.config.locations = [ "classpath:${ appName}-config.properties",
+//                             "classpath:${ appName}-config.groovy",
+//                             "file:${ userHome}/.grails/${ appName}-config.properties",
+//                             "file:${ userHome}/.grails/${ appName}-config.groovy"]
 
-// if (System.properties["${appName}.config.location"]) {
-//    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
+// if (System.properties["${ appName}.config.location"]) {
+//    grails.config.locations << "file:" + System.properties["${ appName}.config.location"]
 // }
-#if($Auth)
+#if( $Auth )
 grails {
    mail {
      host = "smtp.gmail.com"
@@ -48,7 +48,7 @@ grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
 grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
 
 
-// The default codec used to encode data with ${}
+// The default codec used to encode data with ${ }
 grails.views.default.codec = "none" // none, html, base64
 grails.views.gsp.encoding = "UTF-8"
 grails.converters.encoding = "UTF-8"
@@ -76,14 +76,14 @@ grails.hibernate.cache.queries = true
 environments {
     development {
         grails.logging.jul.usebridge = true
-        #if($Website)
+        #if( $XML || $HTML || $PDF )
         jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
         #end
     }
     production {
         grails.logging.jul.usebridge = false
         // TODO: grails.serverURL = "http://www.changeme.com"
-        #if($Website)
+        #if( $XML || $HTML || $PDF )
         jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
         #end
     }
