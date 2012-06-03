@@ -23,11 +23,11 @@ class MemberController {
     }
 
     def save = {
-		#if( $Auth )
+        #if( $Auth )
         if (!grailsApplication.config.grails.mail.username) {
             throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
         }
-		#end
+        #end
 		
         def memberInstance = new Member(params)
         def username = memberInstance?.username
@@ -108,10 +108,9 @@ class MemberController {
             }
         }
 
-        //feature record
-        #if($History)
+        #if($History) //feature record
         def status0 = memberInstance.status //pega o status anterior do usuario
-        #end
+        #end //end feature record
         
         
         memberInstance.properties = params //atualiza todos os parametros
@@ -121,32 +120,16 @@ class MemberController {
             return
         }
         
-        //feature record
-         #if($History)
+        
+        #if($History) //feature record
+
+        String newStatus = memberInstance.status //pega o novo status
         
         //salva o historico se o status mudar
-        String newStatus = memberInstance.status
-        
         if (newStatus != status0){
-            try{
-                def hist = Record.findWhere(end: null, status_H:status0)
-                hist.end = new Date()
-            
-                def h = Record.merge(hist)
-                h.save()
-                memberInstance.addToHistorics(h)    
-            } catch(Exception ex){
-                render "You do not have permission to access this account."
-//                flash.message = message(code: 'historic.failed')
-            }
-            
-            def historic = new Record(start: new Date(), status_H: newStatus)
-            historic.save();
-            memberInstance.addToHistorics(historic)
-            memberInstance.save()
+            saveHistory()
         }
-        //end feature record
-         #end
+        #end //end feature record
         
         flash.message = message(code: 'default.updated.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
@@ -169,5 +152,23 @@ class MemberController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'member.label', default: 'Member'), params.id])
             redirect(action: "show", id: params.id)
         }
+    }
+    
+    private void saveHistory(){
+        try{
+                def hist = Record.findWhere(end: null, status_H:status0)
+                hist.end = new Date()
+            
+                def h = Record.merge(hist)
+                h.save()
+                memberInstance.addToHistorics(h)    
+            } catch(Exception ex){
+                render "You do not have permission to access this account."
+            }
+            
+            def historic = new Record(start: new Date(), status_H: newStatus)
+            historic.save();
+            memberInstance.addToHistorics(historic)
+            memberInstance.save()
     }
 }
