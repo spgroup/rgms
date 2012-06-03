@@ -127,7 +127,7 @@ class MemberController {
         
         //salva o historico se o status mudar
         if (newStatus != status0){
-            saveHistory()
+            saveHistory(memberInstance, status0, newStatus)
         }
         #end //end feature record
         
@@ -154,14 +154,14 @@ class MemberController {
         }
     }
     
-    private void saveHistory(){
+    private void saveHistory(def memberInstance, String status0, String newStatus){
         try{
                 def hist = Record.findWhere(end: null, status_H:status0)
                 hist.end = new Date()
             
                 def h = Record.merge(hist)
                 h.save()
-                memberInstance.addToHistorics(h)    
+                memberInstance.addToHistorics(h)
             } catch(Exception ex){
                 render "You do not have permission to access this account."
             }
