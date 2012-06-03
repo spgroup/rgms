@@ -8,25 +8,10 @@
   <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
-   
-   #if($XML)
-        <br><g:jasperReport jasper="report" format="XML" name="export" ><br></br>
-        <input type="hidden" name="member_id" value="${memberInstance?.id}" />
-        </g:jasperReport>
-    #end
-    
-    #if($HTML)
-        <br><g:jasperReport jasper="report" format="HTML" name="export" ><br></br>
-        <input type="hidden" name="member_id" value="${memberInstance?.id}" />
-        </g:jasperReport>
-    #end
-    
-    #if($PDF)
-        <br><g:jasperReport jasper="report" format="PDF" name="export" ><br></br>
-        <input type="hidden" name="member_id" value="${memberInstance?.id}" />
-        </g:jasperReport>
-    #end  
   
+  <br><g:jasperReport jasper="report" format="PDF,HTML,XML" name="export" ><br></br>
+    <input type="hidden" name="member_id" value="${memberInstance?.id}" />
+   </g:jasperReport>
   
   <div class="nav">
     <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>

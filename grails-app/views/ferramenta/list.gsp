@@ -13,6 +13,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><g:link action="pdfFerramenta" controller="publicacao">BibTex Ferramentas</g:link></li>
 			</ul>
 		</div>
 		<div id="list-ferramenta" class="content scaffold-list" role="main">
@@ -26,15 +27,15 @@
 					
 						<g:sortableColumn property="author" title="${message(code: 'ferramenta.author.label', default: 'Author')}" />
 					
-						<g:sortableColumn property="title" title="${message(code: 'ferramenta.title.label', default: 'Title')}" />
-					
-						<g:sortableColumn property="year" title="${message(code: 'ferramenta.year.label', default: 'Year')}" />
+						<g:sortableColumn property="descricao" title="${message(code: 'ferramenta.descricao.label', default: 'Descricao')}" />
 					
 						<g:sortableColumn property="link" title="${message(code: 'ferramenta.link.label', default: 'Link')}" />
 					
-						<g:sortableColumn property="descricao" title="${message(code: 'ferramenta.descricao.label', default: 'Descricao')}" />
-					
 						<g:sortableColumn property="publicacaoAssociada" title="${message(code: 'ferramenta.publicacaoAssociada.label', default: 'Publicacao Associada')}" />
+					
+						<g:sortableColumn property="title" title="${message(code: 'ferramenta.title.label', default: 'Title')}" />
+					
+						<g:sortableColumn property="year" title="${message(code: 'ferramenta.year.label', default: 'Year')}" />
 					
 					</tr>
 				</thead>
@@ -44,15 +45,14 @@
 					
 						<td><g:link action="show" id="${ferramentaInstance.id}">${fieldValue(bean: ferramentaInstance, field: "author")}</g:link></td>
 					
+						<td>${fieldValue(bean: ferramentaInstance, field: "descricao")}</td>
+						<td><a href = "${fieldValue(bean: ferramentaInstance, field: "link")}"> ${fieldValue(bean: ferramentaInstance, field: "link")} </a></td>
+					
+						<td>${fieldValue(bean: ferramentaInstance, field: "publicacaoAssociada")}</td>
+					
 						<td>${fieldValue(bean: ferramentaInstance, field: "title")}</td>
 					
 						<td>${fieldValue(bean: ferramentaInstance, field: "year")}</td>
-					
-						<td>${fieldValue(bean: ferramentaInstance, field: "link")}</td>
-					
-						<td>${fieldValue(bean: ferramentaInstance, field: "descricao")}</td>
-					
-						<td>${fieldValue(bean: ferramentaInstance, field: "publicacaoAssociada")}</td>
 					
 					</tr>
 				</g:each>

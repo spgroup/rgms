@@ -1,11 +1,11 @@
-/*dataSource {
+dataSource {
     pooled = true
     driverClassName = "org.h2.Driver"
     username = "sa"
     password = ""
 }
-*/
-
+/**/
+/*
 // DataSource have been changed to Mysql
 dataSource {
     pooled = true
@@ -16,6 +16,7 @@ dataSource {
     username = "root"
     password = "jeff"
 }
+/**/
 
 
 hibernate {
@@ -24,7 +25,6 @@ hibernate {
     cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
 }
 
-/*
 // environment specific settings
 environments {
     development {
@@ -57,5 +57,4 @@ environments {
         }
     }
 }
- 
-*/
+/**/

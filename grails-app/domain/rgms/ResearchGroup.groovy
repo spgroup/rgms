@@ -13,6 +13,11 @@ class ResearchGroup {
     static constraints = {
         name(maxSize:50,blank:false)
         description(maxSize:1000,blank:false)
+        childOf(nullable:true)
         
     }
+	static getPublications(researchGroup){
+		def memberships = Membership.getAllMembers(researchGroup)
+		return Publication.getPublicationsByMembershipList(memberships)
+	}
 }

@@ -36,17 +36,16 @@ class Member {
     static constraints = {
         name(nullable: false, blank: false)
         username(unique:true,nullable: false, blank: false,size: 5..20)
-        email(unique:true,email: true)
+        email(unique:true,email: true, nullable: false)
         additionalInfo(nullable:true)
         status(nullable: false, inList: ["Graduate Student", "MSc Student", "PhD Student", "Professor", "Researcher"])
+    	university(blank:false)
+    	phone(nullable: true)
+    	website(nullable:true, url:true)
+    	city(nullable: true)
+    	country(nullable: true)
+    	active(nullable: true)
         enabled(blank: false)
-        university(nullable: false, blank: false)
-        phone(nullable:true, blank: true)
-        website(nullable:true, url:true, blank: true)
-        city(nullable:true, blank: true)
-        country(nullable:true, blank: true)
-        active(nullable:true, blank: true)
-        
     }
 
     static mapping = {

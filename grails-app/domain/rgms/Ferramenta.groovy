@@ -4,11 +4,13 @@ class Ferramenta {
 
 	String author
 	String title
-	String year
+	int year
 	String link
-
+	String bibTex
 	String descricao
 	String publicacaoAssociada
+	
+	static hasMany = [members : Member]
 
     static constraints = {
 		author(nullable:false, blank:false)

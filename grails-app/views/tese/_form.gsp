@@ -42,3 +42,10 @@
 	<g:field type="number" name="month" required="" value="${fieldValue(bean: teseInstance, field: 'month')}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: teseInstance, field: 'arquivo', 'error')} required">
+	<label for="arquivo">
+		<g:message code="tese.arquivo.label" default="Arquivo" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field type="file" name="arquivo" id="arquivo" required="" value="${fieldValue(bean: teseInstance, field: 'arquivo')}"/>
+</div>

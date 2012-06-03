@@ -1,13 +1,12 @@
 <%@ page import="rgms.Dissertacao" %>
 
 
-
-<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'author', 'error')} required">
-	<label for="author">
-		<g:message code="dissertacao.author.label" default="Author" />
-		<span class="required-indicator">*</span>
+<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'members', 'error')} ">
+	<label for="members">
+		<g:message code="dissertacao.members.label" default="Author Member" />
+		
 	</label>
-	<g:textField name="author" required="" value="${dissertacaoInstance?.author}"/>
+	<g:select name="members" from="${rgms.Member.list()}" optionKey="id" value="${dissertacaoInstance?.member?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'title', 'error')} required">
@@ -42,3 +41,10 @@
 	<g:field type="number" name="month" required="" value="${fieldValue(bean: dissertacaoInstance, field: 'month')}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'arquivo', 'error')} required">
+	<label for="arquivo">
+		<g:message code="dissertacao.arquivo.label" default="Arquivo" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field type="file" name="arquivo" id="arquivo" required="" value="${fieldValue(bean: dissertacaoInstance, field: 'arquivo')}"/>
+</div>
