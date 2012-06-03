@@ -26,12 +26,7 @@ class BootStrap {
             adminRole.addToUsers(admin)
             adminRole.save()
             
-            #if($Parents)
-                Member.mixin Parents
-            #end
-            #if($Addres)
-                 Member.mixin Addres
-            #end
+          
             
             #if($History)
             //feature record
