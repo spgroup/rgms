@@ -1,10 +1,11 @@
 import org.apache.shiro.crypto.hash.Sha256Hash
 import rgms.*
 
+
 class BootStrap {
 
     def init = { servletContext ->
-
+      
         def adminRole = Role.findByName("Administrator")
 
         if(!adminRole){
@@ -25,11 +26,13 @@ class BootStrap {
             adminRole.addToUsers(admin)
             adminRole.save()
             
+            #if( $History )
             //feature record
             def hist = new Record(start:new Date(),status_H:"MSc Student")
-            hist.save()
-            
+            hist.save()                        
             admin.addToHistorics(hist)
+            #end
+            
             admin.save()
             
             print("Instancia de Admin = "+Member.findByUsername('admin').toString())

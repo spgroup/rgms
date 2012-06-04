@@ -1,7 +1,6 @@
 
 
 
-
 <div class="fieldcontain ${hasErrors(bean: recordInstance, field: 'start', 'error')} required">
 	<label for="start">
 		<g:message code="record.start.label" default="Start" />
@@ -25,4 +24,3 @@
 	</label>
 	<g:textField name="status_H" required="" value="${recordInstance?.status_H}"/>
 </div>
-
