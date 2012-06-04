@@ -106,7 +106,20 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="63" splitType="Stretch"/>
+		<band height="62" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="2" width="171" height="30"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{Dissertacao}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="10" y="32" width="133" height="30"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "dissertacao.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
