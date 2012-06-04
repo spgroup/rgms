@@ -21,24 +21,18 @@ class MemberController {
     def create = {
 		def member = new Member(params)
                 
-#if($default_values)             
 		def defaultValues = DefaultValueManager.getInstance()
                 member.setEmail("@"+defaultValues.getPropertyValue(DefaultValueManager.Domain))
 		member.setUniversity(defaultValues.getPropertyValue(DefaultValueManager.Univeristy))
 		member.setCountry(defaultValues.getPropertyValue(DefaultValueManager.Country))
 		member.setCity(defaultValues.getPropertyValue(DefaultValueManager.City))
-#end		
-
         [memberInstance: member]
     }
 
     def save = {
-        #if( $Auth )
         if (!grailsApplication.config.grails.mail.username) {
             throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
         }
-        #end
-		
         def memberInstance = new Member(params)
         def username = memberInstance?.username
         def password = ""
@@ -51,14 +45,11 @@ class MemberController {
         memberInstance.passwordChangeRequiredOnNextLogon = true
         
         //feature record
-        #if( $History )
-            def hist = new Record(start:new Date(),status_H:memberInstance.status)
-            hist.save()
-
-            memberInstance.addToHistorics(hist)
-            memberInstance.save()        
-           //end feature record
-       #end
+        def hist = new Record(start:new Date(),status_H:memberInstance.status)
+        hist.save()
+            
+        memberInstance.addToHistorics(hist)
+        memberInstance.save()
         
        //end feature record
         
@@ -66,92 +57,20 @@ class MemberController {
             render(view: "create", model: [memberInstance: memberInstance])
             return
         }
-        
+       
+		
         sendMail {
             to memberInstance.email
             from grailsApplication.config.grails.mail.username
             subject "[GRMS] Your account was successfully created!"
-			#literal()
-			body "Hello ${memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${username} and password: ${password}\n\n ${ createLink(absolute:true,uri:'/') }\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
-			#end
-		}
+						body "Hello ${memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${username} and password: ${password}\n\n ${ createLink(absolute:true,uri:'/') }\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
+					}
         
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
     }
 
-
-	def pdfPeriodico () { 
-		def member = Member.get(params.id)
-		
-		def listaPeriodico = new ArrayList()
-		Periodico.findAll().each {
-		    if(it.members.contains(member)){
-				listaPeriodico.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaPeriodico)
-	}
-	
-	def pdfConferencia () {
-		def member = Member.get(params.id)
-		
-		def listaConferencia = new ArrayList()
-		Conferencia.findAll().each {
-			if(it.members.contains(member)){
-				listaConferencia.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaConferencia)
-	}
-	
-	def pdfFerramenta () {
-		def member = Member.get(params.id)
-		
-		def listaFerramenta = new ArrayList()
-		Ferramenta.findAll().each {
-			if(it.members.contains(member)){
-				listaFerramenta.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaFerramenta)
-	}
-	
-	def pdfDissertacao () {
-		def member = Member.get(params.id)
-		
-		def listaDissertacao = new ArrayList()
-		Ferramenta.findAll().each {
-			if(it.members.contains(member)){
-				listaDissertacao.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaDissertacao)
-	}
-	
-	def pdfTese () {
-		def member = Member.get(params.id)
-		
-		def listaTese = new ArrayList()
-		Ferramenta.findAll().each {
-			if(it.members.contains(member)){
-				listaTese.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaTese)
-	}
-	
-    def show() {
+    def show = {
         def memberInstance = Member.get(params.id)
         if (!memberInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
@@ -193,10 +112,8 @@ class MemberController {
             }
         }
 
-        #if($History) //feature record
+        //feature record
         def status0 = memberInstance.status //pega o status anterior do usuario
-        #end //end feature record
-        
         
         memberInstance.properties = params //atualiza todos os parametros
 
@@ -205,16 +122,30 @@ class MemberController {
             return
         }
         
-        
-        #if($History) //feature record
-
-        String newStatus = memberInstance.status //pega o novo status
+        //feature record
         
         //salva o historico se o status mudar
+        String newStatus = memberInstance.status
+        
         if (newStatus != status0){
-            saveHistory(memberInstance, status0, newStatus)
+            try{
+                def hist = Record.findWhere(end: null, status_H:status0)
+                hist.end = new Date()
+            
+                def h = Record.merge(hist)
+                h.save()
+                memberInstance.addToHistorics(h)    
+            } catch(Exception ex){
+                render "You do not have permission to access this account."
+//                flash.message = message(code: 'historic.failed')
+            }
+            
+            def historic = new Record(start: new Date(), status_H: newStatus)
+            historic.save();
+            memberInstance.addToHistorics(historic)
+            memberInstance.save()
         }
-        #end //end feature record
+        //end feature record
         
         flash.message = message(code: 'default.updated.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
@@ -237,23 +168,5 @@ class MemberController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'member.label', default: 'Member'), params.id])
             redirect(action: "show", id: params.id)
         }
-    }
-    
-    private void saveHistory(def memberInstance, String status0, String newStatus){
-        try{
-                def hist = Record.findWhere(end: null, status_H:status0)
-                hist.end = new Date()
-            
-                def h = Record.merge(hist)
-                h.save()
-                memberInstance.addToHistorics(h)
-            } catch(Exception ex){
-                render "You do not have permission to access this account."
-            }
-            
-            def historic = new Record(start: new Date(), status_H: newStatus)
-            historic.save();
-            memberInstance.addToHistorics(historic)
-            memberInstance.save()
     }
 }
