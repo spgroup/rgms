@@ -6408,3 +6408,228 @@ alter table shiro_user_roles drop constraint FKBA221057ADE50EFD [42102-147]
 org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_ROLES" not found; SQL statement:
 alter table shiro_user_roles drop constraint FKBA2210578BA4B1D [42102-147]
 >>>>>>> c9abca00c3a77a50a587040443b126f1288a8fc1
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "CONFERENCIA_MEMBER" not found; SQL statement:
+alter table conferencia_member drop constraint FK145CAD58BD354E4D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "CONFERENCIA_MEMBER" not found; SQL statement:
+alter table conferencia_member drop constraint FK145CAD581B20A0D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "DISSERTACAO" not found; SQL statement:
+alter table dissertacao drop constraint FK48485472BD354E4D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FERRAMENTA_MEMBER" not found; SQL statement:
+alter table ferramenta_member drop constraint FK34CED98BD354E4D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FERRAMENTA_MEMBER" not found; SQL statement:
+alter table ferramenta_member drop constraint FK34CED98D97A53 [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PERMISSIONS" not found; SQL statement:
+alter table member_permissions drop constraint FK6794C65FBD354E4D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PUBLICATIONS" not found; SQL statement:
+alter table member_publications drop constraint FK93F10D4C9BB6E347 [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PUBLICATIONS" not found; SQL statement:
+alter table member_publications drop constraint FK93F10D4CBD354E4D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_RECORD" not found; SQL statement:
+alter table member_record drop constraint FKAB599D9639642C38 [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_RECORD" not found; SQL statement:
+alter table member_record drop constraint FKAB599D96B0F0DEED [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_ROLES" not found; SQL statement:
+alter table member_roles drop constraint FKFD49A0D8BD354E4D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_ROLES" not found; SQL statement:
+alter table member_roles drop constraint FKFD49A0D87117C98D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBERSHIP" not found; SQL statement:
+alter table membership drop constraint FKB01D87D6BD354E4D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBERSHIP" not found; SQL statement:
+alter table membership drop constraint FKB01D87D6704B3470 [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PASSWORD_RESET_REQUEST" not found; SQL statement:
+alter table password_reset_request drop constraint FK492958FB646F937C [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PERIODICO_MEMBER" not found; SQL statement:
+alter table periodico_member drop constraint FKFFAB4805BD354E4D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PERIODICO_MEMBER" not found; SQL statement:
+alter table periodico_member drop constraint FKFFAB48055C88C36D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PUBLICATION" not found; SQL statement:
+alter table publication drop constraint FKBFBBA22C4701FB64 [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "RESEARCH_GROUP" not found; SQL statement:
+alter table research_group drop constraint FKC9643ADB111BC311 [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "ROLE_PERMISSIONS" not found; SQL statement:
+alter table role_permissions drop constraint FKEAD9D23B7117C98D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_PASSWORD_RESET_REQUEST" not found; SQL statement:
+alter table shiro_password_reset_request drop constraint FK2CB8AB09B8207B4B [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_ROLE_PERMISSIONS" not found; SQL statement:
+alter table shiro_role_permissions drop constraint FK389B46C98BA4B1D [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_PERMISSIONS" not found; SQL statement:
+alter table shiro_user_permissions drop constraint FK34555A9EADE50EFD [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_ROLES" not found; SQL statement:
+alter table shiro_user_roles drop constraint FKBA221057ADE50EFD [42102-164]
+05-22 14:34:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_ROLES" not found; SQL statement:
+alter table shiro_user_roles drop constraint FKBA2210578BA4B1D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "CONFERENCIA_MEMBER" not found; SQL statement:
+alter table conferencia_member drop constraint FK145CAD58BD354E4D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "CONFERENCIA_MEMBER" not found; SQL statement:
+alter table conferencia_member drop constraint FK145CAD581B20A0D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "DISSERTACAO" not found; SQL statement:
+alter table dissertacao drop constraint FK48485472BD354E4D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FERRAMENTA_MEMBER" not found; SQL statement:
+alter table ferramenta_member drop constraint FK34CED98BD354E4D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FERRAMENTA_MEMBER" not found; SQL statement:
+alter table ferramenta_member drop constraint FK34CED98D97A53 [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PERMISSIONS" not found; SQL statement:
+alter table member_permissions drop constraint FK6794C65FBD354E4D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PUBLICATIONS" not found; SQL statement:
+alter table member_publications drop constraint FK93F10D4C9BB6E347 [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PUBLICATIONS" not found; SQL statement:
+alter table member_publications drop constraint FK93F10D4CBD354E4D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_RECORD" not found; SQL statement:
+alter table member_record drop constraint FKAB599D9639642C38 [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_RECORD" not found; SQL statement:
+alter table member_record drop constraint FKAB599D96B0F0DEED [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_ROLES" not found; SQL statement:
+alter table member_roles drop constraint FKFD49A0D8BD354E4D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_ROLES" not found; SQL statement:
+alter table member_roles drop constraint FKFD49A0D87117C98D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBERSHIP" not found; SQL statement:
+alter table membership drop constraint FKB01D87D6BD354E4D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBERSHIP" not found; SQL statement:
+alter table membership drop constraint FKB01D87D6704B3470 [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PASSWORD_RESET_REQUEST" not found; SQL statement:
+alter table password_reset_request drop constraint FK492958FB646F937C [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PERIODICO_MEMBER" not found; SQL statement:
+alter table periodico_member drop constraint FKFFAB4805BD354E4D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PERIODICO_MEMBER" not found; SQL statement:
+alter table periodico_member drop constraint FKFFAB48055C88C36D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PUBLICATION" not found; SQL statement:
+alter table publication drop constraint FKBFBBA22C4701FB64 [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "RESEARCH_GROUP" not found; SQL statement:
+alter table research_group drop constraint FKC9643ADB111BC311 [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "ROLE_PERMISSIONS" not found; SQL statement:
+alter table role_permissions drop constraint FKEAD9D23B7117C98D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_PASSWORD_RESET_REQUEST" not found; SQL statement:
+alter table shiro_password_reset_request drop constraint FK2CB8AB09B8207B4B [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_ROLE_PERMISSIONS" not found; SQL statement:
+alter table shiro_role_permissions drop constraint FK389B46C98BA4B1D [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_PERMISSIONS" not found; SQL statement:
+alter table shiro_user_permissions drop constraint FK34555A9EADE50EFD [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_ROLES" not found; SQL statement:
+alter table shiro_user_roles drop constraint FKBA221057ADE50EFD [42102-164]
+05-22 14:36:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_ROLES" not found; SQL statement:
+alter table shiro_user_roles drop constraint FKBA2210578BA4B1D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "CONFERENCIA_MEMBER" not found; SQL statement:
+alter table conferencia_member drop constraint FK145CAD58BD354E4D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "CONFERENCIA_MEMBER" not found; SQL statement:
+alter table conferencia_member drop constraint FK145CAD581B20A0D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "DISSERTACAO" not found; SQL statement:
+alter table dissertacao drop constraint FK48485472BD354E4D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FERRAMENTA_MEMBER" not found; SQL statement:
+alter table ferramenta_member drop constraint FK34CED98BD354E4D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "FERRAMENTA_MEMBER" not found; SQL statement:
+alter table ferramenta_member drop constraint FK34CED98D97A53 [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PERMISSIONS" not found; SQL statement:
+alter table member_permissions drop constraint FK6794C65FBD354E4D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PUBLICATIONS" not found; SQL statement:
+alter table member_publications drop constraint FK93F10D4C9BB6E347 [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_PUBLICATIONS" not found; SQL statement:
+alter table member_publications drop constraint FK93F10D4CBD354E4D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_RECORD" not found; SQL statement:
+alter table member_record drop constraint FKAB599D9639642C38 [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_RECORD" not found; SQL statement:
+alter table member_record drop constraint FKAB599D96B0F0DEED [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_ROLES" not found; SQL statement:
+alter table member_roles drop constraint FKFD49A0D8BD354E4D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBER_ROLES" not found; SQL statement:
+alter table member_roles drop constraint FKFD49A0D87117C98D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBERSHIP" not found; SQL statement:
+alter table membership drop constraint FKB01D87D6BD354E4D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "MEMBERSHIP" not found; SQL statement:
+alter table membership drop constraint FKB01D87D6704B3470 [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PASSWORD_RESET_REQUEST" not found; SQL statement:
+alter table password_reset_request drop constraint FK492958FB646F937C [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PERIODICO_MEMBER" not found; SQL statement:
+alter table periodico_member drop constraint FKFFAB4805BD354E4D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PERIODICO_MEMBER" not found; SQL statement:
+alter table periodico_member drop constraint FKFFAB48055C88C36D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "PUBLICATION" not found; SQL statement:
+alter table publication drop constraint FKBFBBA22C4701FB64 [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "RESEARCH_GROUP" not found; SQL statement:
+alter table research_group drop constraint FKC9643ADB111BC311 [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "ROLE_PERMISSIONS" not found; SQL statement:
+alter table role_permissions drop constraint FKEAD9D23B7117C98D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_PASSWORD_RESET_REQUEST" not found; SQL statement:
+alter table shiro_password_reset_request drop constraint FK2CB8AB09B8207B4B [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_ROLE_PERMISSIONS" not found; SQL statement:
+alter table shiro_role_permissions drop constraint FK389B46C98BA4B1D [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_PERMISSIONS" not found; SQL statement:
+alter table shiro_user_permissions drop constraint FK34555A9EADE50EFD [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_ROLES" not found; SQL statement:
+alter table shiro_user_roles drop constraint FKBA221057ADE50EFD [42102-164]
+05-22 14:37:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "SHIRO_USER_ROLES" not found; SQL statement:
+alter table shiro_user_roles drop constraint FKBA2210578BA4B1D [42102-164]
