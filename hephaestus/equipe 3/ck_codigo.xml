@@ -32,6 +32,13 @@
     <expression>defaultValues</expression>
     <transformation>
       <name>selectAndMoveComponent</name>
+      <args> memberControllerMixin, rgms\grails-app\controllers\rgms\MemberControllerMixin.groovy</args>
+    </transformation>
+  </configuration>
+  <configuration xmlns="">
+    <expression>defaultValues</expression>
+    <transformation>
+      <name>selectAndMoveComponent</name>
       <args>defaultValueManager, rgms\grails-app\domain\rgms\DefaultValueManager.groovy</args>
     </transformation>
   </configuration>
