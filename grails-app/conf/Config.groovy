@@ -9,7 +9,7 @@
 // if (System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
-#if($Auth)
+//#if($Auth)
 grails {
    mail {
      host = "smtp.gmail.com"
@@ -22,7 +22,7 @@ grails {
               "mail.smtp.socketFactory.fallback":"false"]
    }
 }
-#end
+//#end
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
@@ -76,16 +76,16 @@ grails.hibernate.cache.queries = true
 environments {
     development {
         grails.logging.jul.usebridge = true
-        #if($Website)
+        //#if($Website)
         jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
-        #end
+        //#end
     }
     production {
         grails.logging.jul.usebridge = false
         // TODO: grails.serverURL = "http://www.changeme.com"
-        #if($Website)
+        //#if($Website)
         jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
-        #end
+        //#end
     }
 }
 

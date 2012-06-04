@@ -45,14 +45,14 @@ class MemberController {
         memberInstance.passwordChangeRequiredOnNextLogon = true
         
         //feature record
-        #if($History)
+        //#if($History)
             def hist = new Record(start:new Date(),status_H:memberInstance.status)
             hist.save()
 
             memberInstance.addToHistorics(hist)
             memberInstance.save()        
            //end feature record
-       #end
+       //#end
         
         if (!memberInstance.save(flush: true)) { 
             render(view: "create", model: [memberInstance: memberInstance])
@@ -184,9 +184,9 @@ class MemberController {
         }
 
         //feature record
-        #if($History)
+        //#if($History)
         def status0 = memberInstance.status //pega o status anterior do usuario
-        #end
+        //#end
         
         
         memberInstance.properties = params //atualiza todos os parametros
@@ -197,7 +197,7 @@ class MemberController {
         }
         
         //feature record
-         #if($History)
+        // #if($History)
         
         //salva o historico se o status mudar
         String newStatus = memberInstance.status
@@ -221,7 +221,7 @@ class MemberController {
             memberInstance.save()
         }
         //end feature record
-         #end
+        // #end
         
         flash.message = message(code: 'default.updated.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)

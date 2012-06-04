@@ -9,7 +9,7 @@
 </head>
 <body>
   
-  <br><g:jasperReport jasper="report" format="PDF,HTML,XML" name="export" ><br></br>
+  <br><g:jasperReport jasper="report" format="PDF,HTML,XML,PPTX,DOCX" name="export" ><br></br>
     <input type="hidden" name="member_id" value="${memberInstance?.id}" />
    </g:jasperReport>
   

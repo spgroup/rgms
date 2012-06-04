@@ -3,7 +3,8 @@ package rgms
 class ResearchLine {
     
     String name
-    String description           
+    String description     
+    
     static hasMany = [publications : Publication]
     static constraints = {
         name(blank:false, unique:true)
