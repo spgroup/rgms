@@ -9,7 +9,6 @@
 // if (System.properties["${ appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${ appName}.config.location"]
 // }
-#if( $Auth )
 grails {
    mail {
      host = "smtp.gmail.com"
@@ -22,8 +21,6 @@ grails {
               "mail.smtp.socketFactory.fallback":"false"]
    }
 }
-#end
-
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format

@@ -29,10 +29,12 @@ class PeriodicoController {
 		
 		periodicoInstance.author = periodicoInstance.author.replace(']', '').replace('[', ',')
 		PublicacaoController pb = new PublicacaoController()
-		String bibTex = pb.bibTex(periodicoInstance)
-		periodicoInstance.bibTex = bibTex
-		
-		
+		/**Velocity**/
+		#if($bibtex)
+			String bibTex = pb.bibTex(periodicoInstance)
+			periodicoInstance.bibTex = bibTex
+		#end
+		/**Fim Velocity**/
 		if (periodicoInstance.save(flush: true)) {
 			pb.upload(periodicoInstance)
 			render(view: "show", model: [periodicoInstance: periodicoInstance])

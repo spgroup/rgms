@@ -6,7 +6,11 @@ class Ferramenta {
 	String title
 	int year
 	String link
-	String bibTex
+	/**Velocity**/
+	#if($bibtex)
+		String bibTex
+	#end
+	/**Velocity**/
 	String descricao
 	String publicacaoAssociada
 	
