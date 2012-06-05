@@ -40,15 +40,10 @@ class MemberController {
         }
         memberInstance.passwordChangeRequiredOnNextLogon = true
         
-        //feature record
-        #if( $History )
-            def hist = new Record(start:new Date(),status_H:memberInstance.status)
-            hist.save()
-
-            memberInstance.addToHistorics(hist)
-            memberInstance.save()        
-           //end feature record
-       #end
+        
+        #if( $History ) //feature record
+            saveHistory(memberInstance, memberInstance.status) //refactoring - extract method
+        #end //end feature record
         
         if (!memberInstance.save(flush: true)) { 
             render(view: "create", model: [memberInstance: memberInstance])
@@ -127,7 +122,17 @@ class MemberController {
         
         //salva o historico se o status mudar
         if (newStatus != status0){
-            saveHistory(memberInstance, status0, newStatus)
+            try{
+                def hist = Record.findWhere(end: null, status_H:status0)
+                hist.end = new Date()
+            
+                def h = Record.merge(hist)
+                h.save()
+                memberInstance.addToHistorics(h)
+            } catch(Exception ex){
+                render "You do not have permission to access this account."
+            }
+            saveHistory(memberInstance, newStatus) //refactoring - extract method
         }
         #end //end feature record
         
@@ -154,21 +159,12 @@ class MemberController {
         }
     }
     
-    private void saveHistory(def memberInstance, String status0, String newStatus){
-        try{
-                def hist = Record.findWhere(end: null, status_H:status0)
-                hist.end = new Date()
+    private void saveHistory(def memberInstance, String status){
+        
+            def hist = new Record(start: new Date(), status_H: status)
+            hist.save()
             
-                def h = Record.merge(hist)
-                h.save()
-                memberInstance.addToHistorics(h)
-            } catch(Exception ex){
-                render "You do not have permission to access this account."
-            }
-            
-            def historic = new Record(start: new Date(), status_H: newStatus)
-            historic.save();
-            memberInstance.addToHistorics(historic)
+            memberInstance.addToHistorics(hist)
             memberInstance.save()
     }
 }
