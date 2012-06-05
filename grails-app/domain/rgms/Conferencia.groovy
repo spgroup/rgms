@@ -6,7 +6,11 @@ class Conferencia {
 	String title
 	String conference
 	int year
-	String bibTex
+	/**Velocity**/
+	#if($bibtex)
+		String bibTex
+	#end
+	/**Velocity**/
 	int pageInitial
 	int pageFinal
 	int month

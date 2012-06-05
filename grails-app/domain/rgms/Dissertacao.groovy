@@ -6,7 +6,11 @@ class Dissertacao {
 	String title
 	String school
 	int year
-	String bibTex
+	/**Velocity**/
+	#if($bibtex)
+		String bibTex
+	#end
+	/**Velocity**/
 	int month
 	String arquivo
 	

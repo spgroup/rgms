@@ -4,16 +4,32 @@ dataSource {
     username = "sa"
     password = ""
 }
+/**/
+/*
+// DataSource have been changed to Mysql
+dataSource {
+    pooled = true
+    dbCreate = "update"
+    url = "jdbc:mysql://localhost/rgms?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&characterSetResults=UTF-8"
+    driverClassName = "com.mysql.jdbc.Driver"
+    dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+    username = "root"
+    password = "jeff"
+}
+/**/
+
+
 hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = true
     cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
 }
+
 // environment specific settings
 environments {
     development {
         dataSource {
-            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:file:devDb;MVCC=TRUE"
         }
     }
@@ -41,3 +57,4 @@ environments {
         }
     }
 }
+/**/

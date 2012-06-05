@@ -6,7 +6,11 @@ class Periodico {
 	String title
 	String journal
 	int year
-	String bibTex
+	/**Velocity**/
+	#if($bibtex)
+		String bibTex
+	#end
+	/**Fim Velocity**/
 	int volume
 	int number
 	int pageInitial

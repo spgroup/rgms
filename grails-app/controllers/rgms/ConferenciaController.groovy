@@ -32,9 +32,12 @@ class ConferenciaController {
 		conferenciaInstance.author = conferenciaInstance.author.replace(']', '').replace('[', ',')
 		
 		PublicacaoController pb = new PublicacaoController()
-		String bibTex = pb.bibTex(conferenciaInstance)
-		conferenciaInstance.bibTex = bibTex
-		
+		/**Velocity**/
+		#if($bibtex)
+			String bibTex = pb.bibTex(conferenciaInstance)
+			conferenciaInstance.bibTex = bibTex
+		#end
+		/**Velocity**/
         if (conferenciaInstance.save(flush: true)) {
 			pb.upload(conferenciaInstance)
             render(view: "show", model: [conferenciaInstance: conferenciaInstance])

@@ -1,66 +1,71 @@
 
-<%@ page import="rgms.Member" %>
-<!doctype html>
+
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'member.label', default: 'Member')}" />
-		<title><g:message code="default.list.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#list-member" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="list-member" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<table>
-				<thead>
-					<tr>
-					
-						<g:sortableColumn property="name" title="${message(code: 'member.name.label', default: 'Name')}" />
-					
-						<g:sortableColumn property="email" title="${message(code: 'member.email.label', default: 'Email')}" />
-					
-						<g:sortableColumn property="affiliation" title="${message(code: 'member.affiliation.label', default: 'Affiliation')}" />
-					
-						<g:sortableColumn property="university" title="${message(code: 'member.university.label', default: 'University')}" />
-					
-						<g:sortableColumn property="phone" title="${message(code: 'member.phone.label', default: 'Phone')}" />
-					
-						<g:sortableColumn property="website" title="${message(code: 'member.website.label', default: 'Website')}" />
-					
-					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${memberInstanceList}" status="i" var="memberInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${memberInstance.id}">${fieldValue(bean: memberInstance, field: "name")}</g:link></td>
-					
-						<td>${fieldValue(bean: memberInstance, field: "email")}</td>
-					
-						<td>${fieldValue(bean: memberInstance, field: "affiliation")}</td>
-					
-						<td>${fieldValue(bean: memberInstance, field: "university")}</td>
-					
-						<td>${fieldValue(bean: memberInstance, field: "phone")}</td>
-					
-						<td>${fieldValue(bean: memberInstance, field: "website")}</td>
-					
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
-			<div class="pagination">
-				<g:paginate total="${memberInstanceTotal}" />
-			</div>
-		</div>
-	</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="layout" content="main" />
+        <g:set var="entityName" value="${message(code: 'member.label', default: 'Member')}" />
+        <title><g:message code="default.list.label" args="[entityName]" /></title>
+    </head>
+    <body>
+        <div class="nav">
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+        </div>
+        <div class="body">
+            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <g:if test="${flash.message}">
+            <div class="message">${flash.message}</div>
+            </g:if>
+            <div class="list">
+                <table>
+                    <thead>
+                        <tr>
+                        
+                            <g:sortableColumn property="id" title="${message(code: 'member.id.label', default: 'Id')}" />
+                        
+                            <g:sortableColumn property="name" title="${message(code: 'member.name.label', default: 'Name')}" />
+                        
+                            <g:sortableColumn property="username" title="${message(code: 'member.username.label', default: 'Username')}" />
+                            
+                            <g:sortableColumn property="enabled" title="${message(code: 'member.enabled.label', default: 'Enabled')}" />
+                        
+                            <g:sortableColumn property="email" title="${message(code: 'member.email.label', default: 'Email')}" />
+                        
+                            <th>${message(code: 'member.roles.label', default: 'Roles')}</th>
+                        
+                            <th>${message(code: 'member.permissions.label', default: 'Permissions')}</th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${memberInstanceList}" status="i" var="memberInstance">
+                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        
+                            <td><g:link action="show" id="${memberInstance.id}">${fieldValue(bean: memberInstance, field: "id")}</g:link></td>
+                        
+                            <td>${fieldValue(bean: memberInstance, field: "name")}</td>
+                        
+<!--                            <td>{fieldValue(bean: memberInstance, field: "lastName")}</td>-->
+                        
+                            <td>${fieldValue(bean: memberInstance, field: "username")}</td>
+                            
+                            <td>${fieldValue(bean: memberInstance, field: "enabled")}</td>
+							
+                            <td><a href="mailto:${fieldValue(bean: memberInstance, field: "email")}">${fieldValue(bean: memberInstance, field: "email")}</a></td>
+                        
+							<td>${fieldValue(bean: memberInstance, field: "roles")}</td>
+							
+							<td>${fieldValue(bean: memberInstance, field: "permissions")}</td>
+                        
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paginateButtons">
+                <g:paginate total="${memberInstanceTotal}" />
+            </div>
+        </div>
+    </body>
 </html>
