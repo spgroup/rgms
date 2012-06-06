@@ -34,6 +34,9 @@ class BootStrap {
             
             print("Instancia de Admin = "+Member.findByUsername('admin').toString())
         }
+#if($default_values)             
+        MemberController.mixin MemberControllerMixin                
+#end
 
     }
 

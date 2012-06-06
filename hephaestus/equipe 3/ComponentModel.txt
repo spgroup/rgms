@@ -1,6 +1,7 @@
 memberController => controllers/rgms/MemberController.groovy ;
 memberControllerMixin => controllers/rgms/MemberControllerMixin.groovy ;
 defaultPropertiesFile => conf/DefaultValues.properties ;
+defaultValuesBootStrap => conf/BootStrap.groovy
 researchGroupController => controllers/rgms/ResearchGroupController.groovy ;
 researchGroupShow => views/researchGroup/show.gsp ;
 researchGroupList => views/researchGroup/list.gsp ;

@@ -10,7 +10,7 @@
 <body>
   
     <br><g:jasperReport jasper="researchGroup" format="PDF,HTML,XML" name="export" >
-         <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
+         <input type="hidden" name="research_group_id" value="${ researchGroupInstance?.id }" />
    </g:jasperReport>
   
   <a href="#show-researchGroup" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

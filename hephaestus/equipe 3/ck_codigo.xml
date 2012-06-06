@@ -43,6 +43,13 @@
     </transformation>
   </configuration>
   <configuration xmlns="">
+    <expression>defaultValues</expression>
+    <transformation>
+      <name>selectAndMoveComponent</name>
+      <args>defaultValuesBootStrap, rgms\grails-app\conf\BootStrap.groovy</args>
+    </transformation>
+  </configuration>
+  <configuration xmlns="">
     <expression>researchGroupHierarchy</expression>
     <transformation>
       <name>createBuildEntries</name>
