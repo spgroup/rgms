@@ -1,6 +1,7 @@
 package rgms
 
 class Tese {
+    
 	String author
 	String title
 	String school

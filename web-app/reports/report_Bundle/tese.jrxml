@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[SELECT * FROM rgms.dissertacao;]]>
+		<![CDATA[SELECT * FROM rgms.tese;]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="version" class="java.lang.Long"/>
@@ -15,30 +15,29 @@
 	<field name="year" class="java.lang.Integer"/>
 	<field name="arquivo" class="java.lang.String"/>
 	<field name="bib_tex" class="java.lang.String"/>
-	<field name="member_id" class="java.lang.Long"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="147" splitType="Stretch">
+		<band height="68" splitType="Stretch">
 			<textField>
-				<reportElement x="3" y="18" width="453" height="75"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{bib_tex}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="3" y="0" width="41" height="18"/>
+				<reportElement x="0" y="-20" width="49" height="20"/>
 				<textElement>
 					<font size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{year}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="44" y="0" width="310" height="18" forecolor="#0000CC"/>
+				<reportElement x="49" y="-20" width="291" height="20" forecolor="#0000CC"/>
 				<textElement>
 					<font size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="340" height="62"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{bib_tex}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

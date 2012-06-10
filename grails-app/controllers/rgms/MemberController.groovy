@@ -30,11 +30,11 @@ class MemberController {
     }
 
     def save = {
-        #if( $Auth )
+       // #if( $Auth )
         if (!grailsApplication.config.grails.mail.username) {
             throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
         }
-        #end
+        //#end
 		
         def memberInstance = new Member(params)
         def username = memberInstance?.username
@@ -49,11 +49,8 @@ class MemberController {
         
         //feature record
         //#if($History)
-            def hist = new Record(start:new Date(),status_H:memberInstance.status)
-            hist.save()
-
-            memberInstance.addToHistorics(hist)
-            memberInstance.save()        
+            
+        saveHistory();
            //end feature record
        //#end
         
@@ -202,7 +199,7 @@ class MemberController {
         //feature record
         // #if($History)
         
-        #if($History) //feature record
+        //#if($History) //feature record
 
         String newStatus = memberInstance.status //pega o novo status
         

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="report" whenResourceMissingType="Key">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="48"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["..\\rgms\\web-app\\reports\\report_Bundle\\"]]></defaultValueExpression>
 	</parameter>
@@ -84,11 +84,6 @@
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "memberPubs.jasper"]]></subreportExpression>
 			</subreport>
-			<subreport>
-				<reportElement x="388" y="69" width="134" height="30"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "memberTools.jasper"]]></subreportExpression>
-			</subreport>
 			<textField>
 				<reportElement x="27" y="33" width="171" height="30"/>
 				<textElement>
@@ -97,32 +92,49 @@
 				<textFieldExpression><![CDATA[$R{pubs}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="388" y="39" width="171" height="30"/>
+				<reportElement x="372" y="21" width="86" height="27"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{TESE}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="371" y="48" width="132" height="33"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tese.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<textField>
+				<reportElement x="371" y="12" width="171" height="30"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{DISSERTAÇÃO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="371" y="42" width="133" height="30"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "dissertacao.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="8" y="12" width="171" height="30"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{ferramentas}]]></textFieldExpression>
 			</textField>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="62" splitType="Stretch">
-			<textField>
-				<reportElement x="10" y="2" width="171" height="30"/>
-				<textElement>
-					<font size="18"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$R{Dissertacao}]]></textFieldExpression>
-			</textField>
 			<subreport>
-				<reportElement x="10" y="32" width="133" height="30"/>
+				<reportElement x="8" y="42" width="134" height="30"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "dissertacao.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "memberTools.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="98" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>
