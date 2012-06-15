@@ -1,5 +1,7 @@
 package rgms
 
+
+
 class Member {
     
     String name
@@ -16,15 +18,14 @@ class Member {
     Boolean active
     Boolean enabled
     
-    static hasMany = [roles: Role, permissions: String, #if( $History ) historics: Record,#end memberships : Membership, publications: Publication]
-    
+   //static hasMany = [roles: Role, permissions: String, #if($History) historics: Record,#end memberships : Membership, publications: Publication]
+   static hasMany = [roles: Role, permissions: String, historics: Record, memberships : Membership, publications: Publication]
 
     
     Date dateCreated
     Date lastUpdated
     def beforeInsert = {
         dateCreated = new Date()
-        initializeVelocity()
     }
     def beforeUpdate = {
         lastUpdated = new Date()
@@ -51,9 +52,9 @@ class Member {
         cache roles : true
         cache permissions : true
         
-        #if($History)
+        //#if($History)
         historics fetch: 'join'
-        #end
+        //#end
         
         //        historics joinTable: [name: 'USER_HIST',column: 'HIST_ID',key: 'id']
     }

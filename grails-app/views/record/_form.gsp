@@ -24,4 +24,3 @@
 	</label>
 	<g:textField name="status_H" required="" value="${recordInstance?.status_H}"/>
 </div>
-
