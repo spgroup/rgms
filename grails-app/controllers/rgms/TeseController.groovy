@@ -10,11 +10,6 @@ class TeseController {
         redirect(action: "list", params: params)
     }
 	
-	def bibtex(){
-		Tese tese = Tese.get(params.id)
-		String bibtexTese = "@phdthesis{author=\""+${tese.author}+"\" title=\""+${tese.title}+"\" school=\""+${tese.school}+"\" year=\""+${tese.year}+"\" month=\""+${tese.month}+"\"}"
-	}
-	
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [teseInstanceList: Tese.list(params), teseInstanceTotal: Tese.count()]
@@ -28,12 +23,10 @@ class TeseController {
         def teseInstance = new Tese(params)
 		
 		PublicacaoController pb = new PublicacaoController()
-		/**Velocity**/
 		#if($bibtex)
-			String bibTex = pb.bibTex(teseInstance)
-			teseInstance.bibTex = bibTex
+		teseInstance.bibTex = teseInstance.setBib()
 		#end
-		/**Velocity**/
+		
         if (!teseInstance.save(flush: true)) {
             render(view: "create", model: [teseInstance: teseInstance])
             return

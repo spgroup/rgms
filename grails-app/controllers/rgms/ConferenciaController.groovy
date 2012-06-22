@@ -1,7 +1,6 @@
 package rgms
 
 import org.springframework.dao.DataIntegrityViolationException
-import rgms.PublicacaoController
 
 
 class ConferenciaController {
@@ -32,12 +31,10 @@ class ConferenciaController {
 		conferenciaInstance.author = conferenciaInstance.author.replace(']', '').replace('[', ',')
 		
 		PublicacaoController pb = new PublicacaoController()
-		/**Velocity**/
 		#if($bibtex)
-			String bibTex = pb.bibTex(conferenciaInstance)
-			conferenciaInstance.bibTex = bibTex
+		conferenciaInstance.bibTex = conferenciaInstance.setBib()
 		#end
-		/**Velocity**/
+		
         if (conferenciaInstance.save(flush: true)) {
 			pb.upload(conferenciaInstance)
             render(view: "show", model: [conferenciaInstance: conferenciaInstance])
