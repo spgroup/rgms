@@ -20,14 +20,12 @@ class MemberController {
 
     def create = {
 		def member = new Member(params)
+                
 #if($default_values)             
-		def defaultValues = DefaultValueManager.getInstance()
-		member.setEmail("@"+defaultValues.getPropertyValue(DefaultValueManager.Domain))
-		member.setUniversity(defaultValues.getPropertyValue(DefaultValueManager.Univeristy))
-		member.setCountry(defaultValues.getPropertyValue(DefaultValueManager.Country))
-		member.setCity(defaultValues.getPropertyValue(DefaultValueManager.City))
+		MemberController.mixin MemberControllerMixin
+                loadDefaultValues(member)
 #end		
-		
+
         [memberInstance: member]
     }
 
@@ -192,7 +190,6 @@ class MemberController {
         def status0 = memberInstance.status //pega o status anterior do usuario
         //#end
         
-        
         memberInstance.properties = params //atualiza todos os parametros
 
         if (!memberInstance.save(flush: true)) {
@@ -201,7 +198,6 @@ class MemberController {
         }
         
         //feature record
-        // #if($History)
         
         //#if($History) //feature record
 

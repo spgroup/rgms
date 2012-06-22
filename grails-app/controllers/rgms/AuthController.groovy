@@ -30,7 +30,7 @@ class AuthController {
             return
         }
         
-        def authToken = new UsernamePasswordToken(params.username, params.password as String)
+		def authToken = new UsernamePasswordToken(params.username, params.password as String)
 
         // Support for "remember me"
         if (params.rememberMe) {

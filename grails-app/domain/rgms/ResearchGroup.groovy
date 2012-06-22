@@ -3,9 +3,9 @@ package rgms
 class ResearchGroup {
     String name
     String description
-    #if($researchGroupHierarchy)
+#if($researchGroupHierarchy)
     ResearchGroup childOf;
-    #end
+#end
     static hasMany = [memberships : Membership]
     
     public String toString()
@@ -16,9 +16,9 @@ class ResearchGroup {
         name(maxSize:50,blank:false)
         description(maxSize:1000,blank:false)
 
-        #if($researchGroupHierarchy)
+#if($researchGroupHierarchy)
         childOf(nullable:true)
-        #end
+#end
 
     }
 	static getPublications(researchGroup){

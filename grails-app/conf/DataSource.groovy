@@ -4,7 +4,8 @@ dataSource {
     username = "sa"
     password = ""
 }
-
+/**/
+/*
 // DataSource have been changed to Mysql
 dataSource {
     pooled = true
@@ -15,7 +16,7 @@ dataSource {
     username = "root"
     password = "jeff"
 }
-
+/**/
 
 
 hibernate {
@@ -25,7 +26,6 @@ hibernate {
 }
 
 // environment specific settings
-/*
 environments {
     development {
         dataSource {
@@ -57,4 +57,4 @@ environments {
         }
     }
 }
-*/
+/**/
