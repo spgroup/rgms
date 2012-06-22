@@ -3,9 +3,5 @@
 	</feature>
 	<feature  name="BibTex" type="NONE" id="bibTex">
 	</feature>
-	<feature  name="BibTex" type="NONE" id="internacionalizacao">
-	</feature>
-	<feature name="MaisResultadosPesquisa" type="NONE" id="maisResultadosPesquisa">
-	</feature>
 </feature>
 

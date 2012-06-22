@@ -39,3 +39,5 @@ formFerramenta => views/ferramenta/form.gsp ;
 formConferencia => views/conferencia/form.gsp ;
 formTese =>  views/tese/form.gsp ;
 formDissertacao =>  views/dissertacao/form.gsp ;
+indexPub => views/publicacao/index.gsp ;
+publicacao => domain/rgms/Publicacao.groovy ;
