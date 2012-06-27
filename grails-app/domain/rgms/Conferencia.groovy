@@ -1,16 +1,8 @@
 package rgms
 
-class Conferencia {
+class Conferencia extends Publicacao{
 
-	String author
-	String title
 	String conference
-	int year
-	/**Velocity**/
-	#if($bibtex)
-		String bibTex
-	#end
-	/**Velocity**/
 	int pageInitial
 	int pageFinal
 	int month
@@ -26,4 +18,16 @@ class Conferencia {
 		month(maxSize:12)
 		arquivo(blank:true, maxSize:100000000)
 	}
+	
+	#if($bibtex)
+	public String setBib(){
+		this.bibTex = "@inproceedings{"+this.retPrimeiroAutor()+this.year
+		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
+		this.bibTex = this.bibTex +"\",\n title=\""+this.title
+		this.bibTex = this.bibTex +"\",\n booktitle=\""+this.conference
+		this.bibTex = this.bibTex +"\",\n year=\""+this.year
+		this.bibTex = this.bibTex +"\",\n pages=\""+this.pageInitial+"-"+this.pageFinal
+		this.bibTex = this.bibTex +"\",\n month=\""+this.month+"\"}"
+	}
+	#end
 }

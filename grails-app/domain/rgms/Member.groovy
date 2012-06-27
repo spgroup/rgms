@@ -1,7 +1,5 @@
 package rgms
 
-
-
 class Member {
     
     String name

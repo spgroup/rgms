@@ -1,16 +1,8 @@
 package rgms
 
-class Tese {
-    
-	String author
-	String title
+class Tese extends Publicacao {
+	
 	String school
-	int year
-	/**Velocity**/
-	#if($bibtex)
-		String bibTex
-	#end
-	/**Velocity**/
 	int month
 	String arquivo
 	
@@ -22,4 +14,15 @@ class Tese {
 		month(maxSize:12)
 		arquivo(blank:true, maxSize:100000000)
     }
+	
+	#if($bibtex)
+	public String setBib(){
+		this.bibTex = "@phdthesis{"+this.retPrimeiroAutor()+this.year
+		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
+		this.bibTex = this.bibTex +"\",\n title=\""+this.title
+		this.bibTex = this.bibTex +"\",\n school=\""+this.school
+		this.bibTex = this.bibTex +"\",\n year=\""+this.year
+		this.bibTex = this.bibTex +"\",\n month=\""+this.month+"\"}"
+	}
+	#end
 }

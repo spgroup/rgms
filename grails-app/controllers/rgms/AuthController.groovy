@@ -23,14 +23,14 @@ class AuthController {
 //        def subject = SecurityUtils.getSubject();
         Member member = Member.findByUsername(params.username)
         
-        print("ENTROU no signIn\nEnabled == "+member.enabled)   
-
-		if(member.enabled == false){
+        print("ENTROU no signIn\nEnabled == "+member.enabled)
+        
+        if(member.enabled == false){
             render "Please wait the administrator to unlock your access to system.\n\nThanks."
             return
         }
         
-		def authToken = new UsernamePasswordToken(params.username, params.password as String)
+        def authToken = new UsernamePasswordToken(params.username, params.password as String)
 
         // Support for "remember me"
         if (params.rememberMe) {

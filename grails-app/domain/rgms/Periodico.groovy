@@ -1,16 +1,8 @@
 package rgms
 
-class Periodico {
+class Periodico extends Publicacao{
 
-	String author
-	String title
 	String journal
-	int year
-	/**Velocity**/
-	#if($bibtex)
-		String bibTex
-	#end
-	/**Fim Velocity**/
 	int volume
 	int number
 	int pageInitial
@@ -22,4 +14,17 @@ class Periodico {
 	static constraints = {
 		arquivo(blank:true, maxSize:100000000)
 	}
+	
+	#if($bibtex)
+	public String setBib(){
+		this.bibTex = "@article{"+this.retPrimeiroAutor()+this.year
+		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
+		this.bibTex = this.bibTex +"\",\n title=\""+this.title
+		this.bibTex = this.bibTex +"\",\n journal=\""+this.journal
+		this.bibTex = this.bibTex +"\",\n year=\""+this.year
+		this.bibTex = this.bibTex +"\",\n volume=\""+this.volume
+		this.bibTex = this.bibTex +"\",\n number=\""+this.number
+		this.bibTex = this.bibTex +"\",\n pages=\""+this.pageInitial+"-"+this.pageFinal+"\"}"
+	}
+	#end
 }

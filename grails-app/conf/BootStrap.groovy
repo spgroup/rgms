@@ -1,7 +1,6 @@
 import org.apache.shiro.crypto.hash.Sha256Hash
 import rgms.*
 
-
 class BootStrap {
 
     def init = { servletContext ->

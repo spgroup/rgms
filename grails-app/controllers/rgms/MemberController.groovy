@@ -72,78 +72,7 @@ class MemberController {
         redirect(action: "show", id: memberInstance.id)
     }
 
-
-	def pdfPeriodico () { 
-		def member = Member.get(params.id)
-		
-		def listaPeriodico = new ArrayList()
-		Periodico.findAll().each {
-		    if(it.members.contains(member)){
-				listaPeriodico.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaPeriodico)
-	}
-	
-	def pdfConferencia () {
-		def member = Member.get(params.id)
-		
-		def listaConferencia = new ArrayList()
-		Conferencia.findAll().each {
-			if(it.members.contains(member)){
-				listaConferencia.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaConferencia)
-	}
-	
-	def pdfFerramenta () {
-		def member = Member.get(params.id)
-		
-		def listaFerramenta = new ArrayList()
-		Ferramenta.findAll().each {
-			if(it.members.contains(member)){
-				listaFerramenta.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaFerramenta)
-	}
-	
-	def pdfDissertacao () {
-		def member = Member.get(params.id)
-		
-		def listaDissertacao = new ArrayList()
-		Ferramenta.findAll().each {
-			if(it.members.contains(member)){
-				listaDissertacao.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaDissertacao)
-	}
-	
-	def pdfTese () {
-		def member = Member.get(params.id)
-		
-		def listaTese = new ArrayList()
-		Ferramenta.findAll().each {
-			if(it.members.contains(member)){
-				listaTese.add(it)
-			}
-		}
-
-		PdfController pdf = new PdfController()
-		return pdf.index(listaTese)
-	}
-	
-    def show() {
+    def show = {
         def memberInstance = Member.get(params.id)
         if (!memberInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])

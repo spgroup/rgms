@@ -9,6 +9,18 @@
 // if (System.properties["${ appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${ appName}.config.location"]
 // }
+grails {
+   mail {
+     host = "smtp.gmail.com"
+     port = 465
+     username = "rgms2012@gmail.com"
+     password = "adminrgms2012"
+     props = ["mail.smtp.auth":"true", 					   
+              "mail.smtp.socketFactory.port":"465",
+              "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+              "mail.smtp.socketFactory.fallback":"false"]
+   }
+}
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
@@ -62,10 +74,12 @@ grails.hibernate.cache.queries = true
 environments {
     development {
         grails.logging.jul.usebridge = true
+        jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
     }
     production {
         grails.logging.jul.usebridge = false
         // TODO: grails.serverURL = "http://www.changeme.com"
+        jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
     }
 }
 
