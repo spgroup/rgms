@@ -5188,3 +5188,6 @@ org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic c
 	at groovy.lang.Closure.call(Closure.java:406)
 	at groovy.lang.Closure.run(Closure.java:490)
 	at java.lang.Thread.run(Thread.java:722)
+09-17 19:33:33 database: 1970-01-01
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "1970[*]-01-01"; SQL statement:
+1970-01-01 [42000-164]

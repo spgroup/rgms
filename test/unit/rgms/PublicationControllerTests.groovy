@@ -2,8 +2,9 @@ package rgms
 
 
 
-import org.junit.*
 import grails.test.mixin.*
+
+import org.junit.*
 
 @TestFor(PublicationController)
 @Mock(Publication)

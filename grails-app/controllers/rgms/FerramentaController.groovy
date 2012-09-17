@@ -31,9 +31,9 @@ class FerramentaController {
 		ferramentaInstance.link = "http://"+ferramentaInstance.link
 		
 		PublicacaoController pb = new PublicacaoController()
-		#if($bibtex)
+		//#if($bibtex)
 		ferramentaInstance.bibTex = ferramentaInstance.setBib()
-		#end
+		//#end
 		
         if (!ferramentaInstance.save(flush: true)) {
             render(view: "create", model: [ferramentaInstance: ferramentaInstance])

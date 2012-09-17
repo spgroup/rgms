@@ -19,7 +19,7 @@ class Conferencia extends Publicacao{
 		arquivo(blank:true, maxSize:100000000)
 	}
 	
-	#if($bibtex)
+	//#if($bibtex)
 	public String setBib(){
 		this.bibTex = "@inproceedings{"+this.retPrimeiroAutor()+this.year
 		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
@@ -29,5 +29,5 @@ class Conferencia extends Publicacao{
 		this.bibTex = this.bibTex +"\",\n pages=\""+this.pageInitial+"-"+this.pageFinal
 		this.bibTex = this.bibTex +"\",\n month=\""+this.month+"\"}"
 	}
-	#end
+	//#end
 }

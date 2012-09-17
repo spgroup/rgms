@@ -1,4 +1,4 @@
-package mixin
+package rgms
 
 class Address {
 	

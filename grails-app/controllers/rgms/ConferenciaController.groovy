@@ -33,10 +33,10 @@ class ConferenciaController {
 		
 		PublicacaoController pb = new PublicacaoController()
 		/**Velocity**/
-		#if($bibtex)
+		//#if($bibtex)
 			String bibTex = pb.bibTex(conferenciaInstance)
 			conferenciaInstance.bibTex = bibTex
-		#end
+		//#end
 		/**Velocity**/
         if (conferenciaInstance.save(flush: true)) {
 			pb.upload(conferenciaInstance)

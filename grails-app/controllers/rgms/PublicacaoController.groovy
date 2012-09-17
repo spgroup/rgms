@@ -8,10 +8,10 @@ class PublicacaoController {
 		def listaPeriodico = Periodico.getAll();
 		def listaFerramenta = Ferramenta.getAll();
 		def listaConferencia = Conferencia.getAll();
-		#if($maisresul)
+		//#if($maisresul)
 		def listaDissertacao = Dissertacao.getAll();
 		def listaTese = Tese.getAll();
-		#end
+		//#end
 		def listaGeral = []
 		for(item in listaPeriodico){
 			listaGeral.add(item)
@@ -22,14 +22,14 @@ class PublicacaoController {
 		for(item in listaConferencia){
 			listaGeral.add(item)
 		}
-		#if($maisresul)
+		//#if($maisresul)
 		for(item in listaDissertacao){
 			listaGeral.add(item)
 		}
 		for(item in listaTese){
 			listaGeral.add(item)
 		}
-		#end
+		//#end
 		
 		return [item:listaGeral]
 	}
@@ -55,7 +55,7 @@ class PublicacaoController {
 		PdfController pdf = new PdfController()
 		return pdf.index(listaFerramenta)
 	}
-	#if($maisresul)
+	//#if($maisresul)
 	def pdfDissertacao(){
 		def listaDissertacao = Dissertacao.getAll();
 		PdfController pdf = new PdfController()
@@ -67,7 +67,7 @@ class PublicacaoController {
 		PdfController pdf = new PdfController()
 		return pdf.index(listaTese)
 	}
-	#end
+	//#end
 	def pdftodasPublicacoes () {
 
 			return pdf.index(Publicacao.index())

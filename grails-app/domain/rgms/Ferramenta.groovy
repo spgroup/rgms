@@ -17,7 +17,7 @@ class Ferramenta extends Publicacao{
 		link(nullable:false, blank:false)
     }
 	
-	#if($bibtex)
+//	#if($bibtex)
 	public String setBib(){
 		this.bibTex = "@misc{"+this.retPrimeiroAutor()+this.year
 		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
@@ -25,5 +25,5 @@ class Ferramenta extends Publicacao{
 		this.bibTex = this.bibTex +"\",\n year=\""+this.year
 		this.bibTex = this.bibTex +"\",\n note=\""+this.descricao+"\"}"
 	}
-	#end
+//	#end
 }

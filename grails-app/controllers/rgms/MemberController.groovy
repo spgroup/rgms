@@ -21,10 +21,10 @@ class MemberController {
     def create = {
 		def member = new Member(params)
                 
-#if($default_values)             
+//#if($default_values)             
 		MemberController.mixin MemberControllerMixin
                 loadDefaultValues(member)
-#end		
+//#end		
 
         [memberInstance: member]
     }
@@ -63,9 +63,9 @@ class MemberController {
             to memberInstance.email
             from grailsApplication.config.grails.mail.username
             subject "[GRMS] Your account was successfully created!"
-			#literal()
+			//#literal()
             body "Hello ${ memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${ username} and password: ${ password}\n\n${ createLink(absolute:true,uri:'/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
-			#end
+			//#end
         }
         
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])

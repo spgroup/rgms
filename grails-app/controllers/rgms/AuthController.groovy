@@ -7,7 +7,7 @@ import org.apache.shiro.web.util.SavedRequest
 import org.apache.shiro.web.util.WebUtils
 import java.security.SecureRandom
 import org.apache.shiro.crypto.hash.Sha256Hash
-import rgms.*
+import java.security.SecureRandom
 
 class AuthController {
     def shiroSecurityManager

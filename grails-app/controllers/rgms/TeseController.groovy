@@ -23,9 +23,9 @@ class TeseController {
         def teseInstance = new Tese(params)
 		
 		PublicacaoController pb = new PublicacaoController()
-		#if($bibtex)
+		//#if($bibtex)
 		teseInstance.bibTex = teseInstance.setBib()
-		#end
+		//#end
 		
         if (!teseInstance.save(flush: true)) {
             render(view: "create", model: [teseInstance: teseInstance])

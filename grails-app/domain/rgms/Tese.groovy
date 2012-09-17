@@ -15,7 +15,7 @@ class Tese extends Publicacao {
 		arquivo(blank:true, maxSize:100000000)
     }
 	
-	#if($bibtex)
+	//#if($bibtex)
 	public String setBib(){
 		this.bibTex = "@phdthesis{"+this.retPrimeiroAutor()+this.year
 		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
@@ -24,5 +24,5 @@ class Tese extends Publicacao {
 		this.bibTex = this.bibTex +"\",\n year=\""+this.year
 		this.bibTex = this.bibTex +"\",\n month=\""+this.month+"\"}"
 	}
-	#end
+	//#end
 }

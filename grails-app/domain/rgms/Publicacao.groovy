@@ -5,9 +5,9 @@ abstract class Publicacao {
 	String author
 	String title
 	int year
-	#if($bibtex)
+	//#if($bibtex)
 	String bibTex
-	#end
+	//#end
 
     static constraints = {
 		author(nullable:false, blank:false)

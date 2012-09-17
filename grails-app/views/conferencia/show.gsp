@@ -89,7 +89,7 @@
 					
 				</li>
 				</g:if>
-				#if($bibtex)
+			<!--	#if($bibtex) -->
 				<g:if test="${ conferenciaInstance?.bibTex}">
 				<li class="fieldcontain">
 					<span id="year-label" class="property-label"><g:message code="conferencia.bibTex.label" default="BibTex" /></span>
@@ -98,7 +98,7 @@
 					
 				</li>
 				</g:if>
-				#end
+			<!--	#end -->
 				<li class="fieldcontain">
 					<span id="month-label" class="property-label"><g:message code="conferencia.arquivo.label" default="Arquivo" /></span>
 					<span class="property-value" aria-labelledby="arquivo-label">

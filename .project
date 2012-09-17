@@ -26,7 +26,7 @@
 		<link>
 			<name>.link_to_grails_plugins</name>
 			<type>2</type>
-			<location>/home/tarcisio/.grails/2.0.1/projects/rgms/plugins</location>
+			<locationURI>GRAILS_ROOT/2.1.0/projects/rgms/plugins</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

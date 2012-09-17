@@ -37,10 +37,10 @@ class DissertacaoController {
 		//dissertacaoInstance.author
 		PublicacaoController pb = new PublicacaoController()
 		/**Velocity**/
-		#if($bibtex)
+		//#if($bibtex)
 			String bibTex = pb.bibTex(dissertacaoInstance)
 			dissertacaoInstance.bibTex = bibTex
-		#end
+		//#end
 		/**Velocity**/
         if (!dissertacaoInstance.save(flush: true)) {
             render(view: "create", model: [dissertacaoInstance: dissertacaoInstance])

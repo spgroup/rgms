@@ -1,22 +1,22 @@
 class UrlMappings {
 
 	static mappings = {
-		#literal()
+		//#literal()
 		"/$controller/$action?/$id?"{
-		#end
+		//#end
 			constraints {
 				// apply constraints here
 			}
 		}
-		#if($inter)
-		#literal()
+		//#if($inter)
+		//#literal()
 		"/$lang/$controller/$action?/$id?"{
-		#end
+		//#end
 			constraints {
 				// apply constraints here
 			}
 		}
-		#end
+		//#end
 
 		"/"(controller:"default")
 		"500"(view:'/error')

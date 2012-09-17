@@ -15,7 +15,7 @@ class Periodico extends Publicacao{
 		arquivo(blank:true, maxSize:100000000)
 	}
 	
-	#if($bibtex)
+	//#if($bibtex)
 	public String setBib(){
 		this.bibTex = "@article{"+this.retPrimeiroAutor()+this.year
 		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
@@ -26,5 +26,5 @@ class Periodico extends Publicacao{
 		this.bibTex = this.bibTex +"\",\n number=\""+this.number
 		this.bibTex = this.bibTex +"\",\n pages=\""+this.pageInitial+"-"+this.pageFinal+"\"}"
 	}
-	#end
+	//#end
 }
