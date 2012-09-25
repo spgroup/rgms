@@ -1,10 +1,10 @@
 <%@ page import="rgms.Conferencia" %>
 <%@ page import="rgms.Periodico" %>
 <%@ page import="rgms.Ferramenta" %>
-#if($maisresul)
+<!--#if($maisresul) -->
 <%@ page import="rgms.Dissertacao" %>
 <%@ page import="rgms.Tese" %>
-#end
+<!--#end -->
 <!doctype html>
 <html>
 	<head>
@@ -18,13 +18,13 @@
 				<li><a href='/rgms/periodico/list'><g:message code="default.periodico.label"/></a></li>
 				<li><a href='/rgms/conferencia/list'><g:message code="default.conferencia.label"/></a></li>
 				<li><a href='/rgms/ferramenta/list'><g:message code="default.ferramenta.label"/></a></li>
-				#if($maisresul)
+				<!-- #if($maisresul) -->
 				<li><a href='/rgms/dissertacao/list'><g:message code="default.dissertacao.label"/></a></li>
 				<li><a href='/rgms/tese/list'><g:message code="default.tese.label"/></a></li>
-				#end
-				#if($bibtex)
+				<!-- #end -->
+				<!-- #if($bibtex) -->
 				<li><g:link action="pdftodasPublicacoes" controller="publicacao">BibTex</g:link></li>
-				#end
+				<!-- #end -->
 			</ul>
 		</div>	
 		<div class="content">
@@ -57,10 +57,10 @@
 						<% Conferencia conf = new Conferencia() %>
 						<% Periodico per = new Periodico() %>
 						<% Ferramenta fer = new Ferramenta() %>
-						#if($maisresul)
+						<!-- #if($maisresul) -->
 						<% Dissertacao diss = new Dissertacao() %>
 						<% Tese tese = new Tese() %>
-						#end
+						<!-- #end -->
 					
 						<g:if test = "${ oneitem.class == conf.class}">
 							<td><g:link action="show" controller="conferencia" id="${ oneitem.id}">${ oneitem.title}</g:link></td>
@@ -71,14 +71,14 @@
 						<g:if test = "${ oneitem.class == fer.class}">
 							<td><g:link action="show" controller="ferramenta" id="${ oneitem.id}">${ oneitem.title}</g:link></td>
 						</g:if>
-						#if($maisresul)
+						<!-- #if($maisresul) -->
 						<g:if test = "${ oneitem.class == diss.class}">
 							<td><g:link action="show" controller="dissertacao" id="${ oneitem.id}">${ oneitem.title}</g:link></td>
 						</g:if>
 						<g:if test = "${ oneitem.class == tese.class}">
 							<td><g:link action="show" controller="tese" id="${ oneitem.id}">${ oneitem.title}</g:link></td>
 						</g:if>
-						#end
+						<!-- #end -->
 						<td>${ oneitem.author}</td>
 					
 						<td>${ oneitem.year}</td>

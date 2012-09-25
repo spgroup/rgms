@@ -87,7 +87,7 @@
 					
 				</li>
 				</g:if>
-				#if($bibtex)
+				<!-- #if($bibtex)  -->
 				<g:if test="${ ferramentaInstance?.bibTex}">
 				<li class="fieldcontain">
 					<span id="year-label" class="property-label"><g:message code="ferramenta.bibTex.label" default="BibTex" /></span>
@@ -96,7 +96,7 @@
 					
 				</li>
 				</g:if>
-				#end
+				<!-- #end -->
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

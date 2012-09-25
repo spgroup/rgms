@@ -30,7 +30,7 @@ class MemberController {
     }
 
     def save = {
-       // #if( $Auth )
+       // #if($Auth)
         if (!grailsApplication.config.grails.mail.username) {
             throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
         }

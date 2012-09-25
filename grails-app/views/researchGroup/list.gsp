@@ -1,4 +1,4 @@
-#literal()
+<!-- #literal() -->
 <%@ page import="rgms.ResearchGroup" %>
 <!doctype html>
 <html>  
@@ -27,11 +27,11 @@
       <g:sortableColumn property="name" title="${ message(code: 'researchGroup.name.label', default: 'Name') }" />
 
       <g:sortableColumn property="description" title="${ message(code: 'researchGroup.description.label', default: 'Description') }" />
-#end
-#if($researchGroupHierarchy)
+<!-- #end -->
+<!-- #if($researchGroupHierarchy) -->
       <th><g:message code="researchGroup.childOf.label" default="Child Of" /></th>
-#end
-#literal()
+<!-- #end -->
+<!-- #literal() -->
       </tr>
       </thead>
       <tbody>
@@ -41,11 +41,11 @@
           <td><g:link action="show" id="${ researchGroupInstance.id }">${ fieldValue(bean: researchGroupInstance, field: "name") }</g:link></td>
 
           <td>${ fieldValue(bean: researchGroupInstance, field: "description") } </td>
-#end
-#if($researchGroupHierarchy)
+<!-- #end -->
+<!-- #if($researchGroupHierarchy) -->
         <td>${ fieldValue(bean: researchGroupInstance, field: "childOf") } </td>					
-#end
-#literal()
+<!-- #end -->
+<!-- #literal() -->
         </tr>
       </g:each>
       </tbody>
@@ -56,4 +56,4 @@
   </div>
 </body>
 </html>
-#end
+<!-- #end -->
