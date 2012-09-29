@@ -14,12 +14,11 @@ class Conferencia extends Publicacao{
 		author(nullable:false, blank:false)
 		title(nullable:false, blank:false)
 		conference(nullable:false, blank:false)
-		year(nullable:false, blank:false)
 		month(maxSize:12)
 		arquivo(blank:true, maxSize:100000000)
 	}
 	
-	//#if($bibtex)
+	//#if($Bibtex)
 	public String setBib(){
 		this.bibTex = "@inproceedings{"+this.retPrimeiroAutor()+this.year
 		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()

@@ -10,13 +10,11 @@ class Dissertacao extends Publicacao {
 
 	
     static constraints = {
-		title(nullable:false, blank:false)
 		school(nullable:false, blank:false)
-		year(nullable:false, blank:false)
 		month(maxSize:12)
 		arquivo(blank:true, maxSize:100000000)
     }
-	//#if($bibtex)
+	//#if($Bibtex)
 	public String setBib(){
 		this.bibTex = "@masterthesis{"+this.retPrimeiroAutor()+this.year
 		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()

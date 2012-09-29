@@ -12,12 +12,10 @@ class Ferramenta extends Publicacao{
 
     static constraints = {
 		author(nullable:false, blank:false)
-		title(nullable:false, blank:false)
-		year(nullable:false, blank:false)
 		link(nullable:false, blank:false)
     }
 	
-//	#if($bibtex)
+//	#if($Bibtex)
 	public String setBib(){
 		this.bibTex = "@misc{"+this.retPrimeiroAutor()+this.year
 		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()

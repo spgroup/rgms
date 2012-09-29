@@ -4,7 +4,7 @@ import java.awt.event.ItemEvent;
 
 class PublicacaoController {
 
-	def index() { 
+	def index() {
 		def listaPeriodico = Periodico.getAll();
 		def listaFerramenta = Ferramenta.getAll();
 		def listaConferencia = Conferencia.getAll();
@@ -77,17 +77,31 @@ class PublicacaoController {
 	 * */
 	
 	
-	def upload = { publicacaoInstance ->
-		def nomeOriginal = params.arquivo.originalFilename
-		publicacaoInstance.arquivo = nomeOriginal
+	def upload(Publicacao publicationInstance) {
+			
+		def originalName = publicationInstance.file
+		def filePath = "web-app/uploads/${originalName}"
+		publicationInstance.file = filePath
 		
-		def f = request.getFile("arquivo")
+		def f = new File(filePath)
 		
-		if(!f.empty){
-			f.transferTo(new File("web-app/uploads/${nomeOriginal}"))
-		}else{
-			flash.message = "nao foi possivel transferir o arquivo"
-			}
+		if (f.exists()) {
+			flash.message = message(code: 'file.already.exist.message')
+			return false
+		}
+		
+		InputStream inputStream = request.getInputStream()
+		OutputStream outputStream = new FileOutputStream(f)
+		byte[] buffer = new byte[1024*10] //buffer de 10MB
+		int length
+			 
+		while((length = inputStream.read(buffer)) > 0) {
+			outputStream.write(buffer, 0, length)
+		}
+		outputStream.close()
+		inputStream.close()
+		
+		return true
 	}
 	
 }

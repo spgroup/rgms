@@ -1,1 +1,0 @@
-body "Hello ${memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${username} and password: ${password}\n\n ${createLink(absolute:true,uri:'/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()

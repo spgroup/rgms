@@ -33,7 +33,7 @@ class ConferenciaController {
 		
 		PublicacaoController pb = new PublicacaoController()
 		/**Velocity**/
-		//#if($bibtex)
+		//#if($Bibtex)
 			String bibTex = pb.bibTex(conferenciaInstance)
 			conferenciaInstance.bibTex = bibTex
 		//#end

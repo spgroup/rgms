@@ -8,16 +8,16 @@ class Periodico extends Publicacao{
 	int pageInitial
 	int pageFinal
 	String arquivo
-	
+
 	static hasMany = [members:Member]
-	
+
 	static constraints = {
 		arquivo(blank:true, maxSize:100000000)
 	}
-	
-	//#if($bibtex)
+
+	//#if($Bibtex)
 	public String setBib(){
-		this.bibTex = "@article{"+this.retPrimeiroAutor()+this.year
+		this.bibTex = "@article{"+this.retPrimeiroAutor() + this.year
 		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
 		this.bibTex = this.bibTex +"\",\n title=\""+this.title
 		this.bibTex = this.bibTex +"\",\n journal=\""+this.journal

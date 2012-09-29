@@ -5,7 +5,7 @@ abstract class Publicacao {
 	String author
 	String title
 	int year
-	//#if($bibtex)
+	//#if($Bibtex)
 	String bibTex
 	//#end
 
