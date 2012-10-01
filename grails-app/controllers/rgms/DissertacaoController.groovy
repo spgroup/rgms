@@ -23,31 +23,15 @@ class DissertacaoController {
     def save() {
         def dissertacaoInstance = new Dissertacao(params)
 		
-		//def memberInstance = Member.findAllById(params.member)
-		//dissertacaoInstance.author = memberInstance
-		//dissertacaoInstance.author = dissertacaoInstance.author.replace(']', '').replace('[', '')
-		//def member = Member.findAllById(params.member)
-		//println member.name
-		//dissertacaoInstance.author = member.name.replace(']','').replace('[','').toString()
-		params.member.each{dissertacaoInstance.author = dissertacaoInstance.author + Member.findAllById(params.member)}
-		println dissertacaoInstance.author
-		//println Member.findAllById(params.member)
-		dissertacaoInstance.author = dissertacaoInstance.author.replace(']', '').replace('[', ',')
-		
-		
-		//dissertacaoInstance.author
-		PublicacaoController pb = new PublicacaoController()
-		/**Velocity**/
-		//#if($bibtex)
-			String bibTex = pb.bibTex(dissertacaoInstance)
-			dissertacaoInstance.bibTex = bibTex
+		PublicationController pb = new PublicationController()
+		//#if($Bibtex)
+			dissertacaoInstance.setBib()
 		//#end
-		/**Velocity**/
-        if (!dissertacaoInstance.save(flush: true)) {
+        if (!pb.upload(dissertacaoInstance) || !dissertacaoInstance.save(flush: true)) {
             render(view: "create", model: [dissertacaoInstance: dissertacaoInstance])
             return
         }
-		pb.upload(dissertacaoInstance)
+		
 		flash.message = message(code: 'default.created.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), dissertacaoInstance.id])
         redirect(action: "show", id: dissertacaoInstance.id)
     }

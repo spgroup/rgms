@@ -1,9 +1,9 @@
 package rgms
 
+import java.security.SecureRandom
+
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.dao.DataIntegrityViolationException
-import java.security.SecureRandom
-import rgms.*
 
 class MemberController {
 
@@ -47,11 +47,9 @@ class MemberController {
         }
         memberInstance.passwordChangeRequiredOnNextLogon = true
         
-        //feature record
         //#if($History)
             
-        saveHistory();
-           //end feature record
+        //saveHistory();
        //#end
         
         if (!memberInstance.save(flush: true)) { 

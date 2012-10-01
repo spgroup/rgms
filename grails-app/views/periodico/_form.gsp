@@ -1,72 +1,53 @@
 <%@ page import="rgms.Periodico" %>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'title', 'error')} ">
+
+
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="periodico.title.label" default="Title" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="title" required="" value="${periodicoInstance?.title}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'publicationDate', 'error')} required">
+	<label for="publicationDate">
+		<g:message code="periodico.publicationDate.label" default="Publication Date" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="publicationDate" precision="day"  value="${periodicoInstance?.publicationDate}"  />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'file', 'error')} ">
+	<label for="file">
+		<g:message code="periodico.file.label" default="File" />
 		
 	</label>
-	<g:textField name="title" value="${periodicoInstance?.title}"/>
+	<g:field type="file" name="file" id="file" required="" value="${fieldValue(bean: periodicoInstance, field: 'file')}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'members', 'error')} ">
-	<label for="members">
-		<g:message code="periodico.members.label" default="Authors Members" />
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'researchLine', 'error')} ">
+	<label for="researchLine">
+		<g:message code="periodico.researchLine.label" default="Research Line" />
 		
 	</label>
-	<g:select name="members" from="${rgms.Member.list()}" multiple="multiple" optionKey="id" size="5" value="${periodicoInstance?.members*.id}" class="many-to-many"/>
+	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${periodicoInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'author', 'error')} ">
-	<table>	
-		<tr>
-			<td>
-				<input type="button" value="Add Author" id="add" />
-			</td>
-		</tr>
-		<tbody class='repetir'>
-			<tr>
-				<td>			
-					<label for="author">
-						<g:message code="ferramenta.author.label" default="Author" />
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'bibTex', 'error')} ">
+	<label for="bibTex">
+		<g:message code="periodico.bibTex.label" default="Bib Tex" />
 		
-					</label>
-					<g:textField name="author" value="${ferramentaInstance?.author}"/>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	</label>
+	<g:textArea name="bibTex" cols="40" rows="5" maxlength="10000" value="${periodicoInstance?.bibTex}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'journal', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'journal', 'error')} required">
 	<label for="journal">
 		<g:message code="periodico.journal.label" default="Journal" />
-		
-	</label>
-	<g:textField name="journal" value="${periodicoInstance?.journal}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'number', 'error')} required">
-	<label for="number">
-		<g:message code="periodico.number.label" default="Number" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="number" required="" value="${fieldValue(bean: periodicoInstance, field: 'number')}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'pageInitial', 'error')} required">
-	<label for="pageInitial">
-		<g:message code="periodico.pageInitial.label" default="PageInitial" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="number" name="pageInitial" required="" value="${fieldValue(bean: periodicoInstance, field: 'pageInitial')}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'pageFinal', 'error')} required">
-	<label for="pageFinal">
-		<g:message code="periodico.pageFinal.label" default="PageFinal" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="number" name="pageFinal" required="" value="${fieldValue(bean: periodicoInstance, field: 'pageFinal')}"/>
+	<g:textField name="journal" required="" value="${periodicoInstance?.journal}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'volume', 'error')} required">
@@ -74,21 +55,30 @@
 		<g:message code="periodico.volume.label" default="Volume" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="volume" required="" value="${fieldValue(bean: periodicoInstance, field: 'volume')}"/>
+	<g:field name="volume" type="number" min="1" value="${periodicoInstance.volume}" required=""/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'year', 'error')} required">
-	<label for="year">
-		<g:message code="periodico.year.label" default="Year" />
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'number', 'error')} required">
+	<label for="number">
+		<g:message code="periodico.number.label" default="Number" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="year" required="" value="${fieldValue(bean: periodicoInstance, field: 'year')}"/>
+	<g:field name="number" type="number" min="1" value="${periodicoInstance.number}" required=""/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'arquivo', 'error')} required">
-	<label for="arquivo">
-		<g:message code="periodico.arquivo.label" default="Arquivo" />
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'pages', 'error')} required">
+	<label for="pages">
+		<g:message code="periodico.pages.label" default="Pages" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="file" name="arquivo" id="arquivo" required="" value="${fieldValue(bean: periodicoInstance, field: 'arquivo')}"/>
+	<g:textField name="pages" required="" value="${periodicoInstance?.pages}"/>
 </div>
+
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'members', 'error')} ">
+	<label for="members">
+		<g:message code="periodico.members.label" default="Members" />
+		
+	</label>
+	
+</div>
+

@@ -1,7 +1,5 @@
 <%@ page import="rgms.Publication" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: publicationInstance, field: 'title', 'error')} ">
 	<label for="title">
 		<g:message code="publication.title.label" default="Title" />

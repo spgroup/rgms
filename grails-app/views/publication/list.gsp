@@ -12,7 +12,18 @@
   <div class="nav" role="navigation">
     <ul>
       <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-      <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+      <li><a href='/rgms/periodico/list'><g:message code="default.periodico.label"/></a></li>
+	  <li><a href='/rgms/conferencia/list'><g:message code="default.conferencia.label"/></a></li>
+	  <li><a href='/rgms/ferramenta/list'><g:message code="default.ferramenta.label"/></a></li>
+	  <!-- #if($maisresul) -->
+	   <li><a href='/rgms/dissertacao/list'><g:message code="default.dissertacao.label"/></a></li>
+	   <li><a href='/rgms/tese/list'><g:message code="default.tese.label"/></a></li>
+	   <li><a href='/rgms/bookChapter/list'><g:message code="default.bookchapter.label"/></a></li>
+	   <li><a href='/rgms/technicalReport/list'><g:message code="default.technicalreport.label"/></a></li>
+      <!-- #end -->
+	  <!-- #if($Bibtex) -->
+	   <li><g:link action="pdftodasPublicacoes" controller="publicacao">BibTex</g:link></li>
+	  <!-- #end -->
     </ul>
   </div>
   <div id="list-publication" class="content scaffold-list" role="main">
@@ -47,7 +58,7 @@
       </tbody>
     </table>
     <div class="pagination">
-      <g:paginate total="${publicationInstanceTotal}" />
+      <g:paginate total="${Publication.count()}" />
     </div>
   </div>
 </body>

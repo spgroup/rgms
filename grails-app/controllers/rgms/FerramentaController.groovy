@@ -22,20 +22,12 @@ class FerramentaController {
     def save() {
         def ferramentaInstance = new Ferramenta(params)
 		
-		//params.member.each{ferramentaInstance.author = ferramentaInstance.author + Member.findAllById(it)}
-		for(i in ferramentaInstance.members){
-			ferramentaInstance.author =  i.name + "," + ferramentaInstance.author
-		}
-		//ferramentaInstance.author = ferramentaInstance.author.replace(']', '').replace('[', ',')
-		
-		ferramentaInstance.link = "http://"+ferramentaInstance.link
-		
-		PublicacaoController pb = new PublicacaoController()
-		//#if($bibtex)
-		ferramentaInstance.bibTex = ferramentaInstance.setBib()
+		PublicationController pb = new PublicationController()
+		//#if($Bibtex)
+			//ferramentaInstance.setBib()
 		//#end
 		
-        if (!ferramentaInstance.save(flush: true)) {
+        if (!pb.upload(ferramentaInstance) || !ferramentaInstance.save(flush: true)) {
             render(view: "create", model: [ferramentaInstance: ferramentaInstance])
             return
         }
@@ -47,7 +39,6 @@ class FerramentaController {
     def show() {
         def ferramentaInstance = Ferramenta.get(params.id)
 
-		
         if (!ferramentaInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), params.id])
             redirect(action: "list")
@@ -59,8 +50,6 @@ class FerramentaController {
 
     def edit() {
         def ferramentaInstance = Ferramenta.get(params.id)
-		
-		ferramentaInstance.link = "http://"+ferramentaInstance.link
 		
         if (!ferramentaInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), params.id])

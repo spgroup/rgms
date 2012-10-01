@@ -1,25 +1,36 @@
 package rgms
 
+import java.util.Date;
 import java.util.List;
 
 
 class Publication {
-	
-    Date publicationDate
-    String title
-    ResearchLine researchLine
 
-    static belongsTo = Member
-    static hasMany = [members : Member]
+	String title
+	Date publicationDate
+	String file
+	ResearchLine researchLine
+	
+	//#if($Bibtex)
+	String bibTex
+	//#end
+	
+	List members
+	
+	static belongsTo = Member
+	static hasMany = [members: Member]
+	
+	static constraints = {
+		title nullable: false, blank: false
+		publicationDate nullable: false
+		file maxSize: 100000
+		researchLine nullable: true, blank: true
+		//#if($Bibtex)
+		bibTex maxSize: 10000
+		//#end
+	}
     
-    static constraints = {
-        title()
-        publicationDate()
-        researchLine(nullable:true)
-    }
-    
-    public String toString()
-    {        
+    public String toString() {        
         return title
     }
 	
@@ -39,5 +50,31 @@ class Publication {
 						it.publicationDate?.compareTo(membership.dateLeft) < 0}
                 def p = publications?.findAll(query)
 		return p
+	}
+	
+	public String retPrimeiroAutor(){
+		String[] quebraString = this.author.tokenize(",")
+		String nomeAutor = quebraString[0]
+		String[] quebraNovo = nomeAutor.split()
+		String ultimoNome = quebraNovo[quebraNovo.length-1]
+		return ultimoNome
+	}
+	
+	public String retListaAutor(){
+		
+		String[] quebraString = this.author.tokenize(",")
+		String lista =""
+		//quebraString.each { if(quebraString.length()); lista}
+		int valor=0
+		for(i in quebraString){
+			if(valor!=(quebraString.length-1)){
+				lista = lista+i+" and "
+				valor++
+			}else{
+				lista = lista+i
+			}
+		}
+		
+		return lista;
 	}
 }

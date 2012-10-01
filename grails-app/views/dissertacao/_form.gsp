@@ -1,13 +1,6 @@
 <%@ page import="rgms.Dissertacao" %>
 
 
-<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'members', 'error')} ">
-	<label for="members">
-		<g:message code="dissertacao.members.label" default="Author Member" />
-		
-	</label>
-	<g:select name="members" from="${rgms.Member.list()}" optionKey="id" value="${dissertacaoInstance?.member?.id}" class="many-to-one"/>
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'title', 'error')} required">
 	<label for="title">
@@ -15,6 +8,38 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="title" required="" value="${dissertacaoInstance?.title}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'publicationDate', 'error')} required">
+	<label for="publicationDate">
+		<g:message code="dissertacao.publicationDate.label" default="Publication Date" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="publicationDate" precision="day"  value="${dissertacaoInstance?.publicationDate}"  />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'file', 'error')} ">
+	<label for="file">
+		<g:message code="dissertacao.file.label" default="File" />
+		
+	</label>
+	<g:field type="file" name="file" id="file" required="" value="${fieldValue(bean: dissertacaoInstance, field: 'file')}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'researchLine', 'error')} ">
+	<label for="researchLine">
+		<g:message code="dissertacao.researchLine.label" default="Research Line" />
+		
+	</label>
+	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${dissertacaoInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'bibTex', 'error')} ">
+	<label for="bibTex">
+		<g:message code="dissertacao.bibTex.label" default="Bib Tex" />
+		
+	</label>
+	<g:textArea name="bibTex" cols="40" rows="5" maxlength="10000" value="${dissertacaoInstance?.bibTex}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'school', 'error')} required">
@@ -25,26 +50,19 @@
 	<g:textField name="school" required="" value="${dissertacaoInstance?.school}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'year', 'error')} required">
-	<label for="year">
-		<g:message code="dissertacao.year.label" default="Year" />
+<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'address', 'error')} required">
+	<label for="address">
+		<g:message code="dissertacao.address.label" default="Address" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="year" required="" value="${fieldValue(bean: dissertacaoInstance, field: 'year')}"/>
+	<g:textField name="address" required="" value="${dissertacaoInstance?.address}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'month', 'error')} required">
-	<label for="month">
-		<g:message code="dissertacao.month.label" default="Month" />
-		<span class="required-indicator">*</span>
+<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'members', 'error')} ">
+	<label for="members">
+		<g:message code="dissertacao.members.label" default="Members" />
+		
 	</label>
-	<g:field type="number" name="month" required="" value="${fieldValue(bean: dissertacaoInstance, field: 'month')}"/>
+	
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'arquivo', 'error')} required">
-	<label for="arquivo">
-		<g:message code="dissertacao.arquivo.label" default="Arquivo" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="file" name="arquivo" id="arquivo" required="" value="${fieldValue(bean: dissertacaoInstance, field: 'arquivo')}"/>
-</div>

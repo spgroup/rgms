@@ -3,15 +3,16 @@ package rgms
 class ResearchLine {
     
     String name
-    String description           
+    String description      
+	     
     static hasMany = [publications : Publication]
-    static constraints = {
+    
+	static constraints = {
         name(blank:false, unique:true)
         description(maxSize:256,blank:false)        
     }
-        
-    String toString()
-    {
+	 
+    String toString() {
         return name;
     }
 }

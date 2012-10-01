@@ -11,7 +11,7 @@ class ResearchLineController {
     }
 
     def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        params.max = Math.min(max ?: 10, 100)
         [researchLineInstanceList: ResearchLine.list(params), researchLineInstanceTotal: ResearchLine.count()]
     }
 
@@ -71,29 +71,12 @@ class ResearchLineController {
             }
         }
         
-        def tempPublications = new ArrayList(researchLineInstance.publications);
         researchLineInstance.properties = params
         
         if (!researchLineInstance.save(flush: true)) {
-            
             render(view: "edit", model: [researchLineInstance: researchLineInstance])
             return
         }
-        for(p in tempPublications)
-        {                
-            if(!researchLineInstance?.publications.contains(p))
-            {
-                //def pub = Publication.get(p.id);
-                p.researchLine = null;                
-                if(!p.save(flush:true))
-                {
-                    render(view: "edit", model: [researchLineInstance: researchLineInstance])
-                    return
-                }
-            }
-        }
-        
-
         flash.message = message(code: 'default.updated.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), researchLineInstance.id])
         redirect(action: "show", id: researchLineInstance.id)
     }

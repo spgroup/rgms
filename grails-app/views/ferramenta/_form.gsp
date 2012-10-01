@@ -1,71 +1,68 @@
 <%@ page import="rgms.Ferramenta" %>
 
-<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'members', 'error')} ">
-	<label for="members">
-		<g:message code="conferencia.members.label" default="Authors Members" />
-		
-	</label>
-	<g:select name="members" from="${rgms.Member.list()}" multiple="multiple" optionKey="id" size="5" value="${conferenciaInstance?.members*.id}" class="many-to-many"/>
-</div>
 
-<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'author', 'error')} ">
-	<table>	
-		<tr>
-			<td>
-				<input type="button" value="Add Author" id="add" />
-			</td>
-		</tr>
-		<tbody class='repetir'>
-			<tr>
-				<td>			
-					<label for="author">
-						<g:message code="ferramenta.author.label" default="Author" />
-		
-					</label>
-					<g:textField name="author" value="${ferramentaInstance?.author}"/>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
 
-<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'descricao', 'error')} ">
-	<label for="descricao">
-		<g:message code="ferramenta.descricao.label" default="Descricao" />
-		
-	</label>
-	<g:textField name="descricao" value="${ferramentaInstance?.descricao}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'link', 'error')} ">
-	<label for="link">
-		<g:message code="ferramenta.link.label" default="Link" />
-		
-	</label>
-	<g:textField name="link" value="${ferramentaInstance?.link}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'publicacaoAssociada', 'error')} ">
-	<label for="publicacaoAssociada">
-		<g:message code="ferramenta.publicacaoAssociada.label" default="Publicacao Associada" />
-		
-	</label>
-	<g:textField name="publicacaoAssociada" value="${ferramentaInstance?.publicacaoAssociada}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'title', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="ferramenta.title.label" default="Title" />
-		
-	</label>
-	<g:textField name="title" value="${ferramentaInstance?.title}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'year', 'error')} required">
-	<label for="year">
-		<g:message code="ferramenta.year.label" default="Year" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="year" required="" value="${fieldValue(bean: ferramentaInstance, field: 'year')}"/>
+	<g:textField name="title" required="" value="${ferramentaInstance?.title}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'publicationDate', 'error')} required">
+	<label for="publicationDate">
+		<g:message code="ferramenta.publicationDate.label" default="Publication Date" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="publicationDate" precision="day"  value="${ferramentaInstance?.publicationDate}"  />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'file', 'error')} ">
+	<label for="file">
+		<g:message code="ferramenta.file.label" default="File" />
+		
+	</label>
+	<g:field type="file" name="file" id="file" required="" value="${fieldValue(bean: ferramentaInstance, field: 'file')}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'researchLine', 'error')} ">
+	<label for="researchLine">
+		<g:message code="ferramenta.researchLine.label" default="Research Line" />
+		
+	</label>
+	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${ferramentaInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'bibTex', 'error')} ">
+	<label for="bibTex">
+		<g:message code="ferramenta.bibTex.label" default="Bib Tex" />
+		
+	</label>
+	<g:textArea name="bibTex" cols="40" rows="5" maxlength="10000" value="${ferramentaInstance?.bibTex}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'website', 'error')} required">
+	<label for="website">
+		<g:message code="ferramenta.website.label" default="Website" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="website" required="" value="${ferramentaInstance?.website}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'description', 'error')} required">
+	<label for="description">
+		<g:message code="ferramenta.description.label" default="Description" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="description" required="" value="${ferramentaInstance?.description}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'members', 'error')} ">
+	<label for="members">
+		<g:message code="ferramenta.members.label" default="Members" />
+		
+	</label>
+	
 </div>
 

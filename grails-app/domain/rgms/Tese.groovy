@@ -1,28 +1,23 @@
 package rgms
 
-class Tese extends Publicacao {
+class Tese extends Publication {
 	
 	String school
-	int month
-	String arquivo
+	String address
 	
     static constraints = {
-		author(nullable:false, blank:false)
-		title(nullable:false, blank:false)
-		school(nullable:false, blank:false)
-		year(nullable:false, blank:false)
-		month(maxSize:12)
-		arquivo(blank:true, maxSize:100000000)
+		school nullable: false, blank: false
+		address nullable: false, blank: false
     }
 	
 	//#if($Bibtex)
-	public String setBib(){
-		this.bibTex = "@phdthesis{"+this.retPrimeiroAutor()+this.year
-		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
-		this.bibTex = this.bibTex +"\",\n title=\""+this.title
-		this.bibTex = this.bibTex +"\",\n school=\""+this.school
-		this.bibTex = this.bibTex +"\",\n year=\""+this.year
-		this.bibTex = this.bibTex +"\",\n month=\""+this.month+"\"}"
-	}
+//	public String setBib(){
+//		super.bibTex = "@phdthesis{" + super.members.get(0) + super.publicationDate.get(Calendar.YEAR)
+//		super.bibTex = super.bibTex +",author=\"" + this.retListaAutor()
+//		super.bibTex = super.bibTex +"\",\n title=\"" + this.title
+//		super.bibTex = super.bibTex +"\",\n school=\"" + this.school
+//		super.bibTex = super.bibTex +"\",\n year=\"" + super.publicationDate.get(Calendar.YEAR)
+//		super.bibTex = super.bibTex +"\",\n month=\""+ super.publicationDate.get(Calendar.MONTH) +"\"}"
+//	}
 	//#end
 }

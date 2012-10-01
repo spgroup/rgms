@@ -21,17 +21,17 @@ class TeseController {
 
     def save() {
         def teseInstance = new Tese(params)
+		PublicationController pb = new PublicationController()
 		
-		PublicacaoController pb = new PublicacaoController()
-		//#if($bibtex)
-		teseInstance.bibTex = teseInstance.setBib()
+		//#if($Bibtex)
+			//teseInstance.setBib()
 		//#end
 		
-        if (!teseInstance.save(flush: true)) {
+        if (!pb.upload(teseInstance) || !teseInstance.save(flush: true)) {
             render(view: "create", model: [teseInstance: teseInstance])
             return
         }
-		pb.upload(teseInstance)
+		
 		flash.message = message(code: 'default.created.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
         redirect(action: "show", id: teseInstance.id)
     }

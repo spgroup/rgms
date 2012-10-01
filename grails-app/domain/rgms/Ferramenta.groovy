@@ -2,26 +2,23 @@ package rgms
 
 import groovy.lang.GroovyObjectSupport;
 
-class Ferramenta extends Publicacao{
+class Ferramenta extends Publication {
 
-	String link
-	String descricao
-	String publicacaoAssociada
+	String website
+	String description
 	
-	static hasMany = [members : Member]
-
     static constraints = {
-		author(nullable:false, blank:false)
-		link(nullable:false, blank:false)
+		website nullable: false, blank: false
+		description nullable: false, blank: false
     }
 	
 //	#if($Bibtex)
-	public String setBib(){
-		this.bibTex = "@misc{"+this.retPrimeiroAutor()+this.year
-		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
-		this.bibTex = this.bibTex +"\",\n title=\""+this.title
-		this.bibTex = this.bibTex +"\",\n year=\""+this.year
-		this.bibTex = this.bibTex +"\",\n note=\""+this.descricao+"\"}"
-	}
+//	public String setBib(){
+//		this.bibTex = "@misc{" + super.members.get(0) + super.publicationDate.get(Calendar.YEAR)
+//		this.bibTex = this.bibTex +",author=\""+this.retListaAutor()
+//		this.bibTex = this.bibTex +"\",\n title=\"" + this.title
+//		this.bibTex = this.bibTex +"\",\n year=\"" + super.publicationDate.get(Calendar.YEAR)
+//		this.bibTex = this.bibTex +"\",\n note=\"" + this.description + "\"}"
+//	}
 //	#end
 }

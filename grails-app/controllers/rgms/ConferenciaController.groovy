@@ -1,8 +1,6 @@
 package rgms
 
 import org.springframework.dao.DataIntegrityViolationException
-import rgms.PublicacaoController
-
 
 class ConferenciaController {
 
@@ -23,26 +21,15 @@ class ConferenciaController {
 
     def save() {
         def conferenciaInstance = new Conferencia(params)
-		
-		//params.member.each{conferenciaInstance.author = conferenciaInstance.author + Member.findAllById(it)}
-		
-		for(i in conferenciaInstance.members){
-			conferenciaInstance.author =  i.name+ "," + conferenciaInstance.author
-		}
-		conferenciaInstance.author = conferenciaInstance.author.replace(']', '').replace('[', ',')
-		
-		PublicacaoController pb = new PublicacaoController()
-		/**Velocity**/
+		PublicationController pb = new PublicationController()
 		//#if($Bibtex)
-			String bibTex = pb.bibTex(conferenciaInstance)
-			conferenciaInstance.bibTex = bibTex
+			conferenciaInstance.setBib()
 		//#end
-		/**Velocity**/
-        if (conferenciaInstance.save(flush: true)) {
-			pb.upload(conferenciaInstance)
-            render(view: "show", model: [conferenciaInstance: conferenciaInstance])
+        if (!pb.upload(conferenciaInstance) || !conferenciaInstance.save(flush: true)) {
+            render(view: "create", model: [conferenciaInstance: conferenciaInstance])
             return
         }
+		
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
         redirect(action: "show", id: conferenciaInstance.id)

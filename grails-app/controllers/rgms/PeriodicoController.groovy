@@ -1,7 +1,6 @@
 package rgms
 
 import org.springframework.dao.DataIntegrityViolationException
-import rgms.PublicacaoController
 
 class PeriodicoController {
 
@@ -22,22 +21,19 @@ class PeriodicoController {
 	
 	def save () {
 		def periodicoInstance = new Periodico(params)
-		//params.member.each{periodicoInstance.author = periodicoInstance.author + Member.findAllById(it)}
-		for(i in periodicoInstance.members){
-			periodicoInstance.author =  i.name + "," + periodicoInstance.author
-		}
+		PublicationController pb = new PublicationController()
 		
-		periodicoInstance.author = periodicoInstance.author.replace(']', '').replace('[', ',')
-		PublicacaoController pb = new PublicacaoController()
-		//#if($bibtex)
-		periodicoInstance.bibTex = periodicoInstance.setBib()
+		//#if($Bibtex)
+			//periodicoInstance.setBib()
 		//#end
 		
-		if (periodicoInstance.save(flush: true)) {
-			pb.upload(periodicoInstance)
-			render(view: "show", model: [periodicoInstance: periodicoInstance])
+		if (!pb.upload(periodicoInstance) || !periodicoInstance.save(flush: true)) {
+			render(view: "create", model: [periodicoInstance: periodicoInstance])
 			return
 		}
+		
+		flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
+		redirect(action: "show", id: periodicoInstance.id)
 	}
 
     def show() {

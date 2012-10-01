@@ -1,5 +1,7 @@
 <%@ page import="rgms.Conferencia" %>
 
+
+
 <div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="conferencia.title.label" default="Title" />
@@ -8,78 +10,59 @@
 	<g:textField name="title" required="" value="${conferenciaInstance?.title}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'publicationDate', 'error')} required">
+	<label for="publicationDate">
+		<g:message code="conferencia.publicationDate.label" default="Publication Date" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="publicationDate" precision="day"  value="${conferenciaInstance?.publicationDate}"  />
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'file', 'error')} ">
+	<label for="file">
+		<g:message code="conferencia.file.label" default="File" />
+		
+	</label>
+	<g:field type="file" name="file" id="file" required="" value="${fieldValue(bean: conferenciaInstance, field: 'file')}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'researchLine', 'error')} ">
+	<label for="researchLine">
+		<g:message code="conferencia.researchLine.label" default="Research Line" />
+		
+	</label>
+	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${conferenciaInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'bibTex', 'error')} ">
+	<label for="bibTex">
+		<g:message code="conferencia.bibTex.label" default="Bib Tex" />
+		
+	</label>
+	<g:textArea name="bibTex" cols="40" rows="5" maxlength="10000" value="${conferenciaInstance?.bibTex}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'booktitle', 'error')} required">
+	<label for="booktitle">
+		<g:message code="conferencia.booktitle.label" default="Booktitle" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="booktitle" required="" value="${conferenciaInstance?.booktitle}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'pages', 'error')} required">
+	<label for="pages">
+		<g:message code="conferencia.pages.label" default="Pages" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="pages" required="" value="${conferenciaInstance?.pages}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'members', 'error')} ">
 	<label for="members">
-		<g:message code="conferencia.members.label" default="Authors Members" />
+		<g:message code="conferencia.members.label" default="Members" />
 		
 	</label>
-	<g:select name="members" from="${rgms.Member.list()}" multiple="multiple" optionKey="id" size="5" value="${conferenciaInstance?.members*.id}" class="many-to-many"/>
+	
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'author', 'error')}">
-	<table>	
-		<tr>
-			<td>
-				<input type="button" value="Add Author" id="add" />
-			</td>
-		</tr>
-		<tbody class='repetir'>
-			<tr>
-				<td>			
-					<label for="author">
-						<g:message code="conferencia.author.label" default="Author" />
-		
-					</label>
-					<g:textField name="author" value="${conferenciaInstance?.author}"/>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'conference', 'error')} required">
-	<label for="conference">
-		<g:message code="conferencia.conference.label" default="Conference" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="conference" required="" value="${conferenciaInstance?.conference}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'year', 'error')} required">
-	<label for="year">
-		<g:message code="conferencia.year.label" default="Year" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="number" name="year" required="" value="${fieldValue(bean: conferenciaInstance, field: 'year')}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'pageInitial', 'error')} required">
-	<label for="pageInitial">
-		<g:message code="conferencia.pageInitial.label" default="PageInitial" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="number" id="num" name="pageInitial" required="" value="${fieldValue(bean: conferenciaInstance, field: 'pageInitial')}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'pageFinal', 'error')} required">
-	<label for="pageFinal">
-		<g:message code="conferencia.pageFinal.label" default="PageFinal" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="number" id="num" name="pageFinal" required="" value="${fieldValue(bean: conferenciaInstance, field: 'pageFinal')}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'month', 'error')} required">
-	<label for="month">
-		<g:message code="conferencia.month.label" default="Month" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="number" id="num" name="month" required="" value="${fieldValue(bean: conferenciaInstance, field: 'month')}"/>
-</div>
-<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'arquivo', 'error')} required">
-	<label for="arquivo">
-		<g:message code="conferencia.arquivo.label" default="Arquivo" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field type="file" name="arquivo" id="arquivo" required="" value="${fieldValue(bean: conferenciaInstance, field: 'arquivo')}"/>
-</div>
