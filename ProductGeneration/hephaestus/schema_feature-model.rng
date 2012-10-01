@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <ref name="feature"/>
+  </start>
+  <define name="feature">
+    <element name="feature">
+      <attribute name="id">
+        <data type="Name"/>
+      </attribute>
+      <attribute name="max">
+        <data type="integer"/>
+      </attribute>
+      <attribute name="min">
+        <data type="integer"/>
+      </attribute>
+      <attribute name="name">
+        <data type="string"/>
+      </attribute>
+      <attribute name="type">
+        <data type="NCName"/>
+      </attribute>
+      <zeroOrMore>
+        <ref name="feature"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <element name="featureGroup">
+          <attribute name="id">
+            <data type="Name"/>
+          </attribute>
+          <attribute name="max">
+            <data type="integer"/>
+          </attribute>
+          <attribute name="min">
+            <data type="integer"/>
+          </attribute>
+          <oneOrMore>
+            <ref name="feature"/>
+          </oneOrMore>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>

@@ -1,0 +1,15 @@
+<feature name="RGMS" type="NONE" id="rgms">
+
+	<feature name="Authentication" type="NONE" id="Auth"></feature>
+	
+	<feature name="Research_History" type="NONE" id="History"></feature>
+	
+	<feature name="Bibtex_Feature" type="NONE" id="Bibtex"></feature>
+	
+	<feature name="Generate_Website" type="NONE" id="Website">
+		<feature name="XML" type="NONE" id="XML"></feature>
+		<feature name="HTML" type="NONE" id="HTML"></feature>
+		<feature name="PDF" type="NONE" id="PDF"></feature>
+	</feature>
+
+</feature>

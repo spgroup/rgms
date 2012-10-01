@@ -1,0 +1,189 @@
+index => grailsapp/views/index.gsp;
+error => grailsapp/views/error.gsp;
+
+main => grailsapp/views/layouts/main.gsp;
+
+login => grailsapp/views/auth/login.gsp;
+lostPassword => grailsapp/views/auth/lostPassword.gsp;
+resetPassword => grailsapp/views/auth/resetPassword.gsp;
+updatePassword => grailsapp/views/auth/updatePassword.gsp;
+register => grailsapp/views/auth/register.gsp;
+
+conferenciaForm => grailsapp/views/conferencia/form.gsp;
+conferenciaCreate => grailsapp/views/conferencia/create.gsp;
+conferenciaEdit => grailsapp/views/conferencia/edit.gsp;
+conferenciaList => grailsapp/views/conferencia/list.gsp;
+conferenciaShow => grailsapp/views/conferencia/show.gsp;
+
+createMember => grailsapp/views/member/create.gsp;
+editMember => grailsapp/views/member/edit.gsp;
+listMember => grailsapp/views/member/list.gsp;
+showMember => grailsapp/views/member/show.gsp;
+
+createRole => grailsapp/views/role/create.gsp;
+editRole => grailsapp/views/role/edit.gsp;
+listRole => grailsapp/views/role/list.gsp;
+showRole => grailsapp/views/role/show.gsp;
+
+showHistory => grailsapp/views/record/show.gsp;
+listHistory => grailsapp/views/record/list.gsp;
+editHistory => grailsapp/views/record/edit.gsp;
+createHistory => grailsapp/views/record/create.gsp;
+formHistory => grailsapp/views/record/form.gsp;
+
+showResearchGroup => grailsapp/views/researchGroup/show.gsp;
+listResearchGroup => grailsapp/views/researchGroup/list.gsp;
+editResearchGroup => grailsapp/views/researchGroup/edit.gsp;
+editMembersResearchGroup => grailsapp/views/researchGroup/editMembers.gsp;
+createResearchGroup => grailsapp/views/researchGroup/create.gsp;
+formResearchGroup => grailsapp/views/researchGroup/form.gsp;
+
+
+showDissertation => grailsapp/views/dissertacao/show.gsp;
+listDissertation => grailsapp/views/dissertacao/list.gsp;
+editDissertation => grailsapp/views/dissertacao/edit.gsp;
+createDissertation => grailsapp/views/dissertacao/create.gsp;
+formDissertation => grailsapp/views/dissertacao/form.gsp;
+
+showTool => grailsapp/views/ferramenta/show.gsp;
+listTool => grailsapp/views/ferramenta/list.gsp;
+editTool => grailsapp/views/ferramenta/edit.gsp;
+createTool => grailsapp/views/ferramenta/create.gsp;
+formTool => grailsapp/views/ferramenta/form.gsp;
+
+showMembership => grailsapp/views/membership/show.gsp;
+listMembership => grailsapp/views/membership/list.gsp;
+editMembership => grailsapp/views/membership/edit.gsp;
+createMembership => grailsapp/views/membership/create.gsp;
+
+showPeriodico => grailsapp/views/periodico/show.gsp;
+listPeriodico => grailsapp/views/periodico/list.gsp;
+editPeriodico => grailsapp/views/periodico/edit.gsp;
+createPeriodico => grailsapp/views/periodico/create.gsp;
+formPeriodico => grailsapp/views/periodico/form.gsp;
+
+mainGSP => grailsapp/views/layouts/main.gsp;
+
+
+showMemberShip => grailsapp/views/membership/show.gsp;
+listMemberShip => grailsapp/views/membership/list.gsp;
+editMemberShip => grailsapp/views/membership/edit.gsp;
+createMemberShip => grailsapp/views/membership/create.gsp;
+
+
+indexPublicacao => grailsapp/views/publicacao/index.gsp;
+
+
+
+showPublication => grailsapp/views/publication/show.gsp;
+editPublication => grailsapp/views/publication/edit.gsp;
+listPublication=> grailsapp/views/publication/list.gsp;
+createPublication => grailsapp/views/publication/create.gsp;
+formPublication => grailsapp/views/publication/form.gsp;
+
+showshiroRole => grailsapp/views/shiroRole/show.gsp;
+createshiroRole => grailsapp/views/shiroRole/create.gsp;
+editshiroRole => grailsapp/views/shiroRole/edit.gsp;
+listshiroRole => grailsapp/views/shiroRole/list.gsp;
+
+
+showshiroUser => grailsapp/views/shiroUser/show.gsp;
+createshiroUser => grailsapp/views/shiroUser/create.gsp;
+editshiroUser => grailsapp/views/shiroUser/edit.gsp;
+listshiroUser => grailsapp/views/shiroUser/list.gsp;
+
+
+showtese => grailsapp/views/tese/show.gsp;
+edittese => grailsapp/views/tese/edit.gsp;
+createtese => grailsapp/views/tese/create.gsp;
+listtese=> grailsapp/views/tese/list.gsp;
+formtese=> grailsapp/views/tese/form.gsp;
+
+
+
+conference => grailsapp/domain/rgms/Conferencia.groovy;
+dissertation => grailsapp/domain/rgms/Dissertacao.groovy;
+tool => grailsapp/domain/rgms/Ferramenta.groovy;
+memberDomain => grailsapp/domain/rgms/Member.groovy;
+memberShip => grailsapp/domain/rgms/Membership.groovy;
+passwordResetRequest => grailsapp/domain/rgms/PasswordResetRequest.groovy;
+periodical => grailsapp/domain/rgms/Periodico.groovy;
+publication => grailsapp/domain/rgms/Publication.groovy;
+publicacao => grailsapp/domain/rgms/Publicacao.groovy;
+history => grailsapp/domain/rgms/Record.groovy;
+researchGroup => grailsapp/domain/rgms/ResearchGroup.groovy;
+Role => grailsapp/domain/rgms/Role.groovy;
+thesis => grailsapp/domain/rgms/Tese.groovy;
+researchLine => grailsapp/domain/rgms/ResearchLine.groovy;
+defaultValueManager => grailsapp/domain/rgms/DefaultValueManager.groovy;
+
+
+ApplicationResources => grailsapp/conf/ApplicationResources.groovy;
+BootStrap => grailsapp/conf/BootStrap.groovy;
+BuildConfig => grailsapp/conf/BuildConfig.groovy;
+Config => grailsapp/conf/Config.groovy;
+DataSource => grailsapp/conf/DataSource.groovy;
+ShiroSecurityFilters => grailsapp/conf/ShiroSecurityFilters.groovy;
+UrlMappings => grailsapp/conf/UrlMappings.groovy;
+report => grailsapp/conf/report.properties;
+reportFR => grailsapp/conf/report_fr.properties;
+reportBR => grailsapp/conf/report_pt_BR.properties;
+reportUS => grailsapp/conf/report_us.properties;
+
+
+AuthControllerr => grailsapp/controllers/AuthController.groovy;
+ShiroRoleController => grailsapp/controllers/ShiroRoleController.groovy;
+ShiroUserController => grailsapp/controllers/ShiroUserController.groovy;
+
+
+AuthController => grailsapp/controllers/rgms/AuthController.groovy;
+ConferenciaController => grailsapp/controllers/rgms/ConferenciaController.groovy;
+DissertacaoController => grailsapp/controllers/rgms/DissertacaoController.groovy;
+FerramentaController => grailsapp/controllers/rgms/FerramentaController.groovy;
+MemberController => grailsapp/controllers/rgms/MemberController.groovy;
+MembershipController => grailsapp/controllers/rgms/MembershipController.groovy;
+PeriodicoController => grailsapp/controllers/rgms/PeriodicoController.groovy;
+PublicacaoController => grailsapp/controllers/rgms/PublicacaoController.groovy;
+PublicationController => grailsapp/controllers/rgms/PublicationController.groovy;
+RecordController => grailsapp/controllers/rgms/RecordController.groovy;
+ResearchGroupController => grailsapp/controllers/rgms/ResearchGroupController.groovy;
+RoleController => grailsapp/controllers/rgms/RoleController.groovy;
+TeseController => grailsapp/controllers/rgms/TeseController.groovy;
+
+
+
+messages => grailsapp/i18n/messages.properties;
+messages_cs_CZ => grailsapp/i18n/messages_cs_CZ.properties;
+messages_da => grailsapp/i18n/messages_da.properties;
+messages_de => grailsapp/i18n/messages_de.properties;
+messages_es=> grailsapp/i18n/messages_es.properties;
+messages_fr => grailsapp/i18n/messages_fr.properties;
+messages_it => grailsapp/i18n/messages_it.properties;
+messages_ja => grailsapp/i18n/messages_ja.properties;
+messages_nl => grailsapp/i18n/messages_nl.properties;
+messages_pt_BR => grailsapp/i18n/messages_pt_BR.properties;
+messages_pt_PT => grailsapp/i18n/messages_pt_PT.properties;
+messages_ru => grailsapp/i18n/messages_ru.properties;
+messages_sv => grailsapp/i18n/messages_sv.properties;
+messages_th => grailsapp/i18n/messages_th.properties;
+messages_zh_CN => grailsapp/i18n/messages_zh_CN.properties;
+shiro => grailsapp/i18n/shiro.properties;
+
+
+
+ShiroDbRealm => grailsapp/realms/ShiroDbRealm.groovy;
+
+
+ShiroDbRealmRGMS => grailsapp/realms/rgms/ShiroDbRealm.groovy;
+
+
+JqueryUiTagLib => grailsapp/taglib/com/grailsrocks/jqueryui/JqueryUiTagLib.groovy;
+
+
+ferramentas => webapp/reports/report_Bundle/ferramentas.jrxml;
+memberPubs => webapp/reports/report_Bundle/memberPubs.jrxml;
+memberTools => webapp/reports/report_Bundle/memberTools.jrxml;
+publications => webapp/reports/report_Bundle/publications.jrxml;
+report => webapp/reports/report_Bundle/report.jrxml;
+report1 => webapp/reports/report_Bundle/report1.jrxml;
+researchGroup => webapp/reports/report_Bundle/researchGroup.jrxml;

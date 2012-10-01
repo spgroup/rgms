@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="ck.v20090401" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="configurationModel">
+      <oneOrMore>
+        <element>
+          <name ns="">configuration</name>
+          <element>
+            <name ns="">expression</name>
+            <text/>
+          </element>
+          <oneOrMore>
+            <element>
+              <name ns="">transformation</name>
+              <element>
+                <name ns="">name</name>
+                <data type="NCName"/>
+              </element>
+              <element>
+                <name ns="">args</name>
+                <text/>
+              </element>
+            </element>
+          </oneOrMore>
+          <optional>
+           <element>
+            <name ns="">required</name>
+            <text/>
+           </element> 
+          </optional>
+          <optional>
+           <element>
+            <name ns="">provided</name>
+            <text/>
+           </element> 
+          </optional>
+        </element>
+      </oneOrMore>
+    </element>
+  </start>
+</grammar>

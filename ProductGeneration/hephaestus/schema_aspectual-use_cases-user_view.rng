@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="phone">
+      <element name="feature">
+        <element name="featureId">
+	  <text/>
+	</element>
+        <element name="name">
+	  <text/>
+	</element>
+        <oneOrMore>
+          <element name="useCase">
+            <element name="id">
+	      <text/>
+	    </element>
+            <element name="name">
+	      <text/>
+	    </element>
+            <element name="description">
+	      <text/>
+	    </element>
+           <element name="setup">
+              <text/>
+            </element>
+            <oneOrMore>
+              <element name="flow">
+                <element name="id">
+		  <text/>
+		</element>
+                <element name="description">
+		  <text/>
+		</element>
+                <element name="fromSteps">
+                  <text/>
+                </element>
+                <element name="toSteps">
+                  <text/>
+                </element>
+                <oneOrMore>
+                  <ref name="step"/>
+                </oneOrMore>
+              </element>
+            </oneOrMore>
+          </element>
+        </oneOrMore>
+        <oneOrMore>
+          <element name="aspect">
+            <element name="id">
+	      <text/>
+	    </element>
+            <element name="name">
+	      <text/>
+	    </element>
+            <oneOrMore>
+              <element name="advice">
+                <element name="id">
+		  <text/>
+		</element>
+                <element name="type">
+                  <text/>
+                </element>
+                <element name="description">
+		  <text/>
+		</element>
+                <element name="pointCut">
+                  <text/>
+                </element>
+                <oneOrMore>
+                  <ref name="step"/>
+                </oneOrMore>
+              </element>
+            </oneOrMore>
+          </element>
+        </oneOrMore>
+      </element>
+    </element>
+  </start>
+  <define name="step">
+    <element name="step">
+      <element name="stepId">
+        <text/>
+      </element>
+      <element name="action">
+        <text/>
+      </element>
+      <element name="condition">
+        <text/>
+      </element>
+      <element name="response">
+        <text/>
+      </element>
+    </element>
+  </define>
+</grammar>

@@ -1,0 +1,18 @@
+<feature min="1" max="1" name="RGMS" type="NONE" id="rgms">
+   
+	<feature min="1" max="1" name="Authentication" type="NONE" id="Auth"></feature>
+	
+	<feature min="0" max="1" name="Research_History" type="NONE" id="History"></feature>
+	
+	<feature min="0" max="1" name="Bibtex_Feature" type="NONE" id="Bibtex"></feature>
+	
+	<feature min="0" max="1" name="Generate_Website" type="NONE" id="Website">
+		<featureGroup min="0" max="3" id="group1">
+			<feature min="0" max="1" name="XML" type="NONE" id="XML"></feature>
+			<feature min="0" max="1" name="HTML" type="NONE" id="HTML"></feature>
+			<feature min="0" max="1" name="PDF" type="NONE" id="PDF"></feature>
+		</featureGroup>
+		
+	</feature>
+	
+</feature>

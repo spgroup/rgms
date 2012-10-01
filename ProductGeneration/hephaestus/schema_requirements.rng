@@ -1,0 +1,19 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element name="requirementModel">
+      <element name="requirement">
+        <group>
+          <element name="id">
+            <text/>
+          </element>
+          <element name="name">
+            <text/>
+          </element>
+          <element name="description">
+            <text/>
+          </element>
+        </group>
+      </element>
+    </element>
+  </start>
+</grammar>
