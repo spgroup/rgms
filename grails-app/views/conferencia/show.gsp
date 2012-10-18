@@ -57,17 +57,15 @@
 						<span class="property-value" aria-labelledby="researchLine-label"><g:link controller="researchLine" action="show" id="${conferenciaInstance?.researchLine?.id}">${conferenciaInstance?.researchLine?.encodeAsHTML()}</g:link></span>
 					
 				</li>
+					
 				</g:if>
-			
-				<g:if test="${conferenciaInstance?.bibTex}">
+				
+				<!-- //#if($Bibtex) -->
 				<li class="fieldcontain">
-					<span id="bibTex-label" class="property-label"><g:message code="conferencia.bibTex.label" default="Bib Tex" /></span>
-					
-						<span class="property-value" aria-labelledby="bibTex-label"><g:fieldValue bean="${conferenciaInstance}" field="bibTex"/></span>
-					
+					<g:link controller="Publication" action="generateBib" params="[id : conferenciaInstance.id]">Bibtex</g:link>
 				</li>
-				</g:if>
-			
+				<!-- //#end -->
+				
 				<g:if test="${conferenciaInstance?.booktitle}">
 				<li class="fieldcontain">
 					<span id="booktitle-label" class="property-label"><g:message code="conferencia.booktitle.label" default="Booktitle" /></span>

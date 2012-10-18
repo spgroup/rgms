@@ -22,9 +22,6 @@ class ConferenciaController {
     def save() {
         def conferenciaInstance = new Conferencia(params)
 		PublicationController pb = new PublicationController()
-		//#if($Bibtex)
-			conferenciaInstance.setBib()
-		//#end
         if (!pb.upload(conferenciaInstance) || !conferenciaInstance.save(flush: true)) {
             render(view: "create", model: [conferenciaInstance: conferenciaInstance])
             return

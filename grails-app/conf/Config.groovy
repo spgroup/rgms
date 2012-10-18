@@ -104,3 +104,7 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+tomcat.deploy.username="tomcat"
+tomcat.deploy.password="tomcat"
+tomcat.deploy.url="http://localhost:8080/manager"

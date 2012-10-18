@@ -23,9 +23,6 @@ class FerramentaController {
         def ferramentaInstance = new Ferramenta(params)
 		
 		PublicationController pb = new PublicationController()
-		//#if($Bibtex)
-			//ferramentaInstance.setBib()
-		//#end
 		
         if (!pb.upload(ferramentaInstance) || !ferramentaInstance.save(flush: true)) {
             render(view: "create", model: [ferramentaInstance: ferramentaInstance])

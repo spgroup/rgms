@@ -59,14 +59,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${bookChapterInstance?.bibTex}">
+				<!-- //#if($Bibtex) -->
 				<li class="fieldcontain">
-					<span id="bibTex-label" class="property-label"><g:message code="bookChapter.bibTex.label" default="Bib Tex" /></span>
-					
-						<span class="property-value" aria-labelledby="bibTex-label"><g:fieldValue bean="${bookChapterInstance}" field="bibTex"/></span>
-					
+					<g:link controller="Publication" action="generateBib" params="[id : bookChapterInstance.id]">Bibtex</g:link>
 				</li>
-				</g:if>
+				<!-- //#end -->
 			
 				<g:if test="${bookChapterInstance?.publisher}">
 				<li class="fieldcontain">

@@ -59,14 +59,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${periodicoInstance?.bibTex}">
+				<!-- //#if($Bibtex) -->
 				<li class="fieldcontain">
-					<span id="bibTex-label" class="property-label"><g:message code="periodico.bibTex.label" default="Bib Tex" /></span>
-					
-						<span class="property-value" aria-labelledby="bibTex-label"><g:fieldValue bean="${periodicoInstance}" field="bibTex"/></span>
-					
+					<g:link controller="Publication" action="generateBib" params="[id : periodicoInstance.id]">Bibtex</g:link>
 				</li>
-				</g:if>
+				<!-- //#end -->
 			
 				<g:if test="${periodicoInstance?.journal}">
 				<li class="fieldcontain">

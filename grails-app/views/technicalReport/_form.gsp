@@ -34,14 +34,6 @@
 	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${technicalReportInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'bibTex', 'error')} ">
-	<label for="bibTex">
-		<g:message code="technicalReport.bibTex.label" default="Bib Tex" />
-		
-	</label>
-	<g:textArea name="bibTex" cols="40" rows="5" maxlength="10000" value="${technicalReportInstance?.bibTex}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'institution', 'error')} required">
 	<label for="institution">
 		<g:message code="technicalReport.institution.label" default="Institution" />

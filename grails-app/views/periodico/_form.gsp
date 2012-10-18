@@ -34,14 +34,6 @@
 	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${periodicoInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'bibTex', 'error')} ">
-	<label for="bibTex">
-		<g:message code="periodico.bibTex.label" default="Bib Tex" />
-		
-	</label>
-	<g:textArea name="bibTex" cols="40" rows="5" maxlength="10000" value="${periodicoInstance?.bibTex}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'journal', 'error')} required">
 	<label for="journal">
 		<g:message code="periodico.journal.label" default="Journal" />

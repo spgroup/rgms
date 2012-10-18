@@ -24,9 +24,7 @@ class DissertacaoController {
         def dissertacaoInstance = new Dissertacao(params)
 		
 		PublicationController pb = new PublicationController()
-		//#if($Bibtex)
-			dissertacaoInstance.setBib()
-		//#end
+
         if (!pb.upload(dissertacaoInstance) || !dissertacaoInstance.save(flush: true)) {
             render(view: "create", model: [dissertacaoInstance: dissertacaoInstance])
             return

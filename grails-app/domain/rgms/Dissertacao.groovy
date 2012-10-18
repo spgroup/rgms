@@ -1,5 +1,7 @@
 package rgms
 
+import rgms.publication.BibtexAux;
+
 class Dissertacao extends Publication {
 	
 	String school
@@ -11,13 +13,11 @@ class Dissertacao extends Publication {
 	}
 	
 	//#if($Bibtex)
-	public String setBib(){
-		super.bibTex = "@masterthesis{" + super.members.get(0) + super.publicationDate.get(Calendar.YEAR)
-		super.bibTex = super.bibTex +",author=\"" + this.retListaAutor()
-		super.bibTex = super.bibTex +"\",\n title=\"" + this.title
-		super.bibTex = super.bibTex +"\",\n school=\"" + this.school
-		super.bibTex = super.bibTex +"\",\n year=\"" + super.publicationDate.get(Calendar.YEAR)
-		super.bibTex = super.bibTex +"\",\n month=\"" + super.publicationDate.get(Calendar.MONTH) + "\"}"
+	String generateBib() {
+		return "@masterthesis{"+ super.members.get(0) + super.publicationDate.getAt(Calendar.YEAR) 
+			+ ",author=\"" + BibtexAux.organizeAuthors(super.members) + "\",\n title=\"" + super.title + "\",\n school=\"" 
+			+ this.school + "\",\n year=\"" + super.publicationDate.getAt(Calendar.YEAR) + "\",\n address=\"" 
+			+ this.address + "\",\n month=\"" + super.publicationDate.getAt(Calendar.MONTH) + "\"}"
 	}
 	//#end
 }

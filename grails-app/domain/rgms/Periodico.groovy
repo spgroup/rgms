@@ -1,5 +1,7 @@
 package rgms
 
+import rgms.publication.BibtexAux;
+
 class Periodico extends Publication {
 
 	String journal
@@ -15,15 +17,12 @@ class Periodico extends Publication {
     }
 
 	//#if($Bibtex)
-//	public String setBib(){
-//		super.bibTex = "@article{" + super.members.get(0) + super.publicationDate.get(Calendar.YEAR)
-//		super.bibTex = super.bibTex +",author=\"" + this.retListaAutor()
-//		super.bibTex = super.bibTex +"\",\n title=\"" + this.title
-//		super.bibTex = super.bibTex +"\",\n journal=\"" + this.journal
-//		super.bibTex = super.bibTex +"\",\n year=\"" + super.publicationDate.get(Calendar.YEAR)
-//		super.bibTex = super.bibTex +"\",\n volume=\"" + this.volume
-//		super.bibTex = super.bibTex +"\",\n number=\"" + this.number
-//		super.bibTex = super.bibTex +"\",\n pages=\""+ this.pages +"\"}"
-//	}
+	String generateBib() {
+		return "@article{"+ super.members.get(0) + super.publicationDate.getAt(Calendar.YEAR)
+		+ ",author=\"" + BibtexAux.organizeAuthors(super.members) + "\",\n title=\"" + super.title + "\",\n journal=\""
+		+ this.journal + "\",\n year=\"" + super.publicationDate.getAt(Calendar.YEAR) + "\",\n volume=\""
+		+ this.volume + "\",\n month=\"" + super.publicationDate.getAt(Calendar.MONTH) 
+		+ "\",\n number=\"" + this.number + "\",\n pages=\"" + this.pages + "\"}"
+	}
 	//#end
 }

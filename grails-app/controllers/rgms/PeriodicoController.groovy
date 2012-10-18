@@ -23,10 +23,6 @@ class PeriodicoController {
 		def periodicoInstance = new Periodico(params)
 		PublicationController pb = new PublicationController()
 		
-		//#if($Bibtex)
-			//periodicoInstance.setBib()
-		//#end
-		
 		if (!pb.upload(periodicoInstance) || !periodicoInstance.save(flush: true)) {
 			render(view: "create", model: [periodicoInstance: periodicoInstance])
 			return
