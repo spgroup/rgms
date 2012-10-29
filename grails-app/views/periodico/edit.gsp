@@ -1,4 +1,4 @@
-<%@ page import="rgms.Periodico" %>
+<%@ page import="rgms.publication.Periodico" %>
 <!doctype html>
 <html>
 	<head>

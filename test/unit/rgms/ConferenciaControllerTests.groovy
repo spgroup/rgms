@@ -3,6 +3,9 @@ package rgms
 
 
 import org.junit.*
+
+import rgms.publication.Conferencia;
+import rgms.publication.ConferenciaController;
 import grails.test.mixin.*
 
 @TestFor(ConferenciaController)

@@ -1,4 +1,4 @@
-<%@ page import="rgms.Dissertacao" %>
+<%@ page import="rgms.publication.Dissertacao" %>
 
 
 
@@ -31,7 +31,7 @@
 		<g:message code="dissertacao.researchLine.label" default="Research Line" />
 		
 	</label>
-	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${dissertacaoInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+	<g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id" value="${dissertacaoInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'school', 'error')} required">

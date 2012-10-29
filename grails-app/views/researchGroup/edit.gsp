@@ -1,4 +1,4 @@
-<%@ page import="rgms.ResearchGroup" %>
+<%@ page import="rgms.member.ResearchGroup" %>
 <!doctype html>
 <html>
   <head>

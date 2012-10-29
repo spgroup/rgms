@@ -1,6 +1,5 @@
 package rgms.publication
 
-import rgms.Publication
 
 
 class TechnicalReport extends Publication {

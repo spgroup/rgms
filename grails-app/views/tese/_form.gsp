@@ -1,4 +1,4 @@
-<%@ page import="rgms.Tese" %>
+<%@ page import="rgms.publication.Tese" %>
 
 
 
@@ -31,7 +31,7 @@
 		<g:message code="tese.researchLine.label" default="Research Line" />
 		
 	</label>
-	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${teseInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+	<g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id" value="${teseInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: teseInstance, field: 'school', 'error')} required">

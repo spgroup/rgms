@@ -31,7 +31,7 @@
 		<g:message code="technicalReport.researchLine.label" default="Research Line" />
 		
 	</label>
-	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${technicalReportInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+	<g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id" value="${technicalReportInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'institution', 'error')} required">

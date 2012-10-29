@@ -3,6 +3,9 @@ package rgms
 
 
 import org.junit.*
+
+import rgms.member.ResearchGroup;
+import rgms.member.ResearchGroupController;
 import grails.test.mixin.*
 
 @TestFor(ResearchGroupController)

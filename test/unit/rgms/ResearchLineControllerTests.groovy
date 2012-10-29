@@ -3,6 +3,9 @@ package rgms
 
 
 import org.junit.*
+
+import rgms.publication.ResearchLine;
+import rgms.publication.ResearchLineController;
 import grails.test.mixin.*
 
 @TestFor(ResearchLineController)

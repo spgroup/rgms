@@ -1,5 +1,5 @@
 
-<%@ page import="rgms.Conferencia" %>
+<%@ page import="rgms.publication.Conferencia" %>
 <!doctype html>
 <html>
 	<head>

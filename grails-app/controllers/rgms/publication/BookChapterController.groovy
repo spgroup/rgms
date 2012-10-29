@@ -2,7 +2,6 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.PublicationController
 
 class BookChapterController {
 

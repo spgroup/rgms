@@ -1,5 +1,11 @@
 import org.apache.shiro.crypto.hash.Sha256Hash
-import rgms.*
+
+import rgms.authentication.Role
+import rgms.member.Member
+import rgms.member.MemberController
+import rgms.member.MemberControllerMixin
+import rgms.member.Record
+import rgms.publication.ResearchLine
 
 class BootStrap {
 

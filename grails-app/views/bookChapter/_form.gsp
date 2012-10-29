@@ -31,7 +31,7 @@
 		<g:message code="bookChapter.researchLine.label" default="Research Line" />
 		
 	</label>
-	<g:select id="researchLine" name="researchLine.id" from="${rgms.ResearchLine.list()}" optionKey="id" value="${bookChapterInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+	<g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id" value="${bookChapterInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: bookChapterInstance, field: 'publisher', 'error')} required">

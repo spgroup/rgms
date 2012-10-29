@@ -1,5 +1,5 @@
 
-<%@ page import="rgms.Tese" %>
+<%@ page import="rgms.publication.Tese" %>
 <!doctype html>
 <html>
 	<head>

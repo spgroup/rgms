@@ -1,5 +1,5 @@
 
-<%@ page import="rgms.Ferramenta" %>
+<%@ page import="rgms.publication.Ferramenta" %>
 <!doctype html>
 <html>
 	<head>

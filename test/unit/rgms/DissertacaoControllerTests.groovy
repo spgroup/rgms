@@ -3,6 +3,9 @@ package rgms
 
 
 import org.junit.*
+
+import rgms.publication.Dissertacao;
+import rgms.publication.DissertacaoController;
 import grails.test.mixin.*
 
 @TestFor(DissertacaoController)

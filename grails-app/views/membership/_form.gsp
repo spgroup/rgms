@@ -1,4 +1,4 @@
-<%@ page import="rgms.Membership" %>
+<%@ page import="rgms.member.Membership" %>
 
 
 

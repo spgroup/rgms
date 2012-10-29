@@ -1,5 +1,5 @@
 
-<%@ page import="rgms.ResearchGroup" %>
+<%@ page import="rgms.member.ResearchGroup" %>
 
 <g:javascript library="jquery" />
 

@@ -3,6 +3,9 @@ package rgms
 
 
 import org.junit.*
+
+import rgms.publication.Periodico;
+import rgms.publication.PeriodicoController;
 import grails.test.mixin.*
 
 @TestFor(PeriodicoController)

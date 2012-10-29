@@ -3,6 +3,9 @@ package rgms
 
 
 import org.junit.*
+
+import rgms.publication.Tese;
+import rgms.publication.TeseController;
 import grails.test.mixin.*
 
 @TestFor(TeseController)

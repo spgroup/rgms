@@ -1,4 +1,4 @@
-<%@ page import="rgms.Dissertacao" %>
+<%@ page import="rgms.publication.Dissertacao" %>
 <!doctype html>
 <html>
 	<head>

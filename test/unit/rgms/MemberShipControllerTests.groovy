@@ -3,6 +3,9 @@ package rgms
 
 
 import org.junit.*
+
+import rgms.member.Membership;
+import rgms.member.MembershipController;
 import grails.test.mixin.*
 
 @TestFor(MembershipController)
