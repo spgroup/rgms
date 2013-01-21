@@ -28,36 +28,38 @@ environments {
             url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
     }
-    production {
-        dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-            pooled = true
-            properties {
-               maxActive = -1
-               minEvictableIdleTimeMillis=1800000
-               timeBetweenEvictionRunsMillis=1800000
-               numTestsPerEvictionRun=3
-               testOnBorrow=true
-               testWhileIdle=true
-               testOnReturn=true
-               validationQuery="SELECT 1"
-            }
-        }
+    production {		
+		dataSource {
+			dbCreate = "update"  // Uncomment to modify tables
+			url = "jdbc:mysql://localhost:3306/prodb"
+			driverClassName = "com.mysql.jdbc.Driver"
+			username = "root"
+			password = "HjsitH64"
+			properties {
+				maxActive = 100
+				maxIdle = 25
+				minIdle = 5
+				initialSize = 10
+				minEvictableIdleTimeMillis = 60000
+				timeBetweenEvictionRunsMillis = 60000
+				maxWait = 10000
+			}
+		}
 		
 		dataSource_authentication {
-			dbCreate = "update"
-			url = "jdbc:h2:proAuthDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-			pooled = true
+			dbCreate = "update"  // Uncomment to modify tables
+			url = "jdbc:mysql://localhost:3306/prodb_auth"
+			driverClassName = "com.mysql.jdbc.Driver"
+			username = "root"
+			password = "HjsitH64"
 			properties {
-			   maxActive = -1
-			   minEvictableIdleTimeMillis=1800000
-			   timeBetweenEvictionRunsMillis=1800000
-			   numTestsPerEvictionRun=3
-			   testOnBorrow=true
-			   testWhileIdle=true
-			   testOnReturn=true
-			   validationQuery="SELECT 1"
+				maxActive = 100
+				maxIdle = 25
+				minIdle = 5
+				initialSize = 10
+				minEvictableIdleTimeMillis = 60000
+				timeBetweenEvictionRunsMillis = 60000
+				maxWait = 10000
 			}
 		}
     }

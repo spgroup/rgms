@@ -1,4 +1,4 @@
-<%@ page import="rgms.member.ResearchLine" %>
+<%@ page import="rgms.publication.ResearchLine" %>
 
 
 
