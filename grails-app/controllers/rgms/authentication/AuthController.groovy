@@ -69,7 +69,7 @@ class AuthController {
                 redirect(action: newPassword)
             } else {
                 log.info "Redirecting to '${targetUri}'."
-                redirect(uri: "/member/list")
+                render(view: "/initial")
 //                redirect(uri: targetUri)
             }
         }

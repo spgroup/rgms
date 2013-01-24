@@ -8,19 +8,19 @@
   <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
-<!-- #if($XML) -->
+<!-- #if($XML) 
   <br>
   <g:jasperReport jasper="researchGroup" format="XML" name="export" >
     <input type="hidden" name="research_group_id" value="${ researchGroupInstance?.id}" />
   </g:jasperReport>
-<!-- #end -->
+ #end -->
   
-<!-- #if($HTML) -->
+<!-- #if($HTML) 
   <br>
   <g:jasperReport jasper="researchGroup" format="HTML" name="export" >
     <input type="hidden" name="research_group_id" value="${ researchGroupInstance?.id}" />
   </g:jasperReport>
-<!--#end -->
+#end -->
   
 <!-- #if($PDF) -->
   <br>

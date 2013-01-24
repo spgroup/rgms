@@ -9,17 +9,17 @@
 </head>
 <body>
    
-   <!--  #if($XML) -->
+   <!--  #if($XML) 
         <br><g:jasperReport jasper="report" format="XML" name="export" ><br></br>
         <input type="hidden" name="member_id" value="${memberInstance?.id}" />
         </g:jasperReport>
-  <!--  #end -->
+    #end -->
     
-   <!-- #if($HTML) -->
+   <!-- #if($HTML) 
         <br><g:jasperReport jasper="report" format="HTML" name="export" ><br></br>
         <input type="hidden" name="member_id" value="${memberInstance?.id}" />
         </g:jasperReport>
-   <!-- #end -->
+    #end -->
     
    <!-- #if($PDF) -->
         <br><g:jasperReport jasper="report" format="PDF" name="export" ><br></br>

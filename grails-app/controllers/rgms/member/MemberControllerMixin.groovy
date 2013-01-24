@@ -1,7 +1,5 @@
 package rgms.member
 
-import rgms.member.DefaultValueManager;
-
 class MemberControllerMixin {
 
    def loadDefaultValues(member){

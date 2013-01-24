@@ -104,7 +104,3 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
-
-tomcat.deploy.username="rcaa2"
-tomcat.deploy.password="rgms2012"
-tomcat.deploy.url="http://toritama.cin.ufpe.br:8080/manager"

@@ -44,9 +44,6 @@ class BootStrap {
             
             print("Instancia de Admin = "+Member.findByUsername('admin').toString())
         }
-//#if($default_values)             
-        MemberController.mixin MemberControllerMixin                
-//#end
 
 		ResearchLine rl = new ResearchLine()
 		rl.setName("Empirical Software Engineering")

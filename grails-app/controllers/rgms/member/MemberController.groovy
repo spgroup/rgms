@@ -23,11 +23,6 @@ class MemberController {
 
     def create = {
 		def member = new Member(params)
-                
-//#if($default_values)             
-		MemberController.mixin MemberControllerMixin
-                loadDefaultValues(member)
-//#end		
 
         [memberInstance: member]
     }

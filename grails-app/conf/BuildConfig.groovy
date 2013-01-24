@@ -5,6 +5,9 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
+cloudbees.account='rcaa'
+cloudbees.api.key='DDDB9C32117BA2CD'
+cloudbees.api.secret='BCUW5VXU/0LVUFZ07Q9DMYQXKBLIPDWQDME32VBHPMM='
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies

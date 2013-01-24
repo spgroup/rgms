@@ -7,49 +7,44 @@
 	<classpathentry kind="src" path="grails-app/taglib"/>
 	<classpathentry kind="src" path="test/unit"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/antlr-2.7.5.jar"/>
-	<classpathentry kind="lib" path="lib/avalon-logkit-2.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/itext-2.0.8.jar"/>
-	<classpathentry kind="lib" path="lib/jdom-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.12.jar"/>
-	<classpathentry kind="lib" path="lib/maven-ant-tasks-2.0.9.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.18-bin.jar"/>
-	<classpathentry kind="lib" path="lib/oro-2.0.8.jar"/>
-	<classpathentry kind="lib" path="lib/servletapi-2.3.jar"/>
-	<classpathentry kind="lib" path="lib/velocity-1.7-dep.jar"/>
-	<classpathentry kind="lib" path="lib/velocity-1.7.jar"/>
-	<classpathentry kind="lib" path="lib/werken-xpath-0.9.4.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path=".link_to_grails_plugins/cloud-bees-0.6.2/src/groovy">
+		<attributes>
+			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path=".link_to_grails_plugins/hibernate-2.1.0/grails-app/i18n">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.5.3/grails-app/controllers">
+	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.6.1/grails-app/controllers">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.5.3/grails-app/i18n">
+	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.6.1/grails-app/i18n">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.5.3/grails-app/services">
+	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.6.1/grails-app/services">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.5.3/grails-app/taglib">
+	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.6.1/grails-app/taglib">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.5.3/src/groovy">
+	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.6.1/grails-app/views">
+		<attributes>
+			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path=".link_to_grails_plugins/jasper-1.6.1/src/groovy">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
@@ -79,27 +74,27 @@
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0/grails-app/i18n">
+	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0.1/grails-app/i18n">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0/grails-app/services">
+	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0.1/grails-app/services">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0/grails-app/taglib">
+	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0.1/grails-app/taglib">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0/grails-app/views">
+	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0.1/grails-app/views">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0/src/groovy">
+	<classpathentry kind="src" path=".link_to_grails_plugins/mail-1.0.1/src/groovy">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
@@ -189,37 +184,37 @@
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="BuildConfig.groovy|*DataSource.groovy|UrlMappings.groovy|Config.groovy|BootStrap.groovy|spring/resources.groovy" kind="src" path=".link_to_grails_plugins/shiro-ui-1.0-beta4/grails-app/conf">
+	<classpathentry excluding="BuildConfig.groovy|*DataSource.groovy|UrlMappings.groovy|Config.groovy|BootStrap.groovy|spring/resources.groovy" kind="src" path=".link_to_grails_plugins/shiro-ui-1.2.0-SNAPSHOT/grails-app/conf">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.0-beta4/grails-app/controllers">
+	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.2.0-SNAPSHOT/grails-app/controllers">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.0-beta4/grails-app/domain">
+	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.2.0-SNAPSHOT/grails-app/domain">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.0-beta4/grails-app/i18n">
+	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.2.0-SNAPSHOT/grails-app/i18n">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.0-beta4/grails-app/realms">
+	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.2.0-SNAPSHOT/grails-app/realms">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.0-beta4/grails-app/taglib">
+	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.2.0-SNAPSHOT/grails-app/taglib">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.0-beta4/grails-app/views">
+	<classpathentry kind="src" path=".link_to_grails_plugins/shiro-ui-1.2.0-SNAPSHOT/grails-app/views">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>

@@ -105,11 +105,11 @@ margin-top: 0;
       </ul>
     </div>-->
   <div style="margin-left: 2em; margin-right: 2em;">
-    <h1>Welcome to Research Group Management System (RGMS)</h1>
+   <!--  <h1>Welcome to Research Group Management System (RGMS)</h1>
     <p>Congratulations, you have successfully started your first Grails application! At the moment
       this is the default page, feel free to modify it to either redirect to a controller or display whatever
       content you may choose. Below is a list of controllers that are currently deployed in this application,
-      click on each to execute its default action:</p>
+      click on each to execute its default action:</p>  -->
   </div>
   <!--  <div id="page-body" role="main">-->
   <!--    <h1>Welcome to Grails</h1>
