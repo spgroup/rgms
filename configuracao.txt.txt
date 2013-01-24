@@ -1,7 +1,0 @@
-<feature  name="rgms" type="NONE" id="rgm">
-  <feature  name="ResultadosPesquisa" type="NONE" id="resultadosPesquisa">
-  </feature>
-  <feature  name="BibTex" type="NONE" id="bibTex">
-  </feature>
-</feature>
-
