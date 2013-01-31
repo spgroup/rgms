@@ -13,7 +13,7 @@ class ResearchLineController {
     }
 
     def list() {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [researchLineInstanceList: ResearchLine.list(params), researchLineInstanceTotal: ResearchLine.count()]
     }
 
