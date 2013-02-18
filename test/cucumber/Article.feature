@@ -24,3 +24,9 @@ Feature: journal article
     When I create the article "A theory of software product line refinement" with file name "TCS-2"
     And I create the article "A theory of software product line refinement" with file name "TCS-3"
     Then the article "A theory of software product line refinement" is not stored twice
+
+  Scenario: new article web
+    Given I am at the publications menu
+    When I select the "Periodico" option at the publications menu
+    And I select the new article option at the article page
+    Then I can fill the article details

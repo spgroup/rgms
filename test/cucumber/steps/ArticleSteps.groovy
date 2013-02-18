@@ -1,3 +1,7 @@
+import pages.ArticleCreatePage
+import pages.ArticlesPage
+import pages.LoginPage
+import pages.PublicationsPage
 import rgms.publication.Periodico
 import steps.TestDataAndOperations
 
@@ -33,4 +37,25 @@ Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
     assert articles.size() == 1
     // Should actually check whether elements in articles are not equal except for their filename,
     // which is changed by the system during the file upload.
+}
+
+Given(~'^I am at the publications menu$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+}
+
+When(~'^I select the "([^"]*)" option at the publications menu$') { String option ->
+    page.select(option)
+}
+
+When(~'^I select the new article option at the article page$') {->
+    at ArticlesPage
+    page.selectNewArticle()
+}
+
+Then(~'^I can fill the article details$') {->
+    at ArticleCreatePage
+    page.fillArticleDetails()
 }
