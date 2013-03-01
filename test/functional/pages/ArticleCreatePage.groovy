@@ -6,7 +6,7 @@ class ArticleCreatePage extends Page {
     static url = "periodico/create"
 
     static at = {
-        title ==~ /Create Journal/
+        title ==~ /Criar Periódico/
         journal != null
     }
 
