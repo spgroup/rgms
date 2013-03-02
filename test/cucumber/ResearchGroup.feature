@@ -38,3 +38,4 @@ Feature: research group
       When i create a research group entitled "modcs" with the description "modcs research group"
       And the research group's child is inexistent
       Then the research group is not stored in the system because the child is inexistent
+      
