@@ -168,7 +168,7 @@ Then(~'my resulting articles list contains "([^"]*)"$') { String title ->
 /**
  * @author Guilherme
  */
-Then(~'the details are showed, I select the option to remove, and the article is properly removed by the system$') { ->
+Then(~'the details are showed and I can select the option to remove$') { ->
 	at ArticleShowPage
 	page.select('input','delete')
 }

@@ -1,5 +1,5 @@
 Testsuite: journal article
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 6,146 sec
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 6,058 sec
 ------------- Standard Output ---------------
 @i9n
 Feature: journal article
@@ -13,14 +13,14 @@ ENTROU no signIn
 Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf" # ArticleSteps.groovy:84
     When I select the "Periodico" option at the publications menu                                                                                       # ArticleSteps.groovy:51
     And I select to view "A theory of software product line refinement" in resulting list                                                               # ArticleSteps.groovy:118
-    Then the details are showed, I select the option to remove, and the article is properly removed by the system                                       # ArticleSteps.groovy:171
+    Then the details are showed and I can select the option to remove                                                                                   # ArticleSteps.groovy:171
 ------------- ---------------- ---------------
 ------------- Standard Error -----------------
 
 --Output from remove existing article web--Started ChromeDriver
-port=1907
+port=48731
 version=26.0.1383.0
 log=C:\Users\Guilherme\git\rgms\chromedriver.log
 ------------- ---------------- ---------------
 
-Testcase: remove existing article web took 5,955 sec
+Testcase: remove existing article web took 5,838 sec

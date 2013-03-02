@@ -13,6 +13,23 @@ class TestDataAndOperations {
 			publicationDate: (new Date("12 October 2012"))]
 	]
 
+	/**
+	 * @author Felipe
+	 */
+	static reports = [[title:'Evaluating Natural Languages System',
+			publicationDate: (new Date('13 November 2012')), institution:'UFPE']]
+
+
+	/**
+	 * @author Felipe
+	 */
+	static public def findReportByTitle(String title){
+		reports.find{report ->
+			report.title == title
+		}
+	}
+
+
 	static public def findByTitle(String title) {
 		articles.find { article ->
 			article.title == title
@@ -77,7 +94,7 @@ class TestDataAndOperations {
 		def result = cont.list().periodicoInstanceList
 		return result.contains(testarticle)
 	}
-	
+
 	/**
 	 * Test of editing Article
 	 * @param article
@@ -88,9 +105,9 @@ class TestDataAndOperations {
 		def article = Periodico.findByTitle(oldtitle)
 		article.setTitle(newtitle)
 		def cont = new PeriodicoController()
-		cont.params << article.properties 
+		cont.params << article.properties
 		cont.update()
-		
+
 		def updatedarticle = Periodico.findByTitle(newtitle)
 		return updatedarticle
 	}

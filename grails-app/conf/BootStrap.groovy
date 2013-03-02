@@ -7,6 +7,7 @@ import rgms.member.MemberControllerMixin
 import rgms.member.Record
 import rgms.publication.Periodico
 import rgms.publication.ResearchLine
+import rgms.publication.TechnicalReport;
 
 class BootStrap {
 
@@ -43,15 +44,15 @@ class BootStrap {
 
 			admin.save()
 
-			print("Instancia de Admin = "+Member.findByUsername('admin').toString())	
-					
+			print("Instancia de Admin = "+Member.findByUsername('admin').toString())
+
 		}
 
 		ResearchLine rl = new ResearchLine()
 		rl.setName("Empirical Software Engineering")
 		rl.setDescription("We are investigating processes, methods, techniques and tools for supporting empirical studies in software engineering. The main objective is to develop a infrastructure that support researchers to define, plan, execute, analyze and store results of empirical studies in general. At this moment we call such structure Testbed")
 		rl.save()
-		
+
 		Periodico p1 = new Periodico()
 		p1.setJournal("Theoretical Computer Science")
 		p1.setVolume(455)
@@ -60,12 +61,23 @@ class BootStrap {
 		p1.setTitle("A theory of software product line refinement")
 		p1.setPublicationDate(new Date("12 October 2012"))
 		p1.setFile("TCS.pdf")
-		 if( !p1.save() ) {
+		if( !p1.save() ) {
 			p1.errors.each {
+				println it
+			}
+		}
+
+		TechnicalReport t1 = new TechnicalReport()
+		t1.setTitle('Evaluating Natural Languages System')
+		t1.setPublicationDate(new Date("13 November 2012"))
+		t1.setInstitution('UFPE')
+		t1.setFile("EVLS.pdf")
+		if( !t1.save() ) {
+			t1.errors.each {
 				 println it
 			}
 		 }
-		
+
 	}
 
 	def destroy = {
