@@ -6,5 +6,5 @@ Feature: member
   Scenario: new member
     Given the system has no member with username "usernametest"
     When I create a member with username "usernametest"
-    Then the member with username "username" is properly stored by the system
+    Then the member with username "usernametest" is properly stored by the system
 
