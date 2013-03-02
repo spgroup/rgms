@@ -21,4 +21,4 @@ Feature: research group
      And the system has memberships stored in the system
      And the system has publications stored in the system
     When I get publications from a research group
-    Then the publications members research group are returned
+    Then  the publications members research group are returned
