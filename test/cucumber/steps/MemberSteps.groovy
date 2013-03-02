@@ -1,3 +1,4 @@
+import pages.LoginPage
 import rgms.member.Member
 import steps.TestDataAndOperations
 
@@ -17,4 +18,17 @@ Then(~'^the member with username "([^"]*)" is properly stored by the system$') {
 	member = Member.findByUsername(username)
 	//assert TestDataAndOperations.memberCompatibleTo(member, username)
 	assert member != null
+}
+
+Given(~'^I am at the login page$') {->
+	to LoginPage
+	at LoginPage
+}
+
+When(~'^I fill username and password with "([^"]*)" and "([^"]*)"$') { String login, password ->
+	page.fillLoginData(login, password)
+}
+
+Then(~'^I am still on the login page$') { ->
+	at LoginPage
 }

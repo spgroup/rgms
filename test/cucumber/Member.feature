@@ -8,3 +8,7 @@ Feature: member
     When I create a member with username "usernametest"
     Then the member with username "usernametest" is properly stored by the system
 
+  Scenario: login with incorrect password
+    Given I am at the login page
+    When I fill username and password with "admin" and "incorrectpassword"
+    Then I am still on the login page
