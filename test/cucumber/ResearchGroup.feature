@@ -1,24 +1,47 @@
 @i9n
 Feature: research group
 
-	Scenario: new researchgroup
-	Given the system has no research group entitled "modcs" stored in the system
-	When I create a research group named "modcs" with the description "modcs research group"
-	Then the reserach group "modcs" is properly stored by the system
-	    
-	Scenario: duplicate researchgroup
-	Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
-	When I create a research group named "modcs" with the description "modcs research group"
-	Then the research group "modcs" is not stored again in the system
-	
-	Scenario: invalid researchgroup
-	Given the system has no research group entitled "modcs 123456789" stored in the system
-	When I create a research group named "modcs 123456789" with the description "modcs research group"
-	Then the research group "modcs 123456789" is not stored in the system because exceeds the number of characters allowed
-	
-	Scenario: getting Publications
-	Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
-	And the research group "modcs" has a membership with a member with username "admin" stored in the system
-	And the member with username "admin" is associated with a publication titled "AdminPublication", with date "20-02-2013" stored in the system
-	When I get publications from a research group
-	Then the members publications of the research group "modcs" are returned
+ Scenario: new researchgroup
+    Given the system has no research group entitled "modcs"
+    When I create a research group named "modcs" with the description "modcs research group"
+    Then the reserach group "modcs" is properly stored by the system
+    
+     Scenario: duplicate researchgroup
+     Given the system has a research group entitled "modcs" stored in the system
+    When I create a research group named "modcs" with the description "modcs research group"
+    Then the research group is not stored again in the system
+    
+      Scenario: invalid researchgroup
+     Given the system has no research group entitled "modcs" stored in the system
+    When I create a research group named "modcs" with the description "modcs research group"
+    Then the research group is not stored in the system because is invalid
+
+      Scenario: getting Publications
+     Given the system has research groups stored in the system
+     And the system has memberships stored in the system
+     And the system has publications stored in the system
+    When I get publications from a research group
+    Then the publications members of the research group are returned
+    
+     Scenario:edit research group
+      Given the system has a research group entitled "modcs" stored in the system
+      When i edit the research group entitled "modcs"
+      Then the edited research group is properly stored in the system
+      
+       Scenario:delete research group
+      Given the system has a research group entitled "modcs" stored in the system
+      When i delete the research group entitled "modcs"
+      Then the research group is properly deleted of the system
+      
+        Scenario: new research group child of a inexistent Research Group
+      Given the system has no research group entitled "modcs" stored in the system
+      When i create a research group entitled "modcs" with the description "modcs research group"
+      And the research group's child is inexistent
+      Then the research group is not stored in the system because the child is inexistent
+      
+       Scenario: new research group via web browser
+       Given i am at publication menu
+       When i select the "Research Group" option at publications menu
+       And i select the new research group option at research group list page
+       Then i can fill the research group details and create a new one
+       
