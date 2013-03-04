@@ -17,6 +17,7 @@ Then(~'^the reserach group "([^"]*)" is properly stored by the system$') { Strin
 	assert researchGroup != null
 }
 
+
 Given(~'^the system has a research group entitled "([^"]*)" with the description "([^"]*)" stored in the system$' ) { String name, description ->
 	TestDataAndOperations.createResearchGroup(name, description)
 	researchGroup = ResearchGroup.findByName(name)
