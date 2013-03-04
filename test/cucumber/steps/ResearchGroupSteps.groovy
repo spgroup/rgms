@@ -4,6 +4,7 @@ import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGroupCreatePage
 import pages.ResearchGroupPage
+import pages.ResearchGroupShowPage
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no research group entitled "([^"]*)" stored in the system$') { String name ->
@@ -76,3 +77,25 @@ Then(~'^i can fill the research group details$') { ->
 	page.fillResearchGroupDetails()
 }
 
+Given(~'^the system has a research group stored in the system$') { ->
+}
+
+Given(~'^i am at publications menu$') { ->
+	to LoginPage
+	at LoginPage
+	page.fillLoginData("admin", "adminadmin")
+	at PublicationsPage
+}
+
+When(~'^i select "([^"]*)" option at publications menu$') { String arg1 ->
+	page.select(arg1)
+}
+
+When(~'^i select a research group$') { ->
+	at ResearchGroupPage
+}
+
+Then(~'^the system will show the details of this research group$') { ->
+	page.showResearchGroup()
+	at ResearchGroupShowPage
+}

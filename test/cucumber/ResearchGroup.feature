@@ -54,5 +54,11 @@ Feature: research group
        And i select the new research group option at research group list page
        Then i can fill the research group details
        
+       Scenario: show research group via web browser
+       Given the system has a research group stored in the system
+       And i am at publications menu
+       When i select "Research Group" option at publications menu
+       And i select a research group
+       Then the system will show the details of this research group
        
        
