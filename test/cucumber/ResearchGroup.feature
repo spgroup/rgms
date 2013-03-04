@@ -11,9 +11,14 @@ Feature: research group
     When I create a research group named "modcs" with the description "modcs research group"
     Then the research group is not stored again in the system
     
-      Scenario: invalid researchgroup
+      Scenario: new research group with no name. inavlid
      Given the system has no research group entitled "modcs" stored in the system
-    When I create a research group named "modcs" with the description "modcs research group"
+    When I create a research group with no name and with the description "modcs research group"
+    Then the research group is not stored in the system because is invalid
+	
+      Scenario: new research group with no description. inavlid
+     Given the system has no research group entitled "modcs" stored in the system
+    When I create a research group with name "modcs" and with no description
     Then the research group is not stored in the system because is invalid
 
       Scenario: getting Publications
@@ -28,20 +33,26 @@ Feature: research group
       When i edit the research group entitled "modcs"
       Then the edited research group is properly stored in the system
       
+       Scenario:edit research group inexistent
+      Given the system has no research group entitled "modcs" stored in the system
+      When i edit a research group entitled "modcs"
+      Then the system will not edit anything
+      
        Scenario:delete research group
       Given the system has a research group entitled "modcs" stored in the system
       When i delete the research group entitled "modcs"
       Then the research group is properly deleted of the system
       
-        Scenario: new research group child of a inexistent Research Group
-      Given the system has no research group entitled "modcs" stored in the system
-      When i create a research group entitled "modcs" with the description "modcs research group"
-      And the research group's child is inexistent
-      Then the research group is not stored in the system because the child is inexistent
+       Scenario:delete inexistent research group
+       Given the system has a research group entitled "modcs" stored in the system
+       When i delete the research group entitled "modcs"
+       Then the system will not delete anything
       
        Scenario: new research group via web browser
        Given i am at publication menu
        When i select the "Research Group" option at publications menu
        And i select the new research group option at research group list page
-       Then i can fill the research group details and create a new one
+       Then i can fill the research group details
+       
+       
        
