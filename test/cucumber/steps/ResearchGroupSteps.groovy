@@ -1,6 +1,9 @@
 import rgms.member.ResearchGroup;
 import steps.TestDataAndOperations
-
+import pages.LoginPage
+import pages.PublicationsPage
+import pages.ResearchGroupCreatePage
+import pages.ResearchGroupPage
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no research group entitled "([^"]*)" stored in the system$') { String name ->
@@ -50,3 +53,26 @@ Then(~'^the members publications of the research group "([^"]*)" are returned$')
 	researchGroup = ResearchGroup.findAllByName(name)
 	assert ResearchGroup.getPublications(researchGroup) != null
 }
+
+Given(~'^i am at publication menu$') { ->
+	// Express the Regexp above with the code you wish you had
+	to LoginPage
+	at LoginPage
+	page.fillLoginData("admin", "adminadmin")
+	at PublicationsPage
+}
+
+When(~'^i select the "([^"]*)" option at publications menu$') { String option ->
+	page.select(option)
+}
+
+When(~'^i select the new research group option at research group list page$') { ->
+	at ResearchGroupPage
+	page.selectNewResearchGroup()
+}
+
+Then(~'^i can fill the research group details$') { ->
+	at ResearchGroupCreatePage
+	page.fillResearchGroupDetails()
+}
+
