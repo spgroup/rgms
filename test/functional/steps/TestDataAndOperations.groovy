@@ -2,6 +2,8 @@ package steps
 
 import rgms.publication.Periodico
 import rgms.publication.PeriodicoController
+import rgms.publication.Dissertacao
+import rgms.publication.DissertacaoController
 
 class TestDataAndOperations {
     static articles = [
@@ -34,6 +36,28 @@ class TestDataAndOperations {
         return compatible
     }
 
+	static public void createDissertacao(String title, filename, school) {
+        def cont = new DissertacaoController()
+		def date = new Date()
+		cont.params << [title: title, publicationDate: new Date(2013, 03, 02), 
+			school: school, address: "Boa Viagem",file: filename]
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.create()
+		cont.save()
+		cont.response.reset()
+    }
+	
+	static public void createDissertacaoWithotSchool(String title, filename) {
+		def cont = new DissertacaoController()
+		def date = new Date()
+		cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
+			address: "Boa Viagem",file: filename]
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
+	
     static public void createArticle(String title, filename) {
         def cont = new PeriodicoController()
         def date = new Date()
@@ -47,4 +71,5 @@ class TestDataAndOperations {
     static void clearArticles() {
         Periodico.findAll()*.delete flush: true // Could also delete the created files.
     }
+	
 }
