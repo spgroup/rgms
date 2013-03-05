@@ -1,5 +1,5 @@
 
 --Output from remove existing article web--Started ChromeDriver
-port=1907
+port=48731
 version=26.0.1383.0
 log=C:\Users\Guilherme\git\rgms\chromedriver.log
