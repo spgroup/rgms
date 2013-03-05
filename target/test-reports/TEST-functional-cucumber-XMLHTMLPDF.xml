@@ -1,81 +1,8 @@
-<!DOCTYPE html><html xmlns:lxslt="http://xml.apache.org/xslt" xmlns:stringutils="xalan://org.apache.tools.ant.util.StringUtils">
-<head>
-<META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>
-        Unit Test Results
-     - Failed tests</title>
-<link href="stylesheet.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-<div id="report" class="container container_8">
-<div class="grid_6 alpha">
-<div class="grailslogo"></div>
-<h1>
-        Unit Test Results
-     - Failed tests</h1>
-<p class="intro">
-                        Executed
-                        6
-                        tests
-                    
-                        with
-                        6 errors
-
-                        and
-                        4 failures
-                        .
-                    </p>
-</div>
-<div class="grid_2 omega">
-<nav id="navigationlinks">
-<p>
-<a href="failed.html">
-                    Tests with failure and errors
-                </a>
-</p>
-<p>
-<a href="index.html">
-                    Package summary
-                </a>
-</p>
-<p>
-<a href="all.html">
-                    Show all tests
-                </a>
-</p>
-</nav>
-</div>
-<div class="clear"></div>
-<div class="testsuite error">
-<div class="header">
-<h2>XMLHTMLPDF</h2>
-<h3>
-                        Executed
-                        6
-                        tests
-                    
-                        with
-                        6 errors
-
-                        and
-                        4 failures
-                        .
-                    </h3>
-</div>
-<div class="testcase clearfix error grid_8 alpha omega" data-name="export member report to pdf">
-<div class="grid_3 alpha">
-<p>
-<span class="icon error"></span><b class="testname message error">export member report to pdf</b>
-</p>
-<p class="summary">Executed in 5.997 seconds.</p>
-</div>
-<div class="grid_5 omega outputinfo">
-<div class="details">
-<p>
-<b class="message">Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:27' with pattern [^I select the option Export to PDF at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
-Step: And I select the option Export to PDF at the Member show</b>
-</p>
-<pre>cucumber.runtime.CucumberException: Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:27' with pattern [^I select the option Export to PDF at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="6" failures="4" hostname="Hugo-PC" name="XMLHTMLPDF" tests="6" time="9.862" timestamp="2013-03-05T09:05:46">
+  <properties />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="export member report to pdf" time="5.997">
+    <error message="Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:27&apos; with pattern [^I select the option Export to PDF at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. &#xa;Step: And I select the option Export to PDF at the Member show" type="cucumber.runtime.CucumberException">cucumber.runtime.CucumberException: Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:27&apos; with pattern [^I select the option Export to PDF at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
 Step: And I select the option Export to PDF at the Member show
 	at cucumber.runtime.StepDefinitionMatch.arityMismatch(StepDefinitionMatch.java:106)
 	at cucumber.runtime.StepDefinitionMatch.transformedArgs(StepDefinitionMatch.java:62)
@@ -89,25 +16,10 @@ Step: And I select the option Export to PDF at the Member show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-</div>
-<div class="clear"></div>
-</div>
-<div class="testcase clearfix error grid_8 alpha omega" data-name="export member report to html">
-<div class="grid_3 alpha">
-<p>
-<span class="icon error"></span><b class="testname message error">export member report to html</b>
-</p>
-<p class="summary">Executed in 0.654 seconds.</p>
-</div>
-<div class="grid_5 omega outputinfo">
-<div class="details">
-<p>
-<b class="message">Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:49' with pattern [^I select the option Export to HTML at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
-Step: And I select the option Export to HTML at the Member show</b>
-</p>
-<pre>cucumber.runtime.CucumberException: Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:49' with pattern [^I select the option Export to HTML at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
+</error>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="export member report to html" time="0.654">
+    <error message="Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:49&apos; with pattern [^I select the option Export to HTML at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. &#xa;Step: And I select the option Export to HTML at the Member show" type="cucumber.runtime.CucumberException">cucumber.runtime.CucumberException: Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:49&apos; with pattern [^I select the option Export to HTML at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
 Step: And I select the option Export to HTML at the Member show
 	at cucumber.runtime.StepDefinitionMatch.arityMismatch(StepDefinitionMatch.java:106)
 	at cucumber.runtime.StepDefinitionMatch.transformedArgs(StepDefinitionMatch.java:62)
@@ -121,25 +33,10 @@ Step: And I select the option Export to HTML at the Member show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-</div>
-<div class="clear"></div>
-</div>
-<div class="testcase clearfix error grid_8 alpha omega" data-name="export member report to xml">
-<div class="grid_3 alpha">
-<p>
-<span class="icon error"></span><b class="testname message error">export member report to xml</b>
-</p>
-<p class="summary">Executed in 0.731 seconds.</p>
-</div>
-<div class="grid_5 omega outputinfo">
-<div class="details">
-<p>
-<b class="message">Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:71' with pattern [^I select the option Export to XML at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
-Step: And I select the option Export to XML at the Member show</b>
-</p>
-<pre>cucumber.runtime.CucumberException: Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:71' with pattern [^I select the option Export to XML at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
+</error>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="export member report to xml" time="0.731">
+    <error message="Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:71&apos; with pattern [^I select the option Export to XML at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. &#xa;Step: And I select the option Export to XML at the Member show" type="cucumber.runtime.CucumberException">cucumber.runtime.CucumberException: Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:71&apos; with pattern [^I select the option Export to XML at the Member show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
 Step: And I select the option Export to XML at the Member show
 	at cucumber.runtime.StepDefinitionMatch.arityMismatch(StepDefinitionMatch.java:106)
 	at cucumber.runtime.StepDefinitionMatch.transformedArgs(StepDefinitionMatch.java:62)
@@ -153,13 +50,8 @@ Step: And I select the option Export to XML at the Member show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-<div class="details">
-<p>
-<b class="message">Undefined Step: Then I can generate a XML report about that Member</b>
-</p>
-<pre>cucumber.runtime.UndefinedStepException: Undefined Step: Then I can generate a XML report about that Member
+</error>
+    <failure message="Undefined Step: Then I can generate a XML report about that Member" type="grails.plugin.cucumber.FakeAssertionFailedError">cucumber.runtime.UndefinedStepException: Undefined Step: Then I can generate a XML report about that Member
 	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
 	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
 	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
@@ -171,25 +63,10 @@ Step: And I select the option Export to XML at the Member show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-</div>
-<div class="clear"></div>
-</div>
-<div class="testcase clearfix error grid_8 alpha omega" data-name="export research group report to pdf">
-<div class="grid_3 alpha">
-<p>
-<span class="icon error"></span><b class="testname message error">export research group report to pdf</b>
-</p>
-<p class="summary">Executed in 1.12 seconds.</p>
-</div>
-<div class="grid_5 omega outputinfo">
-<div class="details">
-<p>
-<b class="message">Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:93' with pattern [^I select the option Export to PDF at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
-Step: And I select the option Export to PDF at the Research Group show</b>
-</p>
-<pre>cucumber.runtime.CucumberException: Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:93' with pattern [^I select the option Export to PDF at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
+</failure>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="export research group report to pdf" time="1.12">
+    <error message="Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:93&apos; with pattern [^I select the option Export to PDF at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. &#xa;Step: And I select the option Export to PDF at the Research Group show" type="cucumber.runtime.CucumberException">cucumber.runtime.CucumberException: Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:93&apos; with pattern [^I select the option Export to PDF at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
 Step: And I select the option Export to PDF at the Research Group show
 	at cucumber.runtime.StepDefinitionMatch.arityMismatch(StepDefinitionMatch.java:106)
 	at cucumber.runtime.StepDefinitionMatch.transformedArgs(StepDefinitionMatch.java:62)
@@ -203,13 +80,8 @@ Step: And I select the option Export to PDF at the Research Group show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-<div class="details">
-<p>
-<b class="message">Undefined Step: Then I can generate a PDF report about that Research Group</b>
-</p>
-<pre>cucumber.runtime.UndefinedStepException: Undefined Step: Then I can generate a PDF report about that Research Group
+</error>
+    <failure message="Undefined Step: Then I can generate a PDF report about that Research Group" type="grails.plugin.cucumber.FakeAssertionFailedError">cucumber.runtime.UndefinedStepException: Undefined Step: Then I can generate a PDF report about that Research Group
 	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
 	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
 	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
@@ -221,25 +93,10 @@ Step: And I select the option Export to PDF at the Research Group show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-</div>
-<div class="clear"></div>
-</div>
-<div class="testcase clearfix error grid_8 alpha omega" data-name="export research group report to html">
-<div class="grid_3 alpha">
-<p>
-<span class="icon error"></span><b class="testname message error">export research group report to html</b>
-</p>
-<p class="summary">Executed in 0.626 seconds.</p>
-</div>
-<div class="grid_5 omega outputinfo">
-<div class="details">
-<p>
-<b class="message">Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:115' with pattern [^I select the option Export to HTML at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
-Step: And I select the option Export to HTML at the Research Group show</b>
-</p>
-<pre>cucumber.runtime.CucumberException: Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:115' with pattern [^I select the option Export to HTML at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
+</failure>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="export research group report to html" time="0.626">
+    <error message="Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:115&apos; with pattern [^I select the option Export to HTML at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. &#xa;Step: And I select the option Export to HTML at the Research Group show" type="cucumber.runtime.CucumberException">cucumber.runtime.CucumberException: Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:115&apos; with pattern [^I select the option Export to HTML at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
 Step: And I select the option Export to HTML at the Research Group show
 	at cucumber.runtime.StepDefinitionMatch.arityMismatch(StepDefinitionMatch.java:106)
 	at cucumber.runtime.StepDefinitionMatch.transformedArgs(StepDefinitionMatch.java:62)
@@ -253,13 +110,8 @@ Step: And I select the option Export to HTML at the Research Group show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-<div class="details">
-<p>
-<b class="message">Undefined Step: Then I can generate a HTML report about that Research Group</b>
-</p>
-<pre>cucumber.runtime.UndefinedStepException: Undefined Step: Then I can generate a HTML report about that Research Group
+</error>
+    <failure message="Undefined Step: Then I can generate a HTML report about that Research Group" type="grails.plugin.cucumber.FakeAssertionFailedError">cucumber.runtime.UndefinedStepException: Undefined Step: Then I can generate a HTML report about that Research Group
 	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
 	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
 	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
@@ -271,25 +123,10 @@ Step: And I select the option Export to HTML at the Research Group show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-</div>
-<div class="clear"></div>
-</div>
-<div class="testcase clearfix error grid_8 alpha omega" data-name="export research group report to xml">
-<div class="grid_3 alpha">
-<p>
-<span class="icon error"></span><b class="testname message error">export research group report to xml</b>
-</p>
-<p class="summary">Executed in 0.582 seconds.</p>
-</div>
-<div class="grid_5 omega outputinfo">
-<div class="details">
-<p>
-<b class="message">Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:137' with pattern [^I select the option Export to XML at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
-Step: And I select the option Export to XML at the Research Group show</b>
-</p>
-<pre>cucumber.runtime.CucumberException: Arity mismatch: Step Definition 'XMLHTMLPDFSteps.groovy:137' with pattern [^I select the option Export to XML at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
+</failure>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="export research group report to xml" time="0.582">
+    <error message="Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:137&apos; with pattern [^I select the option Export to XML at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. &#xa;Step: And I select the option Export to XML at the Research Group show" type="cucumber.runtime.CucumberException">cucumber.runtime.CucumberException: Arity mismatch: Step Definition &apos;XMLHTMLPDFSteps.groovy:137&apos; with pattern [^I select the option Export to XML at the Research Group show$] is declared with 1 parameters. However, the gherkin step has 0 arguments []. 
 Step: And I select the option Export to XML at the Research Group show
 	at cucumber.runtime.StepDefinitionMatch.arityMismatch(StepDefinitionMatch.java:106)
 	at cucumber.runtime.StepDefinitionMatch.transformedArgs(StepDefinitionMatch.java:62)
@@ -303,13 +140,8 @@ Step: And I select the option Export to XML at the Research Group show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-<div class="details">
-<p>
-<b class="message">Undefined Step: Then I can generate a XML report about that Research Group</b>
-</p>
-<pre>cucumber.runtime.UndefinedStepException: Undefined Step: Then I can generate a XML report about that Research Group
+</error>
+    <failure message="Undefined Step: Then I can generate a XML report about that Research Group" type="grails.plugin.cucumber.FakeAssertionFailedError">cucumber.runtime.UndefinedStepException: Undefined Step: Then I can generate a XML report about that Research Group
 	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
 	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
 	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
@@ -321,15 +153,9 @@ Step: And I select the option Export to XML at the Research Group show
 	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</pre>
-</div>
-</div>
-<div class="clear"></div>
-</div>
-<div class="clearfix output footer">
-<div class="sysout">
-<h2>Standard output</h2>
-<pre class="stdout">@i10n
+</failure>
+  </testcase>
+  <system-out><![CDATA[@i10n
 Feature: XMLHTMLPDF
 
 --Output from export member report to pdf--
@@ -2995,11 +2821,8 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the Research Grou
       	at org.codehaus.groovy.grails.cli.support.GrailsStarter.main(GrailsStarter.java:262)
 
     Then I can generate a XML report about that Research Group
-</pre>
-</div>
-<div class="syserr">
-<h2>System error</h2>
-<pre class="syserr">
+]]></system-out>
+  <system-err><![CDATA[
 --Output from export member report to pdf--Started ChromeDriver
 port=45686
 version=26.0.1383.0
@@ -3009,150 +2832,5 @@ log=C:\Users\Hugo\Documents\GitHub\rgms\chromedriver.log
 --Output from export member report to xml--
 --Output from export research group report to pdf--
 --Output from export research group report to html--
---Output from export research group report to xml--</pre>
-</div>
-</div>
-<div class="clear"></div>
-</div>
-<div class="clear"></div>
-</div>
-<!--
-            Parses JUnit output and associates it with the corresponding test case
-        -->
-<script language="javascript">
-
-
-/**
- * The JUnit report format is incredibly stuipd in the
- * sense that it accumulates output from all test methods
- * into a single xml node.
- */
-(function() {
-
-    var outputElements = findOutputElements();
-    for (var i in outputElements) {
-        var outputElement = outputElements[i];
-        var textOutput = outputElement.element.firstChild.nodeValue;
-        var header = outputElement.getHeader();
-        appendTestMethodOutput(textOutput, header);
-    }
-
-    function findOutputElements() {
-        var outputElements = [];
-        var preElements = document.getElementsByTagName("pre");
-        for (var i in preElements) {
-            var preElement = preElements[i];
-            var className = preElement.className || "";
-            if (className.indexOf("stdout") >= 0) {
-                var outputElement = new OutputElement(preElement, "output");
-                outputElements.push(outputElement);
-            } else if (className.indexOf("syserr") >= 0) {
-                var outputElement = new OutputElement(preElement, "error");
-                outputElements.push(outputElement);
-            }
-        }
-
-        return outputElements;
-    }
-
-    function OutputElement(element, type) {
-        this.element = element;
-        this.type = type;
-
-        this.getHeader = function() {
-            if (type === "output") {
-                return "System output";
-            } else if ("error") {
-                return "System error";
-            }
-        }
-    }
-
-    function appendTestMethodOutput(text, header) {
-        var testOutput = new TestMethodOutput(header);
-
-        var lines = text.split(/\r\n|\r|\n/);
-        for (var i in lines) {
-            var line = lines[i];
-            var matches = line.match(/^--Output from (.*)--$/);
-            if (matches !== null && matches.length == 2) {
-                testOutput.flushToDom();
-                testOutput.testName = matches[1];
-            } else {
-                testOutput.addLine(line);
-            }
-        }
-
-        testOutput.flushToDom();
-    }
-
-    function TestMethodOutput(header) {
-        this.header = header;
-        this.testName = undefined;
-        this.buffer = "";
-
-        this.addLine = function(line) {
-            this.buffer += line + "\n";
-        }
-
-        this.flushToDom = function() {
-            if (this.testName !== undefined) {
-                var domNode = getTestcaseElementByName(this.testName);
-                if (domNode !== undefined && trimString(this.buffer).length > 0) {
-                    this.appendTo(domNode);
-                }
-
-                this.reset();
-            }
-        }
-
-        this.appendTo = function(domNode) {
-            var node = document.createElement("div");
-            node.innerHTML = '<p><b class="message">' + header + '</b></p>';
-
-            var preNode = document.createElement("pre");
-            preNode.appendChild(document.createTextNode(this.buffer));
-            node.appendChild(preNode);
-
-            var outputContainer = findElementByTagClassAndParent("div", "outputinfo", domNode);
-            outputContainer.appendChild(node);
-        }
-
-        this.reset = function() {
-            this.methodName = undefined;
-            this.buffer = "";
-        }
-    }
-
-    function getTestcaseElementByName(name) {
-        var divElements = document.getElementsByTagName("div");
-        var elementCount = divElements.length;
-        for (var i=0; i<elementCount; i++) {
-            var el = divElements[i];
-            if (el.getAttribute("data-name") === name) {
-                return el;
-            }
-        }
-    }
-
-    function findElementByTagClassAndParent(tagName, className, parentNode) {
-        var elements = parentNode.getElementsByTagName(tagName);
-        for (var i in elements) {
-            var element = elements[i];
-
-            // Not 100% correct, but good enough here
-            if (element.className !== undefined && element.className.indexOf(className) >= 0) {
-                return element;
-            }
-        }
-    }
-
-    function trimString(str) {
-        return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-    }
-
-})();
-
-        </script>
-</body>
-</html>
+--Output from export research group report to xml--]]></system-err>
+</testsuite>

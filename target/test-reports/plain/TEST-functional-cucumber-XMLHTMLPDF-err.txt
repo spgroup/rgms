@@ -1,0 +1,11 @@
+
+--Output from export member report to pdf--Started ChromeDriver
+port=45686
+version=26.0.1383.0
+log=C:\Users\Hugo\Documents\GitHub\rgms\chromedriver.log
+
+--Output from export member report to html--
+--Output from export member report to xml--
+--Output from export research group report to pdf--
+--Output from export research group report to html--
+--Output from export research group report to xml--

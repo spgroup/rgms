@@ -1,6 +1,0 @@
-
---Output from new article--
---Output from new invalid article--
---Output from duplicate article--
---Output from alternative duplicate article--
---Output from new article web--

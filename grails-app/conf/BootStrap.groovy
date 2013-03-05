@@ -4,7 +4,9 @@ import rgms.authentication.Role
 import rgms.member.Member
 import rgms.member.MemberController
 import rgms.member.MemberControllerMixin
+import rgms.member.Membership
 import rgms.member.Record
+import rgms.member.ResearchGroup
 import rgms.publication.ResearchLine
 
 class BootStrap {
