@@ -32,7 +32,7 @@
 					
 						<th><g:message code="ferramenta.researchLine.label" default="Research Line" /></th>
 					
-						<g:sortableColumn property="bibTex" title="${message(code: 'ferramenta.bibTex.label', default: 'Bib Tex')}" />
+						
 					
 						<g:sortableColumn property="website" title="${message(code: 'ferramenta.website.label', default: 'Website')}" />
 					
@@ -50,7 +50,7 @@
 					
 						<td>${fieldValue(bean: ferramentaInstance, field: "researchLine")}</td>
 					
-						<td>${fieldValue(bean: ferramentaInstance, field: "bibTex")}</td>
+						
 					
 						<td>${fieldValue(bean: ferramentaInstance, field: "website")}</td>
 					
