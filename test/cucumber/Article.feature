@@ -60,8 +60,8 @@ Scenario: edit existing article
 
 Scenario: remove existing article web
     Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
-    When 	I select the "Periodico" option at the publications menu 
-    And 	I select to view "A theory of software product line refinement" in resulting list
+    And 	I select the "Periodico" option at the publications menu
+    When 	I select to view "A theory of software product line refinement" in resulting list
     Then 	the details are showed and I can select the option to remove 
 
 @ignore  
