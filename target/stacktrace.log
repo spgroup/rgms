@@ -33083,3 +33083,45 @@ org.codehaus.groovy.grails.web.pages.exceptions.GroovyPagesException: Error eval
 Caused by: groovy.lang.MissingPropertyException: No such property: bibTex for class: rgms.publication.TechnicalReport
 	at C__Users_Guilherme_git_rgms_grails_app_views_technicalReport_list_gsp$_run_closure2_closure42.doCall(list.gsp:53)
 	... 13 more
+2013-03-06 00:09:59,546 [main] ERROR StackTrace  - Full Stack Trace:
+Assertion failed: 
+
+assert article == null
+       |       |
+       |       false
+       A theory of software product line refinement
+
+	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+	at ArticleSteps$_run_closure1.doCall(ArticleSteps.groovy:14)
+	at ?.Given the system has no article entitled "A theory of software product line refinement"(Article.feature:9)
+2013-03-06 00:09:59,546 [main] ERROR StackTrace  - Full Stack Trace:
+Assertion failed: 
+
+assert article == null
+       |       |
+       |       false
+       A theory of software product line refinement
+
+	at ArticleSteps$_run_closure1.doCall(ArticleSteps.groovy:14)
+	at ?.Given the system has no article entitled "A theory of software product line refinement"(Article.feature:9)
+2013-03-06 00:09:59,562 [main] ERROR StackTrace  - Full Stack Trace:
+Assertion failed: 
+
+assert article == null
+       |       |
+       |       false
+       A theory of software product line refinement
+
+	at ArticleSteps$_run_closure1.doCall(ArticleSteps.groovy:14)
+	at ?.Given the system has no article entitled "A theory of software product line refinement"(Article.feature:9)
+2013-03-06 00:09:59,562 [main] ERROR StackTrace  - Full Stack Trace:
+Assertion failed: 
+
+assert article == null
+       |       |
+       |       false
+       A theory of software product line refinement
+
+	at ArticleSteps$_run_closure1.doCall(ArticleSteps.groovy:14)
+	at ?.Given the system has no article entitled "A theory of software product line refinement"(Article.feature:9)

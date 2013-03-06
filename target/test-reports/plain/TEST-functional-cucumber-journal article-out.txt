@@ -5,9 +5,9 @@ Feature: journal article
   so that I can generate web pages and reports containing these articles
 
 --Output from remove existing article web--
-  Scenario: remove existing article web                                                                                                                 # Article.feature:62
+  Scenario: remove existing article web                                                                                                                 # Article.feature:61
 ENTROU no signIn
-Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf" # ArticleSteps.groovy:84
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf" # ArticleSteps.groovy:98
     When I select the "Periodico" option at the publications menu                                                                                       # ArticleSteps.groovy:51
-    And I select to view "A theory of software product line refinement" in resulting list                                                               # ArticleSteps.groovy:118
-    Then the details are showed and I can select the option to remove                                                                                   # ArticleSteps.groovy:171
+    And I select to view "A theory of software product line refinement" in resulting list                                                               # ArticleSteps.groovy:133
+    Then the details are showed and I can select the option to remove                                                                                   # ArticleSteps.groovy:186

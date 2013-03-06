@@ -49,7 +49,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">remove existing article web</b>
 </p>
-<p class="summary">Executed in 5.838 seconds.</p>
+<p class="summary">Executed in 21.61 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -64,21 +64,21 @@ Feature: journal article
   so that I can generate web pages and reports containing these articles
 
 --Output from remove existing article web--
-  Scenario: remove existing article web                                                                                                                 # Article.feature:62
+  Scenario: remove existing article web                                                                                                                 # Article.feature:61
 ENTROU no signIn
-Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf" # ArticleSteps.groovy:84
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf" # ArticleSteps.groovy:98
     When I select the "Periodico" option at the publications menu                                                                                       # ArticleSteps.groovy:51
-    And I select to view "A theory of software product line refinement" in resulting list                                                               # ArticleSteps.groovy:118
-    Then the details are showed and I can select the option to remove                                                                                   # ArticleSteps.groovy:171
+    And I select to view "A theory of software product line refinement" in resulting list                                                               # ArticleSteps.groovy:133
+    Then the details are showed and I can select the option to remove                                                                                   # ArticleSteps.groovy:186
 </pre>
 </div>
 <div class="syserr">
 <h2>System error</h2>
 <pre class="syserr">
 --Output from remove existing article web--Started ChromeDriver
-port=48731
+port=8598
 version=26.0.1383.0
-log=C:\Users\Guilherme\git\rgms\chromedriver.log
+log=C:\springsource\workspace\rgms\chromedriver.log
 </pre>
 </div>
 </div>
