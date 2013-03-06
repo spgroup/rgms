@@ -16,4 +16,8 @@ class ResearchGroupPage extends Page{
 		def selectNewResearchGroup() {
 			$('a.create').click()
 		}
+		
+		def showResearchGroup(String a){
+			$('a', title: a).click()
+		}
 }

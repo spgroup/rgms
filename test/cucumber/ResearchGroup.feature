@@ -58,7 +58,7 @@ Feature: research group
        Given the system has a research group stored in the system
        And i am at publications menu
        When i select "Research Group" option at publications menu
-       And i select a research group
+       And i select a research group called "MODCs"
        Then the system will show the details of this research group
        
        

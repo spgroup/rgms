@@ -91,11 +91,11 @@ When(~'^i select "([^"]*)" option at publications menu$') { String arg1 ->
 	page.select(arg1)
 }
 
-When(~'^i select a research group$') { ->
+When(~'^i select a research group called "([^"]*)"$') { a ->
 	at ResearchGroupPage
+	page.showResearchGroup(a)
 }
 
 Then(~'^the system will show the details of this research group$') { ->
-	page.showResearchGroup()
 	at ResearchGroupShowPage
 }
