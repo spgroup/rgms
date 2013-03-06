@@ -81,28 +81,13 @@ Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') {
 /**
  * @author Guilherme
  */
-//Given(~'^I am at the publications menu and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') {String title, filename->
-//	to LoginPage
-//	at LoginPage
-//	page.fillLoginData("admin", "adminadmin")
-//	at PublicationsPage
-//	page.select('Periodico')
-//	at ArticlesPage
-//	page.selectNewArticle()
-//	at ArticleCreatePage
-//	page.fillArticleDetails()
-//	at ArticleCreatePage
-//	page.selectCreateArticle()
-//	page.select('a','list')
-//}
-	Given(~'^I am at the publications menu and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') {String title, filename->
-		to LoginPage
-		at LoginPage
-		page.fillLoginData("admin", "adminadmin")
-		at PublicationsPage
-	}
 
-
+Given(~'^I am at the publications menu and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') {String title, filename->
+	to LoginPage
+	at LoginPage
+	page.fillLoginData("admin", "adminadmin")
+	at PublicationsPage
+}
 
 /**
  * @author Guilherme
