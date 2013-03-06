@@ -58,7 +58,7 @@ Scenario: edit existing article
    Then 	the article "A theory of software product line refinement" is properly updated by the system
 
 
-    
+@ignore  
 Scenario: remove existing article web
     Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
     When 	I select the "Periodico" option at the publications menu 
@@ -66,7 +66,6 @@ Scenario: remove existing article web
     Then 	the details are showed and I can select the option to remove 
 
 
-@ignore  
 Scenario: list existing article web
     Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
     When 	I select the "Periodico" option at the publications menu
