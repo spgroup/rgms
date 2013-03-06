@@ -39,17 +39,6 @@ Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
     // which is changed by the system during the file upload.
 }
 
-Given(~'^I am at the publications menu$') {->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-}
-
-When(~'^I select the "([^"]*)" option at the publications menu$') { String option ->
-    page.select(option)
-}
-
 When(~'^I select the new article option at the article page$') {->
     at ArticlesPage
     page.selectNewArticle()
