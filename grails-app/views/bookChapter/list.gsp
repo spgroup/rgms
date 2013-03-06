@@ -32,7 +32,7 @@
 					
 						<th><g:message code="bookChapter.researchLine.label" default="Research Line" /></th>
 					
-						<g:sortableColumn property="bibTex" title="${message(code: 'bookChapter.bibTex.label', default: 'Bib Tex')}" />
+						
 					
 						<g:sortableColumn property="publisher" title="${message(code: 'bookChapter.publisher.label', default: 'Publisher')}" />
 					
@@ -50,7 +50,7 @@
 					
 						<td>${fieldValue(bean: bookChapterInstance, field: "researchLine")}</td>
 					
-						<td>${fieldValue(bean: bookChapterInstance, field: "bibTex")}</td>
+						
 					
 						<td>${fieldValue(bean: bookChapterInstance, field: "publisher")}</td>
 					

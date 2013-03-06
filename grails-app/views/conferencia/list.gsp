@@ -32,7 +32,7 @@
 					
 						<th><g:message code="conferencia.researchLine.label" default="Research Line" /></th>
 					
-						<g:sortableColumn property="bibTex" title="${message(code: 'conferencia.bibTex.label', default: 'Bib Tex')}" />
+						
 					
 						<g:sortableColumn property="booktitle" title="${message(code: 'conferencia.booktitle.label', default: 'Booktitle')}" />
 					
@@ -50,7 +50,7 @@
 					
 						<td>${fieldValue(bean: conferenciaInstance, field: "researchLine")}</td>
 					
-						<td>${fieldValue(bean: conferenciaInstance, field: "bibTex")}</td>
+						
 					
 						<td>${fieldValue(bean: conferenciaInstance, field: "booktitle")}</td>
 					
