@@ -32,7 +32,7 @@
 					
 						<th><g:message code="periodico.researchLine.label" default="Research Line" /></th>
 					
-<%--						<g:sortableColumn property="bibTex" title="${message(code: 'periodico.bibTex.label', default: 'Bib Tex')}" />--%>
+						
 					
 						<g:sortableColumn property="journal" title="${message(code: 'periodico.journal.label', default: 'Journal')}" />
 					
@@ -50,7 +50,7 @@
 					
 						<td>${fieldValue(bean: periodicoInstance, field: "researchLine")}</td>
 					
-<%--						<td>${fieldValue(bean: periodicoInstance, field: "bibTex")}</td>--%>
+						
 					
 						<td>${fieldValue(bean: periodicoInstance, field: "journal")}</td>
 					
