@@ -3,12 +3,13 @@ package steps
 import java.text.SimpleDateFormat
 
 import rgms.member.Member
+import rgms.member.Membership
 import rgms.member.MembershipController
 import rgms.member.ResearchGroup
 import rgms.member.ResearchGroupController
+import rgms.publication.Dissertacao
 import rgms.publication.Periodico
 import rgms.publication.PeriodicoController
-import rgms.publication.PublicationController
 
 class TestDataAndOperations {
     static articles = [
@@ -60,28 +61,24 @@ class TestDataAndOperations {
 		researchGroupController.response.reset()
 	}
 
-	static public void createResearchGroupMembershipWithMember(String name, String memberUsername) {
-		def researchGroup = ResearchGroup.findByName(name) 
-		def member = Member.findByUsername(memberUsername)
-		def memberShipController = new MembershipController()
-		memberShipController.params << [researchGroup: researchGroup] << [member: member]
-		memberShipController.create()
-		memberShipController.save()
-		memberShipController.response.reset()
+	static public void editResearchGroup(def researchGroup, String newName, String newDescription) {
+		def researchGroupController = new ResearchGroupController()
+		researchGroupController.params << [name: newName] << [description: newDescription] << [id : researchGroup.getId()]
+		researchGroupController.request.setContent(new byte[1000]) // Could also vary the request content.
+		researchGroupController.edit()
+		researchGroupController.save()
+		researchGroupController.response.reset()
 	}
 
-	static public void createMemberPublication(String username, String title, String date) {
-		def member = Member.findByUsername(username)
-		def publicationController =	 new PublicationController()
-		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");  
-		java.sql.Date dateFormat = new java.sql.Date(format.parse(date).getTime());
-		publicationController.params << [title: title] << [publicationDate: date]
-		publicationController.create()
-		publicationController.save()
-		publicationController.response.reset()
+	static public void deleteResearchGroup(def researchGroup) {
+		def researchGroupController = new ResearchGroupController()
+		researchGroupController.params << [id : researchGroup.getId()]
+		researchGroupController.request.setContent(new byte[1000]) // Could also vary the request content.
+		researchGroupController.delete()
+		researchGroupController.response.reset()
 	}
 
-    static void clearArticles() {
+    static void clearArticles() {	
         Periodico.findAll()*.delete flush: true // Could also delete the created files.
     }
 }
