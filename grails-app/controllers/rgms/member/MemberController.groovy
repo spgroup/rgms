@@ -45,9 +45,9 @@ class MemberController {
         }
         memberInstance.passwordChangeRequiredOnNextLogon = true
         
-        //#if($History)
-            
-        //saveHistory();
+        //#if($History)   
+        //saveHistory(memberInstance,memberInstance.status);//essa é a maneira correta de chamar
+		//saveHistory();
        //#end
         
         if (!memberInstance.save(flush: true)) { 
