@@ -10,7 +10,7 @@ import pages.ResearchLineEditPage
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has a research line named "([^"]*)"$') { String name ->
-	TestDataAndOperations.insertsResearchLines()
+	TestDataAndOperations.insertsResearchLine(name)
 	research_line = ResearchLine.findByName(name)
 	assert research_line != null
 }
@@ -26,7 +26,7 @@ Then(~'^the research line "([^"]*)" is properly removed by the system'){String n
 }
 
 Given(~'^the system has a research line named "([^"]*)" with a description "([^"]*)"$') { String name,description ->
-	TestDataAndOperations.insertsResearchLines()
+	TestDataAndOperations.insertsResearchLine(name)
 	research_line = ResearchLine.findByName(name)
 	assert research_line != null && research_line.description == description
 }
@@ -76,6 +76,15 @@ Then(~'^I can visualize the research line "([^"]*)" details$') {String name->
 }
 
 Given(~'^the system has a research line named as "([^"]*)"$') { String name ->
+	to LoginPage
+	at LoginPage
+	page.fillLoginData("admin", "adminadmin")
+	at PublicationsPage
+	page.select("Linha de pesquisa")
+	at ResearchLinePage
+	page.selectNewResearchLine()
+	at ResearchLineCreatePage
+	page.createsResearchLine(name)
 	research_line = ResearchLine.findByName(name)
 	assert research_line != null
 }
@@ -101,11 +110,3 @@ Then(~'^I can change the research line "([^"]*)" details$') {String name->
 	at ResearchLineEditPage
 	page.changeResearchLineDetails(name)
 }
-
-/*
- *   Scenario: edit research line web
-    When I click the edit button
-    Then I can change the research line "Teoria da informacao - Complexidade no espaco" details
- * 
- * 
- * */

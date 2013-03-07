@@ -17,27 +17,16 @@ class TestDataAndOperations {
                     publicationDate: (new Date("12 October 2012"))]
     ]
 	
-	static public def insertsResearchLines()
-	{
-		ResearchLine rl = new ResearchLine()
-		rl.setName("Empirical Software Engineering")
-		rl.setDescription("We are investigating processes, methods, techniques and tools for supporting empirical studies in software engineering. The main objective is to develop a infrastructure that support researchers to define, plan, execute, analyze and store results of empirical studies in general. At this moment we call such structure Testbed")
-		rl.save()
-		
-		rl = new ResearchLine()
-		rl.setName("Novo Padrao Arquitetural MVCE")
-		rl.setDescription("Nova arquitetura que promete revolucionar a web")
-		rl.save()
-	}
-	
 	static researchLines = [ 
-		[name: "IA Avancada", description: ""]
+		[name: "IA Avancada", description: ""],
+		[name: "Teoria da informacao - Complexidade no espaco", description: "P=NP"],
+		[name: "Novo Padrao Arquitetural MVCE", description: "Nova arquitetura que promete revolucionar a web"]
 	]
 	
 	static records = [
 		[status_H: "MSc Student",start: (new Date()), end: null]
 	]
-
+	
     static public def findArticleByTitle(String title) {
         articles.find { article ->
             article.title == title
@@ -145,6 +134,19 @@ class TestDataAndOperations {
 		cont.save()
 		cont.response.reset()
 		
+	}
+	
+	static public def insertsResearchLine(String name)
+	{
+		def inserted = ResearchLine.findByName(name)
+		if(!inserted)
+		{
+			def research = TestDataAndOperations.findResearchLineByName(name)
+			ResearchLine rl = new ResearchLine()
+			rl.setName(research.name)
+			rl.setDescription(research.description)
+			rl.save()
+		}		
 	}
 	
 

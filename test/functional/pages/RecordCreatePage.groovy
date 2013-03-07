@@ -14,6 +14,11 @@ public class RecordCreatePage extends Page {
 
     def fillRecordDetails() {
         $("form").status_H = "MSc Student"
+		$("form").start_day = "1"
+		$("form").start_month = "1"
+		$("form").start_year = "2012"
+		assert $("form").status_H == "MSc Student" 
+		assert $("form").start_day == "1" && $("form").start_month == "1" && $("form").start_year == "2012"
     }
 }
 
