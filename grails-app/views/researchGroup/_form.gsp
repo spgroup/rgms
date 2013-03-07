@@ -36,7 +36,7 @@
     Research Groups		
   </label>
   <ul class="checklist">
-    <g:each in="${rgms.ResearchGroup.list()}" var="group">
+    <g:each in="${rgms.ResearchGroup?.list()}" var="group">
       <li>
         <label for="${group.id}">
           <g:checkBox name="${group.id}" value="${true}" 

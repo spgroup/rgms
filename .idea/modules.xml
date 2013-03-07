@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/rgms.iml" filepath="$PROJECT_DIR$/rgms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rgms-grailsPlugins.iml" filepath="$PROJECT_DIR$/rgms-grailsPlugins.iml" />
+    </modules>
+  </component>
+</project>
+
