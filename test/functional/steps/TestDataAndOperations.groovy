@@ -17,10 +17,10 @@ class TestDataAndOperations {
 
 	
 	static members = [
-		[name: "Rodolfo Ferraz", username: "usernametest", email: "rcaferraz@gmail.com",
+		[name: "Rodolfo Ferraz", username: "usernametest", email: "rodolfofake@gmail.com",
 				status: "Graduate Student", university: "UFPE", enabled: true
 				],
-		[name: "Rebeca Souza", username: "rebecasouza", email: "rsa2@cin.ufpe.br",
+		[name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
 				status: "Graduate Student", university: "UFPE", enabled: true
 				]
 ]
@@ -85,7 +85,16 @@ class TestDataAndOperations {
 		cont.save()
 		cont.response.reset()
 	}
-
+	
+	static public void deleteMember(String username) {
+		def cont = new MemberController()
+		def identificador = Member.findByUsername(username).id
+		cont.params << [id: identificador]
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.delete()
+		//cont.save()
+		cont.response.reset()
+	}
 	
     static void clearArticles() {
         Periodico.findAll()*.delete flush: true // Could also delete the created files.
