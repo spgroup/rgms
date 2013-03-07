@@ -13,6 +13,6 @@ class ResearchGroupListPage extends Page {
     }
 
     def selectResearchGroup(String s) {
-        $('div', id: 'status').find('a', text: s).click()
+        $('div').find('a', text: s).click()
     }
 }

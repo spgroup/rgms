@@ -51,6 +51,19 @@ class BootStrap {
 		rl.setName("Empirical Software Engineering")
 		rl.setDescription("We are investigating processes, methods, techniques and tools for supporting empirical studies in software engineering. The main objective is to develop a infrastructure that support researchers to define, plan, execute, analyze and store results of empirical studies in general. At this moment we call such structure Testbed")
 		rl.save()
+
+        ResearchGroup r2 = new ResearchGroup()
+        r2.name = "testehugo1"
+        r2.description = "testehugo1"
+        r2.save()
+        ResearchGroup r3 = new ResearchGroup()
+        r3.name = "testehugo12"
+        r3.description = "testehugo12"
+        r3.save()
+        ResearchGroup r4 = new ResearchGroup()
+        r4.name = "testehugo123"
+        r4.description = "testehugo123"
+        r4.save()
     }
 
     def destroy = {

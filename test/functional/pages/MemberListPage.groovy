@@ -13,6 +13,6 @@ class MemberListPage extends Page {
     }
 
     def selectMember(String s) {
-        $('div', id: 'status').find('a', text: s).click()
+        $('div').find('a', text: s).click()
     }
 }
