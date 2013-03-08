@@ -57,7 +57,7 @@ Scenario: edit existing article
    When 	I edit the article title from "A theory of software product line refinement" to "A theory of software product line refinement REVIEWED"
    Then 	the article "A theory of software product line refinement" is properly updated by the system
 
-
+@ignore 
 Scenario: remove existing article web
     Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
     And 	I select the "Periodico" option at the publications menu

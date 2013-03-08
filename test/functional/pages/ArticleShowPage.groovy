@@ -14,9 +14,10 @@ class ArticleShowPage extends Page {
 	}
 
 	def select(String e,v) {
-		$("form").find(e, class: v).click()
-//		if(v == 'delete'){
-//			assert withConfirm(true) { $('input', class: 'delete').click() } == "Are you sure?"
-//		}
+		if(v == 'delete'){
+			assert withConfirm(true) { $("form").find(e, class: v).click() }
+		} else {
+			$("form").find(e, class: v).click()
+		}
 	}
 }

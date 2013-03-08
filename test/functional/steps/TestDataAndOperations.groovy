@@ -2,6 +2,9 @@ package steps
 
 import rgms.publication.Periodico
 import rgms.publication.PeriodicoController
+import rgms.publication.TechnicalReport
+import rgms.publication.TechnicalReportController
+
 
 class TestDataAndOperations {
 	static articles = [
@@ -16,8 +19,12 @@ class TestDataAndOperations {
 	/**
 	 * @author Felipe
 	 */
-	static reports = [[title:'Evaluating Natural Languages System',
-			publicationDate: (new Date('13 November 2012')), institution:'UFPE']]
+	static reports = [
+		[title:'Evaluating Natural Languages System',
+			publicationDate: (new Date('13 November 2012')), institution:'UFPE'],
+		[title:'NFL Languages System',
+			publicationDate: (new Date('27 October 2011')), institution:'NFL']
+		]
 
 
 	/**
@@ -62,6 +69,49 @@ class TestDataAndOperations {
 
 	}
 
+	/**
+	 * @author Felipe
+	 */
+	static public void createReport(String title, filename) {
+		def cont = new TechnicalReportController()
+		def date = new Date()
+		cont.params << TestDataAndOperations.findReportByTitle(title) << [file: filename]
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.create()
+		cont.save()
+		cont.response.reset()
+
+	}
+	/**
+	 * @author Felipe
+	 * @param tech
+	 * @param title
+	 * @return
+	 */
+	static public boolean compatibleTechTo(tech, title) {
+		def testtech = findByTitle(title)
+		def compatible = false
+		if (testtech == null && tech == null) {
+			compatible = true
+		} else if (testtech != null && tech != null) {
+			compatible = true
+			testtech.each { key, data ->
+				compatible = compatible && (tech."$key" == data)
+			}
+		}
+		return compatible
+	}
+	
+	static public TechnicalReport editTech(oldtitle, newtitle) {
+		def tech = TechnicalReport.findByTitle(oldtitle)
+		tech.setTitle(newtitle)
+		def cont = new TechnicalReportController()
+		cont.params << tech.properties
+		cont.update()
+
+		def updatedtech = TechnicalReport.findByTitle(newtitle)
+		return updatedtech
+	}
 
 	static void clearArticles() {
 		Periodico.findAll()*.delete flush: true // Could also delete the created files.
