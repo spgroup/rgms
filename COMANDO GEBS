@@ -1,0 +1,1 @@
+-Dgeb.env=chrome -Dwebdriver.chrome.driver=/springsource/workspace/rgms/chromedriver.exe test-app functional:cucumber --stacktrace
