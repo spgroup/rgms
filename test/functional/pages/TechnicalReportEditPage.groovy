@@ -19,7 +19,9 @@ class TechnicalReportEditPage extends Page {
 	}
 
 	def select(String s) {
-		assert withConfirm(true) {$("form").find("input", value: s).click()}
-
+		if(s == "Alterar")
+			$("form").find("input", value: s).click()
+		else
+			assert withConfirm(true) {$("form").find("input", value: s).click()}
 	}
 }

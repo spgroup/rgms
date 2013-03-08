@@ -4,7 +4,7 @@ As a member of a research group
 I want to add, remove and modify technical report I have published
 so that I can generate web pages and reports containing these technical reports
 
-@ignore
+@ignore 
 Scenario: edit existing technical report with bad parameters web
     Given 	I am at the publications menu and the report "Evaluating Natural Languages System" is stored in the system with file name "EVLS.pdf"
     And 	I select the "Technical Report" option at the publications menu
@@ -12,7 +12,7 @@ Scenario: edit existing technical report with bad parameters web
    	And 	I change the report title to ""
     Then 	I select the "Alterar" option and a error message is shown
 
-  
+
 Scenario: remove existing technical report web
    	Given 	I am at the publications menu and the report "Evaluating Natural Languages System" is stored in the system with file name "EVLS.pdf"
     And 	I select the "Technical Report" option at the publications menu
