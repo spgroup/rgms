@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="1" hostname="Laptop" name="member" tests="7" time="22.526" timestamp="2013-03-09T20:47:48">
+<testsuite errors="0" failures="1" hostname="Laptop" name="member" tests="7" time="22.097" timestamp="2013-03-09T21:09:15">
   <properties />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member" time="3.985" />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="delete member" time="3.496" />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member with existing username" time="3.325" />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="login with incorrect password" time="0.685" />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="user registration" time="1.985" />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="create member" time="7.345">
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member" time="3.765" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="delete member" time="3.592" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member with existing username" time="3.316" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="login with incorrect password" time="0.677" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="user registration" time="1.891" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="create member" time="7.097">
     <failure message="title ==~ /Member Listagem/&#xa;|     |&#xa;|     false&#xa;Ver Member" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
 
 title ==~ /Member Listagem/
@@ -23,7 +23,7 @@ Ver Member
 	at ✽.Then I am on the list page(Member.feature:36)
 </failure>
   </testcase>
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="register user with invalid data" time="1.662" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="register user with invalid data" time="1.724" />
   <system-out><![CDATA[@i9n
 Feature: member
   As an administrator of the RGMS system
@@ -123,7 +123,7 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member
       	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
       	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
       	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
-      	at sun.reflect.GeneratedMethodAccessor672.invoke(Unknown Source)
+      	at sun.reflect.GeneratedMethodAccessor669.invoke(Unknown Source)
       	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
       	at java.lang.reflect.Method.invoke(Method.java:601)
       	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)

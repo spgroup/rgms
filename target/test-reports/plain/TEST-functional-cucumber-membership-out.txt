@@ -7,35 +7,32 @@ Feature: membership
   Scenario: new membership                                                                                                   # Membership.feature:7
     Given the system has member "usernametest" and research group "taes"                                                     # MembershipSteps.groovy:12
     And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:21
-      java.lang.IllegalArgumentException
-      	at java.util.Date.parse(Date.java:615)
-      	at java.util.Date.<init>(Date.java:272)
-      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
-      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-      	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
-      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:54)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
-      	at MembershipSteps$_run_closure2.doCall(MembershipSteps.groovy:24)
-      	at ?.And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:9)
+    When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"       # MembershipSteps.groovy:31
+      groovy.lang.MissingMethodException: No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]
+      Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)
+      	at groovy.lang.MetaClassImpl.invokeStaticMissingMethod(MetaClassImpl.java:1335)
+      	at groovy.lang.MetaClassImpl.invokeStaticMethod(MetaClassImpl.java:1321)
+      	at groovy.lang.ExpandoMetaClass.invokeStaticMethod(ExpandoMetaClass.java:1123)
+      	at org.codehaus.groovy.runtime.callsite.StaticMetaClassSite.call(StaticMetaClassSite.java:50)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at MembershipSteps$_run_closure3.doCall(MembershipSteps.groovy:32)
+      	at ?.When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:10)
 
-    When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"       # MembershipSteps.groovy:28
-    Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created
+    Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created   # MembershipSteps.groovy:35
 
 --Output from delete membership--
   Scenario: delete membership                                                                                               # Membership.feature:13
-    Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:39
+    Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:42
       groovy.lang.MissingPropertyException: No such property: groupname for class: MembershipSteps
       	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:50)
       	at org.codehaus.groovy.runtime.callsite.PogoGetPropertySite.getProperty(PogoGetPropertySite.java:49)
       	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGroovyObjectGetProperty(AbstractCallSite.java:231)
-      	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:43)
+      	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:46)
       	at ?.Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:14)
 
-    When I delete a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"      # MembershipSteps.groovy:53
+    When I delete a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"      # MembershipSteps.groovy:56
     Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is deleted
 
 --Output from modify membership--

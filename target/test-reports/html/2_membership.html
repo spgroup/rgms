@@ -47,7 +47,7 @@
                         2 errors
 
                         and
-                        3 failures
+                        2 failures
                         .
                     </h3>
 </div>
@@ -56,36 +56,18 @@
 <p>
 <span class="icon error"></span><b class="testname message error">new membership</b>
 </p>
-<p class="summary">Executed in 3.574 seconds.</p>
+<p class="summary">Executed in 3.518 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo">
 <div class="details">
 <p>
-<b class="message"></b>
+<b class="message">No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]
+Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)</b>
 </p>
-<pre>java.lang.IllegalArgumentException
-	at java.util.Date.parse(Date.java:615)
-	at java.util.Date.&lt;init&gt;(Date.java:272)
-	at MembershipSteps$_run_closure2.doCall(MembershipSteps.groovy:24)
-	at ✽.And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:9)
-</pre>
-</div>
-<div class="details">
-<p>
-<b class="message">Undefined Step: Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created</b>
-</p>
-<pre>cucumber.runtime.UndefinedStepException: Undefined Step: Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created
-	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
-	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
-	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
-	at cucumber.runtime.model.StepContainer.runStep(StepContainer.java:44)
-	at cucumber.runtime.model.StepContainer.runSteps(StepContainer.java:39)
-	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:36)
-	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:112)
-	at grails.plugin.cucumber.Cucumber$_run_closure2.doCall(Cucumber.groovy:58)
-	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
-	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
-	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
+<pre>groovy.lang.MissingMethodException: No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]
+Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)
+	at MembershipSteps$_run_closure3.doCall(MembershipSteps.groovy:32)
+	at ✽.When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:10)
 </pre>
 </div>
 </div>
@@ -96,7 +78,7 @@
 <p>
 <span class="icon error"></span><b class="testname message error">delete membership</b>
 </p>
-<p class="summary">Executed in 3.342 seconds.</p>
+<p class="summary">Executed in 3.425 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo">
 <div class="details">
@@ -104,7 +86,7 @@
 <b class="message">No such property: groupname for class: MembershipSteps</b>
 </p>
 <pre>groovy.lang.MissingPropertyException: No such property: groupname for class: MembershipSteps
-	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:43)
+	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:46)
 	at ✽.Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:14)
 </pre>
 </div>
@@ -134,7 +116,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">modify membership</b>
 </p>
-<p class="summary">Executed in 0.039 seconds.</p>
+<p class="summary">Executed in 0.041 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -144,7 +126,7 @@
 <p>
 <span class="icon failure"></span><b class="testname message failure">access membership creation page from membership main page</b>
 </p>
-<p class="summary">Executed in 0.048 seconds.</p>
+<p class="summary">Executed in 0.05 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo">
 <div class="details">
@@ -209,7 +191,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">create membership with invalid data</b>
 </p>
-<p class="summary">Executed in 0.034 seconds.</p>
+<p class="summary">Executed in 0.05 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -219,7 +201,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">create membership with incomplete form</b>
 </p>
-<p class="summary">Executed in 0.002 seconds.</p>
+<p class="summary">Executed in 0.001 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -236,35 +218,32 @@ Feature: membership
   Scenario: new membership                                                                                                   # Membership.feature:7
     Given the system has member "usernametest" and research group "taes"                                                     # MembershipSteps.groovy:12
     And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:21
-      java.lang.IllegalArgumentException
-      	at java.util.Date.parse(Date.java:615)
-      	at java.util.Date.&lt;init&gt;(Date.java:272)
-      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
-      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-      	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
-      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:54)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
-      	at MembershipSteps$_run_closure2.doCall(MembershipSteps.groovy:24)
-      	at ?.And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:9)
+    When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"       # MembershipSteps.groovy:31
+      groovy.lang.MissingMethodException: No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]
+      Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)
+      	at groovy.lang.MetaClassImpl.invokeStaticMissingMethod(MetaClassImpl.java:1335)
+      	at groovy.lang.MetaClassImpl.invokeStaticMethod(MetaClassImpl.java:1321)
+      	at groovy.lang.ExpandoMetaClass.invokeStaticMethod(ExpandoMetaClass.java:1123)
+      	at org.codehaus.groovy.runtime.callsite.StaticMetaClassSite.call(StaticMetaClassSite.java:50)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at MembershipSteps$_run_closure3.doCall(MembershipSteps.groovy:32)
+      	at ?.When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:10)
 
-    When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"       # MembershipSteps.groovy:28
-    Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created
+    Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created   # MembershipSteps.groovy:35
 
 --Output from delete membership--
   Scenario: delete membership                                                                                               # Membership.feature:13
-    Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:39
+    Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:42
       groovy.lang.MissingPropertyException: No such property: groupname for class: MembershipSteps
       	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:50)
       	at org.codehaus.groovy.runtime.callsite.PogoGetPropertySite.getProperty(PogoGetPropertySite.java:49)
       	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGroovyObjectGetProperty(AbstractCallSite.java:231)
-      	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:43)
+      	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:46)
       	at ?.Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:14)
 
-    When I delete a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"      # MembershipSteps.groovy:53
+    When I delete a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"      # MembershipSteps.groovy:56
     Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is deleted
 
 --Output from modify membership--

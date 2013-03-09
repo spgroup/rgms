@@ -15,21 +15,24 @@ Given(~'^the system has member "([^"]*)" and research group "([^"]*)"$') { Strin
 	assert member != null
 	TestDataAndOperations.createResearchGroup(groupname)
 	researchgroup = ResearchGroup.findByName(groupname)
-	assert researchgroup != null	
+	assert researchgroup != null
 }
 
 And(~'^the system has no membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)"$') { String username, groupname, date1, date2 ->
+	java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd");
+	// http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html
+
 	member = Member.findByUsername(username)
 	researchgroup = ResearchGroup.findByName(groupname)
-	membership = Membership.findByMemberAndResearchGroupAndDateJoinedAndDateLeft(member, researchgroup, new Date(date1), new Date(date2))
-	assert membership == nulll
+	membership = Membership.findByMemberAndResearchGroupAndDateJoinedAndDateLeft(member, researchgroup, df.parse(date1), df.parse(date2))
+	assert membership == null
 }
 
 When(~'^I create a membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)"$') {String username, rgroup, date1, date2 ->
 	TestDataAndOperations.createMembership(username)
 }
 
-Then(~'^Then the membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)" is created$') {String username, rgroup, date1, date2 ->
+Then(~'^the membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)" is created$') {String username, rgroup, date1, date2 ->
 	at MembershipCreatePage
 	assert Membership.findAllByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2) != null
 }
@@ -43,10 +46,10 @@ Given(~'^the system has membership with member "([^"]*)", research group "([^"]*
 	TestDataAndOperations.createResearchGroup(groupname)
 	researchgroup = ResearchGroup.findByName(groupname)
 	assert researchgroup != null
-	
+
 	membership = Membership.findByMemberAndResearchGroupAndDateJoinedAndDateLeft(member, researchgroup, new Date(date1), new Date(date2))
-	assert membership != nulll
-	
+	assert membership != null
+
 	assert Membership.findAllByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2) != null
 }
 

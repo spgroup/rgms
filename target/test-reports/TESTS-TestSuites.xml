@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="4" failures="1" hostname="Laptop" id="0" name="journal article" package="" tests="5" time="7.693" timestamp="2013-03-09T20:47:41">
+  <testsuite errors="4" failures="1" hostname="Laptop" id="0" name="journal article" package="" tests="5" time="6.849" timestamp="2013-03-09T21:09:08">
       <properties />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new article" time="0.259">
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new article" time="0.215">
           <error message="web-app\uploads\TCS.pdf (The system cannot find the path specified)" type="java.io.FileNotFoundException">java.io.FileNotFoundException: web-app\uploads\TCS.pdf (The system cannot find the path specified)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:212)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:165)
@@ -16,7 +16,7 @@
 
       </testcase>
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new invalid article" time="0.044">
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new invalid article" time="0.042">
           <error message="web-app\uploads\SCP.pdf (The system cannot find the path specified)" type="java.io.FileNotFoundException">java.io.FileNotFoundException: web-app\uploads\SCP.pdf (The system cannot find the path specified)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:212)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:165)
@@ -42,7 +42,7 @@
 
       </testcase>
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="alternative duplicate article" time="0.045">
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="alternative duplicate article" time="0.044">
           <error message="web-app\uploads\TCS-2 (The system cannot find the path specified)" type="java.io.FileNotFoundException">java.io.FileNotFoundException: web-app\uploads\TCS-2 (The system cannot find the path specified)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:212)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:165)
@@ -55,7 +55,7 @@
 
       </testcase>
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new article web" time="6.939">
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new article web" time="6.186">
           <failure message="title ==~ /Journal List/&#xa;|     |&#xa;|     false&#xa;Periódico Listagem" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
 
 title ==~ /Journal List/
@@ -308,7 +308,7 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications 
 --Output from duplicate article--
 --Output from alternative duplicate article--
 --Output from new article web--Started ChromeDriver
-port=16174
+port=10394
 version=26.0.1383.0
 log=C:\code\taes\rgms\chromedriver.log
 Unable to use direct char[] access of java.lang.String
@@ -385,20 +385,20 @@ java.lang.NoSuchFieldException: count
 ]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="1" hostname="Laptop" id="1" name="member" package="" tests="7" time="22.526" timestamp="2013-03-09T20:47:48">
+  <testsuite errors="0" failures="1" hostname="Laptop" id="1" name="member" package="" tests="7" time="22.097" timestamp="2013-03-09T21:09:15">
       <properties />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member" time="3.985" />
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member" time="3.765" />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="delete member" time="3.496" />
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="delete member" time="3.592" />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member with existing username" time="3.325" />
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member with existing username" time="3.316" />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="login with incorrect password" time="0.685" />
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="login with incorrect password" time="0.677" />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="user registration" time="1.985" />
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="user registration" time="1.891" />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="create member" time="7.345">
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="create member" time="7.097">
           <failure message="title ==~ /Member Listagem/&#xa;|     |&#xa;|     false&#xa;Ver Member" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
 
 title ==~ /Member Listagem/
@@ -417,7 +417,7 @@ Ver Member
 
       </testcase>
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="register user with invalid data" time="1.662" />
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="register user with invalid data" time="1.724" />
 
       <system-out><![CDATA[@i9n
 Feature: member
@@ -518,7 +518,7 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member
       	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
       	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
       	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
-      	at sun.reflect.GeneratedMethodAccessor672.invoke(Unknown Source)
+      	at sun.reflect.GeneratedMethodAccessor669.invoke(Unknown Source)
       	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
       	at java.lang.reflect.Method.invoke(Method.java:601)
       	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
@@ -573,36 +573,21 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member
 --Output from register user with invalid data--]]></system-err>
 
   </testsuite>
-  <testsuite errors="2" failures="3" hostname="Laptop" id="2" name="membership" package="" tests="6" time="7.098" timestamp="2013-03-09T20:48:11">
+  <testsuite errors="2" failures="2" hostname="Laptop" id="2" name="membership" package="" tests="6" time="7.123" timestamp="2013-03-09T21:09:37">
       <properties />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new membership" time="3.574">
-          <error type="java.lang.IllegalArgumentException">java.lang.IllegalArgumentException
-	at java.util.Date.parse(Date.java:615)
-	at java.util.Date.&lt;init&gt;(Date.java:272)
-	at MembershipSteps$_run_closure2.doCall(MembershipSteps.groovy:24)
-	at ✽.And the system has no membership with member &quot;usernametest&quot;, research group &quot;taes&quot; between &quot;01-03-2012&quot; and &quot;01-06-2012&quot;(Membership.feature:9)
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="new membership" time="3.518">
+          <error message="No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]&#xa;Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)" type="groovy.lang.MissingMethodException">groovy.lang.MissingMethodException: No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]
+Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)
+	at MembershipSteps$_run_closure3.doCall(MembershipSteps.groovy:32)
+	at ✽.When I create a membership with member &quot;usernametest&quot;, research group &quot;taes&quot; between &quot;01-03-2012&quot; and &quot;01-06-2012&quot;(Membership.feature:10)
 </error>
-
-          <failure message="Undefined Step: Then the membership with member &quot;usernametest&quot;, research group &quot;taes&quot; between &quot;01-03-2012&quot; and &quot;01-06-2012&quot; is created" type="grails.plugin.cucumber.FakeAssertionFailedError">cucumber.runtime.UndefinedStepException: Undefined Step: Then the membership with member &quot;usernametest&quot;, research group &quot;taes&quot; between &quot;01-03-2012&quot; and &quot;01-06-2012&quot; is created
-	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
-	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
-	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
-	at cucumber.runtime.model.StepContainer.runStep(StepContainer.java:44)
-	at cucumber.runtime.model.StepContainer.runSteps(StepContainer.java:39)
-	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:36)
-	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:112)
-	at grails.plugin.cucumber.Cucumber$_run_closure2.doCall(Cucumber.groovy:58)
-	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
-	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
-	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
-</failure>
 
       </testcase>
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="delete membership" time="3.342">
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="delete membership" time="3.425">
           <error message="No such property: groupname for class: MembershipSteps" type="groovy.lang.MissingPropertyException">groovy.lang.MissingPropertyException: No such property: groupname for class: MembershipSteps
-	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:43)
+	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:46)
 	at ✽.Given the system has membership with member &quot;usernametest&quot;, research group &quot;taes&quot; between &quot;01-03-2012&quot; and &quot;01-06-2012&quot;(Membership.feature:14)
 </error>
 
@@ -622,9 +607,9 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member
 
       </testcase>
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="modify membership" time="0.039" />
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="modify membership" time="0.041" />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="access membership creation page from membership main page" time="0.048">
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="access membership creation page from membership main page" time="0.05">
           <failure message="Undefined Step: Given I am at the membership page" type="grails.plugin.cucumber.FakeAssertionFailedError">cucumber.runtime.UndefinedStepException: Undefined Step: Given I am at the membership page
 	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
 	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
@@ -669,9 +654,9 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member
 
       </testcase>
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="create membership with invalid data" time="0.034" />
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="create membership with invalid data" time="0.05" />
 
-      <testcase classname="grails.plugin.cucumber.CucumberTest" name="create membership with incomplete form" time="0.002" />
+      <testcase classname="grails.plugin.cucumber.CucumberTest" name="create membership with incomplete form" time="0.001" />
 
       <system-out><![CDATA[@i9n
 Feature: membership
@@ -682,35 +667,32 @@ Feature: membership
   Scenario: new membership                                                                                                   # Membership.feature:7
     Given the system has member "usernametest" and research group "taes"                                                     # MembershipSteps.groovy:12
     And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:21
-      java.lang.IllegalArgumentException
-      	at java.util.Date.parse(Date.java:615)
-      	at java.util.Date.<init>(Date.java:272)
-      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
-      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-      	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
-      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:54)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
-      	at MembershipSteps$_run_closure2.doCall(MembershipSteps.groovy:24)
-      	at ?.And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:9)
+    When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"       # MembershipSteps.groovy:31
+      groovy.lang.MissingMethodException: No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]
+      Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)
+      	at groovy.lang.MetaClassImpl.invokeStaticMissingMethod(MetaClassImpl.java:1335)
+      	at groovy.lang.MetaClassImpl.invokeStaticMethod(MetaClassImpl.java:1321)
+      	at groovy.lang.ExpandoMetaClass.invokeStaticMethod(ExpandoMetaClass.java:1123)
+      	at org.codehaus.groovy.runtime.callsite.StaticMetaClassSite.call(StaticMetaClassSite.java:50)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at MembershipSteps$_run_closure3.doCall(MembershipSteps.groovy:32)
+      	at ?.When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:10)
 
-    When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"       # MembershipSteps.groovy:28
-    Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created
+    Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created   # MembershipSteps.groovy:35
 
 --Output from delete membership--
   Scenario: delete membership                                                                                               # Membership.feature:13
-    Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:39
+    Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:42
       groovy.lang.MissingPropertyException: No such property: groupname for class: MembershipSteps
       	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:50)
       	at org.codehaus.groovy.runtime.callsite.PogoGetPropertySite.getProperty(PogoGetPropertySite.java:49)
       	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGroovyObjectGetProperty(AbstractCallSite.java:231)
-      	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:43)
+      	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:46)
       	at ?.Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:14)
 
-    When I delete a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"      # MembershipSteps.groovy:53
+    When I delete a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"      # MembershipSteps.groovy:56
     Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is deleted
 
 --Output from modify membership--

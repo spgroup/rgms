@@ -1,5 +1,5 @@
 Testsuite: member
-Tests run: 7, Failures: 1, Errors: 0, Time elapsed: 22.526 sec
+Tests run: 7, Failures: 1, Errors: 0, Time elapsed: 22.097 sec
 ------------- Standard Output ---------------
 @i9n
 Feature: member
@@ -100,7 +100,7 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member
       	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
       	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
       	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
-      	at sun.reflect.GeneratedMethodAccessor672.invoke(Unknown Source)
+      	at sun.reflect.GeneratedMethodAccessor669.invoke(Unknown Source)
       	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
       	at java.lang.reflect.Method.invoke(Method.java:601)
       	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
@@ -154,12 +154,12 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member
 --Output from create member--
 --Output from register user with invalid data--------------- ---------------- ---------------
 
-Testcase: new member took 3.985 sec
-Testcase: delete member took 3.496 sec
-Testcase: new member with existing username took 3.325 sec
-Testcase: login with incorrect password took 0.685 sec
-Testcase: user registration took 1.985 sec
-Testcase: create member took 7.309 sec
+Testcase: new member took 3.765 sec
+Testcase: delete member took 3.592 sec
+Testcase: new member with existing username took 3.316 sec
+Testcase: login with incorrect password took 0.677 sec
+Testcase: user registration took 1.891 sec
+Testcase: create member took 7.065 sec
 	FAILED
 title ==~ /Member Listagem/
 |     |
@@ -180,4 +180,4 @@ Ver Member
 	at MemberSteps$_run_closure17.doCall(MemberSteps.groovy:105)
 	at ?.Then I am on the list page(Member.feature:36)
 
-Testcase: register user with invalid data took 1.662 sec
+Testcase: register user with invalid data took 1.724 sec
