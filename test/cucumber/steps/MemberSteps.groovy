@@ -89,6 +89,9 @@ Then(~'^the member "([^"]*)" is not registered$') { String username ->
 
 
 Given(~'^I am at the create member page$') {->
+	to LoginPage
+	at LoginPage
+	page.fillLoginData("admin", "adminadmin")
 	to MemberCreatePage
 	at MemberCreatePage
 }

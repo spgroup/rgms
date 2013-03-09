@@ -1,9 +1,13 @@
 package steps
 
+import java.util.Date
+
 import rgms.publication.Periodico
 import rgms.publication.PeriodicoController
 import rgms.member.Member
 import rgms.member.MemberController
+import rgms.member.ResearchGroup
+import rgms.member.ResearchGroupController
 
 class TestDataAndOperations {
     static articles = [
@@ -24,6 +28,30 @@ class TestDataAndOperations {
 				status: "Graduate Student", university: "UFPE", enabled: true
 				]
 ]
+	
+	static memberships = [
+		[member: (new Member(members[0])),
+			researchGroup: (new ResearchGroup(name: "taes", description: "grupo de estudos", childOf: null)),
+			//researchGroup: (new ResearchGroup(researchgroups[0])),
+			dateJoined: (new Date("12 October 2012")),
+			dateLeft: (new Date("20 October 2012"))]
+		,
+		[member: (new Member(members[1])),
+			researchGroup: (new ResearchGroup(name: "taes", description: "grupo de estudos", childOf: null)),
+			//researchGroup: (new ResearchGroup(researchgroups[0])),
+			dateJoined: (new Date("12 October 2012")),
+			dateLeft: (new Date("20 October 2012"))]
+		
+]
+	static researchgroups = [
+		[name: "SWPRG",
+			description: "SW Productivity Research Group",
+			childOf: null]
+		,
+		[name: "taes",
+			description: "grupo de estudos",
+			childOf: null]
+]
 
     static public def findByTitle(String title) {
         articles.find { article ->
@@ -37,7 +65,21 @@ class TestDataAndOperations {
 		}
 	}
 
+	static public def findByResearchGroupAndDateJoinedAndDateLeft(String username, String rgroup, String date1, String date2) {
+		memberships.find { membership ->
+			membership.member == username &&
+			membership.researchGroup == rgroup &&
+			membership.dateJoined == date1 &&
+			membership.dateLeft == date2
+		}
+	}
 
+	static public def findByGroupName(String groupname) {
+		researchgroups.find { group ->
+			group.name == groupname
+		}
+	}
+	
     static public boolean compatibleTo(article, title) {
         def testarticle = findByTitle(title)
         def compatible = false
@@ -82,6 +124,35 @@ class TestDataAndOperations {
 		cont.params << TestDataAndOperations.findByUsername(username)
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.
 		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
+	
+	static public void createResearchGroup(String groupname) {
+		def cont = new ResearchGroupController()
+		cont.params << TestDataAndOperations.findByGroupName(groupname)
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
+	
+	static public void createMembership(String username, String rgroup, String date1, String date2) {
+		def cont = new MemberController()
+		
+		cont.params << TestDataAndOperations.findByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2);
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
+	
+	static public void deleteMembership(String username, String rgroup, String date1, String date2) {
+		def cont = new MemberController()
+		
+		cont.params << TestDataAndOperations.findByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2);
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.delete()
 		cont.save()
 		cont.response.reset()
 	}
