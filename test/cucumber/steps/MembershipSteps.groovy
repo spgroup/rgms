@@ -33,7 +33,6 @@ When(~'^I create a membership with member "([^"]*)", research group "([^"]*)" be
 }
 
 Then(~'^the membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)" is created$') {String username, rgroup, date1, date2 ->
-	at MembershipCreatePage
 	assert Membership.findAllByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2) != null
 }
 
