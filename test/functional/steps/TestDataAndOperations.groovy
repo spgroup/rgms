@@ -20,7 +20,8 @@ class TestDataAndOperations {
 	static researchLines = [ 
 		[name: "IA Avancada", description: ""],
 		[name: "Teoria da informacao - Complexidade no espaco", description: "P=NP"],
-		[name: "Novo Padrao Arquitetural MVCE", description: "Nova arquitetura que promete revolucionar a web"]
+		[name: "Novo Padrao Arquitetural MVCE", description: "Nova arquitetura que promete revolucionar a web"],
+		[name: "Modelo Cascata Renovado", description: "Alteração do modelo original"]
 	]
 	
 	static records = [
