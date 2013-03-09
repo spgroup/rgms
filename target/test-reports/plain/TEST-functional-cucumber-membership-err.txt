@@ -1,7 +1,0 @@
-
---Output from new membership--
---Output from delete membership--
---Output from modify membership--
---Output from access membership creation page from membership main page--
---Output from create membership with invalid data--
---Output from create membership with incomplete form--

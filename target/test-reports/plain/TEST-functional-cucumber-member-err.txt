@@ -1,8 +1,0 @@
-
---Output from new member--
---Output from delete member--
---Output from new member with existing username--
---Output from login with incorrect password--
---Output from user registration--
---Output from create member--
---Output from register user with invalid data--
