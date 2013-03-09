@@ -6,6 +6,7 @@ import rgms.publication.Periodico
 import rgms.publication.PeriodicoController
 import rgms.member.Member
 import rgms.member.MemberController
+import rgms.member.MembershipController
 import rgms.member.ResearchGroup
 import rgms.member.ResearchGroupController
 
@@ -138,7 +139,7 @@ class TestDataAndOperations {
 	}
 	
 	static public void createMembership(String username, String rgroup, String date1, String date2) {
-		def cont = new MemberController()
+		def cont = new MembershipController()
 		
 		cont.params << TestDataAndOperations.findByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2);
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.
@@ -148,7 +149,7 @@ class TestDataAndOperations {
 	}
 	
 	static public void deleteMembership(String username, String rgroup, String date1, String date2) {
-		def cont = new MemberController()
+		def cont = new MembershipController()
 		
 		cont.params << TestDataAndOperations.findByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2);
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.

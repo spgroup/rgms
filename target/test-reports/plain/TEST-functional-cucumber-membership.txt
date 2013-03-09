@@ -1,0 +1,168 @@
+Testsuite: membership
+Tests run: 6, Failures: 3, Errors: 2, Time elapsed: 7.098 sec
+------------- Standard Output ---------------
+@i9n
+Feature: membership
+  As an administrator of the RGMS system
+  I want to add, remove and modify memberships in the system.
+
+--Output from new membership--
+  Scenario: new membership                                                                                                   # Membership.feature:7
+    Given the system has member "usernametest" and research group "taes"                                                     # MembershipSteps.groovy:12
+    And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:21
+      java.lang.IllegalArgumentException
+      	at java.util.Date.parse(Date.java:615)
+      	at java.util.Date.<init>(Date.java:272)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+      	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:54)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
+      	at MembershipSteps$_run_closure2.doCall(MembershipSteps.groovy:24)
+      	at ?.And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:9)
+
+    When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"       # MembershipSteps.groovy:28
+    Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created
+
+--Output from delete membership--
+  Scenario: delete membership                                                                                               # Membership.feature:13
+    Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:39
+      groovy.lang.MissingPropertyException: No such property: groupname for class: MembershipSteps
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:50)
+      	at org.codehaus.groovy.runtime.callsite.PogoGetPropertySite.getProperty(PogoGetPropertySite.java:49)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGroovyObjectGetProperty(AbstractCallSite.java:231)
+      	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:43)
+      	at ?.Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:14)
+
+    When I delete a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"      # MembershipSteps.groovy:53
+    Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is deleted
+
+--Output from modify membership--
+--Output from access membership creation page from membership main page--
+  Scenario: modify membership # Membership.feature:19
+    //TODO
+
+
+  Scenario: access membership creation page from membership main page # Membership.feature:23
+    Given I am at the membership page
+    When I click the new membership option
+    Then I am on the create page
+
+--Output from create membership with invalid data--
+--Output from create membership with incomplete form--
+  Scenario: create membership with invalid data # Membership.feature:28
+    //TODO
+
+
+  Scenario: create membership with incomplete form # Membership.feature:31
+    //TODO
+
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+
+--Output from new membership--
+--Output from delete membership--
+--Output from modify membership--
+--Output from access membership creation page from membership main page--
+--Output from create membership with invalid data--
+--Output from create membership with incomplete form--------------- ---------------- ---------------
+
+Testcase: new membership took 3.533 sec
+	Caused an ERROR
+null
+java.lang.IllegalArgumentException
+	at java.util.Date.parse(Date.java:615)
+	at java.util.Date.<init>(Date.java:272)
+	at MembershipSteps$_run_closure2.doCall(MembershipSteps.groovy:24)
+	at ?.And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:9)
+
+	FAILED
+Undefined Step: Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created
+cucumber.runtime.UndefinedStepException: Undefined Step: Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created
+	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
+	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
+	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
+	at cucumber.runtime.model.StepContainer.runStep(StepContainer.java:44)
+	at cucumber.runtime.model.StepContainer.runSteps(StepContainer.java:39)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:36)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:112)
+	at grails.plugin.cucumber.Cucumber$_run_closure2.doCall(Cucumber.groovy:58)
+	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
+	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
+	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
+
+Testcase: delete membership took 3.286 sec
+	Caused an ERROR
+No such property: groupname for class: MembershipSteps
+groovy.lang.MissingPropertyException: No such property: groupname for class: MembershipSteps
+	at MembershipSteps$_run_closure5.doCall(MembershipSteps.groovy:43)
+	at ?.Given the system has membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:14)
+
+	FAILED
+Undefined Step: Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is deleted
+cucumber.runtime.UndefinedStepException: Undefined Step: Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is deleted
+	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
+	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
+	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
+	at cucumber.runtime.model.StepContainer.runStep(StepContainer.java:44)
+	at cucumber.runtime.model.StepContainer.runSteps(StepContainer.java:39)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:36)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:112)
+	at grails.plugin.cucumber.Cucumber$_run_closure2.doCall(Cucumber.groovy:58)
+	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
+	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
+	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
+
+Testcase: modify membership took 0.039 sec
+Testcase: access membership creation page from membership main page took 0.004 sec
+	FAILED
+Undefined Step: Given I am at the membership page
+cucumber.runtime.UndefinedStepException: Undefined Step: Given I am at the membership page
+	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
+	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
+	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
+	at cucumber.runtime.model.StepContainer.runStep(StepContainer.java:44)
+	at cucumber.runtime.model.StepContainer.runSteps(StepContainer.java:39)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:36)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:112)
+	at grails.plugin.cucumber.Cucumber$_run_closure2.doCall(Cucumber.groovy:58)
+	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
+	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
+	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
+
+	FAILED
+Undefined Step: When I click the new membership option
+cucumber.runtime.UndefinedStepException: Undefined Step: When I click the new membership option
+	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
+	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
+	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
+	at cucumber.runtime.model.StepContainer.runStep(StepContainer.java:44)
+	at cucumber.runtime.model.StepContainer.runSteps(StepContainer.java:39)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:36)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:112)
+	at grails.plugin.cucumber.Cucumber$_run_closure2.doCall(Cucumber.groovy:58)
+	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
+	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
+	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
+
+	FAILED
+Undefined Step: Then I am on the create page
+cucumber.runtime.UndefinedStepException: Undefined Step: Then I am on the create page
+	at grails.plugin.cucumber.CucumberFormatter.resultUndefined(CucumberFormatter.groovy:242)
+	at grails.plugin.cucumber.CucumberFormatter.result(CucumberFormatter.groovy:207)
+	at cucumber.runtime.Runtime.runStep(Runtime.java:250)
+	at cucumber.runtime.model.StepContainer.runStep(StepContainer.java:44)
+	at cucumber.runtime.model.StepContainer.runSteps(StepContainer.java:39)
+	at cucumber.runtime.model.CucumberScenario.run(CucumberScenario.java:36)
+	at cucumber.runtime.model.CucumberFeature.run(CucumberFeature.java:112)
+	at grails.plugin.cucumber.Cucumber$_run_closure2.doCall(Cucumber.groovy:58)
+	at grails.plugin.cucumber.Cucumber.run(Cucumber.groovy:57)
+	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
+	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
+
+Testcase: create membership with invalid data took 0.034 sec
+Testcase: create membership with incomplete form took 0.002 sec

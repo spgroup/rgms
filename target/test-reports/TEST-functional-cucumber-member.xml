@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="1" hostname="Laptop" name="member" tests="7" time="22.526" timestamp="2013-03-09T20:47:48">
+  <properties />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member" time="3.985" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="delete member" time="3.496" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new member with existing username" time="3.325" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="login with incorrect password" time="0.685" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="user registration" time="1.985" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="create member" time="7.345">
+    <failure message="title ==~ /Member Listagem/&#xa;|     |&#xa;|     false&#xa;Ver Member" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
+
+title ==~ /Member Listagem/
+|     |
+|     false
+Ver Member
+
+	at pages.MemberListPage$__clinit__closure1.doCall(MemberListPage.groovy:9)
+	at geb.Page.verifyAt(Page.groovy:132)
+	at geb.Browser.doAt(Browser.groovy:335)
+	at geb.Browser.at(Browser.groovy:259)
+	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+	at MemberSteps$_run_closure17.doCall(MemberSteps.groovy:105)
+	at ✽.Then I am on the list page(Member.feature:36)
+</failure>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="register user with invalid data" time="1.662" />
+  <system-out><![CDATA[@i9n
+Feature: member
+  As an administrator of the RGMS system
+  I want to add, remove and modify users in the system.
+
+--Output from new member--
+  Scenario: new member                                                            # Member.feature:7
+    Given the system has no member with username "usernametest"                   # MemberSteps.groovy:11
+    When I create a member with username "usernametest"                           # MemberSteps.groovy:16
+    Then the member with username "usernametest" is properly stored by the system # MemberSteps.groovy:20
+
+--Output from delete member--
+  Scenario: delete member                                    # Member.feature:12
+    Given the system has member with username "usernametest" # MemberSteps.groovy:57
+    When I delete a member with username "usernametest"      # MemberSteps.groovy:63
+    Then the member with "usernametest" doesnt exist         # MemberSteps.groovy:67
+
+--Output from new member with existing username--
+  Scenario: new member with existing username                # Member.feature:17
+    Given the system has member with username "usernametest" # MemberSteps.groovy:57
+    When I create the member with username "usernametest"    # MemberSteps.groovy:80
+    Then the member "usernametest" is not registered         # MemberSteps.groovy:84
+
+--Output from login with incorrect password--
+  Scenario: login with incorrect password                                  # Member.feature:23
+    Given I am at the login page                                           # MemberSteps.groovy:26
+ENTROU no signIn
+Enabled == true    When I fill username and password with "admin" and "incorrectpassword" # MemberSteps.groovy:33
+    Then I am still on the login page with an error message                # MemberSteps.groovy:37
+
+--Output from user registration--
+  Scenario: user registration                                                                                       # Member.feature:28
+ENTROU no registerparams NULL    Given I am at the register page                                                                                 # MemberSteps.groovy:42
+    When I fill the user details with "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student" # MemberSteps.groovy:47
+    Then I am still on the register page with the message user created                                              # MemberSteps.groovy:52
+
+--Output from create member--
+  Scenario: create member                                                      # Member.feature:33
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member page                                       # MemberSteps.groovy:91
+    When I fill the user details with "jose" "josesilva" "jose@ufpe.br" "UFPE" # MemberSteps.groovy:99
+    Then I am on the list page                                                 # MemberSteps.groovy:104
+      Assertion failed: 
+      
+      title ==~ /Member Listagem/
+      |     |
+      |     false
+      Ver Member
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at pages.MemberListPage$__clinit__closure1.doCall(MemberListPage.groovy:9)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at pages.MemberListPage$__clinit__closure1.doCall(MemberListPage.groovy)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:406)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at geb.Page.verifyAt(Page.groovy:132)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at geb.Browser.doAt(Browser.groovy:335)
+      	at geb.Browser.this$2$doAt(Browser.groovy)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at geb.Browser.at(Browser.groovy:259)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:793)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
+      	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+      	at sun.reflect.GeneratedMethodAccessor672.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:425)
+      	at sun.reflect.GeneratedMethodAccessor73.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1093)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1049)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:697)
+      	at groovy.lang.GroovyObjectSupport.invokeMethod(GroovyObjectSupport.java:44)
+      	at groovy.lang.Script.invokeMethod(Script.java:78)
+      	at groovy.lang.MetaClassImpl.invokeMethodOnGroovyObject(MetaClassImpl.java:1112)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1006)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:66)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at MemberSteps$_run_closure17.doCall(MemberSteps.groovy:105)
+      	at ?.Then I am on the list page(Member.feature:36)
+
+
+--Output from register user with invalid data--
+  Scenario: register user with invalid data                                # Member.feature:38
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member page                                   # MemberSteps.groovy:91
+    When I fill the user details with "jose" "josesilva" "jose@com" "UFPE" # MemberSteps.groovy:99
+    Then I am still on the create member page with the error message       # MemberSteps.groovy:119
+]]></system-out>
+  <system-err><![CDATA[
+--Output from new member--
+--Output from delete member--
+--Output from new member with existing username--
+--Output from login with incorrect password--
+--Output from user registration--
+--Output from create member--
+--Output from register user with invalid data--]]></system-err>
+</testsuite>
