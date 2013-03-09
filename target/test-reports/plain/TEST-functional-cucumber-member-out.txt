@@ -97,7 +97,7 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member
       	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
       	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
       	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
-      	at sun.reflect.GeneratedMethodAccessor669.invoke(Unknown Source)
+      	at sun.reflect.GeneratedMethodAccessor670.invoke(Unknown Source)
       	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
       	at java.lang.reflect.Method.invoke(Method.java:601)
       	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)

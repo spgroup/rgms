@@ -1,5 +1,5 @@
 Testsuite: membership
-Tests run: 6, Failures: 2, Errors: 2, Time elapsed: 7.123 sec
+Tests run: 6, Failures: 3, Errors: 1, Time elapsed: 7.399 sec
 ------------- Standard Output ---------------
 @i9n
 Feature: membership
@@ -11,19 +11,99 @@ Feature: membership
     Given the system has member "usernametest" and research group "taes"                                                     # MembershipSteps.groovy:12
     And the system has no membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" # MembershipSteps.groovy:21
     When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"       # MembershipSteps.groovy:31
-      groovy.lang.MissingMethodException: No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]
-      Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)
-      	at groovy.lang.MetaClassImpl.invokeStaticMissingMethod(MetaClassImpl.java:1335)
-      	at groovy.lang.MetaClassImpl.invokeStaticMethod(MetaClassImpl.java:1321)
-      	at groovy.lang.ExpandoMetaClass.invokeStaticMethod(ExpandoMetaClass.java:1123)
-      	at org.codehaus.groovy.runtime.callsite.StaticMetaClassSite.call(StaticMetaClassSite.java:50)
-      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
-      	at MembershipSteps$_run_closure3.doCall(MembershipSteps.groovy:32)
-      	at ?.When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:10)
-
     Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created   # MembershipSteps.groovy:35
+      Assertion failed: 
+      
+      title ==~ /Criar Membership/
+      |     |
+      |     false
+      Criar Member
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at pages.MembershipCreatePage$__clinit__closure1.doCall(MembershipCreatePage.groovy:9)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at pages.MembershipCreatePage$__clinit__closure1.doCall(MembershipCreatePage.groovy)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:406)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at geb.Page.verifyAt(Page.groovy:132)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at geb.Browser.doAt(Browser.groovy:335)
+      	at geb.Browser.this$2$doAt(Browser.groovy)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at geb.Browser.at(Browser.groovy:259)
+      	at sun.reflect.GeneratedMethodAccessor731.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:793)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
+      	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+      	at sun.reflect.GeneratedMethodAccessor670.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:425)
+      	at sun.reflect.GeneratedMethodAccessor73.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1093)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1049)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:697)
+      	at groovy.lang.GroovyObjectSupport.invokeMethod(GroovyObjectSupport.java:44)
+      	at groovy.lang.Script.invokeMethod(Script.java:78)
+      	at groovy.lang.MetaClassImpl.invokeMethodOnGroovyObject(MetaClassImpl.java:1112)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1006)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:66)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at MembershipSteps$_run_closure4.doCall(MembershipSteps.groovy:36)
+      	at ?.Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created(Membership.feature:11)
+
 
 --Output from delete membership--
   Scenario: delete membership                                                                                               # Membership.feature:13
@@ -68,16 +148,28 @@ Feature: membership
 --Output from create membership with invalid data--
 --Output from create membership with incomplete form--------------- ---------------- ---------------
 
-Testcase: new membership took 3.48 sec
-	Caused an ERROR
-No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]
-Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)
-groovy.lang.MissingMethodException: No signature of method: static steps.TestDataAndOperations.createMembership() is applicable for argument types: (java.lang.String) values: [usernametest]
-Possible solutions: createMembership(java.lang.String, java.lang.String, java.lang.String, java.lang.String), createMember(java.lang.String)
-	at MembershipSteps$_run_closure3.doCall(MembershipSteps.groovy:32)
-	at ?.When I create a membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012"(Membership.feature:10)
+Testcase: new membership took 3.605 sec
+	FAILED
+title ==~ /Criar Membership/
+|     |
+|     false
+Criar Member
+Assertion failed: 
 
-Testcase: delete membership took 3.366 sec
+title ==~ /Criar Membership/
+|     |
+|     false
+Criar Member
+
+	at pages.MembershipCreatePage$__clinit__closure1.doCall(MembershipCreatePage.groovy:9)
+	at geb.Page.verifyAt(Page.groovy:132)
+	at geb.Browser.doAt(Browser.groovy:335)
+	at geb.Browser.at(Browser.groovy:259)
+	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+	at MembershipSteps$_run_closure4.doCall(MembershipSteps.groovy:36)
+	at ?.Then the membership with member "usernametest", research group "taes" between "01-03-2012" and "01-06-2012" is created(Membership.feature:11)
+
+Testcase: delete membership took 3.542 sec
 	Caused an ERROR
 No such property: groupname for class: MembershipSteps
 groovy.lang.MissingPropertyException: No such property: groupname for class: MembershipSteps
@@ -99,8 +191,8 @@ cucumber.runtime.UndefinedStepException: Undefined Step: Then the membership wit
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
 
-Testcase: modify membership took 0.041 sec
-Testcase: access membership creation page from membership main page took 0.004 sec
+Testcase: modify membership took 0.037 sec
+Testcase: access membership creation page from membership main page took 0.018 sec
 	FAILED
 Undefined Step: Given I am at the membership page
 cucumber.runtime.UndefinedStepException: Undefined Step: Given I am at the membership page
@@ -146,5 +238,5 @@ cucumber.runtime.UndefinedStepException: Undefined Step: Then I am on the create
 	at grails.plugin.cucumber.CucumberTestType.runFeatures(CucumberTestType.groovy:102)
 	at grails.plugin.cucumber.CucumberTestType.doRun(CucumberTestType.groovy:57)
 
-Testcase: create membership with invalid data took 0.05 sec
+Testcase: create membership with invalid data took 0.031 sec
 Testcase: create membership with incomplete form took 0.001 sec

@@ -29,7 +29,7 @@ And(~'^the system has no membership with member "([^"]*)", research group "([^"]
 }
 
 When(~'^I create a membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)"$') {String username, rgroup, date1, date2 ->
-	TestDataAndOperations.createMembership(username)
+	TestDataAndOperations.createMembership(username, rgroup, date1, date2)
 }
 
 Then(~'^the membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)" is created$') {String username, rgroup, date1, date2 ->

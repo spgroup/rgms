@@ -1,5 +1,5 @@
 Testsuite: journal article
-Tests run: 5, Failures: 1, Errors: 4, Time elapsed: 6.849 sec
+Tests run: 5, Failures: 1, Errors: 4, Time elapsed: 7.429 sec
 ------------- Standard Output ---------------
 @i9n
 Feature: journal article
@@ -235,7 +235,7 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications 
 --Output from duplicate article--
 --Output from alternative duplicate article--
 --Output from new article web--Started ChromeDriver
-port=10394
+port=44811
 version=26.0.1383.0
 log=C:\code\taes\rgms\chromedriver.log
 Unable to use direct char[] access of java.lang.String
@@ -311,7 +311,7 @@ java.lang.NoSuchFieldException: count
 	at java.lang.Thread.run(Thread.java:722)
 ------------- ---------------- ---------------
 
-Testcase: new article took 0.16 sec
+Testcase: new article took 0.162 sec
 	Caused an ERROR
 web-app\uploads\TCS.pdf (The system cannot find the path specified)
 java.io.FileNotFoundException: web-app\uploads\TCS.pdf (The system cannot find the path specified)
@@ -323,7 +323,7 @@ java.io.FileNotFoundException: web-app\uploads\TCS.pdf (The system cannot find t
 	at ArticleSteps$_run_closure2.doCall(ArticleSteps.groovy:16)
 	at ?.When I create the article "A theory of software product line refinement" with file name "TCS.pdf"(Article.feature:9)
 
-Testcase: new invalid article took 0.009 sec
+Testcase: new invalid article took 0.017 sec
 	Caused an ERROR
 web-app\uploads\SCP.pdf (The system cannot find the path specified)
 java.io.FileNotFoundException: web-app\uploads\SCP.pdf (The system cannot find the path specified)
@@ -335,7 +335,7 @@ java.io.FileNotFoundException: web-app\uploads\SCP.pdf (The system cannot find t
 	at ArticleSteps$_run_closure2.doCall(ArticleSteps.groovy:16)
 	at ?.When I create the article "Algebraic reasoning for object-oriented programming" with file name "SCP.pdf"(Article.feature:14)
 
-Testcase: duplicate article took 0.008 sec
+Testcase: duplicate article took 0.009 sec
 	Caused an ERROR
 web-app\uploads\TCS-0.pdf (The system cannot find the path specified)
 java.io.FileNotFoundException: web-app\uploads\TCS-0.pdf (The system cannot find the path specified)
@@ -347,7 +347,7 @@ java.io.FileNotFoundException: web-app\uploads\TCS-0.pdf (The system cannot find
 	at ArticleSteps$_run_closure5.doCall(ArticleSteps.groovy:30)
 	at ?.Given the article "A theory of software product line refinement" is stored in the system with file name "TCS-0.pdf"(Article.feature:18)
 
-Testcase: alternative duplicate article took 0.01 sec
+Testcase: alternative duplicate article took 0.009 sec
 	Caused an ERROR
 web-app\uploads\TCS-2 (The system cannot find the path specified)
 java.io.FileNotFoundException: web-app\uploads\TCS-2 (The system cannot find the path specified)
@@ -359,7 +359,7 @@ java.io.FileNotFoundException: web-app\uploads\TCS-2 (The system cannot find the
 	at ArticleSteps$_run_closure2.doCall(ArticleSteps.groovy:16)
 	at ?.When I create the article "A theory of software product line refinement" with file name "TCS-2"(Article.feature:24)
 
-Testcase: new article web took 6.183 sec
+Testcase: new article web took 6.765 sec
 	FAILED
 title ==~ /Journal List/
 |     |

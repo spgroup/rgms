@@ -4,7 +4,7 @@
 --Output from duplicate article--
 --Output from alternative duplicate article--
 --Output from new article web--Started ChromeDriver
-port=10394
+port=44811
 version=26.0.1383.0
 log=C:\code\taes\rgms\chromedriver.log
 Unable to use direct char[] access of java.lang.String

@@ -141,7 +141,9 @@ class TestDataAndOperations {
 	static public void createMembership(String username, String rgroup, String date1, String date2) {
 		def cont = new MembershipController()
 		
-		cont.params << TestDataAndOperations.findByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2);
+		try {
+			cont.params << TestDataAndOperations.findByResearchGroupAndDateJoinedAndDateLeft(username, rgroup, date1, date2)
+		} catch (Exception e) {}
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.
 		cont.create()
 		cont.save()

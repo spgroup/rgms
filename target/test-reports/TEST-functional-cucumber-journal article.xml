@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="4" failures="1" hostname="Laptop" name="journal article" tests="5" time="6.849" timestamp="2013-03-09T21:09:08">
+<testsuite errors="4" failures="1" hostname="Laptop" name="journal article" tests="5" time="7.429" timestamp="2013-03-09T21:29:50">
   <properties />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new article" time="0.215">
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new article" time="0.218">
     <error message="web-app\uploads\TCS.pdf (The system cannot find the path specified)" type="java.io.FileNotFoundException">java.io.FileNotFoundException: web-app\uploads\TCS.pdf (The system cannot find the path specified)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:212)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:165)
@@ -12,7 +12,7 @@
 	at ✽.When I create the article &quot;A theory of software product line refinement&quot; with file name &quot;TCS.pdf&quot;(Article.feature:9)
 </error>
   </testcase>
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new invalid article" time="0.042">
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new invalid article" time="0.052">
     <error message="web-app\uploads\SCP.pdf (The system cannot find the path specified)" type="java.io.FileNotFoundException">java.io.FileNotFoundException: web-app\uploads\SCP.pdf (The system cannot find the path specified)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:212)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:165)
@@ -23,7 +23,7 @@
 	at ✽.When I create the article &quot;Algebraic reasoning for object-oriented programming&quot; with file name &quot;SCP.pdf&quot;(Article.feature:14)
 </error>
   </testcase>
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="duplicate article" time="0.04">
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="duplicate article" time="0.042">
     <error message="web-app\uploads\TCS-0.pdf (The system cannot find the path specified)" type="java.io.FileNotFoundException">java.io.FileNotFoundException: web-app\uploads\TCS-0.pdf (The system cannot find the path specified)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:212)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:165)
@@ -34,7 +34,7 @@
 	at ✽.Given the article &quot;A theory of software product line refinement&quot; is stored in the system with file name &quot;TCS-0.pdf&quot;(Article.feature:18)
 </error>
   </testcase>
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="alternative duplicate article" time="0.044">
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="alternative duplicate article" time="0.042">
     <error message="web-app\uploads\TCS-2 (The system cannot find the path specified)" type="java.io.FileNotFoundException">java.io.FileNotFoundException: web-app\uploads\TCS-2 (The system cannot find the path specified)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:212)
 	at java.io.FileOutputStream.&lt;init&gt;(FileOutputStream.java:165)
@@ -45,7 +45,7 @@
 	at ✽.When I create the article &quot;A theory of software product line refinement&quot; with file name &quot;TCS-2&quot;(Article.feature:24)
 </error>
   </testcase>
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new article web" time="6.186">
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new article web" time="6.768">
     <failure message="title ==~ /Journal List/&#xa;|     |&#xa;|     false&#xa;Periódico Listagem" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
 
 title ==~ /Journal List/
@@ -295,7 +295,7 @@ Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications 
 --Output from duplicate article--
 --Output from alternative duplicate article--
 --Output from new article web--Started ChromeDriver
-port=10394
+port=44811
 version=26.0.1383.0
 log=C:\code\taes\rgms\chromedriver.log
 Unable to use direct char[] access of java.lang.String
