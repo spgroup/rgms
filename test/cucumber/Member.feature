@@ -33,7 +33,7 @@ Feature: member
   Scenario: create member
     Given I am at the create member page
     When I fill the user details with "jose" "josesilva" "jose@ufpe.br" "UFPE"
-    Then I am on the list page 
+    Then I am on the member view page 
 
   Scenario: register user with invalid data
     Given I am at the create member page

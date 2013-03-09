@@ -4,6 +4,7 @@ import steps.TestDataAndOperations
 import pages.RegisterPage
 import pages.MemberCreatePage
 import pages.MemberListPage
+import pages.MemberViewPage
 
 import static cucumber.api.groovy.EN.*
 
@@ -101,8 +102,8 @@ When(~'^I fill the user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') 
 	page.fillMemberDetails(name, username, email, university)
 }
 
-Then(~'^I am on the list page$') { ->
-	at MemberListPage
+Then(~'^I am on the member view page$') { ->
+	at MemberViewPage
 }
 
 
