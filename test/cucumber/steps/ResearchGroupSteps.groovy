@@ -38,6 +38,36 @@ Then(~'^the research group "([^"]*)" is not stored in the system because exceeds
 	assert researchGroup.size() == 0
 }
 
+
+
+Given(~'^the system has no research group with no name stored in the system$') { ->
+	researchGroup = ResearchGroup.findByName("")
+	assert researchGroup == null
+}
+
+When(~'^I create a research group with no name and with the description "([^"]*)" $') { String arg1 ->
+	TestDataAndOperations.createResearchGroup("", arg1)
+}
+
+Then(~'^the research group is not stored in the system because it has no name$') { ->
+	researchGroup = ResearchGroup.findAllByName("")
+	assert researchGroup == null
+}
+
+Given(~'^the system has no research group with name "([^"]*)"$') { String arg1 ->
+	researchGroup = ResearchGroup.findAllByName(arg1)
+	assert researchGroup == null
+}
+
+When(~'^I create a research group with  with name "([^"]*)" and with no description$') { String arg1 ->
+	TestDataAndOperations.createResearchGroup(arg1, "")
+}
+
+Then(~'^the research group with name "([^"]*)" is not stored in the system because it has no description$') { String arg1 ->
+	researchGroup = ResearchGroup.findAllByName(arg1)
+	assert researchGroup == null
+}
+
 When(~'^i modify the research group entitled "([^"]*)" to "([^"]*)" and its description to "([^"]*)"$') { String oldName, String newName, String newDescription ->
 	researchGroup = ResearchGroup.findByName(oldName)
 	TestDataAndOperations.editResearchGroup(researchGroup, newName, newDescription)
@@ -97,26 +127,33 @@ Then(~'^i can fill the research group details and create a new one$') {
 	->
 	at ResearchGroupCreatePage
 	page.fillResearchGroupDetails()
+	page.clickOnCreate();
+	at ResearchGroupShowPage
 }
-Given(~'^the system has a research group named "([^"]*)" stored in the system$') { String arg1 ->
-	TestDataAndOperations.createResearchGroup(arg1, "description")
-	researchgroup = ResearchGroup.findByName(arg1);
-	assert researchgroup != null
-}
-
-Given(~'^i am at publications menu$') { ->
+Given(~'^the system has a "([^"]*)" named "([^"]*)" stored in the system$') { String menu, String arg1 ->
 	to LoginPage
 	at LoginPage
 	page.fillLoginData("admin", "adminadmin")
 	at PublicationsPage
+	
+	page.select(menu)
+	at ResearchGroupPage
+	
+	page.selectNewResearchGroup()
+	
+	at ResearchGroupCreatePage
+	page.fillResearchGroupDetails(arg1)
+	page.clickOnCreate();
+	
+	at ResearchGroupShowPage
 }
 
-When(~'^i select "([^"]*)" option at publications menu$') { String arg1 ->
-	page.select(arg1)
+Given(~'^i am at Research Group list menu$') { ->
+	to ResearchGroupPage
+	at ResearchGroupPage
 }
 
 When(~'^i select a research group called "([^"]*)"$') { String arg1 ->
-	at ResearchGroupPage
 	page.showResearchGroup(arg1)
 }
 

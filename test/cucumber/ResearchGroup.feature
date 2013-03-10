@@ -21,10 +21,20 @@ Feature: research group
     When I create a research group named "modcs" with the description "modcs research group"
     Then the research group "modcs" is not stored again in the system
     
-    Scenario: invalid researchgroup
+    Scenario: invalid by name size researchgroup
     Given the system has no research group entitled "modcs 123456789" stored in the system
     When I create a research group named "modcs 123456789" with the description "modcs research group"
     Then the research group "modcs 123456789" is not stored in the system because exceeds the number of characters allowed
+    
+    Scenario: invalid by not having a name researchgroup
+    Given the system has no research group with no name stored in the system
+    When I create a research group with no name and with the description "modcs research group"
+    Then the research group is not stored in the system because it has no name
+    
+    Scenario: invalid by not having a description researchgroup
+    Given the system has no research group with name "modcs"
+    When I create a research group with  with name "modcs" and with no description
+    Then the research group with name "modcs" is not stored in the system because it has no description
     
     Scenario:edit research group
     Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
@@ -36,16 +46,15 @@ Feature: research group
     When i delete the research group entitled "modcs"
     Then the research group "modcs" is properly deleted of the system
  
-    Scenario: new research group via web browser
+    Scenario: new research group and show via web browser
     Given i am at publication menu
     When i select the "Research Group" option at publications menu
     And i select the new research group option at research group list page
     Then i can fill the research group details and create a new one
     
     Scenario: show research group via web browser
-    Given the system has a research group named "MODCs" stored in the system
-    And i am at publications menu
-    When i select "Research Group" option at publications menu
+    Given the system has a "Research Group" named "MODCs" stored in the system
+    And i am at Research Group list menu
     And i select a research group called "MODCs"
     Then the system will show the details of this research group
       

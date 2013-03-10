@@ -13,9 +13,13 @@ class ResearchGroupCreatePage extends Page{
 		static content = {
 		}
 	
-		def fillResearchGroupDetails(){
-			$("form").name = "Group X"
-			$("form").description = "A research group called X"
+		def fillResearchGroupDetails(String name){
+			$("form").name = name"
+			$("form").description = "A research group called " + name
 		}	
+		
+		def clickOnCreate(){
+			$('input.save').click()
+		}
 		
 }
