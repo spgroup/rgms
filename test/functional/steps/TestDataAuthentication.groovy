@@ -21,7 +21,9 @@ class TestDataAuthentication{
 
     static public def generateUnregisteredUser(){
         Member user = null;
-        while( user == null || !user.validate() || Member.find(user) != null){
+        while( user == null ||
+                !user.validate() ||
+                Member.findByUsername(user.username) != null){
             println "user: " + user
             println "validate: " + user?.validate()
             println "errors: " + user?.errors
