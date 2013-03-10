@@ -95,6 +95,7 @@ class AuthController {
             flash.message = message(code: "login.failed")
             // Now redirect back to the login page.
             redirect(uri: "/")
+			//redirect(uri: "/auth/login")
 //            redirect(action: "login", params: m) //action: "login"
         }
     }
