@@ -19,7 +19,7 @@ Given(~'^the system has member "([^"]*)" and research group "([^"]*)"$') { Strin
 }
 
 And(~'^the system has no membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)"$') { String username, groupname, date1, date2 ->
-	java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd");
+	java.text.DateFormat df = new java.text.SimpleDateFormat("dd-MM-yyyy");
 	// http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html
 
 	member = Member.findByUsername(username)
@@ -28,17 +28,26 @@ And(~'^the system has no membership with member "([^"]*)", research group "([^"]
 	assert membership == null
 }
 
-When(~'^I create a membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)"$') {String username, rgroup, date1, date2 ->
-	TestDataAndOperations.createMembership(username, rgroup, date1, date2)
+When(~'^I create a membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)"$') {String username, groupname, date1, date2 ->
+	TestDataAndOperations.createMembership(username, groupname, date1, date2)
 }
 
-Then(~'^the membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)" is created$') {String username, rgroup, date1, date2 ->
-	assert Membership.findAllByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2) != null
+Then(~'^the membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)" is created$') {String username, groupname, date1, date2 ->
+	java.text.DateFormat df = new java.text.SimpleDateFormat("dd-MM-yyyy");
+	member = Member.findByUsername(username)
+	researchgroup = ResearchGroup.findByName(groupname)
+	assert Membership.findByMemberAndResearchGroupAndDateJoinedAndDateLeft(member, researchgroup, df.parse(date1), df.parse(date2)) != null
 }
 
 // Delete Membership
 
-Given(~'^the system has membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)"$') { String username, rgroup, date1, date2 ->
+Given(~'^the system has membership with member "([^"]*)", research group "([^"]*)" between "([^"]*)" and "([^"]*)"$') { String username, groupname, date1, date2 ->
+	//TODO Criar um Membership com o member e researchgroup abaixo,
+	//		salvar, e aí sim pedir para procurar e fazer o assert membership != null
+	//		O problema é que métodos de criação de Membership não funcionam ainda.
+	
+	java.text.DateFormat df = new java.text.SimpleDateFormat("dd-MM-yyyy");
+	
 	TestDataAndOperations.createMember(username)
 	member = Member.findByUsername(username)
 	assert member != null
@@ -46,7 +55,7 @@ Given(~'^the system has membership with member "([^"]*)", research group "([^"]*
 	researchgroup = ResearchGroup.findByName(groupname)
 	assert researchgroup != null
 
-	membership = Membership.findByMemberAndResearchGroupAndDateJoinedAndDateLeft(member, researchgroup, new Date(date1), new Date(date2))
+	membership = Membership.findByMemberAndResearchGroupAndDateJoinedAndDateLeft(member, researchgroup, df.parse(date1), df.parse(date1))
 	assert membership != null
 
 	assert Membership.findAllByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2) != null

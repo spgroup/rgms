@@ -30,20 +30,6 @@ class TestDataAndOperations {
 				]
 ]
 	
-	static memberships = [
-		[member: (new Member(members[0])),
-			researchGroup: (new ResearchGroup(name: "taes", description: "grupo de estudos", childOf: null)),
-			//researchGroup: (new ResearchGroup(researchgroups[0])),
-			dateJoined: (new Date("12 October 2012")),
-			dateLeft: (new Date("20 October 2012"))]
-		,
-		[member: (new Member(members[1])),
-			researchGroup: (new ResearchGroup(name: "taes", description: "grupo de estudos", childOf: null)),
-			//researchGroup: (new ResearchGroup(researchgroups[0])),
-			dateJoined: (new Date("12 October 2012")),
-			dateLeft: (new Date("20 October 2012"))]
-		
-]
 	static researchgroups = [
 		[name: "SWPRG",
 			description: "SW Productivity Research Group",
@@ -53,6 +39,19 @@ class TestDataAndOperations {
 			description: "grupo de estudos",
 			childOf: null]
 ]
+	
+	static memberships = [
+		[member: (new Member(members[0])),
+			researchGroup: (new ResearchGroup(researchgroups[0])),
+			dateJoined: (new Date(2012, 03, 01)),
+			dateLeft: (new Date(2012, 06, 01))]
+		,
+		[member: (new Member(members[1])),
+			researchGroup: (new ResearchGroup(researchgroups[0])),
+			dateJoined: (new Date(2012, 03, 01)),
+			dateLeft: (new Date(2012, 06, 01))]
+]
+
 
     static public def findByTitle(String title) {
         articles.find { article ->
@@ -66,16 +65,13 @@ class TestDataAndOperations {
 		}
 	}
 
-	static public def findByResearchGroupAndDateJoinedAndDateLeft(String username, String rgroup, String date1, String date2) {
+	static public def findMembershipByResearchGroupName(String groupname) {
 		memberships.find { membership ->
-			membership.member == username &&
-			membership.researchGroup == rgroup &&
-			membership.dateJoined == date1 &&
-			membership.dateLeft == date2
+			membership.researchGroup.name == groupname
 		}
 	}
 
-	static public def findByGroupName(String groupname) {
+	static public def findResearchGroupByGroupName(String groupname) {
 		researchgroups.find { group ->
 			group.name == groupname
 		}
@@ -131,7 +127,7 @@ class TestDataAndOperations {
 	
 	static public void createResearchGroup(String groupname) {
 		def cont = new ResearchGroupController()
-		cont.params << TestDataAndOperations.findByGroupName(groupname)
+		cont.params << TestDataAndOperations.findResearchGroupByGroupName(groupname)
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.
 		cont.create()
 		cont.save()
@@ -139,11 +135,17 @@ class TestDataAndOperations {
 	}
 	
 	static public void createMembership(String username, String rgroup, String date1, String date2) {
+		//TODO Deveria pegar os dados dos parametros, mas
+		//		esta dando problema na criacao. Entao para
+		//		simplificar o entendimento do problema,
+		//		os valores estão fixos. O problema não
+		//		está nos parâmetros passados.
+		
 		def cont = new MembershipController()
 		
-		try {
-			cont.params << TestDataAndOperations.findByResearchGroupAndDateJoinedAndDateLeft(username, rgroup, date1, date2)
-		} catch (Exception e) {}
+		cont.params << [member: (new Member(members[0])),
+						researchGroup: (new ResearchGroup(name: "taes", description: "grupo de estudos", childOf: null)),
+						dateJoined: (new Date(2012, 03, 01)), dateLeft: (new Date(2012, 06, 01))]
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.
 		cont.create()
 		cont.save()
@@ -151,12 +153,14 @@ class TestDataAndOperations {
 	}
 	
 	static public void deleteMembership(String username, String rgroup, String date1, String date2) {
+		java.text.DateFormat df = new java.text.SimpleDateFormat("dd-MM-yyyy");
 		def cont = new MembershipController()
-		
-		cont.params << TestDataAndOperations.findByResearchGroupAndDateJoinedAndDateLeft(rgroup, date1, date2);
+		def identificador = Membership.findByMemberAndResearchGroupAndDateJoinedAndDateLeft(Member.findByUsername(username),
+										ResearchGroup.findByName(rgroup), df.parse(date1), df.parse(date2)).id
+		cont.params << [id: identificador]
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.
 		cont.delete()
-		cont.save()
+		//cont.save()
 		cont.response.reset()
 	}
 	
