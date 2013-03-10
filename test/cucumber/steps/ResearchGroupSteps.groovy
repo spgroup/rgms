@@ -93,18 +93,18 @@ When(~'^i select the new research group option at research group list page$') {
 	page.selectNewResearchGroup()
 }
 
-Then(~'^i can fill the research group details$') {
+Then(~'^i can fill the research group details and create a new one$') {
 	->
 	at ResearchGroupCreatePage
 	page.fillResearchGroupDetails()
 }
-
-Given(~'^the system has a research group stored in the system$') {
-	->
+Given(~'^the system has a research group named "([^"]*)" stored in the system$') { String arg1 ->
+	TestDataAndOperations.createResearchGroup(arg1, "description")
+	researchgroup = ResearchGroup.findByName(arg1);
+	assert researchgroup != null
 }
 
-Given(~'^i am at publications menu$') {
-	->
+Given(~'^i am at publications menu$') { ->
 	to LoginPage
 	at LoginPage
 	page.fillLoginData("admin", "adminadmin")
@@ -115,10 +115,13 @@ When(~'^i select "([^"]*)" option at publications menu$') { String arg1 ->
 	page.select(arg1)
 }
 
-When(~'^i select a research group$') { -> at ResearchGroupPage }
+When(~'^i select a research group called "([^"]*)"$') { String arg1 ->
+	at ResearchGroupPage
+	page.showResearchGroup(arg1)
+}
 
-Then(~'^the system will show the details of this research group$') {
-	->
-	page.showResearchGroup()
+Then(~'^the system will show the details of this research group$') { ->
 	at ResearchGroupShowPage
 }
+
+
