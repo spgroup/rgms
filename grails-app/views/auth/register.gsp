@@ -95,6 +95,11 @@ margin-top: 0;
           </div>
         </g:hasErrors>-->
     <!--    <g:form action="save" >-->
+      <g:hasErrors bean="${memberInstance}">
+          <div class="errors">
+              <g:renderErrors bean="${memberInstance}" as="list" />
+          </div>
+      </g:hasErrors>
     <div id="status" style="position: relative; margin-left: 25%; margin-right: 80%;">
       <h1 style="font-size: 20px; font-weight: bold; font-family: verdana;">
         Register
@@ -103,6 +108,7 @@ margin-top: 0;
       <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
       </g:if>
+
       <form id="log" action="register" method="post" >
         <input type="hidden" name="targetUri" value="" />
 
@@ -110,11 +116,11 @@ margin-top: 0;
           <tbody>
             <tr>
               <td style="text-align: right; font-size: 14px;">Name: </td>
-              <td><input type="text" name="name" required="true" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+              <td><input type="text" name="name" required="true" value="${memberInstance?.name}" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
             </tr>
             <tr>
               <td style="text-align: right; font-size: 14px;">Username: </td>
-              <td><input type="text" name="username" required="true" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+              <td><input type="text" name="username" required="true" value="${memberInstance?.username}" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
             </tr>
             <tr>
               <td style="text-align: right; font-size: 14px;">Password: </td>
@@ -126,11 +132,11 @@ margin-top: 0;
             </tr>
             <tr>
               <td style="text-align: right; font-size: 14px;">Email: </td>
-              <td><input type="text" name="email" required="true" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+              <td><input type="text" name="email" required="true" value="${memberInstance?.email}" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
             </tr>
             <tr>
               <td style="text-align: right; font-size: 14px;">University: </td>
-              <td><input type="text" name="university" required="true" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+              <td><input type="text" name="university" required="true" value="${memberInstance?.university}" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
             </tr>
 <!--            <tr>
               <td style="text-align: right; font-size: 14px;">Phone: </td>
@@ -150,7 +156,7 @@ margin-top: 0;
             </tr>-->
             <tr>
               <td style="text-align: right; font-size: 14px;">Status: </td>
-              <td><g:select name="status" required="true" from="${["Graduate Student", "MSc Student", "PhD Student", "Professor", "Researcher"]}" value="" noSelection="['':'-Choose your status-']"/></td>
+              <td><g:select name="status" required="true" from="${["Graduate Student", "MSc Student", "PhD Student", "Professor", "Researcher"]}" value="${memberInstance?.status}" noSelection="['':'-Choose your status-']"/></td>
           </tr>       
 
 
