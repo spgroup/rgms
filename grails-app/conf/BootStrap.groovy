@@ -43,12 +43,11 @@ class BootStrap {
             admin.save()
             
             print("Instancia de Admin = "+Member.findByUsername('admin').toString())
-        }
-
-		ResearchLine rl = new ResearchLine()
-		rl.setName("Empirical Software Engineering")
-		rl.setDescription("We are investigating processes, methods, techniques and tools for supporting empirical studies in software engineering. The main objective is to develop a infrastructure that support researchers to define, plan, execute, analyze and store results of empirical studies in general. At this moment we call such structure Testbed")
-		rl.save()
+			ResearchLine rl = new ResearchLine()
+			rl.setName("Teoria da informacao - Complexidade no espaco")
+			rl.setDescription("P=NP")
+			rl.save()
+        }		
     }
 
     def destroy = {
