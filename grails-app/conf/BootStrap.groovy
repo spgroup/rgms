@@ -5,6 +5,7 @@ import rgms.member.Member
 import rgms.member.MemberController
 import rgms.member.MemberControllerMixin
 import rgms.member.Record
+import rgms.member.ResearchGroup
 import rgms.publication.ResearchLine
 
 class BootStrap {
@@ -47,6 +48,19 @@ class BootStrap {
 			rl.setName("Teoria da informacao - Complexidade no espaco")
 			rl.setDescription("P=NP")
 			rl.save()
+
+            ResearchGroup r2 = new ResearchGroup()
+            ResearchGroup r3 = new ResearchGroup()
+            ResearchGroup r4 = new ResearchGroup()
+            r2.name = "testehugo1"
+            r2.description = "testehugo1"
+            r3.name = "testehugo12"
+            r3.description = "testehugo12"
+            r4.name = "testehugo123"
+            r4.description = "testehugo123"
+            r2.save()
+            r3.save()
+            r4.save()
         }		
     }
 
