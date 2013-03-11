@@ -18,7 +18,7 @@ When(~'^I select the new dissertation option at the dissertation page$') {->
     page.selectNewArticle()
 }
 
-Then(~'^I cant add the dissertation without a file$') {->
+When(~'^I cant add the dissertation without a file$') {->
     at DissertationCreate
     page.fillDissertationDetailsWithoutFile()
 }
@@ -30,17 +30,21 @@ When(~'^I select "([^"]*)" at the dissertation page$') {String title ->
 	page.selectDissertation(title)
 }
 
-Then(~'^I click on edit$'){->
+When(~'^I click on edit$'){->
 	at DissertationShowPage
 	page.editDissertation()
 }
 
-Then(~'^I delete it$'){->
+When(~'^I delete it$'){->
 	at DissertationShowPage
 	page.deleteDissertation()
 }
 
-Then(~'^I edit the school to "([^"]*)"$'){String school ->
+Then(~'^the school name is "([^"]*)"$'){ String name->
+	page.nameIs(name)
+}
+
+When(~'^I edit the school to "([^"]*)"$'){String school ->
 	at DissertationEditPage
 	page.editSchool(school)
 }

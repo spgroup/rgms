@@ -14,8 +14,11 @@ class DissertationEditPage extends Page{
 		
 	}
 	
+	def nameIs (String name){
+		assert ($("form").school == name)
+	}
+	
 	def editSchool(String school){
 		$("form").school = school
-		$("form").save().click()
 	}
 }
