@@ -23,7 +23,7 @@ FROM
 	</parameter>
 	<parameter name="research_group_id" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM rgms.research_group where research_group.id=$P{research_group_id};]]>
+		<![CDATA[SELECT * FROM research_group where research_group.id=$P{research_group_id};]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="version" class="java.lang.Long"/>
