@@ -50,12 +50,12 @@ Feature: research group
     Given i am at publication menu
     When i select the "Research Group" option at publications menu
     And i select the new research group option at research group list page
-    Then i can fill the research group details and create a new one
+    Then i can fill the research group details with name "modcs" and create a new one
     
     Scenario: show research group via web browser
     Given the system has a "Research Group" named "grupo" stored in the system
     And i am at Research Group list menu
-    When i select a research group called "grupo"
+    And i select a research group called "grupo"
     Then the system will show the details of this research group
     
     Scenario: edit research group via web browser
@@ -64,4 +64,4 @@ Feature: research group
     When i select a research group called "PESQUISA"
     And i select the edit option
     Then i can change the research group name to "rgms" and save it
-          
+          	

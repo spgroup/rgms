@@ -51,12 +51,12 @@ When(~'^I create a research group with no name and with the description "([^"]*)
 }
 
 Then(~'^the research group is not stored in the system because it has no name$') { ->
-	researchGroup = ResearchGroup.findAllByName("")
+	researchGroup = ResearchGroup.findByName("")
 	assert researchGroup == null
 }
 
-Given(~'^the system has no research group with name "([^"]*)"$') { String arg1 ->
-	researchGroup = ResearchGroup.findAllByName(arg1)
+Given(~'^the system has no research group with name "([^"]*)"$') { String name ->
+	researchGroup = ResearchGroup.findByName(name)
 	assert researchGroup == null
 }
 
@@ -65,7 +65,7 @@ When(~'^I create a research group with  with name "([^"]*)" and with no descript
 }
 
 Then(~'^the research group with name "([^"]*)" is not stored in the system because it has no description$') { String arg1 ->
-	researchGroup = ResearchGroup.findAllByName(arg1)
+	researchGroup = ResearchGroup.findByName(arg1)
 	assert researchGroup == null
 }
 
@@ -124,10 +124,10 @@ When(~'^i select the new research group option at research group list page$') {
 	page.selectNewResearchGroup()
 }
 
-Then(~'^i can fill the research group details and create a new one$') {
+Then(~'^i can fill the research group details with name "([^"]*)" and create a new one$') {  String name
 	->
 	at ResearchGroupCreatePage
-	page.fillResearchGroupDetails()
+	page.fillResearchGroupDetails(name)
 	page.clickOnCreate();
 	at ResearchGroupShowPage
 }
