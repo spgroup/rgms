@@ -5,9 +5,9 @@ Feature: conferencia
   so that I can generate web pages and reports containing these conferencias
 
  Scenario: new conferencia
-    Given the system has no conferencia entitled "II Conference on Software Engineering"
-    When I create the conferencia "II Conference on Software Engineering" with file name "IICSE.pdf"
-    Then the conferencia "II Conference on Software Engineering" is properly stored by the system
+    Given the system has no conferencia entitled "IV Conference on Software Product Lines"
+    When I create the conferencia "IV Conference on Software Product Lines" with file name "IICSE.pdf"
+    Then the conferencia "IV Conference on Software Product Lines" is properly stored by the system
 	
  Scenario: duplicate conferencia
     Given the conferencia "I International Conference on Software Engineering" is stored in the system with file name "IICSE-0.pdf"
@@ -15,9 +15,9 @@ Feature: conferencia
     Then the conferencia "I International Conference on Software Engineering" is not stored twice
 	
  Scenario: remove conferencia
-    Given the conferencia "II Conference on Software Engineering" is stored in the system with file name "IICSE.pdf"
-    When I remove the conferencia "II Conference on Software Engineering"
-    Then the conferencia "II Conference on Software Engineering" is properly removed by the system
+    Given the conferencia "IV Conference on Software Product Lines" is stored in the system with file name "IICSE.pdf"
+    When I remove the conferencia "IV Conference on Software Product Lines"
+    Then the conferencia "IV Conference on Software Product Lines" is properly removed by the system
 	
  Scenario: new conferencia web
     Given I am at the publications and conferencias menu

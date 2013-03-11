@@ -3,7 +3,7 @@ import pages.BookChapterPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.BookChapter
-import steps.TestBookChapterDataAndOperations
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -15,18 +15,18 @@ Given(~'^the system has no book chapter entitled "([^"]*)"$') { String title ->
 
 When(~'^I create the book chapter "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     // Express the Regexp above with the code you wish you had
-    TestBookChapterDataAndOperations.createBookChapter(title, filename)
+    TestDataAndOperations.createBookChapter(title, filename)
 }
 
 Then(~'^the book chapter "([^"]*)" is properly stored by the system$') { String title ->
     // Express the Regexp above with the code you wish you had
     bookChapter = BookChapter.findByTitle(title)
-    assert TestBookChapterDataAndOperations.compatibleTo(bookChapter, title)
+    assert TestDataAndOperations.compatibleTo(bookChapter, title)
 }
 
 Given(~'^the book chapter "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     // Express the Regexp above with the code you wish you had
-    TestBookChapterDataAndOperations.createBookChapter(title, filename)
+    TestDataAndOperations.createBookChapter(title, filename)
     bookChapter = BookChapter.findByTitle(title)
     assert bookChapter != null
 }
@@ -39,7 +39,7 @@ Then(~'^the book chapter  "([^"]*)" is not stored twice$') { String title ->
 
 When(~'^I remove the book chapter "([^"]*)"$') { String title ->
     // Express the Regexp above with the code you wish you had
-    TestBookChapterDataAndOperations.removeBookChapter(title)
+    TestDataAndOperations.removeBookChapter(title)
 }
 
 Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String title ->
@@ -50,7 +50,7 @@ Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String
 
 Given(~'^the book chapter "([^"]*)" is stored in the system with file name  "([^"]*)"$') { String title, String filename ->
     // Express the Regexp above with the code you wish you had
-    TestBookChapterDataAndOperations.createBookChapter(title, filename)
+    TestDataAndOperations.createBookChapter(title, filename)
     bookChapter = BookChapter.findByTitle(title)
     assert bookChapter != null
 }
@@ -92,4 +92,8 @@ Given(~'^I am at the book chapter page$') { ->
 And (~'^I fill only the title field at book chapter create page$') { ->
     at BookChapterCreatePage
     page.fillTitle()
+}
+
+Then(~'^I still on the book chapter create page$') { ->
+    at BookChapterCreatePage
 }

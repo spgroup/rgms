@@ -11,7 +11,7 @@ Feature: BookChapter
 
   Scenario: duplicate book chapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
-    When I create the book chapter "Next Generation Software Product Line Engineering" with file name "NGSPL-1.pdf"
+    When I create the book chapter "Next Generation Software Product Line Engineering" with file name "NGSPL-0.pdf"
     Then the book chapter  "Next Generation Software Product Line Engineering" is not stored twice
 
   Scenario: remove book chapter
@@ -24,7 +24,7 @@ Feature: BookChapter
     When I select the "Book Chapter" option at the publication menu
     And I select the Novo BookChapter option at the book chapter page
     And I fill only the title field at book chapter create page
-    Then I see an error message
+    Then I still on the book chapter create page
 
   Scenario: new book chapter web
     Given I am at the publication menu

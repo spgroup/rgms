@@ -3,7 +3,8 @@ import pages.ConferenciaPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Conferencia
-import steps.TestConferenciaDataAndOperations
+import rgms.publication.Publication
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -13,27 +14,27 @@ Given(~'^the system has no conferencia entitled "([^"]*)"$') { String title ->
 }
 
 When(~'^I create the conferencia "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    TestConferenciaDataAndOperations.createConferencia(title, filename)
+    TestDataAndOperations.createConferencia(title, filename)
 }
 
 Then(~'^the conferencia "([^"]*)" is properly stored by the system$') { String title ->
     conferencia = Conferencia.findByTitle(title)
-    assert TestConferenciaDataAndOperations.compatibleTo(conferencia, title)
+    assert TestDataAndOperations.conferenciaCompatibleTo(conferencia, title)
 }
 
 Given(~'^the conferencia "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
-    TestConferenciaDataAndOperations.createConferencia(title, filename)
+    TestDataAndOperations.createConferencia(title, filename)
     conferencia = Conferencia.findByTitle(title)
     assert conferencia != null
 }
 
 Then(~'^the conferencia "([^"]*)" is not stored twice$') { String title ->
-    conferencias = Conferencia.findAllByTitle(title)
-    assert conferencias.size() == 1
+    conferencia = Conferencia.findByTitle(title)
+    assert conferencia.size() == 1
 }
 
 When(~'^I remove the conferencia "([^"]*)"$') { String title ->
-    TestConferenciaDataAndOperations.removeConferencia(title)
+    TestDataAndOperations.removeConferencia(title)
 }
 
 Then(~'^the conferencia "([^"]*)" is properly removed by the system$') { String title ->
