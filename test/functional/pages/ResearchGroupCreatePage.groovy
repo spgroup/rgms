@@ -14,7 +14,7 @@ class ResearchGroupCreatePage extends Page{
 		}
 	
 		def fillResearchGroupDetails(String name){
-			$("form").name = name"
+			$("form").name = name
 			$("form").description = "A research group called " + name
 		}	
 		

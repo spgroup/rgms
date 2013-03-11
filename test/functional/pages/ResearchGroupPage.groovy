@@ -18,6 +18,6 @@ class ResearchGroupPage extends Page{
 		}
 		
 		def showResearchGroup(String a){
-			$('a', title: a).click()
+			$('a', text: a).click()
 		}
 }

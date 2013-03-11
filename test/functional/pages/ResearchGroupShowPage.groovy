@@ -11,4 +11,12 @@ class ResearchGroupShowPage extends Page{
 	
 		static content = {
 		}
+		
+		def selectEditResearchGroup() {
+			$('a.edit').click()
+		}
+		
+		def selectRemoveResearchGroup() {
+			$('input.delete').click()
+		} 
 }
