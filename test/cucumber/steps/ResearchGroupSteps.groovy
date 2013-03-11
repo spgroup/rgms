@@ -162,32 +162,8 @@ Then(~'^the system will show the details of this research group$') { ->
 	at ResearchGroupShowPage
 }
 
-Given(~'^the system has a "([^"]*)" named "([^"]*)" stored in the system$') { String menu, String arg1 ->
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
-	at PublicationsPage
-	
-	page.select(menu)
-	at ResearchGroupPage
-	
-	page.selectNewResearchGroup()
-	
-	at ResearchGroupCreatePage
-	page.fillResearchGroupDetails(arg1)
-	page.clickOnCreate();
-	
-	at ResearchGroupShowPage
-}
-Given(~'^i am at Research Group list menu$') { ->
-	to ResearchGroupPage
-	at ResearchGroupPage
-}
-When(~'^i select a research group called "([^"]*)"$') { String arg1 ->
-	page.showResearchGroup(arg1)
-	at ResearchGroupShowPage
-}
 When(~'^i select the edit option$') {->
+	at ResearchGroupShowPage
 	page.selectEditResearchGroup()
 	at ResearchGroupEditarPage
 }
