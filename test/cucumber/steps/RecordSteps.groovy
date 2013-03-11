@@ -1,11 +1,23 @@
 import rgms.member.Record
+import rgms.member.Member
 import steps.TestDataAndOperations
 import pages.*
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has only one record with status "([^"]*)"$') { String status ->
+	TestDataAndOperations.insertsRecord(status)
 	def records = Record.findAllByStatus_H(status)
 	assert records.size() == 1 && records.first() != null
+}
+
+Given(~'^the record with status "([^"]*)" is not associated to a member$') { String status ->
+	def associated = TestDataAndOperations.recordIsAssociated(status)
+	assert associated == false
+}
+
+Given(~'^the record with status "([^"]*)" is associated to a member$') { String status ->
+	def associated = TestDataAndOperations.recordIsAssociated(status)
+	assert associated == true
 }
 
 When(~'^I remove the record with status "([^"]*)"$') { String status ->
@@ -16,6 +28,11 @@ When(~'^I remove the record with status "([^"]*)"$') { String status ->
 Then(~'^the record with status "([^"]*)" is properly removed by the system$') { String status ->
 	def record = Record.findByStatus_H(status)
 	assert record == null
+}
+
+Then(~'^the record with status "([^"]*)" is not removed by the system$') { String status ->
+	def record = Record.findByStatus_H(status)
+	assert record != null
 }
 
 Given(~'^the system has only one record with status "([^"]*)" and this record has a null end date$') { String status ->
@@ -101,4 +118,25 @@ When(~'^I click the create record option$') {->
 Then(~'^I can fill the record details$') {->
 	at RecordCreatePage
 	page.fillRecordDetails()
+}
+
+Given(~'^I am at the visualize page of the record with status "([^"]*)"$') {
+	String status ->
+		to LoginPage
+		at LoginPage
+		page.fillLoginData("admin", "adminadmin")
+		at PublicationsPage
+		to RecordPage
+		page.visualizeRecord(status)
+		at RecordVisualizePage
+}
+
+When(~'^I click to remove the record$') {->
+	at RecordVisualizePage
+	page.removeRecord()
+}
+
+Then(~'^I am still at the visualize page of the record with status "([^"]*)"$') { String status ->
+	at RecordVisualizePage
+	page.checkRecordDetails()
 }

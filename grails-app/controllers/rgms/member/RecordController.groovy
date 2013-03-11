@@ -2,7 +2,8 @@ package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.member.Record;
+import rgms.member.Record
+import rgms.member.Member
 
 class RecordController {
 
@@ -91,9 +92,10 @@ class RecordController {
             redirect(action: "list")
             return
         }
-
+		
         try {
-            recordInstance.delete(flush: true)
+			checkAssociations(recordInstance.id)
+			recordInstance.delete(flush: true)
 			flash.message = message(code: 'default.deleted.message', args: [message(code: 'Record.label', default: 'Record'), params.id])
             redirect(action: "list")
         }
@@ -102,4 +104,18 @@ class RecordController {
             redirect(action: "show", id: params.id)
         }
     }
+	
+	static public def checkAssociations(def recordId)
+	{
+		def c = Member.createCriteria()
+		def members = c.listDistinct{
+			historics{
+				eq("id",recordId)
+			}
+		}
+		if(members.size() > 0){
+			throw new DataIntegrityViolationException("Este histórico não pode ser apagado, pois ele está associado a um membro")
+		}
+		
+	}
 }

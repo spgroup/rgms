@@ -2,10 +2,17 @@
 Feature: record
  As a member, I want to edit my status and create, edit and remove records
  
-	Scenario: Delete record
+	Scenario: Delete record without dependency
+	Given the system has only one record with status "Graduate Student"
+	And the record with status "Graduate Student" is not associated to a member
+	When I remove the record with status "Graduate Student"
+	Then the record with status "Graduate Student" is properly removed by the system
+	
+	Scenario: Delete record with dependency
 	Given the system has only one record with status "MSc Student"
+	And the record with status "MSc Student" is associated to a member
 	When I remove the record with status "MSc Student"
-	Then the record with status "MSc Student" is properly removed by the system
+	Then the record with status "MSc Student" is not removed by the system
 			
 	Scenario: Update record
 	Given the system has only one record with status "MSc Student" and this record has a null end date

@@ -1,5 +1,6 @@
 package steps
 
+import rgms.member.Member
 import rgms.publication.Periodico
 import rgms.publication.PeriodicoController
 import rgms.publication.ResearchLine
@@ -25,7 +26,9 @@ class TestDataAndOperations {
 	]
 	
 	static records = [
-		[status_H: "MSc Student",start: (new Date()), end: null]
+		[status_H: "MSc Student",start: (new Date()), end: null],
+		[status_H: "Graduate Student",start: (new Date()), end: null]
+		
 	]
 	
     static public def findArticleByTitle(String title) {
@@ -46,7 +49,19 @@ class TestDataAndOperations {
 			researchLine.name == name
 		}
 	}
-
+	
+	static public boolean recordIsAssociated(def status)
+	{
+		def c = Member.createCriteria()
+		def recordId = Record.findByStatus_H(status).id
+		def members = c.listDistinct{
+			historics{
+				eq("id",recordId)
+			}
+		}
+		members.size() > 0
+	}
+	
     static public boolean compatibleTo(article, title) {
         def testarticle = findArticleByTitle(title)
         def compatible = false
@@ -148,6 +163,20 @@ class TestDataAndOperations {
 			rl.setDescription(research.description)
 			rl.save()
 		}		
+	}
+	
+	static public def insertsRecord(String status)
+	{
+		def inserted = Record.findByStatus_H(status)
+		if(!inserted)
+		{
+			def record = TestDataAndOperations.findRecordByStatus(status)
+			Record r = new Record()
+			r.setStatus_H(record.status_H)
+			r.setStart(r.start)
+			r.setEnd(r.end)
+			r.save()
+		}
 	}
 	
 
