@@ -126,7 +126,10 @@ class ResearchGroupController {
         for(groupId in session["groups"] ){
             def rGroup = ResearchGroup.get(groupId as Long)
             if(rGroup){
-                members.addAll(rGroup?.memberships?.collect{it.member})
+				def collection = rGroup?.memberships?.collect{it.member}
+				if(collection) {
+                	members.addAll(collection)
+				}
             }            
         }
 		

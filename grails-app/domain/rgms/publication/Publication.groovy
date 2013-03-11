@@ -28,23 +28,23 @@ abstract class Publication {
         return title
     }
 
-//	static Set getPublicationsByMembershipList(membershipList){
-//		def set = [] as Set
-//		for(membership in membershipList){
-//			set.addAll(Publication.getPublicationsByMembership(membership))
-//		}
-//                return set
-//	}
+	static Set getPublicationsByMembershipList(membershipList){
+		def set = [] as Set
+		for(membership in membershipList){
+			set.addAll(Publication.getPublicationsByMembership(membership))
+		}
+                return set
+	}
 
-//	static Set getPublicationsByMembership(membership){
-//		def publications = membership?.member.publications
-//		def query = !membership.dateLeft ?
-//					{ it.publicationDate?.compareTo(membership.dateJoined) > 0 }:
-//					{ it.publicationDate?.compareTo(membership.dateJoined) > 0  &&
-//						it.publicationDate?.compareTo(membership.dateLeft) < 0}
-//                def p = publications?.findAll(query)
-//		return p
-//	}
+	static Set getPublicationsByMembership(membership){
+		def publications = membership?.member.publications
+		def query = !membership.dateLeft ?
+					{ it.publicationDate?.compareTo(membership.dateJoined) > 0 }:
+					{ it.publicationDate?.compareTo(membership.dateJoined) > 0  &&
+						it.publicationDate?.compareTo(membership.dateLeft) < 0}
+                def p = publications?.findAll(query)
+		return p
+	}
 
 //	public String retPrimeiroAutor(){
 //		String[] quebraString = this.author.tokenize(",")

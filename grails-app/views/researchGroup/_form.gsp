@@ -27,7 +27,7 @@
     <g:message code="researchGroup.childOf.label" default="Child Of" />
     
   </label>
-  <g:select id="childOf" name="childOf.id" from="${rgms.ResearchGroup.list()}" optionKey="id" value="${researchGroupInstance?.childOf?.id}" class="many-to-one"/>
+  <g:select id="childOf" name="childOf.id" from="${rgms.member.ResearchGroup.list()}" optionKey="id" value="${researchGroupInstance?.childOf?.id}" class="many-to-one"/>
 </div>
 <!-- #end -->
 <div>
@@ -36,7 +36,7 @@
     Research Groups		
   </label>
   <ul class="checklist">
-    <g:each in="${rgms.ResearchGroup.list()}" var="group">
+    <g:each in="${rgms.member.ResearchGroup.list()}" var="group">
       <li>
         <label for="${group.id}">
           <g:checkBox name="${group.id}" value="${true}" 

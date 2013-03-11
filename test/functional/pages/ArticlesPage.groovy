@@ -3,7 +3,7 @@ package pages
 import geb.Page
 
 class ArticlesPage extends Page {
-    static url = "periodico/list"
+    static url = "article/list"
 
     static at = {
         title ==~ /Journal List/
