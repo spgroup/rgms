@@ -38,6 +38,6 @@ public class RecordVisualizePage extends Page {
 	
 	def removeRecord()
 	{
-		assert withConfirm(true) { $("input", name: "_action_delete").click() } == "Tem certeza?"
+		assert withConfirm(true) { $("input.delete").click() }
 	}
 }

@@ -38,3 +38,9 @@ Feature: record
     Given I am at the edit page of the record with status "MSc Student"
     When I set the status to "" and I click the save button
     Then I am still at the edit page of the record with status "MSc Student"
+    
+    Scenario: delete record web with dependency
+    Given I am at the visualize page of the record with status "MSc Student"
+    And the system has only one record with status "MSc Student"
+    When I click to remove the record
+	Then I am still at the visualize page of the record with status "MSc Student"

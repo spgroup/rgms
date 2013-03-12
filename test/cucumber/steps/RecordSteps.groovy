@@ -138,5 +138,5 @@ When(~'^I click to remove the record$') {->
 
 Then(~'^I am still at the visualize page of the record with status "([^"]*)"$') { String status ->
 	at RecordVisualizePage
-	page.checkRecordDetails()
+	page.checkRecordDetails(status)
 }
