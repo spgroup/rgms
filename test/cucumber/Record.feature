@@ -42,5 +42,6 @@ Feature: record
     Scenario: delete record web with dependency
     Given I am at the visualize page of the record with status "MSc Student"
     And the system has only one record with status "MSc Student"
+    And the record with status "MSc Student" is associated to a member
     When I click to remove the record
 	Then I am still at the visualize page of the record with status "MSc Student"
