@@ -50,7 +50,6 @@
 					
 						<td>${fieldValue(bean: technicalReportInstance, field: "researchLine")}</td>
 					
-						
 					
 						<td>${fieldValue(bean: technicalReportInstance, field: "institution")}</td>
 					

@@ -1,6 +1,5 @@
 
---Output from new article--
---Output from new invalid article--
---Output from duplicate article--
---Output from alternative duplicate article--
---Output from new article web--
+--Output from remove existing article web--Started ChromeDriver
+port=8598
+version=26.0.1383.0
+log=C:\springsource\workspace\rgms\chromedriver.log
