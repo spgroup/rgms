@@ -1,22 +1,25 @@
 package steps
 
 import java.util.Date
+import java.text.SimpleDateFormat
 
+import rgms.member.Member
+import rgms.member.Membership
+import rgms.member.MembershipController
+import rgms.member.ResearchGroup
+import rgms.member.ResearchGroupController
+import rgms.member.Record
+import rgms.member.RecordController
+import rgms.member.MemberController
+import rgms.publication.Dissertacao
 import rgms.publication.Periodico
 import rgms.publication.PeriodicoController
-import rgms.publication.Dissertacao
 import rgms.publication.DissertacaoController
 import rgms.publication.ResearchLine
 import rgms.publication.ResearchLineController
 import rgms.publication.TechnicalReport
 import rgms.publication.TechnicalReportController
-import rgms.member.Record
-import rgms.member.RecordController
-import rgms.member.Member
-import rgms.member.MemberController
-import rgms.member.MembershipController
-import rgms.member.ResearchGroup
-import rgms.member.ResearchGroupController
+
 
 class TestDataAndOperations {
     static articles = [
@@ -174,7 +177,34 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+	
+	static public void createResearchGroup(String name, description) {
+		def researchGroupController = new ResearchGroupController()
+		researchGroupController.params << [name: name] << [description: description]
+		researchGroupController.request.setContent(new byte[1000]) // Could also vary the request content.
+		researchGroupController.create()
+		researchGroupController.save()
+		researchGroupController.response.reset()
+	}
 
+	static public void editResearchGroup(def researchGroup, String newName, String newDescription) {
+		def researchGroupController = new ResearchGroupController()
+		researchGroupController.params << [name: newName] << [description: newDescription] << [id : researchGroup.getId()]
+		researchGroupController.request.setContent(new byte[1000]) // Could also vary the request content.
+		researchGroupController.edit()
+		researchGroupController.save()
+		researchGroupController.response.reset()
+	}
+
+	static public void deleteResearchGroup(def researchGroup) {
+		def researchGroupController = new ResearchGroupController()
+		researchGroupController.params << [id : researchGroup.getId()]
+		researchGroupController.request.setContent(new byte[1000]) // Could also vary the request content.
+		researchGroupController.delete()
+		researchGroupController.response.reset()
+	}
+
+    static void clearArticles() {
 	static public void createReport(String title, filename) {
 		
 		def cont = new TechnicalReportController()
@@ -271,7 +301,8 @@ class TestDataAndOperations {
 		cont.response.reset()
 	}
 	
-    static void clearArticles() {
+    
+    static void clearArticles() {	
         Periodico.findAll()*.delete flush: true // Could also delete the created files.
     }
 

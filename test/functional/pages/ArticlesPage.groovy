@@ -4,10 +4,11 @@ import geb.Page
 import rgms.publication.Periodico
 
 class ArticlesPage extends Page {
-	static url = "periodico/list"
+    static url = "periodico/list"
+
 
 	static at = {
-		title ==~ /Periódico Listagem/
+		title ==~ /Periodico Listagem/
 	}
 
 	static content = {
@@ -17,6 +18,7 @@ class ArticlesPage extends Page {
 	def selectNewArticle() {
 		$('a.create').click()
 	}
+   
 
 	/**
 	 * @author Guilherme
