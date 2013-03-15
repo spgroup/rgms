@@ -13,5 +13,7 @@ class MemberListPage extends Page {
 		
 	}
 
-	
+    def selectMember(String s) {
+        $('div').find('a', text: s).click()
+    }
 }

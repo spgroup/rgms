@@ -1,5 +1,0 @@
-
---Output from remove existing article web--Started ChromeDriver
-port=8598
-version=26.0.1383.0
-log=C:\springsource\workspace\rgms\chromedriver.log
