@@ -1,5 +1,9 @@
 import org.openqa.selenium.chrome.ChromeDriver
 
+autoClearCookies = false
+
 driver = {
-    new ChromeDriver()
+    def driver = new ChromeDriver()
+    autoClearCookies = false
+    driver
 }
