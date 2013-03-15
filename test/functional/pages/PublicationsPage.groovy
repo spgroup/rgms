@@ -19,10 +19,6 @@ class PublicationsPage extends Page {
 		$('div', id: 'status').find('a', text: s).click()
 	}
 
-    def select(String s) {
-        $('div', id: 'status').find('a', text: s).click()
-    }
-
     def getLink(String linkName) {
         $('div#status a', text: linkName)
     }
