@@ -204,7 +204,7 @@ class TestDataAndOperations {
 		researchGroupController.response.reset()
 	}
 
-    static void clearArticles() {
+    
 	static public void createReport(String title, filename) {
 		
 		def cont = new TechnicalReportController()
