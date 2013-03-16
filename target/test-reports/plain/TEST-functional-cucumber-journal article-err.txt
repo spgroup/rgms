@@ -1,0 +1,16 @@
+
+--Output from new article--
+--Output from new invalid article--
+--Output from duplicate article--
+--Output from alternative duplicate article--
+--Output from new article web--Started ChromeDriver
+port=11696
+version=26.0.1383.0
+log=C:\Users\Paola2\Documents\Universidade\doutorado\Monitoria\if722\workrgms\rgms\chromedriver.log
+
+--Output from remove existing article--
+--Output from list existing article--
+--Output from edit existing article--
+--Output from remove existing article web--
+--Output from list existing article web--
+--Output from edit existing article web--

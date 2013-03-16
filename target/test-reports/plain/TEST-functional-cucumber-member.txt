@@ -1,0 +1,120 @@
+Testsuite: member
+Tests run: 7, Failures: 0, Errors: 1, Time elapsed: 23,899 sec
+------------- Standard Output ---------------
+@i9n
+Feature: member
+  As an administrator of the RGMS system
+  I want to add, remove and modify users in the system.
+
+--Output from new member--
+  Scenario: new member                                                            # Member.feature:7
+    Given the system has no member with username "usernametest"                   # MemberSteps.groovy:12
+    When I create a member with username "usernametest"                           # MemberSteps.groovy:17
+    Then the member with username "usernametest" is properly stored by the system # MemberSteps.groovy:21
+
+--Output from delete member--
+  Scenario: delete member                                    # Member.feature:12
+    Given the system has member with username "usernametest" # MemberSteps.groovy:58
+    When I delete a member with username "usernametest"      # MemberSteps.groovy:64
+    Then the member with "usernametest" doesnt exist         # MemberSteps.groovy:68
+
+--Output from new member with existing username--
+  Scenario: new member with existing username                # Member.feature:17
+    Given the system has member with username "usernametest" # MemberSteps.groovy:58
+    When I create the member with username "usernametest"    # MemberSteps.groovy:81
+    Then the member "usernametest" is not registered         # MemberSteps.groovy:85
+
+--Output from login with incorrect password--
+  Scenario: login with incorrect password                                  # Member.feature:23
+    Given I am at the login page                                           # MemberSteps.groovy:27
+ENTROU no signIn
+Enabled == true    When I fill username and password with "admin" and "incorrectpassword" # MemberSteps.groovy:34
+    Then I am still on the login page with an error message                # MemberSteps.groovy:38
+      java.lang.IncompatibleClassChangeError: the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+      	at groovy.lang.MetaClassImpl.selectConstructorAndTransformArguments(MetaClassImpl.java:1381)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.selectConstructorAndTransformArguments(ScriptBytecodeAdapter.java:234)
+      	at geb.error.GebException.<init>(GebException.groovy:20)
+      	at geb.error.GebException.<init>(GebException.groovy)
+      	at geb.error.UndefinedPageContentException.<init>(UndefinedPageContentException.groovy:20)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+      	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:54)
+      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:107)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:194)
+      	at geb.content.NavigableSupport.getContent(NavigableSupport.groovy:45)
+      	at geb.content.NavigableSupport.this$2$getContent(NavigableSupport.groovy)
+      	at sun.reflect.GeneratedMethodAccessor744.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at geb.content.NavigableSupport.propertyMissing(NavigableSupport.groovy:131)
+      	at geb.content.NavigableSupport$propertyMissing.call(Unknown Source)
+      	at geb.Page.propertyMissing(Page.groovy)
+      	at sun.reflect.GeneratedMethodAccessor792.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaClassImpl.invokeMissingProperty(MetaClassImpl.java:745)
+      	at groovy.lang.MetaClassImpl.getProperty(MetaClassImpl.java:1589)
+      	at groovy.lang.ExpandoMetaClass.getProperty(ExpandoMetaClass.java:1140)
+      	at groovy.lang.MetaClassImpl.getProperty(MetaClassImpl.java:3308)
+      	at groovy.lang.ExpandoMetaClass.getProperty(ExpandoMetaClass.java:1152)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassGetPropertySite.getProperty(PogoMetaClassGetPropertySite.java:48)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGetProperty(AbstractCallSite.java:227)
+      	at MemberSteps$_run_closure6.doCall(MemberSteps.groovy:40)
+      	at ?.Then I am still on the login page with an error message(Member.feature:26)
+
+
+--Output from user registration--
+  Scenario: user registration                                                                                       # Member.feature:28
+ENTROU no registerparams NULL    Given I am at the register page                                                                                 # MemberSteps.groovy:43
+    When I fill the user details with "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student" # MemberSteps.groovy:48
+    Then I am still on the register page with the message user created                                              # MemberSteps.groovy:53
+
+--Output from create member--
+  Scenario: create member                                                      # Member.feature:33
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member page                                       # MemberSteps.groovy:92
+    When I fill the user details with "jose" "josesilva" "jose@ufpe.br" "UFPE" # MemberSteps.groovy:100
+    Then I am on the member view page                                          # MemberSteps.groovy:105
+
+--Output from register user with invalid data--
+  Scenario: register user with invalid data                                # Member.feature:38
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the create member page                                   # MemberSteps.groovy:92
+    When I fill the user details with "jose" "josesilva" "jose@com" "UFPE" # MemberSteps.groovy:100
+    Then I am still on the create member page with the error message       # MemberSteps.groovy:120
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+
+--Output from new member--
+--Output from delete member--
+--Output from new member with existing username--
+--Output from login with incorrect password--
+--Output from user registration--
+--Output from create member--
+--Output from register user with invalid data--------------- ---------------- ---------------
+
+Testcase: new member took 4,286 sec
+Testcase: delete member took 3,572 sec
+Testcase: new member with existing username took 3,479 sec
+Testcase: login with incorrect password took 0,714 sec
+	Caused an ERROR
+the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+java.lang.IncompatibleClassChangeError: the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+	at geb.error.GebException.<init>(GebException.groovy:20)
+	at geb.error.UndefinedPageContentException.<init>(UndefinedPageContentException.groovy:20)
+	at geb.content.NavigableSupport.getContent(NavigableSupport.groovy:45)
+	at geb.content.NavigableSupport.propertyMissing(NavigableSupport.groovy:131)
+	at MemberSteps$_run_closure6.doCall(MemberSteps.groovy:40)
+	at ?.Then I am still on the login page with an error message(Member.feature:26)
+
+Testcase: user registration took 1,724 sec
+Testcase: create member took 8,104 sec
+Testcase: register user with invalid data took 1,929 sec

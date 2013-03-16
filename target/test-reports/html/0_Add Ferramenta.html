@@ -1,0 +1,410 @@
+<!DOCTYPE html><html xmlns:lxslt="http://xml.apache.org/xslt" xmlns:stringutils="xalan://org.apache.tools.ant.util.StringUtils">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+                    Test - Add Ferramenta</title>
+<link rel="shortcut icon" href="http://grails.org/images/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" title="Style" href="stylesheet.css">
+</head>
+<body>
+<div class="container container_8" id="report">
+<div class="grid_6">
+<a title="Home" href="index.html">
+<div class="grailslogo"></div>
+</a>
+<h1>Add Ferramenta</h1>
+<h2>Package: </h2>
+</div>
+<div class="grid_2">
+<nav id="navigationlinks">
+<p>
+<a href="failed.html">
+                    Tests with failure and errors
+                </a>
+</p>
+<p>
+<a href="index.html">
+                    Package summary
+                </a>
+</p>
+<p>
+<a href="all.html">
+                    Show all tests
+                </a>
+</p>
+</nav>
+</div>
+<div class="clear"></div>
+<div class="testsuite error">
+<div class="header">
+<h2>Add Ferramenta</h2>
+<h3>
+                        Executed
+                        4
+                        tests
+                    
+                        with
+                        one error
+
+                        and
+                        3 failures
+                        .
+                    </h3>
+</div>
+<div class="testcase clearfix failure grid_8 alpha omega" data-name="new ferramenta without publication date">
+<div class="grid_3 alpha">
+<p>
+<span class="icon failure"></span><b class="testname message failure">new ferramenta without publication date</b>
+</p>
+<p class="summary">Executed in 0.046 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo">
+<div class="details">
+<p>
+<b class="message">assert article != null
+       |       |
+       null    false</b>
+</p>
+<pre>Assertion failed: 
+
+assert article != null
+       |       |
+       null    false
+
+	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+	at ✽.Given The system has a ferramenta entitled "Nova Ferramenta"(Ferramenta.feature:8)
+</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix failure grid_8 alpha omega" data-name="duplicate ferramenta">
+<div class="grid_3 alpha">
+<p>
+<span class="icon failure"></span><b class="testname message failure">duplicate ferramenta</b>
+</p>
+<p class="summary">Executed in 0.048 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo">
+<div class="details">
+<p>
+<b class="message">assert article != null
+       |       |
+       null    false</b>
+</p>
+<pre>Assertion failed: 
+
+assert article != null
+       |       |
+       null    false
+
+	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+	at ✽.Given The system has a ferramenta entitled "Nova Ferramenta"(Ferramenta.feature:13)
+</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix failure grid_8 alpha omega" data-name="edit ferramenta">
+<div class="grid_3 alpha">
+<p>
+<span class="icon failure"></span><b class="testname message failure">edit ferramenta</b>
+</p>
+<p class="summary">Executed in 0.05 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo">
+<div class="details">
+<p>
+<b class="message">assert article != null
+       |       |
+       null    false</b>
+</p>
+<pre>Assertion failed: 
+
+assert article != null
+       |       |
+       null    false
+
+	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+	at ✽.Given The system has a ferramenta entitled "Ferramenta1"(Ferramenta.feature:18)
+</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix error grid_8 alpha omega" data-name="new ferramenta without any information">
+<div class="grid_3 alpha">
+<p>
+<span class="icon error"></span><b class="testname message error">new ferramenta without any information</b>
+</p>
+<p class="summary">Executed in 3.985 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo">
+<div class="details">
+<p>
+<b class="message">No signature of method: rgms.publication.Ferramenta.findByTitle() is applicable for argument types: () values: []
+Possible solutions: findByTitle([Ljava.lang.Object;)</b>
+</p>
+<pre>groovy.lang.MissingMethodException: No signature of method: rgms.publication.Ferramenta.findByTitle() is applicable for argument types: () values: []
+Possible solutions: findByTitle([Ljava.lang.Object;)
+	at org.grails.datastore.gorm.GormStaticApi$_methodMissing_closure2.doCall(GormStaticApi.groovy:105)
+	at FerramentaSteps$_run_closure10.doCall(FerramentaSteps.groovy:51)
+	at ✽.Then The ferramenta is not stored(Ferramenta.feature:27)
+</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="clearfix output footer">
+<div class="sysout">
+<h2>Standard output</h2>
+<pre class="stdout">@i9n
+Feature: Add Ferramenta
+  As a member of a research group
+  I want to add, remove and modify ferramentas I have added
+
+--Output from new ferramenta without publication date--
+  Scenario: new ferramenta without publication date                # Ferramenta.feature:7
+    Given The system has a ferramenta entitled "Nova Ferramenta"   # FerramentaSteps.groovy:13
+      Assertion failed: 
+      
+      assert article != null
+             |       |
+             null    false
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+      	at ?.Given The system has a ferramenta entitled "Nova Ferramenta"(Ferramenta.feature:8)
+
+    When I create the ferramenta "Nova Ferramenta" without website # FerramentaSteps.groovy:17
+    Then The ferramenta "Nova Ferramenta" is not stored            # FerramentaSteps.groovy:21
+
+--Output from duplicate ferramenta--
+  Scenario: duplicate ferramenta                                 # Ferramenta.feature:12
+    Given The system has a ferramenta entitled "Nova Ferramenta" # FerramentaSteps.groovy:13
+      Assertion failed: 
+      
+      assert article != null
+             |       |
+             null    false
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+      	at ?.Given The system has a ferramenta entitled "Nova Ferramenta"(Ferramenta.feature:13)
+
+    When I create the ferramenta "Nova Ferramenta"               # FerramentaSteps.groovy:25
+    Then The ferramenta "Nova Ferramenta" is not stored twice    # FerramentaSteps.groovy:29
+
+--Output from edit ferramenta--
+  Scenario: edit ferramenta                                                                                                # Ferramenta.feature:17
+    Given The system has a ferramenta entitled "Ferramenta1"                                                               # FerramentaSteps.groovy:13
+      Assertion failed: 
+      
+      assert article != null
+             |       |
+             null    false
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+      	at ?.Given The system has a ferramenta entitled "Ferramenta1"(Ferramenta.feature:18)
+
+    When I change the website to "websiteteste"                                                                            # FerramentaSteps.groovy:33
+    Then The edited ferramenta entitled "Ferramenta1" is properly stored in the system with the new website "websiteteste" # FerramentaSteps.groovy:37
+
+--Output from new ferramenta without any information--
+  Scenario: new ferramenta without any information                # Ferramenta.feature:22
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications menu                           # CommonSteps.groovy:6
+    When I select the "Ferramenta" option at the program menu     # DissertacaoSteps.groovy:12
+    And I select the new ferramenta option at the ferramenta page # FerramentaSteps.groovy:42
+    And I select the create option at the ferramenta page         # FerramentaSteps.groovy:46
+    Then The ferramenta is not stored                             # FerramentaSteps.groovy:50
+      groovy.lang.MissingMethodException: No signature of method: rgms.publication.Ferramenta.findByTitle() is applicable for argument types: () values: []
+      Possible solutions: findByTitle([Ljava.lang.Object;)
+      	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractClausedStaticPersistentMethod.doInvokeInternal(AbstractClausedStaticPersistentMethod.java:540)
+      	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractClausedStaticPersistentMethod.doInvokeInternal(AbstractClausedStaticPersistentMethod.java:450)
+      	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractStaticPersistentMethod.invoke(AbstractStaticPersistentMethod.java:72)
+      	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractStaticPersistentMethod.invoke(AbstractStaticPersistentMethod.java:65)
+      	at sun.reflect.GeneratedMethodAccessor945.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PojoMetaMethodSite$PojoCachedMethodSite.invoke(PojoMetaMethodSite.java:189)
+      	at org.codehaus.groovy.runtime.callsite.PojoMetaMethodSite.call(PojoMetaMethodSite.java:53)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.grails.commons.metaclass.StaticMethodInvocation$invoke.call(Unknown Source)
+      	at org.grails.datastore.gorm.GormStaticApi$_methodMissing_closure2.doCall(GormStaticApi.groovy:105)
+      	at sun.reflect.GeneratedMethodAccessor526.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:267)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at org.grails.datastore.gorm.GormStaticApi$_methodMissing_closure2.call(GormStaticApi.groovy)
+      	at org.codehaus.groovy.runtime.metaclass.ClosureStaticMetaMethod.invoke(ClosureStaticMetaMethod.java:59)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at org.codehaus.groovy.runtime.callsite.StaticMetaMethodSite.invoke(StaticMetaMethodSite.java:43)
+      	at org.codehaus.groovy.runtime.callsite.StaticMetaMethodSite.call(StaticMetaMethodSite.java:88)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at FerramentaSteps$_run_closure10.doCall(FerramentaSteps.groovy:51)
+      	at ?.Then The ferramenta is not stored(Ferramenta.feature:27)
+
+</pre>
+</div>
+<div class="syserr">
+<h2>System error</h2>
+<pre class="syserr">
+--Output from new ferramenta without publication date--
+--Output from duplicate ferramenta--
+--Output from edit ferramenta--
+--Output from new ferramenta without any information--</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+<!--
+            Parses JUnit output and associates it with the corresponding test case
+        -->
+<script language="javascript">
+
+
+/**
+ * The JUnit report format is incredibly stuipd in the
+ * sense that it accumulates output from all test methods
+ * into a single xml node.
+ */
+(function() {
+
+    var outputElements = findOutputElements();
+    for (var i in outputElements) {
+        var outputElement = outputElements[i];
+        var textOutput = outputElement.element.firstChild.nodeValue;
+        var header = outputElement.getHeader();
+        appendTestMethodOutput(textOutput, header);
+    }
+
+    function findOutputElements() {
+        var outputElements = [];
+        var preElements = document.getElementsByTagName("pre");
+        for (var i in preElements) {
+            var preElement = preElements[i];
+            var className = preElement.className || "";
+            if (className.indexOf("stdout") >= 0) {
+                var outputElement = new OutputElement(preElement, "output");
+                outputElements.push(outputElement);
+            } else if (className.indexOf("syserr") >= 0) {
+                var outputElement = new OutputElement(preElement, "error");
+                outputElements.push(outputElement);
+            }
+        }
+
+        return outputElements;
+    }
+
+    function OutputElement(element, type) {
+        this.element = element;
+        this.type = type;
+
+        this.getHeader = function() {
+            if (type === "output") {
+                return "System output";
+            } else if ("error") {
+                return "System error";
+            }
+        }
+    }
+
+    function appendTestMethodOutput(text, header) {
+        var testOutput = new TestMethodOutput(header);
+
+        var lines = text.split(/\r\n|\r|\n/);
+        for (var i in lines) {
+            var line = lines[i];
+            var matches = line.match(/^--Output from (.*)--$/);
+            if (matches !== null && matches.length == 2) {
+                testOutput.flushToDom();
+                testOutput.testName = matches[1];
+            } else {
+                testOutput.addLine(line);
+            }
+        }
+
+        testOutput.flushToDom();
+    }
+
+    function TestMethodOutput(header) {
+        this.header = header;
+        this.testName = undefined;
+        this.buffer = "";
+
+        this.addLine = function(line) {
+            this.buffer += line + "\n";
+        }
+
+        this.flushToDom = function() {
+            if (this.testName !== undefined) {
+                var domNode = getTestcaseElementByName(this.testName);
+                if (domNode !== undefined && trimString(this.buffer).length > 0) {
+                    this.appendTo(domNode);
+                }
+
+                this.reset();
+            }
+        }
+
+        this.appendTo = function(domNode) {
+            var node = document.createElement("div");
+            node.innerHTML = '<p><b class="message">' + header + '</b></p>';
+
+            var preNode = document.createElement("pre");
+            preNode.appendChild(document.createTextNode(this.buffer));
+            node.appendChild(preNode);
+
+            var outputContainer = findElementByTagClassAndParent("div", "outputinfo", domNode);
+            outputContainer.appendChild(node);
+        }
+
+        this.reset = function() {
+            this.methodName = undefined;
+            this.buffer = "";
+        }
+    }
+
+    function getTestcaseElementByName(name) {
+        var divElements = document.getElementsByTagName("div");
+        var elementCount = divElements.length;
+        for (var i=0; i<elementCount; i++) {
+            var el = divElements[i];
+            if (el.getAttribute("data-name") === name) {
+                return el;
+            }
+        }
+    }
+
+    function findElementByTagClassAndParent(tagName, className, parentNode) {
+        var elements = parentNode.getElementsByTagName(tagName);
+        for (var i in elements) {
+            var element = elements[i];
+
+            // Not 100% correct, but good enough here
+            if (element.className !== undefined && element.className.indexOf(className) >= 0) {
+                return element;
+            }
+        }
+    }
+
+    function trimString(str) {
+        return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    }
+
+})();
+
+        </script>
+</body>
+</html>
