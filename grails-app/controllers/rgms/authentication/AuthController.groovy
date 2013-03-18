@@ -16,7 +16,12 @@ import java.security.SecureRandom
 class AuthController {
     def shiroSecurityManager
 
-    def index = { redirect(action: "login", params: params) }
+    def index = {
+        if(SecurityUtils.subject?.principal != null)
+            render(view:  "/initial")
+        else
+            redirect(action: "login", params: params)
+    }
 
     def login = {
         return [ username: params.username, rememberMe: (params.rememberMe != null), targetUri: params.targetUri ]
@@ -26,13 +31,14 @@ class AuthController {
         
 //        def subject = SecurityUtils.getSubject();
         Member member = Member.findByUsername(params.username)
-        
-        print("ENTROU no signIn\nEnabled == "+member.enabled)
-        
-        if(member.enabled == false){
-            render "Please wait the administrator to unlock your access to system.\n\nThanks."
+        if(member == null) {
+            flash.message = message(code: "login.failed")
+            redirect(uri: "/auth/login")
             return
         }
+        print("ENTROU no signIn\nEnabled == "+member.enabled)
+
+
         
         def authToken = new UsernamePasswordToken(params.username, params.password as String)
 
@@ -47,7 +53,7 @@ class AuthController {
         
         // Handle requests saved by Shiro filters.
         def savedRequest = WebUtils.getSavedRequest(request)
-        if (savedRequest) {
+        if (savedRequest) {     print("deu saved request: " + savedRequest.toString())
             targetUri = savedRequest.requestURI - request.contextPath
             if (savedRequest.queryString) targetUri = targetUri + '?' + savedRequest.queryString
         }
@@ -57,7 +63,10 @@ class AuthController {
             // will be thrown if the username is unrecognised or the
             // password is incorrect.
             SecurityUtils.subject.login(authToken)
-            
+            if(member.enabled == false){
+                render "Please wait the administrator to unlock your access to system.\n\nThanks."
+                return
+            }
             print("ENTROU NO TRY")
             
             def user = Member.findByUsername(params.username)
@@ -94,7 +103,7 @@ class AuthController {
             log.info "Authentication failure for user '${params.username}'."
             flash.message = message(code: "login.failed")
             // Now redirect back to the login page.
-            redirect(uri: "/")
+            redirect(uri: "/auth/login")
 //            redirect(action: "login", params: m) //action: "login"
         }
     }
@@ -205,14 +214,20 @@ class AuthController {
 //    }
     
     def register = {
-        
+        String defaultUniversity = "Federal University of Pernambuco"
+        params.university = params.university ?: defaultUniversity
+
         print("ENTROU no register")
         
         if (params.password1 != params.password2) {
             flash.message = "Please enter same passwords."
             flash.status = "error"
-            return
+            params.password1 = ""
+            params.password2 = ""
+            return [memberInstance: new Member(params)]
         }
+
+        def memberInstance = new Member(params)
         
         if (!grailsApplication.config.grails.mail.username) {
             throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
@@ -220,35 +235,40 @@ class AuthController {
         
         if(params.username == null){
             print("params NULL")
-            return
+            return [memberInstance: memberInstance]
         }
 
         def enabled = false
         
         def pwdHash = new Sha256Hash(params.password1).toHex()
         
-        def memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university)
+        memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university)
         def username = memberInstance?.username
         def password = params.passwordHash
         def name = memberInstance?.name
         def emailAddress = memberInstance?.email
         
         if (!memberInstance.save(flush: true)) {
+            //flash.message = "Error creating user"
             render(view: "register", model: [memberInstance: memberInstance])
+            memberInstance.errors.each{
+                println it
+            }
             return
         }
-        
+
         def Admin = Member.findAllByName("Administrator")
         def emailAdmin = Admin?.email
-        print("Email Admin : "+emailAdmin)
-        
-        sendMail {
-            to emailAdmin
-            from grailsApplication.config.grails.mail.username
-            subject "[GRMS] You received a request to authenticate an account."
-            body "Hello Administrator,\n\nYou received a request to authenticate an account.\n\nWho requested was ${name}. His/Her email address is ${emailAddress}\n\n${createLink(absolute:true,uri:'/member/list')}\n\nBest Regards,\nResearch Group Management System".toString()
+        if(emailAdmin != null && !emailAdmin.empty){
+            print("Email Admin : "+emailAdmin)
+
+            sendMail {
+                to emailAdmin
+                from grailsApplication.config.grails.mail.username
+                subject "[GRMS] You received a request to authenticate an account."
+                body "Hello Administrator,\n\nYou received a request to authenticate an account.\n\nWho requested was ${name}. His/Her email address is ${emailAddress}\n\n${createLink(absolute:true,uri:'/member/list')}\n\nBest Regards,\nResearch Group Management System".toString()
+            }
         }
-        
 //        sendMail {
 //            to memberInstance.email
 //            from grailsApplication.config.grails.mail.username
@@ -258,6 +278,9 @@ class AuthController {
         
 //        flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
 //        redirect(action: "index", id: memberInstance.id)
-        redirect(view: "/index")
+
+        flash.message = "User successfully created";
+        render(view: "register")
+
     }
 }

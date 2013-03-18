@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="1" failures="3" hostname="Paola2-PC" name="Add Ferramenta" tests="4" time="4.185" timestamp="2013-03-16T14:46:13">
+  <properties />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new ferramenta without publication date" time="0.046">
+    <failure message="assert article != null&#xa;       |       |&#xa;       null    false" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
+
+assert article != null
+       |       |
+       null    false
+
+	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+	at ✽.Given The system has a ferramenta entitled &quot;Nova Ferramenta&quot;(Ferramenta.feature:8)
+</failure>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="duplicate ferramenta" time="0.048">
+    <failure message="assert article != null&#xa;       |       |&#xa;       null    false" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
+
+assert article != null
+       |       |
+       null    false
+
+	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+	at ✽.Given The system has a ferramenta entitled &quot;Nova Ferramenta&quot;(Ferramenta.feature:13)
+</failure>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="edit ferramenta" time="0.05">
+    <failure message="assert article != null&#xa;       |       |&#xa;       null    false" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
+
+assert article != null
+       |       |
+       null    false
+
+	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+	at ✽.Given The system has a ferramenta entitled &quot;Ferramenta1&quot;(Ferramenta.feature:18)
+</failure>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new ferramenta without any information" time="3.985">
+    <error message="No signature of method: rgms.publication.Ferramenta.findByTitle() is applicable for argument types: () values: []&#xa;Possible solutions: findByTitle([Ljava.lang.Object;)" type="groovy.lang.MissingMethodException">groovy.lang.MissingMethodException: No signature of method: rgms.publication.Ferramenta.findByTitle() is applicable for argument types: () values: []
+Possible solutions: findByTitle([Ljava.lang.Object;)
+	at org.grails.datastore.gorm.GormStaticApi$_methodMissing_closure2.doCall(GormStaticApi.groovy:105)
+	at FerramentaSteps$_run_closure10.doCall(FerramentaSteps.groovy:51)
+	at ✽.Then The ferramenta is not stored(Ferramenta.feature:27)
+</error>
+  </testcase>
+  <system-out><![CDATA[@i9n
+Feature: Add Ferramenta
+  As a member of a research group
+  I want to add, remove and modify ferramentas I have added
+
+--Output from new ferramenta without publication date--
+  Scenario: new ferramenta without publication date                # Ferramenta.feature:7
+    Given The system has a ferramenta entitled "Nova Ferramenta"   # FerramentaSteps.groovy:13
+      Assertion failed: 
+      
+      assert article != null
+             |       |
+             null    false
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+      	at ?.Given The system has a ferramenta entitled "Nova Ferramenta"(Ferramenta.feature:8)
+
+    When I create the ferramenta "Nova Ferramenta" without website # FerramentaSteps.groovy:17
+    Then The ferramenta "Nova Ferramenta" is not stored            # FerramentaSteps.groovy:21
+
+--Output from duplicate ferramenta--
+  Scenario: duplicate ferramenta                                 # Ferramenta.feature:12
+    Given The system has a ferramenta entitled "Nova Ferramenta" # FerramentaSteps.groovy:13
+      Assertion failed: 
+      
+      assert article != null
+             |       |
+             null    false
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+      	at ?.Given The system has a ferramenta entitled "Nova Ferramenta"(Ferramenta.feature:13)
+
+    When I create the ferramenta "Nova Ferramenta"               # FerramentaSteps.groovy:25
+    Then The ferramenta "Nova Ferramenta" is not stored twice    # FerramentaSteps.groovy:29
+
+--Output from edit ferramenta--
+  Scenario: edit ferramenta                                                                                                # Ferramenta.feature:17
+    Given The system has a ferramenta entitled "Ferramenta1"                                                               # FerramentaSteps.groovy:13
+      Assertion failed: 
+      
+      assert article != null
+             |       |
+             null    false
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at FerramentaSteps$_run_closure1.doCall(FerramentaSteps.groovy:15)
+      	at ?.Given The system has a ferramenta entitled "Ferramenta1"(Ferramenta.feature:18)
+
+    When I change the website to "websiteteste"                                                                            # FerramentaSteps.groovy:33
+    Then The edited ferramenta entitled "Ferramenta1" is properly stored in the system with the new website "websiteteste" # FerramentaSteps.groovy:37
+
+--Output from new ferramenta without any information--
+  Scenario: new ferramenta without any information                # Ferramenta.feature:22
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications menu                           # CommonSteps.groovy:6
+    When I select the "Ferramenta" option at the program menu     # DissertacaoSteps.groovy:12
+    And I select the new ferramenta option at the ferramenta page # FerramentaSteps.groovy:42
+    And I select the create option at the ferramenta page         # FerramentaSteps.groovy:46
+    Then The ferramenta is not stored                             # FerramentaSteps.groovy:50
+      groovy.lang.MissingMethodException: No signature of method: rgms.publication.Ferramenta.findByTitle() is applicable for argument types: () values: []
+      Possible solutions: findByTitle([Ljava.lang.Object;)
+      	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractClausedStaticPersistentMethod.doInvokeInternal(AbstractClausedStaticPersistentMethod.java:540)
+      	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractClausedStaticPersistentMethod.doInvokeInternal(AbstractClausedStaticPersistentMethod.java:450)
+      	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractStaticPersistentMethod.invoke(AbstractStaticPersistentMethod.java:72)
+      	at org.codehaus.groovy.grails.orm.hibernate.metaclass.AbstractStaticPersistentMethod.invoke(AbstractStaticPersistentMethod.java:65)
+      	at sun.reflect.GeneratedMethodAccessor945.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PojoMetaMethodSite$PojoCachedMethodSite.invoke(PojoMetaMethodSite.java:189)
+      	at org.codehaus.groovy.runtime.callsite.PojoMetaMethodSite.call(PojoMetaMethodSite.java:53)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.grails.commons.metaclass.StaticMethodInvocation$invoke.call(Unknown Source)
+      	at org.grails.datastore.gorm.GormStaticApi$_methodMissing_closure2.doCall(GormStaticApi.groovy:105)
+      	at sun.reflect.GeneratedMethodAccessor526.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:267)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at org.grails.datastore.gorm.GormStaticApi$_methodMissing_closure2.call(GormStaticApi.groovy)
+      	at org.codehaus.groovy.runtime.metaclass.ClosureStaticMetaMethod.invoke(ClosureStaticMetaMethod.java:59)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at org.codehaus.groovy.runtime.callsite.StaticMetaMethodSite.invoke(StaticMetaMethodSite.java:43)
+      	at org.codehaus.groovy.runtime.callsite.StaticMetaMethodSite.call(StaticMetaMethodSite.java:88)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at FerramentaSteps$_run_closure10.doCall(FerramentaSteps.groovy:51)
+      	at ?.Then The ferramenta is not stored(Ferramenta.feature:27)
+
+]]></system-out>
+  <system-err><![CDATA[
+--Output from new ferramenta without publication date--
+--Output from duplicate ferramenta--
+--Output from edit ferramenta--
+--Output from new ferramenta without any information--]]></system-err>
+</testsuite>

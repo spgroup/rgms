@@ -1,0 +1,6 @@
+
+--Output from new book chapter--
+--Output from duplicate book chapter--
+--Output from remove book chapter--
+--Output from register book chapter with invalid data--
+--Output from new book chapter web--

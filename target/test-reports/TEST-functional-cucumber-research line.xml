@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="3" hostname="Paola2-PC" name="research line" tests="6" time="8.849" timestamp="2013-03-16T14:47:25">
+  <properties />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="Delete research line" time="0.075" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="Update research line" time="0.05" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="Create invalid research line" time="0.048" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new research line web" time="4.638">
+    <failure message="title ==~ /Criar Research Line/&#xa;|     |&#xa;|     false&#xa;Grails Runtime Exception" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
+
+title ==~ /Criar Research Line/
+|     |
+|     false
+Grails Runtime Exception
+
+	at pages.ResearchLineCreatePage$__clinit__closure1.doCall(ResearchLineCreatePage.groovy:9)
+	at geb.Page.verifyAt(Page.groovy:132)
+	at geb.Browser.doAt(Browser.groovy:335)
+	at geb.Browser.at(Browser.groovy:259)
+	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+	at ResearchLineSteps$_run_closure11.doCall(ResearchLineSteps.groovy:64)
+	at ✽.Then I can fill the research line details(ResearchLine.feature:25)
+</failure>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="visualize research line web" time="2.001">
+    <failure message="title ==~ /Criar Research Line/&#xa;|     |&#xa;|     false&#xa;Grails Runtime Exception" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
+
+title ==~ /Criar Research Line/
+|     |
+|     false
+Grails Runtime Exception
+
+	at pages.ResearchLineCreatePage$__clinit__closure1.doCall(ResearchLineCreatePage.groovy:9)
+	at geb.Page.verifyAt(Page.groovy:132)
+	at geb.Browser.doAt(Browser.groovy:335)
+	at geb.Browser.at(Browser.groovy:259)
+	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+	at ResearchLineSteps$_run_closure14.doCall(ResearchLineSteps.groovy:86)
+	at ✽.Given the system has a research line named as &quot;Teoria da informacao - Complexidade no espaco&quot;(ResearchLine.feature:28)
+</failure>
+  </testcase>
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="edit research line web" time="1.976">
+    <failure message="title ==~ /Criar Research Line/&#xa;|     |&#xa;|     false&#xa;Grails Runtime Exception" type="grails.plugin.cucumber.FakeAssertionFailedError">Assertion failed: 
+
+title ==~ /Criar Research Line/
+|     |
+|     false
+Grails Runtime Exception
+
+	at pages.ResearchLineCreatePage$__clinit__closure1.doCall(ResearchLineCreatePage.groovy:9)
+	at geb.Page.verifyAt(Page.groovy:132)
+	at geb.Browser.doAt(Browser.groovy:335)
+	at geb.Browser.at(Browser.groovy:259)
+	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+	at ResearchLineSteps$_run_closure14.doCall(ResearchLineSteps.groovy:86)
+	at ✽.Given the system has a research line named as &quot;Teoria da informacao - Complexidade no espaco&quot;(ResearchLine.feature:35)
+</failure>
+  </testcase>
+  <system-out><![CDATA[@i9n
+Feature: research line
+  As a member of a research group
+  I want to add, remove and modify research lines I have done
+
+--Output from Delete research line--
+  Scenario: Delete research line                                                             # ResearchLine.feature:6
+    Given the system has a research line named "Novo Padrao Arquitetural MVCE"               # ResearchLineSteps.groovy:12
+    When I remove the research line "Novo Padrao Arquitetural MVCE"                          # ResearchLineSteps.groovy:18
+    Then the research line "Novo Padrao Arquitetural MVCE" is properly removed by the system # ResearchLineSteps.groovy:23
+
+--Output from Update research line--
+  Scenario: Update research line                                                                                         # ResearchLine.feature:11
+    Given the system has a research line named "Teoria da informacao - Complexidade no espaco" with a description "P=NP" # ResearchLineSteps.groovy:28
+    When I update the research line "Teoria da informacao - Complexidade no espaco" with a description "P != NP"         # ResearchLineSteps.groovy:34
+    Then the research line "Teoria da informacao - Complexidade no espaco" has description "P != NP"                     # ResearchLineSteps.groovy:38
+
+--Output from Create invalid research line--
+  Scenario: Create invalid research line                                       # ResearchLine.feature:16
+    Given the system has no research line named "IA Avancada"                  # ResearchLineSteps.groovy:43
+    When I create the research line named "IA Avancada" with empty description # ResearchLineSteps.groovy:48
+    Then the research line "IA Avancada" is not stored, because is invalid     # ResearchLineSteps.groovy:52
+
+--Output from new research line web--
+  Scenario: new research line web                                         # ResearchLine.feature:21
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications menu                                   # CommonSteps.groovy:6
+    When I select the "Linha de pesquisa" option at the publications menu # CommonSteps.groovy:13
+    And I select the new research line option at the research line page   # ResearchLineSteps.groovy:58
+    Then I can fill the research line details                             # ResearchLineSteps.groovy:63
+      Assertion failed: 
+      
+      title ==~ /Criar Research Line/
+      |     |
+      |     false
+      Grails Runtime Exception
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at pages.ResearchLineCreatePage$__clinit__closure1.doCall(ResearchLineCreatePage.groovy:9)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at pages.ResearchLineCreatePage$__clinit__closure1.doCall(ResearchLineCreatePage.groovy)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:406)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at geb.Page.verifyAt(Page.groovy:132)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at geb.Browser.doAt(Browser.groovy:335)
+      	at geb.Browser.this$2$doAt(Browser.groovy)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at geb.Browser.at(Browser.groovy:259)
+      	at sun.reflect.GeneratedMethodAccessor733.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:793)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
+      	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+      	at sun.reflect.GeneratedMethodAccessor654.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:425)
+      	at sun.reflect.GeneratedMethodAccessor73.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1093)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1049)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:697)
+      	at groovy.lang.GroovyObjectSupport.invokeMethod(GroovyObjectSupport.java:44)
+      	at groovy.lang.Script.invokeMethod(Script.java:78)
+      	at groovy.lang.MetaClassImpl.invokeMethodOnGroovyObject(MetaClassImpl.java:1112)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1006)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:66)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at ResearchLineSteps$_run_closure11.doCall(ResearchLineSteps.groovy:64)
+      	at ?.Then I can fill the research line details(ResearchLine.feature:25)
+
+
+--Output from visualize research line web--
+  Scenario: visualize research line web                                                                     # ResearchLine.feature:27
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given the system has a research line named as "Teoria da informacao - Complexidade no espaco"           # ResearchLineSteps.groovy:78
+      Assertion failed: 
+      
+      title ==~ /Criar Research Line/
+      |     |
+      |     false
+      Grails Runtime Exception
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at pages.ResearchLineCreatePage$__clinit__closure1.doCall(ResearchLineCreatePage.groovy:9)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at pages.ResearchLineCreatePage$__clinit__closure1.doCall(ResearchLineCreatePage.groovy)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:406)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at geb.Page.verifyAt(Page.groovy:132)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at geb.Browser.doAt(Browser.groovy:335)
+      	at geb.Browser.this$2$doAt(Browser.groovy)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at geb.Browser.at(Browser.groovy:259)
+      	at sun.reflect.GeneratedMethodAccessor733.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:793)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
+      	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+      	at sun.reflect.GeneratedMethodAccessor654.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:425)
+      	at sun.reflect.GeneratedMethodAccessor73.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1093)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1049)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:697)
+      	at groovy.lang.GroovyObjectSupport.invokeMethod(GroovyObjectSupport.java:44)
+      	at groovy.lang.Script.invokeMethod(Script.java:78)
+      	at groovy.lang.MetaClassImpl.invokeMethodOnGroovyObject(MetaClassImpl.java:1112)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1006)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:66)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at ResearchLineSteps$_run_closure14.doCall(ResearchLineSteps.groovy:86)
+      	at ?.Given the system has a research line named as "Teoria da informacao - Complexidade no espaco"(ResearchLine.feature:28)
+
+    And I am at the publications menu                                                                       # CommonSteps.groovy:6
+    When I select the "Linha de pesquisa" option at the publications menu                                   # CommonSteps.groovy:13
+    And I click the research line "Teoria da informacao - Complexidade no espaco" at the research line list # ResearchLineSteps.groovy:68
+    Then I can visualize the research line "Teoria da informacao - Complexidade no espaco" details          # ResearchLineSteps.groovy:73
+
+--Output from edit research line web--
+  Scenario: edit research line web                                                                      # ResearchLine.feature:34
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given the system has a research line named as "Teoria da informacao - Complexidade no espaco"       # ResearchLineSteps.groovy:78
+      Assertion failed: 
+      
+      title ==~ /Criar Research Line/
+      |     |
+      |     false
+      Grails Runtime Exception
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at pages.ResearchLineCreatePage$__clinit__closure1.doCall(ResearchLineCreatePage.groovy:9)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at pages.ResearchLineCreatePage$__clinit__closure1.doCall(ResearchLineCreatePage.groovy)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:406)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at geb.Page.verifyAt(Page.groovy:132)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at geb.Browser.doAt(Browser.groovy:335)
+      	at geb.Browser.this$2$doAt(Browser.groovy)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at geb.Browser.at(Browser.groovy:259)
+      	at sun.reflect.GeneratedMethodAccessor733.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:793)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
+      	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+      	at sun.reflect.GeneratedMethodAccessor654.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:425)
+      	at sun.reflect.GeneratedMethodAccessor73.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1093)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1049)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:697)
+      	at groovy.lang.GroovyObjectSupport.invokeMethod(GroovyObjectSupport.java:44)
+      	at groovy.lang.Script.invokeMethod(Script.java:78)
+      	at groovy.lang.MetaClassImpl.invokeMethodOnGroovyObject(MetaClassImpl.java:1112)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1006)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:66)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at ResearchLineSteps$_run_closure14.doCall(ResearchLineSteps.groovy:86)
+      	at ?.Given the system has a research line named as "Teoria da informacao - Complexidade no espaco"(ResearchLine.feature:35)
+
+    And I am at the visualize page of the research line "Teoria da informacao - Complexidade no espaco" # ResearchLineSteps.groovy:92
+    When I click the edit button                                                                        # ResearchLineSteps.groovy:104
+    Then I can change the research line "Teoria da informacao - Complexidade no espaco" details         # ResearchLineSteps.groovy:109
+]]></system-out>
+  <system-err><![CDATA[
+--Output from Delete research line--
+--Output from Update research line--
+--Output from Create invalid research line--
+--Output from new research line web--2013-03-16 11:47:29,575 [http-bio-8080-exec-9] ERROR errors.GrailsExceptionResolver  - NullPointerException occurred when processing request: [GET] /rgms/researchLine/create
+Cannot get property 'Publication' on null object. Stacktrace follows:
+Message: Error processing GroovyPageView: Error executing tag <g:form>: Error executing tag <g:render>: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+    Line | Method
+->>  463 | doFilter         in \grails-app\views\researchLine\create.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by GrailsTagException: Error executing tag <g:form>: Error executing tag <g:render>: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+->>   36 | doCall           in C:/Users/Paola2/Documents/Universidade/doutorado/Monitoria/if722/workrgms/rgms/grails-app/views/researchLine/create.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by GrailsTagException: Error executing tag <g:render>: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+->>   31 | doCall           in C:/Users/Paola2/Documents/Universidade/doutorado/Monitoria/if722/workrgms/rgms/grails-app/views/researchLine/create.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by GroovyPagesException: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+->>   27 | run              in C:/Users/Paola2/Documents/Universidade/doutorado/Monitoria/if722/workrgms/rgms/grails-app/views/researchLine/_form.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by NullPointerException: Cannot get property 'Publication' on null object
+->>   27 | doCall           in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine__form_gsp$_run_closure20
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+|     31 | doCall           in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine_create_gsp$_run_closure2_closure24
+|     36 | doCall . . . . . in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine_create_gsp$_run_closure2
+|     38 | run              in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine_create_gsp
+|     55 | doFilter . . . . in org.apache.shiro.grails.SavedRequestFilter
+|    449 | executeChain     in org.apache.shiro.web.servlet.AbstractShiroFilter
+|    365 | call . . . . . . in org.apache.shiro.web.servlet.AbstractShiroFilter$1
+|     90 | doCall           in org.apache.shiro.subject.support.SubjectCallable
+|     83 | call . . . . . . in     ''
+|    380 | execute          in org.apache.shiro.subject.support.DelegatingSubject
+|    362 | doFilterInternal in org.apache.shiro.web.servlet.AbstractShiroFilter
+|    125 | doFilter         in org.apache.shiro.web.servlet.OncePerRequestFilter
+|   1110 | runWorker . . .  in java.util.concurrent.ThreadPoolExecutor
+|    603 | run              in java.util.concurrent.ThreadPoolExecutor$Worker
+^    722 | run . . . . . .  in java.lang.Thread
+
+
+--Output from visualize research line web--2013-03-16 11:47:32,293 [http-bio-8080-exec-4] ERROR errors.GrailsExceptionResolver  - NullPointerException occurred when processing request: [GET] /rgms/researchLine/create
+Cannot get property 'Publication' on null object. Stacktrace follows:
+Message: Error processing GroovyPageView: Error executing tag <g:form>: Error executing tag <g:render>: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+    Line | Method
+->>  463 | doFilter         in \grails-app\views\researchLine\create.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by GrailsTagException: Error executing tag <g:form>: Error executing tag <g:render>: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+->>   36 | doCall           in C:/Users/Paola2/Documents/Universidade/doutorado/Monitoria/if722/workrgms/rgms/grails-app/views/researchLine/create.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by GrailsTagException: Error executing tag <g:render>: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+->>   31 | doCall           in C:/Users/Paola2/Documents/Universidade/doutorado/Monitoria/if722/workrgms/rgms/grails-app/views/researchLine/create.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by GroovyPagesException: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+->>   27 | run              in C:/Users/Paola2/Documents/Universidade/doutorado/Monitoria/if722/workrgms/rgms/grails-app/views/researchLine/_form.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by NullPointerException: Cannot get property 'Publication' on null object
+->>   27 | doCall           in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine__form_gsp$_run_closure20
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+|     31 | doCall           in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine_create_gsp$_run_closure2_closure24
+|     36 | doCall . . . . . in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine_create_gsp$_run_closure2
+|     38 | run              in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine_create_gsp
+|     55 | doFilter . . . . in org.apache.shiro.grails.SavedRequestFilter
+|    449 | executeChain     in org.apache.shiro.web.servlet.AbstractShiroFilter
+|    365 | call . . . . . . in org.apache.shiro.web.servlet.AbstractShiroFilter$1
+|     90 | doCall           in org.apache.shiro.subject.support.SubjectCallable
+|     83 | call . . . . . . in     ''
+|    380 | execute          in org.apache.shiro.subject.support.DelegatingSubject
+|    362 | doFilterInternal in org.apache.shiro.web.servlet.AbstractShiroFilter
+|    125 | doFilter         in org.apache.shiro.web.servlet.OncePerRequestFilter
+|   1110 | runWorker . . .  in java.util.concurrent.ThreadPoolExecutor
+|    603 | run              in java.util.concurrent.ThreadPoolExecutor$Worker
+^    722 | run . . . . . .  in java.lang.Thread
+
+
+--Output from edit research line web--2013-03-16 11:47:34,355 [http-bio-8080-exec-7] ERROR errors.GrailsExceptionResolver  - NullPointerException occurred when processing request: [GET] /rgms/researchLine/create
+Cannot get property 'Publication' on null object. Stacktrace follows:
+Message: Error processing GroovyPageView: Error executing tag <g:form>: Error executing tag <g:render>: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+    Line | Method
+->>  463 | doFilter         in \grails-app\views\researchLine\create.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by GrailsTagException: Error executing tag <g:form>: Error executing tag <g:render>: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+->>   36 | doCall           in C:/Users/Paola2/Documents/Universidade/doutorado/Monitoria/if722/workrgms/rgms/grails-app/views/researchLine/create.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by GrailsTagException: Error executing tag <g:render>: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+->>   31 | doCall           in C:/Users/Paola2/Documents/Universidade/doutorado/Monitoria/if722/workrgms/rgms/grails-app/views/researchLine/create.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by GroovyPagesException: Error evaluating expression [rgms.Publication.list()] on line [27]: Cannot get property 'Publication' on null object
+->>   27 | run              in C:/Users/Paola2/Documents/Universidade/doutorado/Monitoria/if722/workrgms/rgms/grails-app/views/researchLine/_form.gsp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Caused by NullPointerException: Cannot get property 'Publication' on null object
+->>   27 | doCall           in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine__form_gsp$_run_closure20
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+|     31 | doCall           in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine_create_gsp$_run_closure2_closure24
+|     36 | doCall . . . . . in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine_create_gsp$_run_closure2
+|     38 | run              in C__Users_Paola2_Documents_Universidade_doutorado_Monitoria_if722_workrgms_rgms_grails_app_views_researchLine_create_gsp
+|     55 | doFilter . . . . in org.apache.shiro.grails.SavedRequestFilter
+|    449 | executeChain     in org.apache.shiro.web.servlet.AbstractShiroFilter
+|    365 | call . . . . . . in org.apache.shiro.web.servlet.AbstractShiroFilter$1
+|     90 | doCall           in org.apache.shiro.subject.support.SubjectCallable
+|     83 | call . . . . . . in     ''
+|    380 | execute          in org.apache.shiro.subject.support.DelegatingSubject
+|    362 | doFilterInternal in org.apache.shiro.web.servlet.AbstractShiroFilter
+|    125 | doFilter         in org.apache.shiro.web.servlet.OncePerRequestFilter
+|   1110 | runWorker . . .  in java.util.concurrent.ThreadPoolExecutor
+|    603 | run              in java.util.concurrent.ThreadPoolExecutor$Worker
+^    722 | run . . . . . .  in java.lang.Thread
+
+]]></system-err>
+</testsuite>

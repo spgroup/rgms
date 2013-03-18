@@ -1,0 +1,375 @@
+Testsuite: Reports
+Tests run: 6, Failures: 1, Errors: 5, Time elapsed: 8,808 sec
+------------- Standard Output ---------------
+@i10n
+Feature: Reports
+  I want to generate PDF, HTML or XML report files of Members and Research Groups
+
+--Output from export member report to pdf--
+  Scenario: export member report to pdf                          # Reports.feature:5
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the Member list page                           # ReportsSteps.groovy:14
+    When I select the "1" option at the Member list              # ReportsSteps.groovy:23
+      java.lang.IncompatibleClassChangeError: the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+      	at groovy.lang.MetaClassImpl.selectConstructorAndTransformArguments(MetaClassImpl.java:1381)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.selectConstructorAndTransformArguments(ScriptBytecodeAdapter.java:234)
+      	at geb.error.GebException.<init>(GebException.groovy:20)
+      	at geb.error.GebException.<init>(GebException.groovy)
+      	at geb.error.UndefinedPageContentException.<init>(UndefinedPageContentException.groovy:20)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+      	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:194)
+      	at geb.content.NavigableSupport.getContent(NavigableSupport.groovy:45)
+      	at geb.content.NavigableSupport.this$2$getContent(NavigableSupport.groovy)
+      	at sun.reflect.GeneratedMethodAccessor744.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:57)
+      	at geb.content.NavigableSupport.methodMissing(NavigableSupport.groovy:123)
+      	at geb.content.NavigableSupport$methodMissing.call(Unknown Source)
+      	at geb.Page.methodMissing(Page.groovy)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaClassImpl.invokeMissingMethod(MetaClassImpl.java:804)
+      	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1096)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1049)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.call(PogoMetaClassSite.java:39)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at ReportsSteps$_run_closure2.doCall(ReportsSteps.groovy:24)
+      	at ?.When I select the "1" option at the Member list(Reports.feature:7)
+
+    And I can select the option Export to PDF at the Member show # ReportsSteps.groovy:27
+    Then I can generate a PDF report about Member "1"            # ReportsSteps.groovy:32
+
+--Output from export member report to html--
+  Scenario: export member report to html                          # Reports.feature:11
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the Member list page                            # ReportsSteps.groovy:14
+    When I select the "1" option at the Member list               # ReportsSteps.groovy:23
+      java.lang.IncompatibleClassChangeError: the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+      	at groovy.lang.MetaClassImpl.selectConstructorAndTransformArguments(MetaClassImpl.java:1381)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.selectConstructorAndTransformArguments(ScriptBytecodeAdapter.java:234)
+      	at geb.error.GebException.<init>(GebException.groovy:20)
+      	at geb.error.GebException.<init>(GebException.groovy)
+      	at geb.error.UndefinedPageContentException.<init>(UndefinedPageContentException.groovy:20)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+      	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:194)
+      	at geb.content.NavigableSupport.getContent(NavigableSupport.groovy:45)
+      	at geb.content.NavigableSupport.this$2$getContent(NavigableSupport.groovy)
+      	at sun.reflect.GeneratedMethodAccessor744.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at geb.content.NavigableSupport.methodMissing(NavigableSupport.groovy:123)
+      	at geb.content.NavigableSupport$methodMissing.call(Unknown Source)
+      	at geb.Page.methodMissing(Page.groovy)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaClassImpl.invokeMissingMethod(MetaClassImpl.java:804)
+      	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1096)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1049)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.call(PogoMetaClassSite.java:39)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at ReportsSteps$_run_closure2.doCall(ReportsSteps.groovy:24)
+      	at ?.When I select the "1" option at the Member list(Reports.feature:13)
+
+    And I can select the option Export to HTML at the Member show # ReportsSteps.groovy:49
+    Then I can generate a HTML report about Member "1"            # ReportsSteps.groovy:54
+
+--Output from export member report to xml--
+  Scenario: export member report to xml                          # Reports.feature:17
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the Member list page                           # ReportsSteps.groovy:14
+    When I select the "1" option at the Member list              # ReportsSteps.groovy:23
+      java.lang.IncompatibleClassChangeError: the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+      	at groovy.lang.MetaClassImpl.selectConstructorAndTransformArguments(MetaClassImpl.java:1381)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.selectConstructorAndTransformArguments(ScriptBytecodeAdapter.java:234)
+      	at geb.error.GebException.<init>(GebException.groovy:20)
+      	at geb.error.GebException.<init>(GebException.groovy)
+      	at geb.error.UndefinedPageContentException.<init>(UndefinedPageContentException.groovy:20)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+      	at java.lang.reflect.Constructor.newInstance(Constructor.java:525)
+      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:194)
+      	at geb.content.NavigableSupport.getContent(NavigableSupport.groovy:45)
+      	at geb.content.NavigableSupport.this$2$getContent(NavigableSupport.groovy)
+      	at sun.reflect.GeneratedMethodAccessor744.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at geb.content.NavigableSupport.methodMissing(NavigableSupport.groovy:123)
+      	at geb.content.NavigableSupport$methodMissing.call(Unknown Source)
+      	at geb.Page.methodMissing(Page.groovy)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaClassImpl.invokeMissingMethod(MetaClassImpl.java:804)
+      	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1096)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1049)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.call(PogoMetaClassSite.java:39)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at ReportsSteps$_run_closure2.doCall(ReportsSteps.groovy:24)
+      	at ?.When I select the "1" option at the Member list(Reports.feature:19)
+
+    And I can select the option Export to XML at the Member show # ReportsSteps.groovy:71
+    Then I can generate a XML report about Member "1"            # ReportsSteps.groovy:76
+
+--Output from export research group report to pdf--
+  Scenario: export research group report to pdf                                    # Reports.feature:23
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the Research Group list page and I select the "testehugo1" group # ReportsSteps.groovy:80
+    When I select the "testehugo1" option at the Research Group list               # ReportsSteps.groovy:89
+    And I can select the option Export to PDF at the Research Group show           # ReportsSteps.groovy:93
+      Assertion failed: 
+      
+      title ==~ /Research Group Listagem/
+      |     |
+      |     false
+      Ver Research Group
+      
+      	at org.codehaus.groovy.runtime.InvokerHelper.assertFailed(InvokerHelper.java:386)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.assertFailed(ScriptBytecodeAdapter.java:658)
+      	at pages.ResearchGroupPage$__clinit__closure1.doCall(ResearchGroupPage.groovy:20)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSite.invoke(PogoMetaMethodSite.java:226)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:52)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at pages.ResearchGroupPage$__clinit__closure1.doCall(ResearchGroupPage.groovy)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+      	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:406)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at java_util_concurrent_Callable$call.call(Unknown Source)
+      	at geb.Page.verifyAt(Page.groovy:132)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at geb.Page$verifyAt.call(Unknown Source)
+      	at geb.Browser.doAt(Browser.groovy:335)
+      	at geb.Browser.this$2$doAt(Browser.groovy)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at geb.Browser$this$2$doAt.callCurrent(Unknown Source)
+      	at geb.Browser.at(Browser.groovy:259)
+      	at sun.reflect.GeneratedMethodAccessor733.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:793)
+      	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:776)
+      	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.invokeMethodN(ScriptBytecodeAdapter.java:164)
+      	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+      	at sun.reflect.GeneratedMethodAccessor654.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.Closure.call(Closure.java:412)
+      	at groovy.lang.Closure.call(Closure.java:425)
+      	at sun.reflect.GeneratedMethodAccessor73.invoke(Unknown Source)
+      	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+      	at java.lang.reflect.Method.invoke(Method.java:601)
+      	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+      	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1047)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokePropertyOrMissing(MetaClassImpl.java:1093)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1049)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:697)
+      	at groovy.lang.GroovyObjectSupport.invokeMethod(GroovyObjectSupport.java:44)
+      	at groovy.lang.Script.invokeMethod(Script.java:78)
+      	at groovy.lang.MetaClassImpl.invokeMethodOnGroovyObject(MetaClassImpl.java:1112)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1006)
+      	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+      	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:877)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:66)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:141)
+      	at ReportsSteps$_run_closure11.doCall(ReportsSteps.groovy:94)
+      	at ?.And I can select the option Export to PDF at the Research Group show(Reports.feature:26)
+
+    Then I can generate a PDF report about Research Group "testehugo1"             # ReportsSteps.groovy:98
+
+--Output from export research group report to html--
+  Scenario: export research group report to html                                    # Reports.feature:29
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the Research Group list page and I select the "testehugo12" group # ReportsSteps.groovy:80
+    When I select the "testehugo12" option at the Research Group list               # ReportsSteps.groovy:89
+    And I can select the option Export to HTML at the Research Group show           # ReportsSteps.groovy:115
+    Then I can generate a HTML report about Research Group "testehugo12"            # ReportsSteps.groovy:120
+      java.lang.NullPointerException
+      	at java.io.FileInputStream.<init>(FileInputStream.java:134)
+      	at groovy.util.XmlSlurper.parse(XmlSlurper.java:160)
+      	at groovy.util.XmlSlurper$parse$0.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at pages.ResearchGroupPage.compareHTML(ResearchGroupPage.groovy:66)
+      	at pages.ResearchGroupPage$compareHTML.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at ReportsSteps$_run_closure14.doCall(ReportsSteps.groovy:121)
+      	at ?.Then I can generate a HTML report about Research Group "testehugo12"(Reports.feature:33)
+
+
+--Output from export research group report to xml--
+  Scenario: export research group report to xml                                      # Reports.feature:35
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the Research Group list page and I select the "testehugo123" group # ReportsSteps.groovy:80
+    When I select the "testehugo123" option at the Research Group list               # ReportsSteps.groovy:89
+    And I can select the option Export to XML at the Research Group show             # ReportsSteps.groovy:137
+    Then I can generate a XML report about Research Group "testehugo123"             # ReportsSteps.groovy:142
+      java.lang.IllegalArgumentException: File cannot be null
+      	at javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:198)
+      	at javax.xml.parsers.DocumentBuilder$parse.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at pages.ResearchGroupPage.compareXML(ResearchGroupPage.groovy:78)
+      	at pages.ResearchGroupPage$compareXML.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at ReportsSteps$_run_closure16.doCall(ReportsSteps.groovy:143)
+      	at ?.Then I can generate a XML report about Research Group "testehugo123"(Reports.feature:39)
+
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+
+--Output from export member report to pdf--
+--Output from export member report to html--
+--Output from export member report to xml--
+--Output from export research group report to pdf--
+--Output from export research group report to html--
+--Output from export research group report to xml--------------- ---------------- ---------------
+
+Testcase: export member report to pdf took 0,995 sec
+	Caused an ERROR
+the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+java.lang.IncompatibleClassChangeError: the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+	at geb.error.GebException.<init>(GebException.groovy:20)
+	at geb.error.UndefinedPageContentException.<init>(UndefinedPageContentException.groovy:20)
+	at geb.content.NavigableSupport.getContent(NavigableSupport.groovy:45)
+	at geb.content.NavigableSupport.methodMissing(NavigableSupport.groovy:123)
+	at ReportsSteps$_run_closure2.doCall(ReportsSteps.groovy:24)
+	at ?.When I select the "1" option at the Member list(Reports.feature:7)
+
+Testcase: export member report to html took 0,977 sec
+	Caused an ERROR
+the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+java.lang.IncompatibleClassChangeError: the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+	at geb.error.GebException.<init>(GebException.groovy:20)
+	at geb.error.UndefinedPageContentException.<init>(UndefinedPageContentException.groovy:20)
+	at geb.content.NavigableSupport.getContent(NavigableSupport.groovy:45)
+	at geb.content.NavigableSupport.methodMissing(NavigableSupport.groovy:123)
+	at ReportsSteps$_run_closure2.doCall(ReportsSteps.groovy:24)
+	at ?.When I select the "1" option at the Member list(Reports.feature:13)
+
+Testcase: export member report to xml took 0,896 sec
+	Caused an ERROR
+the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+java.lang.IncompatibleClassChangeError: the number of constructors during runtime and compile time for java.lang.Exception do not match. Expected 4 but got 5
+	at geb.error.GebException.<init>(GebException.groovy:20)
+	at geb.error.UndefinedPageContentException.<init>(UndefinedPageContentException.groovy:20)
+	at geb.content.NavigableSupport.getContent(NavigableSupport.groovy:45)
+	at geb.content.NavigableSupport.methodMissing(NavigableSupport.groovy:123)
+	at ReportsSteps$_run_closure2.doCall(ReportsSteps.groovy:24)
+	at ?.When I select the "1" option at the Member list(Reports.feature:19)
+
+Testcase: export research group report to pdf took 3,077 sec
+	FAILED
+title ==~ /Research Group Listagem/
+|     |
+|     false
+Ver Research Group
+Assertion failed: 
+
+title ==~ /Research Group Listagem/
+|     |
+|     false
+Ver Research Group
+
+	at pages.ResearchGroupPage$__clinit__closure1.doCall(ResearchGroupPage.groovy:20)
+	at geb.Page.verifyAt(Page.groovy:132)
+	at geb.Browser.doAt(Browser.groovy:335)
+	at geb.Browser.at(Browser.groovy:259)
+	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
+	at ReportsSteps$_run_closure11.doCall(ReportsSteps.groovy:94)
+	at ?.And I can select the option Export to PDF at the Research Group show(Reports.feature:26)
+
+Testcase: export research group report to html took 1,306 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at java.io.FileInputStream.<init>(FileInputStream.java:134)
+	at pages.ResearchGroupPage.compareHTML(ResearchGroupPage.groovy:66)
+	at ReportsSteps$_run_closure14.doCall(ReportsSteps.groovy:121)
+	at ?.Then I can generate a HTML report about Research Group "testehugo12"(Reports.feature:33)
+
+Testcase: export research group report to xml took 1,267 sec
+	Caused an ERROR
+File cannot be null
+java.lang.IllegalArgumentException: File cannot be null
+	at javax.xml.parsers.DocumentBuilder.parse(DocumentBuilder.java:198)
+	at pages.ResearchGroupPage.compareXML(ResearchGroupPage.groovy:78)
+	at ReportsSteps$_run_closure16.doCall(ReportsSteps.groovy:143)
+	at ?.Then I can generate a XML report about Research Group "testehugo123"(Reports.feature:39)
+

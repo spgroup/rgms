@@ -1,0 +1,120 @@
+Testsuite: conferencia
+Tests run: 5, Failures: 0, Errors: 3, Time elapsed: 6,286 sec
+------------- Standard Output ---------------
+@i9n
+Feature: conferencia
+  As a member of a research group
+  I want to add, remove and modify conferencias I have published
+  so that I can generate web pages and reports containing these conferencias
+
+--Output from new conferencia--
+  Scenario: new conferencia                                                                            # Conferencia.feature:7
+    Given the system has no conferencia entitled "IV Conference on Software Product Lines"             # ConferenciaSteps.groovy:11
+    When I create the conferencia "IV Conference on Software Product Lines" with file name "IICSE.pdf" # ConferenciaSteps.groovy:16
+      java.lang.NullPointerException
+      	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsParameterMap.putAll(GrailsParameterMap.java:249)
+      	at org.codehaus.groovy.runtime.DefaultGroovyMethods.leftShift(DefaultGroovyMethods.java:9469)
+      	at org.codehaus.groovy.runtime.dgm$469.invoke(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoMetaMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:308)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.call(PogoMetaMethodSite.java:64)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at steps.TestDataAndOperations.createConferencia(TestDataAndOperations.groovy:288)
+      	at steps.TestDataAndOperations$createConferencia.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:120)
+      	at ConferenciaSteps$_run_closure2.doCall(ConferenciaSteps.groovy:17)
+      	at ?.When I create the conferencia "IV Conference on Software Product Lines" with file name "IICSE.pdf"(Conferencia.feature:9)
+
+    Then the conferencia "IV Conference on Software Product Lines" is properly stored by the system    # ConferenciaSteps.groovy:20
+
+--Output from duplicate conferencia--
+  Scenario: duplicate conferencia                                                                                                   # Conferencia.feature:12
+    Given the conferencia "I International Conference on Software Engineering" is stored in the system with file name "IICSE-0.pdf" # ConferenciaSteps.groovy:25
+      java.lang.NullPointerException
+      	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsParameterMap.putAll(GrailsParameterMap.java:249)
+      	at org.codehaus.groovy.runtime.DefaultGroovyMethods.leftShift(DefaultGroovyMethods.java:9469)
+      	at org.codehaus.groovy.runtime.dgm$469.invoke(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoMetaMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:308)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.call(PogoMetaMethodSite.java:64)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at steps.TestDataAndOperations.createConferencia(TestDataAndOperations.groovy:288)
+      	at steps.TestDataAndOperations$createConferencia.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:120)
+      	at ConferenciaSteps$_run_closure4.doCall(ConferenciaSteps.groovy:26)
+      	at ?.Given the conferencia "I International Conference on Software Engineering" is stored in the system with file name "IICSE-0.pdf"(Conferencia.feature:13)
+
+    When I create the conferencia "I International Conference on Software Engineering" with file name "IICSE-1.pdf"                 # ConferenciaSteps.groovy:16
+    Then the conferencia "I International Conference on Software Engineering" is not stored twice                                   # ConferenciaSteps.groovy:31
+
+--Output from remove conferencia--
+  Scenario: remove conferencia                                                                                         # Conferencia.feature:17
+    Given the conferencia "IV Conference on Software Product Lines" is stored in the system with file name "IICSE.pdf" # ConferenciaSteps.groovy:25
+      java.lang.NullPointerException
+      	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsParameterMap.putAll(GrailsParameterMap.java:249)
+      	at org.codehaus.groovy.runtime.DefaultGroovyMethods.leftShift(DefaultGroovyMethods.java:9469)
+      	at org.codehaus.groovy.runtime.dgm$469.invoke(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoMetaMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:308)
+      	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.call(PogoMetaMethodSite.java:64)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+      	at steps.TestDataAndOperations.createConferencia(TestDataAndOperations.groovy:288)
+      	at steps.TestDataAndOperations$createConferencia.call(Unknown Source)
+      	at ConferenciaSteps$_run_closure4.doCall(ConferenciaSteps.groovy:26)
+      	at ?.Given the conferencia "IV Conference on Software Product Lines" is stored in the system with file name "IICSE.pdf"(Conferencia.feature:18)
+
+    When I remove the conferencia "IV Conference on Software Product Lines"                                            # ConferenciaSteps.groovy:36
+    Then the conferencia "IV Conference on Software Product Lines" is properly removed by the system                   # ConferenciaSteps.groovy:40
+
+--Output from new conferencia web--
+  Scenario: new conferencia web                                     # Conferencia.feature:22
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications and conferencias menu            # ConferenciaSteps.groovy:45
+    When I select the conferencia option at the publications menu   # ConferenciaSteps.groovy:52
+    And I select the new conferencia option at the conferencia page # ConferenciaSteps.groovy:56
+    Then I can fill the conferencia details                         # ConferenciaSteps.groovy:61
+
+--Output from list conferencia web--
+  Scenario: list conferencia web                                                          # Conferencia.feature:28
+ENTROU no signIn
+Enabled == trueENTROU NO TRYJefferson Almeida    Given I am at the publications menu                                                   # CommonSteps.groovy:6
+    When I select the conferencia option at the publications menu                         # ConferenciaSteps.groovy:52
+    Then a list of conferencias stored by the system is displayed at the conferencia page # ConferenciaSteps.groovy:66
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+
+--Output from new conferencia--
+--Output from duplicate conferencia--
+--Output from remove conferencia--
+--Output from new conferencia web--
+--Output from list conferencia web--------------- ---------------- ---------------
+
+Testcase: new conferencia took 0,013 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at steps.TestDataAndOperations.createConferencia(TestDataAndOperations.groovy:288)
+	at ConferenciaSteps$_run_closure2.doCall(ConferenciaSteps.groovy:17)
+	at ?.When I create the conferencia "IV Conference on Software Product Lines" with file name "IICSE.pdf"(Conferencia.feature:9)
+
+Testcase: duplicate conferencia took 0,004 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at steps.TestDataAndOperations.createConferencia(TestDataAndOperations.groovy:288)
+	at ConferenciaSteps$_run_closure4.doCall(ConferenciaSteps.groovy:26)
+	at ?.Given the conferencia "I International Conference on Software Engineering" is stored in the system with file name "IICSE-0.pdf"(Conferencia.feature:13)
+
+Testcase: remove conferencia took 0,004 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at steps.TestDataAndOperations.createConferencia(TestDataAndOperations.groovy:288)
+	at ConferenciaSteps$_run_closure4.doCall(ConferenciaSteps.groovy:26)
+	at ?.Given the conferencia "IV Conference on Software Product Lines" is stored in the system with file name "IICSE.pdf"(Conferencia.feature:18)
+
+Testcase: new conferencia web took 4,618 sec
+Testcase: list conferencia web took 1,466 sec

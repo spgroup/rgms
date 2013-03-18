@@ -42,6 +42,9 @@ grails.project.dependency.resolution = {
         test("org.codehaus.geb:geb-junit4:$gebVersion")
         test("org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion")
 		test("org.seleniumhq.selenium:selenium-support:$seleniumVersion")
+		compile('lib:itextpdf:5.4.0')
+		compile('lib:itext-pdfa:5.4.0')
+		compile('lib:itext-xtra:5.4.0')
         // runtime 'mysql:mysql-connector-java:5.1.16'
     }
 
