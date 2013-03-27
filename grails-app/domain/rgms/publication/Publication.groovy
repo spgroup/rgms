@@ -15,7 +15,7 @@ abstract class Publication {
     static constraints = {
         title nullable: false, blank: false
         publicationDate nullable: false
-        file maxSize: 100000
+        file maxSize: 100000, nullable: true, blank: true
         researchLine nullable: true, blank: true
     }
 
