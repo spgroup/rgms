@@ -8,7 +8,6 @@ abstract class Publication {
     Date publicationDate
     String file
     ResearchLine researchLine
-	List members
 
     static belongsTo = Member
     static hasMany = [members: Member]
