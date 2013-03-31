@@ -78,6 +78,7 @@ class AuthController {
                 redirect(action: newPassword)
             } else {
                 log.info "Redirecting to '${targetUri}'."
+                session.setAttribute("username", params.username)
                 render(view: "/initial")
 //                redirect(uri: targetUri)
             }

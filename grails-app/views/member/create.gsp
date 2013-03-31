@@ -12,7 +12,7 @@
 <div class="nav">
     <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
     <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-    <g:form url="[action:'uploadXML']" method="post" enctype="multipart/form-data">
+    <g:form url="[action:'uploadMemberXML']" method="post" enctype="multipart/form-data">
         <label for="file">Import XML:</label>
         <input type="file" name="file" id="file"/>
         <input class="save" type="submit" value="Upload"/>

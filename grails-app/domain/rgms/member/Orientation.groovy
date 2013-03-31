@@ -4,23 +4,19 @@ import rgms.publication.Periodico
 
 class Orientation {
     String tipo
-    Member orientando
+    String orientando
     Member orientador
-    String descricao
-    Periodico periodico
-
-    static belongsTo = Member
+    String tituloTese
+    int anoPublicacao
+    String instituicao
+    String curso
 
     static constraints = {
         tipo(nullable: false, blank: false, inList: ["Mestrado","Doutorado","Iniciação Científica"])
         orientando(nullable: false)
         orientador(nullable: false)
-        periodico(nullable: false)
-    }
-
-    public String toString()
-    {
-        return this.tipo + "- Aluno: " + orientando.name + "; Orientador: " + this.orientador.name + "; Periodico: " +
-                this.periodico.title + ". " + this.descricao
+        tituloTese(nullable: false, blank: false)
+        anoPublicacao(nullable: false)
+        instituicao(nullable: false, blank: false)
     }
 }

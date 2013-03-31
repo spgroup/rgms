@@ -2,7 +2,8 @@ package rgms.member
 
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
-
+import org.xml.sax.SAXParseException
+import rgms.XMLService
 import java.security.SecureRandom
 
 import org.apache.shiro.crypto.hash.Sha256Hash
@@ -178,55 +179,40 @@ class MemberController {
         memberInstance.save()
     }
 
-    String getAttributeValueFromNode(Node n, String attribute)
+    def returnWithMessage (String msg, Member newMember)
     {
-        n.attribute attribute
+        render(view: "create", model: [memberInstance: newMember])
+        flash.message = message(code: msg)
     }
 
-    def uploadXML()
+    def uploadMemberXML()
     {
+        String flashMessage = 'XML data extracted. Complete the remaining fields'
+        boolean errorFound = false
         Member newMember = new Member(params)
-        Node xmlFile
+
         try
         {
-            xmlFile = parseReceivedFile()
-            fillMemberInfo(newMember, xmlFile)
-        } catch (all) {
-            //SAXParseException se o arquivo não for XML
-            //NullPointerException se a estrutura do XML está errada (cast em Nó nulo)
-            render(view: "create", model: [memberInstance: newMember])
-            flash.message = 'Insira um arquivo XML válido'
-            return
+            XMLService serv = new XMLService()
+            Node xmlFile = serv.parseReceivedFile(request)
+            serv.fillMemberInfo(xmlFile, newMember)
         }
-        render(view: "create", model: [memberInstance: newMember])
-        flash.message = 'Dados do XML extraídos. Complete as informações restantes'
-    }
+        catch (SAXParseException) { //Se o arquivo nÃ£o for XML ou nÃ£o passaram nenhum
+            flashMessage = 'default.xml.parserror.message'
+            errorFound = true
+        }
+        catch (NullPointerException) //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
+        {
+            flashMessage = 'default.xml.structure.message'
+            errorFound = true
+        }
+        catch (Exception e)
+        {
+            flashMessage = 'default.xml.unknownerror.message'
+            errorFound = true
+        }
 
-    private void fillMemberInfo(Member newMember, Node xmlFile) {
-        Node dadosGerais = (Node) xmlFile.children()[0]
-        List<Object> dadosGeraisChildren = dadosGerais.children()
-        Node outrasInformacoes = (Node) dadosGeraisChildren[1]
-        Node endereco = (Node) dadosGeraisChildren[2]
-        Node enderecoProfissional = (Node) endereco.value()[0]
-        Node formacaoAcademicaTitulacao = (Node) dadosGeraisChildren[3]
-
-        newMember.name = getAttributeValueFromNode(dadosGerais, "NOME-COMPLETO")
-        newMember.university = getAttributeValueFromNode(enderecoProfissional, "NOME-INSTITUICAO-EMPRESA")
-        newMember.phone = getAttributeValueFromNode(enderecoProfissional, "DDD") +
-                getAttributeValueFromNode(enderecoProfissional, "TELEFONE")
-        newMember.website = getAttributeValueFromNode(enderecoProfissional, "HOME-PAGE")
-        newMember.city = getAttributeValueFromNode(enderecoProfissional, "CIDADE")
-        newMember.country = getAttributeValueFromNode(enderecoProfissional, "PAIS")
-        newMember.email = getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
-    }
-
-    private Node parseReceivedFile() {
-        MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
-        CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
-        File file = new File("testexml.xml");
-        f.transferTo(file)
-        def records = new XmlParser()
-
-        records.parse(file)
+        returnWithMessage(flashMessage, newMember)
+        if (errorFound) return
     }
 }

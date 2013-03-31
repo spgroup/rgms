@@ -36,7 +36,7 @@
 				<li class="fieldcontain">
 					<span id="orientando-label" class="property-label"><g:message code="orientation.orientando.label" default="Orientando" /></span>
 					
-						<span class="property-value" aria-labelledby="orientando-label"><g:link controller="member" action="show" id="${orientationInstance?.orientando?.id}">${orientationInstance?.orientando?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="orientando-label"><g:fieldValue bean="${orientationInstance}" field="orientando"/></span>
 					
 				</li>
 				</g:if>
@@ -50,20 +50,38 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${orientationInstance?.periodico}">
+				<g:if test="${orientationInstance?.tituloTese}">
 				<li class="fieldcontain">
-					<span id="periodico-label" class="property-label"><g:message code="orientation.periodico.label" default="Periodico" /></span>
+					<span id="tituloTese-label" class="property-label"><g:message code="orientation.tituloTese.label" default="Titulo Tese" /></span>
 					
-						<span class="property-value" aria-labelledby="periodico-label"><g:link controller="periodico" action="show" id="${orientationInstance?.periodico?.id}">${orientationInstance?.periodico?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="tituloTese-label"><g:fieldValue bean="${orientationInstance}" field="tituloTese"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${orientationInstance?.descricao}">
+				<g:if test="${orientationInstance?.anoPublicacao}">
 				<li class="fieldcontain">
-					<span id="descricao-label" class="property-label"><g:message code="orientation.descricao.label" default="Descricao" /></span>
+					<span id="anoPublicacao-label" class="property-label"><g:message code="orientation.anoPublicacao.label" default="Ano Publicacao" /></span>
 					
-						<span class="property-value" aria-labelledby="descricao-label"><g:fieldValue bean="${orientationInstance}" field="descricao"/></span>
+						<span class="property-value" aria-labelledby="anoPublicacao-label"><g:fieldValue bean="${orientationInstance}" field="anoPublicacao"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${orientationInstance?.instituicao}">
+				<li class="fieldcontain">
+					<span id="instituicao-label" class="property-label"><g:message code="orientation.instituicao.label" default="Instituicao" /></span>
+					
+						<span class="property-value" aria-labelledby="instituicao-label"><g:fieldValue bean="${orientationInstance}" field="instituicao"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${orientationInstance?.curso}">
+				<li class="fieldcontain">
+					<span id="curso-label" class="property-label"><g:message code="orientation.curso.label" default="Curso" /></span>
+					
+						<span class="property-value" aria-labelledby="curso-label"><g:fieldValue bean="${orientationInstance}" field="curso"/></span>
 					
 				</li>
 				</g:if>

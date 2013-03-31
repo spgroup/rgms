@@ -4,6 +4,8 @@ import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import rgms.publication.Periodico;
+import org.xml.sax.SAXParseException
+import rgms.XMLService
 
 class PeriodicoController {
 
@@ -108,53 +110,38 @@ class PeriodicoController {
         }
     }
 
-    def uploadXML()
+    def returnWithMessage (String msg)
     {
-        Periodico newJournal = new Periodico(params)
-        Node xmlFile
+        redirect(action: "list")
+        flash.message = message(code: msg)
+    }
+
+    def uploadXMLPeriodico()
+    {
+        String flashMessage = 'The non existent articles were successfullyimported'
+        boolean errorFound = false
+
         try
         {
-            xmlFile = parseReceivedFile()
-            fillJournalInfo(newJournal, xmlFile)
-        } catch (all) {
-            //SAXParseException se o arquivo não for XML
-            //NullPointerException se a estrutura do XML está errada (cast em Nó nulo)
-            render(view: "create", model: [periodicoInstance: newJournal])
-            flash.message = 'Insira um arquivo XML válido'
-            return
+            XMLService serv = new XMLService()
+            Node xmlFile = serv.parseReceivedFile(request)
+            serv.saveJournals(xmlFile)
         }
-        render(view: "create", model: [periodicoInstance: newJournal])
-        flash.message = 'Dados do XML extraídos. Complete as informações restantes'
-    }
-
-    private void fillJournalInfo(Periodico newJournal, Node xmlFile) {
-        Node artigosPublicados = (Node) ((Node)xmlFile.children()[1]).children()[1]
-        List<Object> firstArticle = ((Node)artigosPublicados.children()[0]).children()
-        Node dadosBasicos = (Node) firstArticle[0]
-        Node detalhamentoArtigo = (Node) firstArticle[1]
-        newJournal.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-ARTIGO")
-        newJournal.publicationDate = new Date()
-        newJournal.publicationDate.set(year: getAttributeValueFromNode(dadosBasicos, "ANO-DO-ARTIGO").toInteger()- 1900)
-        newJournal.volume = getAttributeValueFromNode(detalhamentoArtigo, "VOLUME").toInteger()
-        newJournal.number = getAttributeValueFromNode(detalhamentoArtigo, "FASCICULO").toInteger()
-        newJournal.pages = getAttributeValueFromNode(detalhamentoArtigo, "PAGINA-FINAL").toInteger() -
-                getAttributeValueFromNode(detalhamentoArtigo, "PAGINA-INICIAL").toInteger() + 1
-        newJournal.journal = getAttributeValueFromNode(detalhamentoArtigo, "TITULO-DO-PERIODICO-OU-REVISTA")
-        def a = 2
-
-    }
-
-    private Node parseReceivedFile() {
-        MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
-        CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
-        File file = new File("testexml.xml");
-        f.transferTo(file)
-        def records = new XmlParser()
-
-        records.parse(file)
-    }
-    String getAttributeValueFromNode(Node n, String attribute)
-    {
-        n.attribute attribute
+        catch (SAXParseException) { //Se o arquivo nÃ£o for XML ou nÃ£o passaram nenhum
+            flashMessage = 'default.xml.parserror.message'
+            errorFound = true
+        }
+        catch (NullPointerException) //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
+        {
+            flashMessage = 'default.xml.structure.message'
+            errorFound = true
+        }
+        catch (Exception e)
+        {
+            flashMessage = 'default.xml.unknownerror.message'
+            errorFound = true
+        }
+        returnWithMessage(flashMessage)
+        if (errorFound) return
     }
 }

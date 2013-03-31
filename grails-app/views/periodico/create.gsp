@@ -12,12 +12,6 @@
     <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
         <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-        <g:form url="[action:'uploadXML']" method="post" enctype="multipart/form-data">
-            <label for="file">Import XML:</label>
-            <input type="file" name="file" id="file"/>
-            <input class="save" type="submit" value="Upload"/>
-
-        </g:form>
     </ul>
 </div>
 <div id="create-periodico" class="content scaffold-create" role="main">

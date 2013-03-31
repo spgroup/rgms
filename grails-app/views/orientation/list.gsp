@@ -13,7 +13,12 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
+                <g:form url="[action:'uploadOrientationXML']" method="post" enctype="multipart/form-data">
+                    <label for="file">Import orientations (XML):</label>
+                    <input type="file" name="file" id="file"/>
+                    <input class="save" type="submit" value="Upload"/>
+                </g:form>
+            </ul>
 		</div>
 		<div id="list-orientation" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
@@ -26,13 +31,15 @@
 					
 						<g:sortableColumn property="tipo" title="${message(code: 'orientation.tipo.label', default: 'Tipo')}" />
 					
-						<th><g:message code="orientation.orientando.label" default="Orientando" /></th>
+						<g:sortableColumn property="orientando" title="${message(code: 'orientation.orientando.label', default: 'Orientando')}" />
 					
 						<th><g:message code="orientation.orientador.label" default="Orientador" /></th>
 					
-						<th><g:message code="orientation.periodico.label" default="Periodico" /></th>
+						<g:sortableColumn property="tituloTese" title="${message(code: 'orientation.tituloTese.label', default: 'Titulo Tese')}" />
 					
-						<g:sortableColumn property="descricao" title="${message(code: 'orientation.descricao.label', default: 'Descricao')}" />
+						<g:sortableColumn property="anoPublicacao" title="${message(code: 'orientation.anoPublicacao.label', default: 'Ano Publicacao')}" />
+					
+						<g:sortableColumn property="instituicao" title="${message(code: 'orientation.instituicao.label', default: 'Instituicao')}" />
 					
 					</tr>
 				</thead>
@@ -46,9 +53,11 @@
 					
 						<td>${fieldValue(bean: orientationInstance, field: "orientador")}</td>
 					
-						<td>${fieldValue(bean: orientationInstance, field: "periodico")}</td>
+						<td>${fieldValue(bean: orientationInstance, field: "tituloTese")}</td>
 					
-						<td>${fieldValue(bean: orientationInstance, field: "descricao")}</td>
+						<td>${fieldValue(bean: orientationInstance, field: "anoPublicacao")}</td>
+					
+						<td>${fieldValue(bean: orientationInstance, field: "instituicao")}</td>
 					
 					</tr>
 				</g:each>
