@@ -2,7 +2,6 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.publication.Periodico;
 
 class PeriodicoController {
 
@@ -36,24 +35,12 @@ class PeriodicoController {
 
     def show() {
         def periodicoInstance = Periodico.get(params.id)
-        if (!periodicoInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [periodicoInstance: periodicoInstance]
+        checkPeriodicoInstance(flash, params, periodicoInstance)
     }
 
     def edit() {
         def periodicoInstance = Periodico.get(params.id)
-        if (!periodicoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [periodicoInstance: periodicoInstance]
+		checkPeriodicoInstance(flash, params, periodicoInstance)
     }
 
     def update() {
@@ -106,4 +93,14 @@ class PeriodicoController {
             redirect(action: "show", id: params.id)
         }
     }
+	
+	private checkPeriodicoInstance(Map flash, Map params, Periodico periodicoInstance) {
+		if (!periodicoInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
+			redirect(action: "list")
+			return
+		}
+
+		[periodicoInstance: periodicoInstance]
+	}
 }
