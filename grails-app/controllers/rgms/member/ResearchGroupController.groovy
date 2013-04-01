@@ -3,29 +3,26 @@ package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.member.Member;
-import rgms.member.Membership;
-import rgms.member.ResearchGroup;
 
 class ResearchGroupController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def index() {
+    def index = {
         redirect(action: "list", params: params)
     }
 
-    def list() {
+    def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [researchGroupInstanceList: ResearchGroup.list(params), researchGroupInstanceTotal: ResearchGroup.count()]
     }
 
-    def create() {
+    def create = {
         def members = refreshMemberList()
         [researchGroupInstance: new ResearchGroup(params) , membersInstance: members]
     }
 
-    def save() {
+    def save = {
         def researchGroupInstance = new ResearchGroup(params)
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
@@ -37,7 +34,7 @@ class ResearchGroupController {
         redirect(action: "show", id: researchGroupInstance.id)
     }
 
-    def show() {
+    def show = {
         def researchGroupInstance = ResearchGroup.get(params.id)
         if (!researchGroupInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
@@ -48,7 +45,7 @@ class ResearchGroupController {
         [researchGroupInstance: researchGroupInstance, publicationsInstance : listPublicationByGroup(), currentMemberships: Membership.getCurrentMemberships(researchGroupInstance)]
     }
 
-    def edit() {
+    def edit = {
         def researchGroupInstance = ResearchGroup.get(params.id)
         if (!researchGroupInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
@@ -61,7 +58,7 @@ class ResearchGroupController {
         [researchGroupInstance: researchGroupInstance, membersInstance: members]
     }
 
-    def update() {        
+    def update = {        
         def researchGroupInstance = ResearchGroup.get(params.id)
         if (!researchGroupInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
@@ -91,7 +88,7 @@ class ResearchGroupController {
         redirect(action: "show", id: researchGroupInstance.id)
     }
 
-    def delete() {
+    def delete = {
         def researchGroupInstance = ResearchGroup.get(params.id)
         if (!researchGroupInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
@@ -143,7 +140,7 @@ class ResearchGroupController {
         return members        
     }
    
-    def Set listPublicationByGroup(){
+    def Set listPublicationByGroup = {
     	def researchGroupInstance = ResearchGroup.get(params.id)
     	def list = ResearchGroup.getPublications(researchGroupInstance)
     	return list  
