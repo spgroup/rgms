@@ -85,7 +85,7 @@ class AuthController {
         catch (AuthenticationException ex){
             // Authentication failed, so display the appropriate message
             // on the login page.
-            log.info "Authentication failure for user '${params.username}'."
+            log.info "Authentication failure for user '${params.username}'."+" Error:"+ex.toString()
             flash.message = message(code: "login.failed")
 
             // Keep the username and "remember me" setting so that the
@@ -100,7 +100,7 @@ class AuthController {
                 m["targetUri"] = params.targetUri
             }
 
-            log.info "Authentication failure for user '${params.username}'."
+            log.info "Authentication failure for user '${params.username}'."+" Error:"+ex.toString()
             flash.message = message(code: "login.failed")
             // Now redirect back to the login page.
             redirect(uri: "/auth/login")

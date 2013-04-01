@@ -98,7 +98,7 @@ class RoleController {
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])+" Error:"+e.toString()
             redirect(action: "show", id: params.id)
         }
     }
