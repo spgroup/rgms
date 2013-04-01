@@ -106,7 +106,7 @@ class OrientationController {
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'orientation.label', default: 'Orientation'), id])
             redirect(action: "list")
         }
-        catch (DataIntegrityViolationException e) {
+        catch (DataIntegrityViolationException) {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'orientation.label', default: 'Orientation'), id])
             redirect(action: "show", id: id)
         }
@@ -118,8 +118,8 @@ class OrientationController {
         {
             XMLService serv = new XMLService()
             Node xmlFile = serv.parseReceivedFile(request)
-            serv.importOrientations(xmlFile, session.getAttribute("username"))
-        } catch (all) {
+            serv.importOrientations(xmlFile, session.getAttribute("username").toString())
+        } catch (Exception) {
             //SAXParseException se o arquivo não for XML
             //NullPointerException se a estrutura do XML está errada (cast em Nó nulo)
             redirect([action: "list"])

@@ -52,7 +52,8 @@ class XMLService {
         }
     }
 
-    void saveJournals(Node xmlFile) {
+    void saveJournals(Node xmlFile)
+    {
         Node artigosPublicados = (Node) ((Node)xmlFile.children()[1]).children()[1]
         List<Object> artigosPublicadosChildren = artigosPublicados.children()
         String tryingToParse
@@ -109,10 +110,8 @@ class XMLService {
     {
         Node dadosGerais = (Node) xmlFile.children()[0]
         List<Object> dadosGeraisChildren = dadosGerais.children()
-        Node outrasInformacoes = (Node) dadosGeraisChildren[1]
         Node endereco = (Node) dadosGeraisChildren[2]
         Node enderecoProfissional = (Node) endereco.value()[0]
-        Node formacaoAcademicaTitulacao = (Node) dadosGeraisChildren[3]
 
         newMember.name = getAttributeValueFromNode(dadosGerais, "NOME-COMPLETO")
         newMember.university = getAttributeValueFromNode(enderecoProfissional, "NOME-INSTITUICAO-EMPRESA")
@@ -123,10 +122,21 @@ class XMLService {
         newMember.country = getAttributeValueFromNode(enderecoProfissional, "PAIS")
         newMember.email = getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
     }
+
+    static Node parseReceivedFile(MultipartHttpServletRequest request)
+    {
+        MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
+        CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
+        File file = new File("xmlimported.xml");
+        f.transferTo(file)
+        def records = new XmlParser()
+
+        records.parse(file)
+    }
     //Métodos públicos
 
     //Métodos auxiliares
-    private void fillOrientationData(Node node, Orientation newOrientation, Member user, String tipoOrientacao)
+    private static void fillOrientationData(Node node, Orientation newOrientation, Member user, String tipoOrientacao)
     {
         Node basicData = (Node)(node.children()[0])
         Node specificData = (Node)(node.children()[1])
@@ -140,20 +150,9 @@ class XMLService {
         newOrientation.orientando = (String)specificData.attribute("NOME-DO-ORIENTADO")
     }
 
-    private String getAttributeValueFromNode(Node n, String attribute)
+    private static String getAttributeValueFromNode(Node n, String attribute)
     {
         n.attribute attribute
-    }
-	
-	private Node parseReceivedFile(MultipartHttpServletRequest request)
-	{
-        MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
-        CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
-        File file = new File("xmlimported.xml");
-        f.transferTo(file)
-        def records = new XmlParser()
-
-        records.parse(file)
     }
     //Métodos auxiliares
 }
