@@ -63,7 +63,7 @@ class AuthController {
             // will be thrown if the username is unrecognised or the
             // password is incorrect.
             SecurityUtils.subject.login(authToken)
-            if(member.enabled == false){
+            if(!member.enabled){
                 render "Please wait the administrator to unlock your access to system.\n\nThanks."
                 return
             }
