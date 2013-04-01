@@ -24,8 +24,6 @@ class Role {
 
     static mapping = {
         cache true
-        cache users : true
-        cache permissions : true
     }
 
     String toString(){name}
