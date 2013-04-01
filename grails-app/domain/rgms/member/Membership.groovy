@@ -1,8 +1,5 @@
 package rgms.member
 
-import java.util.List;
-
-
 class Membership {
 	Member member
 	ResearchGroup researchGroup
