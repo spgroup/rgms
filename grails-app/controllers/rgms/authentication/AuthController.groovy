@@ -11,7 +11,7 @@ import org.apache.shiro.crypto.hash.Sha256Hash
 import rgms.member.Member;
 import rgms.member.PasswordResetRequest;
 
-import java.security.SecureRandom
+
 
 class AuthController {
     def shiroSecurityManager
