@@ -68,12 +68,11 @@ class AuthController {
                 return
             }
             print("ENTROU NO TRY")
+
             
-            def user = Member.findByUsername(params.username)
+            print(member)
             
-            print(user)
-            
-            if (user?.passwordChangeRequiredOnNextLogon) {
+            if (member.passwordChangeRequiredOnNextLogon) {
                 log.info "Redirecting to '${targetUri}'."
                 redirect(action: newPassword)
             } else {
@@ -83,29 +82,33 @@ class AuthController {
             }
         }
         catch (AuthenticationException ex){
-            // Authentication failed, so display the appropriate message
-            // on the login page.
-            log.info "Authentication failure for user '${params.username}'."+" Error:"+ex.toString()
-            flash.message = message(code: "login.failed")
-
-            // Keep the username and "remember me" setting so that the
-            // user doesn't have to enter them again.
-            def m = [ username: params.username ]
-            if (params.rememberMe) {
-                m["rememberMe"] = true
-            }
-
-            // Remember the target URI too.
-            if (params.targetUri) {
-                m["targetUri"] = params.targetUri
-            }
-
-            log.info "Authentication failure for user '${params.username}'."+" Error:"+ex.toString()
-            flash.message = message(code: "login.failed")
-            // Now redirect back to the login page.
-            redirect(uri: "/auth/login")
-//            redirect(action: "login", params: m) //action: "login"
+            authErrorHandling(ex)
         }
+    }
+
+    private authErrorHandling(AuthenticationException ex) {
+        // Authentication failed, so display the appropriate message
+        // on the login page.
+        log.info "Authentication failure for user '${params.username}'." + " Error:" + ex.toString()
+        flash.message = message(code: "login.failed")
+
+        // Keep the username and "remember me" setting so that the
+        // user doesn't have to enter them again.
+        def m = [username: params.username]
+        if (params.rememberMe) {
+            m["rememberMe"] = true
+        }
+
+        // Remember the target URI too.
+        if (params.targetUri) {
+            m["targetUri"] = params.targetUri
+        }
+
+        log.info "Authentication failure for user '${params.username}'." + " Error:" + ex.toString()
+        flash.message = message(code: "login.failed")
+        // Now redirect back to the login page.
+        redirect(uri: "/auth/login")
+//            redirect(action: "login", params: m) //action: "login"
     }
 
     def signOut = {
@@ -150,11 +153,14 @@ class AuthController {
             }
         }
     }
+    def putErrorAndRedirect(message,status,action) {
+        flash.message = message
+        flash.status = status
+        redirect(action: action)
+    }
     def doUpdatePassword = {
         if (params.password1!=params.password2) {
-            flash.message = "Please enter same passwords."
-            flash.status = "error"
-            redirect(action:'updatePassword')
+            putErrorAndRedirect("Please enter same passwords.","error",'updatePassword')
         } else {
             def user = Member.findByUsername(SecurityUtils.subject?.principal)
             if (user) {
@@ -164,19 +170,13 @@ class AuthController {
                         flash.message = "Password successfully updated"
                         redirect(uri:'/')
                     } else {
-                        flash.message = "Password update failed."
-                        flash.status = "error"
-                        redirect(action:'updatePassword')
+                        putErrorAndRedirect("Password update failed.","error",'updatePassword')
                     }
                 } else {
-                    flash.message = "Incorrect old password ."
-                    flash.status = "error"
-                    redirect(action:'updatePassword')
+                    putErrorAndRedirect("Incorrect old password .","error",'updatePassword')
                 }
             } else {
-                flash.message = "Unknown user."
-                flash.status = "error"
-                redirect(action:'updatePassword')
+                putErrorAndRedirect("Unknown user.","error",'updatePassword')
             }
         }
     }
@@ -255,18 +255,7 @@ class AuthController {
             return
         }
 
-        def Admin = Member.findAllByName("Administrator")
-        def emailAdmin = Admin?.email
-        if(emailAdmin != null && !emailAdmin.empty){
-            print("Email Admin : "+emailAdmin)
-
-            sendMail {
-                to emailAdmin
-                from grailsApplication.config.grails.mail.username
-                subject "[GRMS] You received a request to authenticate an account."
-                body "Hello Administrator,\n\nYou received a request to authenticate an account.\n\nWho requested was ${name}. His/Her email address is ${emailAddress}\n\n${createLink(absolute:true,uri:'/member/list')}\n\nBest Regards,\nResearch Group Management System".toString()
-            }
-        }
+        sendRegistrationMailToAdmin(name)
 //        sendMail {
 //            to memberInstance.email
 //            from grailsApplication.config.grails.mail.username
@@ -280,5 +269,20 @@ class AuthController {
         flash.message = "User successfully created";
         render(view: "register")
 
+    }
+
+    private sendRegistrationMailToAdmin(name) {
+        def Admin = Member.findAllByName("Administrator")
+        def emailAdmin = Admin?.email
+        if (emailAdmin != null && !emailAdmin.empty) {
+            print("Email Admin : " + emailAdmin)
+
+            sendMail {
+                to emailAdmin
+                from grailsApplication.config.grails.mail.username
+                subject "[GRMS] You received a request to authenticate an account."
+                body "Hello Administrator,\n\nYou received a request to authenticate an account.\n\nWho requested was ${name}. His/Her email address is ${emailAddress}\n\n${createLink(absolute: true, uri: '/member/list')}\n\nBest Regards,\nResearch Group Management System".toString()
+            }
+        }
     }
 }
