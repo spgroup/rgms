@@ -2,7 +2,7 @@ package rgms.authentication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.authentication.Role;
+
 
 class RoleController {
 
