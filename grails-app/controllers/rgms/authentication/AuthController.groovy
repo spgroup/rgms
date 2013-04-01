@@ -243,8 +243,6 @@ class AuthController {
         def pwdHash = new Sha256Hash(params.password1).toHex()
         
         memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university)
-        def username = memberInstance?.username
-        def password = params.passwordHash
         def name = memberInstance?.name
         def emailAddress = memberInstance?.email
         
