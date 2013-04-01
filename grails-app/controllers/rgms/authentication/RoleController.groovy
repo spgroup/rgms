@@ -32,35 +32,32 @@ class RoleController {
         redirect(action: "show", id: shiroRoleInstance.id)
     }
 
-    def show = {
-        def shiroRoleInstance = Role.get(params.id)
+    def getShiroRoleInstanceById(id) {
+        def shiroRoleInstance = Role.get(id)
         if (!shiroRoleInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
             redirect(action: "list")
             return
         }
+        shiroRoleInstance
+    }
+
+    def returnShiroRoleInstance() {
+        def shiroRoleInstance =  getShiroRoleInstanceById(params.id)
 
         [shiroRoleInstance: shiroRoleInstance]
+    }
+
+    def show = {
+        returnShiroRoleInstance()
     }
 
     def edit = {
-        def shiroRoleInstance = Role.get(params.id)
-        if (!shiroRoleInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [shiroRoleInstance: shiroRoleInstance]
+        returnShiroRoleInstance()
     }
 
     def update = {
-        def shiroRoleInstance = Role.get(params.id)
-        if (!shiroRoleInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
-            redirect(action: "list")
-            return
-        }
+        def shiroRoleInstance = getShiroRoleInstanceById(params.id)
 
         if (params.version) {
             def version = params.version.toLong()
@@ -85,12 +82,7 @@ class RoleController {
     }
 
     def delete = {
-        def shiroRoleInstance = Role.get(params.id)
-        if (!shiroRoleInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
-            redirect(action: "list")
-            return
-        }
+        def shiroRoleInstance = getShiroRoleInstanceById(params.id)
 
         try {
             shiroRoleInstance.delete(flush: true)
