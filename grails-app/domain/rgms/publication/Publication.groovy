@@ -44,6 +44,24 @@ abstract class Publication {
                 def p = publications?.findAll(query)
 		return p
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if((obj == null) || (obj.getClass() != this.getClass())) {
+			return false
+		}
+		Publication p = (Publication) obj
+		return this.title != null && this.title.equals(p.title)
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
+		result = prime * result + ((this.id == null) ? 0 : this.id);
+		return result;
+	}
 
 //	public String retPrimeiroAutor(){
 //		String[] quebraString = this.author.tokenize(",")
