@@ -39,9 +39,7 @@ class ResearchGroupController {
 
     def show() {
         def researchGroupInstance = ResearchGroup.get(params.id)
-        if (!researchGroupInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
-            redirect(action: "list")
+        if (!verifyResearchGroupInstance(researchGroupInstance,params.id)) {
             return
         }
 		//def cm = Membership.getCurrentMemberships(researchGroupInstance)
@@ -61,25 +59,38 @@ class ResearchGroupController {
         [researchGroupInstance: researchGroupInstance, membersInstance: members]
     }
 
-    def update() {        
-        def researchGroupInstance = ResearchGroup.get(params.id)
-        if (!researchGroupInstance) {
+     boolean verifyResearchGroupInstance(Object obj, Object id){
+        if(!obj){
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
             redirect(action: "list")
+            return false;
+        }
+         return true;
+    }
+
+    boolean verifyVersion(Object researchGroupInstance, Long version){
+        if (researchGroupInstance.version > version) {
+            researchGroupInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                    [message(code: 'researchGroup.label', default: 'Research Group')] as Object[],
+                    "Another user has updated this ResearchGroup while you were editing")
+            render(view: "edit", model: [researchGroupInstance: researchGroupInstance])
+             return false
+        }
+        return true
+    }
+
+    def update() {        
+       def researchGroupInstance = ResearchGroup.get(params.id)
+        if (!verifyResearchGroupInstance(researchGroupInstance,params.id)) {
             return
         }
         Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
         if (params.version) {
             def version = params.version.toLong()
-            if (researchGroupInstance.version > version) {
-                researchGroupInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                    [message(code: 'researchGroup.label', default: 'Research Group')] as Object[],
-                          "Another user has updated this ResearchGroup while you were editing")
-                render(view: "edit", model: [researchGroupInstance: researchGroupInstance])
+            if (!verifyVersion(researchGroupInstance, version)) {
                 return
             }
         }
-
         researchGroupInstance.properties = params
 
         if (!researchGroupInstance.save(flush: true)) {
@@ -93,9 +104,7 @@ class ResearchGroupController {
 
     def delete() {
         def researchGroupInstance = ResearchGroup.get(params.id)
-        if (!researchGroupInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
-            redirect(action: "list")
+        if (!verifyResearchGroupInstance(researchGroupInstance,params.id)) {
             return
         }
         Membership.editMembersToResearchGroup([], researchGroupInstance)
@@ -104,12 +113,32 @@ class ResearchGroupController {
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
             redirect(action: "list")
         }
-        catch (DataIntegrityViolationException e) {
+        catch (DataIntegrityViolationException ignore) {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
             redirect(action: "show", id: params.id)
         }
     }
-        
+
+    void addOrRemoveGroupsOfSession(){
+        if (session["groups"].contains(params.groups as Long)){
+            session["groups"].remove(params.groups as Long)
+        }else{
+            session["groups"].add(params.groups as Long)
+        }
+    }
+
+     void addMembersToSet(Set members){
+         for(groupId in session["groups"] ){
+             def rGroup = ResearchGroup.get(groupId as Long)
+             if(rGroup){
+                 def collection = rGroup?.memberships?.collect{it.member}
+                 if(collection) {
+                     members.addAll(collection)
+                 }
+             }
+         }
+     }
+
     private Set refreshMemberList()
     {
         def members = [] as Set
@@ -117,22 +146,11 @@ class ResearchGroupController {
         if (request.post == false){
             session["groups"] = ResearchGroup.list()?.collect{it.id}            
         }else{
-            if (session["groups"].contains(params.groups as Long)){
-                session["groups"].remove(params.groups as Long)                
-            }else{
-                session["groups"].add(params.groups as Long)         
-            }            
+            addOrRemoveGroupsOfSession()
         }
-        for(groupId in session["groups"] ){
-            def rGroup = ResearchGroup.get(groupId as Long)
-            if(rGroup){
-				def collection = rGroup?.memberships?.collect{it.member}
-				if(collection) {
-                	members.addAll(collection)
-				}
-            }            
-        }
-		
+
+        addMembersToSet(members);
+
         if(members.empty){
             members = Member.list()
         }
