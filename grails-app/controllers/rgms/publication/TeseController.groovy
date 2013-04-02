@@ -2,13 +2,13 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.publication.Tese;
+//import Tese;
 
 class TeseController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def index() {
+    public def index() {
         redirect(action: "list", params: params)
     }
 	
@@ -24,47 +24,28 @@ class TeseController {
     def save() {
         def teseInstance = new Tese(params)
 		PublicationController pb = new PublicationController()
-		
         if (!pb.upload(teseInstance) || !teseInstance.save(flush: true)) {
             render(view: "create", model: [teseInstance: teseInstance])
             return
         }
-		
 		flash.message = message(code: 'default.created.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
         redirect(action: "show", id: teseInstance.id)
     }
 
     def show() {
-        def teseInstance = Tese.get(params.id)
-
-        if (!teseInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [teseInstance: teseInstance]
+        ShowOrEdit()
     }
 
     def edit() {
-        def teseInstance = Tese.get(params.id)
-        if (!teseInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [teseInstance: teseInstance]
+        ShowOrEdit()
     }
 
     def update() {
         def teseInstance = Tese.get(params.id)
         if (!teseInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
-            redirect(action: "list")
+            getMessage()
             return
         }
-
         if (params.version) {
             def version = params.version.toLong()
             if (teseInstance.version > version) {
@@ -75,14 +56,11 @@ class TeseController {
                 return
             }
         }
-
         teseInstance.properties = params
-
         if (!teseInstance.save(flush: true)) {
             render(view: "edit", model: [teseInstance: teseInstance])
             return
         }
-
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
         redirect(action: "show", id: teseInstance.id)
     }
@@ -90,19 +68,31 @@ class TeseController {
     def delete() {
         def teseInstance = Tese.get(params.id)
         if (!teseInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
-            redirect(action: "list")
+			getMessage()
             return
         }
-
         try {
             teseInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
-            redirect(action: "list")
+			getMessage()
         }
         catch (DataIntegrityViolationException e) {
 			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
             redirect(action: "show", id: params.id)
         }
+    }
+
+    def ShowOrEdit(){
+        def teseInstance = Tese.get(params.id)
+        if (!teseInstance) {
+            getMessage()
+            return
+        }
+        [teseInstance: teseInstance]
+    }
+
+    def getMessage()
+    {
+        flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
+        redirect(action: "list")
     }
 }

@@ -8,7 +8,6 @@ abstract class Publication {
     Date publicationDate
     String file
     ResearchLine researchLine
-	List members
 
     static belongsTo = Member
     static hasMany = [members: Member]
@@ -16,7 +15,7 @@ abstract class Publication {
     static constraints = {
         title nullable: false, blank: false
         publicationDate nullable: false
-        file maxSize: 100000
+        file maxSize: 100000, nullable: true, blank: true
         researchLine nullable: true, blank: true
     }
 
@@ -28,23 +27,23 @@ abstract class Publication {
         return title
     }
 
-//	static Set getPublicationsByMembershipList(membershipList){
-//		def set = [] as Set
-//		for(membership in membershipList){
-//			set.addAll(Publication.getPublicationsByMembership(membership))
-//		}
-//                return set
-//	}
+	static Set getPublicationsByMembershipList(membershipList){
+		def set = [] as Set
+		for(membership in membershipList){
+			set.addAll(Publication.getPublicationsByMembership(membership))
+		}
+                return set
+	}
 
-//	static Set getPublicationsByMembership(membership){
-//		def publications = membership?.member.publications
-//		def query = !membership.dateLeft ?
-//					{ it.publicationDate?.compareTo(membership.dateJoined) > 0 }:
-//					{ it.publicationDate?.compareTo(membership.dateJoined) > 0  &&
-//						it.publicationDate?.compareTo(membership.dateLeft) < 0}
-//                def p = publications?.findAll(query)
-//		return p
-//	}
+	static Set getPublicationsByMembership(membership){
+		def publications = membership?.member.publications
+		def query = !membership.dateLeft ?
+					{ it.publicationDate?.compareTo(membership.dateJoined) > 0 }:
+					{ it.publicationDate?.compareTo(membership.dateJoined) > 0  &&
+						it.publicationDate?.compareTo(membership.dateLeft) < 0}
+                def p = publications?.findAll(query)
+		return p
+	}
 
 //	public String retPrimeiroAutor(){
 //		String[] quebraString = this.author.tokenize(",")

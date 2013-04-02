@@ -32,7 +32,7 @@
 					
 						<th><g:message code="tese.researchLine.label" default="Research Line" /></th>
 					
-						
+						<g:sortableColumn property="bibTex" title="${message(code: 'tese.bibTex.label', default: 'Bib Tex')}" />
 					
 						<g:sortableColumn property="school" title="${message(code: 'tese.school.label', default: 'School')}" />
 					
@@ -50,7 +50,7 @@
 					
 						<td>${fieldValue(bean: teseInstance, field: "researchLine")}</td>
 					
-						
+						<td>${fieldValue(bean: teseInstance, field: "bibTex")}</td>
 					
 						<td>${fieldValue(bean: teseInstance, field: "school")}</td>
 					
