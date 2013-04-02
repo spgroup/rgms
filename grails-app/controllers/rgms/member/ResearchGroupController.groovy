@@ -3,9 +3,6 @@ package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.member.Member;
-import rgms.member.Membership;
-import rgms.member.ResearchGroup;
 
 class ResearchGroupController {
 
@@ -161,7 +158,7 @@ class ResearchGroupController {
         return members        
     }
    
-    def Set listPublicationByGroup(){
+    def Set listPublicationByGroup() {
     	def researchGroupInstance = ResearchGroup.get(params.id)
     	def list = ResearchGroup.getPublications(researchGroupInstance)
     	return list  
