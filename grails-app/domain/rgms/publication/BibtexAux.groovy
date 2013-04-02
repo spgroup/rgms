@@ -1,8 +1,6 @@
 //#if($Bibtex)
 package rgms.publication
 
-import java.util.Iterator;
-
 import rgms.member.Member;
 
 
