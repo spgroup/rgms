@@ -44,6 +44,8 @@ class RoleController {
 
     def returnShiroRoleInstance() {
         def shiroRoleInstance =  getShiroRoleInstanceById(params.id)
+        if(!shiroRoleInstance)
+            return
 
         [shiroRoleInstance: shiroRoleInstance]
     }
@@ -58,6 +60,8 @@ class RoleController {
 
     def update = {
         def shiroRoleInstance = getShiroRoleInstanceById(params.id)
+        if(!shiroRoleInstance)
+            return
 
         if (params.version) {
             def version = params.version.toLong()
@@ -83,6 +87,8 @@ class RoleController {
 
     def delete = {
         def shiroRoleInstance = getShiroRoleInstanceById(params.id)
+        if(!shiroRoleInstance)
+            return
 
         try {
             shiroRoleInstance.delete(flush: true)
