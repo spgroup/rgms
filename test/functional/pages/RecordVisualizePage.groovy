@@ -35,4 +35,9 @@ public class RecordVisualizePage extends Page {
     {
         $('ol').find("span[aria-labelledby='end-label']").text()
     }
+	
+	def removeRecord()
+	{
+		assert withConfirm(true) { $("input.delete").click() }
+	}
 }

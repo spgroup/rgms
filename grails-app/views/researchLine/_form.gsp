@@ -1,7 +1,5 @@
 <%@ page import="rgms.publication.ResearchLine" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: researchLineInstance, field: 'name', 'error')} required">
 	<label for="name">
 		<g:message code="researchLine.name.label" default="Name" />
@@ -24,7 +22,7 @@
     <g:message code="researchLine.publications.label" default="Publications" />
 
   </label>
-  <g:select name="publications" from="${rgms.Publication.list()}" multiple="multiple" optionKey="id" size="5" value="${researchLineInstance?.publications*.id}" class="many-to-one"/>
+  <g:select name="publications" from="${rgms.publication.Publication.list()}" multiple="multiple" optionKey="id" size="5" value="${researchLineInstance?.publications*.id}" class="many-to-one"/>
 </div>
 
 
