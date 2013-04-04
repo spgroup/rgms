@@ -2,8 +2,6 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.publication.ResearchLine;
-
 class ResearchLineController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -23,87 +21,99 @@ class ResearchLineController {
 
     def save() {
         def researchLineInstance = new ResearchLine(params)
-        if (!researchLineInstance.save(flush: true)) {
-            render(view: "create", model: [researchLineInstance: researchLineInstance])
-            return
-        }
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), researchLineInstance.id])
-        redirect(action: "show", id: researchLineInstance.id)
+        saveResearchLine("create", researchLineInstance, "created")
     }
 
     def show() {
-        def researchLineInstance = ResearchLine.get(params.id)
-        if (!researchLineInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [researchLineInstance: researchLineInstance]
+        tryFindInstance(params)
     }
 
     def edit() {
-        def researchLineInstance = ResearchLine.get(params.id)
-        if (!researchLineInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [researchLineInstance: researchLineInstance]
+        tryFindInstance(params)
     }
 
     def update() {
-        def researchLineInstance = ResearchLine.get(params.id)
-        if (!researchLineInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        if (params.version) {
-            def version = params.version.toLong()
-            if (researchLineInstance.version > version) {
-                researchLineInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                    [message(code: 'researchLine.label', default: 'ResearchLine')] as Object[],
-                          "Another user has updated this ResearchLine while you were editing")
-                render(view: "edit", model: [researchLineInstance: researchLineInstance])
-                return
-            }
-        }
-        
+        def researchLineInstance = getInstance(params)
+        if(!researchLineInstance)
+           return 
+		   
+		if (!checkInstanceVersion(params, researchLineInstance))
+			return
         researchLineInstance.properties = params
-        
-        if (!researchLineInstance.save(flush: true)) {
-            render(view: "edit", model: [researchLineInstance: researchLineInstance])
-            return
-        }
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), researchLineInstance.id])
-        redirect(action: "show", id: researchLineInstance.id)
+        saveResearchLine("edit", researchLineInstance, "updated")
     }
 
     def delete() {
         def researchLineInstance = ResearchLine.get(params.id)        
-
         try {
-            for(p in researchLineInstance?.publications)
-            {           
-               // def pub = Publication.get(p.id);
-                p.researchLine = null;                
-                if(!p.save(flush:true))
-                {
-                    render(view: "edit", model: [researchLineInstance: researchLineInstance])
-                    return
-                }                
-            }       
+            if (!editPublications(researchLineInstance))
+               return
             researchLineInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), params.id])
+            createMessage(action: "list")
+        }
+        catch (DataIntegrityViolationException) {
+            createMessage(action: "show", id: params.id)
+        }
+    }
+
+    def checkInstanceVersion(params, researchLineInstance){
+        if (params.version) {
+            def version = params.version.toLong()
+            if (researchLineInstance.version > version) {
+                researchLineInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'researchLine.label', default: 'ResearchLine')] as Object[],
+                        "Another user has updated this ResearchLine while you were editing")
+                render(view: "edit", model: [researchLineInstance: researchLineInstance])
+                return false
+            }
+        }
+        return true
+    }
+
+    def editPublications(researchLineInstance){
+        for(p in researchLineInstance?.publications)
+        {
+            p.researchLine = null;
+            if(!p.save(flush:true))
+            {
+                render(view: "edit", model: [researchLineInstance: researchLineInstance])
+                return false
+            }
+        }
+        true
+    }
+
+    def createMessage(params){
+        flash.message = message(code: 'default.deleted.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), params.id])
+        redirect(params)
+    }
+
+    def saveResearchLine(view, researchLineInstance, action)
+    {
+        if (!researchLineInstance.save(flush: true)) {
+            render(view: view, model: [researchLineInstance: researchLineInstance])
+        }
+        else {
+            flash.message = message(code: 'default.' + action + '.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), researchLineInstance.id])
+            redirect(action: "show", id: researchLineInstance.id)
+        }
+    }
+
+    def tryFindInstance(params){
+        def researchLineInstance = getInstance(params)
+
+        if (researchLineInstance)
+            [researchLineInstance: getInstance(params)]
+    }
+
+    def getInstance(params){
+        def researchLineInstance = ResearchLine.get(params.id)
+        if (!researchLineInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), params.id])
             redirect(action: "list")
+            return
         }
-        catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), params.id])
-            redirect(action: "show", id: params.id)
-        }
+
+        researchLineInstance
     }
 }
