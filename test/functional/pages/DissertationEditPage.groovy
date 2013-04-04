@@ -7,7 +7,7 @@ class DissertationEditPage extends Page{
 	static url = "dissertacao/edit"
 	
 	static at = {
-		title ==~ /Editar Dissertação/
+		title ==~ /Editar Disserta‹o/
 	}
 	
 	static content = {

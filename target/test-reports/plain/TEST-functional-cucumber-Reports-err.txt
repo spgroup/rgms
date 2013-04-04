@@ -1,7 +1,0 @@
-
---Output from export member report to pdf--
---Output from export member report to html--
---Output from export member report to xml--
---Output from export research group report to pdf--
---Output from export research group report to html--
---Output from export research group report to xml--

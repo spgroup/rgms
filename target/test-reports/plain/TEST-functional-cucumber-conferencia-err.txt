@@ -1,6 +1,0 @@
-
---Output from new conferencia--
---Output from duplicate conferencia--
---Output from remove conferencia--
---Output from new conferencia web--
---Output from list conferencia web--
