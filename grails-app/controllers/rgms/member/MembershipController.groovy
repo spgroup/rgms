@@ -2,26 +2,24 @@ package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.member.Membership;
-
 class MembershipController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def index() {
+    def index = {
         redirect(action: "list", params: params)
     }
 
-    def list() {
+    def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [membershipInstanceList: Membership.list(params), membershipInstanceTotal: Membership.count()]
     }
 
-    def create() {
+    def create = {
         [membershipInstance: new Membership(params)]
     }
 
-    def save() {
+    def save = {
         def membershipInstance = new Membership(params)
         if (!membershipInstance.save(flush: true)) {
             render(view: "create", model: [membershipInstance: membershipInstance])
@@ -32,7 +30,7 @@ class MembershipController {
         redirect(action: "show", id: membershipInstance.id)
     }
 
-    def show() {
+    def show = {
         def membershipInstance = Membership.get(params.id)
         if (!membershipInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
@@ -43,7 +41,7 @@ class MembershipController {
         [membershipInstance: membershipInstance]
     }
 
-    def edit() {
+    def edit = {
         def membershipInstance = Membership.get(params.id)
         if (!membershipInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
@@ -54,7 +52,7 @@ class MembershipController {
         [membershipInstance: membershipInstance]
     }
 
-    def update() {
+    def update = {
         def membershipInstance = Membership.get(params.id)
         if (!membershipInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
@@ -84,7 +82,7 @@ class MembershipController {
         redirect(action: "show", id: membershipInstance.id)
     }
 
-    def delete() {
+    def delete = {
         def membershipInstance = Membership.get(params.id)
         if (!membershipInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
