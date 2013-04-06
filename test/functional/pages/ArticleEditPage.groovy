@@ -7,7 +7,7 @@ class ArticleEditPage extends Page {
     static url = "periodico/edit/1"
 
     static at = {
-        title ==~ /Editar Periódico/
+        title ==~ /Editar Peri—dico/
     }
 
     static content = {

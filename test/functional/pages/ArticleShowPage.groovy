@@ -7,7 +7,7 @@ class ArticleShowPage extends Page {
 	static url = "periodico/show/1"
 
 	static at = {
-		title ==~ /Ver Periódico/
+		title ==~ /Ver Peri—dico/
 	}
 
 	static content = {
