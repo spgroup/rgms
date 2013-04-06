@@ -5,9 +5,6 @@ import java.security.SecureRandom
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.member.Member;
-import rgms.member.Record;
-
 class MemberController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
