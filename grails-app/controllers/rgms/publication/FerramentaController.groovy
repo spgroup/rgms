@@ -31,7 +31,7 @@ class FerramentaController {
             return
         }
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), ferramentaInstance.id])
+		flash.message = messageGenerator('default.created.message',ferramentaInstance.id)
         redirect(action: "show", id: ferramentaInstance.id)
     }
 
@@ -39,7 +39,7 @@ class FerramentaController {
         def ferramentaInstance = Ferramenta.get(params.id)
 
         if (!ferramentaInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), params.id])
+			flash.message = messageGenerator('default.not.found.message', params.id)
             redirect(action: "list")
             return
         }
@@ -51,7 +51,7 @@ class FerramentaController {
         def ferramentaInstance = Ferramenta.get(params.id)
 		
         if (!ferramentaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), params.id])
+            flash.message = messageGenerator('default.not.found.message', params.id)
             redirect(action: "list")
             return
         }
@@ -62,7 +62,7 @@ class FerramentaController {
     def update() {
         def ferramentaInstance = Ferramenta.get(params.id)
         if (!ferramentaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), params.id])
+            flash.message = messageGenerator('default.not.found.message', params.id)
             redirect(action: "list")
             return
         }
@@ -85,26 +85,31 @@ class FerramentaController {
             return
         }
 
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), ferramentaInstance.id])
+		flash.message = messageGenerator('default.updated.message', ferramentaInstance.id)
         redirect(action: "show", id: ferramentaInstance.id)
     }
 
     def delete() {
         def ferramentaInstance = Ferramenta.get(params.id)
         if (!ferramentaInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), params.id])
+			flash.message = messageGenerator ('default.not.found.message', params.id)
             redirect(action: "list")
             return
         }
 
         try {
             ferramentaInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), params.id])
+			flash.message = messageGenerator ('default.deleted.message', params.id)
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), params.id])
+			flash.message = messageGenerator ('default.not.deleted.message'+' Erro: '+e.message, params.id)
             redirect(action: "show", id: params.id)
         }
     }
+	
+	def messageGenerator (String code, def id)
+	{
+		return message(code: code, args: [message(code: 'ferramenta.label', default: 'Ferramenta'), id])
+	}
 }
