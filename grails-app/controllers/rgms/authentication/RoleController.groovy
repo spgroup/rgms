@@ -2,7 +2,7 @@ package rgms.authentication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.authentication.Role;
+
 
 class RoleController {
 
@@ -32,35 +32,36 @@ class RoleController {
         redirect(action: "show", id: shiroRoleInstance.id)
     }
 
-    def show = {
-        def shiroRoleInstance = Role.get(params.id)
+    def getShiroRoleInstanceById(id) {
+        def shiroRoleInstance = Role.get(id)
         if (!shiroRoleInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
             redirect(action: "list")
             return
         }
+        shiroRoleInstance
+    }
+
+    def returnShiroRoleInstance() {
+        def shiroRoleInstance =  getShiroRoleInstanceById(params.id)
+        if(!shiroRoleInstance)
+            return
 
         [shiroRoleInstance: shiroRoleInstance]
+    }
+
+    def show = {
+        returnShiroRoleInstance()
     }
 
     def edit = {
-        def shiroRoleInstance = Role.get(params.id)
-        if (!shiroRoleInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [shiroRoleInstance: shiroRoleInstance]
+        returnShiroRoleInstance()
     }
 
     def update = {
-        def shiroRoleInstance = Role.get(params.id)
-        if (!shiroRoleInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
-            redirect(action: "list")
+        def shiroRoleInstance = getShiroRoleInstanceById(params.id)
+        if(!shiroRoleInstance)
             return
-        }
 
         if (params.version) {
             def version = params.version.toLong()
@@ -85,12 +86,9 @@ class RoleController {
     }
 
     def delete = {
-        def shiroRoleInstance = Role.get(params.id)
-        if (!shiroRoleInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
-            redirect(action: "list")
+        def shiroRoleInstance = getShiroRoleInstanceById(params.id)
+        if(!shiroRoleInstance)
             return
-        }
 
         try {
             shiroRoleInstance.delete(flush: true)
@@ -98,7 +96,7 @@ class RoleController {
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])+" Error:"+e.toString()
             redirect(action: "show", id: params.id)
         }
     }
