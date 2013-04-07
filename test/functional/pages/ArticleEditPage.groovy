@@ -10,10 +10,6 @@ class ArticleEditPage extends Page {
         title ==~ /Editar Periódico/
     }
 
-    static content = {
-    }
-
-
 	def edit(String novovalor){
 		$("form").title = novovalor
 	}

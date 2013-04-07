@@ -3,12 +3,15 @@ package pages
 import geb.Page
 import pages.ArticleShowPage
 import pages.ArticlesPage
+import pages.GetPageTitle
 
 class ArticleCreatePage extends Page {
 	static url = "periodico/create"
 
 	static at = {
-		title ==~ /Criar Periódico/
+		String teste = "/" 	+ GetPageTitle.getMessage('default.button.create.label') +
+						" " + GetPageTitle.getMessage('periodico.label') + "/"
+		title ==~ teste
 		journal != null
 	}
 

@@ -16,6 +16,11 @@ class TechnicalReportController {
 		[technicalReportInstanceList: TechnicalReport.list(params), technicalReportInstanceTotal: TechnicalReport.count()]
 	}
 
+	def report() {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		[technicalReportInstanceList: TechnicalReport.list(params), technicalReportInstanceTotal: TechnicalReport.count(), googleScholarCitations: 0, microsoftAcademicCitations:0]
+	}
+	
 	def create() {
 		[technicalReportInstance: new TechnicalReport(params)]
 	}

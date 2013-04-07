@@ -42,14 +42,14 @@ Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
 }
 
 
-/*Given(~'^I am at the publications menu$') {->
+Given(~'^I am at the publications menu$') {->
 	to LoginPage
 	at LoginPage
 	page.fillLoginData("admin", "adminadmin")
 	at PublicationsPage
 }
 
-When(~'^I select the "([^"]*)" option at the publications menu$') { String option ->
+/*When(~'^I select the "([^"]*)" option at the publications menu$') { String option ->
 	page.select(option)
 }*/
 

@@ -19,6 +19,12 @@ Given(~'^I am at the publications menu and the report "([^"]*)" is stored in the
 	page.fillLoginData("admin", "adminadmin")
 	at PublicationsPage
 }
+
+Given(~'^I select the "([^"]*)" option at the publications menu$') { String option ->
+	page.select(option)
+}
+
+
 When (~'^I select to view "([^"]*)" in resulting technical report list$') {String title  ->
 	at TechnicalReportPage
 	page.selectViewTech(title)

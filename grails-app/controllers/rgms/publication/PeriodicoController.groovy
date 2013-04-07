@@ -15,6 +15,11 @@ class PeriodicoController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count()]
     }
+	
+	def report() {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		[periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count(), googleScholarCitations: 0, microsoftAcademicCitations:0]
+	}
 
     def create() {
         [periodicoInstance: new Periodico(params)]
