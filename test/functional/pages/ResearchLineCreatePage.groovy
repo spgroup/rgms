@@ -1,11 +1,13 @@
 package pages
-import steps.TestDataAndOperations
+import steps.TestDataAndOperationsEquipe4
 import geb.Page
 
 class ResearchLineCreatePage extends Page {
 	static url = "researchline/create"
 
 	static at = {
+		//String teste = "/" + GetPageTitle.getMessage("default.button.create.label") + " " + GetPageTitle.getMessage("researchLine.label") + "/"
+		//title ==~  teste
 		title ==~ /Criar Research Line/
 	}
 
@@ -14,7 +16,7 @@ class ResearchLineCreatePage extends Page {
 
 	def fillResearchLineDetails() {
 		def name = "Modelo Cascata Renovado"
-		def description = TestDataAndOperations.findResearchLineByName(name).description
+		def description = TestDataAndOperationsEquipe4.findResearchLineByName(name).description
 		$("form").name = name
 		$("form").description = description 
 		assert $("form").name == name  
@@ -23,7 +25,7 @@ class ResearchLineCreatePage extends Page {
 	
 	def createsResearchLine(String name)
 	{
-		def research = TestDataAndOperations.findResearchLineByName(name)
+		def research = TestDataAndOperationsEquipe4.findResearchLineByName(name)
 		$("form").name = research.name
 		$("form").description = research.description
 		$("input.save").click()
