@@ -80,7 +80,7 @@ class TestDataAndOperationsEquipe4 {
     static public void createArticle(String title, filename) {
         def cont = new PeriodicoController()
         def date = new Date()
-        cont.params << TestDataAndOperations.findArticleByTitle(title) << [file: filename]
+        cont.params << TestDataAndOperationsEquipe4.findArticleByTitle(title) << [file: filename]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
         cont.save()
@@ -112,7 +112,7 @@ class TestDataAndOperationsEquipe4 {
 
 	static public void createResearchLine(String name) {
 		def cont = new ResearchLineController()
-		def research = TestDataAndOperations.findResearchLineByName(name)
+		def research = TestDataAndOperationsEquipe4.findResearchLineByName(name)
 		cont.params.name = research.name
 		cont.params.description = research.description
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.
@@ -143,7 +143,7 @@ class TestDataAndOperationsEquipe4 {
 	static public def createRecord(def status)
 	{
 		def cont = new RecordController()
-		def record = TestDataAndOperations.findRecordByStatus(status)
+		def record = TestDataAndOperationsEquipe4.findRecordByStatus(status)
 		cont.params.status_H = record.status_H
 		cont.params.start = record.start
 		cont.params.end = record.end
@@ -158,7 +158,7 @@ class TestDataAndOperationsEquipe4 {
 		def inserted = ResearchLine.findByName(name)
 		if(!inserted)
 		{
-			def research = TestDataAndOperations.findResearchLineByName(name)
+			def research = TestDataAndOperationsEquipe4.findResearchLineByName(name)
 			ResearchLine rl = new ResearchLine()
 			rl.setName(research.name)
 			rl.setDescription(research.description)
@@ -171,7 +171,7 @@ class TestDataAndOperationsEquipe4 {
 		def inserted = Record.findByStatus_H(status)
 		if(!inserted)
 		{
-			def record = TestDataAndOperations.findRecordByStatus(status)
+			def record = TestDataAndOperationsEquipe4.findRecordByStatus(status)
 			Record r = new Record()
 			r.setStatus_H(record.status_H)
 			r.setStart(r.start)
