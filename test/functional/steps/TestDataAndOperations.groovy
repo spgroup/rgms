@@ -39,7 +39,8 @@ class TestDataAndOperations {
 static researchLines = [
 	[name: "IA Avancada", description: ""],
 	[name: "Teoria da informacao - Complexidade no espaco", description: "P=NP"],
-	[name: "Novo Padrao Arquitetural MVCE", description: "Nova arquitetura que promete revolucionar a web"]
+	[name: "Novo Padrao Arquitetural MVCE", description: "Nova arquitetura que promete revolucionar a web"],
+	[name: "Modelo Cascata Renovado", description: "Alteração do modelo original"]
 ]
 static bookChapters = [
 		[title: "Next Generation Software Product Line Engineering", publicationDate: (new Date("12 October 2012")), researchLine: "Software Product Lines",
@@ -55,7 +56,8 @@ static conferencias = [
 ]
 
 static records = [
-	[status_H: "MSc Student",start: (new Date()), end: null]
+	[status_H: "MSc Student",start: (new Date()), end: null],
+	[status_H: "Graduate Student",start: (new Date()), end: null]
 ]
 
 static reports = [
@@ -111,6 +113,18 @@ static public def findRecordByStatus(def status) {
 	records.find{ record ->
 		record.status_H == status
 	}
+}
+
+static public boolean recordIsAssociated(def status)
+{
+	def c = Member.createCriteria()
+	def recordId = Record.findByStatus_H(status).id
+	def members = c.listDistinct{
+		historics{
+			eq("id",recordId)
+		}
+	}
+	members.size() > 0
 }
 
 static public def findBookChapterByTitle(String title) {
@@ -463,6 +477,20 @@ static public def createRecord(def status) {
 	cont.save()
 	cont.response.reset()
 
+}
+
+static public def insertsRecord(String status)
+{
+	def inserted = Record.findByStatus_H(status)
+	if(!inserted)
+	{
+		def record = TestDataAndOperations.findRecordByStatus(status)
+		Record r = new Record()
+		r.setStatus_H(record.status_H)
+		r.setStart(r.start)
+		r.setEnd(r.end)
+		r.save()
+	}
 }
 
 static public def insertsResearchLine(String name) {

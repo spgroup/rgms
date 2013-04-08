@@ -13,17 +13,19 @@ class ResearchLineCreatePage extends Page {
 	}
 
 	def fillResearchLineDetails() {
-		$("form").name = "Modelo Cascata Renovado"
-		$("form").description = "Alteração do modelo original"
-		assert $("form").name == "Modelo Cascata Renovado" && ("form").description == "Alteração do modelo original"
+		def name = "Modelo Cascata Renovado"
+		def description = TestDataAndOperationsEquipe4.findResearchLineByName(name).description
+		$("form").name = name
+		$("form").description = description 
+		assert $("form").name == name  
+		assert $("#description").attr('value') == description
 	}
-	
+
 	def createsResearchLine(String name)
 	{
-		def research = TestDataAndOperations.findResearchLineByName(name)
+		def research = TestDataAndOperationsEquipe4.findResearchLineByName(name)
 		$("form").name = research.name
 		$("form").description = research.description
 		$("input.save").click()
 	}
 }
-

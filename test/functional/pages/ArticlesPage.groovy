@@ -8,7 +8,7 @@ class ArticlesPage extends Page {
 
 
 	static at = {
-		title ==~ /Peri—dico Listagem/
+		title ==~ /Periodico Listagem/
 	}
 
 	static content = {
