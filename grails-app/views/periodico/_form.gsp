@@ -1,3 +1,4 @@
+<%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.Periodico" %>
 
 
@@ -66,11 +67,13 @@
 	<g:textField name="pages" required="" value="${periodicoInstance?.pages}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'members', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'members', 'error')} required">
 	<label for="members">
 		<g:message code="periodico.members.label" default="Members" />
-		
+		<span class="required-indicator">*</span>
 	</label>
 	
-</div>
+	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
+          value="${periodicoInstance?.members}" />
 
+</div>

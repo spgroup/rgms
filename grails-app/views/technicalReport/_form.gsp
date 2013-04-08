@@ -1,3 +1,4 @@
+<%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.TechnicalReport" %>
 
 
@@ -42,11 +43,14 @@
 	<g:textField name="institution" required="" value="${technicalReportInstance?.institution}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'members', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'members', 'error')} required">
 	<label for="members">
 		<g:message code="technicalReport.members.label" default="Members" />
-		
+		<span class="required-indicator">*</span>
 	</label>
 	
+	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
+          value="${technicalReportInstance?.members}" />
+
 </div>
 
