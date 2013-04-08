@@ -1,13 +1,7 @@
 package rgms
 
-import org.codehaus.groovy.grails.web.servlet.mvc.GrailsParameterMap
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
-import org.xml.sax.SAXParseException
-import rgms.member.Member
-import rgms.member.Orientation
-import rgms.publication.Periodico
-import rgms.publication.Publication
 
 class XMLService {
     //Métodos públicos
@@ -19,24 +13,23 @@ class XMLService {
         {
             saveClosure(xmlFile)
         }
-        catch (SAXParseException exception) { //Se o arquivo nÃ£o for XML ou nÃ£o passaram nenhum
+        catch (SAXParseException) { //Se o arquivo nÃ£o for XML ou nÃ£o passaram nenhum
             flashMessage = 'default.xml.parserror.message'
             errorFound = true
         }
-        catch (NullPointerException e) //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
+        catch (NullPointerException) //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
         {
             flashMessage = 'default.xml.structure.message'
             errorFound = true
         }
-        catch (Exception e)
+        catch (Exception)
         {
             flashMessage = 'default.xml.unknownerror.message'
             errorFound = true
         }
 
         returnWithMessage(flashMessage)
-        if (errorFound) return false
-        else return true
+        return !errorFound
     }
 
     static Node parseReceivedFile(MultipartHttpServletRequest request)

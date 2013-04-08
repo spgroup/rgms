@@ -206,7 +206,7 @@ class MemberController {
             flashMessage = 'default.xml.structure.message'
             errorFound = true
         }
-        catch (Exception e)
+        catch (Exception)
         {
             flashMessage = 'default.xml.unknownerror.message'
             errorFound = true
@@ -216,7 +216,7 @@ class MemberController {
         if (errorFound) return
     }
 
-    private void fillMemberInfo(Node xmlFile, Member newMember, XMLService serv)
+    private static void fillMemberInfo(Node xmlFile, Member newMember, XMLService serv)
     {
         Node dadosGerais = (Node) xmlFile.children()[0]
         List<Object> dadosGeraisChildren = dadosGerais.children()
