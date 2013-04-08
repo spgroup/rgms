@@ -1,3 +1,4 @@
+<%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.Tese" %>
 
 
@@ -50,11 +51,14 @@
 	<g:textField name="address" required="" value="${teseInstance?.address}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: teseInstance, field: 'members', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: teseInstance, field: 'members', 'error')} required">
 	<label for="members">
 		<g:message code="tese.members.label" default="Members" />
-		
+		<span class="required-indicator">*</span>
 	</label>
 	
+	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
+          value="${teseInstance?.members}" />
+
 </div>
 
