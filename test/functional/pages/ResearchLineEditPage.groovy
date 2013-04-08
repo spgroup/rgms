@@ -15,8 +15,11 @@ class ResearchLineEditPage extends Page {
 	def changeResearchLineDetails(String name) {
 		def old_name = $("form").name
 		assert old_name == name
-		$("form").name = "Modelo Cascata Editado"
-		$("form").description = "Edição do modelo original"
+		def new_name = "Modelo Cascata Editado"
+		def description = "Edição do modelo original"
+		$("form").name = new_name
+		$("form").description = description
+		assert $("form").name == new_name
+		assert $("#description").attr('value') == description
 	}
 }
-
