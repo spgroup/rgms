@@ -195,7 +195,7 @@ class MemberController {
         {
             XMLService serv = new XMLService()
             Node xmlFile = serv.parseReceivedFile(request)
-            serv.fillMemberInfo(xmlFile, newMember)
+            fillMemberInfo(xmlFile, newMember, serv)
         }
         catch (SAXParseException) { //Se o arquivo nÃ£o for XML ou nÃ£o passaram nenhum
             flashMessage = 'default.xml.parserror.message'
@@ -214,5 +214,22 @@ class MemberController {
 
         returnWithMessage(flashMessage, newMember)
         if (errorFound) return
+    }
+
+    private void fillMemberInfo(Node xmlFile, Member newMember, XMLService serv)
+    {
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        List<Object> dadosGeraisChildren = dadosGerais.children()
+        Node endereco = (Node) dadosGeraisChildren[2]
+        Node enderecoProfissional = (Node) endereco.value()[0]
+
+        newMember.name = serv.getAttributeValueFromNode(dadosGerais, "NOME-COMPLETO")
+        newMember.university = serv.getAttributeValueFromNode(enderecoProfissional, "NOME-INSTITUICAO-EMPRESA")
+        newMember.phone = serv.getAttributeValueFromNode(enderecoProfissional, "DDD") +
+                serv.getAttributeValueFromNode(enderecoProfissional, "TELEFONE")
+        newMember.website = serv.getAttributeValueFromNode(enderecoProfissional, "HOME-PAGE")
+        newMember.city = serv.getAttributeValueFromNode(enderecoProfissional, "CIDADE")
+        newMember.country = serv.getAttributeValueFromNode(enderecoProfissional, "PAIS")
+        newMember.email = serv.getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
     }
 }

@@ -112,21 +112,72 @@ class OrientationController {
         }
     }
 
+    Closure returnWithMessage = {
+        String msg ->
+
+            redirect(action: "list")
+            flash.message = message(code: msg)
+    }
+
     def uploadOrientationXML()
     {
-        try
-        {
-            XMLService serv = new XMLService()
-            Node xmlFile = serv.parseReceivedFile(request)
-            serv.importOrientations(xmlFile, session.getAttribute("username").toString())
-        } catch (Exception) {
-            //SAXParseException se o arquivo não for XML
-            //NullPointerException se a estrutura do XML está errada (cast em Nó nulo)
-            redirect([action: "list"])
-            flash.message = 'Insira um arquivo XML válido'
+        String flashMessage = 'The non existent orientations were successfully imported'
+
+        XMLService serv = new XMLService()
+        Node xmlFile = serv.parseReceivedFile(request)
+        if (!serv.Import(saveOrientations, returnWithMessage, xmlFile, flashMessage))
             return
+    }
+
+    Closure saveOrientations = {
+        Node xmlFile ->
+
+        String loggedUser = session.getAttribute("username").toString()
+        Member user = Member.findByUsername(loggedUser)
+        def orientations = (Node)xmlFile.children()[3]
+        def concludedOrientations = (Node)orientations.children()[0]
+        List<Object> values = concludedOrientations.children()
+        if(values != null && values.size() > 0)
+        {
+            for(int i = 0; i < values.size(); i++)
+            {
+                Node node = (Node)values[i]
+                Orientation newOrientation = new Orientation()
+                String name = (String)node.name()
+                if (name.toLowerCase().contains("mestrado"))
+                {
+                    fillOrientationData(node, newOrientation, user, "Mestrado")
+                }
+                else if (name.toLowerCase().contains("doutorado"))
+                {
+                    fillOrientationData(node, newOrientation, user, "Doutorado")
+                }
+                else
+                {
+                    Node children = (Node)(node.children()[0])
+                    String natureza = (String)children.attribute("NATUREZA")
+                    if (natureza.toLowerCase().contains("iniciacao_cientifica"))
+                    {
+                        fillOrientationData(node, newOrientation, user, "Iniciação Científica")
+                    }
+                }
+                if (Orientation.findAll().find { it -> newOrientation.Equals(it)} == null)
+                    newOrientation.save(flush: false)
+            }
         }
-        redirect([action: "list"])
-        flash.message = 'Dados do XML extraídos.'
+    }
+
+    static void fillOrientationData(Node node, Orientation newOrientation, Member user, String tipoOrientacao)
+    {
+        Node basicData = (Node)(node.children()[0])
+        Node specificData = (Node)(node.children()[1])
+        newOrientation.tipo = tipoOrientacao
+        newOrientation.tituloTese = XMLService.getAttributeValueFromNode(basicData, "TITULO")
+        String ano = XMLService.getAttributeValueFromNode(basicData, "ANO")
+        newOrientation.anoPublicacao = Integer.parseInt(ano)
+        newOrientation.curso = XMLService.getAttributeValueFromNode(specificData, "NOME-DO-CURSO")
+        newOrientation.instituicao = XMLService.getAttributeValueFromNode(specificData, "NOME-DA-INSTITUICAO")
+        newOrientation.orientador = user
+        newOrientation.orientando = XMLService.getAttributeValueFromNode(specificData, "NOME-DO-ORIENTADO")
     }
 }

@@ -19,4 +19,13 @@ class Orientation {
         anoPublicacao(nullable: false)
         instituicao(nullable: false, blank: false)
     }
+
+    boolean Equals(Orientation other)
+    {
+        return (other != null && this.anoPublicacao == other.anoPublicacao
+        && this.orientador == other.orientador
+        && this.orientando == other.orientando
+        && this.tipo == other.tipo
+        && this.tituloTese == other.tituloTese)
+    }
 }

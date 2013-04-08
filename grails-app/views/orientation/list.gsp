@@ -28,11 +28,12 @@
 			<table>
 				<thead>
 					<tr>
-					
+                        <g:sortableColumn property="id" title="${message(code: 'orientation.id.label', default: 'Id')}" />
+
 						<g:sortableColumn property="tipo" title="${message(code: 'orientation.tipo.label', default: 'Tipo')}" />
-					
+
 						<g:sortableColumn property="orientando" title="${message(code: 'orientation.orientando.label', default: 'Orientando')}" />
-					
+
 						<th><g:message code="orientation.orientador.label" default="Orientador" /></th>
 					
 						<g:sortableColumn property="tituloTese" title="${message(code: 'orientation.tituloTese.label', default: 'Titulo Tese')}" />
@@ -47,9 +48,11 @@
 				<g:each in="${orientationInstanceList}" status="i" var="orientationInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${orientationInstance.id}">${fieldValue(bean: orientationInstance, field: "tipo")}</g:link></td>
-					
-						<td>${fieldValue(bean: orientationInstance, field: "orientando")}</td>
+						<td><g:link action="show" id="${orientationInstance.id}">${fieldValue(bean: orientationInstance, field: "id")}</g:link></td>
+
+                        <td>${fieldValue(bean: orientationInstance, field: "tipo")}</td>
+
+                        <td>${fieldValue(bean: orientationInstance, field: "orientando")}</td>
 					
 						<td>${fieldValue(bean: orientationInstance, field: "orientador")}</td>
 					
