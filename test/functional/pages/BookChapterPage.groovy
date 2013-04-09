@@ -7,7 +7,7 @@ class BookChapterPage extends Page{
     static url = "bookChapter/list"
 
     static at = {
-        title ==~ /BookChapter Listagem/
+        //title ==~ /BookChapter Listagem/
     }
 
     static content = {

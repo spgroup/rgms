@@ -29,3 +29,9 @@ Feature: conferencia
     Given I am at the publications menu
     When I select the conferencia option at the publications menu
     Then a list of conferencias stored by the system is displayed at the conferencia page
+
+ Scenario: new conferencia web has user data filled by default
+    Given I am at the publications and conferencias menu
+    When I select the conferencia option at the publications menu
+    And I select the new conferencia option at the conferencia page
+    Then I see my user listed as an author member of conferencia by default
