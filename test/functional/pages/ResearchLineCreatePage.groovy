@@ -14,7 +14,7 @@ class ResearchLineCreatePage extends Page {
 
 	def fillResearchLineDetails() {
 		def name = "Modelo Cascata Renovado"
-		def description = TestDataAndOperationsEquipe4.findResearchLineByName(name).description
+		def description = TestDataAndOperations.findResearchLineByName(name).description
 		$("form").name = name
 		$("form").description = description 
 		assert $("form").name == name  
@@ -23,7 +23,7 @@ class ResearchLineCreatePage extends Page {
 
 	def createsResearchLine(String name)
 	{
-		def research = TestDataAndOperationsEquipe4.findResearchLineByName(name)
+		def research = TestDataAndOperations.findResearchLineByName(name)
 		$("form").name = research.name
 		$("form").description = research.description
 		$("input.save").click()
