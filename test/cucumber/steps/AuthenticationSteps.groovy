@@ -39,7 +39,7 @@ Given (~'I access the Root Page') { ->
     to RootPage
 }
 When (~'I directly access the Member List Page') { ->
-    to MembersListPage
+    to MemberListPage
 }
 
 Given(~'I am at the Login Page') { ->
@@ -56,7 +56,7 @@ Given(~'I am at the Member Listagem page') { ->
     page.fillLoginDataAndSubmit("admin", "adminadmin")
     at PublicationsPage
     page.getLink("Member").click()
-    at MembersListPage
+    at MemberListPage
 }
 
 When (~'I click the "([^"]*)" link') { linkText ->
