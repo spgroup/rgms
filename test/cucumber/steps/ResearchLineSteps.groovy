@@ -10,14 +10,14 @@ import pages.ResearchLineEditPage
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has a research line named "([^"]*)"$') { String name ->
-	TestDataAndOperationsEquipe4.insertsResearchLine(name)
+	TestDataAndOperations.insertsResearchLine(name)
 	research_line = ResearchLine.findByName(name)
 	assert research_line != null
 }
 
 When(~'^I remove the research line "([^"]*)"$') { String name ->
 	research_line = ResearchLine.findByName(name)
-	TestDataAndOperationsEquipe4.deleteResearchLine(research_line.id)
+	TestDataAndOperations.deleteResearchLine(research_line.id)
 }
 
 Then(~'^the research line "([^"]*)" is properly removed by the system'){String name ->
@@ -26,13 +26,13 @@ Then(~'^the research line "([^"]*)" is properly removed by the system'){String n
 }
 
 Given(~'^the system has a research line named "([^"]*)" with a description "([^"]*)"$') { String name,description ->
-	TestDataAndOperationsEquipe4.insertsResearchLine(name)
+	TestDataAndOperations.insertsResearchLine(name)
 	research_line = ResearchLine.findByName(name)
 	assert research_line != null && research_line.description == description
 }
 
 When(~'^I update the research line "([^"]*)" with a description "([^"]*)"$') { String name,description ->
-	TestDataAndOperationsEquipe4.updateResearchLine(name,description)
+	TestDataAndOperations.updateResearchLine(name,description)
 }
 
 Then(~'^the research line "([^"]*)" has description "([^"]*)"$'){String name, description ->
@@ -46,7 +46,7 @@ Given(~'^the system has no research line named "([^"]*)"$') { String name ->
 }
 
 When(~'^I create the research line named "([^"]*)" with empty description$') { String name ->
-	TestDataAndOperationsEquipe4.createResearchLine(name)
+	TestDataAndOperations.createResearchLine(name)
 }
 
 Then(~'^the research line "([^"]*)" is not stored, because is invalid$'){String name ->
