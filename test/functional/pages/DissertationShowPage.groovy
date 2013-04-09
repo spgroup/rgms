@@ -10,7 +10,7 @@ class DissertationShowPage extends Page{
 	static url = "dissertacao/show"
 	
 	static at = {
-		title ==~ /Ver Dissertação/
+		title ==~ /Ver Dissertacao/
 	}
 	
 	static content = {
