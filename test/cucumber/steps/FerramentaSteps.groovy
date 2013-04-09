@@ -84,3 +84,8 @@ Then(~'^the ferramenta "([^"]*)" is properly stored by the system$') { String ti
 	assert ferramenta != null
 }
 
+Then(~'^I see my user listed as an author member of ferramenta by default$') { ->
+    // FIXME: implement this function.
+    assert false
+}
+
