@@ -97,3 +97,8 @@ And (~'^I fill only the title field at book chapter create page$') { ->
 Then(~'^I still on the book chapter create page$') { ->
     at BookChapterCreatePage
 }
+
+Then(~'^I see my user listed as a member of book chapter by default$') { ->
+    at BookChapterCreatePage
+    assert page.containsMemberLogin("admin")
+}

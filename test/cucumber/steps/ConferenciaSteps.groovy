@@ -67,3 +67,8 @@ Then(~'^a list of conferencias stored by the system is displayed at the conferen
     at ConferenciaPage
     page.listConferencia()
 }
+
+Then(~'^I see my user listed as an author member of conferencia by default$') { ->
+    at ConferenciaCreatePage
+    assert page.containsMemberLogin("admin")
+}

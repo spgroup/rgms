@@ -30,4 +30,10 @@ class ConferenciaCreatePage extends Page{
         $("form").title = "A theory of Software Product Line Refinement"
         $("form").create().click()
     }
+
+    def containsMemberLogin (login) {
+        // FIXME: page form should have members property
+        // $("form").members.findAll{ member -> member.username == login }.size() > 0
+        false
+    }
 }

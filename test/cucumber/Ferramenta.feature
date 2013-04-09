@@ -26,5 +26,8 @@ Scenario: new ferramenta without any information
     And I select the create option at the ferramenta page
     Then The ferramenta is not stored
 
-    
-    
+Scenario: new ferramenta filled with user data by default
+    Given I am at the publications menu
+    When I select the "Ferramenta" option at the program menu
+    And I select the new ferramenta option at the ferramenta page
+    Then I see my user listed as an author member of ferramenta by default
