@@ -5,24 +5,24 @@ import pages.*
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has only one record with status "([^"]*)"$') { String status ->
-	TestDataAndOperationsEquipe4.insertsRecord(status)
+	TestDataAndOperations.insertsRecord(status)
 	def records = Record.findAllByStatus_H(status)
 	assert records.size() == 1 && records.first() != null
 }
 
 Given(~'^the record with status "([^"]*)" is not associated to a member$') { String status ->
-	def associated = TestDataAndOperationsEquipe4.recordIsAssociated(status)
+	def associated = TestDataAndOperations.recordIsAssociated(status)
 	assert associated == false
 }
 
 Given(~'^the record with status "([^"]*)" is associated to a member$') { String status ->
-	def associated = TestDataAndOperationsEquipe4.recordIsAssociated(status)
+	def associated = TestDataAndOperations.recordIsAssociated(status)
 	assert associated == true
 }
 
 When(~'^I remove the record with status "([^"]*)"$') { String status ->
 	def id = Record.findByStatus_H(status).id
-	TestDataAndOperationsEquipe4.deleteRecord(id)
+	TestDataAndOperations.deleteRecord(id)
 }
 
 Then(~'^the record with status "([^"]*)" is properly removed by the system$') { String status ->
@@ -42,7 +42,7 @@ Given(~'^the system has only one record with status "([^"]*)" and this record ha
 }
 
 When(~'^I update the record with status "([^"]*)" with an end date "([^"]*)"$') { String status, String end_str ->
-	TestDataAndOperationsEquipe4.updateRecord(status, end_str)
+	TestDataAndOperations.updateRecord(status, end_str)
 
 }
 
@@ -52,7 +52,7 @@ Then(~'^the record with status "([^"]*)" has end date "([^"]*)"$') { String stat
 }
 
 When(~'^I create the record with status "([^"]*)"$') { String status ->
-	TestDataAndOperationsEquipe4.createRecord(status)
+	TestDataAndOperations.createRecord(status)
 }
 
 Then(~'^the record with status "([^"]*)" is properly stored and the system has two records with this status$') { String status ->
