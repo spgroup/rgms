@@ -11,7 +11,7 @@ import org.apache.shiro.crypto.hash.Sha256Hash
 import rgms.member.Member;
 import rgms.member.PasswordResetRequest;
 
-
+import java.security.SecureRandom
 
 class AuthController {
     def shiroSecurityManager
@@ -68,7 +68,6 @@ class AuthController {
                 return
             }
             print("ENTROU NO TRY")
-
             
             print(member)
             
@@ -255,7 +254,6 @@ class AuthController {
             return
         }
 
-        sendRegistrationMailToAdmin(name)
 //        sendMail {
 //            to memberInstance.email
 //            from grailsApplication.config.grails.mail.username

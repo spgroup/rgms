@@ -144,6 +144,7 @@
         <li><g:link controller="ResearchLine" action="list">Linha de pesquisa</g:link></li>
         <li><g:link controller="TechnicalReport" action="list">Technical Report</g:link></li>
         <li><g:link controller="Tese" action="list">Tese</g:link></li>
+        <li><g:link controller="Orientation" action="list">Orientation</g:link></li>
     </ol>
 </div>
 <!--  </div>-->
