@@ -1,3 +1,4 @@
+<%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.Ferramenta" %>
 
 
@@ -50,11 +51,14 @@
 	<g:textField name="description" required="" value="${ferramentaInstance?.description}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'members', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'members', 'error')} required">
 	<label for="members">
 		<g:message code="ferramenta.members.label" default="Members" />
-		
+		<span class="required-indicator">*</span>
 	</label>
 	
+	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
+          value="${ferramentaInstance?.members}" />
+
 </div>
 

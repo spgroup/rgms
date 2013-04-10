@@ -24,7 +24,7 @@
     <g:message code="researchLine.publications.label" default="Publications" />
 
   </label>
-  <g:select name="publications" from="${rgms.Publication.list()}" multiple="multiple" optionKey="id" size="5" value="${researchLineInstance?.publications*.id}" class="many-to-one"/>
+  <g:select name="publications" from="${rgms.publication.Publication.list()}" multiple="multiple" optionKey="id" size="5" value="${researchLineInstance?.publications*.id}" class="many-to-one"/>
 </div>
 
 

@@ -55,7 +55,7 @@ Then(~'^the research line "([^"]*)" is not stored, because is invalid$'){String 
 }
 
 
-When(~'^I select the new research line option at the research line page$') {->	
+When(~'^I select the new research line option at the research line page$') {->
 	at ResearchLinePage
 	page.selectNewResearchLine()
 }
@@ -98,7 +98,7 @@ Given(~'^I am at the visualize page of the research line "([^"]*)"$') { String n
 	at ResearchLinePage
 	page.visualizeResearchLine(name)
 	at ResearchLineVisualizePage
-	page.checkResearchLineDetails(name)	
+	page.checkResearchLineDetails(name)
 }
 
 When(~'^I click the edit button$') { ->

@@ -23,7 +23,7 @@ class ResearchGroup {
 //#end
 
     }
-	static getPublications(researchGroup){
+    static getPublications(researchGroup){
 		def memberships = Membership.getAllMembers(researchGroup)
 		return Publication.getPublicationsByMembershipList(memberships)
 	}

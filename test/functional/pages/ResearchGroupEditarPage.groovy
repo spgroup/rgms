@@ -5,8 +5,9 @@ import geb.Page
 class ResearchGroupEditarPage extends Page{
 	
 	static at = {
-		title ==~ /Editar Research Group/
-		
+        String teste = "/" + GetPageTitle.getMessage("default.button.edit.label") +
+                " " + GetPageTitle.getMessage("researchGroup.label") + "/"
+        title ==~  teste
 	}
 	
 	def selectAlterarResearchGroup() {

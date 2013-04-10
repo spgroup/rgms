@@ -6,8 +6,9 @@ class ResearchGroupCreatePage extends Page{
 	static url = "researchGroup/create"
 	
 		static at = {
-			title ==~ /Criar Research Group/
-			
+            String teste = "/" + GetPageTitle.getMessage("default.button.create.label") +
+                    " " + GetPageTitle.getMessage("researchGroup.label") + "/"
+            title ==~  teste
 		}
 	
 		static content = {

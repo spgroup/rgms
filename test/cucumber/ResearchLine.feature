@@ -36,4 +36,3 @@ Feature: research line
     And I am at the visualize page of the research line "Teoria da informacao - Complexidade no espaco"
     When I click the edit button
     Then I can change the research line "Teoria da informacao - Complexidade no espaco" details
-	

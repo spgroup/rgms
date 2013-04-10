@@ -1,3 +1,4 @@
+<%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.BookChapter" %>
 
 
@@ -49,11 +50,14 @@
 	<g:field name="chapter" type="number" min="1" value="${bookChapterInstance.chapter}" required=""/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: bookChapterInstance, field: 'members', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: bookChapterInstance, field: 'members', 'error')} required">
 	<label for="members">
 		<g:message code="bookChapter.members.label" default="Members" />
-		
+		<span class="required-indicator">*</span>
 	</label>
 	
+	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
+          value="${bookChapterInstance?.members}" />
+
 </div>
 

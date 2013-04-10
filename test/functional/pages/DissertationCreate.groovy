@@ -6,7 +6,7 @@ class DissertationCreate extends Page {
 	static url = "dissertacao/create"
 
 	static at = {
-		title ==~ /Criar Dissertação/
+		title ==~ /Criar Dissertacao/
 	}
 
 	static content = {
