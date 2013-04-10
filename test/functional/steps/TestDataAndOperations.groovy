@@ -72,6 +72,9 @@ static reports = [
 	[name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
 			status: "Graduate Student", university: "UFPE", enabled: true
 			]]
+	static news = [
+		[descrition: "Desc1", date: Calendar.getInstance().getTime()],
+		[descrition: "Desc2", date: Calendar.getInstance().getTime()]]
 
 static researchgroups = [
 	[name: "SWPRG",
@@ -102,10 +105,17 @@ static public def findArticleByTitle(String title) {
 }
 
 static public def findByUsername(String username) {
-	members.find { member ->
+		members.find { member ->
 		member.username == username
+		}
+	}
+static public def findByDescriptionAndDate(String description, Date date) {
+	news.find { news ->
+		news.description == description
+		news.date == date
 	}
 }
+
 
 static public def findRecordByStatus(def status) {
 	records.find{ record ->
@@ -260,6 +270,14 @@ static public void editResearchGroup(def researchGroup, String newName, String n
 	researchGroupController.response.reset()
 }
 
+static public void editResearchGroupTwitterAccount(def researchGroup, String newTwitterAccount) {
+	def researchGroupController = new ResearchGroupController()
+	researchGroupController.params << [twitterAccount: newTwitterAccount] << [id : researchGroup.getId()]
+	researchGroupController.edit()
+	researchGroupController.save()
+	researchGroupController.response.reset()
+}
+
 static public void createBookChapter (String title, filename){
 	def cont = new BookChapterController()
 	def date = new Date()
@@ -312,6 +330,14 @@ static public void createMember(String username) {
 	cont.create()
 	cont.save()
 	cont.response.reset()
+}
+
+static public void createNews(String descriptionParam, Date dateParam) {
+	/*def cont = new NewsController()	
+	cont.params << [description: descriptionParam, date: dateParam]	
+	cont.create()
+	cont.save()
+	cont.response.reset()*/
 }
 
 
@@ -389,6 +415,16 @@ static public void deleteMember(String username) {
 	cont.delete()
 	//cont.save()
 	cont.response.reset()
+}
+
+static public void deleteNews(String description, Date date) {
+//	def cont = new NewsController()
+//	def identificador = News.findByDescriptionAndDate(description,date).id
+//	cont.params << [id: identificador]
+//	cont.request.setContent(new byte[1000]) // Could also vary the request content.
+//	cont.delete()
+//	//cont.save()
+//	cont.response.reset()
 }
 
 

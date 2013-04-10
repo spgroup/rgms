@@ -84,7 +84,7 @@ When(~'^I create the member with username "([^"]*)"$') { String username ->
 
 Then(~'^the member "([^"]*)" is not registered$') { String username ->
 	members= Member.findAllByUsername(username)
-		assert members.size() == 1
+	assert members.size() == 1
 }
 
 
