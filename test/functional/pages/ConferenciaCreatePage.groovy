@@ -31,9 +31,7 @@ class ConferenciaCreatePage extends Page{
         $("form").create().click()
     }
 
-    def containsMemberLogin (login) {
-        // FIXME: page form should have members property
-        // $("form").members.findAll{ member -> member.username == login }.size() > 0
-        false
+    def selectedMembers() {
+        $("form").members
     }
 }
