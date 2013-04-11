@@ -1,5 +1,6 @@
 <%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.BookChapter" %>
+<%@ page import="org.apache.shiro.SecurityUtils" %>
 
 
 
@@ -55,9 +56,9 @@
 		<g:message code="bookChapter.members.label" default="Members" />
 		<span class="required-indicator">*</span>
 	</label>
-	
-	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-          value="${bookChapterInstance?.members}" />
+
+	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" multiple="true"
+          value="${bookChapterInstance?.members ? bookChapterInstance.members : Member.findByUsername(SecurityUtils.subject?.principal).id}" />
 
 </div>
 
