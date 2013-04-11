@@ -3,6 +3,7 @@ import pages.BookChapterPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.BookChapter
+import rgms.member.Member
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -100,5 +101,6 @@ Then(~'^I still on the book chapter create page$') { ->
 
 Then(~'^I see my user listed as a member of book chapter by default$') { ->
     at BookChapterCreatePage
-    assert page.containsMemberLogin("admin")
+    userData = Member.findByUsername('admin').id.toString()
+    assert page.selectedMembers().contains(userData)
 }
