@@ -92,25 +92,35 @@ class MemberController {
         [memberInstance: memberInstance]
     }
 
-    def update = {
-        def memberInstance = Member.get(params.id)
-
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        if (params.version) {
-            def version = params.version.toLong()
-            if (memberInstance.version > version) {
+    boolean check_version (String version, Member memberInstance) {
+        if (version) {
+            def version_long = version.toLong()
+            if (memberInstance.version > version_long) {
                 memberInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'member.label', default: 'Member')] as Object[],
                         "Another user has updated this Member while you were editing")
                 render(view: "edit", model: [memberInstance: memberInstance])
-                return
+                return false
             }
         }
+		return true
+    }
+
+    private Member getMember(String id) {
+	def memberInstance = Member.get(id)
+		if (!memberInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), id])
+			redirect(action: "list")
+		}
+		return memberInstance
+    }
+
+
+    def update = {
+        def memberInstance = getMember(params.id)
+		if (!memberInstance) return
+
+		if (!check_version(params.version, memberInstance)) return
 
         //feature record
         //#if($History)
