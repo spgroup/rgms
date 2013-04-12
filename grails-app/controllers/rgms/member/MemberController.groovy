@@ -92,14 +92,19 @@ class MemberController {
         [memberInstance: memberInstance]
     }
 
-    def update = {
-        def memberInstance = Member.get(params.id)
+    private Member getMember() {
+		def memberInstance = Member.get(params.id)
+		if (!memberInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
+			redirect(action: "list")
+		}
+    }
 
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
-            return
-        }
+
+    def update = {
+        def memberInstance = getMember()
+
+		if (!memberInstance) return
 
         if (params.version) {
             def version = params.version.toLong()
