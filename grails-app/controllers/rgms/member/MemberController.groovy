@@ -92,6 +92,20 @@ class MemberController {
         [memberInstance: memberInstance]
     }
 
+    boolean check_version (String version, Member memberInstance) {
+        if (version) {
+            def version_long = version.toLong()
+            if (memberInstance.version > version_long) {
+                memberInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'member.label', default: 'Member')] as Object[],
+                        "Another user has updated this Member while you were editing")
+                render(view: "edit", model: [memberInstance: memberInstance])
+                return false
+            }
+        }
+		return true
+    }
+
     def update = {
         def memberInstance = Member.get(params.id)
 
@@ -100,17 +114,8 @@ class MemberController {
             redirect(action: "list")
             return
         }
-
-        if (params.version) {
-            def version = params.version.toLong()
-            if (memberInstance.version > version) {
-                memberInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'member.label', default: 'Member')] as Object[],
-                        "Another user has updated this Member while you were editing")
-                render(view: "edit", model: [memberInstance: memberInstance])
-                return
-            }
-        }
+		
+		if (!check_version(params.version, memberInstance)) return
 
         //feature record
         //#if($History)
