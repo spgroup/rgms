@@ -106,15 +106,20 @@ class MemberController {
 		return true
     }
 
-    def update = {
-        def memberInstance = Member.get(params.id)
+    private Member getMember(String id) {
+	def memberInstance = Member.get(id)
+		if (!memberInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), id])
+			redirect(action: "list")
+		}
+		return memberInstance
+    }
 
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
-            return
-        }
-		
+
+    def update = {
+        def memberInstance = getMember(params.id)
+		if (!memberInstance) return
+
 		if (!check_version(params.version, memberInstance)) return
 
         //feature record
