@@ -25,6 +25,9 @@ import rgms.publication.ConferenciaController
 import rgms.publication.BookChapter
 import rgms.publication.BookChapterController
 
+import rgms.news.News;
+import rgms.news.NewsController 
+
 class TestDataAndOperations {
  
 	static articles = [
@@ -74,18 +77,23 @@ static reports = [
 	[name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
 			status: "Graduate Student", university: "UFPE", enabled: true
 			]]
-	static news = [
-		[descrition: "Desc1", date: Calendar.getInstance().getTime()],
-		[descrition: "Desc2", date: Calendar.getInstance().getTime()]]
+	
 
 static researchgroups = [
 	[name: "SWPRG",
 		description: "SW Productivity Research Group",
-		childOf: null]
+		childOf: null,
+		twitter: null]
 	,
 	[name: "taes",
 		description: "grupo de estudos",
-		childOf: null]]
+		childOf: null,
+		twitter: null]
+	,
+	[name: "RGTST",
+		description: "grupo de estudos",
+		childOf: null,
+		twitter: "olhardigital"]]
 
 static memberships = [
 	[member: (new Member(members[0])),
@@ -111,13 +119,6 @@ static public def findByUsername(String username) {
 		member.username == username
 		}
 	}
-static public def findByDescriptionAndDate(String description, Date date) {
-	news.find { news ->
-		news.description == description
-		news.date == date
-	}
-}
-
 
 static public def findRecordByStatus(def status) {
 	records.find{ record ->
@@ -284,9 +285,9 @@ static public void editResearchGroup(def researchGroup, String newName, String n
 	researchGroupController.response.reset()
 }
 
-static public void editResearchGroupTwitterAccount(def researchGroup, String newTwitterAccount) {
+static public void editResearchGroupTwitter(researchGroup, String newTwitter) {
 	def researchGroupController = new ResearchGroupController()
-	researchGroupController.params << [twitterAccount: newTwitterAccount] << [id : researchGroup.getId()]
+	researchGroupController.params << [twitter: newTwitter] << [id : researchGroup.getId()]
 	researchGroupController.edit()
 	researchGroupController.save()
 	researchGroupController.response.reset()
@@ -347,11 +348,11 @@ static public void createMember(String username) {
 }
 
 static public void createNews(String descriptionParam, Date dateParam) {
-	/*def cont = new NewsController()	
+	def cont = new NewsController()	
 	cont.params << [description: descriptionParam, date: dateParam]	
 	cont.create()
 	cont.save()
-	cont.response.reset()*/
+	cont.response.reset()
 }
 
 
@@ -383,7 +384,7 @@ static public TechnicalReport editTech(oldtitle, newtitle) {
 static public void createResearchGroup(String groupname) {
 	def cont = new ResearchGroupController()
 	cont.params << TestDataAndOperations.findResearchGroupByGroupName(groupname)
-	cont.request.setContent(new byte[1000]) // Could also vary the request content.
+	//cont.request.setContent(new byte[1000]) // Could also vary the request content.
 	cont.create()
 	cont.save()
 	cont.response.reset()
@@ -427,18 +428,17 @@ static public void deleteMember(String username) {
 	cont.params << [id: identificador]
 	cont.request.setContent(new byte[1000]) // Could also vary the request content.
 	cont.delete()
-	//cont.save()
 	cont.response.reset()
 }
 
 static public void deleteNews(String description, Date date) {
-//	def cont = new NewsController()
-//	def identificador = News.findByDescriptionAndDate(description,date).id
-//	cont.params << [id: identificador]
-//	cont.request.setContent(new byte[1000]) // Could also vary the request content.
-//	cont.delete()
-//	//cont.save()
-//	cont.response.reset()
+	def cont = new NewsController()
+	def identificador = News.findByDescriptionAndDate(description,date).id
+	cont.params << [id: identificador]
+	cont.request.setContent(new byte[1000]) // Could also vary the request content.
+	cont.delete()
+	//cont.save()
+	cont.response.reset()
 }
 
 
