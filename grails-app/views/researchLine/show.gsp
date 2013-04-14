@@ -51,6 +51,17 @@
 					
 				</li>
 				</g:if>
+				
+				<g:if test="${researchLineInstance?.members}">
+				<li class="fieldcontain">
+					<span id="members-label" class="property-label"><g:message code="researchLine.members.label" default="Members" /></span>
+					
+						<g:each in="${researchLineInstance.members}" var="p">
+						<span class="property-value" aria-labelledby="members-label"><g:link controller="member" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
 			
 			</ol>
 			<g:form>
