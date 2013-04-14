@@ -24,7 +24,7 @@ class ResearchGroupController {
 
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
-        if (!researchGroupInstance.save(flush: true)) {
+        if (!researchGroupInstance.save(flush: true)) {			
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return
         }
@@ -45,6 +45,7 @@ class ResearchGroupController {
 
     def edit() {
         def researchGroupInstance = ResearchGroup.get(params.id)
+		assert researchGroupInstance != null
         if (!researchGroupInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
             //redirect(action: "list")
