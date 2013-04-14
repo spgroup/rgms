@@ -2,6 +2,8 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import rgms.GoogleScholarService
+
 
 class PeriodicoController {
 
@@ -16,10 +18,15 @@ class PeriodicoController {
         [periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count()]
     }
 	
+	//#if($Report)
+	//
 	def report() {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		[periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count(), googleScholarCitations: 0, microsoftAcademicCitations:0]
+		def GoogleScholarService gss = new GoogleScholarService()
+		gss.findCitations(Periodico.list(params))
+		[periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count()]
 	}
+	//#end
 
     def create() {
         [periodicoInstance: new Periodico(params)]

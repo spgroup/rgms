@@ -2,6 +2,8 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import rgms.GoogleScholarService
+
 
 class TechnicalReportController {
 
@@ -16,10 +18,15 @@ class TechnicalReportController {
 		[technicalReportInstanceList: TechnicalReport.list(params), technicalReportInstanceTotal: TechnicalReport.count()]
 	}
 
+	//#if($Report)
+	//
 	def report() {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		[technicalReportInstanceList: TechnicalReport.list(params), technicalReportInstanceTotal: TechnicalReport.count(), googleScholarCitations: 0, microsoftAcademicCitations:0]
+		def GoogleScholarService gss = new GoogleScholarService()
+		gss.findCitations(TechnicalReport.list(params))
+		[technicalReportInstanceList: TechnicalReport.list(params), technicalReportInstanceTotal: TechnicalReport.count()]
 	}
+	//#end
 	
 	def create() {
 		[technicalReportInstance: new TechnicalReport(params)]

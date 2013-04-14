@@ -4,7 +4,7 @@
     <head>
         <meta name="layout" content="main">
         <g:set var="entityName" value="${message(code: 'periodico.label', default: 'Periodico')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title><g:message code="default.report.label" args="[entityName]" /></title>
     </head>
     <body>
         <a href="#list-periodico" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -51,11 +51,7 @@
                              <table>
                                  <tr>
                                      <td>Google Scholar</td>
-                                    <td>${googleScholarCitations}</td>
-                                 </tr>
-                                 <tr>
-                                     <td>Microsoft Academic</td>
-                                    <td>${microsoftAcademicCitations}</td>
+                                    <td>${fieldValue(bean: periodicoInstance, field: "citations")}</td>
                                  </tr>
                              </table>
                          </td>
