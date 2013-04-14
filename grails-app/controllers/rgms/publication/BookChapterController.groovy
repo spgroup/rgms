@@ -1,6 +1,8 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
+import rgms.member.Member
 
 
 class BookChapterController {
@@ -18,7 +20,14 @@ class BookChapterController {
     }
 
     def create() {
-        [bookChapterInstance: new BookChapter(params)]
+        def bookChapterInstance = new BookChapter(params)
+        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
+        if(publcContextOn){
+            if(SecurityUtils.subject?.principal != null){
+                PublicationControllerUtils.addAuthor(bookChapterInstance)
+            }
+        }
+        [bookChapterInstance: bookChapterInstance]
     }
 
     def save() {

@@ -1,11 +1,14 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
+import rgms.member.Member
 
 //import Tese;
 
 class TeseController {
 
+    def grailsApplication
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     public def index() {
@@ -18,7 +21,17 @@ class TeseController {
     }
 
     def create() {
-        [teseInstance: new Tese(params)]
+        Tese teseInstance = new Tese(params);
+        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
+        if(publcContextOn){
+            if(SecurityUtils.subject?.principal != null){
+                def user = PublicationControllerUtils.addAuthor(teseInstance)
+                if(!user.university.isEmpty()){
+                    teseInstance.school = user.university
+                }
+            }
+        }
+        [teseInstance: teseInstance]
     }
 
     def save() {

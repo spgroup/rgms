@@ -1,7 +1,8 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
-
+import rgms.member.Member
 import rgms.publication.Conferencia;
 
 class ConferenciaController {
@@ -19,7 +20,14 @@ class ConferenciaController {
     }
 
     def create() {
-        [conferenciaInstance: new Conferencia(params)]
+        def conferenciaInstance = new Conferencia(params)
+        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
+        if(publcContextOn){
+            if(SecurityUtils.subject?.principal != null){
+                PublicationControllerUtils.addAuthor(conferenciaInstance)
+            }
+        }
+        [conferenciaInstance: conferenciaInstance]
     }
 
     def save() {

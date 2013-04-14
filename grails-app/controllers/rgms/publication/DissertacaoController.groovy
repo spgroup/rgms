@@ -28,11 +28,7 @@ class DissertacaoController {
         def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
         if(publcContextOn){
             if(SecurityUtils.subject?.principal != null){
-                def user = Member.findByUsername(SecurityUtils.subject.principal)
-                if(!dissertacaoInstance.members){
-                    dissertacaoInstance.members = new LinkedHashSet<Member>()
-                }
-                dissertacaoInstance.members.add(user);
+                def user = PublicationControllerUtils.addAuthor(dissertacaoInstance)
                 if(!user.university.isEmpty()){
                     dissertacaoInstance.school = user.university
                 }
