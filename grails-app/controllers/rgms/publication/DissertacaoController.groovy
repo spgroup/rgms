@@ -143,7 +143,7 @@ class DissertacaoController {
                 newDissertation.publicationDate.set(year: tryingToParse.toInteger())
 
             newDissertation.school = XMLService.getAttributeValueFromNode(xmlNode, "NOME-INSTITUICAO")
-            newDissertation.file = 'emptyfile'
+            newDissertation.file = 'no File'
             newDissertation.address = '_'
             newDissertation.save(flush: false)
 

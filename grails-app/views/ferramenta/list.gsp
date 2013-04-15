@@ -15,6 +15,15 @@
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+        <div class="xml" role="xmlUpload">
+            <ul>
+                <g:form action="uploadXMLFerramenta" method="post" enctype="multipart/form-data">
+                    <label for="file">Import XML:</label>
+                    <input type="file" name="file" id="file"/>
+                    <input class="save" type="submit" value="Upload"/>
+                </g:form>
+            </ul>
+        </div>
 		<div id="list-ferramenta" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
