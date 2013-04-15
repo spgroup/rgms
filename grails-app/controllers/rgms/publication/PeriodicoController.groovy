@@ -103,7 +103,7 @@ class PeriodicoController {
 
 		[periodicoInstance: periodicoInstance]
 	}
-
+    //#if($XMLImp && $Journal)
     Closure returnWithMessage = {
         String msg ->
 
@@ -187,4 +187,5 @@ class PeriodicoController {
         if (tryingToParse.isInteger())
             newJournal.publicationDate.set(year: tryingToParse.toInteger() - 1900)
     }
+    //#end
 }

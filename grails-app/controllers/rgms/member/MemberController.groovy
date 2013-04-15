@@ -188,7 +188,7 @@ class MemberController {
         memberInstance.addToHistorics(hist)
         memberInstance.save()
     }
-
+    //#if($XMLImp && $Member)
     def returnWithMessage (String msg, Member newMember) {
         render(view: "create", model: [memberInstance: newMember])
         flash.message = message(code: msg)
@@ -238,4 +238,6 @@ class MemberController {
         newMember.country = serv.getAttributeValueFromNode(enderecoProfissional, "PAIS")
         newMember.email = serv.getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
     }
+
+    //#end
 }

@@ -1,3 +1,4 @@
+//#if($Orientation)
 package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
@@ -111,7 +112,7 @@ class OrientationController {
             redirect(action: "show", id: id)
         }
     }
-
+    //#if($XMLImp)
     Closure returnWithMessage = {
         String msg ->
 
@@ -152,7 +153,7 @@ class OrientationController {
             Node children = (Node) (node.children()[0])
             String natureza = (String) children.attribute("NATUREZA")
 
-            if (isCientificInitiation(natureza)) {
+            if (isUndergraduateResearch(natureza)) {
                 fillOrientationData(node, newOrientation, user, "Iniciação Científica")
             }
         }
@@ -165,7 +166,7 @@ class OrientationController {
             newOrientation.save(flush: false)
     }
 
-    private boolean isCientificInitiation(String natureza) {
+    private boolean isUndergraduateResearch(String natureza) {
         natureza.toLowerCase().contains("iniciacao_cientifica")
     }
 
@@ -192,4 +193,8 @@ class OrientationController {
         newOrientation.orientador = user
         newOrientation.orientando = XMLService.getAttributeValueFromNode(specificData, "NOME-DO-ORIENTADO")
     }
+
+    //#end
 }
+
+//#end

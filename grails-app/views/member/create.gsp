@@ -1,6 +1,3 @@
-
-
-
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,12 +9,13 @@
 <div class="nav">
     <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
     <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
+    <!-- #if($XMLImp && $Member)
     <g:form url="[action:'uploadMemberXML']" method="post" enctype="multipart/form-data">
         <label for="file">Import XML:</label>
         <input type="file" name="file" id="file"/>
         <input class="save" type="submit" value="Upload"/>
-
     </g:form>
+    #end -->
 </div>
 <div class="body">
     <h1><g:message code="default.create.label" args="[entityName]" /></h1>
