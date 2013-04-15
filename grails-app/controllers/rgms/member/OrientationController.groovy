@@ -137,10 +137,10 @@ class OrientationController {
 
         if (!isNullOrEmpty(completedOrientations))
             for (int i = 0; i < completedOrientations.size(); i++)
-                saveNewJournal(completedOrientations, i, user)
+                saveNewOrientation(completedOrientations, i, user)
     }
 
-    private void saveNewJournal(List<Object> completedOrientations, int i, Member user) {
+    private void saveNewOrientation(List<Object> completedOrientations, int i, Member user) {
         Node node = (Node) completedOrientations[i]
         Orientation newOrientation = new Orientation()
         String name = (String) node.name()
