@@ -1,4 +1,3 @@
-
 <%@ page import="rgms.publication.Periodico" %>
 <!doctype html>
 <html>
@@ -10,7 +9,7 @@
 	<body>
 		<a href="#list-periodico" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<g:render template="navigation"/>
-        <!-- #if($XMLImp && $Journal)
+        <!-- #if($XMLImp && $Journal) -->
 		<div class="xml" role="xmlUpload">
 			<ul>
                 <g:form action="uploadXMLPeriodico" method="post" enctype="multipart/form-data">
@@ -20,7 +19,7 @@
                 </g:form>
             </ul>
 		</div>
-		#end-->
+		<!-- #end -->
 		<div id="list-periodico" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
