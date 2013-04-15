@@ -1,7 +1,9 @@
 package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
+//#if($upXMLDissertacao)
 import rgms.XMLService
+//#end
 import rgms.publication.Dissertacao;
 
 
@@ -113,7 +115,7 @@ class DissertacaoController {
 	{
 		return message(code: code, args: [message(code: 'dissertacao.label', default: 'Dissertacao'), id])
 	}
-//#if(upXMLDissertacao)
+//#if($upXMLDissertacao)
     def uploadXMLDissertacao()
     {
         String flashMessage = 'The non existent dissertations were successfully imported'
@@ -158,5 +160,5 @@ class DissertacaoController {
             createDissertation(mestrado)
             createDissertation(doutorado)
     }
-//#endif
+//#end
 }
