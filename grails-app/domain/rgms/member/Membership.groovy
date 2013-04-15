@@ -1,3 +1,4 @@
+
 package rgms.member
 
 class Membership {
@@ -34,6 +35,7 @@ class Membership {
 				if(!membership){
 					def membershipInstance = new Membership(member: memberInstance, researchGroup: researchGroup, dateJoined: new Date(), dateLeft: null)
 					membership = membershipInstance?.save(flush: true)
+					new MembershipController().sendMailToEveryoneAboutTheNewMember(researchGroup, memberInstance)
 				}else{
 					println("Member already in")
 					
