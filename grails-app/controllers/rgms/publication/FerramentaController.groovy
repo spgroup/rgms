@@ -132,14 +132,14 @@ class FerramentaController {
 
     Closure saveTools = {
         Node xmlFile ->
-            Node producaoTecnicaChildren = (Node)xmlFile.children()[2]
+            Node producaoTecnica = (Node)xmlFile.children()[2]
             Node dadosBasicos
             Node detalhamentoDoSoftware
             Node informacoesAdicionais
 
             Ferramenta newTool = new Ferramenta()
 
-            for (Node currentNode : producaoTecnicaChildren.children())
+            for (Node currentNode : producaoTecnica.children())
             {
                 if (currentNode.name().equals("SOFTWARE"))
                 {

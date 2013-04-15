@@ -144,7 +144,7 @@ class DissertacaoController {
 
             newDissertation.school = XMLService.getAttributeValueFromNode(xmlNode, "NOME-INSTITUICAO")
             newDissertation.file = 'no File'
-            newDissertation.address = '_'
+            newDissertation.address = 'no Address'
             newDissertation.save(flush: false)
 
     }
