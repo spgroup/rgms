@@ -1,7 +1,9 @@
 package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
+//#if($upXMLFerramenta)
 import rgms.XMLService
+//#end
 import rgms.publication.Ferramenta;
 
 class FerramentaController {
@@ -112,7 +114,7 @@ class FerramentaController {
 	{
 		return message(code: code, args: [message(code: 'ferramenta.label', default: 'Ferramenta'), id])
 	}
-
+//#if($upXMLFerramenta)
     def uploadXMLFerramenta()
     {
         String flashMessage = 'The non existent dissertations were successfully imported'
@@ -170,4 +172,5 @@ class FerramentaController {
                 newTool = new Ferramenta()
             }
     }
+//#end
 }
