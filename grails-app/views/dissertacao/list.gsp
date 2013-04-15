@@ -19,7 +19,7 @@
                 </g:form>
             </ul>
         </div>
-<!--#end-->
+<!-- //#end -->
 		<div id="list-dissertacao" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
