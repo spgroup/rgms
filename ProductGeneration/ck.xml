@@ -112,12 +112,6 @@
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>listtese,grails-app/views/tese/list.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>showtese,grails-app/views/tese/show.gsp</args></transformation></configuration>
 
-<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>formorientation,grails-app/views/orientation/form.gsp</args></transformation></configuration>
-<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>createorientation,grails-app/views/orientation/create.gsp</args></transformation></configuration>
-<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>editorientation,grails-app/views/orientation/edit.gsp</args></transformation></configuration>
-<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>listorientation,grails-app/views/orientation/list.gsp</args></transformation></configuration>
-<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>showorientation,grails-app/views/orientation/show.gsp</args></transformation></configuration>
-
 
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>BuildConfig,grails-app/conf/BuildConfig.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>ApplicationResources,grails-app/conf/ApplicationResources.groovy</args></transformation></configuration>
@@ -150,9 +144,6 @@
 
 <configuration xmlns=""><expression>History</expression><transformation><name>selectAndMoveComponent</name><args>history,grails-app/domain/rgms/Record.groovy</args></transformation></configuration>
 
-<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/member/Orientation.groovy</args></transformation></configuration>
-<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>orientation,grails-app/domain/rgms/member/Orientation.groovy</args></transformation></configuration>
-
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>researchGroup,grails-app/domain/rgms/ResearchGroup.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/ResearchGroup.groovy</args></transformation></configuration>
 
@@ -176,9 +167,6 @@
 
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>MembershipController,grails-app/controllers/rgms/MembershipController.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/controllers/rgms/MembershipController.groovy</args></transformation></configuration>
-
-<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/controllers/rgms/member/OrientationController.groovy</args></transformation></configuration>
-<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>OrientationController,grails-app/controllers/rgms/member/OrientationController.groovy</args></transformation></configuration>
 
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>PeriodicoController,grails-app/controllers/rgms/PeriodicoController.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/controllers/rgms/PeriodicoController.groovy</args></transformation></configuration>

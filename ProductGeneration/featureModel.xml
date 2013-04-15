@@ -14,13 +14,5 @@
 		</featureGroup>
 		
 	</feature>
-
-    <feature min="0" max="1" name="Member_Feature" type="NONE" id="Member"></feature>
-
-    <feature min="0" max="1" name="Periodico_Feature" type="NONE" id="Journal"></feature>
-
-    <feature min="0" max="1" name="Orientation_Feature" type="NONE" id="Orientation"></feature>
-
-    <feature min="0" max="1" name="XMLImportation_Feature" type="NONE" id="XMLImp"></feature>
 	
 </feature>

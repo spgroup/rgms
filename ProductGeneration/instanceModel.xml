@@ -12,12 +12,4 @@
 		<feature name="PDF" type="NONE" id="PDF"></feature>
 	</feature>
 
-    <feature name="Member" type="NONE" id="Member"></feature>
-
-    <feature name="Periodico" type="NONE" id="Journal"></feature>
-
-    <feature name="Orientation" type="NONE" id="Orientation"></feature>
-
-    <feature name="XMLImportation" type="NONE" id="XMLImp"></feature>
-
 </feature>

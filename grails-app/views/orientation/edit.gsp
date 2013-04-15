@@ -1,4 +1,4 @@
-<!-- #if($Orientation)
+<!-- #if($Orientation) -->
 <%@ page import="rgms.member.Orientation" %>
 <!doctype html>
 <html>
@@ -42,4 +42,4 @@
 		</div>
 	</body>
 </html>
-#end -->
+<!--#end -->

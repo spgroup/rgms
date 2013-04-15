@@ -38,11 +38,6 @@ editMembersResearchGroup => grailsapp/views/researchGroup/editMembers.gsp;
 createResearchGroup => grailsapp/views/researchGroup/create.gsp;
 formResearchGroup => grailsapp/views/researchGroup/form.gsp;
 
-showorientation => grailsapp/views/orientation/show.gsp;
-editorientation => grailsapp/views/orientation/edit.gsp;
-createorientation => grailsapp/views/orientation/create.gsp;
-listorientation => grailsapp/views/orientation/list.gsp;
-formorientation => grailsapp/views/orientation/form.gsp;
 
 showDissertation => grailsapp/views/dissertacao/show.gsp;
 listDissertation => grailsapp/views/dissertacao/list.gsp;
@@ -110,7 +105,6 @@ conference => grailsapp/domain/rgms/Conferencia.groovy;
 dissertation => grailsapp/domain/rgms/Dissertacao.groovy;
 tool => grailsapp/domain/rgms/Ferramenta.groovy;
 memberDomain => grailsapp/domain/rgms/Member.groovy;
-orientation => grailsapp/domain/rgms/member/Orientation.groovy;
 memberShip => grailsapp/domain/rgms/Membership.groovy;
 passwordResetRequest => grailsapp/domain/rgms/PasswordResetRequest.groovy;
 periodical => grailsapp/domain/rgms/Periodico.groovy;
@@ -148,7 +142,6 @@ DissertacaoController => grailsapp/controllers/rgms/DissertacaoController.groovy
 FerramentaController => grailsapp/controllers/rgms/FerramentaController.groovy;
 MemberController => grailsapp/controllers/rgms/MemberController.groovy;
 MembershipController => grailsapp/controllers/rgms/MembershipController.groovy;
-OrientationController => grailsapp/controllers/rgms/member/OrientationController.groovy;
 PeriodicoController => grailsapp/controllers/rgms/PeriodicoController.groovy;
 PublicacaoController => grailsapp/controllers/rgms/PublicacaoController.groovy;
 PublicationController => grailsapp/controllers/rgms/PublicationController.groovy;
