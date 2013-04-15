@@ -1,4 +1,3 @@
-
 <%@ page import="rgms.publication.Dissertacao" %>
 <!doctype html>
 <html>
@@ -10,6 +9,7 @@
 	<body>
 		<a href="#list-dissertacao" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <g:render template="navigation"/>
+<!--//#if($upXMLDissertacao)-->
         <div class="xml" role="xmlUpload">
             <ul>
                 <g:form action="uploadXMLDissertacao" method="post" enctype="multipart/form-data">
@@ -19,6 +19,7 @@
                 </g:form>
             </ul>
         </div>
+<!--#end-->
 		<div id="list-dissertacao" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
