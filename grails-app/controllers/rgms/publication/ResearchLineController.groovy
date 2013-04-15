@@ -2,7 +2,9 @@ package rgms.publication
 
 
 import org.springframework.dao.DataIntegrityViolationException
+//#if($ResearchLineNotification)
 import rgms.member.Member
+//#end
 
 class ResearchLineController {
 
@@ -33,7 +35,7 @@ class ResearchLineController {
 	def edit() {
 		tryFindInstance(params)
 	}
-	
+	//#if($ResearchLineNotification)
 	def getOldMembers(def id)
 	{
 		def oldMembers = ResearchLine.get(id)?.members
@@ -44,9 +46,12 @@ class ResearchLineController {
 		}
 		members
 	}
-
+	//#end
 	def update() {
-		def old_members = getOldMembers(params.id)
+		def old_members = []
+		//#if($ResearchLineNotification)
+		old_members = getOldMembers(params.id)
+		//#end
 		def researchLineInstance = getInstance(params)		
 		if(!researchLineInstance)
 			return
@@ -60,7 +65,7 @@ class ResearchLineController {
 		}
 		saveResearchLine("edit", researchLineInstance, "updated",old_members)
 	}
-	
+	//#if($ResearchLineNotification)
 	def sendEmail(def email, def title, def content)
 	{
 		sendMail {
@@ -68,10 +73,11 @@ class ResearchLineController {
 			from grailsApplication.config.grails.mail.username
 			subject title
 			body content
-			//#end
+			
 		}
 	}
-	
+	//#end
+	//#if($ResearchLineNotification)
 	def sendNotifications(def researchLineInstance,def oldMembers)
 	{
 		def receivedMembers = researchLineInstance?.members
@@ -96,8 +102,14 @@ class ResearchLineController {
 			sendEmail(m.email,title,content)
 			contentJoined += "* "+m.name + "\n "
 		}
-		title = "Report of change of members in Research Line "+researchLineName 
-		
+		 
+		sendReports(newMembers,membersWhoLeft,similarMembers,researchLineName,contentJoined,contentLeft)
+	}
+	//#end
+	//#if($ResearchLineNotification)
+	def sendReports(def newMembers,def membersWhoLeft,def similarMembers,def researchLineName,def contentJoined,def contentLeft)
+	{
+		def title = "Report of change of members in Research Line "+researchLineName
 		def membersJoined = newMembers.size() > 0
 		def membersLeft =  membersWhoLeft.size() > 0
 
@@ -120,7 +132,7 @@ class ResearchLineController {
 			}
 		}
 	}
-
+	//#end
 	def delete() {
 		def researchLineInstance = ResearchLine.get(params.id)
 		try {
@@ -172,7 +184,9 @@ class ResearchLineController {
 			render(view: view, model: [researchLineInstance: researchLineInstance])
 		}
 		else {
+			//#if($ResearchLineNotification)
 			sendNotifications(researchLineInstance,oldMembers)
+			//#end
 			flash.message = message(code: 'default.' + action + '.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), researchLineInstance.id])
 			redirect(action: "show", id: researchLineInstance.id)
 		}
