@@ -3,7 +3,8 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>RGMS</title>
+    <g:set var="title" value="${message(code: 'mainMenu.title', default: 'RGMS')}" />
+    <title>${title}</title>
     <!--<link rel="shortcut icon" href="/images/icon.ico" type="image/x-icon" />-->
     <style type="text/css" media="screen">
     #status {

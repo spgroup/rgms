@@ -23,12 +23,14 @@ class PeriodicoController {
 
     def create() {
         def periodicoInstance = new Periodico(params)
+        //#if($publicationContext)
         def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
         if(publcContextOn){
             if(SecurityUtils.subject?.principal != null){
-                PublicationControllerUtils.addAuthor(periodicoInstance)
+                PublicationController.addAuthor(periodicoInstance)
             }
         }
+        //#end
         [periodicoInstance: periodicoInstance]
     }
 

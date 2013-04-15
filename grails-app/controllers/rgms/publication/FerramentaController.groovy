@@ -20,12 +20,14 @@ class FerramentaController {
 
     def create() {
         def ferramentaInstance = new Ferramenta(params)
+        //#if($publicationContext)
         def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
         if(publcContextOn){
             if(SecurityUtils.subject?.principal != null){
-                PublicationControllerUtils.addAuthor(ferramentaInstance)
+                PublicationController.addAuthor(ferramentaInstance)
             }
         }
+        //#end
         [ferramentaInstance: ferramentaInstance]
     }
 

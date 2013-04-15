@@ -15,7 +15,7 @@ class DissertacaoController {
     def index() {
         redirect(action: "list", params: params)
     }
-
+                            def messageSource
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [dissertacaoInstanceList: Dissertacao.list(params), dissertacaoInstanceTotal: Dissertacao.count()]
@@ -23,12 +23,11 @@ class DissertacaoController {
 
     def create() {
         Dissertacao dissertacaoInstance = new Dissertacao(params)
-        //#if($aiueo)
-        //def teste = ConfigurationHolder.getConfig().getProperty("publicationContext");
+        //#if($publicationContext)
         def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
         if(publcContextOn){
             if(SecurityUtils.subject?.principal != null){
-                def user = PublicationControllerUtils.addAuthor(dissertacaoInstance)
+                def user = PublicationController.addAuthor(dissertacaoInstance)
                 if(!user.university.isEmpty()){
                     dissertacaoInstance.school = user.university
                 }

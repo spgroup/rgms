@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="layout" content="main"/>
-    <g:set var="title" value="${message(code: 'login', default: 'Login')}" />
+    <g:set var="title" value="${message(code: 'user.login.title', default: 'Login')}" />
     <title>${title}</title>
     <style type="text/css" media="screen">
     #status {
