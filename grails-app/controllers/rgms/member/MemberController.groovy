@@ -189,8 +189,7 @@ class MemberController {
         memberInstance.save()
     }
 
-    def returnWithMessage (String msg, Member newMember)
-    {
+    def returnWithMessage (String msg, Member newMember) {
         render(view: "create", model: [memberInstance: newMember])
         flash.message = message(code: msg)
     }
@@ -201,8 +200,7 @@ class MemberController {
         boolean errorFound = false
         Member newMember = new Member(params)
 
-        try
-        {
+        try {
             XMLService serv = new XMLService()
             Node xmlFile = serv.parseReceivedFile(request)
             fillMemberInfo(xmlFile, newMember, serv)
@@ -211,13 +209,12 @@ class MemberController {
             flashMessage = 'default.xml.parserror.message'
             errorFound = true
         }
-        catch (NullPointerException) //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
-        {
+        catch (NullPointerException) { //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
+
             flashMessage = 'default.xml.structure.message'
             errorFound = true
         }
-        catch (Exception)
-        {
+        catch (Exception) {
             flashMessage = 'default.xml.unknownerror.message'
             errorFound = true
         }
@@ -226,8 +223,7 @@ class MemberController {
         if (errorFound) return
     }
 
-    private static void fillMemberInfo(Node xmlFile, Member newMember, XMLService serv)
-    {
+    private static void fillMemberInfo(Node xmlFile, Member newMember, XMLService serv) {
         Node dadosGerais = (Node) xmlFile.children()[0]
         List<Object> dadosGeraisChildren = dadosGerais.children()
         Node endereco = (Node) dadosGeraisChildren[2]

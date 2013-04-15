@@ -119,8 +119,7 @@ class OrientationController {
             flash.message = message(code: msg)
     }
 
-    def uploadOrientationXML()
-    {
+    def uploadOrientationXML() {
         String flashMessage = 'The non existent orientations were successfully imported'
 
         XMLService serv = new XMLService()
@@ -132,43 +131,56 @@ class OrientationController {
     Closure saveOrientations = {
         Node xmlFile ->
 
-        String loggedUser = session.getAttribute("username").toString()
-        Member user = Member.findByUsername(loggedUser)
-        def orientations = (Node)xmlFile.children()[3]
-        def concludedOrientations = (Node)orientations.children()[0]
-        List<Object> values = concludedOrientations.children()
-        if(values != null && values.size() > 0)
-        {
-            for(int i = 0; i < values.size(); i++)
-            {
-                Node node = (Node)values[i]
-                Orientation newOrientation = new Orientation()
-                String name = (String)node.name()
-                if (name.toLowerCase().contains("mestrado"))
-                {
-                    fillOrientationData(node, newOrientation, user, "Mestrado")
-                }
-                else if (name.toLowerCase().contains("doutorado"))
-                {
-                    fillOrientationData(node, newOrientation, user, "Doutorado")
-                }
-                else
-                {
-                    Node children = (Node)(node.children()[0])
-                    String natureza = (String)children.attribute("NATUREZA")
-                    if (natureza.toLowerCase().contains("iniciacao_cientifica"))
-                    {
-                        fillOrientationData(node, newOrientation, user, "Iniciação Científica")
-                    }
-                }
-                if (Orientation.findAll().find { it -> newOrientation.Equals(it)} == null)
-                    newOrientation.save(flush: false)
-            }
-        }
+        List<Object> completedOrientations = findCompletedOrientations(xmlFile)
+        Member user = Member.findByUsername(session.getAttribute("username").toString())
+
+        if (!isNullOrEmpty(completedOrientations))
+            for (int i = 0; i < completedOrientations.size(); i++)
+                saveNewJournal(completedOrientations, i, user)
     }
 
-    static void fillOrientationData(Node node, Orientation newOrientation, Member user, String tipoOrientacao)
-    {
+    private void saveNewJournal(List<Object> completedOrientations, int i, Member user) {
+        Node node = (Node) completedOrientations[i]
+        Orientation newOrientation = new Orientation()
+        String name = (String) node.name()
+
+        if (name.toLowerCase().contains("mestrado")) {
+            fillOrientationData(node, newOrientation, user, "Mestrado")
+        } else if (name.toLowerCase().contains("doutorado")) {
+            fillOrientationData(node, newOrientation, user, "Doutorado")
+        } else {
+            Node children = (Node) (node.children()[0])
+            String natureza = (String) children.attribute("NATUREZA")
+
+            if (isCientificInitiation(natureza)) {
+                fillOrientationData(node, newOrientation, user, "Iniciação Científica")
+            }
+        }
+        saveOrientation(newOrientation)
+    }
+
+    //Only saves if the orientation does not already exist
+    private void saveOrientation(Orientation newOrientation) {
+        if (Orientation.findAll().find { it -> newOrientation.Equals(it) } == null)
+            newOrientation.save(flush: false)
+    }
+
+    private boolean isCientificInitiation(String natureza) {
+        natureza.toLowerCase().contains("iniciacao_cientifica")
+    }
+
+    private boolean isNullOrEmpty(List<Object> completedOrientations) {
+        completedOrientations == null || completedOrientations.size() > 0
+    }
+
+    private List<Object> findCompletedOrientations(Node xmlFile) {
+        def orientations = (Node) xmlFile.children()[3]
+        def completedOrientations = (Node) orientations.children()[0]
+        List<Object> values = completedOrientations.children()
+        values
+    }
+
+    static void fillOrientationData(Node node, Orientation newOrientation, Member user, String tipoOrientacao) {
         Node basicData = (Node)(node.children()[0])
         Node specificData = (Node)(node.children()[1])
         newOrientation.tipo = tipoOrientacao
