@@ -101,6 +101,7 @@ class MembershipController {
         }
     }
 	
+	//#if($NewMemberInGroupNotification)
 	def sendMailToEveryoneAboutTheNewMember (ResearchGroup researchGroup, Member member) {
 		def researchGroupCurrentMemberships = Membership.findAllByResearchGroupAndDateLeft(researchGroup, null)
 
@@ -114,4 +115,5 @@ class MembershipController {
 			}
 		}
 	}
+	//#end
 }
