@@ -30,5 +30,9 @@ class FerramentaCreate extends Page {
     def createNewFerramentaWithoutInformation(){
         $("form").create().click()
     }
+
+    def selectedMembers() {
+        $("form").members
+    }
 	
 }

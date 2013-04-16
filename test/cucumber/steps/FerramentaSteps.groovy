@@ -7,6 +7,7 @@ import pages.FerramentaShowPage
 import pages.FerramentaEditPage
 import rgms.publication.Dissertacao
 import rgms.publication.Ferramenta
+import rgms.member.Member
 
 import static cucumber.api.groovy.EN.*
 
@@ -85,7 +86,8 @@ Then(~'^the ferramenta "([^"]*)" is properly stored by the system$') { String ti
 }
 
 Then(~'^I see my user listed as an author member of ferramenta by default$') { ->
-    // FIXME: implement this function.
-    assert false
+    at FerramentaCreate
+    userData = Member.findByUsername('admin').id.toString()
+    assert page.selectedMembers().contains(userData)
 }
 
