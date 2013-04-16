@@ -25,6 +25,11 @@ import rgms.publication.ConferenciaController
 import rgms.publication.BookChapter
 import rgms.publication.BookChapterController
 
+import rgms.visit.Visitor
+import rgms.visit.Visit
+import rgms.visit.VisitorController
+import rgms.visit.VisitController
+
 class TestDataAndOperations {
  
 	static articles = [
@@ -93,6 +98,15 @@ static memberships = [
 		dateJoined: (new Date(2012, 03, 01)),
 		dateLeft: (new Date(2012, 06, 01))]]
 
+static visitors = [
+	[name:"Pessoa"]
+   ]
+
+static public def findVisitor(String name){
+	visitors.find { visitor ->
+		visitor.name == name
+	}
+}
 
 static public def findArticleByTitle(String title) {
 	articles.find { article ->
@@ -506,6 +520,36 @@ static public void removeConferencia (String title){
 	def cont = new ConferenciaController()
 	def date = new Date()
 	Conferencia.findByTitle(title).delete(flush:true)
+}
+
+static public void agendaVisita(String visitante,String dataInicio, String dataFim){
+	def cont = new VisitController()
+	
+	def visite = Visitor.findByName(visitante)
+	
+	cont.params.visit = visite
+	cont.params.dataInicio = Date.parse("dd/mm/yyyy",dataInicio)
+	cont.params.dataFim = Date.parse("dd/mm/yyyy",dataFim)
+	cont.create()
+	cont.save()
+}
+
+static public def buscaVisita(visitante,dataInicio,dataFim){
+	def cont = new VisitController()
+	def visita = Visitor.findByName(visitante)
+	cont.params.visit = visita
+	cont.params.dataInicio = Date.parse("dd/mm/yyyy",dataInicio)
+	cont.params.dataFim = Date.parse("dd/mm/yyyy",dataFim)
+	def result = Visit.list(cont.params)
+	return result
+}
+
+static public void createVisitor(String nome){
+	def cont = new VisitorController()
+	cont.params << TestDataAndOperations.findVisitor(nome)
+	cont.create();
+	cont.save()
+	cont.response.reset()
 }
 
 }
