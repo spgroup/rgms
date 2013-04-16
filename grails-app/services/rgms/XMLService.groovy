@@ -8,11 +8,13 @@ class XMLService {
     /*
         saveEntity - closure que salva a classe de domínio que está usando a importação
      */
-    static boolean Import(Closure saveEntity, Closure returnWithMessage, Node xmlFile, String flashMessage)
+    static boolean Import(Closure saveEntity, Closure returnWithMessage, String flashMessage,
+        javax.servlet.http.HttpServletRequest request)
     {
         boolean errorFound = false
 
         try {
+            Node xmlFile = parseReceivedFile(request)
             saveEntity(xmlFile)
         }
         //If file is not XML or if no file was uploaded
@@ -35,7 +37,7 @@ class XMLService {
         return !errorFound
     }
 
-    static Node parseReceivedFile(MultipartHttpServletRequest request) {
+    private static Node parseReceivedFile(MultipartHttpServletRequest request) {
         MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
         CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
         File file = new File("xmlimported.xml");

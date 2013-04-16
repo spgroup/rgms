@@ -123,9 +123,7 @@ class OrientationController {
     def uploadOrientationXML() {
         String flashMessage = 'The non existent orientations were successfully imported'
 
-        XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request)
-        if (!serv.Import(saveOrientations, returnWithMessage, xmlFile, flashMessage))
+        if (!XMLService.Import(saveOrientations, returnWithMessage, flashMessage, request))
             return
     }
 

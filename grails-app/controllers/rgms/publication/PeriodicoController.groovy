@@ -114,9 +114,7 @@ class PeriodicoController {
     def uploadXMLPeriodico() {
         String flashMessage = 'The non existent articles were successfully imported'
 
-        XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request)
-        if (!serv.Import(saveJournals, returnWithMessage, xmlFile, flashMessage))
+        if (XMLService.Import(saveJournals, returnWithMessage, flashMessage, request))
             return
     }
 
