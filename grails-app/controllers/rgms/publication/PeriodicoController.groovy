@@ -2,7 +2,11 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.publication.Periodico;
+import rgms.publication.Periodico
+
+import org.apache.shiro.SecurityUtils
+
+import rgms.member.Member;
 
 class PeriodicoController {
 
@@ -29,7 +33,10 @@ class PeriodicoController {
 			render(view: "create", model: [periodicoInstance: periodicoInstance])
 			return
 		}
-		
+        //#if($facebook)
+        def user = Member.findByUsername(SecurityUtils.subject?.principal)
+		pb.sendPostFacebook(user, periodicoInstance.toString())
+        //#end
 		flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
 		redirect(action: "show", id: periodicoInstance.id)
 	}

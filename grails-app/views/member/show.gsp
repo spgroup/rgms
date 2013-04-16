@@ -158,6 +158,21 @@
         </td>
 
         </tr>
+        <!-- #if($facebook) -->
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.facebook_id.label" default="Facebook ID" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "facebook_id")}</td>
+
+        </tr>
+
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.access_token.label" default="Access Token" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "access_token")}</td>
+
+        </tr>
+        <!-- #end -->
 
         </tbody>
       </table>

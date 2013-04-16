@@ -2,6 +2,10 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import org.apache.shiro.SecurityUtils
+
+import rgms.member.Member;
+
 
 class BookChapterController {
 
@@ -27,7 +31,10 @@ class BookChapterController {
             render(view: "create", model: [bookChapterInstance: bookChapterInstance])
             return
         }
-
+        //#if($facebook)
+        def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        pb.sendPostFacebook(user, bookChapterInstance.toString())
+        //#end
         flash.message = message(code: 'default.created.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
         redirect(action: "show", id: bookChapterInstance.id)
     }

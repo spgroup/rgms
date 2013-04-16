@@ -3,6 +3,19 @@ package rgms.publication
 import org.springframework.dao.DataIntegrityViolationException
 
 import rgms.publication.Publication;
+import rgms.member.Member;
+
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.NameValuePair;
+import org.apache.http.protocol.HTTP;
+
+import java.util.List;
 
 
 class PublicationController {
@@ -43,7 +56,34 @@ class PublicationController {
 		}
 		outputStream.close()
 		inputStream.close()
-		
+
 		return true
 	}
+
+	/**
+	*   Para enviar o post, é preciso esta autenticado com o facebook.
+	*      - Para um usuario novo, no momento do registro basta logar com o FB
+	*      - Para um usuario ja existente, edit esse usuario e adicione o a conta do FB ao usuario.
+	*/
+	//#if($facebook)
+	def sendPostFacebook(Member user, String title){
+        def url = "https://graph.facebook.com/me/feed?access_token=" + user?.access_token 
+        
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        
+        HttpPost post = new HttpPost(url);
+
+        params.add(new BasicNameValuePair("access_token", user?.access_token));
+        params.add(new BasicNameValuePair("message", "Confira a minha nova publicação no sistema RGMS! O title da publicação é " + title));
+
+        UrlEncodedFormEntity postEntity = new UrlEncodedFormEntity(params, HTTP.UTF_8);
+        post.setEntity(postEntity);
+        
+        HttpClient client = new DefaultHttpClient();
+        HttpResponse response = client.execute(post);
+        StatusLine statusLine = response.getStatusLine();
+        
+//      return statusLine.getStatusCode();
+    }
+    //#end
 }

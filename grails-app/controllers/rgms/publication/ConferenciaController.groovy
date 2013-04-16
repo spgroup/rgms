@@ -2,7 +2,11 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.publication.Conferencia;
+import rgms.publication.Conferencia
+
+import org.apache.shiro.SecurityUtils
+
+import rgms.member.Member;
 
 class ConferenciaController {
 
@@ -28,8 +32,10 @@ class ConferenciaController {
             render(view: "create", model: [conferenciaInstance: conferenciaInstance])
             return
         }
-		
-
+		//#if($facebook)
+        def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        pb.sendPostFacebook(user, conferenciaInstance.toString())
+        //#end
 		flash.message = message(code: 'default.created.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
         redirect(action: "show", id: conferenciaInstance.id)
     }

@@ -18,6 +18,8 @@ class Member {
     String country
     Boolean active
     Boolean enabled
+    String access_token
+    long facebook_id
     
    //static hasMany = [roles: Role, permissions: String, #if($History) historics: Record,#end memberships : Membership, publications: Publication]
    static hasMany = [roles: Role, permissions: String, historics: Record, memberships : Membership, publications: Publication]
@@ -46,6 +48,8 @@ class Member {
     	country(nullable: true)
     	active(nullable: true)
         enabled(blank: false)
+        access_token(nullable: true)
+        facebook_id(nullable: true)
     }
 
     static mapping = {

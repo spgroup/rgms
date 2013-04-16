@@ -242,7 +242,7 @@ class AuthController {
         
         def pwdHash = new Sha256Hash(params.password1).toHex()
         
-        memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university)
+        memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university, facebook_id:params.facebook_id, access_token:params.access_token)
         def username = memberInstance?.username
         def password = params.passwordHash
         def name = memberInstance?.name
@@ -280,7 +280,6 @@ class AuthController {
 //        redirect(action: "index", id: memberInstance.id)
 
         flash.message = "User successfully created";
-        render(view: "register")
-
+        render(view: "login")
     }
 }

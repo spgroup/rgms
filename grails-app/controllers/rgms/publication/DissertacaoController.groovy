@@ -2,7 +2,11 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.publication.Dissertacao;
+import rgms.publication.Dissertacao
+
+import org.apache.shiro.SecurityUtils
+
+import rgms.member.Member;
 
 
 class DissertacaoController {
@@ -31,7 +35,10 @@ class DissertacaoController {
             render(view: "create", model: [dissertacaoInstance: dissertacaoInstance])
             return
         }
-		
+        //#if($facebook)
+        def user = Member.findByUsername(SecurityUtils.subject?.principal)
+		pb.sendPostFacebook(user, dissertacaoInstance.toString())
+        //#end
 		flash.message = message(code: 'default.created.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), dissertacaoInstance.id])
         redirect(action: "show", id: dissertacaoInstance.id)
     }

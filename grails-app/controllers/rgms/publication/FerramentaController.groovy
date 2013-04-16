@@ -2,7 +2,11 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.publication.Ferramenta;
+import rgms.publication.Ferramenta
+
+import org.apache.shiro.SecurityUtils
+
+import rgms.member.Member;
 
 class FerramentaController {
 
@@ -30,7 +34,10 @@ class FerramentaController {
             render(view: "create", model: [ferramentaInstance: ferramentaInstance])
             return
         }
-
+        //#if($facebook)
+        def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        pb.sendPostFacebook(user, ferramentaInstance.toString())
+        //#end
 		flash.message = message(code: 'default.created.message', args: [message(code: 'ferramenta.label', default: 'Ferramenta'), ferramentaInstance.id])
         redirect(action: "show", id: ferramentaInstance.id)
     }

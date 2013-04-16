@@ -2,6 +2,9 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import org.apache.shiro.SecurityUtils
+
+import rgms.member.Member;
 //import Tese;
 
 class TeseController {
@@ -28,6 +31,10 @@ class TeseController {
             render(view: "create", model: [teseInstance: teseInstance])
             return
         }
+        //#if($facebook)
+        def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        pb.sendPostFacebook(user, teseInstance.toString())
+        //#end
 		flash.message = message(code: 'default.created.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
         redirect(action: "show", id: teseInstance.id)
     }
@@ -81,7 +88,7 @@ class TeseController {
         }
     }
 
-    def ShowOrEdit(){
+    def ShowOrEdit(){   
         def teseInstance = Tese.get(params.id)
         if (!teseInstance) {
             getMessage()

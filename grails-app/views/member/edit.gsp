@@ -156,8 +156,83 @@
                                     <g:checkBox name="enabled" value="${memberInstance?.enabled}" />
                                 </td>
                             </tr>
-                            
-                            
+                            <!--#if($facebook) -->
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="facebook">Atualizar Access Token: </label>
+                                </td>
+                                <td valign="top" >
+                                    <div id="login_" style="text-align: left;">
+                                        <div style="text-align: left;">
+                                            <input id="login" style="text-align: left;" value="Login" type="button">
+                                        </div>
+                                        <div id="user-info" style="display: none;"></div>
+
+                                        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+                                        <div id="fb-root"></div>
+
+                                        <script src="http://connect.facebook.net/en_US/all.js"></script>
+                                        
+                                        <script>
+                                              // initialize the library with the API key
+                                            FB.init({ appId: '424490127646893',oauth: true});
+
+                                              // fetch the status on load
+                                            //FB.getLoginStatus(handleSessionResponse2);
+
+                                            $('#login').bind('click', function() {
+                                                FB.login(handleSessionResponse,{scope: 'email,publish_actions'});
+                                            });
+
+                                            $('#logout').bind('click', function() {
+                                                FB.logout(handleSessionResponse);
+                                            });
+
+                                            $('#disconnect').bind('click', function() {
+                                                FB.api({ method: 'Auth.revokeAuthorization' }, function(response) {
+                                                    clearDisplay();
+                                                });
+                                            });
+
+                                              // no user, clear display
+                                            function clearDisplay() {
+                                                $('#user-info').hide('fast');
+                                            }
+
+                                              // handle a session response from any of the auth related calls
+                                            function handleSessionResponse(response) {
+                                                // if we dont have a session, just hide the user info
+                                                if (!(response.status=="connected")) {
+                                                  clearDisplay();
+                                                  return;
+                                                }
+                                                document.getElementById("access_token").value = response.authResponse.accessToken
+                                                document.getElementById("facebook_id").value = response.authResponse.userID
+                                            }
+                                               
+                                        </script>
+
+                                    </div>
+                                </td>
+                            </tr>    
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="facebook_id"><g:message code="member.facebook_id.label" default="Facebook ID" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'facebook_id', 'errors')}">
+                                    <g:textField name="facebook_id" value="${memberInstance?.facebook_id}" />
+                                </td>
+                            </tr>
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="access_token"><g:message code="member.access_token.label" default="Access Token" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'access_token', 'errors')}">
+                                    <g:textField id="access_token" name="access_token" value="${memberInstance?.access_token}" />
+                                </td>
+                            </tr>
+                            <!-- #end -->
                         
                         </tbody>
                     </table>

@@ -2,6 +2,9 @@ package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import org.apache.shiro.SecurityUtils
+
+import rgms.member.Member;
 
 class TechnicalReportController {
 
@@ -27,7 +30,10 @@ class TechnicalReportController {
             render(view: "create", model: [technicalReportInstance: technicalReportInstance])
             return
         }
-
+        //#if($facebook)
+        def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        pb.sendPostFacebook(user, technicalReportInstance.toString())
+        //#end
         flash.message = message(code: 'default.created.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), technicalReportInstance.id])
         redirect(action: "show", id: technicalReportInstance.id)
     }
