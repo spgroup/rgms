@@ -5,6 +5,7 @@ import pages.TechnicalReportEditPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.TechnicalReport
+import rgms.member.Member
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -79,8 +80,14 @@ Then(~'^The technical report "([^"]*)" is not updated by the system$') { String 
 	assert tech != null
 }
 
+When(~'^I click on "New TechnicalReport" option at Technical Report list$') { ->
+    at TechnicalReportPage
+    page.selectNewTechnicalReport()
+}
+
 Then(~'^I see my user listed as an author member of technical report by default$') { ->
-    // FIXME: implement this function.
-    assert false
+    at TechnicalReportCreatePage
+    userData = Member.findByUsername('admin').id.toString()
+    assert page.selectedMembers().contains(userData)
 }
 

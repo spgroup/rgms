@@ -6,8 +6,8 @@ class TechnicalReportCreatePage extends Page {
 	static url = "technicalReport/create"
 
 	static at = {
-		title ==~ /Criar Technical Report/
-		journal != null
+		title ==~ /Criar TechnicalReport/
+		//journal != null
 	}
 
 	static content = {
@@ -21,4 +21,8 @@ class TechnicalReportCreatePage extends Page {
 		$("form").journal = "Theoretical Computer Science"
 		// Could parametrize, obtaining data from class TestDataAndOperations
 	}
+
+    def selectedMembers() {
+        $("form").members
+    }
 }
