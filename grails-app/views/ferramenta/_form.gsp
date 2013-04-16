@@ -1,6 +1,6 @@
 <%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.Ferramenta" %>
-
+<%@ page import="org.apache.shiro.SecurityUtils" %>
 
 
 <div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'title', 'error')} required">
@@ -58,7 +58,7 @@
 	</label>
 	
 	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-          value="${ferramentaInstance?.members}" />
+		value="${ferramentaInstance?.members ? ferramentaInstance.members : Member.findByUsername(SecurityUtils.subject?.principal).id}" />
 
 </div>
 
