@@ -6,6 +6,7 @@ import pages.DissertationCreate
 import pages.DissertationShowPage
 import pages.DissertationEditPage
 import rgms.publication.Dissertacao
+import rgms.member.Member
 
 import static cucumber.api.groovy.EN.*
 
@@ -80,11 +81,13 @@ When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without sch
 }
 
 Then(~'^I see my user listed as an author member of dissertation by default$') { ->
-	// FIXME: implement this function.
-	assert false
+	at DissertationCreate
+    userData = Member.findByUsername('admin').id.toString()
+    assert page.selectedMembers().contains(userData)
 }
 
 Then(~'^I see my school name as school of dissertation by default$') { ->
-	// FIXME: implement this function.
-	assert false
+	at DissertationCreate
+    userData = Member.findByUsername('admin').university
+    assert page.currentSchool() == userData
 }

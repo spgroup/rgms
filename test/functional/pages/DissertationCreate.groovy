@@ -22,5 +22,13 @@ class DissertationCreate extends Page {
 		$("form").create().click()
 		// Could parametrize, obtaining data from class TestDataAndOperations
 	}
+
+	def currentSchool() {
+		$("form").school
+	}
+
+	def selectedMembers() {
+		$("form").members
+	}
 	
 }
