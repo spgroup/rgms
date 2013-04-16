@@ -1,12 +1,15 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.springframework.dao.DataIntegrityViolationException
-
+import rgms.member.Member
 import rgms.publication.Dissertacao;
 
 
 class DissertacaoController {
 
+    def grailsApplication
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
@@ -19,7 +22,19 @@ class DissertacaoController {
     }
 
     def create() {
-        [dissertacaoInstance: new Dissertacao(params)]
+        Dissertacao dissertacaoInstance = new Dissertacao(params)
+        //#if($publicationContext)
+        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
+        if(publcContextOn){
+            if(SecurityUtils.subject?.principal != null){
+                def user = PublicationController.addAuthor(dissertacaoInstance)
+                if(!user.university.isEmpty()){
+                    dissertacaoInstance.school = user.university
+                }
+            }
+        }
+        //#end
+        [dissertacaoInstance: dissertacaoInstance]
     }
 
     def save() {

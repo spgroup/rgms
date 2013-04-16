@@ -1,7 +1,8 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
-
+import rgms.member.Member
 import rgms.publication.Publication;
 
 
@@ -19,6 +20,17 @@ class PublicationController {
 		render(text: publication.generateBib(), contentType: "text/txt", encoding: "UTF-8")
 	}
 	//#end
+
+    //#if($publicationContext)
+    static Member addAuthor(Publication publication){
+        Member user = Member.findByUsername(SecurityUtils.subject.principal)
+        if(!publication.members){
+            publication.members = new LinkedHashSet<Member>()
+        }
+        publication.members.add(user);
+        return user
+    }
+    //#end
 	
 	def upload(Publication publicationInstance) {
 			

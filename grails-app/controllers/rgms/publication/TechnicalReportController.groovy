@@ -1,6 +1,8 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
+import rgms.member.Member
 
 
 class TechnicalReportController {
@@ -17,7 +19,19 @@ class TechnicalReportController {
 	}
 
 	def create() {
-		[technicalReportInstance: new TechnicalReport(params)]
+        def technicalReportInstance = new TechnicalReport(params)
+        //#if($publicationContext)
+        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
+        if(publcContextOn){
+            if(SecurityUtils.subject?.principal != null){
+                def user = PublicationController.addAuthor(technicalReportInstance)
+                if(!user.university.isEmpty()){
+                    technicalReportInstance.institution = user.university
+                }
+            }
+        }
+        //#end
+		[technicalReportInstance: technicalReportInstance]
 	}
 
 	def save() {

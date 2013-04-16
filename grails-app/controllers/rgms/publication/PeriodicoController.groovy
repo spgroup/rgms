@@ -1,10 +1,12 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import org.xml.sax.SAXParseException
 import rgms.XMLService
+import rgms.member.Member
 
 class PeriodicoController {
 
@@ -20,7 +22,16 @@ class PeriodicoController {
     }
 
     def create() {
-        [periodicoInstance: new Periodico(params)]
+        def periodicoInstance = new Periodico(params)
+        //#if($publicationContext)
+        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
+        if(publcContextOn){
+            if(SecurityUtils.subject?.principal != null){
+                PublicationController.addAuthor(periodicoInstance)
+            }
+        }
+        //#end
+        [periodicoInstance: periodicoInstance]
     }
 
     def save () {
