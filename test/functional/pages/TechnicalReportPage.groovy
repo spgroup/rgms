@@ -14,7 +14,7 @@ class TechnicalReportPage extends Page {
 	}
 
 
-	def selectNewArticle() {
+	def selectNewTechnicalReport() {
 		$('a.create').click()
 	}
 
