@@ -277,8 +277,7 @@ static public void editResearchGroup(def researchGroup, String newName, String n
 static public void createBookChapter (String title, filename){
 	def cont = new BookChapterController()
 	def date = new Date()
-def tempBookChapter = BookChapter.findByTitle(title)
-tempBookChapter.members = null
+	def tempBookChapter = TestDataAndOperations.findBookChapterByTitle(title)
 	cont.params << tempBookChapter << [file: filename]
 	cont.request.setContent(new byte[1000])
 	cont.create()
@@ -299,7 +298,7 @@ static public void deleteResearchGroup(def researchGroup) {
 static public void createConferencia (String title, String filename){
 	def cont = new ConferenciaController()
 	def date = new Date()
-	cont.params << Conferencia.findByTitle(title) << [file: filename]
+	cont.params << TestDataAndOperations.findConferenciaByTitle(title) << [file: filename]
 	cont.request.setContent(new byte[1000])
 	cont.create()
 	cont.save()
