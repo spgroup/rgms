@@ -30,4 +30,8 @@ class BookChapterCreatePage extends Page{
         $("form").title = "A theory of Software Product Line Refinement"
         $("form").create().click()
     }
+
+    def selectedMembers() {
+        $("form").members
+    }
 }

@@ -79,3 +79,8 @@ Then(~'^The technical report "([^"]*)" is not updated by the system$') { String 
 	assert tech != null
 }
 
+Then(~'^I see my user listed as an author member of technical report by default$') { ->
+    // FIXME: implement this function.
+    assert false
+}
+
