@@ -2,12 +2,10 @@ package rgms.member
 
 
 import org.springframework.dao.DataIntegrityViolationException
-
 import rgms.news.News
 import rgms.news.NewsController
 import rgms.news.TwitterConnection
 import twitter4j.Status
-
 
 class ResearchGroupController {
 

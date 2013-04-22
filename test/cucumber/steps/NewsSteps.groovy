@@ -83,4 +83,3 @@ Then(~'^news of "([^"]*)" research group has been updated$') { String groupName 
 	researchGroup = ResearchGroup.findByName(groupName)
 	assert researchGroup.news.size() == 10
 }
-
