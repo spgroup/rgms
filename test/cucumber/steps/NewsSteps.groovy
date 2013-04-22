@@ -3,44 +3,51 @@ import rgms.news.News;
 import steps.TestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
-Given(~'^the system has no news with description "([^"]*)" and date "([^"]*)"$') { String description, String date ->
+Given(~'^the system has no news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
 	Date dateAsDateObj = Date.parse("dd-MM-yyyy",date)		   
-	news = News.findByDescriptionAndDate(description, dateAsDateObj);
+	researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
+	news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj,researchGroup)
 	assert news == null
 }
 
-When(~'^I create a news with description "([^"]*)" and date "([^"]*)"$') { String description, String date ->
+When(~'^I create a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->	
 	Date dateAsDateObj = Date.parse("dd-MM-yyyy",date)
-	TestDataAndOperations.createNews(description,dateAsDateObj)
+	def researchGroup = ResearchGroup.findByName(group)
+	TestDataAndOperations.createNews(description,dateAsDateObj, researchGroup)
 }
 
-Then(~'^the news  with description  "([^"]*)" and date "([^"]*)" is properly stored by the system$') { String description, String date ->
+Then(~'^the news  with description  "([^"]*)", date "([^"]*)" and "([^"]*)" research group is properly stored by the system$') { String description, String date, String group ->
 	Date dateAsDateObj = Date.parse("dd-MM-yyyy",date)
-	news = News.findByDescriptionAndDate(description, dateAsDateObj);
+	def researchGroup = ResearchGroup.findByName(group)
+	news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj,researchGroup);
 	assert news != null
 }
 
-Given(~'^the system has a news with description "([^"]*)" and date "([^"]*)"$') { String description, String date ->
+Given(~'^the system has a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
 	Date dateAsDateObj = Date.parse("dd-MM-yyyy",date)
-	TestDataAndOperations.createNews(description,dateAsDateObj)
-	news = News.findByDescriptionAndDate(description, dateAsDateObj);
+	researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
+	TestDataAndOperations.createNews(description,dateAsDateObj, researchGroup)
+	news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj,researchGroup);
 	assert news != null
 }
 
-When(~'^I delete a news with description "([^"]*)" and date "([^"]*)"$') { String description, String date ->
+When(~'^I delete a news with description "([^"]*)" and date "([^"]*)" of "([^"]*)" research group$') { String description, String date, String group ->
 	Date dateAsDateObj = Date.parse("dd-MM-yyyy",date)
-	TestDataAndOperations.deleteNews(description,dateAsDateObj);
+	def researchGroup = ResearchGroup.findByName(group)
+	TestDataAndOperations.deleteNews(description,dateAsDateObj,researchGroup);
 }
 
-Then(~'^the news  with "([^"]*)" and date "([^"]*)" doesnt exists$') { String description, String date ->
+Then(~'^the news  with "([^"]*)" and date "([^"]*)" doesnt exists to "([^"]*)" research group$') { String description, String date, String group ->
 	Date dateAsDateObj = Date.parse("dd-MM-yyyy",date)
-	news = News.findByDescriptionAndDate(description, dateAsDateObj);
+	researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group);	
+	news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj,researchGroup);
 	assert news == null
 }
 
-Then(~'^the news  with "([^"]*)" and date "([^"]*)" is not registered$') { String description, String date ->
+Then(~'^the news  with "([^"]*)" and date "([^"]*)" is not registered to "([^"]*)" research group$') { String description, String date, String group  ->
 	Date dateAsDateObj = Date.parse("dd-MM-yyyy",date)
-	newsList = News.findAllByDescriptionAndDate(description, dateAsDateObj);
+	researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group);
+	newsList = News.findAllByDescriptionAndDateAndResearchGroup(description, dateAsDateObj,researchGroup);
 	assert newsList.size() == 1
 }
 
@@ -63,16 +70,17 @@ Then(~'^"([^"]*)" research group has a twitter account "([^"]*)" registred$') { 
 }
 
 Given(~'^the research group "([^"]*)" in the system has Twitter account "([^"]*)" associated$') { String groupName, String twitter ->
-	
+	TestDataAndOperations.createResearchGroup(groupName)
+	researchGroup = ResearchGroup.findByName(groupName)
+	assert researchGroup.twitter==twitter
 }
 
 When(~'^I request to update the news from Twitter "([^"]*)"$') { String twitter ->
-	// Express the Regexp above with the code you wish you had
-	//throw new PendingException()
+	TestDataAndOperations.requestNewsFromTwitter(researchGroup)
 }
 
 Then(~'^news of "([^"]*)" research group has been updated$') { String groupName ->
-	// Express the Regexp above with the code you wish you had
-	//throw new PendingException()
+	researchGroup = ResearchGroup.findByName(groupName)
+	assert researchGroup.news.size() == 10
 }
 

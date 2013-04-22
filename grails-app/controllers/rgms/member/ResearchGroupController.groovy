@@ -3,6 +3,11 @@ package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import rgms.news.News
+import rgms.news.NewsController
+import rgms.news.TwitterConnection
+import twitter4j.Status
+
 
 class ResearchGroupController {
 
@@ -23,7 +28,7 @@ class ResearchGroupController {
     }
 
     def save() {
-        def researchGroupInstance = new ResearchGroup(params)
+        def researchGroupInstance = new ResearchGroup(params)		
         if (!researchGroupInstance.save(flush: true)) {			
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return
@@ -40,7 +45,7 @@ class ResearchGroupController {
             return
         }
 		//def cm = Membership.getCurrentMemberships(researchGroupInstance)
-        [researchGroupInstance: researchGroupInstance, publicationsInstance : listPublicationByGroup(), currentMemberships: Membership.getCurrentMemberships(researchGroupInstance)]
+        [researchGroupInstance: researchGroupInstance, publicationsInstance : listPublicationByGroup(), currentMemberships: Membership.getCurrentMemberships(researchGroupInstance), currentNews: News.getCurrentNews(researchGroupInstance)]
     }
 
     def edit() {
@@ -165,28 +170,15 @@ class ResearchGroupController {
     	return list  
     			
     }
-//    def Set listPublicationByGroup(){
-//    	def researchGroupInstance = ResearchGroup.get(params.id)
-//    			//def g = rgms.ResearchGroup.findById(researchGroupInstance.id)
-//    			def l = [] as Set
-//    			def memberships = researchGroupInstance.memberships.findAll{
-//    		researchGroupInstance.id = it.researchGroup.id
-//    	}
-//    	
-//    	memberships.each{
-//    		
-//    		def dateJoined =  it.dateJoined
-//    				for(publication in it.member.publications)
-//    				{
-//    					
-//    					if( publication.publicationDate.compareTo(it.dateJoined) > 0)
-//    					{
-//    						l.add(publication);
-//    					} 
-//    				}
-//    	}
-//    	return l  
-//    			
-//    }
-   
+	
+	def updateNewsFromTwitter(){
+		def researchGroupInstance = ResearchGroup.get(params.id)
+		TwitterConnection twConn = new TwitterConnection()
+		List<Status> timeline = twConn.getTimeLine(researchGroupInstance.twitter)
+		timeline.each {
+			researchGroupInstance.addToNews(new News(description: it.getText(), date: it.getCreatedAt()))			
+		}
+		researchGroupInstance.save()
+		redirect(action: "show", id: researchGroupInstance.id)
+	}
 }

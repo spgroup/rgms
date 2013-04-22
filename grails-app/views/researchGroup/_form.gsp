@@ -12,6 +12,14 @@
   <g:textField name="name" maxlength="50" required="" value="${researchGroupInstance?.name}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'name', 'error')} required">
+  <label for="twitter">
+    <g:message code="researchGroup.twitter.label" default="Twitter" />
+    <span class="required-indicator">*</span>
+  </label>
+  <g:textField name="twitter" maxlength="50" required="" value="${researchGroupInstance?.twitter}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'description', 'error')} required">
   <label for="description">
     <g:message code="researchGroup.description.label" default="Description" />
