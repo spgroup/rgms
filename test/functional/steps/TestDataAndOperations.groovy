@@ -27,6 +27,8 @@ import rgms.publication.BookChapterController
 
 import rgms.news.News;
 import rgms.news.NewsController 
+import rgms.news.TwitterConnection;
+import twitter4j.Status;
 
 class TestDataAndOperations {
  
@@ -276,6 +278,16 @@ static public void createResearchGroup(String name, description) {
 	researchGroupController.response.reset()
 }
 
+static public ResearchGroup createAndGetResearchGroupByName(String name)
+{
+	def researchGroupController = new ResearchGroupController()
+	researchGroupController.params << findResearchGroupByGroupName(name)
+	researchGroupController.create()
+	researchGroupController.save()
+	researchGroupController.response.reset()
+	return ResearchGroup.findByName(name)
+}
+
 static public void editResearchGroup(def researchGroup, String newName, String newDescription) {
 	def researchGroupController = new ResearchGroupController()
 	researchGroupController.params << [name: newName] << [description: newDescription] << [id : researchGroup.getId()]
@@ -347,9 +359,9 @@ static public void createMember(String username) {
 	cont.response.reset()
 }
 
-static public void createNews(String descriptionParam, Date dateParam) {
+static public void createNews(String descriptionParam, Date dateParam, ResearchGroup groupParam) {
 	def cont = new NewsController()	
-	cont.params << [description: descriptionParam, date: dateParam]	
+	cont.params << [description: descriptionParam, date: dateParam, researchGroup: groupParam]	
 	cont.create()
 	cont.save()
 	cont.response.reset()
@@ -390,6 +402,12 @@ static public void createResearchGroup(String groupname) {
 	cont.response.reset()
 }
 
+static public void requestNewsFromTwitter(ResearchGroup group){
+	def cont = new ResearchGroupController()
+	cont.params << [id:group.id]
+	cont.updateNewsFromTwitter()
+	cont.response.reset()	
+}
 
 static public void createMembership(String username, String rgroup, String date1, String date2) {
 	//TODO Deveria pegar os dados dos parametros, mas
@@ -431,15 +449,16 @@ static public void deleteMember(String username) {
 	cont.response.reset()
 }
 
-static public void deleteNews(String description, Date date) {
+static public void deleteNews(String description, Date date, ResearchGroup researchGroup) {
 	def cont = new NewsController()
-	def identificador = News.findByDescriptionAndDate(description,date).id
+	def identificador = News.findByDescriptionAndDateAndResearchGroup(description,date,researchGroup).id
 	cont.params << [id: identificador]
 	cont.request.setContent(new byte[1000]) // Could also vary the request content.
 	cont.delete()
 	//cont.save()
 	cont.response.reset()
 }
+
 
 
 static void clearArticles() {
