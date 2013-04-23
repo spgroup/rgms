@@ -7,6 +7,11 @@ class UrlMappings {
 			}
 		}
 
+		"/bibtexFileController/upload" {
+			controller = "bibtexFile"
+			action = "upload"
+		}
+		
         "/"(controller: "Auth", action: "index")
 		"500"(view:'/error')
 	}
