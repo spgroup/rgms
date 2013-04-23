@@ -54,6 +54,3 @@ Then(~'^is created two Tese publications$') { ->
 
 Then(~'^one Dissertacao is stored and two Tese is stored$') { ->
 }
-
-When(~'^I click on "([^"]*)" option at Technical Report list$') { String arg1 ->
-}
