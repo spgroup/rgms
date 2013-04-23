@@ -224,5 +224,57 @@
 <configuration xmlns=""><expression>History</expression><transformation><name>selectAndMoveComponent</name><args>RecordController,grails-app/controllers/rgms/RecordController.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>Auth</expression><transformation><name>selectAndMoveComponent</name><args>RoleController,grails-app/controllers/rgms/RoleController.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>Auth</expression><transformation><name>selectAndMoveComponent</name><args>ShiroDbRealmRGMS,grails-app/realms/rgms/ShiroDbRealm.groovy</args></transformation></configuration>
-
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>BibtexParse,grails-app/domain/rgms/publication/BibtexParse.groovy
+		</args>
+	</transformation>
+</configuration>
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>BibtexFile,grails-app/domain/rgms/publication/BibtexFile.groovy
+		</args>
+	</transformation>
+</configuration>
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>BibtexImportFeature,test/cucumber/BibtexImport.feature</args>
+	</transformation>
+</configuration>
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>BibtexImportSteps,test/cucumber/steps/BibtexImportSteps.groovy
+		</args>
+	</transformation>
+</configuration>
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>sample,test/cucumber/steps/sample.bibtex</args>
+	</transformation>
+</configuration>
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>BibtexFileController,grails-app/controller/rgms/publication/BibtexFileController.groovy
+		</args>
+	</transformation>
+</configuration>
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>home,grails-app/views/bibtexFile/home.gsp</args>
+	</transformation>
+</configuration>
 </configurationModel>
