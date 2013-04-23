@@ -9,12 +9,7 @@
 	</head>
 	<body>
 		<a href="#list-technicalReport" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
+ 		<g:render template="navigation"/>
 		<div id="list-technicalReport" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -32,7 +27,7 @@
 					
 						<th><g:message code="technicalReport.researchLine.label" default="Research Line" /></th>
 					
-						<g:sortableColumn property="bibTex" title="${message(code: 'technicalReport.bibTex.label', default: 'Bib Tex')}" />
+						
 					
 						<g:sortableColumn property="institution" title="${message(code: 'technicalReport.institution.label', default: 'Institution')}" />
 					
@@ -50,7 +45,6 @@
 					
 						<td>${fieldValue(bean: technicalReportInstance, field: "researchLine")}</td>
 					
-						<td>${fieldValue(bean: technicalReportInstance, field: "bibTex")}</td>
 					
 						<td>${fieldValue(bean: technicalReportInstance, field: "institution")}</td>
 					

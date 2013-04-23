@@ -8,7 +8,7 @@
 	</parameter>
 	<parameter name="member_id" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM rgms.member where member.id=$P{member_id};]]>
+		<![CDATA[SELECT * FROM member where member.id=$P{member_id};]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="version" class="java.lang.Long"/>
@@ -91,48 +91,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$R{pubs}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="372" y="21" width="86" height="27"/>
-				<textElement>
-					<font size="18"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$R{TESE}]]></textFieldExpression>
-			</textField>
-			<subreport>
-				<reportElement x="371" y="48" width="132" height="33"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tese.jasper"]]></subreportExpression>
-			</subreport>
+			
 		</band>
 	</columnHeader>
-	<detail>
-		<band height="72" splitType="Stretch">
-			<textField>
-				<reportElement x="371" y="12" width="171" height="30"/>
-				<textElement>
-					<font size="18"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$R{DISSERTAÇÃO}]]></textFieldExpression>
-			</textField>
-			<subreport>
-				<reportElement x="371" y="42" width="133" height="30"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "dissertacao.jasper"]]></subreportExpression>
-			</subreport>
-			<textField>
-				<reportElement x="8" y="12" width="171" height="30"/>
-				<textElement>
-					<font size="18"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$R{ferramentas}]]></textFieldExpression>
-			</textField>
-			<subreport>
-				<reportElement x="8" y="42" width="134" height="30"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "memberTools.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
-	</detail>
+	
 	<columnFooter>
 		<band height="98" splitType="Stretch"/>
 	</columnFooter>

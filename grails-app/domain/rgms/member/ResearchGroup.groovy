@@ -15,7 +15,7 @@ class ResearchGroup {
         return this.name
     }
     static constraints = {
-        name(maxSize:50,blank:false)
+        name(maxSize:10,blank:false,unique:true)
         description(maxSize:1000,blank:false)
 
 //#if($researchGroupHierarchy)
@@ -23,7 +23,7 @@ class ResearchGroup {
 //#end
 
     }
-	static getPublications(researchGroup){
+    static getPublications(researchGroup){
 		def memberships = Membership.getAllMembers(researchGroup)
 		return Publication.getPublicationsByMembershipList(memberships)
 	}

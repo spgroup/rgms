@@ -9,11 +9,15 @@
 	</head>
 	<body>
 		<a href="#list-periodico" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
+		<g:render template="navigation"/>
+		<div class="xml" role="xmlUpload">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
+                <g:form action="uploadXMLPeriodico" method="post" enctype="multipart/form-data">
+                    <label for="file">Import XML:</label>
+                    <input type="file" name="file" id="file"/>
+                    <input class="save" type="submit" value="Upload"/>
+                </g:form>
+            </ul>
 		</div>
 		<div id="list-periodico" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
@@ -32,7 +36,7 @@
 					
 						<th><g:message code="periodico.researchLine.label" default="Research Line" /></th>
 					
-						<g:sortableColumn property="bibTex" title="${message(code: 'periodico.bibTex.label', default: 'Bib Tex')}" />
+						
 					
 						<g:sortableColumn property="journal" title="${message(code: 'periodico.journal.label', default: 'Journal')}" />
 					
@@ -50,7 +54,7 @@
 					
 						<td>${fieldValue(bean: periodicoInstance, field: "researchLine")}</td>
 					
-						<td>${fieldValue(bean: periodicoInstance, field: "bibTex")}</td>
+						
 					
 						<td>${fieldValue(bean: periodicoInstance, field: "journal")}</td>
 					

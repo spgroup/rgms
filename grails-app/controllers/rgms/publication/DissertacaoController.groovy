@@ -32,7 +32,7 @@ class DissertacaoController {
             return
         }
 		
-		flash.message = message(code: 'default.created.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), dissertacaoInstance.id])
+		flash.message = messageGenerator('default.created.message', dissertacaoInstance.id)
         redirect(action: "show", id: dissertacaoInstance.id)
     }
 
@@ -41,7 +41,7 @@ class DissertacaoController {
 		
 
         if (!dissertacaoInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), params.id])
+			flash.message = messageGenerator('default.not.found.message',  params.id)
             redirect(action: "list")
             return
         }
@@ -52,7 +52,7 @@ class DissertacaoController {
     def edit() {
         def dissertacaoInstance = Dissertacao.get(params.id)
         if (!dissertacaoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), params.id])
+            flash.message = messageGenerator('default.not.found.message',  params.id)
             redirect(action: "list")
             return
         }
@@ -86,27 +86,33 @@ class DissertacaoController {
             return
         }
 
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), dissertacaoInstance.id])
+		flash.message = messageGenerator('default.updated.message',  dissertacaoInstance.id)
         redirect(action: "show", id: dissertacaoInstance.id)
     }
 
     def delete() {
         def dissertacaoInstance = Dissertacao.get(params.id)
         if (!dissertacaoInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), params.id])
+			flash.message = messageGenerator('default.not.found.message', params.id)
             redirect(action: "list")
             return
         }
 
         try {
             dissertacaoInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), params.id])
+			flash.message = messageGenerator('default.deleted.message', params.id)
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), params.id])
+			flash.message = messageGenerator('default.not.deleted.message' + ' Erro: '+e.message, params.id)
             redirect(action: "show", id: params.id)
         }
     }
+	
+	def messageGenerator (String code, def id)
+	{
+		return message(code: code, args: [message(code: 'dissertacao.label', default: 'Dissertacao'), id])
+	}
+	
 	static scaffold = true 
 }
