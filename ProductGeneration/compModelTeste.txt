@@ -187,3 +187,14 @@ publications => webapp/reports/report_Bundle/publications.jrxml;
 report => webapp/reports/report_Bundle/report.jrxml;
 report1 => webapp/reports/report_Bundle/report1.jrxml;
 researchGroup => webapp/reports/report_Bundle/researchGroup.jrxml;
+
+
+
+BibtexParse => grails-app/domain/rgms/publication/BibtexParse.groovy;
+BibtexFile => grails-app/domain/rgms/publication/BibtexFile.groovy;
+BibtexImportFeature => test/cucumber/BibtexImport.feature;
+BibtexImportSteps => test/cucumber/steps/BibtexImportSteps.groovy;
+sample.bibtex => test/cucumber/steps/sample.bibtex;
+BibtexFileController => grails-app/controller/rgms/publication/BibtexFileController.groovy;
+home.gsp => grails-app/views/bibtexFile/home.gsp;
+
