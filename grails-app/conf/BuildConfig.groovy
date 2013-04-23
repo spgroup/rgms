@@ -45,6 +45,7 @@ grails.project.dependency.resolution = {
 		compile('lib:itextpdf:5.4.0')
 		compile('lib:itext-pdfa:5.4.0')
 		compile('lib:itext-xtra:5.4.0')
+		compile('lib:jbibtex:1.0.3')
         // runtime 'mysql:mysql-connector-java:5.1.16'
     }
 

@@ -145,6 +145,7 @@
         <li><g:link controller="TechnicalReport" action="list">Technical Report</g:link></li>
         <li><g:link controller="Tese" action="list">Tese</g:link></li>
         <li><g:link controller="Orientation" action="list">Orientation</g:link></li>
+        <li><g:link controller="BibtexFile" action="home">Import Bibtex File</g:link></li>
     </ol>
 </div>
 <!--  </div>-->
