@@ -225,4 +225,15 @@
 <configuration xmlns=""><expression>Auth</expression><transformation><name>selectAndMoveComponent</name><args>RoleController,grails-app/controllers/rgms/RoleController.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>Auth</expression><transformation><name>selectAndMoveComponent</name><args>ShiroDbRealmRGMS,grails-app/realms/rgms/ShiroDbRealm.groovy</args></transformation></configuration>
 
+<configuration xmlns=""><expression>visit</expression><transformation><name>selectAndMoveComponent</name><args>visitForm,grails-app/views/visit/form.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>visit</expression><transformation><name>selectAndMoveComponent</name><args>visitCreate,grails-app/views/visit/create.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>visit</expression><transformation><name>selectAndMoveComponent</name><args>visitEdit,grails-app/views/visit/edit.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>visit</expression><transformation><name>selectAndMoveComponent</name><args>visitList,grails-app/views/visit/list.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>visit</expression><transformation><name>selectAndMoveComponent</name><args>visitShow,grails-app/views/visit/show.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>visit</expression><transformation><name>selectAndMoveComponent</name><args>visit,grails-app/domain/rgms/Visit.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>visit</expression><transformation><name>selectAndMoveComponent</name><args>visitor,grails-app/domain/rgms/Visitor.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>visit</expression><transformation><name>selectAndMoveComponent</name><args>VisitController,grails-app/controllers/rgms/VisitController.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>visit</expression><transformation><name>selectAndMoveComponent</name><args>VisitorController,grails-app/controllers/rgms/VisitorController.groovy</args></transformation></configuration>
+
+
 </configurationModel>
