@@ -39,8 +39,9 @@ class XMLService {
         File file = new File("xmlimported.xml");
         f.transferTo(file)
         def records = new XmlParser()
-
-        records.parse(file)
+        if (file.length()>0){
+            records.parse(file)
+        }
     }
 
     static String getAttributeValueFromNode(Node n, String attribute)
