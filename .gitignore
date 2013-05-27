@@ -26,3 +26,5 @@ target-eclipse/classes/auth/updatePassword.gsp
 target-eclipse/classes/_testemails/i18ntest.gsp
 
 target-eclipse/classes/_testemails/test.gsp
+
+target/stacktrace.log
