@@ -1,11 +1,13 @@
 package rgms.publication
 
+import rgms.member.Member;
+
 class ResearchLine {
     
     String name
     String description      
 	     
-    static hasMany = [publications : Publication]
+    static hasMany = [publications : Publication, members: Member]
     
 	static constraints = {
         name(blank:false, unique:true)
