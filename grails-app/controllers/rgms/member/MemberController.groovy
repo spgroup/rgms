@@ -188,9 +188,8 @@ class MemberController {
         memberInstance.addToHistorics(hist)
         memberInstance.save()
     }
-
-    def returnWithMessage (String msg, Member newMember)
-    {
+    //#if($XMLImp && $Member)
+    def returnWithMessage (String msg, Member newMember) {
         render(view: "create", model: [memberInstance: newMember])
         flash.message = message(code: msg)
     }
@@ -201,8 +200,7 @@ class MemberController {
         boolean errorFound = false
         Member newMember = new Member(params)
 
-        try
-        {
+        try {
             XMLService serv = new XMLService()
             Node xmlFile = serv.parseReceivedFile(request)
             fillMemberInfo(xmlFile, newMember, serv)
@@ -211,13 +209,12 @@ class MemberController {
             flashMessage = 'default.xml.parserror.message'
             errorFound = true
         }
-        catch (NullPointerException) //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
-        {
+        catch (NullPointerException) { //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
+
             flashMessage = 'default.xml.structure.message'
             errorFound = true
         }
-        catch (Exception)
-        {
+        catch (Exception) {
             flashMessage = 'default.xml.unknownerror.message'
             errorFound = true
         }
@@ -226,20 +223,21 @@ class MemberController {
         if (errorFound) return
     }
 
-    private static void fillMemberInfo(Node xmlFile, Member newMember, XMLService serv)
-    {
+    private static void fillMemberInfo(Node xmlFile, Member newMember) {
         Node dadosGerais = (Node) xmlFile.children()[0]
         List<Object> dadosGeraisChildren = dadosGerais.children()
         Node endereco = (Node) dadosGeraisChildren[2]
         Node enderecoProfissional = (Node) endereco.value()[0]
 
-        newMember.name = serv.getAttributeValueFromNode(dadosGerais, "NOME-COMPLETO")
-        newMember.university = serv.getAttributeValueFromNode(enderecoProfissional, "NOME-INSTITUICAO-EMPRESA")
-        newMember.phone = serv.getAttributeValueFromNode(enderecoProfissional, "DDD") +
-                serv.getAttributeValueFromNode(enderecoProfissional, "TELEFONE")
-        newMember.website = serv.getAttributeValueFromNode(enderecoProfissional, "HOME-PAGE")
-        newMember.city = serv.getAttributeValueFromNode(enderecoProfissional, "CIDADE")
-        newMember.country = serv.getAttributeValueFromNode(enderecoProfissional, "PAIS")
-        newMember.email = serv.getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
+        newMember.name = XMLService.getAttributeValueFromNode(dadosGerais, "NOME-COMPLETO")
+        newMember.university = XMLService.getAttributeValueFromNode(enderecoProfissional, "NOME-INSTITUICAO-EMPRESA")
+        newMember.phone = XMLService.getAttributeValueFromNode(enderecoProfissional, "DDD") +
+                XMLService.getAttributeValueFromNode(enderecoProfissional, "TELEFONE")
+        newMember.website = XMLService.getAttributeValueFromNode(enderecoProfissional, "HOME-PAGE")
+        newMember.city = XMLService.getAttributeValueFromNode(enderecoProfissional, "CIDADE")
+        newMember.country = XMLService.getAttributeValueFromNode(enderecoProfissional, "PAIS")
+        newMember.email = XMLService.getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
     }
+
+    //#end
 }

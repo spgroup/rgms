@@ -1,6 +1,5 @@
+//#if($Orientation)
 package rgms.member
-
-import rgms.publication.Periodico
 
 class Orientation {
     String tipo
@@ -29,3 +28,4 @@ class Orientation {
         && this.tituloTese == other.tituloTese)
     }
 }
+//#end

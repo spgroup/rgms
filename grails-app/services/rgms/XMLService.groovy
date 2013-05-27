@@ -4,26 +4,31 @@ import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 class XMLService {
-    //Métodos públicos
-    static boolean Import(Closure saveClosure, Closure returnWithMessage, Node xmlFile, String flashMessage)
+
+    /*
+        saveEntity - closure que salva a classe de domínio que está usando a importação
+     */
+    static boolean Import(Closure saveEntity, Closure returnWithMessage, String flashMessage,
+        javax.servlet.http.HttpServletRequest request)
     {
         boolean errorFound = false
 
-        try
-        {
-            saveClosure(xmlFile)
+        try {
+            Node xmlFile = parseReceivedFile(request)
+            saveEntity(xmlFile)
         }
-        catch (SAXParseException) { //Se o arquivo nÃ£o for XML ou nÃ£o passaram nenhum
+        //If file is not XML or if no file was uploaded
+        catch (SAXParseException) {
             flashMessage = 'default.xml.parserror.message'
             errorFound = true
         }
-        catch (NullPointerException) //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
-        {
+        //If XML structure is not according to Lattes, it'll perform an invalid cast
+        catch (NullPointerException) {
+
             flashMessage = 'default.xml.structure.message'
             errorFound = true
         }
-        catch (Exception)
-        {
+        catch (Exception) {
             flashMessage = 'default.xml.unknownerror.message'
             errorFound = true
         }
@@ -32,8 +37,7 @@ class XMLService {
         return !errorFound
     }
 
-    static Node parseReceivedFile(MultipartHttpServletRequest request)
-    {
+    private static Node parseReceivedFile(MultipartHttpServletRequest request) {
         MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
         CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
         File file = new File("xmlimported.xml");
@@ -44,9 +48,7 @@ class XMLService {
         }
     }
 
-    static String getAttributeValueFromNode(Node n, String attribute)
-    {
+    static String getAttributeValueFromNode(Node n, String attribute) {
         n.attribute attribute
     }
-    //Métodos públicos
 }
