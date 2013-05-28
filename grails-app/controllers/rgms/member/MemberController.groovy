@@ -29,11 +29,11 @@ class MemberController {
     }
 
     def save = {
-        // #if($Auth)
+#if($Auth)
         if (!grailsApplication.config.grails.mail.username) {
             throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
         }
-        //#end
+#end
 
         def memberInstance = new Member(params)
         def username = memberInstance?.username
@@ -46,11 +46,6 @@ class MemberController {
         }
         memberInstance.passwordChangeRequiredOnNextLogon = true
 
-        //#if($History)
-        //saveHistory(memberInstance,memberInstance.status);//essa ? a maneira correta de chamar
-        //saveHistory();
-        //#end
-
         if (!memberInstance.save(flush: true)) {
             render(view: "create", model: [memberInstance: memberInstance])
             return
@@ -60,9 +55,9 @@ class MemberController {
             to memberInstance.email
             from grailsApplication.config.grails.mail.username
             subject "[GRMS] Your account was successfully created!"
-            //#literal()
+#literal()
             body "Hello ${ memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${ username} and password: ${ password}\n\n${ createLink(absolute: true, uri: '/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
-            //#end
+#end
         }
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
@@ -122,10 +117,9 @@ class MemberController {
 
 		if (!check_version(params.version, memberInstance)) return
 
-        //feature record
-        //#if($History)
+#if($History)
         def status0 = memberInstance.status //pega o status anterior do usuario
-        //#end
+#end
 
         memberInstance.properties = params //atualiza todos os parametros
 
@@ -134,9 +128,7 @@ class MemberController {
             return
         }
 
-        //feature record
-
-        //#if($History) //feature record
+#if($History)
 
         String newStatus = memberInstance.status //pega o novo status
 
@@ -154,8 +146,7 @@ class MemberController {
             }
             saveHistory(memberInstance, newStatus) //refactoring - extract method
         }
-        //end feature record
-        // #end
+#end
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)

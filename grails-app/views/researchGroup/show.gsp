@@ -107,11 +107,7 @@
           	
         <g:each in="${ currentNews }" var="n" status="index">
         	<tr>
-        		<td>
-        			${index+1} -
-          		</td>
-          		<td>${ n.description?.encodeAsHTML() }
-          		</td>
+        		<td> ${ index + 1} - </td><td>${ n.description?.encodeAsHTML() }</td>
           	</tr>
         </g:each>
         </table>
