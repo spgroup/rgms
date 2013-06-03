@@ -1,8 +1,9 @@
 package rgms.publication
 
-import org.springframework.dao.DataIntegrityViolationException
+//#if($XMLUpload && $Conferencia)
+import rgms.XMLService
+//#end
 
-import rgms.publication.Conferencia;
 
 class ConferenciaController {
 
@@ -29,8 +30,6 @@ class ConferenciaController {
             render(view: "create", model: [conferenciaInstance: conferenciaInstance])
             return
         }
-		
-
 		flash.message = message(code: 'default.created.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
         redirect(action: "show", id: conferenciaInstance.id)
     }
@@ -41,13 +40,6 @@ class ConferenciaController {
 		if(!isReturned){
 			[conferenciaInstance: conferenciaInstance]
 		}
-        if (!conferenciaInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [conferenciaInstance: conferenciaInstance]
     }
 
     def edit() {
@@ -86,4 +78,48 @@ class ConferenciaController {
 		def conferenciaInstance = Conferencia.get(params.id)
 		aux.delete(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
 	}
+	
+	//#if($XMLUpload && $Conferencia)
+	Closure returnWithMessage = {
+		String msg ->
+		redirect(action: "list")
+		flash.message = message(code: msg)
+	}
+	
+	def enviarConferenciaXML(){
+		String flashMessage = 'The non existent conferences were successfully imported'
+		XMLService serv = new XMLService()
+		Node xmlFile = serv.parseReceivedFile(request)
+		if (!serv.Import(saveConferencias, returnWithMessage, xmlFile, flashMessage)) return
+	}
+	
+	Closure saveConferencias = {
+		Node xmlFile -> 
+		Node trabalhosEmEventos = (Node) ((Node)xmlFile.children()[1]).children()[0]
+		List<Object> trabalhosEmEventosChildren = trabalhosEmEventos.children()
+		for (int i = 0; i < trabalhosEmEventosChildren.size(); ++i){
+			List<Object> primeiroTrabalho = ((Node)trabalhosEmEventosChildren[i]).children()
+			Node dadosBasicos = (Node) primeiroTrabalho[0]
+			Node detalhamento = (Node) primeiroTrabalho[1]
+			String nomeEvento = XMLService.getAttributeValueFromNode(detalhamento, "NOME-DO-EVENTO")
+			if(nomeEvento.contains("onferenc")){
+				Conferencia novaConferencia = new Conferencia()
+				novaConferencia.title = nomeEvento;
+				if (Publication.findByTitle(novaConferencia.title) == null){
+					novaConferencia.publicationDate = new Date()
+					String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO-DO-TRABALHO")
+					if (tryingToParse.isInteger())
+						novaConferencia.publicationDate.set(year: tryingToParse.toInteger())
+					tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-TRABALHO")
+					novaConferencia.booktitle = tryingToParse;
+					tryingToParse =  XMLService.getAttributeValueFromNode(detalhamento, "PAGINA-INICIAL")
+					String tryingToParse2 = XMLService.getAttributeValueFromNode(detalhamento, "PAGINA-FINAL")
+					novaConferencia.pages = tryingToParse + " - " + tryingToParse2
+					novaConferencia.file = 'emptyfile' + i.toString()
+					novaConferencia.save(flush: false)
+				}
+			}
+		}
+	}
+	//#end
 }

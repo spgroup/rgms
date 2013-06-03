@@ -1,7 +1,10 @@
 package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
-
+//#if($XMLUpload && $BookChapter)
+import rgms.XMLService
+//#end
+import org.xml.sax.SAXParseException
 
 class BookChapterController {
 
@@ -76,4 +79,61 @@ class BookChapterController {
 		def bookChapterInstance = BookChapter.get(id)
 		aux.delete(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
 	}
+	
+	//#if($XMLUpload && $BookChapter)
+	Closure returnWithMessage = {
+		String msg ->
+
+		redirect(action: "list")
+		flash.message = message(code: msg)
+	}
+
+	def uploadXMLBookChapter()
+	{
+		String flashMessage = 'The non existent Book Chapters were successfully imported'
+
+		XMLService serv = new XMLService()
+		Node xmlFile = serv.parseReceivedFile(request)
+		if (!serv.Import(saveBookChapters, returnWithMessage, xmlFile, flashMessage))
+			return
+	}
+
+	Closure saveBookChapters = {
+		
+		Node xmlFile ->
+		
+				Node bookChapters = (Node)((Node)((Node)xmlFile.children()[1]).children()[2]).children()[1]
+				List<Object> bookChaptersChildren = bookChapters.children()
+		
+				for (int i = 0; i < bookChaptersChildren.size(); ++i)
+				{
+					List<Object> bookChapter = ((Node)bookChaptersChildren[i]).children()
+					
+					Node dadosBasicos = (Node) bookChapter[0]
+					Node detalhamentoCapitulo = (Node) bookChapter[1]
+								
+					BookChapter newBookChapter = new BookChapter()
+					newBookChapter.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
+		
+					print(newBookChapter.title)
+					
+					if (Publication.findByTitle(newBookChapter.title) == null)
+					{
+						newBookChapter.publicationDate = new Date()
+		
+						String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO")
+						if (tryingToParse.isInteger())
+							newBookChapter.publicationDate.set(year: tryingToParse.toInteger())
+		
+							
+						print(newBookChapter.publicationDate)
+						newBookChapter.file = 'emptyfile' + i.toString()
+						newBookChapter.publisher = "Empty"
+						newBookChapter.chapter = 2
+						newBookChapter.save(flush: false)
+					}
+				}
+		
+	}
+	//#end
 }

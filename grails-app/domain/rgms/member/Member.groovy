@@ -2,6 +2,7 @@ package rgms.member
 
 import rgms.authentication.Role;
 import rgms.publication.Publication;
+import rgms.publication.ResearchLine;
 
 class Member {
     
@@ -20,8 +21,8 @@ class Member {
     Boolean enabled
     
    //static hasMany = [roles: Role, permissions: String, #if($History) historics: Record,#end memberships : Membership, publications: Publication]
-   static hasMany = [roles: Role, permissions: String, historics: Record, memberships : Membership, publications: Publication]
-
+   static hasMany = [roles: Role, permissions: String, historics: Record, memberships : Membership, publications: Publication, researchLines: ResearchLine]
+   static belongsTo = ResearchLine
     
     Date dateCreated
     Date lastUpdated
