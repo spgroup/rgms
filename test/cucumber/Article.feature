@@ -33,34 +33,49 @@ And I select the new article option at the article page
 Then I can fill the article details
 
 Scenario: remove existing article
-    Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS.pdf"
+    Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS-3.pdf"
     When 	I delete the article "A theory of software product line refinement" 
     Then 	the article "A theory of software product line refinement" is properly removed by the system 
  
 Scenario: list existing article
-   Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS.pdf"
+   Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS-4.pdf"
    When 	I view the article list
    Then 	my article list contains "A theory of software product line refinement"
    
 Scenario: edit existing article
-   Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS.pdf"
+   Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS-5.pdf"
    When 	I edit the article title from "A theory of software product line refinement" to "A theory of software product line refinement REVIEWED"
    Then 	the article "A theory of software product line refinement" is properly updated by the system
 
 Scenario: remove existing article web
-    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
+    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-6.pdf"
     And 	I select the "Periodico" option at the publications menu
     When 	I select to view "A theory of software product line refinement" in resulting list
     Then 	the details are showed and I can select the option to remove 
 
 Scenario: list existing article web
-    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
+    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-7.pdf"
     When 	I select the "Periodico" option at the publications menu
     Then 	my resulting articles list contains "A theory of software product line refinement"
 
 Scenario: edit existing article web
-    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
+    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-8.pdf"
     And 	I select the "Periodico" option at the publications menu
    	When 	I select to view "A theory of software product line refinement" in resulting list and I change the article title to "REVIEWED"
     Then 	I can select the "Alterar" option 
 
+#if( $twitter )
+  Scenario: Add a new book chapter twitting it
+    Given There is a user "twitteruser" with a twitter account
+    And I am logged as "twitteruser" and at the Add Article Page
+    When I try to create an article named as "Empirical Studies in Product Line"
+    Then A twitter is added to my twitter account regarding the new article "Empirical Studies in Product Line"
+#end
+
+#if( $twitter )
+  Scenario: Add a new book chapter with twitter
+    Given There is a user "notwitteruser" with a twitter account
+    And I am logged as "notwitteruser" and at the Add Article Page
+    When I try to create an article named as "Empirical Studies in Product Line 2"
+    Then No twitte should be post about "Empirical Studies in Product Line 2"
+#end

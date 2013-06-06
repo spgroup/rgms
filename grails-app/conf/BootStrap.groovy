@@ -79,6 +79,7 @@ class BootStrap {
 			r3.save()
 			r4.save()
 
+			/*
 			Periodico p1 = new Periodico()
 			p1.setJournal("Theoretical Computer Science")
 			p1.setVolume(455)
@@ -109,6 +110,7 @@ class BootStrap {
 					school: "UFPE", address: "Boa Viagem", file:"gui3Dissertacao.txt")
 
 			dissertation2.save()
+			*/
 
 		}
 	}

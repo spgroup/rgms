@@ -3,11 +3,16 @@ import pages.ArticlesPage
 import pages.ArticleShowPage
 import pages.ArticleEditPage
 import pages.LoginPage
+import pages.MemberEditionPage
 import pages.PublicationsPage
+import pages.UserRegisterPage
+import rgms.member.Member
 import rgms.publication.Periodico
+import rgms.tool.TwitterTool
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
+import static cucumber.api.groovy.Hooks.*
 
 Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
 	article = Periodico.findByTitle(title)
@@ -61,6 +66,7 @@ When(~'^I select the new article option at the article page$') {->
 Then(~'^I can fill the article details$') {->
 	at ArticleCreatePage
 	page.fillArticleDetails()
+	//page.selectCreateArticle()
 }
 
 
@@ -84,6 +90,7 @@ Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') {
  */
 
 Given(~'^I am at the publications menu and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') {String title, filename->
+	TestDataAndOperations.createArticle(title, filename)
 	to LoginPage
 	at LoginPage
 	page.fillLoginData("admin", "adminadmin")
@@ -182,3 +189,45 @@ Then(~'I can select the "([^"]*)" option$') { String option ->
 	page.select(option)
 }
 
+//#if( $twitter )
+Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName ->
+	to UserRegisterPage
+	at UserRegisterPage
+	page.fillFormData(userName)
+
+	page.submitForm()
+
+	to LoginPage
+	at LoginPage
+	page.fillLoginData("admin", "adminadmin")
+
+	member = Member.findByUsername(userName)
+	MemberEditionPage.url = "member/edit/"+ member.getId()
+
+	to MemberEditionPage
+	at MemberEditionPage
+	page.editEnableUser(userName)
+}
+
+Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
+	to LoginPage
+	at LoginPage
+	page.fillLoginData(userName, "adminadmin")
+	to ArticlesPage
+}
+
+When(~'^I try to create an article named as "([^"]*)"$') { String articleName ->
+	at ArticlesPage
+	page.selectNewArticle()
+	at ArticleCreatePage
+	page.fillArticleDetails(articleName)
+}
+
+Then(~'^A twitter is added to my twitter account regarding the new article "([^"]*)"$') { String articleTitle ->
+	assert TwitterTool.consult(articleTitle)
+}
+
+Then(~'^No twitte should be post about "([^"]*)"$') { String articleTitle ->
+	assert !TwitterTool.consult(articleTitle)
+}
+//#end

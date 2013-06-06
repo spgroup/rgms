@@ -1,6 +1,9 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
+import rgms.member.Member
+import rgms.tool.TwitterTool
 
 import rgms.publication.Periodico;
 
@@ -30,6 +33,18 @@ class PeriodicoController {
 			return
 		}
 		
+//#if( $twitter )
+		String memberUsername = SecurityUtils.subject.principal
+		def member = Member.findByUsername(memberUsername)
+		final def twitterAccessToken = member.twitterAccessToken
+		final def twitterAccessSecret = member.twitterAccessSecret
+		final def text = "New periodic published: "+ periodicoInstance.title + " #RMGS"
+		if (twitterAccessToken) {
+			TwitterTool.sendGTwitter(periodicoInstance.title,twitterAccessToken, twitterAccessSecret
+					, text)
+		}
+//#end
+
 		flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
 		redirect(action: "show", id: periodicoInstance.id)
 	}

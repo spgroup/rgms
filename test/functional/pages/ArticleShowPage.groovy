@@ -7,7 +7,12 @@ class ArticleShowPage extends Page {
 	static url = "periodico/show/1"
 
 	static at = {
-		title ==~ /Ver Periódico/
+		//title ==~ /Ver Periódico/
+		GetPageTitle gp = new GetPageTitle()
+		def currentPeriodico = gp.msg("default.periodico.label")
+		def currentTitle = gp.msg("default.show.label", [currentPeriodico])
+		
+		title ==~ currentTitle
 	}
 
 	static content = {

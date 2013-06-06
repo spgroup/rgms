@@ -3,6 +3,8 @@ package steps
 import java.util.Date
 import java.text.SimpleDateFormat
 
+import org.apache.shiro.crypto.hash.Sha256Hash
+
 import rgms.member.Member
 import rgms.member.Membership
 import rgms.member.MembershipController
@@ -35,6 +37,14 @@ class TestDataAndOperations {
 	static articles = [
 		[journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
 				title: "A theory of software product line refinement",
+				publicationDate: (new Date("12 October 2012"))],
+		[journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
+				title: "Empirical Studies in Product Line",
+				file: "C:\\concurso.pdf",
+				publicationDate: (new Date("12 October 2012"))],
+		[journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
+				title: "Empirical Studies in Product Line 2",
+				file: "C:\\concurso2.pdf",
 				publicationDate: (new Date("12 October 2012"))],
 		[journal: "Science of Computer Programming", volume: 455, pages: "2-30",
 				title: "Algebraic reasoning for object-oriented programming",
@@ -74,6 +84,21 @@ static reports = [
 	[name: "Rodolfo Ferraz", username: "usernametest", email: "rodolfofake@gmail.com",
 			status: "Graduate Student", university: "UFPE", enabled: true
 			],
+	//#if( $twitter )
+	[name: "twitteruser", username: "twitteruser", email: "waldemar.neto@gmail.com",
+					status: "Graduate Student", university: "UFPE",
+					passwordChangeRequiredOnNextLogon: false,
+					passwordHash: new Sha256Hash("adminadmin").toHex(), active: true,
+					twitterAccessToken : "1355061949-0rulGCOLNlq77yqn2XFUfNYBUozJW4qXGrT91Vl",
+					twitterAccessSecret : "4mfFXffaAxvDygTduFxShQL37l0YSCG0ATZJrdskxA",
+					enabled: true
+			],
+	[name: "notwitteruser", username: "notwitteruser", email: "waldemarneto@gmail.com",
+			passwordChangeRequiredOnNextLogon: false,
+			passwordHash: new Sha256Hash("adminadmin").toHex(), active: true,
+					status: "Graduate Student", university: "UFPE", enabled: true
+			],
+	//#end
 	[name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
 			status: "Graduate Student", university: "UFPE", enabled: true
 			]]

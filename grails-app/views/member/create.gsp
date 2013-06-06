@@ -126,7 +126,25 @@
                                     <g:checkBox name="active" value="${memberInstance?.active}" />
                                 </td>
                             </tr>
-                            
+<!-- #if($twitter) -->
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="twitterAccessToken"><g:message code="member.twitterAccessToken.label" default="Twitter Access Token" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'twitterAccessToken', 'errors')}">
+                                    <g:textField name="twitterAccessToken" maxlength="20" value="${memberInstance?.twitterAccessToken}" />
+                                </td>
+                            </tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="twitterAccessSecret"><g:message code="member.twitterAccessSecret.label" default="Twitter Access Secret" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'twitterAccessSecret', 'errors')}">
+                                    <g:textField name="twitterAccessSecret" maxlength="20" value="${memberInstance?.twitterAccessSecret}" />
+                                </td>
+                            </tr>
+<!-- #end  -->
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="additionalInfo"><g:message code="member.additionalInfo.label" default="Additional Info" /></label>

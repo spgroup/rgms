@@ -187,3 +187,5 @@ publications => webapp/reports/report_Bundle/publications.jrxml;
 report => webapp/reports/report_Bundle/report.jrxml;
 report1 => webapp/reports/report_Bundle/report1.jrxml;
 researchGroup => webapp/reports/report_Bundle/researchGroup.jrxml;
+
+TwitterTool => grailsapp/controllers/rgms/tool/TwitterTool.groovy;

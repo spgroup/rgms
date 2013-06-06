@@ -8,7 +8,12 @@ class ArticlesPage extends Page {
 
 
 	static at = {
-		title ==~ /Periodico Listagem/
+		//title ==~ /Periodico Listagem/
+		GetPageTitle gp = new GetPageTitle()
+		def currentPeriodico = gp.msg("default.periodico.label")
+		def currentTitle = gp.msg("default.list.label", [currentPeriodico])
+		
+		title ==~ currentTitle
 	}
 
 	static content = {

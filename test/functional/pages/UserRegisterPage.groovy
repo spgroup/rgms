@@ -3,6 +3,7 @@ package pages
 import geb.Page
 import geb.navigator.Navigator
 import rgms.member.Member
+import steps.TestDataAndOperations
 import steps.TestDataAuthentication
 
 class UserRegisterPage extends Page {
@@ -41,4 +42,16 @@ class UserRegisterPage extends Page {
         Member.findByUsername(user.username)
     }
 
+	def fillFormData(String userName){
+		println("userName="+userName)
+		def userData = TestDataAndOperations.findByUsername(userName)
+		$("form").university = userData.university
+		$("form").name = userData.name
+		$("form").username = userName
+		$("form").email = userData.email
+
+		$("form").password1 = "adminadmin"
+		$("form").password2 = "adminadmin"
+		$("form").status = "Graduate Student"
+	}
 }

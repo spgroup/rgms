@@ -11,7 +11,8 @@ cloudbees.api.secret = 'BCUW5VXU/0LVUFZ07Q9DMYQXKBLIPDWQDME32VBHPMM='
 
 grails.project.dependency.resolution = {
 
-    def gebVersion = "0.7.0"
+    //def gebVersion = "0.7.0"
+	def gebVersion = "0.7.1"
     def seleniumVersion = "2.22.0"
 
     // inherit Grails' default dependencies
@@ -49,6 +50,10 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
+		
+		compile ":remote-control:1.4"
+		compile ":twitter4j:0.3.2"
+		
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.7.1"
         runtime ":resources:1.1.6"
