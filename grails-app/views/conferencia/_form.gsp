@@ -58,7 +58,7 @@
 	</label>
 	
 	<g:select name="members" from="${Member.list()}" size="10" multiple="true" optionKey="id"
-          value="${conferenciaInstance?.members ? conferenciaInstance.members : Member.findByUsername(SecurityUtils.subject?.principal).id}" />
+          value="${conferenciaInstance?.membersSelected(SecurityUtils.subject?.principal)}" />
 
 </div>
 

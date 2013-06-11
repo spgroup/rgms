@@ -63,6 +63,14 @@ abstract class Publication {
 		return result;
 	}
 
+	public Set membersSelected(loggedUsername) {
+#if ($Autofill)
+		return members ? members : [ Member.findByUsername(loggedUsername).id ];
+#else
+		return members;
+#end
+	}
+
 //	public String retPrimeiroAutor(){
 //		String[] quebraString = this.author.tokenize(",")
 //		String nomeAutor = quebraString[0]

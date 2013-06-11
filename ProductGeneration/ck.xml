@@ -270,5 +270,7 @@
 <configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Dissertacao.feature</args></transformation></configuration>
 <configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>technicalreportFeature,test/cucumber/TechnicalReport.feature</args></transformation></configuration>
 <configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/TechnicalReport.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>publication,grails-app/domain/rgms/publication/Publication.groovy</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/Publication.groovy</args></transformation></configuration>
 
 </configurationModel>
