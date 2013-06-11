@@ -32,8 +32,10 @@ Feature: BookChapter
     And I select the Novo BookChapter option at the book chapter page
     Then I can fill the book chapter details
 
+#if ($Autofill)
   Scenario: new book chapter filled with user data by default
     Given I am at the publication menu
     When I select the "Book Chapter" option at the publication menu
     And I select the Novo BookChapter option at the book chapter page
     Then I see my user listed as a member of book chapter by default
+#end

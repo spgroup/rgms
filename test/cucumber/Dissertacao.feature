@@ -40,10 +40,12 @@ Scenario: delete dissertation
     And I select "Dissertacao Teste4" at the dissertation page
     And I delete it
     Then the system has no dissertation entitled "Dissertacao Teste4"
-    
+
+#if ($Autofill)
 Scenario: create a new dissertation with user data already filled by default
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
     And I select the new dissertation option at the dissertation page
     Then I see my user listed as an author member of dissertation by default
     And I see my school name as school of dissertation by default
+#end

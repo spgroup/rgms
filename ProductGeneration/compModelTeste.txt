@@ -188,3 +188,10 @@ publications => webapp/reports/report_Bundle/publications.jrxml;
 report => webapp/reports/report_Bundle/report.jrxml;
 report1 => webapp/reports/report_Bundle/report1.jrxml;
 researchGroupReport => webapp/reports/report_Bundle/researchGroup.jrxml;
+
+ferramentaFeature => test/cucumber/Ferramenta.feature;
+bookchapterFeature => test/cucumber/BookChapter.feature;
+dissertacaoFeature => test/cucumber/Dissertacao.feature;
+conferenciaFeature => test/cucumber/Conferencia.feature;
+technicalreportFeature => test/cucumber/TechnicalReport.feature;
+

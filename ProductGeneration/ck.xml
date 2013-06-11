@@ -16,6 +16,10 @@
 <transformation><name>createBuildEntries</name><args>Bibtex</args></transformation>
 </configuration>
 <configuration>
+<expression>Autofill</expression>
+<transformation><name>createBuildEntries</name><args>Autofill</args></transformation>
+</configuration>
+<configuration>
 <expression>Website</expression>
 <transformation><name>createBuildEntries</name><args>Website</args></transformation>
 </configuration>
@@ -255,4 +259,16 @@
 		<args>home,grails-app/views/bibtexFile/home.gsp</args>
 	</transformation>
 </configuration>
+
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>ferramentaFeature,test/cucumber/Ferramenta.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Ferramenta.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>bookchapterFeature,test/cucumber/BookChapter.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/BookChapter.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>conferenciaFeature,test/cucumber/Conferencia.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Conferencia.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>dissertacaoFeature,test/cucumber/Dissertacao.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Dissertacao.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>technicalreportFeature,test/cucumber/TechnicalReport.feature</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/TechnicalReport.feature</args></transformation></configuration>
+
 </configurationModel>

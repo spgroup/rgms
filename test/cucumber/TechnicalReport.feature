@@ -28,8 +28,10 @@ Scenario: edit existing technical report wrong value
 	When	I edit the technical report title from "NFL Languages System" to ""
 	Then	The technical report "NFL Languages System" is not updated by the system
 
+#if ($Autofill)
 Scenario: new technical report web has user data already filled by default
     Given I am at the publications menu
     And I select the "Technical Report" option at the publications menu
     When I click on "New TechnicalReport" option at Technical Report list
     Then I see my user listed as an author member of technical report by default
+#end
