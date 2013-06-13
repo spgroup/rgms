@@ -26,3 +26,28 @@
 	<g:textField id="visitor" name="name" from="${rgms.visit.Visitor.list()}" optionKey="id" required="" value="${visitInstance?.visitor?.id}" class="many-to-one"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'researchGroup', 'error')} required">
+	<label for="researchGroup">
+		<g:message code="visit.visitor.label" default="Research Group" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="researchGroup" name="nameGroup" from="${rgms.member.ResearchGroup.list()}" valGroue="${visitInstance?.researchGroup?.id}" class="many-to-one"/>
+</div>
+
+<!-- #if($twitter) -->
+    <div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'twitterAccessToken', 'error')} required">
+	  <label for="twitterAccessToken">
+		  <g:message code="member.twitterAccessToken.label" default="Twitter Access Token" />
+		  <span class="required-indicator">*</span>
+      </label>
+	  <g:textField name="twitterAccessToken" maxlength="20"  value="${visitInstance?.visitor?.twitterAccessToken}"  />
+     </div>
+ 
+     <div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'twitterAccessSecret', 'error')} required">
+	   <label for="twitterAccessSecret">
+		 <g:message code="member.twitterAccessSecret.label" default="Twitter Access Secret" />
+		 <span class="required-indicator">*</span>
+	   </label>
+	   <g:textField name="twitterAccessSecret" maxlength="20"  value="${visitInstance?.visitor?.twitterAccessSecret}"  />
+      </div>
+<!-- #end  -->

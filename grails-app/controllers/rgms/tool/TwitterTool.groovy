@@ -10,14 +10,14 @@ public class TwitterTool{
     final static String consumerKey = "ZHgJv54dR7ZkYuKLvBeFJA";
     final static String consumerSecret = "9Qj0OVOSEbkVOdCl4X1XUnoHSA46lQuAF3zCd7Gdk";
 
-    static twittersHistory = []
+	static twittersHistory = []
 
     public static void sendGTwitter(String articleName, String accessToken, String accessSecret, String text){
         TwitterFactory factory = new TwitterFactory()
         Twitter twitter = factory.getInstance()
         AccessToken accessTokenO = new AccessToken(accessToken, accessSecret)
-
-        twitter.setOAuthConsumer(consumerKey, consumerSecret)
+    
+		twitter.setOAuthConsumer(consumerKey, consumerSecret)
         twitter.setOAuthAccessToken(accessTokenO)
 		def today = new Date ()
         Status status = twitter.updateStatus(today+" - "+text)

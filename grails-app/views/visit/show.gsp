@@ -49,6 +49,19 @@
 					
 				</li>
 				</g:if>
+				
+				<g:if test="${visitInstance?.researchGroup}">
+				<li class="fieldcontain">
+					<span id="visitor-label" class="property-label"><g:message code="visit.visitor.label" default="Research Group" /></span>
+					
+						<span class="property-value" aria-labelledby="visitor-label">
+							<g:link controller="researchGroup" action="show" id="${visitInstance?.researchGroup?.id}">
+							     ${visitInstance?.researchGroup?.encodeAsHTML()}
+							</g:link>
+					  </span>
+					
+				</li>
+				</g:if>
 			
 			</ol>
 			<g:form>

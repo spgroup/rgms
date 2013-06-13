@@ -39,8 +39,9 @@ class PeriodicoController {
 		final def twitterAccessToken = member.twitterAccessToken
 		final def twitterAccessSecret = member.twitterAccessSecret
 		final def text = "New periodic published: "+ periodicoInstance.title + " #RMGS"
+
 		if (twitterAccessToken) {
-			TwitterTool.sendGTwitter(periodicoInstance.title,twitterAccessToken, twitterAccessSecret
+				TwitterTool.sendGTwitter(periodicoInstance.title,twitterAccessToken, twitterAccessSecret
 					, text)
 		}
 //#end

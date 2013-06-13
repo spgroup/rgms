@@ -2,6 +2,9 @@ package rgms.visit
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import rgms.member.ResearchGroup
+import rgms.tool.TwitterTool
+
 class VisitController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -23,14 +26,36 @@ class VisitController {
 		def visitInstance
 		String nome  = params.get("name")
 		
+		//#if( $twitter )
+		  String twitterAccessToken = params.get("twitterAccessToken");
+		  String twitterAccessSecret = params.get("twitterAccessSecret");
+		//#end
+		
 		if (Visitor.findByName(nome) == null){
-			Visitor novoVisitante = new Visitor(name:nome)
+			Visitor novoVisitante
+			
+			//#if( $twitter )
+			   novoVisitante = new Visitor(name:nome,twitterAccessToken:twitterAccessToken,twitterAccessSecret:twitterAccessSecret)
+		    //#else
+			   novoVisitante = new Visitor(name:nome)
+			//#end
+			
 			novoVisitante.save()
 		
 			Date dataInicio = params.get("dataInicio")
 			Date dataFim = params.get("dataFim")
+			String researchGroupName = params.get("nameGroup");
+			ResearchGroup researchGroup = ResearchGroup.findByName(researchGroupName);
 			
-			visitInstance = new Visit(dataInicio: dataInicio,dataFim: dataFim,visitor: novoVisitante)
+			visitInstance = new Visit(dataInicio: dataInicio,dataFim: dataFim,visitor: novoVisitante,researchGroup:researchGroup)
+			
+			//#if( $twitter )
+		    	final def text = "Nova visita agendada, inicio dia " + dataInicio + " até dia  " + dataFim + " #RMGS"
+	                  def textTitulo = "Visita " + nome + ":" + dataInicio + "-" + dataFim; 
+			    if (twitterAccessToken) {
+				    	TwitterTool.sendGTwitter(textTitulo,twitterAccessToken, twitterAccessSecret, text)
+			     }
+		    //#end
 		
 		}else{
 			params.visitor = Visitor.findByName(nome)

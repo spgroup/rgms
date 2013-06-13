@@ -20,10 +20,6 @@ editMember => grailsapp/views/member/edit.gsp;
 listMember => grailsapp/views/member/list.gsp;
 showMember => grailsapp/views/member/show.gsp;
 
-createRole => grailsapp/views/role/create.gsp;
-editRole => grailsapp/views/role/edit.gsp;
-listRole => grailsapp/views/role/list.gsp;
-showRole => grailsapp/views/role/show.gsp;
 
 showHistory => grailsapp/views/record/show.gsp;
 listHistory => grailsapp/views/record/list.gsp;
@@ -99,24 +95,29 @@ createtese => grailsapp/views/tese/create.gsp;
 listtese=> grailsapp/views/tese/list.gsp;
 formtese=> grailsapp/views/tese/form.gsp;
 
+showvisit => grailsapp/views/visit/show.gsp;
+editvisit => grailsapp/views/visit/edit.gsp;
+createvisit => grailsapp/views/visit/create.gsp;
+listvisit => grailsapp/views/visit/list.gsp;
+formvisit => grailsapp/views/visit/form.gsp;
 
 
-conference => grailsapp/domain/rgms/Conferencia.groovy;
-dissertation => grailsapp/domain/rgms/Dissertacao.groovy;
-tool => grailsapp/domain/rgms/Ferramenta.groovy;
+conference => grailsapp/domain/rgms/publication/Conferencia.groovy;
+dissertation => grailsapp/domain/rgms/publication/Dissertacao.groovy;
+tool => grailsapp/domain/rgms/publication/Ferramenta.groovy;
 memberDomain => grailsapp/domain/rgms/Member.groovy;
 memberShip => grailsapp/domain/rgms/Membership.groovy;
 passwordResetRequest => grailsapp/domain/rgms/PasswordResetRequest.groovy;
-periodical => grailsapp/domain/rgms/Periodico.groovy;
-publication => grailsapp/domain/rgms/Publication.groovy;
-publicacao => grailsapp/domain/rgms/Publicacao.groovy;
+periodical => grailsapp/domain/rgms/publication/Periodico.groovy;
+publication => grailsapp/domain/rgms/publication/Publication.groovy;
 history => grailsapp/domain/rgms/Record.groovy;
-researchGroup => grailsapp/domain/rgms/ResearchGroup.groovy;
+researchGroup => grailsapp/domain/rgms/publication/ResearchGroup.groovy;
 Role => grailsapp/domain/rgms/Role.groovy;
-thesis => grailsapp/domain/rgms/Tese.groovy;
-researchLine => grailsapp/domain/rgms/ResearchLine.groovy;
+thesis => grailsapp/domain/rgms/publication/Tese.groovy;
+researchLine => grailsapp/domain/rgms/publication/ResearchLine.groovy;
 defaultValueManager => grailsapp/domain/rgms/DefaultValueManager.groovy;
 
+initial => grailsapp/views/initial.gsp;
 
 ApplicationResources => grailsapp/conf/ApplicationResources.groovy;
 BootStrap => grailsapp/conf/BootStrap.groovy;
@@ -169,6 +170,7 @@ messages_th => grailsapp/i18n/messages_th.properties;
 messages_zh_CN => grailsapp/i18n/messages_zh_CN.properties;
 shiro => grailsapp/i18n/shiro.properties;
 
+TwitterTool => grailsapp/controllers/rgms/tool/TwitterTool.groovy;
 
 
 ShiroDbRealm => grailsapp/realms/ShiroDbRealm.groovy;
@@ -187,5 +189,3 @@ publications => webapp/reports/report_Bundle/publications.jrxml;
 report => webapp/reports/report_Bundle/report.jrxml;
 report1 => webapp/reports/report_Bundle/report1.jrxml;
 researchGroup => webapp/reports/report_Bundle/researchGroup.jrxml;
-
-TwitterTool => grailsapp/controllers/rgms/tool/TwitterTool.groovy;

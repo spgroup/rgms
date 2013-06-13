@@ -29,6 +29,8 @@
 						<g:sortableColumn property="dataFim" title="${message(code: 'visit.dataFim.label', default: 'Data Fim')}" />
 					
 						<th><g:message code="visit.visitor.label" default="Visitor" /></th>
+						
+					    <th><g:message code="researchGroup.name.label" default="Reserarch Group" /></th>	
 					
 					</tr>
 				</thead>
@@ -48,6 +50,7 @@
 					
 						<td>${fieldValue(bean: visitInstance, field: "visitor")}</td>
 					
+						<td>${fieldValue(bean: visitInstance, field: "researchGroup")}</td>
 					</tr>
 				</g:each>
 				</tbody>
