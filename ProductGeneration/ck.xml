@@ -245,8 +245,7 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>createDissertation,grails-app/views/dissertacao/create.gsp
-			</args>
+			<args>createDissertation,grails-app/views/dissertacao/create.gsp</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
@@ -458,8 +457,7 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>ApplicationResources,grails-app/conf/ApplicationResources.groovy
-			</args>
+			<args>ApplicationResources,grails-app/conf/ApplicationResources.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
@@ -485,8 +483,7 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>conference,grails-app/domain/rgms/publication/Conferencia.groovy
-			</args>
+			<args>conference,grails-app/domain/rgms/publication/Conferencia.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
@@ -541,19 +538,12 @@
 			<args>grails-app/domain/rgms/publication/Periodico.groovy</args>
 		</transformation>
 	</configuration>
-	<configuration xmlns="">
-		<expression>rgms</expression>
-		<transformation>
-			<name>selectAndMoveComponent</name>
-			<args>defaultValueManager,grails-app/domain/rgms/DefaultValueManager.groovy</args>
-		</transformation>
-	</configuration>
 
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>memberShip,grails-app/domain/rgms/Membership.groovy</args>
+			<args>memberShip,grails-app/domain/rgms/member/Membership.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -561,7 +551,7 @@
 		<expression>History</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>history,grails-app/domain/rgms/Record.groovy</args>
+			<args>history,grails-app/domain/rgms/member/Record.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -569,15 +559,14 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>researchGroup,grails-app/domain/rgms/ResearchGroup.groovy
-			</args>
+			<args>researchGroup,grails-app/domain/rgms/member/ResearchGroup.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/domain/rgms/ResearchGroup.groovy</args>
+			<args>grails-app/domain/rgms/member/ResearchGroup.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -585,7 +574,7 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>researchLine,grails-app/domain/rgms/ResearchLine.groovy</args>
+			<args>researchLine,grails-app/domain/rgms/publication/ResearchLine.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -593,7 +582,7 @@
 		<expression>Auth</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>Role,grails-app/domain/rgms/Role.groovy</args>
+			<args>Role,grails-app/domain/rgms/member/Role.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -601,14 +590,14 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>thesis,grails-app/domain/rgms/Tese.groovy</args>
+			<args>thesis,grails-app/domain/rgms/publication/Tese.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/domain/rgms/Tese.groovy</args>
+			<args>grails-app/domain/rgms/publication/Tese.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -618,15 +607,14 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>ConferenciaController,grails-app/controllers/rgms/ConferenciaController.groovy
-			</args>
+			<args>ConferenciaController,grails-app/controllers/rgms/publication/ConferenciaController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/ConferenciaController.groovy</args>
+			<args>grails-app/controllers/rgms/publication/ConferenciaController.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -634,15 +622,14 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>DissertacaoController,grails-app/controllers/rgms/DissertacaoController.groovy
-			</args>
+			<args>DissertacaoController,grails-app/controllers/rgms/publication/DissertacaoController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/DissertacaoController.groovy</args>
+			<args>grails-app/controllers/rgms/publication/DissertacaoController.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -650,14 +637,14 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>FerramentaController,grails-app/controllers/rgms/FerramentaController.groovy</args>
+			<args>FerramentaController,grails-app/controllers/rgms/publication/FerramentaController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/FerramentaController.groovy</args>
+			<args>grails-app/controllers/rgms/publication/FerramentaController.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -665,15 +652,14 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>MembershipController,grails-app/controllers/rgms/MembershipController.groovy
-			</args>
+			<args>MembershipController,grails-app/controllers/rgms/member/MembershipController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/MembershipController.groovy</args>
+			<args>grails-app/controllers/rgms/member/MembershipController.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -681,15 +667,14 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>PeriodicoController,grails-app/controllers/rgms/PeriodicoController.groovy
-			</args>
+			<args>PeriodicoController,grails-app/controllers/rgms/publication/PeriodicoController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/PeriodicoController.groovy</args>
+			<args>grails-app/controllers/rgms/publication/PeriodicoController.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -697,14 +682,14 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>PublicacaoController,grails-app/controllers/rgms/PublicacaoController.groovy</args>
+			<args>PublicationController,grails-app/controllers/rgms/publication/PublicationController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/PublicacaoController.groovy</args>
+			<args>grails-app/controllers/rgms/publication/PublicationController.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -712,15 +697,14 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>PublicationController,grails-app/controllers/rgms/PublicationController.groovy
-			</args>
+			<args>ResearchGroupController,grails-app/controllers/rgms/member/ResearchGroupController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/PublicationController.groovy</args>
+			<args>grails-app/controllers/rgms/member/ResearchGroupController.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -728,32 +712,29 @@
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>ResearchGroupController,grails-app/controllers/rgms/ResearchGroupController.groovy
-			</args>
+			<args>TeseController,grails-app/controllers/rgms/publication/TeseController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/ResearchGroupController.groovy
-			</args>
+			<args>grails-app/controllers/rgms/publication/TeseController.groovy</args>
 		</transformation>
 	</configuration>
 
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
-			<name>selectAndMoveComponent</name>
-			<args>TeseController,grails-app/controllers/rgms/TeseController.groovy
-			</args>
+			<name>preprocessFiles</name>
+			<args>grails-app/domain/rgms/member/Member.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
-			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/TeseController.groovy</args>
+			<name>selectAndMoveComponent</name>
+			<args>memberDomain,grails-app/domain/rgms/member/Member.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -761,49 +742,7 @@
 		<expression>Auth</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>AuthControllerr,grails-app/controllers/AuthController.groovy
-			</args>
-		</transformation>
-	</configuration>
-
-	<configuration xmlns="">
-		<expression>Auth</expression>
-		<transformation>
-			<name>selectAndMoveComponent</name>
-			<args>ShiroRoleController,grails-app/controllers/ShiroRoleController.groovy
-			</args>
-		</transformation>
-	</configuration>
-
-	<configuration xmlns="">
-		<expression>Auth</expression>
-		<transformation>
-			<name>selectAndMoveComponent</name>
-			<args>ShiroUserController,grails-app/controllers/ShiroUserController.groovy</args>
-		</transformation>
-	</configuration>
-
-	<configuration xmlns="">
-		<expression>rgms</expression>
-		<transformation>
-			<name>preprocessFiles</name>
-			<args>grails-app/domain/rgms/Member.groovy</args>
-		</transformation>
-	</configuration>
-	<configuration xmlns="">
-		<expression>rgms</expression>
-		<transformation>
-			<name>selectAndMoveComponent</name>
-			<args>memberDomain,grails-app/domain/rgms/Member.groovy</args>
-		</transformation>
-	</configuration>
-
-	<configuration xmlns="">
-		<expression>Auth</expression>
-		<transformation>
-			<name>selectAndMoveComponent</name>
-			<args>passwordResetRequest,grails-app/domain/ShiroPasswordResetRequest.groovy
-			</args>
+			<args>passwordResetRequest,grails-app/domain/rgms/member/PasswordResetRequest.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
@@ -825,14 +764,7 @@
 		<expression>Auth</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>passwordResetRequest,grails-app/domain/ShiroRole.groovy</args>
-		</transformation>
-	</configuration>
-	<configuration xmlns="">
-		<expression>Auth</expression>
-		<transformation>
-			<name>selectAndMoveComponent</name>
-			<args>passwordResetRequest,grails-app/domain/ShiroUser.groovy</args>
+			<args>passwordResetRequest,grails-app/domain/rmgs/member/PasswordResetRequest.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -852,43 +784,31 @@
 	</configuration>
 
 	<configuration xmlns="">
-		<expression>Auth</expression>
-		<transformation>
-			<name>selectAndMoveComponent</name>
-			<args>ShiroSecurityFilters,grails-app/conf/ShiroSecurityFilters.groovy</args>
-		</transformation>
-	</configuration>
-
-	<configuration xmlns="">
 		<expression>Website</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>ferramentas,web-app/reports/report_Bundle/ferramentas.jrxml
-			</args>
+			<args>ferramentas,web-app/reports/report_Bundle/ferramentas.jrxml</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>Website</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>memberPubs,web-app/reports/report_Bundle/memberPubs.jrxml
-			</args>
+			<args>memberPubs,web-app/reports/report_Bundle/memberPubs.jrxml</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>Website</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>memberTools,web-app/reports/report_Bundle/memberTools.jrxml
-			</args>
+			<args>memberTools,web-app/reports/report_Bundle/memberTools.jrxml</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>Website</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>publications,web-app/reports/report_Bundle/publications.jrxml
-			</args>
+			<args>publications,web-app/reports/report_Bundle/publications.jrxml</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
@@ -909,8 +829,7 @@
 		<expression>Website</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>researchGroup,web-app/reports/report_Bundle/researchGroup.jrxml
-			</args>
+			<args>researchGroup,web-app/reports/report_Bundle/researchGroup.jrxml</args>
 		</transformation>
 	</configuration>
 
@@ -947,21 +866,21 @@
 		<expression>Auth</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>AuthController,grails-app/controllers/rgms/AuthController.groovy</args>
+			<args>AuthController,grails-app/controllers/rgms/authetication/AuthController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
-			<args>grails-app/controllers/rgms/MemberController.groovy</args>
+			<args>grails-app/controllers/rgms/member/MemberController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>MemberController,grails-app/controllers/rgms/MemberController.groovy</args>
+			<args>MemberController,grails-app/controllers/rgms/member/MemberController.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -969,14 +888,14 @@
 		<expression>History</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>RecordController,grails-app/controllers/rgms/RecordController.groovy</args>
+			<args>RecordController,grails-app/controllers/rgms/member/RecordController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>Auth</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>RoleController,grails-app/controllers/rgms/RoleController.groovy</args>
+			<args>RoleController,grails-app/controllers/rgms/member/RoleController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
@@ -1040,8 +959,7 @@
 		<expression>visit</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>VisitController,grails-app/controllers/rgms/VisitController.groovy
-			</args>
+			<args>VisitController,grails-app/controllers/rgms/VisitController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
@@ -1059,5 +977,180 @@
 			<args>TwitterTool,grails-app/controllers/rgms/tool/TwitterTool.groovy</args>
 		</transformation>
 	</configuration>
-
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>ArticleFeature,test/cucumber/Article.feature</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>test/cucumber/Article.feature</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>env,test/cucumber/hooks/env.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>ArticleSteps,test/cucumber/steps/ArticleSteps.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>test/cucumber/steps/ArticleSteps.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>GebConfig,test/functional/GebConfig.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>TestDataAndOperation,test/functional/steps/TestDataAndOperations.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>test/functional/steps/TestDataAndOperations.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>TestDataAuthentication,test/functional/steps/TestDataAuthentication.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>test/functional/steps/TestDataAuthentication.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>ArticleCreatePage,test/functional/pages/ArticleCreatePage.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>ArticleEditPage,test/functional/pages/ArticleEditPage.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>ArticleShowPage,test/functional/pages/ArticleShowPage.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>ArticlePage,test/functional/pages/ArticlesPage.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>UserRegisterPage,test/functional/pages/UserRegisterPage.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<!-- File not fould 
+	<configuration xmlns="">
+		<expression>rgms</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>defaultValueManager,grails-app/domain/rgms/DefaultValueManager.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Auth</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>AuthControllerr,grails-app/controllers/AuthController.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Auth</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>ShiroRoleController,grails-app/controllers/ShiroRoleController.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Auth</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>ShiroUserController,grails-app/controllers/ShiroUserController.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Auth</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>passwordResetRequest,grails-app/domain/ShiroUser.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Auth</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>ShiroSecurityFilters,grails-app/conf/ShiroSecurityFilters.groovy</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>rgms</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>PublicacaoController,grails-app/controllers/rgms/PublicacaoController.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>rgms</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>grails-app/controllers/rgms/PublicacaoController.groovy</args>
+		</transformation>
+	</configuration>
+	 -->
 </configurationModel>
