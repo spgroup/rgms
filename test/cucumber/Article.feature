@@ -64,7 +64,7 @@ Scenario: edit existing article web
    	When 	I select to view "A theory of software product line refinement" in resulting list and I change the article title to "REVIEWED"
     Then 	I can select the "Alterar" option 
 
-#if( $twitter )
+#if( $Twitter )
   Scenario: Add a new book chapter twitting it
     Given There is a user "twitteruser" with a twitter account
     And I am logged as "twitteruser" and at the Add Article Page
@@ -72,7 +72,7 @@ Scenario: edit existing article web
     Then A twitter is added to my twitter account regarding the new article "Empirical Studies in Product Line"
 #end
 
-#if( $twitter )
+#if( $Twitter )
   Scenario: Add a new book chapter with twitter
     Given There is a user "notwitteruser" with a twitter account
     And I am logged as "notwitteruser" and at the Add Article Page

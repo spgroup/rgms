@@ -189,7 +189,7 @@ Then(~'I can select the "([^"]*)" option$') { String option ->
 	page.select(option)
 }
 
-//#if( $twitter )
+//#if( $Twitter )
 Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName ->
 	to UserRegisterPage
 	at UserRegisterPage

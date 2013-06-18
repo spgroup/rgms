@@ -3,7 +3,7 @@ package rgms.visit
 class Visitor {
 	
 	String name
-	//#if($twitter)
+	//#if($Twitter)
 		String twitterAccessToken
 		String twitterAccessSecret
 	//#end

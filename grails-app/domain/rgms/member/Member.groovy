@@ -17,7 +17,7 @@ class Member {
     String city
     String country
 	
-	//#if($twitter)
+	//#if($Twitter)
 	String twitterAccessToken
 	String twitterAccessSecret
 	//#end
@@ -52,7 +52,7 @@ class Member {
     	country(nullable: true)
     	active(nullable: true)
         enabled(blank: false)
-		//#if($twitter)
+		//#if($Twitter)
 		twitterAccessToken nullable: true
 		twitterAccessSecret nullable: true
 		//#end

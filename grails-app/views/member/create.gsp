@@ -126,7 +126,7 @@
                                     <g:checkBox name="active" value="${memberInstance?.active}" />
                                 </td>
                             </tr>
-<!-- #if($twitter) -->
+<!-- #if($Twitter) -->
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="twitterAccessToken"><g:message code="member.twitterAccessToken.label" default="Twitter Access Token" /></label>
