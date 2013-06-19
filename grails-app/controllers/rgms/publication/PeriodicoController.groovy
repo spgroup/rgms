@@ -1,9 +1,6 @@
 package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
-import org.xml.sax.SAXParseException
 import rgms.XMLService
 
 class PeriodicoController {
@@ -23,25 +20,47 @@ class PeriodicoController {
         [periodicoInstance: new Periodico(params)]
     }
 
-    def save () {
-        def periodicoInstance = new Periodico(params)
+    def save() {
         PublicationController pb = new PublicationController()
-
-        if (!pb.upload(periodicoInstance) || !periodicoInstance.save(flush: true)) {
-            render(view: "create", model: [periodicoInstance: periodicoInstance])
+        def periodicoInstance = new Periodico(params)
+        if (Periodico.findByTitle(params.title)) {
+            handleSavingError(periodicoInstance, "Periódico não cadastrado porque já existe um periódico com o mesmo título")
             return
         }
-
+        if (!pb.upload(periodicoInstance)) {
+            handleSavingError(periodicoInstance, "Periódico não cadastrado devido a problema na gravação do arquivo")
+            return
+        }
+        if (!periodicoInstance.save(flush: true)) {
+            handleSavingError(periodicoInstance, "Periódico não cadastrado devido a problema na gravação")
+            return
+        }
         flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
         redirect(action: "show", id: periodicoInstance.id)
     }
 
-    def show() {
+    def handleSavingError(Periodico periodicoInstance, String message) {
+        periodicoInstance.discardMembers()
+        flash.message = message
+        render(view: "create", model: [periodicoInstance: periodicoInstance])
+    }
+
+    def accessArticle() {
         def periodicoInstance = Periodico.get(params.id)
+        if (!periodicoInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
+            redirect(action: "list")
+            return
+        }
+        [periodicoInstance: periodicoInstance]
+    }
+
+    def show() {
+        accessArticle()
     }
 
     def edit() {
-        def periodicoInstance = Periodico.get(params.id)
+        accessArticle()
     }
 
     def update() {
@@ -93,22 +112,22 @@ class PeriodicoController {
             redirect(action: "show", id: params.id)
         }
     }
-	
-	private checkPeriodicoInstance(Map flash, Map params, Periodico periodicoInstance) {
-		if (!periodicoInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
-			redirect(action: "list")
-			return
-		}
 
-		[periodicoInstance: periodicoInstance]
-	}
+    private checkPeriodicoInstance(Map flash, Map params, Periodico periodicoInstance) {
+        if (!periodicoInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [periodicoInstance: periodicoInstance]
+    }
     //#if($XMLImp && $Journal)
     Closure returnWithMessage = {
         String msg ->
 
-        redirect(action: "list")
-        flash.message = message(code: msg)
+            redirect(action: "list")
+            flash.message = message(code: msg)
     }
 
     def uploadXMLPeriodico() {
@@ -121,11 +140,11 @@ class PeriodicoController {
     Closure saveJournals = {
         Node xmlFile ->
 
-        Node artigosPublicados = (Node) ((Node)xmlFile.children()[1]).children()[1]
-        List<Object> artigosPublicadosChildren = artigosPublicados.children()
+            Node artigosPublicados = (Node) ((Node) xmlFile.children()[1]).children()[1]
+            List<Object> artigosPublicadosChildren = artigosPublicados.children()
 
-        for (int i = 0; i < artigosPublicadosChildren.size(); ++i)
-            saveNewJournal(artigosPublicadosChildren, i)
+            for (int i = 0; i < artigosPublicadosChildren.size(); ++i)
+                saveNewJournal(artigosPublicadosChildren, i)
     }
 
     private void saveNewJournal(List artigosPublicadosChildren, int i) {
