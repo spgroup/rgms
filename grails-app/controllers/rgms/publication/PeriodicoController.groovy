@@ -24,15 +24,15 @@ class PeriodicoController {
         PublicationController pb = new PublicationController()
         def periodicoInstance = new Periodico(params)
         if (Periodico.findByTitle(params.title)) {
-            handleSavingError(periodicoInstance, "Periódico não cadastrado porque já existe um periódico com o mesmo título")
+            handleSavingError(periodicoInstance, 'periodico.duplicatetitle.failure')
             return
         }
         if (!pb.upload(periodicoInstance)) {
-            handleSavingError(periodicoInstance, "Periódico não cadastrado devido a problema na gravação do arquivo")
+            handleSavingError(periodicoInstance, 'periodico.filesaving.failure')
             return
         }
         if (!periodicoInstance.save(flush: true)) {
-            handleSavingError(periodicoInstance, "Periódico não cadastrado devido a problema na gravação")
+            handleSavingError(periodicoInstance, 'periodico.saving.failure')
             return
         }
         flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
@@ -45,6 +45,15 @@ class PeriodicoController {
         render(view: "create", model: [periodicoInstance: periodicoInstance])
     }
 
+    def show() {
+        accessArticle()
+    }
+
+    def edit() {
+        accessArticle()
+    }
+
+
     def accessArticle() {
         def periodicoInstance = Periodico.get(params.id)
         if (!periodicoInstance) {
@@ -53,14 +62,6 @@ class PeriodicoController {
             return
         }
         [periodicoInstance: periodicoInstance]
-    }
-
-    def show() {
-        accessArticle()
-    }
-
-    def edit() {
-        accessArticle()
     }
 
     def update() {
