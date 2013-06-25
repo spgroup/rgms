@@ -64,11 +64,11 @@ abstract class Publication {
 	}
 
 	public Set membersSelected(loggedUsername) {
-#if ($Autofill)
+//#if ($Autofill)
 		return members ? members : [ Member.findByUsername(loggedUsername).id ];
-#else
+//#else
 		return members;
-#end
+//#end
 	}
 
 //	public String retPrimeiroAutor(){

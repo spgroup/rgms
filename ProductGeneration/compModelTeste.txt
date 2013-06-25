@@ -201,3 +201,12 @@ testFunctionalFerramentaCreate => test/functional/pages/FerramentaCreate.groovy;
 testFunctionalDissertationCreate => test/functional/pages/DissertationCreate.groovy;
 testFunctionalBookChapterCreatePage => test/functional/pages/BookChapterCreatePage.groovy;
 testFunctionalConferenciaCreatePage => test/functional/pages/ConferenciaCreatePage.groovy;
+
+bibtexParse => grailsapp/domain/rgms/publication/BibtexParse.groovy;
+bibtexFile => grailsapp/domain/rgms/publication/BibtexFile.groovy;
+bibtexFileController => grailsapp/controllers/rgms/publication/BibtexFileController.groovy;
+sampleBibtex => test/cucumber/steps/sample.bibtex;
+homeBibtexFile => grailsapp/views/bibtexFile/home.gsp;
+bibtexImportFeature => test/cucumber/BibtexImport.feature;
+bibtexImportSteps => test/cucumber/steps/BibtexImportSteps.groovy;
+

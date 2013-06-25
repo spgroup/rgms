@@ -13,12 +13,12 @@ class PublicationController {
         render(view: "publication")
     }
 		
-#if($Bibtex)
+//#if($Bibtex)
 	def generateBib() {
 		def publication = Publication.get(params.id)
 		render(text: publication.generateBib(), contentType: "text/txt", encoding: "UTF-8")
 	}
-#end
+//#end
 	
 	def upload(Publication publicationInstance) {
 			

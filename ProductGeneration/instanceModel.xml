@@ -6,6 +6,8 @@
 	
 	<feature name="Bibtex_Feature" type="NONE" id="Bibtex"></feature>
 
+	<feature name="ImportBibtex_Feature" type="NONE" id="ImportBibtex"></feature>
+
 	<feature name="Autofill_Feature" type="NONE" id="Autofill"></feature>
 	
 	<feature name="Generate_Website" type="NONE" id="Website">
