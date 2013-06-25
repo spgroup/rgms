@@ -1,8 +1,8 @@
 package pages
 
-import geb.Page
+import pages.FormPage
 
-class ConferenciaCreatePage extends Page{
+class ConferenciaCreatePage extends FormPage {
     static url = "conferencia/create"
 
     static at = {
@@ -31,7 +31,4 @@ class ConferenciaCreatePage extends Page{
         $("form").create().click()
     }
 
-    def selectedMembers() {
-        $("form").members
-    }
 }

@@ -1,8 +1,8 @@
 package pages
 
-import geb.Page
+import pages.FormPage
 
-class BookChapterCreatePage extends Page{
+class BookChapterCreatePage extends FormPage {
     static url = "bookChapter/create"
 
     static at = {
@@ -29,9 +29,5 @@ class BookChapterCreatePage extends Page{
     def fillTitle (){
         $("form").title = "A theory of Software Product Line Refinement"
         $("form").create().click()
-    }
-
-    def selectedMembers() {
-        $("form").members
     }
 }

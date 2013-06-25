@@ -195,3 +195,9 @@ dissertacaoFeature => test/cucumber/Dissertacao.feature;
 conferenciaFeature => test/cucumber/Conferencia.feature;
 technicalreportFeature => test/cucumber/TechnicalReport.feature;
 
+testFunctionalFormPage => test/functional/pages/FormPage.groovy;
+testFunctionalTechnicalReportCreatePage => test/functional/pages/TechnicalReportCreatePage.groovy;
+testFunctionalFerramentaCreate => test/functional/pages/FerramentaCreate.groovy;
+testFunctionalDissertationCreate => test/functional/pages/DissertationCreate.groovy;
+testFunctionalBookChapterCreatePage => test/functional/pages/BookChapterCreatePage.groovy;
+testFunctionalConferenciaCreatePage => test/functional/pages/ConferenciaCreatePage.groovy;

@@ -1,8 +1,8 @@
 package pages
 
-import geb.Page
+import pages.FormPage
 
-class TechnicalReportCreatePage extends Page {
+class TechnicalReportCreatePage extends FormPage {
 	static url = "technicalReport/create"
 
 	static at = {
@@ -21,8 +21,4 @@ class TechnicalReportCreatePage extends Page {
 		$("form").journal = "Theoretical Computer Science"
 		// Could parametrize, obtaining data from class TestDataAndOperations
 	}
-
-    def selectedMembers() {
-        $("form").members
-    }
 }

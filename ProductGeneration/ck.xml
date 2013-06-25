@@ -272,5 +272,11 @@
 <configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/TechnicalReport.feature</args></transformation></configuration>
 <configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>publication,grails-app/domain/rgms/publication/Publication.groovy</args></transformation></configuration>
 <configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/Publication.groovy</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalFormPage,test/functional/pages/FormPage.groovy</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalTechnicalReportCreatePage,test/functional/pages/TechnicalReportCreatePage.groovy</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalFerramentaCreate,test/functional/pages/FerramentaCreate.groovy</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalDissertationCreate,test/functional/pages/DissertationCreate.groovy</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalBookChapterCreatePage,test/functional/pages/BookChapterCreatePage.groovy</args></transformation></configuration>
+<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalConferenciaCreatePage,test/functional/pages/ConferenciaCreatePage.groovy</args></transformation></configuration>
 
 </configurationModel>
