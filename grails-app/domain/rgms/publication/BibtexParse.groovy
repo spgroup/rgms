@@ -7,6 +7,7 @@ import org.jbibtex.BibTeXString
 import org.jbibtex.Key
 import org.jbibtex.ParseException
 
+import rgms.publication.strategyBibtexParse.StrategyParseTese
 import rgms.publication.strategyBibtexParse.StrategyParseDissertacao
 
 /**
@@ -50,19 +51,13 @@ class BibtexParse {
 				
 			}
 			else if (entry.getType().equals(BibTeXEntry.TYPE_MASTERSTHESIS)) {
-				publications.add(new StrategyParseDissertacao(entry))
+				publications.add(new StrategyParseDissertacao().execute(entry))
 			}
 			else if (entry.getType().equals(BibTeXEntry.TYPE_MISC)) {
 				
 			}
 			else if (entry.getType().equals(BibTeXEntry.TYPE_PHDTHESIS)) {
-				Tese tese = new Tese()
-				tese.setTitle(entry.getField(BibTeXEntry.KEY_TITLE).toUserString())
-				tese.setSchool(entry.getField(BibTeXEntry.KEY_SCHOOL).toUserString())
-				tese.setAddress(entry.getField(BibTeXEntry.KEY_ADDRESS).toUserString())
-				tese.setPublicationDate(new Date())//TODO transformar o date para setar no objeto
-				tese.setFile("file")//TODO settar corretamente este atributo
-				publications.add(tese)
+				publications.add(new StrategyParseTese().execute(entry))
 			}
 			else if (entry.getType().equals(BibTeXEntry.TYPE_PROCEEDINGS)) {
 				
