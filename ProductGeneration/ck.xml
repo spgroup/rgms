@@ -16,6 +16,10 @@
 <transformation><name>createBuildEntries</name><args>Bibtex</args></transformation>
 </configuration>
 <configuration xmlns="">
+<expression>ImportBibtex</expression>
+<transformation><name>createBuildEntries</name><args>ImportBibtex</args></transformation>
+</configuration>
+<configuration xmlns="">
 <expression>Website</expression>
 <transformation><name>createBuildEntries</name><args>Website</args></transformation>
 </configuration>
@@ -239,23 +243,23 @@
 	</transformation>
 </configuration>
 
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>ferramentaFeature,test/cucumber/Ferramenta.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Ferramenta.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>bookchapterFeature,test/cucumber/BookChapter.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/BookChapter.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>conferenciaFeature,test/cucumber/Conferencia.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Conferencia.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>dissertacaoFeature,test/cucumber/Dissertacao.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Dissertacao.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>technicalreportFeature,test/cucumber/TechnicalReport.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/TechnicalReport.feature</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>publication,grails-app/domain/rgms/publication/Publication.groovy</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/Publication.groovy</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalFormPage,test/functional/pages/FormPage.groovy</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalTechnicalReportCreatePage,test/functional/pages/TechnicalReportCreatePage.groovy</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalFerramentaCreate,test/functional/pages/FerramentaCreate.groovy</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalDissertationCreate,test/functional/pages/DissertationCreate.groovy</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalBookChapterCreatePage,test/functional/pages/BookChapterCreatePage.groovy</args></transformation></configuration>
-<configuration><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalConferenciaCreatePage,test/functional/pages/ConferenciaCreatePage.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>ferramentaFeature,test/cucumber/Ferramenta.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Ferramenta.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>bookchapterFeature,test/cucumber/BookChapter.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/BookChapter.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>conferenciaFeature,test/cucumber/Conferencia.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Conferencia.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>dissertacaoFeature,test/cucumber/Dissertacao.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Dissertacao.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>technicalreportFeature,test/cucumber/TechnicalReport.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/TechnicalReport.feature</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>publication,grails-app/domain/rgms/publication/Publication.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/Publication.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalFormPage,test/functional/pages/FormPage.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalTechnicalReportCreatePage,test/functional/pages/TechnicalReportCreatePage.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalFerramentaCreate,test/functional/pages/FerramentaCreate.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalDissertationCreate,test/functional/pages/DissertationCreate.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalBookChapterCreatePage,test/functional/pages/BookChapterCreatePage.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>testFunctionalConferenciaCreatePage,test/functional/pages/ConferenciaCreatePage.groovy</args></transformation></configuration>
 
 </configurationModel>
