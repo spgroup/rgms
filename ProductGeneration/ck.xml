@@ -242,6 +242,27 @@
 		<args>homeBibtexFile,grails-app/views/bibtexFile/home.gsp</args>
 	</transformation>
 </configuration>
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>strategyParse,grails-app/domain/rgms/publication/strategyBibtexParse/StrategyParse.java</args>
+	</transformation>
+</configuration>
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>strategyParseDissertacao,grails-app/domain/rgms/publication/strategyBibtexParse/StrategyParseDissertacao.java</args>
+	</transformation>
+</configuration>
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>strategyParseTese,grails-app/domain/rgms/publication/strategyBibtexParse/StrategyParseTese.java</args>
+	</transformation>
+</configuration>
 
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>ferramentaFeature,test/cucumber/Ferramenta.feature</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Ferramenta.feature</args></transformation></configuration>

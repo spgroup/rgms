@@ -209,4 +209,8 @@ sampleBibtex => test/cucumber/steps/sample.bibtex;
 homeBibtexFile => grailsapp/views/bibtexFile/home.gsp;
 bibtexImportFeature => test/cucumber/BibtexImport.feature;
 bibtexImportSteps => test/cucumber/steps/BibtexImportSteps.groovy;
+strategyParse => grailsapp/domain/rgms/publication/strategyBibtexParse/StrategyParse.java;
+strategyParseDissertacao => grailsapp/domain/rgms/publication/strategyBibtexParse/StrategyParseDissertacao.java;
+strategyParseTese => grailsapp/domain/rgms/publication/strategyBibtexParse/StrategyParseTese.java;
+
 

@@ -1,12 +1,13 @@
 package rgms.publication
 
 import org.jbibtex.BibTeXDatabase
-import org.jbibtex.BibTeXEntry;
+import org.jbibtex.BibTeXEntry
 import org.jbibtex.BibTeXParser
 import org.jbibtex.BibTeXString
 import org.jbibtex.Key
 import org.jbibtex.ParseException
-import org.jbibtex.Value
+
+import rgms.publication.strategyBibtexParse.StrategyParseDissertacao
 
 /**
  *
@@ -49,13 +50,7 @@ class BibtexParse {
 				
 			}
 			else if (entry.getType().equals(BibTeXEntry.TYPE_MASTERSTHESIS)) {
-				Dissertacao dissertacao = new Dissertacao()
-				dissertacao.setTitle(entry.getField(BibTeXEntry.KEY_TITLE).toUserString())
-				dissertacao.setSchool(entry.getField(BibTeXEntry.KEY_SCHOOL).toUserString())
-				dissertacao.setAddress(entry.getField(BibTeXEntry.KEY_ADDRESS).toUserString())
-				dissertacao.setPublicationDate(new Date())//TODO transformar o date para setar no objeto
-				dissertacao.setFile("file")//TODO tirar a obrigatoriedade. futuramente processar a url para importar 
-				publications.add(dissertacao)
+				publications.add(new StrategyParseDissertacao(entry))
 			}
 			else if (entry.getType().equals(BibTeXEntry.TYPE_MISC)) {
 				
@@ -84,7 +79,7 @@ class BibtexParse {
 		return publications
 		
 	}
-	
+
 	private static BibTeXDatabase parseBibTeX(File file) throws IOException, ParseException {
 		Reader reader = new FileReader(file);
 
