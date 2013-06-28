@@ -32,17 +32,17 @@ Feature: journal article
     Then I can fill the article details
 
   Scenario: remove existing article
-    Given    the system has article entitled "A theory of software product line refinement" with file name "TCS.pdf"
+    Given   the system has article entitled "A theory of software product line refinement" with file name "TCS-44.pdf"
     When    I delete the article "A theory of software product line refinement"
     Then    the article "A theory of software product line refinement" is properly removed by the system
 
   Scenario: list existing article
-    Given    the system has article entitled "A theory of software product line refinement" with file name "TCS.pdf"
+    Given   the system has article entitled "A theory of software product line refinement" with file name "TCS-55.pdf"
     When    I view the article list
     Then    my article list contains "A theory of software product line refinement"
 
   Scenario: edit existing article
-    Given    the system has article entitled "A theory of software product line refinement" with file name "TCS.pdf"
+    Given    the system has article entitled "A theory of software product line refinement" with file name "TCS-66.pdf"
     When    I edit the article title from "A theory of software product line refinement" to "A theory of software product line refinement REVIEWED"
     Then    the article "A theory of software product line refinement" is properly updated by the system
 
