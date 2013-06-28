@@ -150,11 +150,13 @@
 		<script type="text/javascript">
 		$(document).ready(function(){
 			var periodicoTitle="${periodicoInstance?.title}"
+			var periodicoId="${periodicoInstance?.id}"
 			var periodicoJournal="${periodicoInstance?.journal}"
 			var periodicoVolume="${periodicoInstance?.volume}"
 			var periodicoNumber="${periodicoInstance?.number}"
 			var periodicoPages="${periodicoInstance?.pages}"
 			var link = document.URL
+			var callback = "http://localhost:8080/rgms/notifyFacebook/periodico/"+periodicoId
 			$('#share_button').live('click', function(e){
 				e.preventDefault();
 				FB.ui(
@@ -167,6 +169,7 @@
 									 ', Number: '+periodicoNumber + ', Pages: '+periodicoPages,
 						message: 'Personal Message.'
 				});
+				$.get("http://localhost:8080/rgms/notifyFacebook/periodico/1");
 			});
 		});
 		</script>
