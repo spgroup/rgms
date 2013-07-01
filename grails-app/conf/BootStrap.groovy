@@ -28,8 +28,8 @@ class BootStrap {
 
 		if(!admin) {
 
-			admin = new Member(name:"Jefferson Almeida",username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),
-					email:"jra@cin.ufpe.br", status:"MSc Student", enabled:true, university:"UFPE")
+			admin = new Member(name:"Administrador do sistema",username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),
+					email:"admin@cin.ufpe.br", status:"MSc Student", enabled:true, university:"UFPE")
 
 
 			adminRole.addToUsers(admin)
@@ -47,7 +47,7 @@ class BootStrap {
 
 			admin.save()
 
-			print("Instancia de Admin = "+Member.findByUsername('admin').toString())
+			//print("Instancia de Admin = "+Member.findByUsername('admin').toString())
 
 //			ResearchLine rl2 = new ResearchLine()
 //			rl2.setName("Teoria da informacao - Complexidade no espaco")
