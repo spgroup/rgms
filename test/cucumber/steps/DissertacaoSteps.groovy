@@ -54,7 +54,11 @@ Given(~'^the system has no dissertation entitled "([^"]*)"$') { String title ->
     assert article == null
 }
 
-Given(~'^the system has a dissertation entitled "([^"]*)"$') { String title ->
+Given(~'^the system has a dissertation entitled "([^"]*)"$') { String title->
+	
+	String filename = "teste2.txt"
+	String school = "ufpe"
+	TestDataAndOperations.createDissertacao(title, filename, school)
     article = Dissertacao.findByTitle(title)
     assert article != null
 }
