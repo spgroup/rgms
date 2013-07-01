@@ -34,26 +34,35 @@ import rgms.visit.VisitController
 
 class TestDataAndOperations {
  
+	static fileRepository = new File(".").getCanonicalPath()+File.separator+"test"+File.separator+"files"+File.separator
 	static articles = [
 		[journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
 				title: "A theory of software product line refinement",
 				publicationDate: (new Date("12 October 2012"))],
+//#if( $Twitter )
 		[journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
 				title: "Empirical Studies in Product Line",
-				file: "C:\\concurso.pdf",
+				//file: "C:\\concurso.pdf",
+				file: fileRepository+"ArticleExample.pdf",
 				publicationDate: (new Date("12 October 2012"))],
 		[journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
 				title: "Empirical Studies in Product Line 2",
-				file: "C:\\concurso2.pdf",
+				//file: "C:\\concurso2.pdf",
+				file: fileRepository+"ArticleExample2.pdf",
 				publicationDate: (new Date("12 October 2012"))],
+//#end
+//#if( $Facebook )
 		[journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
 			title: "Empirical Studies in Product Line 3",
-			file: "C:\\concurso3.pdf",
+			//file: "C:\\concurso3.pdf",
+			file: fileRepository+"ArticleExample3.pdf",
 			publicationDate: (new Date("12 October 2012"))],
 		[journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
 			title: "Empirical Studies in Product Line 4",
-			file: "C:\\concurso4.pdf",
+			//file: "C:\\concurso4.pdf",
+			file: fileRepository+"ArticleExample4.pdf",
 			publicationDate: (new Date("12 October 2012"))],
+//#end
 		[journal: "Science of Computer Programming", volume: 455, pages: "2-30",
 				title: "Algebraic reasoning for object-oriented programming",
 				publicationDate: (new Date("12 October 2012"))]

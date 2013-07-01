@@ -6,6 +6,8 @@
 	
 	<feature name="Twitter" type="NONE" id="Twitter"></feature>
 	
+	<feature name="Facebook" type="NONE" id="Facebook"></feature>
+	
 	<feature name="Bibtex_Feature" type="NONE" id="Bibtex"></feature>
 	
 	<feature name="Generate_Website" type="NONE" id="Website">

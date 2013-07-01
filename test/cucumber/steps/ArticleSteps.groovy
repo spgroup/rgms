@@ -215,6 +215,11 @@ Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userNa
 	at LoginPage
 	page.fillLoginData(userName, "adminadmin")
 	to ArticlesPage
+	
+	def path =  new File(".").getCanonicalPath()+File.separator+"test"+File.separator+"files"+File.separator+"TCS.pdf"
+	println path
+	def f = new File(path)
+	println "exist Path?"+f.exists()
 }
 
 When(~'^I try to create an article named as "([^"]*)"$') { String articleName ->
@@ -239,7 +244,7 @@ When(~'^I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String 
 }
 //#end
 
-
+//#if( $Facebook )
 When(~'^I click on share it on Facebook, with login "([^"]*)", password "([^"]*)", and message "([^"]*)"$') { String facebookLogin, String facebookPw, String message ->
 	at ArticleShowPage
 	page.clickOnFacebookIt(facebookLogin, facebookPw, message)
@@ -253,3 +258,4 @@ Then(~'^A facebook message is added for "([^"]*)"$') { String articleTitle ->
 Then(~'^No facebook message is added for "([^"]*)"$') { String articleTitle ->
 	assert !FacebookTool.consult(articleTitle)
 }
+//#end

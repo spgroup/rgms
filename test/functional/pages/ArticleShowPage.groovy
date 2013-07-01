@@ -25,7 +25,7 @@ class ArticleShowPage extends Page {
 			$("form").find(e, class: v).click()
 		}
 	}
-	
+//#if( $Twitter )
 	def clickOnTwitteIt (String login, pw){
 		$("#button_twitter").click()
 		//$("#password").text = login
@@ -33,7 +33,8 @@ class ArticleShowPage extends Page {
 		//$("input", type:"submit", class:"button selected submit", value:"Entrar e Tweetar").click()
 		//<input type="submit" class="button selected submit" value="Entrar e Tweetar">
 	}
-	
+//#end
+//#if( $Facebook )
 	def clickOnFacebookIt (String login, pw, message){
 		$("#share_facebook").click()
 		//$("#password").text = login
@@ -41,4 +42,5 @@ class ArticleShowPage extends Page {
 		//$("input", type:"submit", class:"button selected submit", value:"Entrar e Tweetar").click()
 		//<input type="submit" class="button selected submit" value="Entrar e Tweetar">
 	}
+//#end
 }

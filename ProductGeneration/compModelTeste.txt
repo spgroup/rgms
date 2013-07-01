@@ -167,6 +167,9 @@ messageszhCN => grailsapp/i18n/messageszhCN.properties;
 shiro => grailsapp/i18n/shiro.properties;
 
 TwitterTool => grailsapp/controllers/rgms/tool/TwitterTool.groovy;
+TwitterController => grailsapp/controllers/rgms/tool/TwitterController.groovy;
+FacebookTool => grailsapp/controllers/rgms/tool/FacebookTool.groovy;
+FacebookController => grailsapp/controllers/rgms/tool/FacebookController.groovy;
 
 
 ShiroDbRealm => grailsapp/realms/ShiroDbRealm.groovy;

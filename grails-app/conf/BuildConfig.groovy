@@ -52,7 +52,6 @@ grails.project.dependency.resolution = {
     plugins {
 		
 		compile ":remote-control:1.4"
-		compile ":twitter4j:0.3.2"
 		
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.7.1"

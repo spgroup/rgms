@@ -21,6 +21,13 @@
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
+		<expression>Facebook</expression>
+		<transformation>
+			<name>createBuildEntries</name>
+			<args>Facebook</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
 		<expression>History</expression>
 		<transformation>
 			<name>createBuildEntries</name>
@@ -472,6 +479,13 @@
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>UrlMappings,grails-app/conf/UrlMappings.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>rgms</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>grails-app/conf/UrlMappings.groovy</args>
 		</transformation>
 	</configuration>
 
@@ -971,129 +985,139 @@
 	</configuration>
 
 	<configuration xmlns="">
-		<expression>Twitter</expression>
-		<transformation>
-			<name>selectAndMoveComponent</name>
-			<args>TwitterTool,grails-app/controllers/rgms/tool/TwitterTool.groovy</args>
-		</transformation>
-	</configuration>
-	
-	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>ArticleFeature,test/cucumber/Article.feature</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
 			<args>test/cucumber/Article.feature</args>
 		</transformation>
 	</configuration>
-	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>env,test/cucumber/hooks/env.groovy</args>
 		</transformation>
 	</configuration>
-	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>ArticleSteps,test/cucumber/steps/ArticleSteps.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
 			<args>test/cucumber/steps/ArticleSteps.groovy</args>
 		</transformation>
-	</configuration>
-	
+	</configuration>	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>GebConfig,test/functional/GebConfig.groovy</args>
 		</transformation>
 	</configuration>
-	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>TestDataAndOperation,test/functional/steps/TestDataAndOperations.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
 			<args>test/functional/steps/TestDataAndOperations.groovy</args>
 		</transformation>
 	</configuration>
-	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>TestDataAuthentication,test/functional/steps/TestDataAuthentication.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>preprocessFiles</name>
 			<args>test/functional/steps/TestDataAuthentication.groovy</args>
 		</transformation>
 	</configuration>
-	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>ArticleCreatePage,test/functional/pages/ArticleCreatePage.groovy</args>
 		</transformation>
 	</configuration>
-	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>ArticleEditPage,test/functional/pages/ArticleEditPage.groovy</args>
 		</transformation>
 	</configuration>
-	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>ArticleShowPage,test/functional/pages/ArticleShowPage.groovy</args>
 		</transformation>
 	</configuration>
-	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>ArticlePage,test/functional/pages/ArticlesPage.groovy</args>
 		</transformation>
 	</configuration>
-	
 	<configuration xmlns="">
-		<expression>Twitter</expression>
+		<expression>rgms</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>UserRegisterPage,test/functional/pages/UserRegisterPage.groovy</args>
 		</transformation>
 	</configuration>
-	
+
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>TwitterTool,grails-app/controllers/rgms/tool/TwitterTool.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>TwitterController,grails-app/controllers/rgms/tool/TwitterController.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Facebook</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>FacebookTool,grails-app/controllers/rgms/tool/FacebookTool.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>Facebook</expression>
+		<transformation>
+			<name>selectAndMoveComponent</name>
+			<args>FacebookController,grails-app/controllers/rgms/tool/FacebookController.groovy</args>
+		</transformation>
+	</configuration>	
 	<!-- File not fould 
 	<configuration xmlns="">
 		<expression>rgms</expression>
