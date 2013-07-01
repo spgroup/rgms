@@ -47,18 +47,18 @@ Feature: journal article
     Then    the article "A theory of software product line refinement" is properly updated by the system
 
   Scenario: remove existing article web
-    Given    I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
-    And    I select the "Periodico" option at the publications menu
+    Given   I am at the articles page and the article "A theory of software product line refinement" is stored in the system with file name "TCS-77.pdf"
     When    I select to view "A theory of software product line refinement" in resulting list
     Then    the details are showed and I can select the option to remove
+    And     the article "A theory of software product line refinement" is properly removed by the system
 
   Scenario: list existing article web
-    Given    I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
+    Given    I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-88.pdf"
     When    I select the "Periodico" option at the publications menu
     Then    my resulting articles list contains "A theory of software product line refinement"
 
   Scenario: edit existing article web
-    Given    I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS.pdf"
+    Given    I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-99.pdf"
     And    I select the "Periodico" option at the publications menu
     When    I select to view "A theory of software product line refinement" in resulting list and I change the article title to "REVIEWED"
     Then    I can select the "Alterar" option

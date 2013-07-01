@@ -63,11 +63,21 @@ Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') {
  * @author Guilherme
  */
 
-Given(~'^I am at the publications menu and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+Given(~'^I am at the articles page and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
+    page.select("Periodico")
+    at ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+    page.fillArticleDetails("./test/functional/steps/" + filename, title)
+    page.selectCreateArticle()
+    article = Periodico.findByTitle(title)
+    assert article != null
+    to ArticlesPage
+    at ArticlesPage
 }
 
 /**
@@ -97,7 +107,6 @@ When(~"^I view the article list\$") {->
  * @author Guilherme
  */
 When(~'^I select to view "([^"]*)" in resulting list$') { String title ->
-    at ArticlesPage
     page.selectViewArticle(title)
     at ArticleShowPage
 }

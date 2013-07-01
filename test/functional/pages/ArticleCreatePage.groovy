@@ -17,9 +17,13 @@ class ArticleCreatePage extends Page {
     }
 
     def fillArticleDetails() {
-        $("form").title = "A theory of Software Product Line Refinement"
+        fillArticleDetails("./test/functional/steps/TCS.pdf", "A theory of software product line refinement")
+    }
+
+    def fillArticleDetails(filename, title) {
+        $("form").title = title
         $("form").journal = "Theoretical Computer Science"
-        $("form").file = "./test/functional/steps/TCS.pdf"
+        $("form").file = filename
         $("form").volume = 455
         $("form").number = 1
         $("form").pages = "2-30"
