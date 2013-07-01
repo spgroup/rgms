@@ -25,4 +25,20 @@ class ArticleShowPage extends Page {
 			$("form").find(e, class: v).click()
 		}
 	}
+	
+	def clickOnTwitteIt (String login, pw){
+		$("#button_twitter").click()
+		//$("#password").text = login
+		//$("#username_or_email").text = pw
+		//$("input", type:"submit", class:"button selected submit", value:"Entrar e Tweetar").click()
+		//<input type="submit" class="button selected submit" value="Entrar e Tweetar">
+	}
+	
+	def clickOnFacebookIt (String login, pw, message){
+		$("#share_facebook").click()
+		//$("#password").text = login
+		//$("#username_or_email").text = pw
+		//$("input", type:"submit", class:"button selected submit", value:"Entrar e Tweetar").click()
+		//<input type="submit" class="button selected submit" value="Entrar e Tweetar">
+	}
 }

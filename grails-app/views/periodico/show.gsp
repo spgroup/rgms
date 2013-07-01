@@ -127,6 +127,7 @@
 
 		</ol>
 
+<!-- Facebook start -->
 		<div id="fb-root"></div>
 		<script>
 		  window.fbAsyncInit = function() {
@@ -145,7 +146,7 @@
 			document.getElementById('fb-root').appendChild(e);
 		  }());
 		</script>
-		<img id="share_button"
+		<img id="share_facebook"
 		     src="http://www.tabpress.com/fbui_share/share_button.png">
 		<script type="text/javascript">
 		$(document).ready(function(){
@@ -157,7 +158,7 @@
 			var periodicoPages="${periodicoInstance?.pages}"
 			var link = document.URL
 			var callback = "http://localhost:8080/rgms/notifyFacebook/periodico/"+periodicoId
-			$('#share_button').live('click', function(e){
+			$('#share_facebook').live('click', function(e){
 				e.preventDefault();
 				FB.ui(
 					{
@@ -169,10 +170,26 @@
 									 ', Number: '+periodicoNumber + ', Pages: '+periodicoPages,
 						message: 'Personal Message.'
 				});
-				$.get("http://localhost:8080/rgms/notifyFacebook/periodico/1");
+				$.get("http://localhost:8080/rgms/notifyFacebook/periodico/"+periodicoId+"/"+periodicoTitle);
 			});
 		});
 		</script>
+<!-- Facebook end -->
+<!-- Twitter start -->
+		 <a href="javascript:window.open('https://twitter.com/intent/tweet?button_hashtag=RGMS&text=Article:%20${periodicoInstance?.title}', 'Tweteet It', 'width=450,height=250');"
+			class="twitter-hashtag-button"
+			data-related="rgms_ufpe"
+			id="button_twitter"
+			target="_blank">
+				<img id="share_twitter2"
+		     	src="http://www.tabpress.com/fbui_share/share_button.png">
+		 </a>
+		 <script>
+		 $('#button_twitter').live('click', function(e){
+				$.get("http://localhost:8080/rgms/notifyTwitter/periodico/${periodicoInstance?.id}/${periodicoInstance?.title}");
+			});
+		</script>
+<!-- Twitter end -->
 		<g:form>
 			<fieldset class="buttons">
 				<g:hiddenField name="id" value="${periodicoInstance?.id}" />

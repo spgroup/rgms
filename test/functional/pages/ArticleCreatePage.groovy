@@ -46,7 +46,8 @@ class ArticleCreatePage extends Page {
 		$("form").number = article.number
 		$("form").pages = article.pages
 		$("form").file 		= article.file
-		$("input", type: "submit", class: "save", id:"create").click()
+		//$("input", type: "submit", class: "save", id:"create").click()
+		$("input.save").click()
 	}
 	def selectCreateArticle(){
 		$("input", name: "create").click()

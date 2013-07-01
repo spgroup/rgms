@@ -20,12 +20,18 @@ public class TwitterTool{
 		twitter.setOAuthConsumer(consumerKey, consumerSecret)
         twitter.setOAuthAccessToken(accessTokenO)
 		def today = new Date ()
-        Status status = twitter.updateStatus(today+" - "+text)
+        Status status = twitter.updateStatus(today.toString()+" - "+text)
         twittersHistory.add([articleName : articleName, status : status.getId()])
     }
+	
+	public static void addTwitterHistory(String articleName, String status){
+		println "addTwitterHistory="+articleName
+		twittersHistory.add([articleName : articleName, status : status])
+	}
 
     static public boolean consult(String articleName) {
-        def twitterFound = twittersHistory.find { articleNameTwitter ->
+		println "consult="+articleName
+		def twitterFound = twittersHistory.find { articleNameTwitter ->
             articleNameTwitter.articleName == articleName
         }
         if (twitterFound == null){

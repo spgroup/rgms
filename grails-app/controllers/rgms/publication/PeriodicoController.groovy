@@ -26,25 +26,11 @@ class PeriodicoController {
 	
 	def save () {
 		def periodicoInstance = new Periodico(params)
-		PublicationController pb = new PublicationController()
 		
-		if (!pb.upload(periodicoInstance) || !periodicoInstance.save(flush: true)) {
+		if (!PublicationController.newUpload(periodicoInstance, flash, request) || !periodicoInstance.save(flush: true)) {
 			render(view: "create", model: [periodicoInstance: periodicoInstance])
 			return
 		}
-		
-//#if( $twitter )
-		String memberUsername = SecurityUtils.subject.principal
-		def member = Member.findByUsername(memberUsername)
-		final def twitterAccessToken = member.twitterAccessToken
-		final def twitterAccessSecret = member.twitterAccessSecret
-		final def text = "New periodic published: "+ periodicoInstance.title + " #RMGS"
-
-		if (twitterAccessToken) {
-				TwitterTool.sendGTwitter(periodicoInstance.title,twitterAccessToken, twitterAccessSecret
-					, text)
-		}
-//#end
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
 		redirect(action: "show", id: periodicoInstance.id)

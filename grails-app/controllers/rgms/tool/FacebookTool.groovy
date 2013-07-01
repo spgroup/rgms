@@ -12,8 +12,10 @@ public class FacebookTool {
         def facebookFound = facebookHistory.find { articleNameTwitter ->
             articleNameTwitter.articleName == articleName
         }
-        facebookFound == null
-        //facebookFound?.status != 0
+        if (facebookFound == null){
+            return false
+        }
+        facebookFound?.status != 0
     }
 
 }

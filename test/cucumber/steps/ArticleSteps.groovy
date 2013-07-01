@@ -9,6 +9,7 @@ import pages.UserRegisterPage
 import rgms.member.Member
 import rgms.publication.Periodico
 import rgms.tool.TwitterTool
+import rgms.tool.FacebookTool
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -230,4 +231,25 @@ Then(~'^A twitter is added to my twitter account regarding the new article "([^"
 Then(~'^No twitte should be post about "([^"]*)"$') { String articleTitle ->
 	assert !TwitterTool.consult(articleTitle)
 }
+
+When(~'^I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+	at ArticleShowPage
+	page.clickOnTwitteIt(twitterLogin, twitterPw)
+	at ArticleShowPage
+}
 //#end
+
+
+When(~'^I click on share it on Facebook, with login "([^"]*)", password "([^"]*)", and message "([^"]*)"$') { String facebookLogin, String facebookPw, String message ->
+	at ArticleShowPage
+	page.clickOnFacebookIt(facebookLogin, facebookPw, message)
+	at ArticleShowPage
+}
+
+Then(~'^A facebook message is added for "([^"]*)"$') { String articleTitle ->
+	assert FacebookTool.consult(articleTitle)
+}
+
+Then(~'^No facebook message is added for "([^"]*)"$') { String articleTitle ->
+	assert !FacebookTool.consult(articleTitle)
+}

@@ -16,12 +16,6 @@ class Member {
     String website
     String city
     String country
-	
-	//#if($Twitter)
-	String twitterAccessToken
-	String twitterAccessSecret
-	//#end
-	
     Boolean active
     Boolean enabled
     
@@ -52,10 +46,6 @@ class Member {
     	country(nullable: true)
     	active(nullable: true)
         enabled(blank: false)
-		//#if($Twitter)
-		twitterAccessToken nullable: true
-		twitterAccessSecret nullable: true
-		//#end
     }
 
     static mapping = {

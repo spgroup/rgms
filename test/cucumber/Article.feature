@@ -4,78 +4,87 @@ Feature: journal article
   I want to add, remove and modify journal articles I have published
   so that I can generate web pages and reports containing these articles
 
-  Scenario: new article
-    Given the system has no article entitled "A theory of software product line refinement"
-    When I create the article "A theory of software product line refinement" with file name "TCS.pdf"
-    Then the article "A theory of software product line refinement" is properly stored by the system
-
-  Scenario: new invalid article
-    Given the system has no article entitled "Algebraic reasoning for object-oriented programming"
-    When I create the article "Algebraic reasoning for object-oriented programming" with file name "SCP.pdf"
-    Then the article "Algebraic reasoning for object-oriented programming" is not stored by the system because it is invalid
-
-  Scenario: duplicate article
-    Given the article "A theory of software product line refinement" is stored in the system with file name "TCS-0.pdf"
-    When I create the article "A theory of software product line refinement" with file name "TCS-1.pdf"
-    Then the article "A theory of software product line refinement" is not stored twice
-
-  Scenario: alternative duplicate article
-    Given the system has no article entitled "A theory of software product line refinement"
-    When I create the article "A theory of software product line refinement" with file name "TCS-2"
-    And I create the article "A theory of software product line refinement" with file name "TCS-3"
-    Then the article "A theory of software product line refinement" is not stored twice
-
-
-Scenario: new article web
-Given I am at the publications menu
-When I select the "Periodico" option at the publications menu
-And I select the new article option at the article page
-Then I can fill the article details
-
-Scenario: remove existing article
-    Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS-3.pdf"
-    When 	I delete the article "A theory of software product line refinement" 
-    Then 	the article "A theory of software product line refinement" is properly removed by the system 
- 
-Scenario: list existing article
-   Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS-4.pdf"
-   When 	I view the article list
-   Then 	my article list contains "A theory of software product line refinement"
-   
-Scenario: edit existing article
-   Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS-5.pdf"
-   When 	I edit the article title from "A theory of software product line refinement" to "A theory of software product line refinement REVIEWED"
-   Then 	the article "A theory of software product line refinement" is properly updated by the system
-
-Scenario: remove existing article web
-    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-6.pdf"
-    And 	I select the "Periodico" option at the publications menu
-    When 	I select to view "A theory of software product line refinement" in resulting list
-    Then 	the details are showed and I can select the option to remove 
-
-Scenario: list existing article web
-    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-7.pdf"
-    When 	I select the "Periodico" option at the publications menu
-    Then 	my resulting articles list contains "A theory of software product line refinement"
-
-Scenario: edit existing article web
-    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-8.pdf"
-    And 	I select the "Periodico" option at the publications menu
-   	When 	I select to view "A theory of software product line refinement" in resulting list and I change the article title to "REVIEWED"
-    Then 	I can select the "Alterar" option 
-
+#  Scenario: new article
+#    Given the system has no article entitled "A theory of software product line refinement"
+#    When I create the article "A theory of software product line refinement" with file name "TCS.pdf"
+#    Then the article "A theory of software product line refinement" is properly stored by the system
+#
+#  Scenario: new invalid article
+#    Given the system has no article entitled "Algebraic reasoning for object-oriented programming"
+#    When I create the article "Algebraic reasoning for object-oriented programming" with file name "SCP.pdf"
+#    Then the article "Algebraic reasoning for object-oriented programming" is not stored by the system because it is invalid
+#
+#  Scenario: duplicate article
+#    Given the article "A theory of software product line refinement" is stored in the system with file name "TCS-0.pdf"
+#    When I create the article "A theory of software product line refinement" with file name "TCS-1.pdf"
+#    Then the article "A theory of software product line refinement" is not stored twice
+#
+#  Scenario: alternative duplicate article
+#    Given the system has no article entitled "A theory of software product line refinement"
+#    When I create the article "A theory of software product line refinement" with file name "TCS-2"
+#    And I create the article "A theory of software product line refinement" with file name "TCS-3"
+#    Then the article "A theory of software product line refinement" is not stored twice
+#
+#Scenario: new article web
+#Given I am at the publications menu
+#When I select the "Periodico" option at the publications menu
+#And I select the new article option at the article page
+#Then I can fill the article details
+#
+#Scenario: remove existing article
+#    Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS-3.pdf"
+#    When 	I delete the article "A theory of software product line refinement" 
+#    Then 	the article "A theory of software product line refinement" is properly removed by the system 
+# 
+#Scenario: list existing article
+#   Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS-4.pdf"
+#   When 	I view the article list
+#   Then 	my article list contains "A theory of software product line refinement"
+#   
+#Scenario: edit existing article
+#   Given 	the system has article entitled "A theory of software product line refinement" with file name "TCS-5.pdf"
+#   When 	I edit the article title from "A theory of software product line refinement" to "A theory of software product line refinement REVIEWED"
+#   Then 	the article "A theory of software product line refinement" is properly updated by the system
+#
+#Scenario: remove existing article web
+#    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-6.pdf"
+#    And 	I select the "Periodico" option at the publications menu
+#    When 	I select to view "A theory of software product line refinement" in resulting list
+#    Then 	the details are showed and I can select the option to remove
+#
+#Scenario: list existing article web
+#    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-7.pdf"
+#   When 	I select the "Periodico" option at the publications menu
+#    Then 	my resulting articles list contains "A theory of software product line refinement"
+#
+#Scenario: edit existing article web
+#    Given 	I am at the publications menu and the article "A theory of software product line refinement" is stored in the system with file name "TCS-8.pdf"
+#    And 	I select the "Periodico" option at the publications menu
+#   	When 	I select to view "A theory of software product line refinement" in resulting list and I change the article title to "REVIEWED"
+#    Then 	I can select the "Alterar" option 
+#
 #if( $Twitter )
-  Scenario: Add a new book chapter twitting it
-    Given There is a user "twitteruser" with a twitter account
-    And I am logged as "twitteruser" and at the Add Article Page
+  Scenario: Add a new article twitting it
+    Given I am logged as "admin" and at the Add Article Page
     When I try to create an article named as "Empirical Studies in Product Line"
+    And I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then A twitter is added to my twitter account regarding the new article "Empirical Studies in Product Line"
-#end
 
-#if( $Twitter )
-  Scenario: Add a new book chapter with twitter
-    Given There is a user "notwitteruser" with a twitter account
-    And I am logged as "notwitteruser" and at the Add Article Page
+  Scenario: Add a new article with twitter, but don't twitte it
+    Given I am logged as "admin" and at the Add Article Page
     When I try to create an article named as "Empirical Studies in Product Line 2"
     Then No twitte should be post about "Empirical Studies in Product Line 2"
+#end
+
+#if( $Facebook )
+  Scenario: Add a new article and post it in the facebook
+    Given I am logged as "admin" and at the Add Article Page
+    When I try to create an article named as "Empirical Studies in Product Line 3"
+    And I click on share it on Facebook, with login "rgms.ufpe@gmail.com", password "rgmsadmin2013", and message "New Article"
+    Then A facebook message is added for "Empirical Studies in Product Line 3"
+
+  Scenario: Add a new article and post it in the facebook
+    Given I am logged as "admin" and at the Add Article Page
+    When I try to create an article named as "Empirical Studies in Product Line 4"
+    Then No facebook message is added for "Empirical Studies in Product Line 4"
 #end

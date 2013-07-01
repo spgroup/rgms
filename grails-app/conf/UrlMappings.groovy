@@ -1,7 +1,8 @@
 class UrlMappings {
 
 	static mappings = {
-		"/notifyFacebook/periodico/$id"(controller: "Facebook", action: "index")
+		"/notifyFacebook/periodico/$id?/$name?"(controller: "Facebook", action: "index")
+		"/notifyTwitter/periodico/$id?/$name?"(controller: "Twitter", action: "index")
 		"/$controller/$action?/$id?"{
 			constraints {
 				// apply constraints here
