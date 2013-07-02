@@ -35,6 +35,10 @@
 <expression>PDF</expression>
 <transformation><name>createBuildEntries</name><args>PDF</args></transformation>
 </configuration>
+<configuration xmlns="">
+<expression>Autofill</expression>
+<transformation><name>createBuildEntries</name><args>Autofill</args></transformation>
+</configuration>
 
 <configuration xmlns="">
 <expression>rgms</expression>
@@ -144,6 +148,9 @@
 
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>thesis,grails-app/domain/rgms/publication/Tese.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/Tese.groovy</args></transformation></configuration>
+
+<configuration xmlns=""><expression>Auth</expression><transformation><name>selectAndMoveComponent</name><args>teseOrDissertacao,grails-app/domain/rgms/publication/TeseOrDissertacao.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/TeseOrDissertacao.groovy</args></transformation></configuration>
 
 
 
@@ -264,6 +271,7 @@
 	</transformation>
 </configuration>
 
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>bookchapterForm,grails-app/views/bookChapter/_form.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>ferramentaFeature,test/cucumber/Ferramenta.feature</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>test/cucumber/Ferramenta.feature</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>bookchapterFeature,test/cucumber/BookChapter.feature</args></transformation></configuration>

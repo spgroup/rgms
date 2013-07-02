@@ -50,7 +50,7 @@
 	</label>
 	
 	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-		value="${technicalReportInstance?.members ? technicalReportInstance.members : Member.findByUsername(SecurityUtils.subject?.principal).id}" />
+		value="${technicalReportInstance?.membersSelected(SecurityUtils.subject?.principal)}" />
 
 </div>
 

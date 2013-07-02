@@ -58,7 +58,7 @@
 	</label>
 	
 	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-		value="${ferramentaInstance?.members ? ferramentaInstance.members : Member.findByUsername(SecurityUtils.subject?.principal).id}" />
+		value="${ferramentaInstance?.membersSelected(SecurityUtils.subject?.principal)}" />
 
 </div>
 

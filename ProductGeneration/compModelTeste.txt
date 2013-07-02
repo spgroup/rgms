@@ -10,6 +10,8 @@ resetPassword => grailsapp/views/auth/resetPassword.gsp;
 updatePassword => grailsapp/views/auth/updatePassword.gsp;
 register => grailsapp/views/auth/register.gsp;
 
+bookchapterForm => grailsapp/views/bookChapter/form.gsp;
+
 conferenciaForm => grailsapp/views/conferencia/form.gsp;
 conferenciaCreate => grailsapp/views/conferencia/create.gsp;
 conferenciaEdit => grailsapp/views/conferencia/edit.gsp;
@@ -116,6 +118,7 @@ researchGroup => grailsapp/domain/rgms/member/ResearchGroup.groovy;
 Role => grailsapp/domain/rgms/authentication/Role.groovy;
 thesis => grailsapp/domain/rgms/publication/Tese.groovy;
 researchLine => grailsapp/domain/rgms/publication/ResearchLine.groovy;
+teseOrDissertacao => grailsapp/domain/rgms/publication/TeseOrDissertacao.groovy;
 
 
 ApplicationResources => grailsapp/conf/ApplicationResources.groovy;
