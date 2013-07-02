@@ -1,6 +1,7 @@
 package rgms.publication
 
 import rgms.member.Member
+import org.apache.shiro.SecurityUtils
 
 abstract class Publication {
 
@@ -63,8 +64,9 @@ abstract class Publication {
 		return result;
 	}
 
-	public Set membersSelected(loggedUsername) {
+	public Set membersSelected() {
 //#if ($Autofill)
+		def loggedUsername = SecurityUtils.subject?.principal;
 		return members ? members : [ Member.findByUsername(loggedUsername).id ];
 //#else
 		return members;

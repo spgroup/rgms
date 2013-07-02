@@ -1,6 +1,7 @@
 package rgms.publication
 
 import rgms.member.Member
+import org.apache.shiro.SecurityUtils
 
 abstract class TeseOrDissertacao extends Publication{
 	
@@ -12,9 +13,10 @@ abstract class TeseOrDissertacao extends Publication{
 		address nullable: false, blank: false
 	}
 
-	public Set schoolSelected(loggedUsername) {
+	public String schoolSelected() {
 //#if ($Autofill)
-		return school ? school : [ Member.findByUsername(loggedUsername).university ];
+		def loggedUsername = SecurityUtils.subject?.principal;
+		return school ? school : Member.findByUsername(loggedUsername).university;
 //#else
 		return school;
 //#end

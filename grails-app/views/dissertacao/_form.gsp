@@ -1,6 +1,5 @@
 <%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.Dissertacao" %>
-<%@ page import="org.apache.shiro.SecurityUtils" %>
 
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'title', 'error')} required">
@@ -40,7 +39,7 @@
 		<g:message code="dissertacao.school.label" default="School" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="school" required="" value="${dissertacaoInstance?.schoolSelected(SecurityUtils.subject?.principal)}"/>
+	<g:textField name="school" required="" value="${dissertacaoInstance?.schoolSelected()}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'address', 'error')} required">
@@ -58,7 +57,7 @@
 	</label>
 	
 	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-		value="${dissertacaoInstance?.membersSelected(SecurityUtils.subject?.principal)}" />
+		value="${dissertacaoInstance?.membersSelected()}" />
 
 </div>
 

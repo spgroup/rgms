@@ -1,7 +1,5 @@
 <%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.BookChapter" %>
-<%@ page import="org.apache.shiro.SecurityUtils" %>
-
 
 
 <div class="fieldcontain ${hasErrors(bean: bookChapterInstance, field: 'title', 'error')} required">
@@ -57,7 +55,7 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" multiple="true"
-          value="${bookChapterInstance?.membersSelected(SecurityUtils.subject?.principal)}" />
+          value="${bookChapterInstance?.membersSelected()}" />
 
 
 </div>

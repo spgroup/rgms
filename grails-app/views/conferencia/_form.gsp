@@ -1,6 +1,5 @@
 <%@page import="rgms.member.Member"%>
 <%@ page import="rgms.publication.Conferencia" %>
-<%@ page import="org.apache.shiro.SecurityUtils" %>
 
 
 <div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'title', 'error')} required">
@@ -58,7 +57,7 @@
 	</label>
 	
 	<g:select name="members" from="${Member.list()}" size="10" multiple="true" optionKey="id"
-          value="${conferenciaInstance?.membersSelected(SecurityUtils.subject?.principal)}" />
+          value="${conferenciaInstance?.membersSelected()}" />
 
 </div>
 
