@@ -207,15 +207,6 @@
 		<args>bibtexParse,grails-app/domain/rgms/publication/BibtexParse.groovy</args>
 	</transformation>
 </configuration>
-
-<configuration xmlns="">
-	<expression>ImportBibtex</expression>
-	<transformation>
-		<name>selectAndMoveComponent</name>
-		<args>bibtexParse,grails-app/domain/rgms/publication/BibtexParse.groovy</args>
-	</transformation>
-</configuration>
-
 <configuration xmlns="">
 	<expression>ImportBibtex</expression>
 	<transformation>
