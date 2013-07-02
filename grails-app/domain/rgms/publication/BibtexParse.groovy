@@ -56,9 +56,11 @@ class BibtexParse {
 			else if (entry.getType().equals(BibTeXEntry.TYPE_MISC)) {
 				
 			}
+			//#if($ImportBibtex && $TesePublication)
 			else if (entry.getType().equals(BibTeXEntry.TYPE_PHDTHESIS)) {
 				publications.add(new StrategyParseTese().execute(entry))
 			}
+			//#end
 			else if (entry.getType().equals(BibTeXEntry.TYPE_PROCEEDINGS)) {
 				
 			}

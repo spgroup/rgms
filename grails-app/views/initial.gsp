@@ -143,9 +143,11 @@
         <li><g:link controller="Periodico" action="list">Periodico</g:link></li>
         <li><g:link controller="ResearchLine" action="list">Linha de pesquisa</g:link></li>
         <li><g:link controller="TechnicalReport" action="list">Technical Report</g:link></li>
+        <!-- #if($TesePublication) -->
         <li><g:link controller="Tese" action="list">Tese</g:link></li>
+        <!-- #end -->
         <li><g:link controller="Orientation" action="list">Orientation</g:link></li>
-        <!-- #if($ImportBibtex) -->
+        <!-- #if($ImportBibtex && $TesePublication) -->
         <li><g:link controller="BibtexFile" action="home">Import Bibtex File</g:link></li>
         <!-- #end -->
         

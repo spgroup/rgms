@@ -146,8 +146,8 @@
 
 <configuration xmlns=""><expression>Auth</expression><transformation><name>selectAndMoveComponent</name><args>Role,grails-app/domain/rgms/authentication/Role.groovy</args></transformation></configuration>
 
-<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>thesis,grails-app/domain/rgms/publication/Tese.groovy</args></transformation></configuration>
-<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/Tese.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>And (rgms,TesePublication)</expression><transformation><name>selectAndMoveComponent</name><args>thesis,grails-app/domain/rgms/publication/Tese.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>And (rgms,TesePublication)</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/Tese.groovy</args></transformation></configuration>
 
 <configuration xmlns=""><expression>Auth</expression><transformation><name>selectAndMoveComponent</name><args>teseOrDissertacao,grails-app/domain/rgms/publication/TeseOrDissertacao.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/TeseOrDissertacao.groovy</args></transformation></configuration>
@@ -175,8 +175,8 @@
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>ResearchGroupController,grails-app/controllers/rgms/member/ResearchGroupController.groovy</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/controllers/rgms/member/ResearchGroupController.groovy</args></transformation></configuration>
 
-<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>TeseController,grails-app/controllers/rgms/publication/TeseController.groovy</args></transformation></configuration>
-<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/controllers/rgms/publication/TeseController.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>And (rgms,TesePublication)</expression><transformation><name>selectAndMoveComponent</name><args>TeseController,grails-app/controllers/rgms/publication/TeseController.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>And (rgms,TesePublication)</expression><transformation><name>preprocessFiles</name><args>grails-app/controllers/rgms/publication/TeseController.groovy</args></transformation></configuration>
 
 <configuration xmlns=""><expression>Auth</expression><transformation><name>selectAndMoveComponent</name><args>AuthController,grails-app/controllers/rgms/authentication/AuthController.groovy</args></transformation></configuration>
 
@@ -207,6 +207,23 @@
 		<args>bibtexParse,grails-app/domain/rgms/publication/BibtexParse.groovy</args>
 	</transformation>
 </configuration>
+
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>selectAndMoveComponent</name>
+		<args>bibtexParse,grails-app/domain/rgms/publication/BibtexParse.groovy</args>
+	</transformation>
+</configuration>
+
+<configuration xmlns="">
+	<expression>ImportBibtex</expression>
+	<transformation>
+		<name>preprocessFiles</name>
+		<args>grails-app/domain/rgms/publication/BibtexParse.groovy</args>
+	</transformation>
+</configuration>
+
 <configuration xmlns="">
 	<expression>ImportBibtex</expression>
 	<transformation>
@@ -264,7 +281,7 @@
 	</transformation>
 </configuration>
 <configuration xmlns="">
-	<expression>ImportBibtex</expression>
+	<expression>And (ImportBibtex,TesePublication)</expression>
 	<transformation>
 		<name>selectAndMoveComponent</name>
 		<args>strategyParseTese,grails-app/domain/rgms/publication/strategyBibtexParse/StrategyParseTese.java</args>
