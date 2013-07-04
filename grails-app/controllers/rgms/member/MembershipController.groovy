@@ -100,4 +100,20 @@ class MembershipController {
             redirect(action: "show", id: params.id)
         }
     }
+	
+	//#if($NewMemberInGroupNotification)
+	def sendMailToEveryoneAboutTheNewMember (ResearchGroup researchGroup, Member member) {
+		def researchGroupCurrentMemberships = Membership.findAllByResearchGroupAndDateLeft(researchGroup, null)
+
+		for (peerMember in researchGroupCurrentMemberships) {
+			println "Sending mail to " + peerMember.member.email + " about " + member.name 
+			sendMail {
+				to peerMember.member.email
+				from grailsApplication.config.grails.mail.username
+				subject "[RGMS] New member in " + researchGroup.name + "!"
+				body member.name + " joined " + researchGroup.name + " today. Please welcome him at: " + member.email
+			}
+		}
+	}
+	//#end
 }

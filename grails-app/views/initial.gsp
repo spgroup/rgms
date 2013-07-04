@@ -146,7 +146,9 @@
         <!-- #if($TesePublication) -->
         <li><g:link controller="Tese" action="list">Tese</g:link></li>
         <!-- #end -->
+        <!-- #if($Orientation)  -->
         <li><g:link controller="Orientation" action="list">Orientation</g:link></li>
+        <!-- #end -->
         <!-- #if($ImportBibtex && $TesePublication) -->
         <li><g:link controller="BibtexFile" action="home">Import Bibtex File</g:link></li>
         <!-- #end -->

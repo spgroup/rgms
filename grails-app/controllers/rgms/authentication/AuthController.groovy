@@ -36,7 +36,7 @@ class AuthController {
             redirect(uri: "/auth/login")
             return
         }
-        print("ENTROU no signIn\nEnabled == "+member.enabled)
+     //   print("ENTROU no signIn\nEnabled == "+member.enabled)
 
 
         
@@ -53,7 +53,7 @@ class AuthController {
         
         // Handle requests saved by Shiro filters.
         def savedRequest = WebUtils.getSavedRequest(request)
-        if (savedRequest) {     print("deu saved request: " + savedRequest.toString())
+        if (savedRequest) {    // print("deu saved request: " + savedRequest.toString())
             targetUri = savedRequest.requestURI - request.contextPath
             if (savedRequest.queryString) targetUri = targetUri + '?' + savedRequest.queryString
         }
@@ -67,9 +67,9 @@ class AuthController {
                 render "Please wait the administrator to unlock your access to system.\n\nThanks."
                 return
             }
-            print("ENTROU NO TRY")
+            //("ENTROU NO TRY")
             
-            print(member)
+           // print(member)
             
             if (member.passwordChangeRequiredOnNextLogon) {
                 log.info "Redirecting to '${targetUri}'."
@@ -216,7 +216,7 @@ class AuthController {
         String defaultUniversity = "Federal University of Pernambuco"
         params.university = params.university ?: defaultUniversity
 
-        print("ENTROU no register")
+        //("ENTROU no register")
         
         if (params.password1 != params.password2) {
             flash.message = "Please enter same passwords."
@@ -233,7 +233,7 @@ class AuthController {
         }
         
         if(params.username == null){
-            print("params NULL")
+          //  print("params NULL")
             return [memberInstance: memberInstance]
         }
 
@@ -249,7 +249,7 @@ class AuthController {
             //flash.message = "Error creating user"
             render(view: "register", model: [memberInstance: memberInstance])
             memberInstance.errors.each{
-                println it
+              //  println it
             }
             return
         }
@@ -273,7 +273,7 @@ class AuthController {
         def Admin = Member.findAllByName("Administrator")
         def emailAdmin = Admin?.email
         if (emailAdmin != null && !emailAdmin.empty) {
-            print("Email Admin : " + emailAdmin)
+           // print("Email Admin : " + emailAdmin)
 
             sendMail {
                 to emailAdmin

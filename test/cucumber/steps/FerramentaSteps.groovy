@@ -56,14 +56,14 @@ Then(~'^The ferramenta is not stored$'){ ->
 
 
 When(~'^I select "([^"]*)" at the ferramenta page$') {String title ->
-	at FerramentaPage
-	page.selectFerramenta(title)
+    at FerramentaPage
+    page.selectFerramenta(title)
 }
 
 
 Then(~'^I click on edit at the Ferramenta page$'){->
-	at FerramentaShowPage
-	page.editDissertation()
+    at FerramentaShowPage
+    page.editDissertation()
 }
 
 Then(~'^The ferramenta entitle "([^"]*)" is properly deleted of the system$'){String title ->
@@ -73,16 +73,39 @@ Then(~'^The ferramenta entitle "([^"]*)" is properly deleted of the system$'){St
 
 
 Given(~'^the system has no ferramenta entitled "([^"]*)"$') { String title ->
-	article = Ferramenta.findByTitle(title)
-	assert article == null
+    article = Ferramenta.findByTitle(title)
+    assert article == null
 }
 
 
 
 
 Then(~'^the ferramenta "([^"]*)" is properly stored by the system$') { String title ->
-	ferramenta = Ferramenta.findByTitle(title)
-	assert ferramenta != null
+    ferramenta = Ferramenta.findByTitle(title)
+    assert ferramenta != null
+}
+
+When(~'^I select the upload button at the ferramenta page$') { ->
+    at FerramentaPage
+    page.uploadWithoutFile()
+}
+Then(~'^I\'m still on ferramenta page$') {  ->
+    at FerramentaPage
+}
+Given(~'^the system has some ferramenta stored$') { ->
+    inicialSize = Ferramenta.findAll().size()
+}
+When(~'^I upload a new ferramenta "([^"]*)"$') {  filepath ->
+    inicialSize = Ferramenta.findAll().size()
+    TestDataAndOperations.uploadFerramenta(filepath)
+    finalSize = Ferramenta.findAll().size()
+    assert inicialSize<finalSize
+    //para funcionar é necessario que tenha um FilePath válido
+    // não consegui fazer de uma maneira que todos os passos sejam independentes
+}
+Then(~'the system has more ferramenta now$') {->
+    finalSize = Ferramenta.findAll().size()
+
 }
 
 Then(~'^I see my user listed as an author member of ferramenta by default$') { ->

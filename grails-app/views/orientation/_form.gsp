@@ -1,6 +1,5 @@
+<!-- #if($Orientation) -->
 <%@ page import="rgms.member.Orientation" %>
-
-
 
 <div class="fieldcontain ${hasErrors(bean: orientationInstance, field: 'tipo', 'error')} required">
 	<label for="tipo">
@@ -57,4 +56,4 @@
 	</label>
 	<g:textField name="curso" value="${orientationInstance?.curso}"/>
 </div>
-
+<!--#end -->

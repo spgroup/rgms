@@ -1,7 +1,9 @@
 package rgms.publication
 
 import org.springframework.dao.DataIntegrityViolationException
-
+//#if($upXMLFerramenta)
+import rgms.XMLService
+//#end
 import rgms.publication.Ferramenta;
 
 class FerramentaController {
@@ -112,4 +114,63 @@ class FerramentaController {
 	{
 		return message(code: code, args: [message(code: 'ferramenta.label', default: 'Ferramenta'), id])
 	}
+//#if($upXMLFerramenta)
+    def uploadXMLFerramenta()
+    {
+        String flashMessage = 'The non existent dissertations were successfully imported'
+
+        XMLService serv = new XMLService()
+        Node xmlFile = serv.parseReceivedFile(request)
+        if (!serv.Import(saveTools, returnWithMessage, xmlFile, flashMessage))
+            return
+    }
+
+    Closure returnWithMessage = {
+        String msg ->
+
+            redirect(action: "list")
+            flash.message = message(code: msg)
+    }
+
+    Closure saveTools = {
+        Node xmlFile ->
+            Node producaoTecnica = (Node)xmlFile.children()[2]
+            Node dadosBasicos
+            Node detalhamentoDoSoftware
+            Node informacoesAdicionais
+
+            Ferramenta newTool = new Ferramenta()
+
+            for (Node currentNode : producaoTecnica.children())
+            {
+                if (currentNode.name().equals("SOFTWARE"))
+                {
+                    for(Node currentNodeChild : currentNode.children())
+                    {
+                        if ((currentNodeChild.name()+"").equals(("INFORMACOES-ADICIONAIS")))
+                            informacoesAdicionais = currentNodeChild
+                    }
+                    dadosBasicos = (Node) currentNode.children()[0]
+                    detalhamentoDoSoftware = (Node) currentNode.children()[1]
+
+                    newTool.publicationDate = new Date()
+
+                    String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO")
+                    if (tryingToParse.isInteger())
+                        newTool.publicationDate.set(year: tryingToParse.toInteger())
+
+                    newTool.file = 'no File'
+                    newTool.website = 'no Website'
+
+                    newTool.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-SOFTWARE")
+
+                    String descricao =   XMLService.getAttributeValueFromNode(informacoesAdicionais, "DESCRICAO-INFORMACOES-ADICIONAIS")
+
+                    newTool.description = "País: "+XMLService.getAttributeValueFromNode(dadosBasicos, "PAIS") +", Ambiente: " + XMLService.getAttributeValueFromNode(detalhamentoDoSoftware, "AMBIENTE") + (descricao.equals("") ? "" : ", Informacoes adicionais: "+descricao)
+                    newTool.save(flush: false)
+                }
+                newTool = new Ferramenta()
+            }
+    }
+//#end
 }
