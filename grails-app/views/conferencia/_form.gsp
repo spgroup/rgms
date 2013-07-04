@@ -2,7 +2,6 @@
 <%@ page import="rgms.publication.Conferencia" %>
 
 
-
 <div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="conferencia.title.label" default="Title" />
@@ -57,8 +56,8 @@
 		<span class="required-indicator">*</span>
 	</label>
 	
-	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-          value="${conferenciaInstance?.members}" />
+	<g:select name="members" from="${Member.list()}" size="10" multiple="true" optionKey="id"
+          value="${conferenciaInstance?.membersSelected()}" />
 
 </div>
 

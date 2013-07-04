@@ -2,7 +2,6 @@
 <%@ page import="rgms.publication.TechnicalReport" %>
 
 
-
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="technicalReport.title.label" default="Title" />
@@ -50,7 +49,7 @@
 	</label>
 	
 	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-          value="${technicalReportInstance?.members}" />
+		value="${technicalReportInstance?.membersSelected()}" />
 
 </div>
 

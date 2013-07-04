@@ -1,8 +1,8 @@
 package pages
 
-import geb.Page
+import pages.FormPage
 
-class BookChapterCreatePage extends Page{
+class BookChapterCreatePage extends FormPage {
     static url = "bookChapter/create"
 
     static at = {

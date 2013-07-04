@@ -1,13 +1,13 @@
 package pages
 
-import geb.Page
+import pages.FormPage
 
-class TechnicalReportCreatePage extends Page {
+class TechnicalReportCreatePage extends FormPage {
 	static url = "technicalReport/create"
 
 	static at = {
-		title ==~ /Criar Technical Report/
-		journal != null
+		title ==~ /Criar TechnicalReport/
+		//journal != null
 	}
 
 	static content = {

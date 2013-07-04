@@ -1,6 +1,7 @@
 package rgms.publication
 
 import rgms.member.Member
+import org.apache.shiro.SecurityUtils
 
 abstract class Publication {
 
@@ -61,6 +62,15 @@ abstract class Publication {
 		result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
 		result = prime * result + ((this.id == null) ? 0 : this.id);
 		return result;
+	}
+
+	public Set membersSelected() {
+//#if ($Autofill)
+		def loggedUsername = SecurityUtils.subject?.principal;
+		return members ? members : [ Member.findByUsername(loggedUsername).id ];
+//#else
+		return members;
+//#end
 	}
 
 //	public String retPrimeiroAutor(){

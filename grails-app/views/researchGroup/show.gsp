@@ -26,8 +26,11 @@
   <br>
   <g:jasperReport jasper="researchGroup" format="PDF" name="export" >
     <input type="hidden" name="research_group_id" value="${ researchGroupInstance?.id}" />
-  </g:jasperReport>
+  </g:jasperReport>  
 <!--#end -->
+  <g:link class="edit" action="updateNewsFromTwitter" id="${ researchGroupInstance?.id}">
+  	<g:message code="default.button.update.twitter.label" default="xxx" />  	
+  </g:link>
   
   <a href="#show-researchGroup" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
   <div class="nav" role="navigation">
@@ -52,6 +55,15 @@
 
         </li>
       </g:if>
+      
+      <g:if test="${ researchGroupInstance?.name }">
+        <li class="fieldcontain">
+          <span id="name-label" class="property-label"><g:message code="researchGroup.twitter.label" default="Twitter" /></span>
+
+          <span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${ researchGroupInstance }" field="twitter"/></span>
+
+        </li>
+      </g:if>
 
       <g:if test="${ researchGroupInstance?.description }">
         <li class="fieldcontain">
@@ -70,7 +82,7 @@
           <span class="property-value" aria-labelledby="childOf-label"><g:link controller="researchGroup" action="show" id="${ researchGroupInstance?.childOf?.id }">${ researchGroupInstance?.childOf?.encodeAsHTML() }</g:link></span>
 
         </li>
-      </g:if>
+      </g:if>      
 
      
 <!-- #end -->
@@ -86,13 +98,29 @@
 
         </li>
       </g:if>
+      
+      <g:if test="${ currentNews }">
+        <li class="fieldcontain">
+          <span id="members-label" class="property-label"><g:message code="researchGroup.news.label" default="News" /></span>
+          
+          <table>
+          	
+        <g:each in="${ currentNews }" var="n" status="index">
+        	<tr>
+        		<td> ${ index + 1} - </td><td>${ n.description?.encodeAsHTML() }</td>
+          	</tr>
+        </g:each>
+        </table>
+
+        </li>
+      </g:if>
 
     </ol>
     <ol class="property-list researchGroup">
       <li class="fieldcontain">
         <label>Inference: </label>
       <g:select name="members" from="${ publicationsInstance }" multiple="multiple" optionKey="id" size="5" value="${ publicationsInstance*.id }" id="${ researchGroupInstance?.id }"" class="many-to-many"/>
-                </li> 
+      </li> 
     </ol>
 
     <g:form>

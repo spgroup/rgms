@@ -52,3 +52,12 @@ Feature: Dissertation Tests
     Given the system has some dissertation stored
     When I upload a new dissertation "C:\testelattes.xml"
     Then the system has more dissertations now
+
+#if ($Autofill)
+Scenario: create a new dissertation with user data already filled by default
+    Given I am at the publications menu
+    When I select the "Dissertacao" option at the program menu
+    And I select the new dissertation option at the dissertation page
+    Then I see my user listed as an author member of dissertation by default
+    And I see my school name as school of dissertation by default
+#end

@@ -14,7 +14,7 @@ class Periodico extends Publication {
 		pages nullable: false, blank: false
 	}
 
-	//#if($Bibtex)
+//#if($Bibtex)
 	String generateBib() {
 		return "@article{"+ super.members.get(0) + super.publicationDate.getAt(Calendar.YEAR)
 		+ ",author=\"" + BibtexAux.organizeAuthors(super.members) + "\",\n title=\"" + super.title + "\",\n journal=\""
@@ -22,7 +22,7 @@ class Periodico extends Publication {
 		+ this.volume + "\",\n month=\"" + super.publicationDate.getAt(Calendar.MONTH)
 		+ "\",\n number=\"" + this.number + "\",\n pages=\"" + this.pages + "\"}"
 	}
-	//#end
+//#end
 
 	@Override
 	public String toString() {

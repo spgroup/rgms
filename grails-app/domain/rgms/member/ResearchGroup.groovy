@@ -1,14 +1,17 @@
 package rgms.member
 
-import rgms.publication.Publication;
+import rgms.news.News
+import rgms.publication.Publication
 
 class ResearchGroup {
     String name
     String description
+	String twitter	
+	
 //#if($researchGroupHierarchy)
     ResearchGroup childOf;
 //#end
-    static hasMany = [memberships : Membership]
+    static hasMany = [memberships : Membership, news : News]
     
     public String toString()
     {
@@ -17,6 +20,7 @@ class ResearchGroup {
     static constraints = {
         name(maxSize:10,blank:false,unique:true)
         description(maxSize:1000,blank:false)
+		twitter(nullable:true)
 
 //#if($researchGroupHierarchy)
         childOf(nullable:true)

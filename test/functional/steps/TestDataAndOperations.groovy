@@ -27,6 +27,11 @@ import rgms.publication.ConferenciaController
 import rgms.publication.BookChapter
 import rgms.publication.BookChapterController
 
+import rgms.news.News;
+import rgms.news.NewsController 
+import rgms.news.TwitterConnection;
+import twitter4j.Status;
+
 class TestDataAndOperations {
 
 	static articles = [
@@ -76,15 +81,23 @@ class TestDataAndOperations {
 			[name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
 					status: "Graduate Student", university: "UFPE", enabled: true
 			]]
+	
 
 	static researchgroups = [
 			[name: "SWPRG",
 					description: "SW Productivity Research Group",
-					childOf: null]
+					childOf: null,
+					twitter: null]
 			,
 			[name: "taes",
 					description: "grupo de estudos",
-					childOf: null]]
+					childOf: null,
+					twitter: null]
+			,
+			[name: "RGTST",
+					description: "grupo de estudos",
+					childOf: null,
+					twitter: "olhardigital"]]
 
 	static memberships = [
 			[member: (new Member(members[0])),
@@ -549,6 +562,50 @@ class TestDataAndOperations {
 		def cont = new ConferenciaController()
 		def date = new Date()
 		Conferencia.findByTitle(title).delete(flush:true)
+	}
+
+
+	static public ResearchGroup createAndGetResearchGroupByName(String name)
+	{
+		def researchGroupController = new ResearchGroupController()
+		researchGroupController.params << findResearchGroupByGroupName(name)
+		researchGroupController.create()
+		researchGroupController.save()
+		researchGroupController.response.reset()
+		return ResearchGroup.findByName(name)
+	}
+
+	static public void createNews(String descriptionParam, Date dateParam, ResearchGroup groupParam) {
+		def cont = new NewsController()	
+		cont.params << [description: descriptionParam, date: dateParam, researchGroup: groupParam]	
+		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
+
+	static public void requestNewsFromTwitter(ResearchGroup group){
+		def cont = new ResearchGroupController()
+		cont.params << [id:group.id]
+		cont.updateNewsFromTwitter()
+		cont.response.reset()	
+	}
+
+	static public void deleteNews(String description, Date date, ResearchGroup researchGroup) {
+		def cont = new NewsController()
+		def identificador = News.findByDescriptionAndDateAndResearchGroup(description,date,researchGroup).id
+		cont.params << [id: identificador]
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.delete()
+		//cont.save()
+		cont.response.reset()
+	}
+
+	static public void editResearchGroupTwitter(researchGroup, String newTwitter) {
+		def researchGroupController = new ResearchGroupController()
+		researchGroupController.params << [twitter: newTwitter] << [id : researchGroup.getId()]
+		researchGroupController.edit()
+		researchGroupController.save()
+		researchGroupController.response.reset()
 	}
 
 }

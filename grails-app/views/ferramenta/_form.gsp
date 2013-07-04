@@ -2,7 +2,6 @@
 <%@ page import="rgms.publication.Ferramenta" %>
 
 
-
 <div class="fieldcontain ${hasErrors(bean: ferramentaInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="ferramenta.title.label" default="Title" />
@@ -58,7 +57,7 @@
 	</label>
 	
 	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-          value="${ferramentaInstance?.members}" />
+		value="${ferramentaInstance?.membersSelected()}" />
 
 </div>
 

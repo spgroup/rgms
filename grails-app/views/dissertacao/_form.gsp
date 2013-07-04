@@ -2,7 +2,6 @@
 <%@ page import="rgms.publication.Dissertacao" %>
 
 
-
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'title', 'error')} required">
 	<label for="title">
 		<g:message code="dissertacao.title.label" default="Title" />
@@ -40,7 +39,7 @@
 		<g:message code="dissertacao.school.label" default="School" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="school" required="" value="${dissertacaoInstance?.school}"/>
+	<g:textField name="school" required="" value="${dissertacaoInstance?.schoolSelected()}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'address', 'error')} required">
@@ -58,7 +57,7 @@
 	</label>
 	
 	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-          value="${dissertacaoInstance?.members}" />
+		value="${dissertacaoInstance?.membersSelected()}" />
 
 </div>
 
