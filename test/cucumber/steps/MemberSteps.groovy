@@ -97,6 +97,11 @@ When(~'^I fill the user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') 
     page.fillMemberDetails(name, username, email, university)
 }
 
+
+When(~'^I fill some user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
+    page.fillSomeMemberDetails(name, username, email, university)
+}
+
 Then(~'^I am on the member show page$') {->
     at MemberViewPage
 }

@@ -33,6 +33,11 @@ Feature: member
     When I fill the user details with "jose" "josesilva" "jose@ufpe.br" "UFPE"
     Then I am on the member show page
 
+  Scenario: create member web with partial information in chrome
+    Given I am at the create member page
+    When I fill some user details with "jose" "josesilva" "jose@ufpe.br" "UFPE"
+    Then I am still on the create member page with the error message
+
   Scenario: register user with invalid data
     Given I am at the create member page
     When I fill the user details with "jose" "josesilva" "jose@com" "UFPE"

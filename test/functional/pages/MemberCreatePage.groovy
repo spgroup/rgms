@@ -14,10 +14,6 @@ class MemberCreatePage extends Page {
     }
 
     def fillMemberDetails(String name, String username, String email, String university) {
-        $("form").name = name
-        $("form").username = username
-        $("form").email = email
-        $("form").university = university
         $("form").phone = "81 2126 8430"
         $("form").website = "http://www.cin.ufpe.br"
         $("form").city = "Recife"
@@ -25,6 +21,14 @@ class MemberCreatePage extends Page {
         $("form").active = true
         $("form").status = "Graduate Student"
         $("form").enabled = true
+        fillSomeMemberDetails(name, username, email, university)
+    }
+
+    def fillSomeMemberDetails(String name, String username, String email, String university) {
+        $("form").name = name
+        $("form").username = username
+        $("form").email = email
+        $("form").university = university
         $("input", id: "create").click()
     }
 }
