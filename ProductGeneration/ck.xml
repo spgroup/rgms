@@ -20,6 +20,10 @@
 <transformation><name>createBuildEntries</name><args>ImportBibtex</args></transformation>
 </configuration>
 <configuration xmlns="">
+<expression>TesePublication</expression>
+<transformation><name>createBuildEntries</name><args>TesePublication</args></transformation>
+</configuration>
+<configuration xmlns="">
 <expression>Website</expression>
 <transformation><name>createBuildEntries</name><args>Website</args></transformation>
 </configuration>
@@ -136,6 +140,7 @@
 <configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/publication/Periodico.groovy</args></transformation></configuration>
 
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>memberShip,grails-app/domain/rgms/member/Membership.groovy</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/domain/rgms/member/Membership.groovy</args></transformation></configuration>
 
 <configuration xmlns=""><expression>History</expression><transformation><name>selectAndMoveComponent</name><args>history,grails-app/domain/rgms/member/Record.groovy</args></transformation></configuration>
 
