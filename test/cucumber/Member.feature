@@ -28,10 +28,10 @@ Feature: member
     When I fill the user details with "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student"
     Then I am still on the register page with the message user created
 
-  Scenario: create member
+  Scenario: create member web
     Given I am at the create member page
     When I fill the user details with "jose" "josesilva" "jose@ufpe.br" "UFPE"
-    Then I am on the member view page
+    Then I am on the member show page
 
   Scenario: register user with invalid data
     Given I am at the create member page

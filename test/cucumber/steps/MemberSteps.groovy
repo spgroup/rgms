@@ -94,11 +94,10 @@ Given(~'^I am at the create member page$') {->
 }
 
 When(~'^I fill the user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
-    at MemberCreatePage
     page.fillMemberDetails(name, username, email, university)
 }
 
-Then(~'^I am on the member view page$') {->
+Then(~'^I am on the member show page$') {->
     at MemberViewPage
 }
 
