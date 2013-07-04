@@ -115,6 +115,8 @@ researchGroup => grailsapp/domain/rgms/member/ResearchGroup.groovy;
 Role => grailsapp/domain/rgms/authentication/Role.groovy;
 thesis => grailsapp/domain/rgms/publication/Tese.groovy;
 researchLine => grailsapp/domain/rgms/publication/ResearchLine.groovy;
+visitor => grailsapp/domain/rgms/visit/Visitor.groovy;
+visit => grailsapp/domain/rgms/visit/Visit.groovy;
 
 initial => grailsapp/views/initial.gsp;
 
@@ -146,6 +148,8 @@ RecordController => grailsapp/controllers/rgms/member/RecordController.groovy;
 ResearchGroupController => grailsapp/controllers/rgms/member/ResearchGroupController.groovy;
 RoleController => grailsapp/controllers/rgms/authentication/RoleController.groovy;
 TeseController => grailsapp/controllers/rgms/publication/TeseController.groovy;
+VisitorController => grailsapp/controllers/rgms/visit/VisitorController.groovy;
+VisitController => grailsapp/controllers/rgms/visit/VisitController.groovy;
 
 
 

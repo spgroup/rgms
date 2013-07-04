@@ -7,7 +7,14 @@ class Visit {
   	Date    dataInicio
 	Date    dataFim
 	Visitor visitor
-	ResearchGroup researchGroup;
+	
+	//#if( $reserchgroupobrigatorio )	
+		ResearchGroup researchGroup;
+	//#end
+	
+	//#if( $descricaovisita )	
+		String descricao	
+	//#end
 	
 	static constraints = {
 		dataInicio(nullable:false,blank:false)

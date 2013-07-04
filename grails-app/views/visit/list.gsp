@@ -6,6 +6,52 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'visit.label', default: 'Visit')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
+
+		<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+
+		<script type="text/javascript">
+			$(function(){
+				// Dialog
+				$('.dialog').dialog({
+					autoOpen: false,
+					width: 600,
+					buttons: {
+						"Ok": function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+
+			// Dialog Link
+			$('.dialog_link').click(function(){
+				$('.dialog').dialog('close');
+
+				var id_link = $(this).attr('id');
+				var index = id_link.split('_');
+
+				$('#txt_'+index[1]).dialog('open');
+
+				return false;
+			});
+		});
+	  </script>
+	  
+	  <style type="text/css">
+
+		.dialog_link
+        {
+           padding: .4em 1em .4em 20px;
+           text-decoration: none;position: relative;
+        }
+
+		.dialog_link span.ui-icon
+        {
+           margin: 0 5px 0 0;position: absolute;
+          left: .2em;top: 50%;margin-top: -8px;
+        }
+	</style>
 	</head>
 	<body>
 		<a href="#list-visit" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -30,7 +76,13 @@
 					
 						<th><g:message code="visit.visitor.label" default="Visitor" /></th>
 						
-					    <th><g:message code="researchGroup.name.label" default="Reserarch Group" /></th>	
+						<!-- #if( $reserchgroupobrigatorio ) -->
+						    <th><g:message code="researchGroup.name.label" default="Reserarch Group" /></th>	
+						<!-- #end -->
+						
+						<!-- #if( $descricaovisita ) -->
+							<th><g:message code="researchGroup.name.label" default="Descrição" /></th>
+						<!-- #end -->
 					
 					</tr>
 				</thead>
@@ -50,7 +102,21 @@
 					
 						<td>${fieldValue(bean: visitInstance, field: "visitor")}</td>
 					
-						<td>${fieldValue(bean: visitInstance, field: "researchGroup")}</td>
+			            <!-- #if( $reserchgroupobrigatorio ) -->
+						<td>${fieldValue(bean: visitInstance, field: "researchGroup")}</td> 
+						<!-- #end -->
+						
+						<!-- #if( $descricaovisita ) -->
+						<td>
+						   <a href="#" id="lk_1" class="dialog_link ">
+						      <span class="ui-icon ui-icon-newwin"></span>
+						       ${fieldValue(bean: visitInstance, field: "descricao",maxLengh:"10")}
+						     </a>
+						</td>
+						<div title="Descrição" id="txt_1"  class="dialog">
+							${fieldValue(bean: visitInstance, field: "descricao")} 
+						</div>
+						<!-- #end -->
 					</tr>
 				</g:each>
 				</tbody>

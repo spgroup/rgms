@@ -23,3 +23,11 @@ Scenario: visita de um periodo para visitante cadastrado
     Given que o visitante "Pessoa" esteja cadastrado no  sistema  
     When eu agendar uma visita para o visitante "Pessoa" e inserir data inicio igual a "11/11/2000" e inserir a data fim igual a "12/11/2000"
     Then uma visita para o visitante "Pessoa" com de incio igual a "11/11/2000" e data fim igual a "12/11/2000" e armazenada no sistemas
+    
+#if( $Twitter )
+  Scenario: Add a new visit twitting it
+    Given I am logged as "admin" and at the Add Visit Page
+    When I try to create an visit "new Visit"
+    And I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
+    Then A twitter is added to my twitter account regarding the new visit "new Visit"
+#end

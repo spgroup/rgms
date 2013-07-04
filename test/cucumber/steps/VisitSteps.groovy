@@ -1,7 +1,11 @@
 import rgms.visit.Visitor
+import pages.LoginPage
+import rgms.tool.TwitterTool
+import rgms.tool.FacebookTool
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
+import static cucumber.api.groovy.Hooks.*
 
 Given(~'^que o visitante "([^"]*)" nao esteja cadastrado no  sistema$') { String visitante ->
 	 def visitor = Visitor.findByName(visitante)
@@ -43,3 +47,22 @@ Then(~'^uma visita para o visitante "([^"]*)" com de incio igual a "([^"]*)" e d
 	def visita = TestDataAndOperations.buscaVisita(visitante,dataInicio,dataFim)
 	assert visita != null
 }
+
+Given(~'^I am logged as "([^"]*)" and at the Add Visit Page$') { String userName ->
+	to LoginPage
+	at LoginPage
+	page.fillLoginData(userName, "adminadmin")
+	to VisitPage
+}
+
+When(~'^I try to create an visit "([^"]*)"$') { String visit ->
+	at VisitPage
+	page.selectNewVisit()
+	at VistCreatePage
+	page.fillArticleDetails(articleName)
+}
+
+Then(~'^A twitter is added to my twitter account regarding the new visit "([^"]*)"$') { String visit ->
+	assert TwitterTool.consult(visit)
+}
+

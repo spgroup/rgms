@@ -62,8 +62,41 @@
 					
 				</li>
 				</g:if>
+				
+				<!-- #if( $descricaovisita ) -->
+				<g:if test="${visitInstance?.descricao}">
+				<li class="fieldcontain">
+					<span id="descricao-label" class="property-label"><g:message code="ferramenta.descricao.label" default="Descricao" /></span>
+					
+	    			<span class="property-value" aria-labelledby="visitor-label">
+							     ${visitInstance?.descricao}
+				
+					  </span>
+					
+				</li>
+				</g:if>
+				<!-- #end -->
 			
 			</ol>
+			
+			<!--#if( $Twitter ) -->
+			<!-- Twitter start -->
+			<a href="javascript:window.open('https://twitter.com/intent/tweet?button_hashtag=RGMS&text=Visit:%20${visitInstance?.visitor}', 'Tweteet It', 'width=450,height=250');"
+				class="twitter-hashtag-button"
+				data-related="rgms_ufpe"
+				id="button_twitter"
+				target="_blank">
+					<img id="share_twitter2"
+		     		src="http://www.tabpress.com/fbui_share/share_button.png">
+		    </a>
+		 	<script>
+			 $('#button_twitter').live('click', function(e){
+				$.get("http://localhost:8080/rgms/notifyTwitter/visit/${visitInstance?.visitor}");
+			});
+			</script>
+			<!-- Twitter end -->
+			<!--#end -->
+			
 			<g:form>
 				<fieldset class="buttons">
 					<g:hiddenField name="id" value="${visitInstance?.id}" />

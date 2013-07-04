@@ -924,49 +924,70 @@
 		<expression>visit</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>visitForm,grails-app/views/visit/form.gsp</args>
+			<args>formvisit,grails-app/views/visit/form.gsp</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>visit</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>visitCreate,grails-app/views/visit/create.gsp</args>
+			<args>createvisit,grails-app/views/visit/create.gsp</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>visit</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>visitEdit,grails-app/views/visit/edit.gsp</args>
+			<args>editvisit,grails-app/views/visit/edit.gsp</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>visit</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>visitList,grails-app/views/visit/list.gsp</args>
+			<args>listvisit,grails-app/views/visit/list.gsp</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>visit</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>visitShow,grails-app/views/visit/show.gsp</args>
+			<args>showvisit,grails-app/views/visit/show.gsp</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>visit</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>grails-app/domain/rgms/visit/Visit.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>visit</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>visit,grails-app/domain/rgms/Visit.groovy</args>
+			<args>visit,grails-app/domain/rgms/visit/Visit.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>visit</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>grails-app/domain/rgms/visit/Visitor.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
 		<expression>visit</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
-			<args>visitor,grails-app/domain/rgms/Visitor.groovy</args>
+			<args>visitor,grails-app/domain/rgms/visit/Visitor.groovy</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>visit</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>grails-app/controllers/rgms/VisitController.groovy</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">

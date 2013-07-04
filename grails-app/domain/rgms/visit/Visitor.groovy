@@ -3,11 +3,7 @@ package rgms.visit
 class Visitor {
 	
 	String name
-	//#if($Twitter)
-		String twitterAccessToken
-		String twitterAccessSecret
-	//#end
-	
+	 
 	static hasMany = [visit:Visit]
 
 	static constraints = {

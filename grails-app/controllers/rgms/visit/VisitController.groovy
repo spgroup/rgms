@@ -26,39 +26,33 @@ class VisitController {
 		def visitInstance
 		String nome  = params.get("name")
 		
-		//#if( $twitter )
-		  String twitterAccessToken = params.get("twitterAccessToken");
-		  String twitterAccessSecret = params.get("twitterAccessSecret");
-		//#end
-		
+	
 		if (Visitor.findByName(nome) == null){
 			Visitor novoVisitante
 			
-			//#if( $twitter )
-			   novoVisitante = new Visitor(name:nome,twitterAccessToken:twitterAccessToken,twitterAccessSecret:twitterAccessSecret)
-		    //#else
-			   novoVisitante = new Visitor(name:nome)
-			//#end
-			
+			novoVisitante = new Visitor(name:nome)
 			novoVisitante.save()
 		
 			Date dataInicio = params.get("dataInicio")
 			Date dataFim = params.get("dataFim")
 			String researchGroupName = params.get("nameGroup");
+			String descricao = params.get("descricao")
 			ResearchGroup researchGroup = ResearchGroup.findByName(researchGroupName);
 			
-			visitInstance = new Visit(dataInicio: dataInicio,dataFim: dataFim,visitor: novoVisitante,researchGroup:researchGroup)
-			
-			//#if( $twitter )
-		    	final def text = "Nova visita agendada, inicio dia " + dataInicio + " até dia  " + dataFim + " #RMGS"
-	                  def textTitulo = "Visita " + nome + ":" + dataInicio + "-" + dataFim; 
-			    if (twitterAccessToken) {
-				    	TwitterTool.sendGTwitter(textTitulo,twitterAccessToken, twitterAccessSecret, text)
-			     }
-		    //#end
-		
+			//#if( $reserchgroupobrigatorio && $descricaovisita )
+				visitInstance = new Visit(dataInicio: dataInicio,dataFim: dataFim,visitor: novoVisitante,researchGroup:researchGroup,descricao:descricao)
+		    //#elseif( $reserchgroupobrigatorio )
+				visitInstance = new Visit(dataInicio: dataInicio,dataFim: dataFim,visitor: novoVisitante,researchGroup:researchGroup)
+			//#elseif( $descricaovisita )
+			    visitInstance = new Visit(dataInicio: dataInicio,dataFim: dataFim,visitor: novoVisitante,descricao:descricao)
+		    //#else
+			    visitInstance = new Visit(dataInicio: dataInicio,dataFim: dataFim,visitor: novoVisitante)
+			//#end
+					
 		}else{
 			params.visitor = Visitor.findByName(nome)
+			String researchGroupName = params.get("nameGroup");
+			params.researchGroup = ResearchGroup.findByName(researchGroupName);
 			visitInstance = new Visit(params)
 		}
 		
@@ -69,14 +63,6 @@ class VisitController {
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'visit.label', default: 'Visit'), visitInstance.id])
 		redirect(action: "show", id: visitInstance.id)
-//        def visitInstance = new Visit(params)
-//        if (!visitInstance.save(flush: true)) {
-//            render(view: "create", model: [visitInstance: visitInstance])
-//            return
-//        }
-//
-//        flash.message = message(code: 'default.created.message', args: [message(code: 'visit.label', default: 'Visit'), visitInstance.id])
-//        redirect(action: "show", id: visitInstance.id)
     }
 
     def show(Long id) {
