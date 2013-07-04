@@ -21,6 +21,27 @@
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
+		<expression>descricaovisita</expression>
+		<transformation>
+			<name>createBuildEntries</name>
+			<args>descricaovisita</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
+		<expression>reserchgroupobrigatorio</expression>
+		<transformation>
+			<name>createBuildEntries</name>
+			<args>reserchgroupobrigatorio</args>
+		</transformation>
+	</configuration>	
+	<configuration xmlns="">
+		<expression>Twitter</expression>
+		<transformation>
+			<name>createBuildEntries</name>
+			<args>Twitter</args>
+		</transformation>
+	</configuration>
+	<configuration xmlns="">
 		<expression>Facebook</expression>
 		<transformation>
 			<name>createBuildEntries</name>
@@ -923,6 +944,14 @@
 	<configuration xmlns="">
 		<expression>visit</expression>
 		<transformation>
+			<name>preprocessFiles</name>
+			<args>grails-app/views/visit/form.gsp</args>
+		</transformation>
+	</configuration>
+
+	<configuration xmlns="">
+		<expression>visit</expression>
+		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>formvisit,grails-app/views/visit/form.gsp</args>
 		</transformation>
@@ -941,11 +970,27 @@
 			<args>editvisit,grails-app/views/visit/edit.gsp</args>
 		</transformation>
 	</configuration>
+	
+	<configuration xmlns="">
+		<expression>visit</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>grails-app/views/visit/list.gsp</args>
+		</transformation>
+	</configuration>
 	<configuration xmlns="">
 		<expression>visit</expression>
 		<transformation>
 			<name>selectAndMoveComponent</name>
 			<args>listvisit,grails-app/views/visit/list.gsp</args>
+		</transformation>
+	</configuration>
+	
+	<configuration xmlns="">
+		<expression>visit</expression>
+		<transformation>
+			<name>preprocessFiles</name>
+			<args>grails-app/views/visit/show.gsp</args>
 		</transformation>
 	</configuration>
 	<configuration xmlns="">
