@@ -18,7 +18,6 @@ Feature: member
     When I create the member with username "usernametest"
     Then the member "usernametest" is not registered
 
-
   Scenario: login with incorrect password
     Given I am at the login page
     When I fill username and password with "admin" and "incorrectpassword"
