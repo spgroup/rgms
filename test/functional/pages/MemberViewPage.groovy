@@ -3,15 +3,15 @@ package pages
 import geb.Page
 
 class MemberViewPage extends Page {
-	static url = "member/view"
+    static url = "member/show"
 
-	static at = {
-		title ==~ /Ver Member/
-	}
+    static at = {
+        title ==~ /Ver Member/
+    }
 
-	static content = {
-		
-	}
+    static content = {
 
-	
+    }
+
+
 }
