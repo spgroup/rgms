@@ -15,12 +15,15 @@ class TestDataAndOperations {
     ]
 	
 	static ferramentas = [
-		[description: "Teste de nova ferramenta",
+		[description: "Ferramenta Target",
 				title: "Target",
 				publicationDate: (new Date("12 October 2012"))],
-		[website: "http://www.teste.com", description: "Teste de nova ferramenta 2",
+		[website: "http://www.teste.com", description: "Ferramenta Emergo",
 				title: "Emergo",
-				publicationDate: (new Date("12 October 2012"))]
+				publicationDate: (new Date("12 October 2012"))],
+		[website: "http://www.ccfinder.com", description: "Ferramenta CCfinder",
+			title: "CCFinder",
+			publicationDate: (new Date("12 October 2012"))]
 	]
 
     static researchLines = [
