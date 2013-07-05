@@ -3,35 +3,23 @@ Feature: Add Ferramenta
   As a member of a research group
   I want to add, remove and modify ferramentas I have added
 
-
-  Scenario: new ferramenta without publication date
-    Given The system has a ferramenta entitled "Nova Ferramenta"
-    When I create the ferramenta "Nova Ferramenta" without website
-    Then The ferramenta "Nova Ferramenta" is not stored
+  Scenario: new ferramenta without website
+    Given the system has no ferramenta entitled "Target"
+    When I create the ferramenta "Target" with file name "novaferramenta.pdf" without its website
+    Then the ferramenta "Target" is not stored
 
   Scenario: duplicate ferramenta
-    Given The system has a ferramenta entitled "Nova Ferramenta"
-    When I create the ferramenta "Nova Ferramenta"
-    Then The ferramenta "Nova Ferramenta" is not stored twice
+    Given the ferramenta "Emergo" is stored in the system with file name "target.pdf"
+    When I create the ferramenta "Emergo" with file name "target.pdf"
+    Then the ferramenta "Emergo" is not stored twice
 
-  Scenario: edit ferramenta
-    Given The system has a ferramenta entitled "Ferramenta1"
-    When I change the website to "websiteteste"
-    Then The edited ferramenta entitled "Ferramenta1" is properly stored in the system with the new website "websiteteste"
+  Scenario: edit existing ferramenta
+    Given the system has a ferramenta entitled "Emergo" with file name "emergo.pdf"
+    When I edit the ferramenta title from "Emergo" to "Emergo REVIEWED"
+    Then the ferramenta "Emergo" is properly updated by the system
 
-  Scenario: new ferramenta without any information
+  Scenario: new ferramenta web
     Given I am at the publications menu
-    When I select the "Ferramenta" option at the program menu
+    When I select the "Ferramenta" option at the publications menu
     And I select the new ferramenta option at the ferramenta page
-    And I select the create option at the ferramenta page
-    Then The ferramenta is not stored
-  Scenario: upload dissertation without a file
-    Given I am at the publications menu
-    When I select the "Ferramenta" option at the program menu
-    And I select the upload button at the ferramenta page
-    Then I'm still on ferramenta page
-
-  Scenario: upload dissertation with a file
-    Given the system has some ferramenta stored
-    When I upload a new ferramenta "C:\testelattes.xml"
-    Then the system has more ferramenta now
+    Then I can fill the ferramenta details

@@ -2,7 +2,7 @@ package pages
 
 import geb.Page
 
-class FerramentaCreate extends Page {
+class FerramentaCreatePage extends Page {
 	static url = "ferramenta/create"
 
 	static at = {

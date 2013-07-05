@@ -2,109 +2,65 @@ import steps.TestDataAndOperations
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.FerramentaPage
-import pages.FerramentaCreate
+import pages.FerramentaCreatePage
 import pages.FerramentaShowPage
 import pages.FerramentaEditPage
-import rgms.publication.Dissertacao
 import rgms.publication.Ferramenta
 
 import static cucumber.api.groovy.EN.*
 
-Given(~'The system has a ferramenta entitled "([^"]*)"$') { String title ->
-    article = Ferramenta.findByTitle(title)
-    assert article != null
-}
-When(~'^I create the ferramenta "([^"]*)" without website$') {String title ->
-    at FerramentaCreate
-    page.createFerramentaWithoutWebsite()
-}
-Then(~'^The ferramenta "([^"]*)" is not stored$'){String title->
-    article = Ferramenta.findByTitle(title)
-    assert article == null
-}
-When(~'^I create the ferramenta "([^"]*)"$') {String title ->
-    at FerramentaCreate
-    page.createNewFerramenta(title)
-}
-Then(~'^The ferramenta "([^"]*)" is not stored twice$') { String title ->
-    ferramenta = Ferramenta.findAllByTitle(title)
-    assert ferramenta.size() == 1
-}
-When(~'^I change the website to "([^"]*)"$') {String website ->
-    at FerramentaEditPage
-    page.editWebsite(website)
-}
-Then(~'^The edited ferramenta entitled "([^"]*)" is properly stored in the system with the new website "([^"]*)"$') { String title, website ->
-    ferramenta = Ferramenta.findAllByTitle(title)
-    assert ferramenta.website == website
-}
-
-When(~'^I select the new ferramenta option at the ferramenta page$') {->
-    at FerramentaPage
-    page.selectNewArticle()
-}
-When(~'^I select the create option at the ferramenta page$') {->
-    at FerramentaCreate
-    page.createNewFerramentaWithoutInformation()
-}
-Then(~'^The ferramenta is not stored$'){ ->
-    article = Ferramenta.findByTitle(null)
-    assert article == null
-}
-
-
-
-When(~'^I select "([^"]*)" at the ferramenta page$') {String title ->
-    at FerramentaPage
-    page.selectFerramenta(title)
-}
-
-
-Then(~'^I click on edit at the Ferramenta page$'){->
-    at FerramentaShowPage
-    page.editDissertation()
-}
-
-Then(~'^The ferramenta entitle "([^"]*)" is properly deleted of the system$'){String title ->
-    article = Ferramenta.findByTitle(title)
-    assert article == null
-}
-
-
+// new ferramenta without website
 Given(~'^the system has no ferramenta entitled "([^"]*)"$') { String title ->
-    article = Ferramenta.findByTitle(title)
-    assert article == null
+	ferramenta = Ferramenta.findByTitle(title)
+    assert ferramenta == null
+}
+When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" without its website$') { String title, String filename ->
+	TestDataAndOperations.createFerramenta(title, filename)
+}
+Then(~'^the ferramenta "([^"]*)" is not stored$') { String title ->
+	ferramentas = Ferramenta.findAllByTitle(title)
+    assert ferramentas.size() == 0
 }
 
-
-
-
-Then(~'^the ferramenta "([^"]*)" is properly stored by the system$') { String title ->
+// duplicate ferramenta 
+Given(~'^the ferramenta "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+	TestDataAndOperations.createFerramenta(title, filename)
     ferramenta = Ferramenta.findByTitle(title)
     assert ferramenta != null
 }
-
-When(~'^I select the upload button at the ferramenta page$') { ->
-    at FerramentaPage
-    page.uploadWithoutFile()
+When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+	TestDataAndOperations.createFerramenta(title, filename)
 }
-Then(~'^I\'m still on ferramenta page$') {  ->
-    at FerramentaPage
-}
-Given(~'^the system has some ferramenta stored$') { ->
-    inicialSize = Ferramenta.findAll().size()
-}
-When(~'^I upload a new ferramenta "([^"]*)"$') {  filepath ->
-    inicialSize = Ferramenta.findAll().size()
-    TestDataAndOperations.uploadFerramenta(filepath)
-    finalSize = Ferramenta.findAll().size()
-    assert inicialSize<finalSize
-    //para funcionar é necessario que tenha um FilePath válido
-    // não consegui fazer de uma maneira que todos os passos sejam independentes
-}
-Then(~'the system has more ferramenta now$') {->
-    finalSize = Ferramenta.findAll().size()
-
+Then(~'^the ferramenta "([^"]*)" is not stored twice$') { String title ->
+	ferramentas = Ferramenta.findAllByTitle(title)
+    assert ferramentas.size() == 1
+    // Should actually check whether elements in articles are not equal except for their filename,
+    // which is changed by the system during the file upload.
 }
 
+// edit ferramenta
+Given(~'^the system has a ferramenta entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+	TestDataAndOperations.createFerramenta(title, filename)
+    ferramenta = Ferramenta.findByTitle(title)
+    assert ferramenta != null
+}
+When(~'^I edit the ferramenta title from "([^"]*)" to "([^"]*)"$') { String oldtitle, String newtitle ->
+	def updatedFerramenta = TestDataAndOperations.editFerramenta(oldtitle, newtitle)
+    assert updatedFerramenta != null
+}
+Then(~'^the ferramenta "([^"]*)" is properly updated by the system$') { String title ->
+	ferramenta = Ferramenta.findByTitle(title)
+    assert ferramenta == null
+	// ideally, it should check whether the tool is stored with the new title
+}
 
+// new ferramenta web
+
+When(~'^I select the new ferramenta option at the ferramenta page$') {->
+	at FerramentaPage
+	page.selectNewFerramenta()
+}
+Then(~'^I can fill the ferramenta details$') { ->
+	at FerramentaCreatePage
+    page.fillArticleDetails()
+}

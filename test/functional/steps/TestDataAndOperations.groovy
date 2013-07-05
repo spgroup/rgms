@@ -13,6 +13,15 @@ class TestDataAndOperations {
                     title: "Algebraic reasoning for object-oriented programming",
                     publicationDate: (new Date("12 October 2012"))]
     ]
+	
+	static ferramentas = [
+		[description: "Teste de nova ferramenta",
+				title: "Target",
+				publicationDate: (new Date("12 October 2012"))],
+		[website: "http://www.teste.com", description: "Teste de nova ferramenta 2",
+				title: "Emergo",
+				publicationDate: (new Date("12 October 2012"))]
+	]
 
     static researchLines = [
             [name: "IA Avancada", description: ""],
@@ -80,6 +89,12 @@ class TestDataAndOperations {
 
         }
     }
+	
+	static public def findFerramentaByTitle(String title) {
+		ferramentas.find { ferramenta ->
+			ferramenta.title == title
+		}
+	}
 
     static public def findByUsername(String username) {
         members.find { member ->
@@ -249,6 +264,16 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+	
+	static public void createFerramenta(String title, filename) {
+		def cont = new FerramentaController()
+		def date = new Date()
+		cont.params << TestDataAndOperations.findFerramentaByTitle(title) << [file: filename]
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
 
     static public void createResearchGroup(String name, description) {
         def researchGroupController = new ResearchGroupController()
@@ -519,6 +544,17 @@ class TestDataAndOperations {
         def updatedarticle = Periodico.findByTitle(newtitle)
         return updatedarticle
     }
+	
+	static public Ferramenta editFerramenta(oldtitle, newtitle) {
+		def ferramenta = Ferramenta.findByTitle(oldtitle)
+		ferramenta.setTitle(newtitle)
+		def cont = new FerramentaController()
+		cont.params << ferramenta.properties
+		cont.update()
+
+		def updatedferramenta = Ferramenta.findByTitle(newtitle)
+		return updatedferramenta
+	}
 
     static public void removeConferencia(String title) {
         def cont = new ConferenciaController()
