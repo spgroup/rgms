@@ -54,14 +54,12 @@ Given(~'^the system has no dissertation entitled "([^"]*)"$') { String title ->
     assert article == null
 }
 
-Given(~'^the system has a dissertation entitled "([^"]*)"$') { String title->
-	
-	String filename = "teste2.txt"
-	String school = "ufpe"
-	TestDataAndOperations.createDissertacao(title, filename, school)
-    article = Dissertacao.findByTitle(title)
+Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+	TestDataAndOperations.createDissertacao(title, filename, "UFPE")
+	article = Dissertacao.findByTitle(title)
     assert article != null
 }
+
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') { String title, filename, school ->
     TestDataAndOperations.createDissertacao(title, filename, school)
@@ -83,6 +81,16 @@ When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without sch
     TestDataAndOperations.createDissertacaoWithotSchool(title, filename);
 }
 
+When(~'^I edit the dissertation title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
+	def updatedDissertation = TestDataAndOperations.editDissertatacao(oldtitle, newtitle)
+	assert updatedDissertation != null
+}
+
+Then(~'^the dissertation "([^"]*)" is properly updated by the system$') { String title ->
+	def article = Dissertacao.findByTitle(title)
+	assert article == null
+}
+
 When(~'^I select the upload button at the dissertation page$') { ->
     at DissertationPage
     page.uploadWithoutFile()
@@ -92,10 +100,11 @@ Then(~'^I\'m still on dissertation page$') {  ->
 }
 Given(~'^the system has some dissertation stored$') { ->
     inicialSize = Dissertacao.findAll().size()
+	
 }
-When(~'^I upload a new dissertation "([^"]*)"$') {  filepath ->
+When(~'^I upload a new dissertation "([^"]*)"$') {  filename ->
     inicialSize = Dissertacao.findAll().size()
-    TestDataAndOperations.uploadDissertacao(filepath)
+    TestDataAndOperations.uploadDissertacao(filename)
     finalSize = Dissertacao.findAll().size()
     assert inicialSize<finalSize
     //para funcionar é necessario que tenha um FilePath válido

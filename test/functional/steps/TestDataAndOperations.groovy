@@ -211,10 +211,21 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+	
+	static public Dissertacao editDissertatacao(oldtitle, newtitle) {
+		def article = Dissertacao.findByTitle(oldtitle)
+		article.setTitle(newtitle)
+		def cont = new DissertacaoController()
+		cont.params << article.properties
+		cont.update()
 
-    static public void uploadDissertacao(filepath) {
+		def updatedarticle = Dissertacao.findByTitle(newtitle)
+		return updatedarticle
+	}
+	
+    static public void uploadDissertacao(filename) {
         def cont = new DissertacaoController()
-        def xml = new File((String) filepath);
+        def xml = new File(filename);
         def records = new XmlParser()
         cont.saveDissertations(records.parse(xml));
         cont.response.reset()
