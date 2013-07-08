@@ -6,9 +6,10 @@ class ResearchGroupListPage extends Page {
     static url = "researchGroup/list"
 
     static at = {
-        String teste = "/" +  GetPageTitle.getMessage("researchGroup.label") +
-                " " + GetPageTitle.getMessage("default.button.list.label") + "/"
-        title ==~  teste
+        String teste = "Grupo de Pesquisa Listagem"
+        /*"/" +  GetPageTitle.getMessage("researchGroup.label") +
+            " " + GetPageTitle.getMessage("default.button.list.label") + "/"       */
+        title ==~ teste
     }
 
     static content = {
