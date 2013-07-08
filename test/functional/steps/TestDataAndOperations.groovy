@@ -126,7 +126,7 @@ class TestDataAndOperations {
     }
 
     static public def findBookChapterByTitle(String title) {
-        bookChapters.findAll { bookChapter ->
+        bookChapters.find { bookChapter ->
             bookChapter.title == title
         }
     }
