@@ -70,6 +70,7 @@
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>conferenciaCreate,grails-app/views/conferencia/create.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>conferenciaEdit,grails-app/views/conferencia/edit.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>conferenciaList,grails-app/views/conferencia/list.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/views/conferencia/list.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>conferenciaShow,grails-app/views/conferencia/show.gsp</args></transformation></configuration>
 
 
@@ -78,6 +79,8 @@
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>createDissertation,grails-app/views/dissertacao/create.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>editDissertation,grails-app/views/dissertacao/edit.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>listDissertation,grails-app/views/dissertacao/list.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/views/dissertacao/list.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>navDissertacao,grails-app/views/dissertacao/_navigation.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>showDissertation,grails-app/views/dissertacao/show.gsp</args></transformation></configuration>
 
 
@@ -85,7 +88,9 @@
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>createTool,grails-app/views/ferramenta/create.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>editTool,grails-app/views/ferramenta/edit.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>listTool,grails-app/views/ferramenta/list.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/views/ferramenta/list.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>showTool,grails-app/views/ferramenta/show.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>navTool,grails-app/views/ferramenta/_navigation.gsp</args></transformation></configuration>
 
 
 
@@ -93,6 +98,7 @@
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>createPeriodico,grails-app/views/periodico/create.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>editPeriodico,grails-app/views/periodico/edit.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>listPeriodico,grails-app/views/periodico/list.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/views/periodico/list.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>showPeriodico,grails-app/views/periodico/show.gsp</args></transformation></configuration>
 
 
@@ -105,9 +111,11 @@
 
 
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>formResearchGroup,grails-app/views/researchGroup/_form.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/views/researchGroup/_form.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>createResearchGroup,grails-app/views/researchGroup/create.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>editResearchGroup,grails-app/views/researchGroup/edit.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>listResearchGroup,grails-app/views/researchGroup/list.gsp</args></transformation></configuration>
+<configuration xmlns=""><expression>rgms</expression><transformation><name>preprocessFiles</name><args>grails-app/views/researchGroup/list.gsp</args></transformation></configuration>
 <configuration xmlns=""><expression>rgms</expression><transformation><name>selectAndMoveComponent</name><args>editMembersResearchGroup,grails-app/views/researchGroup/editMembers.gsp</args></transformation></configuration>
 
 

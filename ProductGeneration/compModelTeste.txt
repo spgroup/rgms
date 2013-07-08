@@ -47,12 +47,14 @@ listDissertation => grailsapp/views/dissertacao/list.gsp;
 editDissertation => grailsapp/views/dissertacao/edit.gsp;
 createDissertation => grailsapp/views/dissertacao/create.gsp;
 formDissertation => grailsapp/views/dissertacao/form.gsp;
+navDissertacao => grailsapp/views/dissertacao/navigation.gsp;
 
 showTool => grailsapp/views/ferramenta/show.gsp;
 listTool => grailsapp/views/ferramenta/list.gsp;
 editTool => grailsapp/views/ferramenta/edit.gsp;
 createTool => grailsapp/views/ferramenta/create.gsp;
 formTool => grailsapp/views/ferramenta/form.gsp;
+navTool => grailsapp/views/ferramenta/navigation.gsp;
 
 showMembership => grailsapp/views/membership/show.gsp;
 listMembership => grailsapp/views/membership/list.gsp;
@@ -215,5 +217,4 @@ bibtexImportSteps => test/cucumber/steps/BibtexImportSteps.groovy;
 strategyParse => grailsapp/domain/rgms/publication/strategyBibtexParse/StrategyParse.java;
 strategyParseDissertacao => grailsapp/domain/rgms/publication/strategyBibtexParse/StrategyParseDissertacao.java;
 strategyParseTese => grailsapp/domain/rgms/publication/strategyBibtexParse/StrategyParseTese.java;
-
 
