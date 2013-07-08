@@ -12,10 +12,10 @@ Feature: BookChapter
   Scenario: duplicate book chapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
     When I create the book chapter "Next Generation Software Product Line Engineering" with file name "NGSPL-0.pdf"
-    Then the book chapter  "Next Generation Software Product Line Engineering" is not stored twice
+    Then the book chapter "Next Generation Software Product Line Engineering" is not stored twice
 
   Scenario: remove book chapter
-    Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
+    Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
     When I remove the book chapter "Next Generation Software Product Line Engineering"
     Then the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
 
