@@ -29,7 +29,7 @@ Given(~'^the conferencia "([^"]*)" is stored in the system with file name "([^"]
 }
 
 Then(~'^the conferencia "([^"]*)" is not stored twice$') { String title ->
-    conferencia = Conferencia.findByTitle(title)
+    conferencia = Conferencia.findAllByTitle(title)
     assert conferencia.size() == 1
 }
 
