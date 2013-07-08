@@ -1,0 +1,1 @@
+Nenhum PDF gerado nesta pasta deve ser passado pro git. Ou deleta os pdfs antes de fazer o pull request ou adiciona ao gitignore.

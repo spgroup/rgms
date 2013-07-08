@@ -5,17 +5,17 @@ Feature: BookChapter
   so that I can generate web pages and reports containing these book chapters
 
   Scenario: new book chapter
-    Given the system has no book chapter entitled "Next Generation Software Product Line Engineering"
-    When  I create the book chapter "Next Generation Software Product Line Engineering" with file name "NGSPL.pdf"
-    Then  the book chapter "Next Generation Software Product Line Engineering" is properly stored by the system
+    Given the system has no book chapter entitled "SPL Development"
+    When  I create the book chapter "SPL Development" with file name "HSPLE.pdf"
+    Then  the book chapter "SPL Development" is properly stored by the system
 
   Scenario: duplicate book chapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
     When I create the book chapter "Next Generation Software Product Line Engineering" with file name "NGSPL-0.pdf"
-    Then the book chapter  "Next Generation Software Product Line Engineering" is not stored twice
+    Then the book chapter "Next Generation Software Product Line Engineering" is not stored twice
 
   Scenario: remove book chapter
-    Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
+    Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
     When I remove the book chapter "Next Generation Software Product Line Engineering"
     Then the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
 

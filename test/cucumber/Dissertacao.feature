@@ -4,43 +4,39 @@ Feature: Dissertation Tests
   I want to add, remove and modify dissertations I have added
 
   Scenario: new dissertation without school
-    Given the system has no dissertation entitled "Dissertacao Teste3"
-    When I create the dissertation "Dissertacao Teste3" with file name "teste3Dissertacao.pdf" without school
-    Then the system has no dissertation entitled "Dissertacao Teste3"
+    Given the system has no dissertation entitled "Dissertation without school"
+    When I create the dissertation "Dissertation without school" with file name "Dissertationwithoutschool.txt" without school
+    Then the system has no dissertation entitled "Dissertation without school"
 
   Scenario: new dissertation
-    Given the system has no dissertation entitled "Dissertacao Teste2"
-    When I create the dissertation "Dissertacao Teste2" with file name "teste2.pdf" and school "UFPE"
-    Then the dissertation "Dissertacao Teste2" is properly stored by the system
+    Given the system has no dissertation entitled "New dissertation"
+    When I create the dissertation "New dissertation" with file name "Newdissertation.txt" and school "UFPE"
+    Then the dissertation "New dissertation" is properly stored by the system
     
   Scenario: new dissertation duplicated
-    Given the system has a dissertation entitled "Nova Dissertacao"
-    When I create the dissertation "Dissertacao Teste3" with file name "teste6.txt" and school "UFPE"
-    Then the dissertation "Dissertacao Teste3" is not stored twice
+    Given the dissertation "Dissertation duplicated" is stored in the system with file name "Dissertationduplicated.txt"
+    When I create the dissertation "Dissertation duplicated" with file name "Dissertationduplicated2.txt" and school "UFPE"
+    Then the dissertation "Dissertation duplicated" is not stored twice
 
   Scenario: new dissertation without file
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
     And I select the new dissertation option at the dissertation page
     And I cant add the dissertation without a file
-    Then the system has no dissertation entitled "Dissertacao Teste 1"
+    Then the system has no dissertation entitled "Dissertacao sem arquivo"
 
   Scenario: edit dissertation
-    Given the system has a dissertation entitled "Nova Dissertacao edit"
-    Given I am at the publications menu
-    When I select the "Dissertacao" option at the program menu
-    And I select "Nova Dissertacao edit" at the dissertation page
-    And I click on edit
-    And I edit the school to "UFPB"
-    Then the school name is "UFPB"
+    Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt"
+    When    I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
+    Then    the dissertation "Edit dissertation" is properly updated by the system
 
   Scenario: delete dissertation
-  	Given the system has a dissertation entitled "Nova Dissertacao delete"
+  	Given the dissertation "Delete dissertation" is stored in the system with file name "Deletedissertation.txt"
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
-    And I select "Nova Dissertacao delete" at the dissertation page
+    And I select "Delete dissertation" at the dissertation page
     And I delete it
-    Then the system has no dissertation entitled "Nova Dissertacao delete"
+    Then the system has no dissertation entitled "Delete dissertation"
 
   Scenario: upload dissertation without a file
     Given I am at the publications menu
@@ -50,5 +46,5 @@ Feature: Dissertation Tests
 
   Scenario: upload dissertation with a file
     Given the system has some dissertation stored
-    When I upload a new dissertation "C:\testelattes.xml"
+    When I upload a new dissertation "test\\functional\\steps\\curriculo.xml"
     Then the system has more dissertations now

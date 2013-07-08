@@ -12,7 +12,7 @@ class FerramentaPage extends Page {
     static content = {
     }
 
-    def selectNewArticle() {
+    def selectNewFerramenta() {
         $('a.create').click()
     }
 

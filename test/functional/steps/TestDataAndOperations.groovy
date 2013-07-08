@@ -13,6 +13,18 @@ class TestDataAndOperations {
                     title: "Algebraic reasoning for object-oriented programming",
                     publicationDate: (new Date("12 October 2012"))]
     ]
+	
+	static ferramentas = [
+		[description: "Ferramenta Target",
+				title: "Target",
+				publicationDate: (new Date("12 October 2012"))],
+		[website: "http://www.teste.com", description: "Ferramenta Emergo",
+				title: "Emergo",
+				publicationDate: (new Date("12 October 2012"))],
+		[website: "http://www.ccfinder.com", description: "Ferramenta CCfinder",
+			title: "CCFinder",
+			publicationDate: (new Date("12 October 2012"))]
+	]
 
     static researchLines = [
             [name: "IA Avancada", description: ""],
@@ -21,15 +33,18 @@ class TestDataAndOperations {
             [name: "Modelo Cascata Renovado", description: "Altera��o do modelo original"]
     ]
     static bookChapters = [
-            [title: "Next Generation Software Product Line Engineering", publicationDate: (new Date("12 October 2012")), researchLine: "Software Product Lines",
-                    publisher: "Person", chapter: 1, members: null]
+            [title: "Next Generation Software Product Line Engineering", publicationDate: (new Date("12 October 2012")),
+                    publisher: "Person", chapter: 1],
+			[title: "SPL Development", publicationDate: (new Date("12 October 2012")),
+					publisher: "Addison", chapter: 5]
     ]
+	
     static conferencias = [
             [title: "I International Conference on Software Engineering",
-                    publicationDate: (new Date("12 October 2012")), researchLine: "Software Product Lines",
+                    publicationDate: (new Date("12 October 2012")),
                     booktitle: "Software Engineering", pages: "20-120"],
             [title: "IV Conference on Software Product Lines",
-                    publicationDate: (new Date("14 October 2012")), researchLine: "Software Product Lines",
+                    publicationDate: (new Date("14 October 2012")),
                     booktitle: "Practices and Patterns", pages: "150-200"]
     ]
 
@@ -80,6 +95,12 @@ class TestDataAndOperations {
 
         }
     }
+	
+	static public def findFerramentaByTitle(String title) {
+		ferramentas.find { ferramenta ->
+			ferramenta.title == title
+		}
+	}
 
     static public def findByUsername(String username) {
         members.find { member ->
@@ -105,7 +126,7 @@ class TestDataAndOperations {
     }
 
     static public def findBookChapterByTitle(String title) {
-        bookChapters.findAll { bookChapter ->
+        bookChapters.find { bookChapter ->
             bookChapter.title == title
         }
     }
@@ -155,6 +176,20 @@ class TestDataAndOperations {
         }
         return compatible
     }
+	
+	static public boolean bookChapterCompatibleTo(bookChapter, title) {
+		def testBookChapter = findBookChapterByTitle(title)
+		def compatible = false
+		if (testBookChapter == null && bookChapter == null) {
+			compatible = true
+		} else if (testBookChapter != null && bookChapter != null) {
+			compatible = true
+			testBookChapter.each { key, data ->
+				compatible = compatible && (bookChapter."$key" == data)
+			}
+		}
+		return compatible
+	}
 
     static public boolean memberCompatibleTo(member, username) {
         def testmember = findByUsername(username)
@@ -169,7 +204,6 @@ class TestDataAndOperations {
         }
         return compatible
     }
-
 
     static public void createDissertacao(String title, filename, school) {
         def cont = new DissertacaoController()
@@ -193,10 +227,21 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+	
+	static public Dissertacao editDissertatacao(oldtitle, newtitle) {
+		def article = Dissertacao.findByTitle(oldtitle)
+		article.setTitle(newtitle)
+		def cont = new DissertacaoController()
+		cont.params << article.properties
+		cont.update()
 
-    static public void uploadDissertacao(filepath) {
+		def updatedarticle = Dissertacao.findByTitle(newtitle)
+		return updatedarticle
+	}
+	
+    static public void uploadDissertacao(filename) {
         def cont = new DissertacaoController()
-        def xml = new File((String) filepath);
+        def xml = new File(filename);
         def records = new XmlParser()
         cont.saveDissertations(records.parse(xml));
         cont.response.reset()
@@ -210,24 +255,8 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-
-    static public boolean bookChapterCompatibleTo(bookChapter, title) {
-        def testBookChapter = findArticleByTitle(title)
-        def compatible = false
-        if (testBookChapter == null && bookChapter == null) {
-            compatible = true
-        } else if (testBookChapter != null && bookChapter != null) {
-            compatible = true
-            testBookChapter.each { key, data ->
-                compatible = compatible && (bookChapter."$key" == data)
-            }
-        }
-        return compatible
-    }
-
-
     static public boolean conferenciaCompatibleTo(conferencia, title) {
-        def testConferencia = findArticleByTitle(title)
+        def testConferencia = findConferenciaByTitle(title)
         def compatible = false
         if (testConferencia == null && conferencia == null) {
             compatible = true
@@ -249,6 +278,16 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+	
+	static public void createFerramenta(String title, filename) {
+		def cont = new FerramentaController()
+		def date = new Date()
+		cont.params << TestDataAndOperations.findFerramentaByTitle(title) << [file: filename]
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
 
     static public void createResearchGroup(String name, description) {
         def researchGroupController = new ResearchGroupController()
@@ -269,16 +308,14 @@ class TestDataAndOperations {
     }
 
     static public void createBookChapter(String title, filename) {
-        def cont = new BookChapterController()
-        def date = new Date()
-        def tempBookChapter = TestDataAndOperations.findBookChapterByTitle(title)
-        cont.params << tempBookChapter << [file: filename]
-        cont.request.setContent(new byte[1000])
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-
+		def cont = new BookChapterController()
+		def date = new Date()
+		cont.params << TestDataAndOperations.findBookChapterByTitle(title) << [file: filename]
+		cont.request.setContent(new byte[1000])
+		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
 
     static public void deleteResearchGroup(def researchGroup) {
         def researchGroupController = new ResearchGroupController()
@@ -410,13 +447,6 @@ class TestDataAndOperations {
         res.response.reset()
     }
 
-    static public void removeBookChapter(String title) {
-        def cont = new BookChapterController()
-        def date = new Date()
-        BookChapter.findByTitle(title).delete(flush: true)
-    }
-
-
     static public void updateResearchLine(String name, String description) {
         def res = new ResearchLineController()
         def research_line = ResearchLine.findByName(name)
@@ -501,6 +531,13 @@ class TestDataAndOperations {
         cont.params << [id: testarticle.id]
         cont.delete()
     }
+	
+	static public void removeBookChapter(String title) {
+		def testBookChapter = BookChapter.findByTitle(title)
+        def cont = new BookChapterController()
+        cont.params << [id: testBookChapter.id]
+        cont.delete()
+	}
 
     static public boolean containsArticle(title, articles) {
         def testarticle = Periodico.findByTitle(title)
@@ -519,6 +556,17 @@ class TestDataAndOperations {
         def updatedarticle = Periodico.findByTitle(newtitle)
         return updatedarticle
     }
+	
+	static public Ferramenta editFerramenta(oldtitle, newtitle) {
+		def ferramenta = Ferramenta.findByTitle(oldtitle)
+		ferramenta.setTitle(newtitle)
+		def cont = new FerramentaController()
+		cont.params << ferramenta.properties
+		cont.update()
+
+		def updatedferramenta = Ferramenta.findByTitle(newtitle)
+		return updatedferramenta
+	}
 
     static public void removeConferencia(String title) {
         def cont = new ConferenciaController()
