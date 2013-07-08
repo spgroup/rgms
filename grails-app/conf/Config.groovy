@@ -83,6 +83,10 @@ environments {
         // TODO: grails.serverURL = "http://www.changeme.com"
         jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
     }
+    test {
+        grails.logging.jul.usebridge = true
+        jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
+    }
 }
 
 // log4j configuration

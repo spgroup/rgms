@@ -41,10 +41,10 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         test("org.codehaus.geb:geb-junit4:$gebVersion")
         test("org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion")
-		test("org.seleniumhq.selenium:selenium-support:$seleniumVersion")
-		compile('lib:itextpdf:5.4.0')
-		compile('lib:itext-pdfa:5.4.0')
-		compile('lib:itext-xtra:5.4.0')
+        test("org.seleniumhq.selenium:selenium-support:$seleniumVersion")
+        compile('lib:itextpdf:5.4.0')
+        compile('lib:itext-pdfa:5.4.0')
+        compile('lib:itext-xtra:5.4.0')
         // runtime 'mysql:mysql-connector-java:5.1.16'
     }
 
@@ -52,6 +52,7 @@ grails.project.dependency.resolution = {
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.7.1"
         runtime ":resources:1.1.6"
+        runtime ':jasper:1.6.1'
 
         // Uncomment these (or fillLoginData new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"

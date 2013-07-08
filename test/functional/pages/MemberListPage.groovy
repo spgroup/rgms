@@ -1,8 +1,6 @@
 package pages
 
-
 import geb.Page
-import geb.navigator.Navigator
 
 class MemberListPage extends Page {
     static url = "member/list"
@@ -15,8 +13,12 @@ class MemberListPage extends Page {
     static content = {
     }
 
-    def getMenuOption(String option){
+    def getMenuOption(String option) {
         $("div.nav a", text: option)
+    }
+
+    def selectMember(String member) {
+        $("a", text: member).click()
     }
 
 }
