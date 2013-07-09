@@ -6,19 +6,27 @@ class TechnicalReportCreatePage extends Page {
 	static url = "technicalReport/create"
 
 	static at = {
-		title ==~ /Criar Technical Report/
-		journal != null
+		title ==~ /Criar TechnicalReport/
+		institution != null
 	}
 
 	static content = {
-		journal {
-			$("input", id: "journal")
+		institution {
+			$("input", id: "institution")
 		}
 	}
 
-	def fillArticleDetails() {
-		$("form").title = "A theory of Software Product Line Refinement"
-		$("form").journal = "Theoretical Computer Science"
-		// Could parametrize, obtaining data from class TestDataAndOperations
-	}
+	 def fillTechnicalReportDetails() {
+        fillTechnicalReportDetails("./test/functional/steps/Joee.pdf", "Joe-E")
+    }
+
+    def fillTechnicalReportDetails(filename, title) {
+        $("form").title = title
+        $("form").institution = "UC Berkeley"
+        $("form").file = filename
+    }
+
+    def selectCreateTechnicalReport() {
+        $("input", name: "create").click()
+    }
 }

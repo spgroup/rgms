@@ -49,7 +49,7 @@ Feature: journal article
   Scenario: remove existing article web
     Given   I am at the articles page and the article "A theory of software product line refinement" is stored in the system with file name "TCS-77.pdf"
     When    I select to view "A theory of software product line refinement" in resulting list
-    Then    the details are showed and I can select the option to remove
+    Then    the article details are showed and I can select the option to remove
     And     the article "A theory of software product line refinement" is properly removed by the system
 
   Scenario: list existing article web

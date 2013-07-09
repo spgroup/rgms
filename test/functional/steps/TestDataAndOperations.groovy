@@ -143,7 +143,7 @@ class TestDataAndOperations {
         }
     }
 
-    static public def findReportByTitle(String title) {
+    static public def findTechnicalReportByTitle(String title) {
         reports.find { report ->
             report.title == title
         }
@@ -186,6 +186,20 @@ class TestDataAndOperations {
 			compatible = true
 			testBookChapter.each { key, data ->
 				compatible = compatible && (bookChapter."$key" == data)
+			}
+		}
+		return compatible
+	}
+	
+	static public boolean technicalReportCompatibleTo(tech, title) {
+		def testtech = findTechnicalReportByTitle(title)
+		def compatible = false
+		if (testtech == null && tech == null) {
+			compatible = true
+		} else if (testtech != null && tech != null) {
+			compatible = true
+			testtech.each { key, data ->
+				compatible = compatible && (tech."$key" == data)
 			}
 		}
 		return compatible
@@ -328,7 +342,6 @@ class TestDataAndOperations {
 
     static public void createConferencia(String title, String filename) {
         def cont = new ConferenciaController()
-        def date = new Date()
         cont.params << TestDataAndOperations.findConferenciaByTitle(title) << [file: filename]
         cont.request.setContent(new byte[1000])
         cont.create()
@@ -336,12 +349,9 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void createReport(String title, filename) {
-
+    static public void createTechnicalReport(String title, filename) {
         def cont = new TechnicalReportController()
-        def date = new Date()
-        cont.params << TestDataAndOperations.findReportByTitle(title) << [file: filename]
-
+        cont.params << TestDataAndOperations.findTechnicalReportByTitle(title) << [file: filename]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
         cont.save()
@@ -350,26 +360,10 @@ class TestDataAndOperations {
 
     static public void createMember(String username) {
         def cont = new MemberController()
-
         cont.params << TestDataAndOperations.findByUsername(username)
         cont.create()
         cont.save()
         cont.response.reset()
-    }
-
-
-    static public boolean compatibleTechTo(tech, title) {
-        def testtech = TechnicalReport.findByTitle(title)
-        def compatible = false
-        if (testtech == null && tech == null) {
-            compatible = true
-        } else if (testtech != null && tech != null) {
-            compatible = true
-            testtech.each { key, data ->
-                compatible = compatible && (tech."$key" == data)
-            }
-        }
-        return compatible
     }
 
     static public TechnicalReport editTech(oldtitle, newtitle) {

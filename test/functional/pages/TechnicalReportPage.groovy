@@ -1,7 +1,7 @@
 package pages
 
 import geb.Page
-import rgms.publication.Periodico
+import rgms.publication.TechnicalReport
 
 class TechnicalReportPage extends Page {
 	static url = "technicalReport/list"
@@ -14,14 +14,11 @@ class TechnicalReportPage extends Page {
 	}
 
 
-	def selectNewArticle() {
+	def selectNewTechnicalReport() {
 		$('a.create').click()
 	}
 
-	/**
-	 * @author Guilherme e Felipe
-	 */
-	def selectViewTech(title) {
+	def selectViewTechnicalReport(title) {
 		def listDiv = $('div', id: 'list-technicalReport')
 		def techTable = (listDiv.find('table'))[0]
 		def techRow  = techTable.find('tbody').find('tr')
@@ -29,18 +26,15 @@ class TechnicalReportPage extends Page {
 		showLink.click()
 	}
 
-	/**
-	 * @author Guilherme
-	 */
-	def checkArticleAtList(title,row){
-		def listDiv = $('div', id: 'list-periodico')
-		def articleTable = (listDiv.find('table'))[0]
-		def articleRows  = articleTable.find('tbody').find('tr')
-		def articleColumns = articleRows[row].find('td')
+	def checkTechincalReportAtList(title,row){
+		def listDiv = $('div', id: 'list-technicalReport')
+		def techReportTable = (listDiv.find('table'))[0]
+		def techReportRows  = techReportTable.find('tbody').find('tr')
+		def techReportColumns = techReportRows[row].find('td')
 
-		def testarticle = Periodico.findByTitle(title)
-		assert articleColumns[0].text() == testarticle.title
-		assert articleColumns[2].text() == testarticle.file
-		assert articleColumns[4].text() == testarticle.journal
+		def testTechReport = TechnicalReport.findByTitle(title)
+		assert techReportColumns[0].text() == testTechReport.title
+		assert techReportColumns[2].text() == testTechReport.file
+		assert techReportColumns[4].text() == testTechReport.institution
 	}
 }

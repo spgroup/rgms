@@ -1,4 +1,4 @@
-@i9n @ignore
+@i9n
 Feature: conferencia
   As a member of a research group
   I want to add, remove and modify conferencias I have published

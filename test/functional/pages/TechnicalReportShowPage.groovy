@@ -13,10 +13,13 @@ class TechnicalReportShowPage extends Page {
 	static content = {
 	}
 
-	def select(String e,v) {
-		$("form").find(e, class: v).click()
-//		if(v == 'delete'){
-//			assert withConfirm(true) { $('input', class: 'delete').click() } == "Are you sure?"
-//		}
-	}
+	def select(String e, v) {
+        if (v == 'edit') {
+			$("form").find(e, class: v).click()
+           // assert withConfirm(true) { $("form").find(e, class: v).click() }
+        } 
+		//else {
+        //    $("form").find(e, class: v).click()
+        //}
+    }
 }
