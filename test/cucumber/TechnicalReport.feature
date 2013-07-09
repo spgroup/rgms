@@ -16,11 +16,11 @@ Scenario: edit existing technical report with empty title
 	
 Scenario: edit existing technical report with invalid title web
     Given  I am at the technical reports page and the technical report "Joe-E" is stored in the system with file name "Joee.pdf"
-    When   I select to view "Joe-E" in resulting list and I change the technical report title to ""
+    When   I select to view "Joe-E" in resulting list and I change the technical report title to a blank one
     Then   I cannot select the "Alterar" option
     
 Scenario: remove existing technical report web
     Given  I am at the technical reports page and the technical report "Joe-E" is stored in the system with file name "Joee.pdf"
-    When   I select to view "Joe-E" in resulting list
+    When   I select to view the technical report "Joe-E" in resulting list
     Then   the technical report details are showed and I can select the option to remove
     And    the technical report "Joe-E" is properly removed by the system

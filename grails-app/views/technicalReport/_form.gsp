@@ -24,7 +24,8 @@
 		<g:message code="technicalReport.file.label" default="File" />
 		
 	</label>
-	<g:textArea name="file" cols="40" rows="5" maxlength="100000" value="${technicalReportInstance?.file}"/>
+	<g:field type="file" name="file" id="file" required=""
+             value="${fieldValue(bean: periodicoInstance, field: 'file')}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'researchLine', 'error')} ">

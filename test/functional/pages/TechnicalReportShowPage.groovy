@@ -16,10 +16,8 @@ class TechnicalReportShowPage extends Page {
 	def select(String e, v) {
         if (v == 'edit') {
 			$("form").find(e, class: v).click()
-           // assert withConfirm(true) { $("form").find(e, class: v).click() }
-        } 
-		//else {
-        //    $("form").find(e, class: v).click()
-        //}
+        } else if (v == 'delete') {
+        	assert withConfirm(true) { $("form").find(e, class: v).click() }
+        }
     }
 }

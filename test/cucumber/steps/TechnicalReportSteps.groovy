@@ -50,13 +50,13 @@ Given(~'^I am at the technical reports page and the technical report "([^"]*)" i
 	at TechnicalReportPage
 }
 
-When(~'^I select to view "([^"]*)" in resulting list and I change the technical report title to "([^"]*)"') { String oldtitle, newtitle
+When(~'^I select to view "([^"]*)" in resulting list and I change the technical report title to a blank one') { String oldtitle ->
 	at TechnicalReportPage
 	page.selectViewTechnicalReport(oldtitle)
 	at TechnicalReportShowPage
 	page.select('a', 'edit')
 	at TechnicalReportEditPage
-	page.edit(newtitle)
+	page.edit("")
 }
 
 Then(~'^I cannot select the "([^"]*)" option$') { String option ->
@@ -73,5 +73,10 @@ Then(~'^the technical report details are showed and I can select the option to r
 Then(~'^the technical report "([^"]*)" is properly removed by the system$') { String title ->
 	techReport = TechnicalReport.findByTitle(title)
 	assert techReport == null
+}
+
+When(~'^I select to view the technical report "([^"]*)" in resulting list$') { String title ->
+	page.selectViewTechnicalReport(title)
+	at TechnicalReportShowPage
 }
 
