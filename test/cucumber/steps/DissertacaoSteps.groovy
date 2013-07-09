@@ -7,6 +7,8 @@ import pages.DissertationShowPage
 import pages.DissertationEditPage
 import rgms.publication.Dissertacao
 
+import java.io.File
+
 import static cucumber.api.groovy.EN.*
 
 When(~'^I select the "([^"]*)" option at the program menu$') { String option ->
@@ -103,8 +105,9 @@ Given(~'^the system has some dissertation stored$') { ->
 	
 }
 When(~'^I upload a new dissertation "([^"]*)"$') {  filename ->
+	String path = "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
-    TestDataAndOperations.uploadDissertacao(filename)
+    TestDataAndOperations.uploadDissertacao(path)
     finalSize = Dissertacao.findAll().size()
     assert inicialSize<finalSize
     //para funcionar é necessario que tenha um FilePath válido

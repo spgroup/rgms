@@ -46,5 +46,5 @@ Feature: Dissertation Tests
 
   Scenario: upload dissertation with a file
     Given the system has some dissertation stored
-    When I upload a new dissertation "test\\functional\\steps\\curriculo.xml"
+    When I upload a new dissertation "curriculo.xml"
     Then the system has more dissertations now
