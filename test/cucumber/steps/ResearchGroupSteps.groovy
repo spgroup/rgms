@@ -115,7 +115,9 @@ Given(~'^i am at publication menu$') {
 }
 
 When(~'^i select the "([^"]*)" option at publications menu$') { String option ->
+	at PublicationsPage
 	page.select(option)
+	at ResearchGroupPage
 }
 
 When(~'^i select the new research group option at research group list page$') {
@@ -129,15 +131,17 @@ Then(~'^i can fill the research group details with name "([^"]*)" and create a n
 	at ResearchGroupCreatePage
 	page.fillResearchGroupDetails(name)
 	page.clickOnCreate();
-	at ResearchGroupShowPage
+	researchGroup = ResearchGroup.findByName(name)
+	assert researchGroup != null
+	
 }
-Given(~'^the system has a "([^"]*)" named "([^"]*)" stored in the system$') { String menu, String arg1 ->
+Given(~'^the system has a Research Group named "([^"]*)" stored in the system$') { String arg1 ->
 	to LoginPage
 	at LoginPage
 	page.fillLoginData("admin", "adminadmin")
 	at PublicationsPage
 	
-	page.select(menu)
+	page.select("Research Group")
 	at ResearchGroupPage
 	
 	page.selectNewResearchGroup()
@@ -146,7 +150,9 @@ Given(~'^the system has a "([^"]*)" named "([^"]*)" stored in the system$') { St
 	page.fillResearchGroupDetails(arg1)
 	page.clickOnCreate();
 	
-	at ResearchGroupShowPage
+	researchGroup = ResearchGroup.findByName(arg1)
+	assert researchGroup != null
+	
 }
 
 Given(~'^i am at Research Group list menu$') { ->

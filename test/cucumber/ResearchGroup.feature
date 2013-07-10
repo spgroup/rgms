@@ -53,13 +53,13 @@ Feature: research group
     Then i can fill the research group details with name "modcs" and create a new one
     
     Scenario: show research group via web browser
-    Given the system has a "Research Group" named "grupo" stored in the system
+    Given the system has a Research Group named "grupo" stored in the system
     And i am at Research Group list menu
     And i select a research group called "grupo"
     Then the system will show the details of this research group
     
     Scenario: edit research group via web browser
-    Given the system has a "Research Group" named "PESQUISA" stored in the system
+    Given the system has a Research Group named "PESQUISA" stored in the system
     And i am at Research Group list menu
     When i select a research group called "PESQUISA"
     And i select the edit option

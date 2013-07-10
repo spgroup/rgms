@@ -6,9 +6,7 @@ class ResearchGroupCreatePage extends Page{
 	static url = "researchGroup/create"
 	
 		static at = {
-            String teste = "/" + GetPageTitle.getMessage("default.button.create.label") +
-                    " " + GetPageTitle.getMessage("researchGroup.label") + "/"
-            title ==~  teste
+            title ==~  /Criar Grupo de Pesquisa/
 		}
 	
 		static content = {
@@ -20,7 +18,7 @@ class ResearchGroupCreatePage extends Page{
 		}	
 		
 		def clickOnCreate(){
-			$('input.save').click()
+			 $("input", name: "create").click()
 		}
 		
 }
