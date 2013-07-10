@@ -28,15 +28,30 @@ class DissertacaoController {
         def dissertacaoInstance = new Dissertacao(params)
 		
 		PublicationController pb = new PublicationController()
-
-        if (!pb.upload(dissertacaoInstance) || !dissertacaoInstance.save(flush: true)) {
-            render(view: "create", model: [dissertacaoInstance: dissertacaoInstance])
-            return
-        }
 		
-		flash.message = messageGenerator('default.created.message', dissertacaoInstance.id)
-        redirect(action: "show", id: dissertacaoInstance.id)
+		
+		if (Dissertacao.findByTitle(params.title)) {
+			handleSavingError(dissertacaoInstance, 'dissertacao.duplicatetitle.failure')
+			return
+		}
+		if (!pb.upload(dissertacaoInstance)) {
+			handleSavingError(dissertacaoInstance, 'dissertacao.filesaving.failure')
+			return
+		}
+		if (!dissertacaoInstance.save(flush: true)) {
+			handleSavingError(dissertacaoInstance, 'dissertacao.saving.failure')
+			return
+		}
+		flash.message = message(code: 'default.created.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), dissertacaoInstance.id])
+		redirect(action: "show", id: dissertacaoInstance.id)
+       
     }
+	
+	def handleSavingError(Dissertacao dissertacaoInstance, String message) {
+		dissertacaoInstance.discardMembers()
+		flash.message = message
+		render(view: "create", model: [dissertacaoInstance: dissertacaoInstance])
+	}
 
     def show() {
         def dissertacaoInstance = Dissertacao.get(params.id)

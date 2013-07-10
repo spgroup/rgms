@@ -260,6 +260,14 @@ class TestDataAndOperations {
         cont.saveDissertations(records.parse(xml));
         cont.response.reset()
     }
+	
+	static public void removeDissertacao(String title) {
+		def testDissertation = Dissertacao.findByTitle(title)
+		def cont = new DissertacaoController()
+		def date = new Date()
+		cont.params << [id: testDissertation.id]
+		cont.delete()
+	}
 
     static public void uploadFerramenta(filepath) {
         def cont = new FerramentaController()

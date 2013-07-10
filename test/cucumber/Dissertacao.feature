@@ -35,7 +35,7 @@ Feature: Dissertation Tests
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
     And I select "Delete dissertation" at the dissertation page
-    And I delete it
+    And I delete "Delete dissertation"
     Then the system has no dissertation entitled "Delete dissertation"
 
   Scenario: upload dissertation without a file

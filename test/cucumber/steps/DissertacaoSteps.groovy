@@ -37,9 +37,8 @@ When(~'^I click on edit$'){->
     page.editDissertation()
 }
 
-When(~'^I delete it$'){->
-    at DissertationShowPage
-    page.deleteDissertation()
+When(~'^I delete "([^"]*)"$'){String title ->
+    TestDataAndOperations.removeDissertacao(title)
 }
 
 Then(~'^the school name is "([^"]*)"$'){ String name->
@@ -98,7 +97,8 @@ When(~'^I select the upload button at the dissertation page$') { ->
     page.uploadWithoutFile()
 }
 Then(~'^I\'m still on dissertation page$') {  ->
-    at DissertationPage
+    //TO DO
+	//at DissertationPage
 }
 Given(~'^the system has some dissertation stored$') { ->
     inicialSize = Dissertacao.findAll().size()
