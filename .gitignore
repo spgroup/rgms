@@ -302,3 +302,7 @@ web-app/uploads/Newdissertation.txt
 web-app/uploads/SPLC.pdf
 
 web-app/uploads/Joee.pdf
+
+libpeerconnection.log
+
+target/test-reports/html/0_Ferramenta.html

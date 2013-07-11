@@ -21,7 +21,19 @@ class FerramentaCreatePage extends Page {
 		$("form").create().click()
 		// Could parametrize, obtaining data from class TestDataAndOperations
 	}
-    def createNewFerramenta(String title){
+    
+	def fillFerramentaDetails() {
+		fillFerramentaDetails("./test/functional/steps/CCFinder.pdf", "CCFinder")
+	}
+	
+	def fillFerramentaDetails(filename, title) {
+		$("form").title = title
+        $("form").description = "Description"
+        $("form").website = "website"
+		$("form").file = filename
+	}
+	
+	def createNewFerramenta(String title){
         $("form").title = title
         $("form").description = "Description"
         $("form").website = "website"

@@ -62,5 +62,5 @@ When(~'^I select the new ferramenta option at the ferramenta page$') {->
 }
 Then(~'^I can fill the ferramenta details$') { ->
 	at FerramentaCreatePage
-    page.fillArticleDetails()
+    page.fillFerramentaDetails()
 }
