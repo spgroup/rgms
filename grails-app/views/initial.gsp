@@ -147,6 +147,9 @@
         <!-- #if($Orientation)  -->
         <li><g:link controller="Orientation" action="list">Orientation</g:link></li>
         <!-- #end -->
+<!-- #if($visit) -->
+        <li><g:link controller="Visit" action="list">Visita</g:link></li>
+<!-- #end --> 
     </ol>
 </div>
 <!--  </div>-->

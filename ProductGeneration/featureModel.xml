@@ -4,6 +4,10 @@
 	
 	<feature min="0" max="1" name="Research_History" type="NONE" id="History"></feature>
 	
+	<feature min="0" max="1" name="Twitter" type="NONE" id="Twitter"></feature>
+	
+	<feature min="0" max="1" name="Facebook" type="NONE" id="Facebook"></feature>
+	
 	<feature min="0" max="1" name="Bibtex_Feature" type="NONE" id="Bibtex"></feature>
 	
 	<feature min="0" max="1" name="Generate_Website" type="NONE" id="Website">
@@ -11,8 +15,20 @@
 			<feature min="0" max="1" name="XML" type="NONE" id="XML"></feature>
 			<feature min="0" max="1" name="HTML" type="NONE" id="HTML"></feature>
 			<feature min="0" max="1" name="PDF" type="NONE" id="PDF"></feature>
-		</featureGroup>
-		
+		</featureGroup>		
 	</feature>
+	
+	<feature min="0" max="1" name="visit" type="NONE" id="visit">
+		<featureGroup min="4" max="6" id="visita">
+			<feature min="1" max="1" name="Create" type="NONE" id="createVisit"></feature>
+			<feature min="1" max="1" name="Edit" type="NONE" id="editVisit"></feature>
+			<feature min="1" max="1" name="Show" type="NONE" id="showVisit"></feature>
+			<feature min="1" max="1" name="list" type="NONE" id="listVsit"></feature>
+         	<feature min="0" max="1" name="reserchgroupobrigatorio" type="NONE" id="reserchgroupobrigatorio"></feature>
+	        <feature min="0" max="1" name="descricaovisita" type="NONE" id="descricaovisita"></feature>
+		</featureGroup>		
+	</feature>
+	
+
 	
 </feature>

@@ -13,7 +13,7 @@ abstract class Publication {
     static hasMany = [members: Member]
 
     static constraints = {
-        title nullable: false, blank: false
+        title unique:true, nullable: false, blank: false
         publicationDate nullable: false
         file maxSize: 100000, nullable: true, blank: true
         researchLine nullable: true, blank: true

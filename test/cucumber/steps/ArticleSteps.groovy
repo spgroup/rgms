@@ -1,8 +1,12 @@
 import pages.*
 import rgms.publication.Periodico
+import rgms.tool.TwitterTool
+import rgms.tool.FacebookTool
 import steps.TestDataAndOperations
+import rgms.member.Member
 
 import static cucumber.api.groovy.EN.*
+import static cucumber.api.groovy.Hooks.*
 
 Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
     article = Periodico.findByTitle(title)
@@ -171,3 +175,72 @@ Then(~'I can select the "([^"]*)" option$') { String option ->
     page.select(option)
 }
 
+if( $Twitter )
+Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName ->
+	to UserRegisterPage
+	at UserRegisterPage
+	page.fillFormData(userName)
+
+	page.submitForm()
+
+	to LoginPage
+	at LoginPage
+	page.fillLoginData("admin", "adminadmin")
+
+	member = Member.findByUsername(userName)
+	MemberEditionPage.url = "member/edit/"+ member.getId()
+
+	to MemberEditionPage
+	at MemberEditionPage
+	page.editEnableUser(userName)
+}
+
+Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
+	to LoginPage
+	at LoginPage
+	page.fillLoginData(userName, "adminadmin")
+	to ArticlesPage
+	
+	def path =  new File(".").getCanonicalPath()+File.separator+"test"+File.separator+"files"+File.separator+"TCS.pdf"
+	println path
+	def f = new File(path)
+	println "exist Path?"+f.exists()
+}
+
+When(~'^I try to create an article named as "([^"]*)"$') { String articleName ->
+	at ArticlesPage
+	page.selectNewArticle()
+	at ArticleCreatePage
+	page.fillArticleDetails(articleName)
+}
+
+Then(~'^A twitter is added to my twitter account regarding the new article "([^"]*)"$') { String articleTitle ->
+	assert TwitterTool.consult(articleTitle)
+}
+
+Then(~'^No twitte should be post about "([^"]*)"$') { String articleTitle ->
+	assert !TwitterTool.consult(articleTitle)
+}
+
+When(~'^I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+	at ArticleShowPage
+	page.clickOnTwitteIt(twitterLogin, twitterPw)
+	at ArticleShowPage
+}
+end
+
+if( $Facebook )
+When(~'^I click on share it on Facebook, with login "([^"]*)", password "([^"]*)", and message "([^"]*)"$') { String facebookLogin, String facebookPw, String message ->
+	at ArticleShowPage
+	page.clickOnFacebookIt(facebookLogin, facebookPw, message)
+	at ArticleShowPage
+}
+
+Then(~'^A facebook message is added for "([^"]*)"$') { String articleTitle ->
+	assert FacebookTool.consult(articleTitle)
+}
+
+Then(~'^No facebook message is added for "([^"]*)"$') { String articleTitle ->
+	assert !FacebookTool.consult(articleTitle)
+}
+end

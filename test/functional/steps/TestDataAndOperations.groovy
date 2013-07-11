@@ -3,6 +3,8 @@ package steps
 import rgms.member.*
 import rgms.publication.*
 
+import org.apache.shiro.crypto.hash.Sha256Hash
+
 class TestDataAndOperations {
 
     static articles = [
@@ -92,6 +94,17 @@ class TestDataAndOperations {
     static public def findArticleByTitle(String title) {
         articles.find { article ->
             article.title == title
+//#if ($visit)
+static visitors = [
+	[name:"Pessoa"]
+   ]
+
+static public def findVisitor(String name){
+	visitors.find { visitor ->
+		visitor.name == name
+	}
+}
+//#end
 
         }
     }
@@ -575,5 +588,37 @@ class TestDataAndOperations {
         def date = new Date()
         Conferencia.findByTitle(title).delete(flush: true)
     }
+
+//#if ( $visit )
+static public void agendaVisita(String visitante,String dataInicio, String dataFim){
+	def cont = new VisitController()
+	
+	def visite = Visitor.findByName(visitante)
+	
+	cont.params.visit = visite
+	cont.params.dataInicio = Date.parse("dd/mm/yyyy",dataInicio)
+	cont.params.dataFim = Date.parse("dd/mm/yyyy",dataFim)
+	cont.create()
+	cont.save()
+}
+
+static public def buscaVisita(visitante,dataInicio,dataFim){
+	def cont = new VisitController()
+	def visita = Visitor.findByName(visitante)
+	cont.params.visit = visita
+	cont.params.dataInicio = Date.parse("dd/mm/yyyy",dataInicio)
+	cont.params.dataFim = Date.parse("dd/mm/yyyy",dataFim)
+	def result = Visit.list(cont.params)
+	return result
+}
+
+static public void createVisitor(String nome){
+	def cont = new VisitorController()
+	cont.params << TestDataAndOperations.findVisitor(nome)
+	cont.create();
+	cont.save()
+	cont.response.reset()
+}
+//#end
 
 }

@@ -91,24 +91,6 @@ class BootStrap {
 //				p1.errors.each { println it }
 //			}
 
-//			TechnicalReport t1 = new TechnicalReport()
-//			t1.setTitle('Evaluating Natural Languages System')
-//			t1.setPublicationDate(new Date("13 November 2012"))
-//			t1.setInstitution('UFPE')
-//			t1.setFile("EVLS.pdf")
-//			if( !t1.save() ) {
-//				t1.errors.each { println it }
-//			}
-//
-//			def dissertation = new Dissertacao(title: "Nova Dissertacao", publicationDate: new Date(2013, 03, 02),
-//					school: "UFPE", address: "Boa Viagem", ResearchLine: rl, file:"guiDissertacao.txt")
-//
-//			dissertation.save()
-//
-//			def dissertation2 = new Dissertacao(title: "Dissertacao Teste4", publicationDate: new Date(2013, 03, 02),
-//					school: "UFPE", address: "Boa Viagem", file:"gui3Dissertacao.txt")
-//
-//			dissertation2.save()
 
 		}
 	}

@@ -46,4 +46,31 @@ class PublicationController {
 		
 		return true
 	}
+	
+	def static newUpload(Publication publicationInstance, flash, request) {
+		
+	def originalName = publicationInstance.file
+	def filePath = "web-app/uploads/${originalName}"
+	publicationInstance.file = filePath
+	
+	def f = new File(filePath)
+	
+	if (f.exists()) {
+		flash.message = message(code: 'file.already.exist.message')
+		return false
+	}
+	
+	InputStream inputStream = request.getInputStream()
+	OutputStream outputStream = new FileOutputStream(f)
+	byte[] buffer = new byte[1024*10] //buffer de 10MB
+	int length
+		 
+	while((length = inputStream.read(buffer)) > 0) {
+		outputStream.write(buffer, 0, length)
+	}
+	outputStream.close()
+	inputStream.close()
+	
+	return true
+}
 }
