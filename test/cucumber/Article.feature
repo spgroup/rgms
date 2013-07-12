@@ -49,9 +49,9 @@ Feature: journal article
 
   Scenario: Add a new article twitting it
     Given I am logged as "admin" and at the Add Article Page
-    When I try to create an article named as "Empirical Studies in Product Line"
+    When I try to create an article named as "A theory of software product line refinement"
     And I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
-    Then A twitter is added to my twitter account regarding the new article "Empirical Studies in Product Line"
+    Then A twitter is added to my twitter account regarding the new article "A theory of software product line refinement"
 
   Scenario: Add a new article with twitter, but don't twitte it
     Given I am logged as "admin" and at the Add Article Page
@@ -64,7 +64,7 @@ Feature: journal article
     And I click on share it on Facebook, with login "rgms.ufpe@gmail.com", password "rgmsadmin2013", and message "New Article"
     Then A facebook message is added for "Empirical Studies in Product Line 3"
 
-  Scenario: Add a new article and post it in the facebook
+  Scenario: Add a new article but don't post it in the facebook
     Given I am logged as "admin" and at the Add Article Page
     When I try to create an article named as "Empirical Studies in Product Line 4"
     Then No facebook message is added for "Empirical Studies in Product Line 4"

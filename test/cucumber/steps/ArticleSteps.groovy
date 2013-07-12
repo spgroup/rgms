@@ -210,7 +210,8 @@ When(~'^I try to create an article named as "([^"]*)"$') { String articleName ->
     at ArticlesPage
     page.selectNewArticle()
     at ArticleCreatePage
-    page.fillArticleDetails(articleName)
+    page.fillArticleDetails()
+    page.selectCreateArticle()
 }
 
 Then(~'^A twitter is added to my twitter account regarding the new article "([^"]*)"$') { String articleTitle ->

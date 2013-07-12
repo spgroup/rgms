@@ -20,27 +20,27 @@ class PeriodicoController {
         [periodicoInstance: new Periodico(params)]
     }
 
-	
-	/*def save () {
-		def periodicoInstance = new Periodico(params)
-		
-		if (!PublicationController.newUpload(periodicoInstance, flash, request) || !periodicoInstance.save(flush: true)) {
-			render(view: "create", model: [periodicoInstance: periodicoInstance])
-			return
-		}
+    /*def save () {
+        def periodicoInstance = new Periodico(params)
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
-		redirect(action: "show", id: periodicoInstance.id)
-	}*/
+        if (!PublicationController.newUpload(periodicoInstance, flash, request) || !periodicoInstance.save(flush: true)) {
+            render(view: "create", model: [periodicoInstance: periodicoInstance])
+            return
+        }
+
+        flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
+        redirect(action: "show", id: periodicoInstance.id)
+    }*/
 
     def save() {
-        PublicationController pb = new PublicationController()
+        //def pb = new PublicationController()
         def periodicoInstance = new Periodico(params)
         if (Periodico.findByTitle(params.title)) {
             handleSavingError(periodicoInstance, 'periodico.duplicatetitle.failure')
             return
         }
-        if (!pb.upload(periodicoInstance)) {
+        if (!PublicationController.newUpload(periodicoInstance, flash, request)) { // (!pb.upload(periodicoInstance)) {
+            // com a segunda opção, o sistema se perde e vai para publication controller no teste Add a new article twitting it
             handleSavingError(periodicoInstance, 'periodico.filesaving.failure')
             return
         }
