@@ -5,8 +5,6 @@ Feature: journal article
   so that I can generate web pages and reports containing these articles
 
 
-
-
   Scenario: alternative duplicate article
     Given the system has no article entitled "A theory of software product line refinement"
     When I create the article "A theory of software product line refinement" with file name "TCS-2"
@@ -49,7 +47,6 @@ Feature: journal article
     When    I select to view "A theory of software product line refinement" in resulting list and I change the article title to "REVIEWED"
     Then    I can select the "Alterar" option
 
-if( $Twitter )
   Scenario: Add a new article twitting it
     Given I am logged as "admin" and at the Add Article Page
     When I try to create an article named as "Empirical Studies in Product Line"
@@ -60,9 +57,7 @@ if( $Twitter )
     Given I am logged as "admin" and at the Add Article Page
     When I try to create an article named as "Empirical Studies in Product Line 2"
     Then No twitte should be post about "Empirical Studies in Product Line 2"
-end
 
-if( $Facebook )
   Scenario: Add a new article and post it in the facebook
     Given I am logged as "admin" and at the Add Article Page
     When I try to create an article named as "Empirical Studies in Product Line 3"
@@ -73,5 +68,3 @@ if( $Facebook )
     Given I am logged as "admin" and at the Add Article Page
     When I try to create an article named as "Empirical Studies in Product Line 4"
     Then No facebook message is added for "Empirical Studies in Product Line 4"
-end
-

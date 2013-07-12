@@ -2,8 +2,10 @@ package steps
 
 import rgms.member.*
 import rgms.publication.*
-
-import org.apache.shiro.crypto.hash.Sha256Hash
+import rgms.visit.Visit
+import rgms.visit.VisitController
+import rgms.visit.Visitor
+import rgms.visit.VisitorController
 
 class TestDataAndOperations {
 
@@ -15,18 +17,18 @@ class TestDataAndOperations {
                     title: "Algebraic reasoning for object-oriented programming",
                     publicationDate: (new Date("12 October 2012"))]
     ]
-	
-	static ferramentas = [
-		[description: "Ferramenta Target",
-				title: "Target",
-				publicationDate: (new Date("12 October 2012"))],
-		[website: "http://www.teste.com", description: "Ferramenta Emergo",
-				title: "Emergo",
-				publicationDate: (new Date("12 October 2012"))],
-		[website: "http://www.ccfinder.com", description: "Ferramenta CCfinder",
-			title: "CCFinder",
-			publicationDate: (new Date("12 October 2012"))]
-	]
+
+    static ferramentas = [
+            [description: "Ferramenta Target",
+                    title: "Target",
+                    publicationDate: (new Date("12 October 2012"))],
+            [website: "http://www.teste.com", description: "Ferramenta Emergo",
+                    title: "Emergo",
+                    publicationDate: (new Date("12 October 2012"))],
+            [website: "http://www.ccfinder.com", description: "Ferramenta CCfinder",
+                    title: "CCFinder",
+                    publicationDate: (new Date("12 October 2012"))]
+    ]
 
     static researchLines = [
             [name: "IA Avancada", description: ""],
@@ -37,10 +39,10 @@ class TestDataAndOperations {
     static bookChapters = [
             [title: "Next Generation Software Product Line Engineering", publicationDate: (new Date("12 October 2012")),
                     publisher: "Person", chapter: 1],
-			[title: "SPL Development", publicationDate: (new Date("12 October 2012")),
-					publisher: "Addison", chapter: 5]
+            [title: "SPL Development", publicationDate: (new Date("12 October 2012")),
+                    publisher: "Addison", chapter: 5]
     ]
-	
+
     static conferencias = [
             [title: "I International Conference on Software Engineering",
                     publicationDate: (new Date("12 October 2012")),
@@ -94,26 +96,26 @@ class TestDataAndOperations {
     static public def findArticleByTitle(String title) {
         articles.find { article ->
             article.title == title
-//#if ($visit)
-static visitors = [
-	[name:"Pessoa"]
-   ]
-
-static public def findVisitor(String name){
-	visitors.find { visitor ->
-		visitor.name == name
-	}
-}
-//#end
-
         }
     }
-	
-	static public def findFerramentaByTitle(String title) {
-		ferramentas.find { ferramenta ->
-			ferramenta.title == title
-		}
-	}
+
+//#if ($visit)
+    static visitors = [
+            [name: "Pessoa"]
+    ]
+
+    static public def findVisitor(String name) {
+        visitors.find { visitor ->
+            visitor.name == name
+        }
+    }
+//#end
+
+    static public def findFerramentaByTitle(String title) {
+        ferramentas.find { ferramenta ->
+            ferramenta.title == title
+        }
+    }
 
     static public def findByUsername(String username) {
         members.find { member ->
@@ -189,34 +191,34 @@ static public def findVisitor(String name){
         }
         return compatible
     }
-	
-	static public boolean bookChapterCompatibleTo(bookChapter, title) {
-		def testBookChapter = findBookChapterByTitle(title)
-		def compatible = false
-		if (testBookChapter == null && bookChapter == null) {
-			compatible = true
-		} else if (testBookChapter != null && bookChapter != null) {
-			compatible = true
-			testBookChapter.each { key, data ->
-				compatible = compatible && (bookChapter."$key" == data)
-			}
-		}
-		return compatible
-	}
-	
-	static public boolean technicalReportCompatibleTo(tech, title) {
-		def testtech = findTechnicalReportByTitle(title)
-		def compatible = false
-		if (testtech == null && tech == null) {
-			compatible = true
-		} else if (testtech != null && tech != null) {
-			compatible = true
-			testtech.each { key, data ->
-				compatible = compatible && (tech."$key" == data)
-			}
-		}
-		return compatible
-	}
+
+    static public boolean bookChapterCompatibleTo(bookChapter, title) {
+        def testBookChapter = findBookChapterByTitle(title)
+        def compatible = false
+        if (testBookChapter == null && bookChapter == null) {
+            compatible = true
+        } else if (testBookChapter != null && bookChapter != null) {
+            compatible = true
+            testBookChapter.each { key, data ->
+                compatible = compatible && (bookChapter."$key" == data)
+            }
+        }
+        return compatible
+    }
+
+    static public boolean technicalReportCompatibleTo(tech, title) {
+        def testtech = findTechnicalReportByTitle(title)
+        def compatible = false
+        if (testtech == null && tech == null) {
+            compatible = true
+        } else if (testtech != null && tech != null) {
+            compatible = true
+            testtech.each { key, data ->
+                compatible = compatible && (tech."$key" == data)
+            }
+        }
+        return compatible
+    }
 
     static public boolean memberCompatibleTo(member, username) {
         def testmember = findByUsername(username)
@@ -254,18 +256,18 @@ static public def findVisitor(String name){
         cont.save()
         cont.response.reset()
     }
-	
-	static public Dissertacao editDissertatacao(oldtitle, newtitle) {
-		def article = Dissertacao.findByTitle(oldtitle)
-		article.setTitle(newtitle)
-		def cont = new DissertacaoController()
-		cont.params << article.properties
-		cont.update()
 
-		def updatedarticle = Dissertacao.findByTitle(newtitle)
-		return updatedarticle
-	}
-	
+    static public Dissertacao editDissertatacao(oldtitle, newtitle) {
+        def article = Dissertacao.findByTitle(oldtitle)
+        article.setTitle(newtitle)
+        def cont = new DissertacaoController()
+        cont.params << article.properties
+        cont.update()
+
+        def updatedarticle = Dissertacao.findByTitle(newtitle)
+        return updatedarticle
+    }
+
     static public void uploadDissertacao(filename) {
         def cont = new DissertacaoController()
         def xml = new File(filename);
@@ -273,14 +275,14 @@ static public def findVisitor(String name){
         cont.saveDissertations(records.parse(xml));
         cont.response.reset()
     }
-	
-	static public void removeDissertacao(String title) {
-		def testDissertation = Dissertacao.findByTitle(title)
-		def cont = new DissertacaoController()
-		def date = new Date()
-		cont.params << [id: testDissertation.id]
-		cont.delete()
-	}
+
+    static public void removeDissertacao(String title) {
+        def testDissertation = Dissertacao.findByTitle(title)
+        def cont = new DissertacaoController()
+        def date = new Date()
+        cont.params << [id: testDissertation.id]
+        cont.delete()
+    }
 
     static public void uploadFerramenta(filepath) {
         def cont = new FerramentaController()
@@ -313,16 +315,16 @@ static public def findVisitor(String name){
         cont.save()
         cont.response.reset()
     }
-	
-	static public void createFerramenta(String title, filename) {
-		def cont = new FerramentaController()
-		def date = new Date()
-		cont.params << TestDataAndOperations.findFerramentaByTitle(title) << [file: filename]
-		cont.request.setContent(new byte[1000]) // Could also vary the request content.
-		cont.create()
-		cont.save()
-		cont.response.reset()
-	}
+
+    static public void createFerramenta(String title, filename) {
+        def cont = new FerramentaController()
+        def date = new Date()
+        cont.params << TestDataAndOperations.findFerramentaByTitle(title) << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
 
     static public void createResearchGroup(String name, description) {
         def researchGroupController = new ResearchGroupController()
@@ -343,14 +345,14 @@ static public def findVisitor(String name){
     }
 
     static public void createBookChapter(String title, filename) {
-		def cont = new BookChapterController()
-		def date = new Date()
-		cont.params << TestDataAndOperations.findBookChapterByTitle(title) << [file: filename]
-		cont.request.setContent(new byte[1000])
-		cont.create()
-		cont.save()
-		cont.response.reset()
-	}
+        def cont = new BookChapterController()
+        def date = new Date()
+        cont.params << TestDataAndOperations.findBookChapterByTitle(title) << [file: filename]
+        cont.request.setContent(new byte[1000])
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
 
     static public void deleteResearchGroup(def researchGroup) {
         def researchGroupController = new ResearchGroupController()
@@ -546,13 +548,13 @@ static public def findVisitor(String name){
         cont.params << [id: testarticle.id]
         cont.delete()
     }
-	
-	static public void removeBookChapter(String title) {
-		def testBookChapter = BookChapter.findByTitle(title)
+
+    static public void removeBookChapter(String title) {
+        def testBookChapter = BookChapter.findByTitle(title)
         def cont = new BookChapterController()
         cont.params << [id: testBookChapter.id]
         cont.delete()
-	}
+    }
 
     static public boolean containsArticle(title, articles) {
         def testarticle = Periodico.findByTitle(title)
@@ -571,17 +573,17 @@ static public def findVisitor(String name){
         def updatedarticle = Periodico.findByTitle(newtitle)
         return updatedarticle
     }
-	
-	static public Ferramenta editFerramenta(oldtitle, newtitle) {
-		def ferramenta = Ferramenta.findByTitle(oldtitle)
-		ferramenta.setTitle(newtitle)
-		def cont = new FerramentaController()
-		cont.params << ferramenta.properties
-		cont.update()
 
-		def updatedferramenta = Ferramenta.findByTitle(newtitle)
-		return updatedferramenta
-	}
+    static public Ferramenta editFerramenta(oldtitle, newtitle) {
+        def ferramenta = Ferramenta.findByTitle(oldtitle)
+        ferramenta.setTitle(newtitle)
+        def cont = new FerramentaController()
+        cont.params << ferramenta.properties
+        cont.update()
+
+        def updatedferramenta = Ferramenta.findByTitle(newtitle)
+        return updatedferramenta
+    }
 
     static public void removeConferencia(String title) {
         def cont = new ConferenciaController()
@@ -590,35 +592,35 @@ static public def findVisitor(String name){
     }
 
 //#if ( $visit )
-static public void agendaVisita(String visitante,String dataInicio, String dataFim){
-	def cont = new VisitController()
-	
-	def visite = Visitor.findByName(visitante)
-	
-	cont.params.visit = visite
-	cont.params.dataInicio = Date.parse("dd/mm/yyyy",dataInicio)
-	cont.params.dataFim = Date.parse("dd/mm/yyyy",dataFim)
-	cont.create()
-	cont.save()
-}
+    static public void agendaVisita(String visitante, String dataInicio, String dataFim) {
+        def cont = new VisitController()
 
-static public def buscaVisita(visitante,dataInicio,dataFim){
-	def cont = new VisitController()
-	def visita = Visitor.findByName(visitante)
-	cont.params.visit = visita
-	cont.params.dataInicio = Date.parse("dd/mm/yyyy",dataInicio)
-	cont.params.dataFim = Date.parse("dd/mm/yyyy",dataFim)
-	def result = Visit.list(cont.params)
-	return result
-}
+        def visite = Visitor.findByName(visitante)
 
-static public void createVisitor(String nome){
-	def cont = new VisitorController()
-	cont.params << TestDataAndOperations.findVisitor(nome)
-	cont.create();
-	cont.save()
-	cont.response.reset()
-}
+        cont.params.visit = visite
+        cont.params.dataInicio = Date.parse("dd/mm/yyyy", dataInicio)
+        cont.params.dataFim = Date.parse("dd/mm/yyyy", dataFim)
+        cont.create()
+        cont.save()
+    }
+
+    static public def buscaVisita(visitante, dataInicio, dataFim) {
+        def cont = new VisitController()
+        def visita = Visitor.findByName(visitante)
+        cont.params.visit = visita
+        cont.params.dataInicio = Date.parse("dd/mm/yyyy", dataInicio)
+        cont.params.dataFim = Date.parse("dd/mm/yyyy", dataFim)
+        def result = Visit.list(cont.params)
+        return result
+    }
+
+    static public void createVisitor(String nome) {
+        def cont = new VisitorController()
+        cont.params << TestDataAndOperations.findVisitor(nome)
+        cont.create();
+        cont.save()
+        cont.response.reset()
+    }
 //#end
 
 }
