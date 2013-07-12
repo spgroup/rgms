@@ -593,10 +593,8 @@ class TestDataAndOperations {
 
 //#if ( $visit )
     static public void agendaVisita(String visitante, String dataInicio, String dataFim) {
-        def cont = new VisitController()
-
+        def cont = new VisitorController()
         def visite = Visitor.findByName(visitante)
-
         cont.params.visit = visite
         cont.params.dataInicio = Date.parse("dd/mm/yyyy", dataInicio)
         cont.params.dataFim = Date.parse("dd/mm/yyyy", dataFim)
@@ -605,7 +603,7 @@ class TestDataAndOperations {
     }
 
     static public def buscaVisita(visitante, dataInicio, dataFim) {
-        def cont = new VisitController()
+        def cont = new VisitorController()
         def visita = Visitor.findByName(visitante)
         cont.params.visit = visita
         cont.params.dataInicio = Date.parse("dd/mm/yyyy", dataInicio)
