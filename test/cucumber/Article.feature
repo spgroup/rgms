@@ -49,22 +49,22 @@ Feature: journal article
 
   Scenario: Add a new article twitting it
     Given I am logged as "admin" and at the Add Article Page
-    When I try to create an article named as "A theory of software product line refinement"
+    When I try to create an article named as "A theory of software product line refinement 1" with filename "TCS.pdf"
     And I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
-    Then A twitter is added to my twitter account regarding the new article "A theory of software product line refinement"
+    Then A twitter is added to my twitter account regarding the new article "A theory of software product line refinement 1"
 
   Scenario: Add a new article with twitter, but don't twitte it
     Given I am logged as "admin" and at the Add Article Page
-    When I try to create an article named as "Empirical Studies in Product Line 2"
+    When I try to create an article named as "Empirical Studies in Product Line 2" with filename "TCS.pdf"
     Then No twitte should be post about "Empirical Studies in Product Line 2"
 
   Scenario: Add a new article and post it in the facebook
     Given I am logged as "admin" and at the Add Article Page
-    When I try to create an article named as "Empirical Studies in Product Line 3"
+    When I try to create an article named as "A theory of software product line refinement 2" with filename "TCS-100.pdf"
     And I click on share it on Facebook, with login "rgms.ufpe@gmail.com", password "rgmsadmin2013", and message "New Article"
-    Then A facebook message is added for "Empirical Studies in Product Line 3"
+    Then A facebook message is added for "A theory of software product line refinement 2"
 
   Scenario: Add a new article but don't post it in the facebook
     Given I am logged as "admin" and at the Add Article Page
-    When I try to create an article named as "Empirical Studies in Product Line 4"
+    When I try to create an article named as "Empirical Studies in Product Line 4" with filename "TCS.pdf"
     Then No facebook message is added for "Empirical Studies in Product Line 4"

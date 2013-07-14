@@ -198,19 +198,20 @@ Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userNa
     to LoginPage
     at LoginPage
     page.fillLoginData(userName, "adminadmin")
+    at PublicationsPage
+    page.select("Periodico")
     to ArticlesPage
-
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
     println path
     def f = new File(path)
     println "exist Path?" + f.exists()
 }
 
-When(~'^I try to create an article named as "([^"]*)"$') { String articleName ->
+When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$') { String articleName, String filename ->
     at ArticlesPage
     page.selectNewArticle()
     at ArticleCreatePage
-    page.fillArticleDetails()
+    page.fillArticleDetails("./test/functional/steps/" + filename, articleName)
     page.selectCreateArticle()
 }
 
