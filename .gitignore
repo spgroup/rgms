@@ -306,3 +306,35 @@ web-app/uploads/Joee.pdf
 libpeerconnection.log
 
 target/test-reports/html/0_Ferramenta.html
+
+target-eclipse/classes/twitter4j/index.gsp
+
+target-eclipse/classes/twitter4j/requestToken.gsp
+
+target/test-reports/html/12_technical report.html
+
+target/test-reports/html/11_research line.html
+
+target/test-reports/html/10_research group.html
+
+target/test-reports/TEST-functional-cucumber-Visitante Externo.xml
+
+target-eclipse/classes/twitter4j/verifyPin.gsp
+
+target-eclipse/classes/twitter4j/status.gsp
+
+target/test-reports/html/5_Visitante Externo.html
+
+target/test-reports/html/9_record.html
+
+target/test-reports/plain/TEST-functional-cucumber-Visitante Externo-err.txt
+
+target/test-reports/plain/TEST-functional-cucumber-Visitante Externo-out.txt
+
+target/test-reports/html/7_journal article.html
+
+target/test-reports/html/8_member.html
+
+target/test-reports/html/6_conferencia.html
+
+target/test-reports/plain/TEST-functional-cucumber-Visitante Externo.txt
