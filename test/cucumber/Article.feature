@@ -63,7 +63,7 @@ Feature: journal article
 
   Scenario: Add a new article twitting it
     Given I am logged as "admin" and at the Add Article Page
-    When I try to create an article named as "A theory of software product line refinement 1" with filename "TCS.pdf"
+    When I try to create an article named as "A theory of software product line refinement 1" with filename "TCS-101.pdf"
     And I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then A twitter is added to my twitter account regarding the new article "A theory of software product line refinement 1"
 

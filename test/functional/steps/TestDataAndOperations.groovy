@@ -3,7 +3,6 @@ package steps
 import rgms.member.*
 import rgms.publication.*
 import rgms.visit.Visit
-import rgms.visit.VisitController
 import rgms.visit.Visitor
 import rgms.visit.VisitorController
 

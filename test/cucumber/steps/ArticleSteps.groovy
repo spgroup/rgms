@@ -75,7 +75,8 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
     at ArticlesPage
     page.selectNewArticle()
     at ArticleCreatePage
-    page.fillArticleDetails("./test/functional/steps/" + filename, title)
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    page.fillArticleDetails(path + filename, title)
     page.selectCreateArticle()
     article = Periodico.findByTitle(title)
     assert article != null
@@ -211,7 +212,8 @@ When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$')
     at ArticlesPage
     page.selectNewArticle()
     at ArticleCreatePage
-    page.fillArticleDetails("./test/functional/steps/" + filename, articleName)
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    page.fillArticleDetails(path + filename, articleName)
     page.selectCreateArticle()
 }
 

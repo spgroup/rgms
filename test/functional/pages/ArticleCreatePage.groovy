@@ -15,7 +15,8 @@ class ArticleCreatePage extends Page {
     }
 
     def fillArticleDetails() {
-        fillArticleDetails("./test/functional/steps/TCS.pdf", "A theory of software product line refinement")
+        def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
+        fillArticleDetails(path, "A theory of software product line refinement")
     }
 
     def fillArticleDetails(filename, title) {
