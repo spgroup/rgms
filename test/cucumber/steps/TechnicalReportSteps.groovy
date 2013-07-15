@@ -42,7 +42,8 @@ Given(~'^I am at the technical reports page and the technical report "([^"]*)" i
 	at TechnicalReportPage
 	page.selectNewTechnicalReport()
 	at TechnicalReportCreatePage
-	page.fillTechnicalReportDetails("./test/functional/steps/" + filename, title)
+	def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator
+	page.fillTechnicalReportDetails(path + filename, title)
 	page.selectCreateTechnicalReport()
 	techReport = TechnicalReport.findByTitle(title)
 	assert techReport != null
