@@ -1,37 +1,36 @@
 package pages
 
 import geb.Page
-
 import rgms.tool.TwitterTool
 
 class VisitCreatePage extends Page {
-	static url = "visit/create"
+    static url = "visit/create"
 
-	static at = {
-		//this.name == "Visitante"
-	}
+    static at = {
+        //this.name == "Visitante"
+    }
 
-	static content = {
-	}
+    static content = {
+    }
 
-	def clickOnCreate(){
-	  $('input.save').click()
-	}
+    def clickOnCreate() {
+        $('input.save').click()
+    }
 
-	def fillVisitDetailsTwitter() {
-		$("form").visitor = "Visitante"
-		$("form").descricao = "Primeira Visita"
+    def fillVisitDetailsTwitter() {
+        $("form").name = "Visitante"
+        $("form").descricao = "Primeira Visita"
 
-		$("input.save").click()
+        $("input.save").click()
 
-		TwitterTool.addTwitterHistory("Primeira Visita",null)
-	}
+        TwitterTool.addTwitterHistory("Primeira Visita", null)
+    }
 
-	def fillVisitDetails() {
-		$("form").visitor = "Visitante"
-		$("form").descricao = "Primeira Visita"
+    def fillVisitDetails() {
+        $("form").name = "Visitante"
+        $("form").descricao = "Primeira Visita"
 
-		$("input.save").click()
+        $("input.save").click()
 
-	}
+    }
 }
