@@ -1,7 +1,10 @@
+
 import rgms.visit.Visitor
 import pages.LoginPage
+import pages.VisitPage
+import pages.VisitCreatePage
+import pages.VisitShowPage
 import rgms.tool.TwitterTool
-import rgms.tool.FacebookTool
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -48,21 +51,40 @@ Then(~'^uma visita para o visitante "([^"]*)" com de incio igual a "([^"]*)" e d
 	assert visita != null
 }
 
+//#if( $Twitter )
 Given(~'^I am logged as "([^"]*)" and at the Add Visit Page$') { String userName ->
 	to LoginPage
 	at LoginPage
 	page.fillLoginData(userName, "adminadmin")
 	to VisitPage
+
 }
 
-When(~'^I try to create an visit "([^"]*)"$') { String visit ->
+When(~'^I try to create an visit  and I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
 	at VisitPage
 	page.selectNewVisit()
-	at VistCreatePage
-	page.fillArticleDetails(articleName)
+	at VisitCreatePage
+	page.fillVisitDetailsTwitter()
+
+	at VisitShowPage
+	page.clickOnTwitteIt(twitterLogin, twitterPw)
+	at VisitShowPage
 }
 
-Then(~'^A twitter is added to my twitter account regarding the new visit "([^"]*)"$') { String visit ->
-	assert TwitterTool.consult(visit)
+When(~'^I try to create an visit$') { ->
+	at VisitPage
+	page.selectNewVisit()
+	at VisitCreatePage
+	page.fillVisitDetails()
+
 }
+Then(~'^A twitter is added to my twitter account regarding the new visit "([^"]*)"$') { String visita ->
+	assert TwitterTool.consult(visita)
+}
+
+Then(~'^No twitte should be post$') { ->
+	assert !TwitterTool.consult(null)
+}
+//#end
+
 
