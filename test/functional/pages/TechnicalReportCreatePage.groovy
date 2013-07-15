@@ -16,8 +16,9 @@ class TechnicalReportCreatePage extends Page {
 		}
 	}
 
-	 def fillTechnicalReportDetails() {
-        fillTechnicalReportDetails("./test/functional/steps/Joee.pdf", "Joe-E")
+	def fillTechnicalReportDetails() {
+		 def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + "Joee.pdf"
+		 fillTechnicalReportDetails(path, "Joe-E")
     }
 
     def fillTechnicalReportDetails(filename, title) {

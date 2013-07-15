@@ -23,7 +23,8 @@ class FerramentaCreatePage extends Page {
 	}
     
 	def fillFerramentaDetails() {
-		fillFerramentaDetails("./test/functional/steps/CCFinder.pdf", "CCFinder")
+		def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + "CCFinder.pdf"
+		fillFerramentaDetails(path, "CCFinder")
 	}
 	
 	def fillFerramentaDetails(filename, title) {
