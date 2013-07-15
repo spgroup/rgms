@@ -2,7 +2,7 @@ package rgms.visit
 
 import org.springframework.dao.DataIntegrityViolationException
 
-class VisitorController {
+class VisitController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -63,8 +63,8 @@ class VisitorController {
         if (version != null) {
             if (visitorInstance.version > version) {
                 visitorInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'visitor.label', default: 'Visitor')] as Object[],
-                          "Another user has updated this Visitor while you were editing")
+                        [message(code: 'visitor.label', default: 'Visitor')] as Object[],
+                        "Another user has updated this Visitor while you were editing")
                 render(view: "edit", model: [visitorInstance: visitorInstance])
                 return
             }

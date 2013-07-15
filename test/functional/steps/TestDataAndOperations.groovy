@@ -3,8 +3,8 @@ package steps
 import rgms.member.*
 import rgms.publication.*
 import rgms.visit.Visit
+import rgms.visit.VisitController
 import rgms.visit.Visitor
-import rgms.visit.VisitorController
 
 class TestDataAndOperations {
 
@@ -592,7 +592,7 @@ class TestDataAndOperations {
 
 //#if ( $visit )
     static public void agendaVisita(String visitante, String dataInicio, String dataFim) {
-        def cont = new VisitorController()
+        def cont = new VisitController()
         def visite = Visitor.findByName(visitante)
         cont.params.visit = visite
         cont.params.dataInicio = Date.parse("dd/mm/yyyy", dataInicio)
@@ -602,7 +602,7 @@ class TestDataAndOperations {
     }
 
     static public def buscaVisita(visitante, dataInicio, dataFim) {
-        def cont = new VisitorController()
+        def cont = new VisitController()
         def visita = Visitor.findByName(visitante)
         cont.params.visit = visita
         cont.params.dataInicio = Date.parse("dd/mm/yyyy", dataInicio)
@@ -612,7 +612,7 @@ class TestDataAndOperations {
     }
 
     static public void createVisitor(String nome) {
-        def cont = new VisitorController()
+        def cont = new VisitController()
         cont.params << TestDataAndOperations.findVisitor(nome)
         cont.create();
         cont.save()
