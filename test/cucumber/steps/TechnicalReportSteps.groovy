@@ -5,17 +5,27 @@ import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
-// new invalid technical report
+//new technical report
 Given(~'^The system has no technical report entitled "([^"]*)"$') { String title ->
     tech = TechnicalReport.findByTitle(title)
     assert tech == null
 }
+
+//new valid technical report
 When(~'^I create the technical report "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     TestDataAndOperations.createTechnicalReport(title, filename)
 }
-Then(~'^The technical report "([^"]*)" is not properly stored by the system$') { String title ->
+Then(~'^The technical report "([^"]*)" is properly stored by the system.$') { String title ->
     tech = TechnicalReport.findByTitle(title)
     assert TestDataAndOperations.technicalReportCompatibleTo(tech, title)
+}
+// new invalid technical report: empty institution
+When(~'^I create the technical report "([^"]*)" with file name "([^"]*)" and empty institution$') { String title, filename ->
+	TestDataAndOperations.createTechnicalReportWithEmptyInstitution(title, filename)
+}
+Then(~'^The technical report "([^"]*)" is not properly stored by the system$') { String title ->
+	tech = TechnicalReport.findByTitle(title)
+	assert tech == null
 }
 
 // edit existing technical report with empty title
@@ -34,6 +44,35 @@ Then(~'^The technical report "([^"]*)" is not updated by the system$') { String 
     tech = TechnicalReport.findByTitle(title)
     assert tech != null
 }
+
+//new valid technical report
+Given(~'^I am at the technical reports page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    page.select("Technical Report")
+    at TechnicalReportPage
+}
+
+When(~'^I select the new technical report button$'){ ->
+    page.selectNewTechnicalReport()
+    at TechnicalReportCreatePage
+}
+
+And(~'^I fill the technical report details with title "([^"]*)" file name "([^"]*)" and institution "([^"]*)"$'){String title, filename, institution ->
+    def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator
+    page.fillTechnicalReportDetails(path + filename, title, institution)
+}
+
+And(~'^I select the save technical report button$'){ ->
+    page.selectCreateTechnicalReport()
+}
+
+Then(~'^The technical report "([^"]*)" details page is shown$') { String title ->
+    at TechnicalReportShowPage
+}
+
 // edit existing technical report with invalid title web
 Given(~'^I am at the technical reports page and the technical report "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     to LoginPage
@@ -67,19 +106,22 @@ Then(~'^I cannot select the "([^"]*)" option$') { String option ->
     at TechnicalReportEditPage
 }
 
-Then(~'^the technical report details are showed and I can select the option to remove$') {->
-    at TechnicalReportShowPage
-    page.select('input', 'delete')
-}
-
-Then(~'^the technical report "([^"]*)" is properly removed by the system$') { String title ->
-    techReport = TechnicalReport.findByTitle(title)
-    assert techReport == null
-}
-
+//remove existing technical report
 When(~'^I select to view the technical report "([^"]*)" in resulting list$') { String title ->
     page.selectViewTechnicalReport(title)
     at TechnicalReportShowPage
+}
+And(~'^I select the option to remove$') { ->
+    page.select('input', 'delete')
+}
+
+Then(~'^The technical report "([^"]*)" is properly removed by the system$') { String title ->
+	techReport = TechnicalReport.findByTitle(title)
+	assert techReport == null
+}
+
+And(~'^The system go to the technical reports page$') { ->
+    at TechnicalReportPage
 }
 
 When(~'^I click on "New TechnicalReport" option at Technical Report list$') {->
