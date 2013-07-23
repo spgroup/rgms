@@ -24,7 +24,7 @@ class PublicationController {
         def f = new File(filePath)
 
         if (f.exists()) {
-            flash.message = message(code: 'file.already.exist.message')
+            flash.message = message(code: 'file.already.exist.message', default: 'File already exists. Please try to use a different file name.')
             return false
         }
 
@@ -51,7 +51,7 @@ class PublicationController {
         def f = new File(filePath)
 
         if (f.exists()) {
-            flash.message = message(code: 'file.already.exist.message')
+            flash.message = 'File already exists. Please try to use a different file name.'
             return false
         }
 
