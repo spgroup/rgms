@@ -391,7 +391,6 @@ class TestDataAndOperations {
         def cont = new TechnicalReportController()
         cont.params << tech.properties
         cont.update()
-
         def updatedtech = TechnicalReport.findByTitle(newtitle)
         return updatedtech
     }

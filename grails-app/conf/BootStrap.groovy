@@ -1,6 +1,7 @@
 import org.apache.shiro.crypto.hash.Sha256Hash
 import rgms.authentication.Role
 import rgms.member.Member
+import rgms.member.Record
 
 class BootStrap {
 
@@ -28,9 +29,9 @@ class BootStrap {
 
             //#if($History)
             //feature record
-            //def hist = new Record(start:new Date(),status_H:"MSc Student")
-            //hist.save()
-            //admin.addToHistorics(hist)
+            def hist = new Record(start: new Date(), status_H: "MSc Student")
+            hist.save()
+            admin.addToHistorics(hist)
             //#end
 
             admin.save()

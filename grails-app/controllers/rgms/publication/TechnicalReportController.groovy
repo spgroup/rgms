@@ -87,11 +87,9 @@ class TechnicalReportController {
         }
 
         try {
-            technicalReportInstance.discardMembers()
-            technicalReportInstance.members = null
-            //def m = Member.findByPublications(technicalReportInstance)
-            technicalReportInstance.save(flush: true)
-            println "BUG! " + technicalReportInstance
+            technicalReportInstance.members.each {
+                it.publications.remove(technicalReportInstance)
+            }
             technicalReportInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
             redirect(action: "list")
