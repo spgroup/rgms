@@ -11,7 +11,6 @@ cloudbees.api.secret = ''
 
 grails.project.dependency.resolution = {
 
-    //def gebVersion = "0.7.0"
     def gebVersion = "0.7.1"
     def seleniumVersion = "2.22.0"
 

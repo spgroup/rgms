@@ -6,9 +6,14 @@ import pages.FerramentaCreatePage
 import pages.FerramentaShowPage
 import pages.FerramentaEditPage
 import rgms.publication.Ferramenta
+import rgms.member.Member
 
 import static cucumber.api.groovy.EN.*
 
+Given(~'The system has a ferramenta entitled "([^"]*)"$') { String title ->
+    article = Ferramenta.findByTitle(title)
+    assert article != null
+}
 // new ferramenta without website
 Given(~'^the system has no ferramenta entitled "([^"]*)"$') { String title ->
 	ferramenta = Ferramenta.findByTitle(title)
@@ -54,13 +59,62 @@ Then(~'^the ferramenta "([^"]*)" is properly updated by the system$') { String t
 	// ideally, it should check whether the tool is stored with the new title
 }
 
+When(~'^I select "([^"]*)" at the ferramenta page$') {String title ->
+    at FerramentaPage
+    page.selectFerramenta(title)
+}
+
+
+Then(~'^I click on edit at the Ferramenta page$'){->
+    at FerramentaShowPage
+    page.editDissertation()
+}
+
+Then(~'^The ferramenta entitle "([^"]*)" is properly deleted of the system$'){String title ->
+    article = Ferramenta.findByTitle(title)
+    assert article == null
+}
+
+
+Given(~'^the system has no ferramenta entitled "([^"]*)"$') { String title ->
+    article = Ferramenta.findByTitle(title)
+    assert article == null
+}
+
+
+
+
+Then(~'^the ferramenta "([^"]*)" is properly stored by the system$') { String title ->
+    ferramenta = Ferramenta.findByTitle(title)
+    assert ferramenta != null
+}
+Given(~'^the system has some ferramenta stored$') { ->
+    inicialSize = Ferramenta.findAll().size()
+}
+When(~'^I upload a new ferramenta "([^"]*)"$') {  filepath ->
+    inicialSize = Ferramenta.findAll().size()
+    TestDataAndOperations.uploadFerramenta(filepath)
+    finalSize = Ferramenta.findAll().size()
+    assert inicialSize<finalSize
+    //para funcionar é necessario que tenha um FilePath válido
+    // não consegui fazer de uma maneira que todos os passos sejam independentes
+}
+Then(~'the system has more ferramenta now$') {->
+    finalSize = Ferramenta.findAll().size()
+
 // new ferramenta web
 
 When(~'^I select the new ferramenta option at the ferramenta page$') {->
 	at FerramentaPage
 	page.selectNewFerramenta()
 }
-Then(~'^I can fill the ferramenta details$') { ->
-	at FerramentaCreatePage
-    page.fillFerramentaDetails()
+When(~'^I change the website to "([^"]*)"$') {String website ->
+    at FerramentaEditPage
+    page.editWebsite(website)
 }
+Then(~'^The edited ferramenta entitled "([^"]*)" is properly stored in the system with the new website "([^"]*)"$') { String title, website ->
+    ferramenta = Ferramenta.findAllByTitle(title)
+    assert ferramenta.website == website
+}
+
+

@@ -1,5 +1,6 @@
 import pages.*
 import rgms.publication.BookChapter
+import rgms.member.Member
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -81,4 +82,10 @@ And (~'^I fill only the title field at book chapter create page$') { ->
 
 Then(~'^I still on the book chapter create page$') { ->
     at BookChapterCreatePage
+}
+
+Then(~'^I see my user listed as a member of book chapter by default$') { ->
+    at BookChapterCreatePage
+    userData = Member.findByUsername('admin').id.toString()
+    assert page.selectedMembers().contains(userData)
 }

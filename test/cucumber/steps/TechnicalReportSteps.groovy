@@ -1,5 +1,6 @@
 import pages.*
 import rgms.publication.TechnicalReport
+import rgms.member.Member
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -32,6 +33,7 @@ Then(~'^The technical report "([^"]*)" is not updated by the system$') { String 
 	assert tech != null
 }
 
+<<<<<<< HEAD
 // edit existing technical report with invalid title web
 Given(~'^I am at the technical reports page and the technical report "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
 	to LoginPage
@@ -79,5 +81,16 @@ Then(~'^the technical report "([^"]*)" is properly removed by the system$') { St
 When(~'^I select to view the technical report "([^"]*)" in resulting list$') { String title ->
 	page.selectViewTechnicalReport(title)
 	at TechnicalReportShowPage
+=======
+When(~'^I click on "New TechnicalReport" option at Technical Report list$') { ->
+    at TechnicalReportPage
+    page.selectNewTechnicalReport()
+}
+
+Then(~'^I see my user listed as an author member of technical report by default$') { ->
+    at TechnicalReportCreatePage
+    userData = Member.findByUsername('admin').id.toString()
+    assert page.selectedMembers().contains(userData)
+>>>>>>> cae73b215783e5dc6d1c5d25a524aa96ed765e5d
 }
 

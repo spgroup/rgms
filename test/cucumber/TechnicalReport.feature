@@ -23,4 +23,12 @@ Scenario: remove existing technical report web
     Given  I am at the technical reports page and the technical report "Joe-E" is stored in the system with file name "Joee.pdf"
     When   I select to view the technical report "Joe-E" in resulting list
     Then   the technical report details are showed and I can select the option to remove
-    And    the technical report "Joe-E" is properly removed by the system
+    And    the technical report "Joe-E" is proper
+#if ($Autofill)
+Scenario: new technical report web has user data already filled by default
+    Given I am at the publications menu
+    And I select the "Technical Report" option at the publications menu
+    When I click on "New TechnicalReport" option at Technical Report list
+    Then I see my user listed as an author member of technical report by default
+#end
+ly removed by the system

@@ -224,6 +224,8 @@
 		</transformation>
 	</configuration>
 
+<configuration xmlns="">
+
 	<configuration xmlns="">
 		<expression>rgms</expression>
 		<transformation>

@@ -113,10 +113,9 @@ publication => grailsapp/domain/rgms/publication/Publication.groovy;
 history => grailsapp/domain/rgms/member/Record.groovy;
 researchGroup => grailsapp/domain/rgms/member/ResearchGroup.groovy;
 Role => grailsapp/domain/rgms/authentication/Role.groovy;
-thesis => grailsapp/domain/rgms/publication/Tese.groovy;
-researchLine => grailsapp/domain/rgms/publication/ResearchLine.groovy;
-visitor => grailsapp/domain/rgms/visit/Visitor.groovy;
-visit => grailsapp/domain/rgms/visit/Visit.groovy;
+thesis => gr=> grailsapp/domain/rgms/publication/ResearchLine.groovy;
+researchLine => grailsapp/domain/rgms/ResearchLine.groovy;
+defaultValueManager => grailsapp/domain/rgms/DefaultValueManager.groovy;
 
 initial => grailsapp/views/initial.gsp;
 
@@ -132,8 +131,6 @@ reportFR => grailsapp/conf/reportfr.properties;
 reportBR => grailsapp/conf/reportptBR.properties;
 reportUS => grailsapp/conf/reportus.properties;
 
-ShiroRoleController => grailsapp/controllers/ShiroRoleController.groovy;
-ShiroUserController => grailsapp/controllers/ShiroUserController.groovy;
 
 
 AuthController => grailsapp/controllers/rgms/authentication/AuthController.groovy;
@@ -145,11 +142,11 @@ MembershipController => grailsapp/controllers/rgms/member/MembershipController.g
 PeriodicoController => grailsapp/controllers/rgms/publication/PeriodicoController.groovy;
 PublicationController => grailsapp/controllers/rgms/publication/PublicationController.groovy;
 RecordController => grailsapp/controllers/rgms/member/RecordController.groovy;
-ResearchGroupController => grailsapp/controllers/rgms/member/ResearchGroupController.groovy;
-RoleController => grailsapp/controllers/rgms/authentication/RoleController.groovy;
-TeseController => grailsapp/controllers/rgms/publication/TeseController.groovy;
-VisitorController => grailsapp/controllers/rgms/visit/VisitorController.groovy;
-VisitController => grailsapp/controllers/rgms/visit/VisitController.groovy;
+ResearchGroupController => grailecordController => grailsapp/controllers/rgms/RecordController.groovy;
+ResearchGroupController => grailsapp/controllers/rgms/ResearchGrogroovy;
+TeseController => grailsapp/controllers/rgms/TeseController.groovy;
+ResearchGroupController => grailsapp/controllers/rgms/ResearchGrogroovy;
+TeseController => grailsapp/controllers/rgms/TeseController.groovy;
 
 
 
@@ -173,25 +170,41 @@ shiro => grailsapp/i18n/shiro.properties;
 TwitterTool => grailsapp/controllers/rgms/tool/TwitterTool.groovy;
 TwitterController => grailsapp/controllers/rgms/tool/TwitterController.groovy;
 FacebookTool => grailsapp/controllers/rgms/tool/FacebookTool.groovy;
-FacebookController => grailsapp/controllers/rgms/tool/FacebookController.groovy;
-
-
-ShiroDbRealm => grailsapp/realms/ShiroDbRealm.groovy;
-
-
-ShiroDbRealmRGMS => grailsapp/realms/rgms/ShiroDbRealm.groovy;
-
-
-JqueryUiTagLib => grailsapp/taglib/com/grailsrocks/jqueryui/JqueryUiTagLib.groovy;
-
-
-ferramentas => webapp/reports/reportBundle/ferramentas.jrxml;
-memberPubs => webapp/reports/reportBundle/memberPubs.jrxml;
-memberTools => webapp/reports/reportBundle/memberTools.jrxml;
-publications => webapp/reports/reportBundle/publications.jrxml;
-report => webapp/reports/reportBundle/report.jrxml;
+FacebookController => grailsapp/controllers/rgms/tooferramentas => webapp/reports/reportBundle/ferramentas.jrxml;entas.jrxml;
+memberPubs => webapp/reports/report_Bundle/memberPubs.jrxml;
+memberTools => webapp/reports/report_Bundle/memberTools.jrxml;
+publications => webapp/reports/report_Bundle/publications.jrxml;
+report => webapp/reports/report_Bundle/report.jrxml;
+report1 => webapp/reports/report_Bundle/report1.jrxml;
+researchGroupReport => webapp/reports/repor> webapp/reports/reportBundle/report.jrxml;
 report1 => webapp/reports/reportBundle/report1.jrxml;
 researchGroup => webapp/reports/reportBundle/researchGroup.jrxml;
+report1 => webapp/reports/reportBundle/report1.jrxml;
+researchGroup => webapp/reports/reportBundle/researchGroup.jrxml;
+
+ferramentaFeature => test/cucumber/Ferramenta.feature;
+bookchapterFeature => test/cucumber/BookChapter.feature;
+dissertacaoFeature => test/cucumber/Dissertacao.feature;
+conferenciaFeature => test/cucumber/Conferencia.feature;
+technicalreportFeature => test/cucumber/TechnicalReport.feature;
+
+testFunctionalFormPage => test/functional/pages/FormPage.groovy;
+testFunctionalTechnicalReportCreatePage => test/functional/pages/TechnicalReportCreatePage.groovy;
+testFunctionalFerramentaCreate => test/functional/pages/FerramentaCreate.groovy;
+testFunctionalDissertationCreate => test/functional/pages/DissertationCreate.groovy;
+testFunctionalBookChapterCreatePage => test/functional/pages/BookChapterCreatePage.groovy;
+testFunctionalConferenciaCreatePage => test/functional/pages/ConferenciaCreatePage.groovy;
+
+bibtexParse => grailsapp/domain/rgms/publication/BibtexParse.groovy;
+bibtexFile => grailsapp/domain/rgms/publication/BibtexFile.groovy;
+bibtexFileController => grailsapp/controllers/rgms/publication/BibtexFileController.groovy;
+sampleBibtex => test/cucumber/steps/sample.bibtex;
+homeBibtexFile => grailsapp/views/bibtexFile/home.gsp;
+bibtexImportFeature => test/cucumber/BibtexImport.feature;
+bibtexImportSteps => test/cucumber/steps/BibtexImportSteps.groovy;
+strategyParse => grailsapp/domain/rgms/publication/strategyBibtexParse/StrategyParse.java;
+strategyParseDissertacao => grailsapp/domain/rgms/publication/strategyBibtexParse/StrategyParseDissertacao.java;
+strategyParseTese => grailsapp/domain/rgms/publication/strategyBibtexParse/StrategyParseTese.java;
 
 ArticleFeature => test/cucumber/Article.feature;
 env => test/cucumber/hooks/env.groovy;

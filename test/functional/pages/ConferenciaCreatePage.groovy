@@ -1,8 +1,8 @@
 package pages
 
-import geb.Page
+import pages.FormPage
 
-class ConferenciaCreatePage extends Page{
+class ConferenciaCreatePage extends FormPage {
     static url = "conferencia/create"
 
     static at = {
@@ -30,4 +30,5 @@ class ConferenciaCreatePage extends Page{
         $("form").title = "A theory of Software Product Line Refinement"
         $("form").create().click()
     }
+
 }

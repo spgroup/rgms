@@ -4,6 +4,7 @@ import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Conferencia
 import rgms.publication.Publication
+import rgms.member.Member
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -66,4 +67,10 @@ Then(~'^I can fill the conferencia details$') { ->
 Then(~'^a list of conferencias stored by the system is displayed at the conferencia page$') { ->
     at ConferenciaPage
     page.listConferencia()
+}
+
+Then(~'^I see my user listed as an author member of conferencia by default$') { ->
+    at ConferenciaCreatePage
+    userData = Member.findByUsername('admin').id.toString()
+    assert page.selectedMembers().contains(userData)
 }
