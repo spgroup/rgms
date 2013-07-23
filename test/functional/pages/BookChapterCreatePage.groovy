@@ -1,7 +1,5 @@
 package pages
 
-import pages.FormPage
-
 class BookChapterCreatePage extends FormPage {
     static url = "bookChapter/create"
 
@@ -26,7 +24,7 @@ class BookChapterCreatePage extends FormPage {
         // Could parametrize, obtaining data from class TestDataAndOperations
     }
 
-    def fillTitle (){
+    def fillTitle() {
         $("form").title = "A theory of Software Product Line Refinement"
         $("form").create().click()
     }

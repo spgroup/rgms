@@ -1,14 +1,10 @@
-import steps.TestDataAndOperations
-import pages.LoginPage
-import pages.PublicationsPage
-import pages.DissertationPage
 import pages.DissertationCreate
-import pages.DissertationShowPage
 import pages.DissertationEditPage
-import rgms.publication.Dissertacao
+import pages.DissertationPage
+import pages.DissertationShowPage
 import rgms.member.Member
-
-import java.io.File
+import rgms.publication.Dissertacao
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -28,25 +24,25 @@ When(~'^I cant add the dissertation without a file$') {->
 
 
 
-When(~'^I select "([^"]*)" at the dissertation page$') {String title ->
+When(~'^I select "([^"]*)" at the dissertation page$') { String title ->
     at DissertationPage
     page.selectDissertation(title)
 }
 
-When(~'^I click on edit$'){->
+When(~'^I click on edit$') {->
     at DissertationShowPage
     page.editDissertation()
 }
 
-When(~'^I delete "([^"]*)"$'){String title ->
+When(~'^I delete "([^"]*)"$') { String title ->
     TestDataAndOperations.removeDissertacao(title)
 }
 
-Then(~'^the school name is "([^"]*)"$'){ String name->
+Then(~'^the school name is "([^"]*)"$') { String name ->
     page.nameIs(name)
 }
 
-When(~'^I edit the school to "([^"]*)"$'){String school ->
+When(~'^I edit the school to "([^"]*)"$') { String school ->
     at DissertationEditPage
     page.editSchool(school)
 }
@@ -57,8 +53,8 @@ Given(~'^the system has no dissertation entitled "([^"]*)"$') { String title ->
 }
 
 Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-	TestDataAndOperations.createDissertacao(title, filename, "UFPE")
-	article = Dissertacao.findByTitle(title)
+    TestDataAndOperations.createDissertacao(title, filename, "UFPE")
+    article = Dissertacao.findByTitle(title)
     assert article != null
 }
 
@@ -80,37 +76,37 @@ Then(~'^the dissertation "([^"]*)" is not stored twice$') { String title ->
 }
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without school$') { String title, filename ->
-	TestDataAndOperations.createDissertacaoWithotSchool(title, filename);
+    TestDataAndOperations.createDissertacaoWithotSchool(title, filename);
 }
 
 When(~'^I edit the dissertation title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
-	def updatedDissertation = TestDataAndOperations.editDissertatacao(oldtitle, newtitle)
-	assert updatedDissertation != null
+    def updatedDissertation = TestDataAndOperations.editDissertatacao(oldtitle, newtitle)
+    assert updatedDissertation != null
 }
 
 Then(~'^the dissertation "([^"]*)" is properly updated by the system$') { String title ->
-	def article = Dissertacao.findByTitle(title)
-	assert article == null
+    def article = Dissertacao.findByTitle(title)
+    assert article == null
 }
 
-When(~'^I select the upload button at the dissertation page$') { ->
+When(~'^I select the upload button at the dissertation page$') {->
     at DissertationPage
     page.uploadWithoutFile()
 }
-Then(~'^I\'m still on dissertation page$') {  ->
+Then(~'^I\'m still on dissertation page$') {->
     //TO DO
-	//at DissertationPage
+    //at DissertationPage
 }
-Given(~'^the system has some dissertation stored$') { ->
+Given(~'^the system has some dissertation stored$') {->
     inicialSize = Dissertacao.findAll().size()
-	
+
 }
-When(~'^I upload a new dissertation "([^"]*)"$') {  filename ->
-	String path = "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
+    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
     TestDataAndOperations.uploadDissertacao(path)
     finalSize = Dissertacao.findAll().size()
-    assert inicialSize<finalSize
+    assert inicialSize < finalSize
     //para funcionar é necessario que tenha um FilePath válido
     // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
@@ -119,13 +115,13 @@ Then(~'the system has more dissertations now$') {->
 
 }
 
-Then(~'^I see my user listed as an author member of dissertation by default$') { ->
+Then(~'^I see my user listed as an author member of dissertation by default$') {->
     at DissertationCreate
     userData = Member.findByUsername('admin').id.toString()
     assert page.selectedMembers().contains(userData)
 }
 
-Then(~'^I see my school name as school of dissertation by default$') { ->
+Then(~'^I see my school name as school of dissertation by default$') {->
     at DissertationCreate
     userData = Member.findByUsername('admin').university
     assert page.currentSchool() == userData

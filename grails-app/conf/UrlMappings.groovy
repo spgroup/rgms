@@ -1,24 +1,24 @@
 class UrlMappings {
 
-	static mappings = {
+    static mappings = {
 //#if( $Facebook )
-		"/notifyFacebook/periodico/$id?/$name?"(controller: "Facebook", action: "index")
+        "/notifyFacebook/periodico/$id?/$name?"(controller: "Facebook", action: "index")
 //#end
 //#if( $Twitter )
-		"/notifyTwitter/periodico/$id?/$name?"(controller: "Twitter", action: "index")
+        "/notifyTwitter/periodico/$id?/$name?"(controller: "Twitter", action: "index")
 //#end
-		"/$controller/$action?/$id?"{
-			constraints {
-				// apply constraints here
-			}
-		}
+        "/$controller/$action?/$id?" {
+            constraints {
+                // apply constraints here
+            }
+        }
 
-		"/bibtexFileController/upload" {
-			controller = "bibtexFile"
-			action = "upload"
-		}
-		
+        "/bibtexFileController/upload" {
+            controller = "bibtexFile"
+            action = "upload"
+        }
+
         "/"(controller: "Auth", action: "index")
-		"500"(view:'/error')
-	}
+        "500"(view: '/error')
+    }
 }

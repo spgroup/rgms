@@ -1,7 +1,7 @@
 package rgms.publication
 
-import rgms.member.Member
 import org.apache.shiro.SecurityUtils
+import rgms.member.Member
 
 abstract class Publication {
 
@@ -14,7 +14,7 @@ abstract class Publication {
     static hasMany = [members: Member]
 
     static constraints = {
-        title unique:true, nullable: false, blank: false
+        title nullable: false, blank: false
         publicationDate nullable: false
         file maxSize: 100000, nullable: true, blank: true
         researchLine nullable: true, blank: true
@@ -72,14 +72,14 @@ abstract class Publication {
         return result;
     }
 
-	public Set membersSelected() {
+    public Set membersSelected() {
 //#if ($Autofill)
-		def loggedUsername = SecurityUtils.subject?.principal;
-		return members ? members : [ Member.findByUsername(loggedUsername).id ];
+        def loggedUsername = SecurityUtils.subject?.principal;
+        return members ? members : [Member.findByUsername(loggedUsername).id];
 //#else
-		return members;
+        return members;
 //#end
-	}
+    }
 
 //	public String retPrimeiroAutor(){
 //		String[] quebraString = this.author.tokenize(",")

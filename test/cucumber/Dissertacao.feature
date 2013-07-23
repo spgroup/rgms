@@ -12,7 +12,7 @@ Feature: Dissertation Tests
     Given the system has no dissertation entitled "New dissertation"
     When I create the dissertation "New dissertation" with file name "Newdissertation.txt" and school "UFPE"
     Then the dissertation "New dissertation" is properly stored by the system
-    
+
   Scenario: new dissertation duplicated
     Given the dissertation "Dissertation duplicated" is stored in the system with file name "Dissertationduplicated.txt"
     When I create the dissertation "Dissertation duplicated" with file name "Dissertationduplicated2.txt" and school "UFPE"
@@ -31,7 +31,7 @@ Feature: Dissertation Tests
     Then    the dissertation "Edit dissertation" is properly updated by the system
 
   Scenario: delete dissertation
-  	Given the dissertation "Delete dissertation" is stored in the system with file name "Deletedissertation.txt"
+    Given the dissertation "Delete dissertation" is stored in the system with file name "Deletedissertation.txt"
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
     And I select "Delete dissertation" at the dissertation page
@@ -50,7 +50,8 @@ Feature: Dissertation Tests
     Then the system has more dissertations now
 
 #if ($Autofill)
-Scenario: create a new dissertation with user data already filled by default
+
+  Scenario: create a new dissertation with user data already filled by default
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
     And I select the new dissertation option at the dissertation page

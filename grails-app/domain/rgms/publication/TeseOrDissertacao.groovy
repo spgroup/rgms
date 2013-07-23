@@ -1,24 +1,24 @@
 package rgms.publication
 
-import rgms.member.Member
 import org.apache.shiro.SecurityUtils
+import rgms.member.Member
 
-abstract class TeseOrDissertacao extends Publication{
-	
-	String school
-	String address
-	
-	static constraints = {
-		school nullable: false, blank: false
-		address nullable: false, blank: false
-	}
+abstract class TeseOrDissertacao extends Publication {
 
-	public String schoolSelected() {
+    String school
+    String address
+
+    static constraints = {
+        school nullable: false, blank: false
+        address nullable: false, blank: false
+    }
+
+    public String schoolSelected() {
 //#if ($Autofill)
-		def loggedUsername = SecurityUtils.subject?.principal;
-		return school ? school : Member.findByUsername(loggedUsername).university;
+        def loggedUsername = SecurityUtils.subject?.principal;
+        return school ? school : Member.findByUsername(loggedUsername).university;
 //#else
-		return school;
+        return school;
 //#end
-	}
+    }
 }

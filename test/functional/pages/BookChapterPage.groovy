@@ -2,7 +2,7 @@ package pages
 
 import geb.Page
 
-class BookChapterPage extends Page{
+class BookChapterPage extends Page {
 
     static url = "bookChapter/list"
 

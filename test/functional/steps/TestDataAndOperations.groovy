@@ -1,14 +1,12 @@
 package steps
 
 import rgms.member.*
+import rgms.news.News
+import rgms.news.NewsController
 import rgms.publication.*
 import rgms.visit.Visit
 import rgms.visit.VisitController
 import rgms.visit.Visitor
-import rgms.news.News;
-import rgms.news.NewsController 
-import rgms.news.TwitterConnection;
-import twitter4j.Status;
 
 class TestDataAndOperations {
 
@@ -77,7 +75,7 @@ class TestDataAndOperations {
             ]]
 
     static researchgroups = [
-            [name: "SWPRG",
+            [name: "SPG",
                     description: "SW Productivity Research Group",
                     childOf: null]
             ,
@@ -107,7 +105,7 @@ class TestDataAndOperations {
     static visitors = [
             [name: "Pessoa"]
     ]
-
+//#end
 
     static public def findFerramentaByTitle(String title) {
         ferramentas.find { ferramenta ->
@@ -617,52 +615,54 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+
+    static public def findVisitor(String name) {
+        visitors.find { visitor ->
+            visitor.name == name
+        }
+    }
 //#end
 
-}
+    static public ResearchGroup createAndGetResearchGroupByName(String name) {
+        def researchGroupController = new ResearchGroupController()
+        researchGroupController.params << findResearchGroupByGroupName(name)
+        researchGroupController.create()
+        researchGroupController.save()
+        researchGroupController.response.reset()
+        return ResearchGroup.findByName(name)
+    }
 
-	static public ResearchGroup createAndGetResearchGroupByName(String name)
-	{
-		def researchGroupController = new ResearchGroupController()
-		researchGroupController.params << findResearchGroupByGroupName(name)
-		researchGroupController.create()
-		researchGroupController.save()
-		researchGroupController.response.reset()
-		return ResearchGroup.findByName(name)
-	}
+    static public void createNews(String descriptionParam, Date dateParam, ResearchGroup groupParam) {
+        def cont = new NewsController()
+        cont.params << [description: descriptionParam, date: dateParam, researchGroup: groupParam]
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
 
-	static public void createNews(String descriptionParam, Date dateParam, ResearchGroup groupParam) {
-		def cont = new NewsController()	
-		cont.params << [description: descriptionParam, date: dateParam, researchGroup: groupParam]	
-		cont.create()
-		cont.save()
-		cont.response.reset()
-	}
+    static public void requestNewsFromTwitter(ResearchGroup group) {
+        def cont = new ResearchGroupController()
+        cont.params << [id: group.id]
+        cont.updateNewsFromTwitter()
+        cont.response.reset()
+    }
 
-	static public void requestNewsFromTwitter(ResearchGroup group){
-		def cont = new ResearchGroupController()
-		cont.params << [id:group.id]
-		cont.updateNewsFromTwitter()
-		cont.response.reset()	
-	}
+    static public void deleteNews(String description, Date date, ResearchGroup researchGroup) {
+        def cont = new NewsController()
+        def identificador = News.findByDescriptionAndDateAndResearchGroup(description, date, researchGroup).id
+        cont.params << [id: identificador]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.delete()
+        //cont.save()
+        cont.response.reset()
+    }
 
-	static public void deleteNews(String description, Date date, ResearchGroup researchGroup) {
-		def cont = new NewsController()
-		def identificador = News.findByDescriptionAndDateAndResearchGroup(description,date,researchGroup).id
-		cont.params << [id: identificador]
-		cont.request.setContent(new byte[1000]) // Could also vary the request content.
-		cont.delete()
-		//cont.save()
-		cont.response.reset()
-	}
+    static public void editResearchGroupTwitter(researchGroup, String newTwitter) {
+        def researchGroupController = new ResearchGroupController()
+        researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
+        researchGroupController.edit()
+        researchGroupController.save()
+        researchGroupController.response.reset()
+    }
 
-	static public void editResearchGroupTwitter(researchGroup, String newTwitter) {
-		def researchGroupController = new ResearchGroupController()
-		researchGroupController.params << [twitter: newTwitter] << [id : researchGroup.getId()]
-		researchGroupController.edit()
-		researchGroupController.save()
-		researchGroupController.response.reset()
-	}
-
-}
 }

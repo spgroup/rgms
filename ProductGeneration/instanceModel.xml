@@ -1,25 +1,25 @@
 <feature name="RGMS" type="NONE" id="rgms">
 
-	<feature name="Authentication" type="NONE" id="Auth"></feature>
-	
-	<feature name="Research_History" type="NONE" id="History"></feature>
-	
-	<feature name="Twitter" type="NONE" id="Twitter"></feature>
-	
-	<feature name="Facebook" type="NONE" id="Facebook"></feature>
-	
-	<feature name="Bibtex_Feature" type="NONE" id="Bibtex"></feature>
+    <feature name="Authentication" type="NONE" id="Auth"></feature>
 
-	<feature name="TesePublication_Feature" type="NONE" id="TesePublication"></feature>
+    <feature name="Research_History" type="NONE" id="History"></feature>
 
-	<feature name="ImportBibtex_Feature" type="NONE" id="ImportBibtex"></feature>
+    <feature name="Twitter" type="NONE" id="Twitter"></feature>
 
-	<feature name="Autofill_Feature" type="NONE" id="Autofill"></feature>
-	
-	<feature name="Generate_Website" type="NONE" id="Website">
-		<feature name="XML" type="NONE" id="XML"></feature>
-		<feature name="HTML" type="NONE" id="HTML"></feature>
-		<feature name="PDF" type="NONE" id="PDF"></feature>
-	</feature>
+    <feature name="Facebook" type="NONE" id="Facebook"></feature>
+
+    <feature name="Bibtex_Feature" type="NONE" id="Bibtex"></feature>
+
+    <feature name="TesePublication_Feature" type="NONE" id="TesePublication"></feature>
+
+    <feature name="ImportBibtex_Feature" type="NONE" id="ImportBibtex"></feature>
+
+    <feature name="Autofill_Feature" type="NONE" id="Autofill"></feature>
+
+    <feature name="Generate_Website" type="NONE" id="Website">
+        <feature name="XML" type="NONE" id="XML"></feature>
+        <feature name="HTML" type="NONE" id="HTML"></feature>
+        <feature name="PDF" type="NONE" id="PDF"></feature>
+    </feature>
 
 </feature>

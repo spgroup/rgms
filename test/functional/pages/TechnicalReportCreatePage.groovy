@@ -1,24 +1,22 @@
 package pages
 
-import pages.FormPage
-
 class TechnicalReportCreatePage extends FormPage {
-	static url = "technicalReport/create"
+    static url = "technicalReport/create"
 
-	static at = {
-		title ==~ /Criar TechnicalReport/
-		institution != null
-	}
+    static at = {
+        title ==~ /Criar Technical Report/
+        institution != null
+    }
 
-	static content = {
-		institution {
-			$("input", id: "institution")
-		}
-	}
+    static content = {
+        institution {
+            $("input", id: "institution")
+        }
+    }
 
-	def fillTechnicalReportDetails() {
-		 def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + "Joee.pdf"
-		 fillTechnicalReportDetails(path, "Joe-E")
+    def fillTechnicalReportDetails() {
+        def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + "Joee.pdf"
+        fillTechnicalReportDetails(path, "Joe-E")
     }
 
     def fillTechnicalReportDetails(filename, title) {

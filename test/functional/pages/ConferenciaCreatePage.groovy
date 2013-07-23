@@ -1,7 +1,5 @@
 package pages
 
-import pages.FormPage
-
 class ConferenciaCreatePage extends FormPage {
     static url = "conferencia/create"
 
@@ -26,7 +24,7 @@ class ConferenciaCreatePage extends FormPage {
         // Could parametrize, obtaining data from class TestConferenciaDataAndOperations
     }
 
-    def fillTitle (){
+    def fillTitle() {
         $("form").title = "A theory of Software Product Line Refinement"
         $("form").create().click()
     }

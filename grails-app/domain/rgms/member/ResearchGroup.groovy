@@ -6,29 +6,30 @@ import rgms.publication.Publication
 class ResearchGroup {
     String name
     String description
-	String twitter	
-	
+    String twitter
+
 //#if($researchGroupHierarchy)
     ResearchGroup childOf;
 //#end
-    static hasMany = [memberships : Membership, news : News]
-    
-    public String toString()
-    {
+    static hasMany = [memberships: Membership, news: News]
+
+    public String toString() {
         return this.name
     }
+
     static constraints = {
-        name(maxSize:10,blank:false,unique:true)
-        description(maxSize:1000,blank:false)
-		twitter(nullable:true)
+        name(maxSize: 10, blank: false, unique: true)
+        description(maxSize: 1000, blank: false)
+        twitter(nullable: true)
 
 //#if($researchGroupHierarchy)
-        childOf(nullable:true)
+        childOf(nullable: true)
 //#end
 
     }
-    static getPublications(researchGroup){
-		def memberships = Membership.getAllMembers(researchGroup)
-		return Publication.getPublicationsByMembershipList(memberships)
-	}
+
+    static getPublications(researchGroup) {
+        def memberships = Membership.getAllMembers(researchGroup)
+        return Publication.getPublicationsByMembershipList(memberships)
+    }
 }

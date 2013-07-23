@@ -1,6 +1,9 @@
-import pages.*
-import rgms.publication.BookChapter
+import pages.BookChapterCreatePage
+import pages.BookChapterPage
+import pages.LoginPage
+import pages.PublicationsPage
 import rgms.member.Member
+import rgms.publication.BookChapter
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -45,7 +48,7 @@ Given(~'^the book chapter "([^"]*)" is stored in the system with file name  "([^
     assert bookChapter != null
 }
 
-Given(~'^I am at the publication menu$') { ->
+Given(~'^I am at the publication menu$') {->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -56,17 +59,17 @@ When(~'^I select the "([^"]*)" option at the publication menu$') { String option
     page.select(option)
 }
 
-When(~'^I select the Novo BookChapter option at the book chapter page$') { ->
+When(~'^I select the Novo BookChapter option at the book chapter page$') {->
     at BookChapterPage
     page.selectNewBookChapter()
 }
 
-Then(~'^I can fill the book chapter details$') { ->
+Then(~'^I can fill the book chapter details$') {->
     at BookChapterCreatePage
     page.fillBookChapterDetails()
 }
 
-Given(~'^I am at the book chapter page$') { ->
+Given(~'^I am at the book chapter page$') {->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -75,16 +78,16 @@ Given(~'^I am at the book chapter page$') { ->
     at BookChapterPage
 }
 
-And (~'^I fill only the title field at book chapter create page$') { ->
+And(~'^I fill only the title field at book chapter create page$') {->
     at BookChapterCreatePage
     page.fillTitle()
 }
 
-Then(~'^I still on the book chapter create page$') { ->
+Then(~'^I still on the book chapter create page$') {->
     at BookChapterCreatePage
 }
 
-Then(~'^I see my user listed as a member of book chapter by default$') { ->
+Then(~'^I see my user listed as a member of book chapter by default$') {->
     at BookChapterCreatePage
     userData = Member.findByUsername('admin').id.toString()
     assert page.selectedMembers().contains(userData)

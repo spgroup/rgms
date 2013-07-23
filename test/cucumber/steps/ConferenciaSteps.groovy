@@ -2,14 +2,13 @@ import pages.ConferenciaCreatePage
 import pages.ConferenciaPage
 import pages.LoginPage
 import pages.PublicationsPage
-import rgms.publication.Conferencia
-import rgms.publication.Publication
 import rgms.member.Member
+import rgms.publication.Conferencia
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
-Given(~'^the system has no conferencia entitled "([^"]*)"$') { String title -> 
+Given(~'^the system has no conferencia entitled "([^"]*)"$') { String title ->
     conferencia = Conferencia.findByTitle(title)
     assert conferencia == null
 }
@@ -50,26 +49,26 @@ Given(~'^I am at the publications and conferencias menu$') {->
     at PublicationsPage
 }
 
-When(~'^I select the conferencia option at the publications menu$') { ->
+When(~'^I select the conferencia option at the publications menu$') {->
     page.select("Conferencia")
 }
 
-When(~'^I select the new conferencia option at the conferencia page$') { ->
+When(~'^I select the new conferencia option at the conferencia page$') {->
     at ConferenciaPage
     page.selectNewConferencia()
 }
 
-Then(~'^I can fill the conferencia details$') { ->
+Then(~'^I can fill the conferencia details$') {->
     at ConferenciaCreatePage
     page.fillConferenciaDetails()
 }
 
-Then(~'^a list of conferencias stored by the system is displayed at the conferencia page$') { ->
+Then(~'^a list of conferencias stored by the system is displayed at the conferencia page$') {->
     at ConferenciaPage
     page.listConferencia()
 }
 
-Then(~'^I see my user listed as an author member of conferencia by default$') { ->
+Then(~'^I see my user listed as an author member of conferencia by default$') {->
     at ConferenciaCreatePage
     userData = Member.findByUsername('admin').id.toString()
     assert page.selectedMembers().contains(userData)

@@ -149,12 +149,12 @@
         <!-- #if($Orientation)  -->
         <li><g:link controller="Orientation" action="list">Orientation</g:link></li>
         <!-- #end -->
-<!-- #if($visit) -->
+        <!-- #if($visit) -->
         <li><g:link controller="Visit" action="list">Visita</g:link></li>
-<!-- #end --> 
- <!-- #if($ImportBibtex && $TesePublication) -->
+        <!-- #end -->
+        <!-- #if($ImportBibtex && $TesePublication) -->
         <li><g:link controller="BibtexFile" action="home">Import Bibtex File</g:link></li>
- <!-- #end -->
+        <!-- #end -->
     </ol>
 </div>
 <!--  </div>-->

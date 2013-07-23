@@ -1,13 +1,10 @@
 package rgms.member
 
-import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
-import org.xml.sax.SAXParseException
-import rgms.XMLService
-import java.security.SecureRandom
-
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.dao.DataIntegrityViolationException
+import rgms.XMLService
+
+import java.security.SecureRandom
 
 class MemberController {
 
@@ -31,7 +28,7 @@ class MemberController {
     def save = {
 //#if($Auth)
         if (!grailsApplication.config.grails.mail.username) {
-            throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
+            throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured'))
         }
 //#end
 
@@ -87,7 +84,7 @@ class MemberController {
         [memberInstance: memberInstance]
     }
 
-    boolean check_version (String version, Member memberInstance) {
+    boolean check_version(String version, Member memberInstance) {
         if (version) {
             def version_long = version.toLong()
             if (memberInstance.version > version_long) {
@@ -98,24 +95,24 @@ class MemberController {
                 return false
             }
         }
-		return true
+        return true
     }
 
     private Member getMember(String id) {
-	def memberInstance = Member.get(id)
-		if (!memberInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), id])
-			redirect(action: "list")
-		}
-		return memberInstance
+        def memberInstance = Member.get(id)
+        if (!memberInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), id])
+            redirect(action: "list")
+        }
+        return memberInstance
     }
 
 
     def update = {
         def memberInstance = getMember(params.id)
-		if (!memberInstance) return
+        if (!memberInstance) return
 
-		if (!check_version(params.version, memberInstance)) return
+        if (!check_version(params.version, memberInstance)) return
 
 //#if($History)
         def status0 = memberInstance.status //pega o status anterior do usuario
@@ -133,15 +130,15 @@ class MemberController {
         String newStatus = memberInstance.status //pega o novo status
 
         //salva o historico se o status mudar
-        if (newStatus != status0){
-            try{
-                def hist = Record.findWhere(end: null, status_H:status0)
+        if (newStatus != status0) {
+            try {
+                def hist = Record.findWhere(end: null, status_H: status0)
                 hist.end = new Date()
 
                 def h = Record.merge(hist)
                 h.save()
                 memberInstance.addToHistorics(h)
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 render "You do not have permission to access this account."
             }
             saveHistory(memberInstance, newStatus) //refactoring - extract method
@@ -171,7 +168,7 @@ class MemberController {
         }
     }
 
-    private void saveHistory(def memberInstance, String status){
+    private void saveHistory(def memberInstance, String status) {
 
         def hist = new Record(start: new Date(), status_H: status)
         hist.save()
@@ -180,13 +177,12 @@ class MemberController {
         memberInstance.save()
     }
     //#if($XMLImp && $Member)
-    def returnWithMessage (String msg, Member newMember) {
+    def returnWithMessage(String msg, Member newMember) {
         render(view: "create", model: [memberInstance: newMember])
         flash.message = message(code: msg)
     }
 
-    def uploadMemberXML()
-    {
+    def uploadMemberXML() {
         String flashMessage = 'XML data extracted. Complete the remaining fields'
         boolean errorFound = false
         Member newMember = new Member(params)

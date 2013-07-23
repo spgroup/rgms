@@ -1,56 +1,57 @@
-<%@page import="rgms.member.Member"%>
+<%@ page import="rgms.member.Member" %>
 <%@ page import="rgms.publication.TechnicalReport" %>
 
 
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'title', 'error')} required">
-	<label for="title">
-		<g:message code="technicalReport.title.label" default="Title" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="title" required="" value="${technicalReportInstance?.title}"/>
+    <label for="title">
+        <g:message code="technicalReport.title.label" default="Title"/>
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="title" required="" value="${technicalReportInstance?.title}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'publicationDate', 'error')} required">
-	<label for="publicationDate">
-		<g:message code="technicalReport.publicationDate.label" default="Publication Date" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="publicationDate" precision="day"  value="${technicalReportInstance?.publicationDate}"  />
+    <label for="publicationDate">
+        <g:message code="technicalReport.publicationDate.label" default="Publication Date"/>
+        <span class="required-indicator">*</span>
+    </label>
+    <g:datePicker name="publicationDate" precision="day" value="${technicalReportInstance?.publicationDate}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'file', 'error')} ">
-	<label for="file">
-		<g:message code="technicalReport.file.label" default="File" />
-		
-	</label>
-	<g:field type="file" name="file" id="file" required=""
+    <label for="file">
+        <g:message code="technicalReport.file.label" default="File"/>
+
+    </label>
+    <g:field type="file" name="file" id="file" required=""
              value="${fieldValue(bean: periodicoInstance, field: 'file')}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'researchLine', 'error')} ">
-	<label for="researchLine">
-		<g:message code="technicalReport.researchLine.label" default="Research Line" />
-		
-	</label>
-	<g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id" value="${technicalReportInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+    <label for="researchLine">
+        <g:message code="technicalReport.researchLine.label" default="Research Line"/>
+
+    </label>
+    <g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id"
+              value="${technicalReportInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'institution', 'error')} required">
-	<label for="institution">
-		<g:message code="technicalReport.institution.label" default="Institution" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="institution" required="" value="${technicalReportInstance?.institution}"/>
+    <label for="institution">
+        <g:message code="technicalReport.institution.label" default="Institution"/>
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="institution" required="" value="${technicalReportInstance?.institution}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: technicalReportInstance, field: 'members', 'error')} required">
-	<label for="members">
-		<g:message code="technicalReport.members.label" default="Members" />
-		<span class="required-indicator">*</span>
-	</label>
-	
-	<g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-		value="${technicalReportInstance?.membersSelected()}" />
+    <label for="members">
+        <g:message code="technicalReport.members.label" default="Members"/>
+        <span class="required-indicator">*</span>
+    </label>
+
+    <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
+              value="${technicalReportInstance?.membersSelected()}"/>
 
 </div>
 

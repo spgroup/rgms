@@ -1,53 +1,41 @@
 import org.apache.shiro.crypto.hash.Sha256Hash
-
 import rgms.authentication.Role
 import rgms.member.Member
-import rgms.member.MemberController
-import rgms.member.MemberControllerMixin
-import rgms.member.Record
-import rgms.publication.Periodico
-import rgms.member.ResearchGroup
-import rgms.publication.Dissertacao;
-import rgms.publication.ResearchLine
-import rgms.publication.TechnicalReport
 
 class BootStrap {
 
-	def init = { servletContext ->
+    def init = { servletContext ->
 
-		def adminRole = Role.findByName("Administrator")
+        def adminRole = Role.findByName("Administrator")
 
-		if(!adminRole) {
+        if (!adminRole) {
 
-			adminRole = new Role(name: 'Administrator')
-			adminRole.addToPermissions("*:*")
-			adminRole.save()
-		}
+            adminRole = new Role(name: 'Administrator')
+            adminRole.addToPermissions("*:*")
+            adminRole.save()
+        }
 
-		def admin = Member.findByUsername('admin')
+        def admin = Member.findByUsername('admin')
 
-		if(!admin) {
+        if (!admin) {
 
-			admin = new Member(name:"Administrador do sistema",username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),
-					email:"admin@cin.ufpe.br", status:"MSc Student", enabled:true, university:"UFPE")
-
-
-			adminRole.addToUsers(admin)
-			adminRole.save()
+            admin = new Member(name: "Administrador do sistema", username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),
+                    email: "admin@cin.ufpe.br", status: "MSc Student", enabled: true, university: "UFPE")
 
 
+            adminRole.addToUsers(admin)
+            adminRole.save()
 
+            //#if($History)
+            //feature record
+            //def hist = new Record(start:new Date(),status_H:"MSc Student")
+            //hist.save()
+            //admin.addToHistorics(hist)
+            //#end
 
-			//#if($History)
-			//feature record
-			def hist = new Record(start:new Date(),status_H:"MSc Student")
-			hist.save()
-			admin.addToHistorics(hist)
-			//#end
+            admin.save()
 
-			admin.save()
-
-			//print("Instancia de Admin = "+Member.findByUsername('admin').toString())
+            //print("Instancia de Admin = "+Member.findByUsername('admin').toString())
 
 //			ResearchLine rl2 = new ResearchLine()
 //			rl2.setName("Teoria da informacao - Complexidade no espaco")
@@ -92,11 +80,11 @@ class BootStrap {
 //			}
 
 
-		}
-	}
+        }
+    }
 
-	def destroy = {
+    def destroy = {
 
-	}
+    }
 
 }
