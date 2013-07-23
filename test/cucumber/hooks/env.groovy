@@ -16,10 +16,10 @@ Before() {
 
 After() {
     bindingUpdater.remove()
-	def rootPath = new File(".").getCanonicalPath()+File.separator
-	def uploadsFolder = new File (rootPath+"web-app"+File.separator+"uploads")
-	uploadsFolder.listFiles().each {innerFile ->
-		if(innerFile.getName() != "necessary.text") 
-			innerFile.deleteOnExit()
-	}
+    def rootPath = new File(".").getCanonicalPath() + File.separator
+    def uploadsFolder = new File(rootPath + "web-app" + File.separator + "uploads")
+    uploadsFolder.listFiles().each { innerFile ->
+        if (innerFile.getName() != "necessary.txt")
+            innerFile.deleteOnExit()
+    }
 }
