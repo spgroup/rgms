@@ -67,7 +67,9 @@ class TestDataAndOperations {
             [title: 'Evaluating Natural Languages System',
                     publicationDate: (new Date('13 November 2012')), institution: 'UFPE'],
             [title: 'NFL Languages System',
-                    publicationDate: (new Date('27 October 2011')), institution: 'NFL']
+                    publicationDate: (new Date('27 October 2011')), institution: 'NFL'],
+            [title: 'Joe-E',
+                    publicationDate: (new Date('1 May 2013')), institution: 'TG']
     ]
 
     static members = [
@@ -790,4 +792,15 @@ class TestDataAndOperations {
         PublicationController.sendPostFacebook(member, title)
     }
 
+    static public void createTechnicalReportWithEmptyInstitution(String title, filename) {
+        def cont = new TechnicalReportController()
+        def params = TestDataAndOperations.findTechnicalReportByTitle(title)
+        params["institution"] = ""
+        cont.params << params << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
 }
+
