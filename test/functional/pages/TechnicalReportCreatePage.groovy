@@ -4,7 +4,7 @@ class TechnicalReportCreatePage extends FormPage {
     static url = "technicalReport/create"
 
     static at = {
-        title ==~ /Criar Relatório Técnico/
+        title ==~ /Criar Relatorio Tecnico/
         institution != null
     }
 

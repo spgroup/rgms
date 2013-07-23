@@ -6,7 +6,7 @@ class TechnicalReportShowPage extends Page {
     static url = "technicalReport/show/2"
 
     static at = {
-        title ==~ /Ver Relatório Técnico/
+        title ==~ /Ver Relatorio Tecnico/
     }
 
     static content = {
