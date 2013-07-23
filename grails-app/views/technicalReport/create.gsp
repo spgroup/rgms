@@ -4,6 +4,7 @@
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'default.technicalReport.label', default: 'TechnicalReport')}" />
+
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
