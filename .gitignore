@@ -337,3 +337,43 @@ target/test-reports/html/8_member.html
 target/test-reports/html/6_conferencia.html
 
 target/test-reports/plain/TEST-functional-cucumber-Visitante Externo.txt
+
+target/test-reports/plain/TEST-functional-cucumber-news.txt
+
+target/test-reports/plain/TEST-functional-cucumber-news-out.txt
+
+target/test-reports/plain/TEST-functional-cucumber-BibtexImport-err.txt
+
+target/test-reports/plain/TEST-functional-cucumber-BibtexImport-out.txt
+
+target/test-reports/plain/TEST-functional-cucumber-BibtexImport.txt
+
+target/test-reports/plain/TEST-functional-cucumber-news-err.txt
+
+target/test-reports/html/9_member.html
+
+target/test-reports/html/8_journal article.html
+
+target/test-reports/html/7_conferencia.html
+
+target/test-reports/html/6_Visitante Externo.html
+
+target/test-reports/html/5_Reports.html
+
+target/test-reports/html/4_Ferramenta.html
+
+target/test-reports/html/1_BibtexImport.html
+
+target/test-reports/html/14_technical report.html
+
+target/test-reports/html/13_research line.html
+
+target/test-reports/html/12_research group.html
+
+target/test-reports/html/11_record.html
+
+target/test-reports/html/10_news.html
+
+target/test-reports/TEST-functional-cucumber-news.xml
+
+target/test-reports/TEST-functional-cucumber-BibtexImport.xml
