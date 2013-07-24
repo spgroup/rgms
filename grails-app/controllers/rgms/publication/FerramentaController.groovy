@@ -1,9 +1,13 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
+
 //#if($upXMLFerramenta)
 import rgms.XMLService
 //#end
+
+import rgms.member.Member
 import rgms.publication.Ferramenta;
 
 class FerramentaController {
@@ -20,7 +24,16 @@ class FerramentaController {
     }
 
     def create() {
-        [ferramentaInstance: new Ferramenta(params)]
+        def ferramentaInstance = new Ferramenta(params)
+        //#if($publicationContext)
+        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
+        if(publcContextOn){
+            if(SecurityUtils.subject?.principal != null){
+                PublicationController.addAuthor(ferramentaInstance)
+            }
+        }
+        //#end
+        [ferramentaInstance: ferramentaInstance]
     }
 
     def save() {

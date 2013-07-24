@@ -7,10 +7,11 @@ import steps.TestDataAndOperations
 import steps.TestDataAuthentication
 
 class UserRegisterPage extends Page {
+    def titleName = /${(new GetPageTitle()).getMessageServerLocale("user.register.title")}/
     static url = "auth/register"
 
     static at = {
-        title ==~ /RGMS/ && university != null && registerButton != null
+        title ==~ titleName && university != null && registerButton != null
     }
 
     static content = {

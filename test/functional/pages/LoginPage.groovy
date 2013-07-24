@@ -3,10 +3,11 @@ package pages
 import geb.Page
 
 class LoginPage extends Page {
-    static url = "auth/login"
+    def titleName = /${(new GetPageTitle()).getMessageServerLocale("user.login.title")}/
+	static url = "auth/login"
 
     static at = {
-        title ==~ /Login/ && rememberMe != null
+        title ==~ titleName && rememberMe != null
     }
 
     static content = {

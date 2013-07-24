@@ -77,11 +77,16 @@ environments {
     development {
         grails.logging.jul.usebridge = true
         jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
+        publicationContext = true;
     }
     production {
         grails.logging.jul.usebridge = false
         // TODO: grails.serverURL = "http://www.changeme.com"
         jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
+        publicationContext = true;
+    }
+    test{
+        publicationContext = true;
     }
     test {
         grails.logging.jul.usebridge = true

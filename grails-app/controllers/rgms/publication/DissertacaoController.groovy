@@ -1,12 +1,16 @@
 package rgms.publication
 
-import org.springframework.dao.DataIntegrityViolationException
 import rgms.XMLService
+import org.apache.shiro.SecurityUtils
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import org.springframework.dao.DataIntegrityViolationException
+import rgms.member.Member
+import rgms.publication.Dissertacao;
 
-//#if($upXMLDissertacao)
-//#end
+
 class DissertacaoController {
 
+    def grailsApplication
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
@@ -19,7 +23,19 @@ class DissertacaoController {
     }
 
     def create() {
-        [dissertacaoInstance: new Dissertacao(params)]
+        Dissertacao dissertacaoInstance = new Dissertacao(params)
+        //#if($publicationContext)
+        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
+        if(publcContextOn){
+            if(SecurityUtils.subject?.principal != null){
+                def user = PublicationController.addAuthor(dissertacaoInstance)
+                if(!user.university.isEmpty()){
+                    dissertacaoInstance.school = user.university
+                }
+            }
+        }
+        //#end
+        [dissertacaoInstance: dissertacaoInstance]
     }
 
     def save() {
@@ -42,7 +58,6 @@ class DissertacaoController {
         }
         flash.message = message(code: 'default.created.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), dissertacaoInstance.id])
         redirect(action: "show", id: dissertacaoInstance.id)
-
     }
 
     def handleSavingError(Dissertacao dissertacaoInstance, String message) {
@@ -53,7 +68,6 @@ class DissertacaoController {
 
     def show() {
         def dissertacaoInstance = Dissertacao.get(params.id)
-
 
         if (!dissertacaoInstance) {
             flash.message = messageGenerator('default.not.found.message', params.id)
