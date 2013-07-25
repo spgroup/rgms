@@ -26,7 +26,6 @@ Feature: technical report
     Given   I am at the technical reports page
     And 	The system has no technical report entitled "TechRepo"
     When 	I select the new technical report button
-
     And     I fill the technical report details with title "TechRepo" file name "TechRepo.pdf" and institution "UFPE"
     And 	I select the save technical report button
     Then    The technical report "TechRepo" details page is shown
