@@ -5,13 +5,11 @@ Feature: technical report
   so that I can generate web pages and reports containing these technical reports
 
 #Controller tests
-  #created by Gabriel
   Scenario: new valid technical report
     Given 	The system has no technical report entitled "Evaluating Natural Languages System"
     When 	I create the technical report "Evaluating Natural Languages System" with file name "EvaluateNLS.txt"
     Then 	The technical report "Evaluating Natural Languages System" is properly stored by the system.
 
-  #modified by Gabriel
   Scenario: new invalid technical report (empty institution)
     Given 	The system has no technical report entitled "Evaluating Natural Languages System"
     When 	I create the technical report "Evaluating Natural Languages System" with file name "TCS-99.pdf" and empty institution
@@ -23,7 +21,6 @@ Feature: technical report
     Then    The technical report "NFL Languages System" is not updated by the system
 
 #GUI tests
-  #created by Gabriel
   Scenario: new valid technical report
     Given   I am at the technical reports page
     And 	The system has no technical report entitled "TechRepo"
@@ -37,7 +34,6 @@ Feature: technical report
     When   I select to view "Joe-E" in resulting list and I change the technical report title to a blank one
     Then   I cannot select the "Alterar" option
 
-#modified by Gabriel
   Scenario: remove existing technical report
     Given  I am at the technical reports page
     And    The system has an technical report entitled "Joe-E" with file name "Joee.pdf"
