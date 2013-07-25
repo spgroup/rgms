@@ -13,12 +13,12 @@ Feature: technical report
 
   #modified by Gabriel
   Scenario: new invalid technical report (empty institution)
-    Given 	The system has no technical report entitled "NFL Languages System"
-    When 	I create the technical report "NFL Languages System" with file name "NFS.pdf" and empty institution
-    Then 	The technical report "NFL Languages System" is not properly stored by the system
+    Given 	The system has no technical report entitled "Evaluating Natural Languages System"
+    When 	I create the technical report "Evaluating Natural Languages System" with file name "TCS-99.pdf" and empty institution
+    Then 	The technical report "Evaluating Natural Languages System" is not properly stored by the system
 
   Scenario: edit existing technical report with empty title
-    Given    The system has an technical report entitled "NFL Languages System" with file name "NFL.pdf"
+    Given    The system has an technical report entitled "NFL Languages System" with file name "NLS.pdf"
     When    I edit the technical report title from "NFL Languages System" to ""
     Then    The technical report "NFL Languages System" is not updated by the system
 
@@ -28,10 +28,9 @@ Feature: technical report
     Given   I am at the technical reports page
     And 	The system has no technical report entitled "Evaluating Natural Languages System"
     When 	I select the new technical report button
-    And     I fill the technical report details with title "Evaluating Natural Languages System" file name "EvaluateNLS.txt" and institution "UFPE"
+    And     I fill the technical report details with title "Evaluating Natural Languages System" file name "TCS-88.pdf" and institution "UFPE"
     And 	I select the save technical report button
     Then    The technical report "Evaluating Natural Languages System" details page is shown
-    And     The technical report "Evaluating Natural Languages System" is properly stored by the system.
 
   Scenario: edit existing technical report with invalid title web
     Given  I am at the technical reports page and the technical report "Joe-E" is stored in the system with file name "Joee.pdf"
