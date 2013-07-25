@@ -4,7 +4,13 @@ class TechnicalReportCreatePage extends FormPage {
     static url = "technicalReport/create"
 
     static at = {
-        title ==~ /Criar Relatorio Tecnico/
+        //title ==~ /Criar TechnicalReport/
+
+        GetPageTitle gp = new GetPageTitle()
+        def currentReport = gp.msg("default.technicalReport.label")
+        def currentTitle = gp.msg("default.create.label", [currentReport])
+        title ==~ currentTitle
+
         institution != null
     }
 
@@ -22,6 +28,12 @@ class TechnicalReportCreatePage extends FormPage {
     def fillTechnicalReportDetails(filename, title) {
         $("form").title = title
         $("form").institution = "UC Berkeley"
+        $("form").file = filename
+    }
+
+    def fillTechnicalReportDetails(filename, title, institution) {
+        $("form").title = title
+        $("form").institution = institution
         $("form").file = filename
     }
 
