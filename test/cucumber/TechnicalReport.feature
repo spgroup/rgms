@@ -5,7 +5,6 @@ Feature: technical report
   so that I can generate web pages and reports containing these technical reports
 
 #Controller tests
-  #created by Gabriel
   Scenario: new valid technical report
     Given 	The system has no technical report entitled "Evaluating Natural Languages System"
     When 	I create the technical report "Evaluating Natural Languages System" with file name "EvaluateNLS.txt"
