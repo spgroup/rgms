@@ -69,7 +69,6 @@ Feature: technical report
     And    The system go to the technical reports page
 
 #if ($Autofill)
-
   Scenario: new technical report web has user data already filled by default
     Given I am at the publications menu
     And I select the "Technical Report" option at the publications menu
