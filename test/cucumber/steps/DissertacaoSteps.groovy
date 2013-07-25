@@ -127,3 +127,28 @@ Then(~'^I see my school name as school of dissertation by default$') {->
     assert page.currentSchool() == userData
 }
 
+Given(~'^the system has some dissertation stored, has no dissertation entitled "([^"]*)"$') { String title ->
+    article = Dissertacao.findByTitle(title)
+    assert article == null
+
+    inicialSize = Dissertacao.findAll().size()
+}
+
+When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
+    String path = "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    inicialSize = Dissertacao.findAll().size()
+    TestDataAndOperations.uploadDissertacao(path)
+    finalSize = Dissertacao.findAll().size()
+    assert inicialSize<finalSize
+    //para funcionar é necessario que tenha um FilePath válido
+    // não consegui fazer de uma maneira que todos os passos sejam independentes
+}
+
+Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)", has no dissertation entitled "([^"]*)"$') { String title, filename, String newtitle ->
+    article = Dissertacao.findByTitle(title)
+    assert article == null
+
+    TestDataAndOperations.createDissertacao(title, filename, "UFPE")
+    article = Dissertacao.findByTitle(title)
+    assert article != null
+}
