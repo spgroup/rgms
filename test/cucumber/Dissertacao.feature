@@ -26,7 +26,7 @@ Feature: Dissertation Tests
     Then the system has no dissertation entitled "Dissertacao sem arquivo"
 
   Scenario: edit dissertation
-    Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt"
+    Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt", has no dissertation entitled "Edit dissertation reviewed"
     When    I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
     Then    the dissertation "Edit dissertation" is properly updated by the system
 
@@ -45,6 +45,6 @@ Feature: Dissertation Tests
     Then I'm still on dissertation page
 
   Scenario: upload dissertation with a file
-    Given the system has some dissertation stored
-    When I upload a new dissertation "curriculo.xml"
+    Given the system has some dissertation stored, has no dissertation entitled "New dissertation"
+    When I upload a new dissertation "curriculo.xml" with title "New dissertation"
     Then the system has more dissertations now
