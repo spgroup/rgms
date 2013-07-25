@@ -82,6 +82,10 @@ When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without sch
     TestDataAndOperations.createDissertacaoWithotSchool(title, filename);
 }
 
+When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without address$') { String title, filename ->
+    TestDataAndOperations.createDissertacaoWithotAddress(title, filename);
+}
+
 When(~'^I edit the dissertation title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
 	def updatedDissertation = TestDataAndOperations.editDissertatacao(oldtitle, newtitle)
 	assert updatedDissertation != null

@@ -8,6 +8,11 @@ Feature: Dissertation Tests
     When I create the dissertation "Dissertation without school" with file name "Dissertationwithoutschool.txt" without school
     Then the system has no dissertation entitled "Dissertation without school"
 
+  Scenario: new dissertation without address
+    Given the system has no dissertation entitled "Dissertation without address"
+    When I create the dissertation "Dissertation without address" with file name "Dissertationwithoutaddress.txt" without address
+    Then the system has no dissertation entitled "Dissertation without address"
+
   Scenario: new dissertation
     Given the system has no dissertation entitled "New dissertation"
     When I create the dissertation "New dissertation" with file name "Newdissertation.txt" and school "UFPE"
