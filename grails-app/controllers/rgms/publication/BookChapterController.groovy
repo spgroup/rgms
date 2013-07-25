@@ -8,6 +8,7 @@ import rgms.XMLService
 import org.xml.sax.SAXParseException
 import rgms.member.Member
 
+
 class BookChapterController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -42,7 +43,10 @@ class BookChapterController {
             render(view: "create", model: [bookChapterInstance: bookChapterInstance])
             return
         }
-
+        //#if($facebook)
+       // def user = Member.findByUsername(SecurityUtils.subject.principal)
+       // pb.sendPostFacebook(user, bookChapterInstance.toString())
+        //#end
         flash.message = message(code: 'default.created.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
         redirect(action: "show", id: bookChapterInstance.id)
     }

@@ -43,6 +43,10 @@ class TechnicalReportController {
             handleSavingError(technicalReportInstance, 'technicalReport.saving.failure')
             return
         }
+        //#if($facebook)
+        //def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        //PublicationController.sendPostFacebook(user, technicalReportInstance.toString())
+        //#end
         flash.message = message(code: 'default.created.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), technicalReportInstance.id])
         redirect(action: "show", id: technicalReportInstance.id)
     }

@@ -31,18 +31,6 @@ class PeriodicoController {
         [periodicoInstance: periodicoInstance]
     }
 
-    /*def save () {
-        def periodicoInstance = new Periodico(params)
-
-        if (!PublicationController.newUpload(periodicoInstance, flash, request) || !periodicoInstance.save(flush: true)) {
-            render(view: "create", model: [periodicoInstance: periodicoInstance])
-            return
-        }
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
-        redirect(action: "show", id: periodicoInstance.id)
-    }*/
-
     def save() {
         //def pb = new PublicationController()
         def periodicoInstance = new Periodico(params)
@@ -59,6 +47,12 @@ class PeriodicoController {
             handleSavingError(periodicoInstance, 'periodico.saving.failure')
             return
         }
+	
+	//#if($facebook)
+       // def user = Member.findByUsername(SecurityUtils.subject?.principal)
+		//PublicationController.sendPostFacebook(user, periodicoInstance.toString())
+        //#end
+	
         flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
         redirect(action: "show", id: periodicoInstance.id)
     }

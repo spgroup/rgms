@@ -139,15 +139,77 @@ margin-top: 0;
               <td style="text-align: right; font-size: 14px;">University: </td>
               <td><input type="text" name="university" required="true" value="${memberInstance?.university}" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
             </tr>
-<!--            <tr>
-              <td style="text-align: right; font-size: 14px;">Phone: </td>
-              <td><input type="text" name="phone" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+            <tr>
+            </tr>  
+            <!--#if($facebook)-->
+            <tr>
+              <td ></td>
+              <td style="font-size: 14px;">Entre com o Facebook: 
+                <div id="login_" style="text-align: left;">
+                    <div style="text-align: left;">
+                        <input id="login" style="text-align: left;" value="Login" type="button">
+                    </div>
+                    <div id="user-info" style="display: none;"></div>
+
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+                    <div id="fb-root"></div>
+
+                    <script src="http://connect.facebook.net/en_US/all.js"></script>
+                    
+                    <script>
+                          // initialize the library with the API key
+                        FB.init({ appId: '424490127646893',oauth: true});
+
+                          // fetch the status on load
+                        //FB.getLoginStatus(handleSessionResponse2);
+
+                        $('#login').bind('click', function() {
+                            FB.login(handleSessionResponse,{scope: 'email,publish_actions'});
+                        });
+
+                        $('#logout').bind('click', function() {
+                            FB.logout(handleSessionResponse);
+                        });
+
+                        $('#disconnect').bind('click', function() {
+                            FB.api({ method: 'Auth.revokeAuthorization' }, function(response) {
+                                clearDisplay();
+                            });
+                        });
+
+                          // no user, clear display
+                        function clearDisplay() {
+                            $('#user-info').hide('fast');
+                        }
+
+                          // handle a session response from any of the auth related calls
+                        function handleSessionResponse(response) {
+                            // if we dont have a session, just hide the user info
+                            if (!(response.status=="connected")) {
+                              clearDisplay();
+                              return;
+                            }
+
+                            document.getElementById("access_token").value = response.authResponse.accessToken
+                            document.getElementById("facebook_id").value = response.authResponse.userID
+                        }
+                    </script>
+
+                </div>
+              </td>
             </tr>
             <tr>
-              <td style="text-align: right; font-size: 14px;">Website: </td>
-              <td><input type="url" name="website" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+              <td style="text-align: right; font-size: 14px;">FacebookID: </td>
+              <td><input type="text" id="facebook_id" name="facebook_id" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+              <td></td>
             </tr>
             <tr>
+              <td style="text-align: right; font-size: 14px;">Access_Token: </td>
+              <td><input type="text" id="access_token" name="access_token" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+            </tr>
+            <!-- #end -->
+            <!--<tr>
               <td style="text-align: right; font-size: 14px;">City: </td>
               <td><input type="text" name="city" value="" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
             </tr>
