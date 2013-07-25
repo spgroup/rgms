@@ -41,17 +41,17 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         test("org.codehaus.geb:geb-junit4:$gebVersion")
         test("org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion")
-		test("org.seleniumhq.selenium:selenium-support:$seleniumVersion")
-		compile('lib:itextpdf:5.4.0')
-		compile('lib:itext-pdfa:5.4.0')
-		compile('lib:itext-xtra:5.4.0')
-		
-		compile (group:'org.apache.poi', name:'poi', version:'3.7') {
-			excludes 'xmlbeans'
-		}
-		compile (group:'org.apache.poi', name:'poi-ooxml', version:'3.7') {
-			excludes 'xmlbeans'
-		}
+        test("org.seleniumhq.selenium:selenium-support:$seleniumVersion")
+        compile('lib:itextpdf:5.4.0')
+        compile('lib:itext-pdfa:5.4.0')
+        compile('lib:itext-xtra:5.4.0')
+
+        compile(group: 'org.apache.poi', name: 'poi', version: '3.7') {
+            excludes 'xmlbeans'
+        }
+        compile(group: 'org.apache.poi', name: 'poi-ooxml', version: '3.7') {
+            excludes 'xmlbeans'
+        }
         // runtime 'mysql:mysql-connector-java:5.1.16'
     }
 
@@ -63,7 +63,7 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.7.1"
         runtime ":resources:1.1.6"
         runtime ':jasper:1.6.1'
-	runtime ":rest:0.7"
+        runtime ":rest:0.7"
         // Uncomment these (or fillLoginData new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"

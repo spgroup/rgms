@@ -14,3 +14,4 @@ Given(~'^I am at the publications menu$') {->
 When(~'^I select the "([^"]*)" option at the publications menu$') { String option ->
     page.select(option)
 }
+

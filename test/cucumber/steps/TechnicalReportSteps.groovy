@@ -24,16 +24,12 @@ Given(~'^The system has an technical report entitled "([^"]*)" with file name "(
     tech = TechnicalReport.findByTitle(title)
     assert tech != null
 }
+
 When(~'^I edit the technical report title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
     def updatedTech = TestDataAndOperations.editTech(oldtitle, newtitle)
-    //
-
-
-Given(~'^I select the "([^"]*)" option at the publications menu$') { String option ->
-	page.select(option)
+    //assert updatedTech != null
 }
-assert updatedTech != null
-}
+
 Then(~'^The technical report "([^"]*)" is not updated by the system$') { String title ->
     tech = TechnicalReport.findByTitle(title)
     assert tech != null

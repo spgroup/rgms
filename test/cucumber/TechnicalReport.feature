@@ -26,6 +26,7 @@ Feature: technical report
     And    the technical report "Joe-E1" is properly removed by the system
 
 #if ($Autofill)
+
   Scenario: new technical report web has user data already filled by default
     Given I am at the publications menu
     And I select the "Technical Report" option at the publications menu

@@ -85,7 +85,7 @@ environments {
         jasper.dir.reports = '../rgms/web-app/reports/report_Bundle'
         publicationContext = true;
     }
-    test{
+    test {
         publicationContext = true;
     }
     test {
