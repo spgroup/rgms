@@ -26,11 +26,11 @@ Feature: technical report
   #created by Gabriel
   Scenario: new valid technical report
     Given   I am at the technical reports page
-    And 	The system has no technical report entitled "Evaluating Natural Languages System"
+    And 	The system has no technical report entitled "TechRepo"
     When 	I select the new technical report button
-    And     I fill the technical report details with title "Evaluating Natural Languages System" file name "TCS-88.pdf" and institution "UFPE"
+    And     I fill the technical report details with title "TechRepo" file name "TechRepo.pdf" and institution "UFPE"
     And 	I select the save technical report button
-    Then    The technical report "Evaluating Natural Languages System" details page is shown
+    Then    The technical report "TechRepo" details page is shown
 
   Scenario: edit existing technical report with invalid title web
     Given  I am at the technical reports page and the technical report "Joe-E" is stored in the system with file name "Joee.pdf"
