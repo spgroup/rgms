@@ -26,7 +26,13 @@ Given(~'^The system has an technical report entitled "([^"]*)" with file name "(
 }
 When(~'^I edit the technical report title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
     def updatedTech = TestDataAndOperations.editTech(oldtitle, newtitle)
-    //assert updatedTech != null
+    //
+
+
+Given(~'^I select the "([^"]*)" option at the publications menu$') { String option ->
+	page.select(option)
+}
+assert updatedTech != null
 }
 Then(~'^The technical report "([^"]*)" is not updated by the system$') { String title ->
     tech = TechnicalReport.findByTitle(title)

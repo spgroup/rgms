@@ -3,6 +3,7 @@ package rgms.publication
 import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
+import rgms.GoogleScholarService
 
 class TechnicalReportController {
 
@@ -17,6 +18,16 @@ class TechnicalReportController {
         [technicalReportInstanceList: TechnicalReport.list(params), technicalReportInstanceTotal: TechnicalReport.count()]
     }
 
+	//#if($Report)
+	//
+	def report() {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		def GoogleScholarService gss = new GoogleScholarService()
+		gss.findCitations(TechnicalReport.list(params))
+		[technicalReportInstanceList: TechnicalReport.list(params), technicalReportInstanceTotal: TechnicalReport.count()]
+	}
+	//#end
+	
 	def create() {
         def technicalReportInstance = new TechnicalReport(params)
         //#if($publicationContext)

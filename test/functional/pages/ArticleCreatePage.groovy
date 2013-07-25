@@ -1,6 +1,7 @@
 package pages
 
 import geb.Page
+import pages.GetPageTitle
 
 class ArticleCreatePage extends Page {
     static url = "periodico/create"

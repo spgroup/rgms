@@ -12,8 +12,8 @@ Feature: journal article
   Scenario: new invalid article
     Given the system has no article entitled "Algebraic reasoning for object-oriented programming"
     When I create the article "Algebraic reasoning for object-oriented programming" with file name "SCP.pdf"
-    Then the article "Algebraic reasoning for object-oriented programming" is not stored by the system because it is invalid
-
+    Then the article "Algebraic reasoning for object-oriented programming" is not stored by the system because
+ it is invalid
   Scenario: duplicate article
     Given the article "A theory of software product line refinement" is stored in the system with file name "TCS-0.pdf"
     When I create the article "A theory of software product line refinement" with file name "TCS-1.pdf"

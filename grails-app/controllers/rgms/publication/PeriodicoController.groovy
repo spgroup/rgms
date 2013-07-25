@@ -5,6 +5,9 @@ import org.springframework.dao.DataIntegrityViolationException
 import rgms.XMLService
 import rgms.member.Member
 
+import rgms.GoogleScholarService
+
+
 class PeriodicoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -17,6 +20,16 @@ class PeriodicoController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count()]
     }
+	
+	//#if($Report)
+	//
+	def report() {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		def GoogleScholarService gss = new GoogleScholarService()
+		gss.findCitations(Periodico.list(params))
+		[periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count()]
+	}
+	//#end
 
     def create() {
         def periodicoInstance = new Periodico(params)
