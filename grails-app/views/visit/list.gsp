@@ -85,11 +85,11 @@
             <th><g:message code="visit.visitor.label" default="Visitor"/></th>
 
             <!-- #if( $reserchgroupobrigatorio ) -->
-            <th><g:message code="researchGroup.name.label" default="Reserarch Group"/></th>
+            <th><g:message code="visit.researchGroup.label" default="Research Group"/></th>
             <!-- #end -->
 
             <!-- #if( $descricaovisita ) -->
-            <th><g:message code="researchGroup.name.label" default="Descrição"/></th>
+            <th><g:message code="visit.descricao.label" default="Descrição"/></th>
             <!-- #end -->
 
         </tr>
@@ -100,13 +100,13 @@
 
                 <td>
                     <g:link action="show" id="${visitInstance.id}">
-                        <g:formatDate format="dd-MM-yyyy">
+                        <g:formatDate format="dd/MM/yyyy">
                             ${fieldValue(bean: visitInstance, field: "dataInicio")}
                         </g:formatDate>
                     </g:link>
                 </td>
 
-                <td><g:formatDate format="dd-MM-yyyy" date="${visitInstance.dataFim}"/></td>
+                <td><g:formatDate format="dd/MM/yyyy" date="${visitInstance.dataFim}"/></td>
 
                 <td>${fieldValue(bean: visitInstance, field: "visitor")}</td>
 
@@ -132,7 +132,7 @@
     </table>
 
     <div class="pagination">
-        <g:paginate total="${visitorInstanceTotal}"/>
+        <g:paginate total="${visitInstanceTotal}"/>
     </div>
 </div>
 </body>
