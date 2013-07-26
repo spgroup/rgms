@@ -22,9 +22,11 @@ class FerramentaCreatePage extends Page {
         // Could parametrize, obtaining data from class TestDataAndOperations
     }
 
+    // Fill form means submit form too
     def fillFerramentaDetails() {
         def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + "CCFinder.pdf"
         fillFerramentaDetails(path, "CCFinder")
+        $("form").create().click()
     }
 
     def fillFerramentaDetails(filename, title) {

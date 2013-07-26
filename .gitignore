@@ -337,6 +337,7 @@ target/test-reports/html/8_member.html
 target/test-reports/html/6_conferencia.html
 
 target/test-reports/plain/TEST-functional-cucumber-Visitante Externo.txt
+
 target/test-reports/plain/TEST-functional-cucumber-news-err.txt
 
 target/test-reports/html/1_BibtexImport.html
@@ -380,3 +381,5 @@ target/test-reports/plain/TEST-functional-cucumber-BibtexImport-err.txt
 target/test-reports/plain/TEST-functional-cucumber-news-out.txt
 
 target/test-reports/plain/TEST-functional-cucumber-news.txt
+
+.swp
