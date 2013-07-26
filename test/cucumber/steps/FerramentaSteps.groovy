@@ -26,7 +26,7 @@ Then(~'^the ferramenta "([^"]*)" is not stored$') { String title ->
     assert ferramentas.size() == 0
 }
 
-// duplicate ferramenta 
+// duplicate ferramenta
 Given(~'^the ferramenta "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     TestDataAndOperations.createFerramenta(title, filename)
     ferramenta = Ferramenta.findByTitle(title)
@@ -53,8 +53,8 @@ When(~'^I edit the ferramenta title from "([^"]*)" to "([^"]*)"$') { String oldt
     assert updatedFerramenta != null
 }
 Then(~'^the ferramenta "([^"]*)" is properly updated by the system$') { String title ->
-    ferramenta = Ferramenta.findByTitle(title)
-    assert ferramenta == null
+    newFerramenta = Ferramenta.findByTitle(title)
+    assert newFerramenta != null
     // ideally, it should check whether the tool is stored with the new title
 }
 
@@ -74,7 +74,7 @@ Then(~'^The ferramenta entitle "([^"]*)" is properly deleted of the system$') { 
     assert article == null
 }
 
-Then(~'^I can fill the ferramenta details$') {->
+Then(~'^I can create a ferramenta filling the details$') {->
     at FerramentaCreatePage
     page.fillFerramentaDetails()
 }
