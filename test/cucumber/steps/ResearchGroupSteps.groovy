@@ -39,8 +39,6 @@ Then(~'^the research group "([^"]*)" is not stored in the system because exceeds
 	assert researchGroup.size() == 0
 }
 
-
-
 Given(~'^the system has no research group with no name stored in the system$') { ->
 	researchGroup = ResearchGroup.findByName("")
 	assert researchGroup == null
@@ -133,26 +131,24 @@ Then(~'^i can fill the research group details with name "([^"]*)" and create a n
 	page.clickOnCreate();
 	researchGroup = ResearchGroup.findByName(name)
 	assert researchGroup != null
-	
 }
 Given(~'^the system has a Research Group named "([^"]*)" stored in the system$') { String arg1 ->
 	to LoginPage
 	at LoginPage
 	page.fillLoginData("admin", "adminadmin")
 	at PublicationsPage
-	
+
 	page.select("Research Group")
 	at ResearchGroupPage
-	
+
 	page.selectNewResearchGroup()
-	
+
 	at ResearchGroupCreatePage
 	page.fillResearchGroupDetails(arg1)
 	page.clickOnCreate();
-	
+
 	researchGroup = ResearchGroup.findByName(arg1)
 	assert researchGroup != null
-	
 }
 
 Given(~'^i am at Research Group list menu$') { ->
@@ -178,5 +174,3 @@ Then(~'^i can change the research group name to "([^"]*)" and save it$') { Strin
 	page.selectAlterarResearchGroup()
 	at ResearchGroupShowPage
 }
-
-
