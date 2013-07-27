@@ -25,6 +25,20 @@ class ResearchGroupController {
 
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
+
+        //#if($researchGroupHierarchy)
+        def parents = []
+        def current = researchGroupInstance
+        while(current != null && ! parents.contains(current)) {
+            parents.add(current)
+            current = current.childOf
+        }
+
+        if(current != null) {
+            throw new RuntimeException("Há um ciclo relacionado à este research group!")
+        }
+        //#end
+
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return

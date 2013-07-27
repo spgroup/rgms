@@ -22,7 +22,6 @@ Then(~'^the research group "([^"]*)" is properly stored by the system$') { Strin
 	assert researchGroup != null
 }
 
-
 Given(~'^the system has a research group entitled "([^"]*)" with the description "([^"]*)" stored in the system$' ) { String name, description ->
 	TestDataAndOperations.createResearchGroup(name, description)
 	researchGroup = ResearchGroup.findByName(name)
@@ -44,8 +43,8 @@ Given(~'^the system has no research group with no name stored in the system$') {
 	assert researchGroup == null
 }
 
-When(~'^I create a research group with no name and with the description "([^"]*)" $') { String arg1 ->
-	TestDataAndOperations.createResearchGroup("", arg1)
+When(~'^I create a research group with no name and with the description "([^"]*)" $') { String description ->
+	TestDataAndOperations.createResearchGroup("", description)
 }
 
 Then(~'^the research group is not stored in the system because it has no name$') { ->
@@ -92,6 +91,7 @@ When(~'^I create a research group with no name and with the description "([^"]*)
 	TestDataAndOperations.createResearchGroup("", description)
 }
 
+//TODO Corrigir este step
 Then(~'^the research group is not stored in the system because is invalid$') {
 	->
 	researchGroup = ResearchGroup.findByName("")
@@ -102,7 +102,6 @@ When(~'^I create a research group with name "([^"]*)" and with no description$')
 	TestDataAndOperations.createResearchGroup(name, "")
 }
 
-
 Given(~'^i am at publication menu$') {
 	->
 	// Express the Regexp above with the code you wish you had
@@ -112,6 +111,7 @@ Given(~'^i am at publication menu$') {
 	at PublicationsPage
 }
 
+//TODO Remover o último at ?
 When(~'^i select the "([^"]*)" option at publications menu$') { String option ->
 	at PublicationsPage
 	page.select(option)
@@ -132,6 +132,7 @@ Then(~'^i can fill the research group details with name "([^"]*)" and create a n
 	researchGroup = ResearchGroup.findByName(name)
 	assert researchGroup != null
 }
+
 Given(~'^the system has a Research Group named "([^"]*)" stored in the system$') { String arg1 ->
 	to LoginPage
 	at LoginPage
@@ -153,10 +154,10 @@ Given(~'^the system has a Research Group named "([^"]*)" stored in the system$')
 
 Given(~'^i am at Research Group list menu$') { ->
 	to ResearchGroupPage
-	at ResearchGroupPage
 }
 
 When(~'^i select a research group called "([^"]*)"$') { String arg1 ->
+    at ResearchGroupPage
 	page.showResearchGroup(arg1)
 }
 
@@ -167,9 +168,11 @@ Then(~'^the system will show the details of this research group$') { ->
 When(~'^i select the edit option$') {->
 	at ResearchGroupShowPage
 	page.selectEditResearchGroup()
-	at ResearchGroupEditarPage
 }
+
+//TODO Remover o último at ?
 Then(~'^i can change the research group name to "([^"]*)" and save it$') { String name->
+    at ResearchGroupEditarPage
 	page.changeResearchGroupDetails(name)
 	page.selectAlterarResearchGroup()
 	at ResearchGroupShowPage
