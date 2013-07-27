@@ -60,3 +60,17 @@ Feature: Dissertation Tests
     Given the system has some dissertation stored, has no dissertation entitled "New dissertation"
     When I upload a new dissertation "curriculo.xml" with title "New dissertation"
     Then the system has more dissertations now
+
+  Scenario: upload a dissertation and system has no dissertation stored
+    Given the system has no dissertation stored
+    When I upload a new dissertation "curriculo.xml" with title "New dissertation"
+    Then the system has more dissertations now
+
+  Scenario:  first dissertation and delete
+    Given the system has no dissertation stored
+    When I create the dissertation "New dissertation" with file name "dissertation.txt" and school "federal"
+    And I am at the publications menu
+    And I select the "Dissertacao" option at the program menu
+    And I select "Delete dissertation" at the dissertation page
+    And I delete "New dissertation"
+    Then the system has no dissertation stored
