@@ -56,6 +56,16 @@ Feature: Visitante Externo
     Then I can select the "Alterar" option visit
     And the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is properly updated by the system
 
+  Scenario: new invalid visit
+    Given que o visitante "Pessoa" esteja cadastrado no  sistema
+    When eu agendar uma visita para o visitante "Pessoa" e inserir data inicio igual a "11/11/2000" e inserir a data fim igual a "10/11/2000"
+    Then the visit for the visitor "Pessoa" with initial date "11/11/2000" and final date "10/11/2000" is not stored by the system because it is invalid
+
+  Scenario: invalid edit existing visit
+    Given the system has a visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" stored
+    When I try to edit the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" changing the final date to "10/11/2000"
+    Then the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is not properly updated by the system because it is invalid
+
 #if( $Twitter )
   Scenario: Add a new visit twitting it
     Given I am logged as "admin" and at the Add Visit Page

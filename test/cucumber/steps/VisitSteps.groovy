@@ -194,6 +194,35 @@ Then(~'I can select the "([^"]*)" option visit$') { String option ->
     page.select(option)
 }
 
+/**
+ * @author penc
+ */
+Then(~'^the visit for the visitor "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is not stored by the system because it is invalid$') { String visitante, String dataInicio, String dataFim ->
+    Visitor visitor = Visitor.findByName(visitante)
+    Date dia_1 = Date.parse("dd/MM/yyyy", dataInicio)
+    Date dia_2 = Date.parse("dd/MM/yyyy", dataFim)
+    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, dia_1, dia_2)
+    assert visit == null
+}
+
+/**
+ * @author penc
+ */
+When(~'^I try to edit the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" changing the final date to "([^"]*)"$') { String visitante, String dataInicio, String oldDataFim, String newDataFim ->
+    TestDataAndOperations.editVisitChangeData(visitante, dataInicio, oldDataFim, newDataFim)
+}
+
+/**
+ * @author penc
+ */
+Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is not properly updated by the system because it is invalid$') { String visitante, String dataInicio, String dataFim ->
+    def visitor = Visitor.findByName(visitante)
+    Date dia_1 = Date.parse("dd/MM/yyyy", dataInicio)
+    Date dia_2 = Date.parse("dd/MM/yyyy", dataFim)
+    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, dia_1, dia_2)
+    assert visit != null
+}
+
 //#if( $Twitter )
 
 Given(~'^I am logged as "([^"]*)" and at the Add Visit Page$') { String userName ->

@@ -687,6 +687,23 @@ class TestDataAndOperations {
         return updatedVisit
     }
 
+    /**
+     * @author penc
+     */
+    static public Visit editVisitChangeData(String visitante, String dataInicio, String oldDataFim, String newDataFim) {
+        def visitor = Visitor.findByName(visitante)
+        Date dia_1 = Date.parse("dd/MM/yyyy", dataInicio)
+        Date dia_2 = Date.parse("dd/MM/yyyy", oldDataFim)
+        def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, dia_1, dia_2)
+
+        Date newFinalDate = Date.parse("dd/MM/yyyy", newDataFim)
+        visit.setDataFim(newFinalDate);
+
+        def visitController = new VisitController()
+        visitController.params << visit.properties
+        visitController.update()
+    }
+
 //#end
 
     static public ResearchGroup createAndGetResearchGroupByName(String name) {

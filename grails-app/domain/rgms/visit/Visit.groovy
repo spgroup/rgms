@@ -20,5 +20,8 @@ class Visit {
         dataInicio(nullable:false,blank:false)
         researchGroup(nullable:true,blank:true)
         descricao(nullable:true,blank:true)
+        dataFim(validator: { val, obj ->
+            (val?.compareTo(obj.dataInicio) >= 0)
+        })
     }
 }

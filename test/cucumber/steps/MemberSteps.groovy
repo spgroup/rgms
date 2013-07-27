@@ -121,3 +121,16 @@ Then(~'^I am still on the create member page with the error message$') {->
     //assert mensagem != null
 
 }
+
+Then(~'^I see default date filled on create form$'){ ->
+    at MemberCreatePage
+    defaultUniversity   = "Federal University of Pernambuco";
+    defaultCity         = "Recife";
+    assert (page.$("form").university == defaultUniversity &&  page.$("form").city == defaultCity)
+}
+
+Then(~'^I see default date filled on register form$'){ ->
+    at RegisterPage
+    defaultUniversity   = "Federal University of Pernambuco";
+    assert page.$("form").university == defaultUniversity;
+}
