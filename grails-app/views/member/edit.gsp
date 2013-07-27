@@ -178,7 +178,7 @@
                                         
                                         <script>
                                               // initialize the library with the API key
-                                            FB.init({ appId: '424490127646893',oauth: true});
+                                            FB.init({ appId: '642760719075660',oauth: true});
 
                                               // fetch the status on load
                                             //FB.getLoginStatus(handleSessionResponse2);

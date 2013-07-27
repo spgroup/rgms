@@ -43,8 +43,8 @@ Given(~'^the system has no research group with no name stored in the system$') {
 	assert researchGroup == null
 }
 
-When(~'^I create a research group with no name and with the description "([^"]*)" $') { String description ->
-	TestDataAndOperations.createResearchGroup("", description)
+When(~'^I create a research group with no name and with the description "([^"]*)" $') { String arg1 ->
+    TestDataAndOperations.createResearchGroup("", arg1)
 }
 
 Then(~'^the research group is not stored in the system because it has no name$') { ->
@@ -91,7 +91,6 @@ When(~'^I create a research group with no name and with the description "([^"]*)
 	TestDataAndOperations.createResearchGroup("", description)
 }
 
-//TODO Corrigir este step
 Then(~'^the research group is not stored in the system because is invalid$') {
 	->
 	researchGroup = ResearchGroup.findByName("")
@@ -111,11 +110,9 @@ Given(~'^i am at publication menu$') {
 	at PublicationsPage
 }
 
-//TODO Remover o último at ?
 When(~'^i select the "([^"]*)" option at publications menu$') { String option ->
 	at PublicationsPage
 	page.select(option)
-	at ResearchGroupPage
 }
 
 When(~'^i select the new research group option at research group list page$') {
@@ -170,10 +167,52 @@ When(~'^i select the edit option$') {->
 	page.selectEditResearchGroup()
 }
 
-//TODO Remover o último at ?
 Then(~'^i can change the research group name to "([^"]*)" and save it$') { String name->
     at ResearchGroupEditarPage
 	page.changeResearchGroupDetails(name)
 	page.selectAlterarResearchGroup()
 	at ResearchGroupShowPage
 }
+
+When(~'^I modify the description of research group entitled "([^"]*)" to none$') { String oldName ->
+    researchGroup = ResearchGroup.findByName(oldName)
+    TestDataAndOperations.editResearchGroup(researchGroup, oldName, "")
+}
+
+Then(~'^the description of research group entitled "([^"]*)" is not none$') { String name ->
+    researchGroup = ResearchGroup.findByName(name)
+    assert researchGroup.getDescription().compareTo("") != 0
+}
+
+When(~'^I modify the name of research group entitled "([^"]*)" to none$') { String oldName ->
+    researchGroup = ResearchGroup.findByName(oldName)
+    TestDataAndOperations.editResearchGroup(researchGroup, oldName, "")
+}
+
+Then(~'^there is not exists research group entitled none$') { ->
+    researchGroup = ResearchGroup.findByName("")
+    assert researchGroup == null
+}
+
+
+Given(~'^the system has a research group entitled "([^"]*)" with childof none$') { String name ->
+    TestDataAndOperations.createResearchGroup(name, "description")
+    researchGroup = ResearchGroup.findByName(name)
+    researchGroup.childOf = null
+    researchGroup.save()
+
+    researchGroup = ResearchGroup.findByName(name)
+    assert researchGroup.getChildOf() == null
+}
+
+When(~'^I modify the childof of research group entitled "([^"]*)" to itself$') { String name ->
+    researchGroup = ResearchGroup.findByName(name)
+    TestDataAndOperations.editResearchGroupChildOf(researchGroup, researchGroup)
+}
+
+Then(~'^the childof of research group "([^"]*)" is none$') { String name ->
+    researchGroup = ResearchGroup.findByName(name)
+    assert researchGroup.getChildOf() == null
+}
+
+

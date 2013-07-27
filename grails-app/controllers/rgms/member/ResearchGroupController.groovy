@@ -23,10 +23,9 @@ class ResearchGroupController {
         [researchGroupInstance: new ResearchGroup(params), membersInstance: members]
     }
 
-    def save() {
-        def researchGroupInstance = new ResearchGroup(params)
+    //#if($researchGroupHierarchy)
+    def validarChildOf(def researchGroupInstance) {
 
-        //#if($researchGroupHierarchy)
         def parents = []
         def current = researchGroupInstance
         while(current != null && ! parents.contains(current)) {
@@ -37,6 +36,14 @@ class ResearchGroupController {
         if(current != null) {
             throw new RuntimeException("Há um ciclo relacionado à este research group!")
         }
+
+    }
+    //#end
+    def save() {
+        def researchGroupInstance = new ResearchGroup(params)
+
+        //#if($researchGroupHierarchy)
+        validarChildOf(researchGroupInstance)
         //#end
 
         if (!researchGroupInstance.save(flush: true)) {
@@ -96,6 +103,11 @@ class ResearchGroupController {
 
     def update() {
         def researchGroupInstance = ResearchGroup.get(params.id)
+
+        //#if($researchGroupHierarchy)
+        validarChildOf(researchGroupInstance)
+        //#end
+
         //#if($researchGroupHierarchyNotify)
         def researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
         if (isChildOfResearchGroupChanged(researchGroupInstance, researchGroupInstanceChildOf)) {
