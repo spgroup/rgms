@@ -137,7 +137,7 @@ class DissertacaoController {
 
         XMLService serv = new XMLService()
         Node xmlFile = serv.parseReceivedFile(request)
-        if (!serv.Import(saveDissertations, returnWithMessage, xmlFile, flashMessage))
+        if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile))
             return
     }
 
