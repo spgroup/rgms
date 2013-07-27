@@ -148,6 +148,11 @@ Given(~'^the system has some dissertation stored, has no dissertation entitled "
     inicialSize = Dissertacao.findAll().size()
 }
 
+Given(~'^the system has no dissertation stored$') { ->
+   inicialSize = Dissertacao.findAll().size()
+   assert inicialSize == 0
+}
+
 When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
     String path = "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
