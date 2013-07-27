@@ -44,12 +44,12 @@ Feature: Visitante Externo
     Then the visit details are showed and I can select the option to remove
     And the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is properly removed by the system
 
-  Scenario: edit existing article
+  Scenario: edit existing visit
     Given the system has a visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" stored
     When I edit the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" to the visitor named "Pessoa Updated"
     Then the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is properly updated by the system
 
-  Scenario: edit existing article web
+  Scenario: edit existing visit web
     Given I am logged as "admin" and at the visits page and the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is stored in the system
     When I select to view the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" in resulting list
     And I change the visitor name
