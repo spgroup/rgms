@@ -1,6 +1,7 @@
 import pages.LoginPage
 import pages.MemberListPage
 import pages.MemberPage
+import pages.MemberCreatePage
 
 import pages.PublicationsPage
 import pages.ResearchGroupListPage
@@ -77,7 +78,29 @@ Then(~'^I can generate a XML report about Member "([^"]*)"$') { String memberNam
     page.compareXML(memberName)
 }
 //-------------------------------------------------------------------------------------------------
-Given(~'^I am at the Research Group list page and I select the "([^"]*)" group$') { String researchGroupName ->
+
+Given(~'^I am at the Publications page$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    
+}
+
+When(~'^I select the Novo Member option$') { ->
+    to MemberCreatePage
+    at MemberCreatePage
+}
+
+Then(~'^I fill the Member details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
+    at MemberCreatePage
+    page.fillMemberDetails(name, username, email, university)
+    to MemberListPage
+    at MemberListPage
+}
+
+//-------------------------------------------------------------------------------------------------
+Given(~'^I am at the Research Group list page$') { ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -87,10 +110,13 @@ Given(~'^I am at the Research Group list page and I select the "([^"]*)" group$'
 }
 
 When(~'^I select the "([^"]*)" option at the Research Group list$') { String researchGroupName ->
+    to ResearchGroupListPage
+    at ResearchGroupListPage
     page.selectResearchGroup(researchGroupName)
 }
 
 And(~'^I can select the option Export to PDF at the Research Group show$') { ->
+    to ResearchGroupPage
     at ResearchGroupPage
     page.checkPDF()
 }
@@ -142,3 +168,15 @@ And(~'^I can select the option Export to XML at the Research Group show$') {  ->
 Then(~'^I can generate a XML report about Research Group "([^"]*)"$') { String researchGroupName ->
     page.compareXML(researchGroupName)
 }
+
+//---------------------------------------------------------------------------------------------------
+
+When(~'^i select the "([^"]*)" option at publications page') { String option ->
+    at PublicationsPage
+    page.select(option)
+    at ResearchGroupPage
+}
+
+
+
+//---------------------------------------------------------------------------------------------------
