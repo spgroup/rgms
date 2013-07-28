@@ -22,6 +22,16 @@ When(~'^I cant add the dissertation without a file$') {->
     page.fillDissertationDetailsWithoutFile()
 }
 
+When(~'^I can add the dissertation with a file "([^"]*)"$'){ String filename->
+    at DissertationCreate
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + filename
+    page.fillDissertationDetailsWithFile(path)
+}
+Then((~'^the system has a dissertation entitled "([^"]*)"$')){ String title->
+    article = Dissertacao.findByTitle(title)
+    assert article != null
+}
+
 
 
 When(~'^I select "([^"]*)" at the dissertation page$') { String title ->
