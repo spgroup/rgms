@@ -74,13 +74,8 @@ Then(~'^The technical report "([^"]*)" details page is shown$') { String title -
 }
 
 // edit existing technical report with invalid title web
-Given(~'^I am at the technical reports page and the technical report "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-    page.select("Technical Report")
-    at TechnicalReportPage
+
+And(~'^the technical report "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     page.selectNewTechnicalReport()
     at TechnicalReportCreatePage
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator
@@ -92,10 +87,12 @@ Given(~'^I am at the technical reports page and the technical report "([^"]*)" i
     at TechnicalReportPage
 }
 
-When(~'^I select to view "([^"]*)" in resulting list and I change the technical report title to a blank one') { String oldtitle ->
+When(~'^I select to view "([^"]*)" in technical reports resulting list$') { String oldtitle ->
     page.selectViewTechnicalReport(oldtitle)
     at TechnicalReportShowPage
-    page.select('a', 'edit')
+}
+
+And(~'^I change the technical report title to a blank one$')  {  ->
     at TechnicalReportEditPage
     page.edit("")
 }
@@ -132,4 +129,24 @@ When(~'^I click on "New TechnicalReport" option at Technical Report list$') {->
 Then(~'^I see my user listed as an author member of technical report by default$') {->
     at TechnicalReportCreatePage
     assert TestDataAndOperations.containsUser(page.selectedMembers())
+}
+
+And (~'^I select the option to edit$'){->
+    at TechnicalReportShowPage
+    page.select('a', 'edit')
+    at TechnicalReportEditPage
+}
+
+And (~'^I press the button alterar$'){ ->
+    at TechnicalReportEditPage
+    page.select("Alterar")
+}
+
+Then(~'^The technical report is not saved by the system$'){ ->
+    tech = TechnicalReport.findByTitle("")
+    assert tech == null
+}
+
+And(~'^I remain at the technical report edit page$'){ ->
+    at TechnicalReportEditPage
 }
