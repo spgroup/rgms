@@ -75,3 +75,15 @@ Feature: research group
     Then the childof of research group "group" is none
 
 
+  Scenario: edit childof of research group web
+    Given i am logged as "admin"
+    And   i created a research group entitled "rg" with childof none
+    And   i am at Research Group list menu
+    When  i select a research group called "rg"
+    And   i select the edit option
+    And   i change the field childof to research group called "rg"
+    And   i click on alterar button
+    Then  the childof of research group "rg" is none
+
+
+

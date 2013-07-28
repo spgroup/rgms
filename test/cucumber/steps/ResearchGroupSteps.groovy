@@ -195,6 +195,8 @@ Then(~'^there is not exists research group entitled none$') { ->
 }
 
 
+
+
 Given(~'^the system has a research group entitled "([^"]*)" with childof none$') { String name ->
     TestDataAndOperations.createResearchGroup(name, "description")
     researchGroup = ResearchGroup.findByName(name)
@@ -213,6 +215,38 @@ When(~'^I modify the childof of research group entitled "([^"]*)" to itself$') {
 Then(~'^the childof of research group "([^"]*)" is none$') { String name ->
     researchGroup = ResearchGroup.findByName(name)
     assert researchGroup.getChildOf() == null
+}
+
+
+Given(~'^i am logged as "([^"]*)"$') { String userName ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData(userName, "adminadmin")
+}
+
+
+Given(~'^i created a research group entitled "([^"]*)" with childof none$') { String name ->
+    at PublicationsPage
+    page.select("Research Group")
+
+    at ResearchGroupPage
+
+    page.selectNewResearchGroup()
+
+    at ResearchGroupCreatePage
+    page.fillResearchGroupDetails(name)
+    page.clickOnCreate();
+}
+
+
+When(~'^i change the field childof to research group called "([^"]*)"$') { String name ->
+    at ResearchGroupEditarPage
+    page.changeChildOfTo(name)
+}
+
+When(~'^i click on alterar button$') { ->
+    at ResearchGroupEditarPage
+    page.selectAlterarResearchGroup()
 }
 
 

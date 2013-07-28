@@ -24,14 +24,19 @@ class ResearchGroupController {
     }
 
     //#if($researchGroupHierarchy)
-    def validarChildOf(def researchGroupInstance) {
+    def validarChildOf(def researchGroupInstance, def researchGroupParent) {
 
-        def parents = []
-        def current = researchGroupInstance
+        System.out.println("validarChildOf")
+        System.out.println(researchGroupInstance)
+
+        def parents = [researchGroupInstance]
+        def current = researchGroupParent
         while(current != null && ! parents.contains(current)) {
             parents.add(current)
             current = current.childOf
         }
+
+        System.out.println("\nTerminando a execução!!!!\nvalidarChildOf\n")
 
         if(current != null) {
             throw new RuntimeException("Há um ciclo relacionado à este research group!")
@@ -39,19 +44,23 @@ class ResearchGroupController {
 
     }
     //#end
+
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
-
-        //#if($researchGroupHierarchy)
-        validarChildOf(researchGroupInstance)
-        //#end
 
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return
         }
+
+        //#if($researchGroupHierarchy)
+        validarChildOf(researchGroupInstance, researchGroupInstance.getChildOf())
+        //#end
+
         //#if($researchGroupHierarchyNotify)
-        if (researchGroupInstance.getChildOf() != null) notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+        if (researchGroupInstance.getChildOf() != null) {
+            notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+        }
         //#end
         Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
 
@@ -104,12 +113,22 @@ class ResearchGroupController {
     def update() {
         def researchGroupInstance = ResearchGroup.get(params.id)
 
+        //#if($researchGroupHierarchyNotify)
+        def researchGroupInstanceChildOf = null
+        try {
+            researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
+        } catch(Exception e) {}
+
         //#if($researchGroupHierarchy)
-        validarChildOf(researchGroupInstance)
+        try {
+            validarChildOf(researchGroupInstance, researchGroupInstanceChildOf)
+        } catch(Exception e) {
+            flash.message = e.getMessage()
+            redirect(action: "edit", id: params.id)
+            return;
+        }
         //#end
 
-        //#if($researchGroupHierarchyNotify)
-        def researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
         if (isChildOfResearchGroupChanged(researchGroupInstance, researchGroupInstanceChildOf)) {
             notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
         }

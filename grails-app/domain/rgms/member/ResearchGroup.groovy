@@ -20,7 +20,7 @@ class ResearchGroup {
         twitter(nullable: true)
 
 //#if($researchGroupHierarchy)
-        childOf(nullable: true)
+        childOf(nullable: true, blank: true)
 //#end
     }
 
