@@ -49,6 +49,15 @@ Given(~'^I am at the publications and conferencias menu$') {->
     at PublicationsPage
 }
 
+Given(~'^I am at the conferencias page$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    page.select("Conferencia")
+    at ConferenciaPage
+}
+
 When(~'^I select the conferencia option at the publications menu$') {->
     page.select("Conferencia")
 }
@@ -57,6 +66,20 @@ When(~'^I select the new conferencia option at the conferencia page$') {->
     at ConferenciaPage
     page.selectNewConferencia()
 }
+
+When(~'^I select the home option at the conferencia page$') {->
+    at ConferenciaPage
+    page.selectHome()
+}
+
+When(~'^I select the conferencia "([^"]*)"$') {String title ->
+    page.select(title)
+}
+
+When(~'^I click on remove$') {->
+    page.select("Remove")
+}
+
 
 Then(~'^I can fill the conferencia details$') {->
     at ConferenciaCreatePage
@@ -72,4 +95,8 @@ Then(~'^I see my user listed as an author member of conferencia by default$') {-
     at ConferenciaCreatePage
     userData = Member.findByUsername('admin').id.toString()
     assert page.selectedMembers().contains(userData)
+}
+
+Then(~'^I am back at the publications and conferencias menu$') {->
+    at PublicationsPage
 }
