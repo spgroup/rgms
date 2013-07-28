@@ -55,7 +55,6 @@ When(~'^I edit the ferramenta title from "([^"]*)" to "([^"]*)"$') { String oldt
 Then(~'^the ferramenta "([^"]*)" is properly updated by the system$') { String title ->
     newFerramenta = Ferramenta.findByTitle(title)
     assert newFerramenta != null
-    // ideally, it should check whether the tool is stored with the new title
 }
 
 When(~'^I select "([^"]*)" at the ferramenta page$') { String title ->
@@ -136,3 +135,20 @@ Then(~'^I am still on ferramenta page$') {->
     // Express the Regexp above with the code you wish you had
 
 }
+
+When(~'^I create a new ferramenta at ferramenta create page$') {->
+    at FerramentaCreatePage
+    page.fillFerramentaDetails()
+}
+When(~'^I select the edit option at ferramenta show page$') {->
+    at FerramentaShowPage
+    page.editFerramenta()
+}
+When(~'^I can modify the name to "([^"]*)" at the edit ferramenta page$') { String title ->
+    at FerramentaEditPage
+    page.editTitle(title)
+}
+Then(~'^I am on ferramenta page$') {->
+    at FerramentaPage
+}
+

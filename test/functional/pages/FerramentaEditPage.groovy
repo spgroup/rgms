@@ -17,4 +17,9 @@ class FerramentaEditPage extends Page {
         $("form").website = website
         $("form").save().click()
     }
+
+    def editTitle(String title){
+        $("form").title = title
+        $("form").save().click()
+    }
 }
