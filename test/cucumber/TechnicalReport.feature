@@ -75,4 +75,3 @@ Feature: technical report
     When I click on "New TechnicalReport" option at Technical Report list
     Then I see my user listed as an author member of technical report by default
 #end
-

@@ -199,4 +199,3 @@ And(~'^I am at the technical reports list page$') { ->
     to TechnicalReportPage
     at TechnicalReportPage
 }
-
