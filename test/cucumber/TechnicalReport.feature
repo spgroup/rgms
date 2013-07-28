@@ -30,9 +30,14 @@ Feature: technical report
     Then    The technical report "TechRepo" details page is shown
 
   Scenario: edit existing technical report with invalid title web
-    Given  I am at the technical reports page and the technical report "Joe-E" is stored in the system with file name "Joee.pdf"
-    When   I select to view "Joe-E" in resulting list and I change the technical report title to a blank one
-    Then   I cannot select the "Alterar" option
+    Given  I am at the technical reports page
+    And    the technical report "Joe-E" is stored in the system with file name "Joee.pdf"
+    When   I select to view "Joe-E" in technical reports resulting list
+    And    I select the option to edit
+    And    I change the technical report title to a blank one
+    And    I press the button alterar
+    Then   The technical report is not saved by the system
+    And    I remain at the technical report edit page
 
   Scenario: remove existing technical report
     Given  I am at the technical reports page
