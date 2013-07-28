@@ -109,11 +109,20 @@ Given(~'^I am at the Research Group list page$') { ->
     at ResearchGroupListPage
 }
 
-When(~'^I select the "([^"]*)" option at the Research Group list$') { String researchGroupName ->
+When(~'^i select the "([^"]*)" option at publications page') { String option ->
+    at PublicationsPage
+    page.select(option)
+    at ResearchGroupPage
+}
+
+Then(~'^I select the "([^"]*)" option at the Research Group list$') { String researchGroupName ->
     to ResearchGroupListPage
     at ResearchGroupListPage
     page.selectResearchGroup(researchGroupName)
 }
+
+
+//-------------------------------------------------------------------------------------------------
 
 And(~'^I can select the option Export to PDF at the Research Group show$') { ->
     to ResearchGroupPage
@@ -139,6 +148,7 @@ When(~'^I select the "([^"]*)" option at the Research Group list$') { String res
 }  */
 
 And(~'^I can select the option Export to HTML at the Research Group show$') {  ->
+    to ResearchGroupPage
     at ResearchGroupPage
     page.checkHtml()
 }
@@ -161,6 +171,7 @@ When(~'^I select the "([^"]*)" option at the Research Group list$') { String res
 } */
 
 And(~'^I can select the option Export to XML at the Research Group show$') {  ->
+    to ResearchGroupPage
     at ResearchGroupPage
     page.checkXml()
 }
@@ -168,15 +179,5 @@ And(~'^I can select the option Export to XML at the Research Group show$') {  ->
 Then(~'^I can generate a XML report about Research Group "([^"]*)"$') { String researchGroupName ->
     page.compareXML(researchGroupName)
 }
-
-//---------------------------------------------------------------------------------------------------
-
-When(~'^i select the "([^"]*)" option at publications page') { String option ->
-    at PublicationsPage
-    page.select(option)
-    at ResearchGroupPage
-}
-
-
 
 //---------------------------------------------------------------------------------------------------
