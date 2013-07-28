@@ -30,6 +30,13 @@ Feature: Dissertation Tests
     And I cant add the dissertation without a file
     Then the system has no dissertation entitled "Dissertacao sem arquivo"
 
+  Scenario: new dissertation with file
+    Given I am at the publications menu
+    When I select the "Dissertacao" option at the program menu
+    And I select the new dissertation option at the dissertation page
+    And I can add the dissertation with a file "TCS.pdf"
+    Then the system has a dissertation entitled "Dissertacao Teste 1"
+
   Scenario: edit dissertation
     Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt", has no dissertation entitled "Edit dissertation reviewed"
     When    I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
