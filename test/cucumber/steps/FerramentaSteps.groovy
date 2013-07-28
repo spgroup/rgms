@@ -133,6 +133,7 @@ Then(~'^I am still on ferramenta page$') {->
 
 }
 
+// edit ferramenta
 When(~'^I create a new ferramenta at ferramenta create page$') {->
     at FerramentaCreatePage
     page.fillFerramentaDetails()
@@ -148,4 +149,15 @@ When(~'^I can modify the name to "([^"]*)" at the edit ferramenta page$') { Stri
 Then(~'^I am on ferramenta page$') {->
     at FerramentaPage
 }
+
+// list ferramentas
+Then(~'^The system list "([^"]*)" and "([^"]*)" ferramentas$') { String title, otherTitle ->
+    ferramentas = Ferramenta.findAllByTitle(title)
+    assert ferramentas.size() == 1
+    ferramentas = Ferramenta.findAllByTitle(otherTitle)
+    assert ferramentas.size() == 1
+    ferramentaCount = Ferramenta.count()
+    assert ferramentaCount == 2
+}
+
 
