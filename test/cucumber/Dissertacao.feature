@@ -74,6 +74,11 @@ Feature: Dissertation Tests
     Given the system has some dissertation stored, has no dissertation entitled "New dissertation"
     When I upload a new dissertation "curriculo.xml" with title "New dissertation"
     Then the system has more dissertations now
+
+  Scenario: upload a dissertation and system has no dissertation stored
+    Given the system has no dissertation stored
+    When I upload a new dissertation "curriculo.xml" with title "New dissertation"
+    Then the system has more dissertations now
     
 #if ($Autofill)
 
