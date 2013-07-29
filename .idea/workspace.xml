@@ -1,11 +1,281 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a74ac94c-d8a4-440b-9490-bbf80761ebc5" name="Default" comment="" />
+    <list default="true" id="a74ac94c-d8a4-440b-9490-bbf80761ebc5" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\COMANDO GEBS" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\application.properties" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\renomear.py" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\rgms-grailsPlugins.iml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\rgms.iml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\target-eclipse\classes\auth\login.gsp" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\target-eclipse\classes\auth\lostPassword.gsp" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\target-eclipse\classes\auth\resetPassword.gsp" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\target-eclipse\classes\auth\updatePassword.gsp" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\target-eclipse\classes\error.gsp" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\Article.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\Authentication.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\BookChapter.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\Conferencia.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\Dissertacao.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\Ferramenta.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\Member.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\Record.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\Reports.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\ResearchGroup.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\ResearchLine.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\TechnicalReport.feature" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\cucumber.iml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\hooks\env.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\ArticleSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\AuthenticationSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\BookChapterSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\CommonSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\ConferenciaSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\DissertacaoSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\FerramentaSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\MemberSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\RecordSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\ReportsSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\ResearchGroupSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\ResearchLineSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\cucumber\steps\TechnicalReportSteps.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\GebConfig.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ArticleCreatePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ArticleEditPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ArticleShowPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ArticlesPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\BookChapterCreatePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\BookChapterPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ConferenciaCreatePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ConferenciaPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\DissertationCreate.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\DissertationEditPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\DissertationPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\DissertationShowPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\FerramentaCreate.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\FerramentaEditPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\FerramentaPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\FerramentaShowPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\GetPageTitle.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\LoginPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\MemberCreatePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\MemberListPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\MemberPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\MemberViewPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\MembershipCreatePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\MembershipPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\PublicationsPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\RecordCreatePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\RecordEditPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\RecordPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\RecordVisualizePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\RegisterPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ResearchGroupCreatePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ResearchGroupEditarPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ResearchGroupListPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ResearchGroupPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ResearchGroupShowPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ResearchLineCreatePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ResearchLineEditPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ResearchLinePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\ResearchLineVisualizePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\RootPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\TechnicalReportCreatePage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\TechnicalReportEditPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\TechnicalReportPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\TechnicalReportShowPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\pages\UserRegisterPage.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\steps\TestDataAndOperations.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\functional\steps\TestDataAuthentication.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\test.iml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\test\unit\rgms\publication\AuxiliarControllerTests.groovy" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\WEB-INF\applicationContext.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\WEB-INF\sitemesh.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\WEB-INF\tld\c.tld" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\WEB-INF\tld\fmt.tld" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\WEB-INF\tld\grails.tld" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\WEB-INF\tld\spring.tld" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\errors.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\main.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\mobile.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\Thumbs.db" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-bg_glass_100_f6f6f6_1x400.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-bg_glass_65_ffffff_1x400.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-icons_222222_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-icons_228ef1_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-icons_ef8c08_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-icons_ffd27a_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\images\ui-icons_ffffff_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\css\ui-lightness\jquery-ui-1.8.18.custom.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\Thumbs.db" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\apple-touch-icon-retina.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\apple-touch-icon.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\bart.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\favicon.ico" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\grails_logo.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\grails_logo.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\icon.ico" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\icon.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\icon1.gif" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\leftnav_btm.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\leftnav_midstretch.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\leftnav_top.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\logoSPG.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\Thumbs.db" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\database_add.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\database_delete.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\database_edit.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\database_save.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\database_table.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\exclamation.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\house.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\information.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\shadow.jpg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\sorted_asc.gif" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\skin\sorted_desc.gif" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\spinner.gif" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\images\springsource.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\application.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery-1.7.1.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery-1.7.1.min.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery-ui-1.8.18.custom.min.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery.maskedinput-1.1.4.pack.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery.quicksearch.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery-ui-i18n.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-af.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ar-DZ.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ar.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-az.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-bg.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-bs.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ca.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-cs.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-da.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-de.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-el.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-en-AU.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-en-GB.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-en-NZ.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-eo.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-es.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-et.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-eu.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-fa.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-fi.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-fo.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-fr-CH.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-fr.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-gl.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-he.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-hr.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-hu.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-hy.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-id.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-is.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-it.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ja.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ko.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-kz.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-lt.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-lv.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ml.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ms.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-nl.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-no.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-pl.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-pt-BR.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-pt.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-rm.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ro.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ru.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-sk.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-sl.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-sq.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-sr-SR.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-sr.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-sv.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-ta.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-th.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-tj.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-tr.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-uk.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-vi.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-zh-CN.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-zh-HK.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\js\jquery\i18n\jquery.ui.datepicker-zh-TW.js" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\dissertacao.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\dissertacao.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\ferramentas.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\ferramentas.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\memberPubs.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\memberPubs.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\memberTools.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\memberTools.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\publications.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\publications.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\report.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\report.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\report1.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\report1.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\reportmemberPubs.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\reportmemberPubs.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\researchGroup.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\researchGroup.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\tese.jasper" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\reports\report_Bundle\tese.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Flavia\Documents\GitHub\rgms\web-app\uploads\necessary.text" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chromedrivers/chromedriverlinux32" afterPath="$PROJECT_DIR$/chromedrivers/chromedriverlinux32" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chromedrivers/chromedriverlinux64" afterPath="$PROJECT_DIR$/chromedrivers/chromedriverlinux64" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chromedrivers/chromedrivermac" afterPath="$PROJECT_DIR$/chromedrivers/chromedrivermac" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chromedrivers/chromedriverwindows.exe" afterPath="$PROJECT_DIR$/chromedrivers/chromedriverwindows.exe" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/ApplicationResources.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/ApplicationResources.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/taglib/com/grailsrocks/jqueryui/JqueryUiTagLib.groovy" afterPath="$PROJECT_DIR$/grails-app/taglib/com/grailsrocks/jqueryui/JqueryUiTagLib.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/rgms/member/PasswordResetRequest.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/rgms/member/PasswordResetRequest.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/rgms/PdfService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/rgms/PdfService.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/rgms/publication/Publication.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/rgms/publication/Publication.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/rgms/member/Record.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/rgms/member/Record.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/rgms/member/ResearchGroup.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/rgms/member/ResearchGroup.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/controllers/rgms/member/ResearchGroupController.groovy" afterPath="$PROJECT_DIR$/grails-app/controllers/rgms/member/ResearchGroupController.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/UrlMappings.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/periodico/_errors.gsp" afterPath="$PROJECT_DIR$/grails-app/views/periodico/_errors.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/technicalReport/_errors.gsp" afterPath="$PROJECT_DIR$/grails-app/views/technicalReport/_errors.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/researchGroup/_form.gsp" afterPath="$PROJECT_DIR$/grails-app/views/researchGroup/_form.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/periodico/_navigation.gsp" afterPath="$PROJECT_DIR$/grails-app/views/periodico/_navigation.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/technicalReport/_navigation.gsp" afterPath="$PROJECT_DIR$/grails-app/views/technicalReport/_navigation.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProductGeneration/ck.xml" afterPath="$PROJECT_DIR$/ProductGeneration/ck.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProductGeneration/compModelTeste.txt" afterPath="$PROJECT_DIR$/ProductGeneration/compModelTeste.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/researchGroup/create.gsp" afterPath="$PROJECT_DIR$/grails-app/views/researchGroup/create.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/researchGroup/edit.gsp" afterPath="$PROJECT_DIR$/grails-app/views/researchGroup/edit.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/error.gsp" afterPath="$PROJECT_DIR$/grails-app/views/error.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProductGeneration/featureModel.xml" afterPath="$PROJECT_DIR$/ProductGeneration/featureModel.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProductGeneration/instanceModel.xml" afterPath="$PROJECT_DIR$/ProductGeneration/instanceModel.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/researchGroup/list.gsp" afterPath="$PROJECT_DIR$/grails-app/views/researchGroup/list.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/i18n/messages_da.properties" afterPath="$PROJECT_DIR$/grails-app/i18n/messages_da.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/i18n/messages_de.properties" afterPath="$PROJECT_DIR$/grails-app/i18n/messages_de.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/i18n/messages_es.properties" afterPath="$PROJECT_DIR$/grails-app/i18n/messages_es.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/i18n/messages_fr.properties" afterPath="$PROJECT_DIR$/grails-app/i18n/messages_fr.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/i18n/messages_it.properties" afterPath="$PROJECT_DIR$/grails-app/i18n/messages_it.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/i18n/messages_nl.properties" afterPath="$PROJECT_DIR$/grails-app/i18n/messages_nl.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/i18n/messages_pt_PT.properties" afterPath="$PROJECT_DIR$/grails-app/i18n/messages_pt_PT.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/i18n/messages_sv.properties" afterPath="$PROJECT_DIR$/grails-app/i18n/messages_sv.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/i18n/messages_zh_CN.properties" afterPath="$PROJECT_DIR$/grails-app/i18n/messages_zh_CN.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ProductGeneration/hephaestus/project.properties" afterPath="$PROJECT_DIR$/ProductGeneration/hephaestus/project.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/spring/resources.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/spring/resources.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/views/researchGroup/show.gsp" afterPath="$PROJECT_DIR$/grails-app/views/researchGroup/show.gsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="rgms.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$USER_HOME$/.grails/" />
-    <file path="/Dummy.txt" changelist="a74ac94c-d8a4-440b-9490-bbf80761ebc5" time="1372199109830" ignored="false" />
+    <file path="/Dummy.txt" changelist="a74ac94c-d8a4-440b-9490-bbf80761ebc5" time="1375067622612" ignored="false" />
     <file path="/fragment.java" changelist="a74ac94c-d8a4-440b-9490-bbf80761ebc5" time="1373331284713" ignored="false" />
     <file path="$PROJECT_DIR$/../Arquitetura/src/arquitetura/uml/Arquitetura.java" changelist="a74ac94c-d8a4-440b-9490-bbf80761ebc5" time="1373331291071" ignored="false" />
     <file path="/MemberController.groovy" changelist="a74ac94c-d8a4-440b-9490-bbf80761ebc5" time="1373341622758" ignored="false" />
@@ -69,15 +339,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TeseController.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/controllers/rgms/publication/TeseController.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="46" selection-start="174" selection-end="176" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MemberController.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/controllers/rgms/member/MemberController.groovy">
           <provider selected="true" editor-type-id="text-editor">
@@ -96,21 +357,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResearchLine.feature" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ResearchLine.feature" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/cucumber/ResearchLine.feature">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="20" selection-start="442" selection-end="442" vertical-scroll-proportion="0.0">
+            <state line="26" column="68" selection-start="1408" selection-end="1408" vertical-scroll-proportion="0.5031056">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResearchLineSteps.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ResearchLineSteps.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/cucumber/steps/ResearchLineSteps.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="84" selection-start="2242" selection-end="2242" vertical-scroll-proportion="0.048991356">
+            <state line="12" column="17" selection-start="395" selection-end="395" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestDataAndOperations.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/functional/steps/TestDataAndOperations.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="83" selection-start="1490" selection-end="1490" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArticleSteps.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/cucumber/steps/ArticleSteps.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="221" column="0" selection-start="6275" selection-end="6275" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -152,19 +433,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.gsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/views/auth/login.gsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="163" column="133" selection-start="6085" selection-end="6085" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1372160669415" expanded="true" signature="4957:5047" placeholder="{...}" />
-                <marker date="1372160669415" expanded="true" signature="5348:5438" placeholder="{...}" />
-                <marker date="1372160669415" expanded="true" signature="5784:5977" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -172,10 +440,20 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/grails-app/controllers/rgms/member/MemberController.groovy" />
+        <option value="$PROJECT_DIR$/test/cucumber/steps/ResearchLineSteps.groovy" />
+        <option value="$PROJECT_DIR$/test/functional/steps/TestDataAndOperations.groovy" />
       </list>
     </option>
   </component>
@@ -185,7 +463,7 @@
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -221,7 +499,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -448,7 +726,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -465,15 +743,19 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager" selected="Grails.Grails:rgms">
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
       <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
-      <option name="PROGRAM_PARAMETERS" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="true" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
@@ -485,14 +767,10 @@
       <setting name="debug" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
-      <setting name="vmparams" value="" />
-      <setting name="cmdLine" value="run-app" />
-      <setting name="depsClasspath" value="true" />
-      <setting name="passParentEnv" value="true" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <setting name="launchBrowser" value="false" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
       <method />
     </configuration>
     <configuration default="true" type="GriffonRunConfigurationType" factoryName="Griffon">
@@ -510,19 +788,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -551,6 +816,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -735,16 +1013,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/grails-app/controllers/rgms/publication/DissertacaoController.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="46" selection-start="258" selection-end="260" vertical-scroll-proportion="-1.9583334" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/controllers/rgms/publication/FerramentaController.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="46" selection-start="254" selection-end="256" vertical-scroll-proportion="-1.6041666" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/controllers/rgms/publication/PeriodicoController.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="46" selection-start="362" selection-end="364" vertical-scroll-proportion="-1.6041666" />
@@ -775,11 +1043,7 @@
     <entry file="file://$PROJECT_DIR$/grails-app/views/auth/login.gsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="163" column="133" selection-start="6085" selection-end="6085" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1372160669415" expanded="true" signature="4957:5047" placeholder="{...}" />
-            <marker date="1372160669415" expanded="true" signature="5348:5438" placeholder="{...}" />
-            <marker date="1372160669415" expanded="true" signature="5784:5977" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -825,19 +1089,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/cucumber/ResearchLine.feature">
+    <entry file="file://$PROJECT_DIR$/test/cucumber/steps/ArticleSteps.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="20" selection-start="442" selection-end="442" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="221" column="0" selection-start="6275" selection-end="6275" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/cucumber/steps/ResearchLineSteps.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="84" selection-start="2242" selection-end="2242" vertical-scroll-proportion="0.048991356">
+        <state line="12" column="17" selection-start="395" selection-end="395" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/functional/steps/TestDataAndOperations.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="83" selection-start="1490" selection-end="1490" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/cucumber/ResearchLine.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="68" selection-start="1408" selection-end="1408" vertical-scroll-proportion="0.5031056">
+          <folding />
         </state>
       </provider>
     </entry>
