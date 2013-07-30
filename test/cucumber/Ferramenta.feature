@@ -65,3 +65,11 @@ Feature: Ferramenta
     Given the ferramenta "Tool" is stored in the system with file name "tool.pdf"
     When I create the ferramenta "New" with file name "new.pdf"
     Then The system list "Tool" and "New" ferramentas
+
+  Scenario: new ferramenta with Titulo exceding caracteres limits
+    Given I am at the publications menu
+    When I select the "Ferramenta" option at the program menu
+    And I select the new ferramenta option at the ferramenta page
+    And I fill Titulo with more than 255 caracteres
+    And fill the others fields with valid values without Titulo
+    Then I am still on ferramenta page

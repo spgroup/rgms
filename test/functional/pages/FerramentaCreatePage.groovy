@@ -24,16 +24,20 @@ class FerramentaCreatePage extends FormPage {
 
     // Fill form means submit form too
     def fillFerramentaDetails() {
-        def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + "CCFinder.pdf"
-        fillFerramentaDetails(path, "CCFinder")
-        $("form").create().click()
+        fillFerramentaTitle("CCFinder")
+        fillFerramentaDetailsWithoutTitle()
     }
 
-    def fillFerramentaDetails(filename, title) {
+    def fillFerramentaTitle(title){
         $("form").title = title
+    }
+
+    def fillFerramentaDetailsWithoutTitle() {
+        def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + "CCFinder.pdf"
         $("form").description = "Description"
         $("form").website = "website"
-        $("form").file = filename
+        $("form").file = path
+        $("form").create().click()
     }
 
     def createNewFerramenta(String title) {
@@ -45,6 +49,10 @@ class FerramentaCreatePage extends FormPage {
 
     def createNewFerramentaWithoutInformation() {
         $("form").create().click()
+    }
+
+    def fillTitleWithMaxCaracteres(){
+        $("form").title = "titulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotituloAAA"
     }
 
 }
