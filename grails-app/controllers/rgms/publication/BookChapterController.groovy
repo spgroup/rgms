@@ -103,52 +103,50 @@ class BookChapterController {
 		flash.message = message(code: msg)
 	}
 
-	def uploadXMLBookChapter()
-	{
-		String flashMessage = 'The non existent Book Chapters were successfully imported'
+    def uploadXMLBookChapter()
+    {
+        String flashMessage = 'The non existent Book Chapters were successfully imported'
 
-		XMLService serv = new XMLService()
-		Node xmlFile = serv.parseReceivedFile(request)
-		if (!serv.Import(saveBookChapters, returnWithMessage, xmlFile, flashMessage))
-			return
-	}
+        if (XMLService.Import(saveBookChapters, returnWithMessage, flashMessage, request))
+            return
+    }
 
-	Closure saveBookChapters = {
-		
-		Node xmlFile ->
-		
-				Node bookChapters = (Node)((Node)((Node)xmlFile.children()[1]).children()[2]).children()[1]
-				List<Object> bookChaptersChildren = bookChapters.children()
-		
-				for (int i = 0; i < bookChaptersChildren.size(); ++i)
-				{
-					List<Object> bookChapter = ((Node)bookChaptersChildren[i]).children()
-					
-					Node dadosBasicos = (Node) bookChapter[0]
-					Node detalhamentoCapitulo = (Node) bookChapter[1]
-								
-					BookChapter newBookChapter = new BookChapter()
-					newBookChapter.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
-		
-					print(newBookChapter.title)
-					
-					if (Publication.findByTitle(newBookChapter.title) == null)
-					{
-						newBookChapter.publicationDate = new Date()
-		
-						String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO")
-						if (tryingToParse.isInteger())
-							newBookChapter.publicationDate.set(year: tryingToParse.toInteger())
-		
-							
-						print(newBookChapter.publicationDate)
-						newBookChapter.file = 'emptyfile' + i.toString()
-						newBookChapter.publisher = "Empty"
-						newBookChapter.chapter = 2
-						newBookChapter.save(flush: false)
-					}
-				}
-		
-	}
-	//#end
+    Closure saveBookChapters = {
+
+        Node xmlFile ->
+
+            Node bookChapters = (Node)((Node)((Node)xmlFile.children()[1]).children()[2]).children()[1]
+            List<Object> bookChaptersChildren = bookChapters.children()
+
+            for (int i = 0; i < bookChaptersChildren.size(); ++i)
+            {
+                List<Object> bookChapter = ((Node)bookChaptersChildren[i]).children()
+
+                Node dadosBasicos = (Node) bookChapter[0]
+                Node detalhamentoCapitulo = (Node) bookChapter[1]
+
+                BookChapter newBookChapter = new BookChapter()
+                newBookChapter.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
+                newBookChapter.publisher = XMLService.getAttributeValueFromNode(detalhamentoCapitulo, "NOME-DA-EDITORA")
+
+                print(newBookChapter.title)
+
+                if (Publication.findByTitle(newBookChapter.title) == null)
+                {
+                    newBookChapter.publicationDate = new Date()
+
+                    String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO")
+                    if (tryingToParse.isInteger())
+                        newBookChapter.publicationDate.set(year: tryingToParse.toInteger())
+
+
+                    print(newBookChapter.publicationDate)
+                    newBookChapter.file = 'emptyfile' + i.toString()
+                    newBookChapter.chapter = 2
+                    newBookChapter.save(flush: false)
+                }
+            }
+
+    }
+    //#end
 }
