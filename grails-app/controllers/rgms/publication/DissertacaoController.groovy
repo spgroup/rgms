@@ -144,13 +144,11 @@ class DissertacaoController {
     def messageGenerator(String code, def id) {
         return message(code: code, args: [message(code: 'dissertacao.label', default: 'Dissertacao'), id])
     }
-//#if($upXMLDissertacao)
+
     def uploadXMLDissertacao() {
         String flashMessage = 'The non existent dissertations were successfully imported'
 
-        XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request)
-        if (!serv.Import(saveDissertations, returnWithMessage, xmlFile, request))
+        if (XMLService.Import(saveDissertations, returnWithMessage, flashMessage, request))
             return
     }
 
@@ -182,11 +180,11 @@ class DissertacaoController {
     Closure saveDissertations = {
         Node xmlFile ->
             Node dadosGerais = (Node) xmlFile.children()[0]
-            Node mestrado = (Node) ((Node) dadosGerais.children()[3]).children()[1]
-            Node doutorado = (Node) ((Node) dadosGerais.children()[3]).children()[2]
+            Node mestrado = (Node) ((Node) dadosGerais.children()[1]).children()[1]
+            Node doutorado = (Node) ((Node) dadosGerais.children()[1]).children()[2]
 
             createDissertation(mestrado)
             createDissertation(doutorado)
     }
-//#end
+
 }
