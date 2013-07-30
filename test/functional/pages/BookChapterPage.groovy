@@ -7,7 +7,7 @@ class BookChapterPage extends Page {
     static url = "bookChapter/list"
 
     static at = {
-        //title ==~ /BookChapter Listagem/
+        title ==~ /BookChapter Listagem/
     }
 
     static content = {
@@ -16,5 +16,9 @@ class BookChapterPage extends Page {
 
     def selectNewBookChapter() {
         $('a.create').click()
+    }
+
+    def uploadWithoutFile(){
+        $('input.save').click()
     }
 }

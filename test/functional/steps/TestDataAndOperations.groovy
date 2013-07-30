@@ -272,6 +272,14 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    static public void uploadBookChapter(filename) {
+        def cont = new BookChapterController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.saveBookChapters(records.parse(xml));
+        cont.response.reset()
+    }
+
     static public void removeDissertacao(String title) {
         def testDissertation = Dissertacao.findByTitle(title)
         def cont = new DissertacaoController()

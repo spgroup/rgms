@@ -40,3 +40,14 @@ Feature: BookChapter
     And I select the Novo BookChapter option at the book chapter page
     Then I see my user listed as a member of book chapter by default
 #end
+
+  Scenario: upload book chapter with a file
+    Given the system has some book chapters stored
+    When I upload some book chapters of "curriculo.xml"
+    Then the system has more book chapters now
+
+  Scenario: upload book chapters without a file
+    Given I am at the publications menu
+    When I select the "Book Chapter" option at the program menu
+    And I select the upload button at the book chapter page
+    Then I'm still on book chapter page
