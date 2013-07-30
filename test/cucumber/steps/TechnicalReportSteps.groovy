@@ -34,12 +34,10 @@ Given(~'^The system has an technical report entitled "([^"]*)" with file name "(
     tech = TechnicalReport.findByTitle(title)
     assert tech != null
 }
-
 When(~'^I edit the technical report title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
     def updatedTech = TestDataAndOperations.editTech(oldtitle, newtitle)
     //assert updatedTech != null
 }
-
 Then(~'^The technical report "([^"]*)" is not updated by the system$') { String title ->
     tech = TechnicalReport.findByTitle(title)
     assert tech != null
@@ -199,3 +197,4 @@ And(~'^I am at the technical reports list page$') { ->
     to TechnicalReportPage
     at TechnicalReportPage
 }
+
