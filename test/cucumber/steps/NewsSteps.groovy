@@ -20,7 +20,7 @@ When(~'^I create a news with description "([^"]*)" and date "([^"]*)" for "([^"]
 Then(~'^the news  with description  "([^"]*)", date "([^"]*)" and "([^"]*)" research group is properly stored by the system$') { String description, String date, String group ->
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     def researchGroup = ResearchGroup.findByName(group)
-    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup);
+    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
     assert news != null
 }
 
@@ -28,20 +28,20 @@ Given(~'^the system has a news with description "([^"]*)" and date "([^"]*)" for
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
     TestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
-    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup);
+    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
     assert news != null
 }
 
-When(~'^I delete a news with description "([^"]*)" and date "([^"]*)" of "([^"]*)" research group$') { String description, String date, String group ->
+When(~'^I delete a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     def researchGroup = ResearchGroup.findByName(group)
-    TestDataAndOperations.deleteNews(description, dateAsDateObj, researchGroup);
+    TestDataAndOperations.deleteNews(description, dateAsDateObj, researchGroup)
 }
 
-Then(~'^the news  with "([^"]*)" and date "([^"]*)" doesnt exists to "([^"]*)" research group$') { String description, String date, String group ->
+Then(~'^the news with "([^"]*)" and date "([^"]*)" doesnt exists to "([^"]*)" research group$') { String description, String date, String group ->
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group);
-    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup);
+    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
     assert news == null
 }
 
@@ -56,18 +56,24 @@ Given(~'^the research group "([^"]*)" in the system has no Twitter account assoc
     TestDataAndOperations.createResearchGroup(groupName)
     researchGroup = ResearchGroup.findByName(groupName)
     assert researchGroup != null
+    assert researchGroup.twitter == null
 }
 
 When(~'^I associate the account "([^"]*)" to "([^"]*)" group$') { String twitter, String groupName ->
     researchGroup = ResearchGroup.findByName(groupName)
-    researchGroup.twitter = twitter
-    researchGroup.save()
+    assert researchGroup != null
+    //researchGroup.twitter = twitter
+    //researchGroup.save()
     //TestDataAndOperations.editResearchGroupTwitter(researchGroup, twitter)
+    TestDataAndOperations.editResearchGroupTwitterAcount(researchGroup, twitter)
+    assert researchGroup != null
+    assert researchGroup.getTwitter() == twitter
 }
 
 Then(~'^"([^"]*)" research group has a twitter account "([^"]*)" registred$') { String groupName, String twitter ->
     researchGroup = ResearchGroup.findByName(groupName)
-    assert researchGroup.twitter == twitter
+    assert researchGroup != null
+    assert researchGroup.getTwitter() == twitter
 }
 
 Given(~'^the research group "([^"]*)" in the system has Twitter account "([^"]*)" associated$') { String groupName, String twitter ->
