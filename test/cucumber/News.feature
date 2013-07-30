@@ -30,6 +30,7 @@ Feature: news
 
   Scenario: update news from twitter account
     Given the research group "SPG" in the system has a Twitter account "@HumanBrainProj" associated
+     And  the research group "SPG" news list is empty
      When I request to update the news from Twitter to research group "SPG"
      Then news of "SPG" research group has been updated
 
