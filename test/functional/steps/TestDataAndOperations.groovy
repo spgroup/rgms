@@ -69,7 +69,9 @@ class TestDataAndOperations {
             [title: 'NFL Languages System',
                     publicationDate: (new Date('27 October 2011')), institution: 'NFL'],
             [title: 'Joe-E',
-                    publicationDate: (new Date('1 May 2013')), institution: 'TG']
+                    publicationDate: (new Date('1 May 2013')), institution: 'TG'],
+            [title: 'RC77-1',
+                    publicationDate: (new Date('15 May 2013')), institution: 'MIT', file: "TCS-77.pdf"]
     ]
 
     static members = [

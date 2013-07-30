@@ -155,3 +155,18 @@ And(~'^I change the technical report title to "([^"]*)" filename to "([^"]*)" an
     at TechnicalReportEditPage
     page.edit(t, path + fn, i)
 }
+
+Given(~'^The system has an technical report entitled "([^"]*)" with file name "([^"]*)" and institution "([^"]*)"$'){ String title, filename , institute->
+    def path = "web-app/uploads/"
+    techReport = TechnicalReport.findByTitle(title)
+    assert techReport != null
+    assert techReport.file == path + filename
+    assert techReport.title == title
+    assert techReport.institution == institute
+}
+
+And(~'^I am at the technical reports list page$') { ->
+    to TechnicalReportPage
+    at TechnicalReportPage
+}
+
