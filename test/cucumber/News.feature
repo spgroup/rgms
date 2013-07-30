@@ -39,3 +39,4 @@ Feature: news
     And   twitter account associated with "SPG" research group has been updated once
     When  I request to update the news from Twitter to research group "SPG"
     Then  there is no duplicated news in Twitter account associated with research group "SPG"
+
