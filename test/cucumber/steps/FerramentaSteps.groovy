@@ -16,7 +16,9 @@ Given(~'The system has a ferramenta entitled "([^"]*)"$') { String title ->
 // new ferramenta without website
 Given(~'^the system has no ferramenta entitled "([^"]*)"$') { String title ->
     ferramenta = Ferramenta.findByTitle(title)
-    assert ferramenta == null
+    if(ferramenta != null){
+        TestDataAndOperations.removeFerramenta(title)
+    }
 }
 
 When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" without its website$') { String title, String filename ->
