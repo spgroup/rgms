@@ -658,11 +658,19 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    //não funciona
     static public void editResearchGroupTwitter(researchGroup, String newTwitter) {
         def researchGroupController = new ResearchGroupController()
         researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
         researchGroupController.edit()
         researchGroupController.save()
+        researchGroupController.response.reset()
+    }
+
+    static public ResearchGroup editResearchGroupTwitterAcount(researchGroup, String newTwitter){
+        def researchGroupController = new ResearchGroupController()
+        researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
+        researchGroupController.update()
         researchGroupController.response.reset()
     }
 
