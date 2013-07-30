@@ -11,8 +11,6 @@ class ResearchGroupController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def mailService
-
     def index() {
         redirect(action: "list", params: params)
     }
@@ -61,6 +59,7 @@ class ResearchGroupController {
             return
         }
 
+
         //#if($researchGroupHierarchyNotify)
         if (researchGroupInstance.getChildOf() != null) {
             notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
@@ -90,6 +89,7 @@ class ResearchGroupController {
             //return
         }
         def members = refreshMemberList()
+
         //def deb = [session["groups"],session["groups"].contains(params.groups),entrou1,entrou2,entrou3,params]
         [researchGroupInstance: researchGroupInstance, membersInstance: members]
     }
@@ -188,9 +188,7 @@ class ResearchGroupController {
         for (groupId in session["groups"]) {
             def rGroup = ResearchGroup.get(groupId as Long)
             if (rGroup) {
-                def collection = rGroup?.memberships?.collect {
-                    it.member
-                }
+                def collection = rGroup?.memberships?.collect { it.member }
                 if (collection) {
                     members.addAll(collection)
                 }
@@ -202,9 +200,7 @@ class ResearchGroupController {
         def members = [] as Set
 
         if (request.post == false) {
-            session["groups"] = ResearchGroup.list()?.collect {
-                it.id
-            }
+            session["groups"] = ResearchGroup.list()?.collect { it.id }
         } else {
             addOrRemoveGroupsOfSession()
         }
@@ -225,29 +221,8 @@ class ResearchGroupController {
         def researchGroupInstance = ResearchGroup.get(params.id)
         def list = ResearchGroup.getPublications(researchGroupInstance)
         return list
-    }
 
-    //#if($researchGroupHierarchyNotify)
-    void notifyChangeChildOfResearchGroup(researchGroup, members) {
-        for (memberId in members) {
-            def member = Member.get(memberId)
-            assert member != null
-            if (member.getEmail()) {
-                mailService.sendMail {
-                    to member.getEmail()
-                    subject "Research Group change hierarchy"
-                    body "Hello " + member.name + ",\n\nThe Research Group is now child of the Research Group ${researchGroup.getChildOf().getName()}".toString()
-                }
-            }
-        }
     }
-
-    boolean isChildOfResearchGroupChanged(researchGroupInstance, newResearchGroupChildOf) {
-        def result = (researchGroupInstance != null) && (newResearchGroupChildOf != null) && (researchGroupInstance.getChildOf() != null)
-        result = result && (newResearchGroupChildOf != researchGroupInstance.getChildOf())
-        result
-    }
-    //#end
 
     def updateNewsFromTwitter() {
         def researchGroupInstance = ResearchGroup.get(params.id)
@@ -261,7 +236,8 @@ class ResearchGroupController {
             newContr.response.reset()
             //researchGroupInstance.addToNews(new News(description: it.getText(), date: it.getCreatedAt()))
         }
+        researchGroupInstance.save()
+        redirect(action: "show", id: researchGroupInstance.id)
     }
-
 
 }
