@@ -735,6 +735,16 @@ class TestDataAndOperations {
         return ResearchGroup.findByName(name)
     }
 
+    static public ResearchGroup createAndGetResearchGroupByNameWithTwitter(String name, String twitter) {
+        def researchGroupController = new ResearchGroupController()
+        researchGroupController.params << findResearchGroupByGroupName(name)
+        researchGroupController.params << [twitter: twitter]
+        researchGroupController.create()
+        researchGroupController.save()
+        researchGroupController.response.reset()
+        return ResearchGroup.findByName(name)
+    }
+
     static public void createNews(String descriptionParam, Date dateParam, ResearchGroup groupParam) {
         def cont = new NewsController()
         cont.params << [description: descriptionParam, date: dateParam, researchGroup: groupParam]
