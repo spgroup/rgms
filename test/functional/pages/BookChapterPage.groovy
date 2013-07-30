@@ -8,7 +8,7 @@ class BookChapterPage extends Page {
     static url = "bookChapter/list"
 
     static at = {
-        //title ==~ /BookChapter Listagem/
+        title ==~ /BookChapter Listagem/
     }
 
     static content = {
@@ -18,6 +18,7 @@ class BookChapterPage extends Page {
     def selectNewBookChapter() {
         $('a.create').click()
     }
+
     def checkBookChapterAtList(title,row){
         def listDiv = $('div', id: 'list-bookChapter')
         def bookTable = (listDiv.find('table'))[0]
@@ -30,5 +31,9 @@ class BookChapterPage extends Page {
         assert bookColumns[0].text() == testarbook.title
         assert bookColumns[2].text() == testarbook.file
         assert bookColumns[4].text() == testarbook.publisher
+    }
+
+    def uploadWithoutFile(){
+        $('input.save').click()
     }
 }
