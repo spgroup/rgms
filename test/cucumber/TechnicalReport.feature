@@ -39,6 +39,15 @@ Feature: technical report
     Then   The technical report is not saved by the system
     And    I remain at the technical report edit page
 
+  Scenario: edit existing technical report with valid title, a valid filename and valid institution
+    Given  I am at the technical reports page
+    And    the technical report "TC77" is stored in the system with file name "TCS-77.pdf"
+    When   I select to view "TC77" in technical reports resulting list
+    And    I select the option to edit
+    And    I change the technical report title to "TC88" filename to "TCS-88.pdf" and institution to "MIT"
+    And    I press the button alterar
+    Then   The technical report "TC88" details page is shown
+
   Scenario: remove existing technical report
     Given  I am at the technical reports page
     And    The system has an technical report entitled "Joe-E" with file name "Joee.pdf"

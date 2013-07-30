@@ -138,7 +138,7 @@ And (~'^I select the option to edit$'){->
 
 And (~'^I press the button alterar$'){ ->
     at TechnicalReportEditPage
-    page.select("Alterar")
+    page.select('Alterar')
 }
 
 Then(~'^The technical report is not saved by the system$'){ ->
@@ -148,4 +148,10 @@ Then(~'^The technical report is not saved by the system$'){ ->
 
 And(~'^I remain at the technical report edit page$'){ ->
     at TechnicalReportEditPage
+}
+
+And(~'^I change the technical report title to "([^"]*)" filename to "([^"]*)" and institution to "([^"]*)"$') {String t, fn, i ->
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator
+    at TechnicalReportEditPage
+    page.edit(t, path + fn, i)
 }
