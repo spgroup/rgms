@@ -28,8 +28,8 @@ Feature: Ferramenta
     Given I am at the publications menu
     When I select the "Ferramenta" option at the program menu
     And I select the new ferramenta option at the ferramenta page
-    And I select the create option at the ferramenta page
-    Then The ferramenta is not stored
+    And I click on Criar button
+    Then I am still on create new ferramenta page
 
   Scenario: upload dissertation without a file
     Given I am at the publications menu
@@ -64,3 +64,16 @@ Feature: Ferramenta
     Given the ferramenta "Emergo" is stored in the system with file name "emergo.pdf"
     When I create the ferramenta "Target" with file name "target.pdf"
     Then The system list "Emergo" and "Target" ferramentas
+
+  Scenario: new ferramenta with Titulo exceding caracteres limits
+    Given I am at the publications menu
+    When I select the "Ferramenta" option at the program menu
+    And I select the new ferramenta option at the ferramenta page
+    And I fill Titulo with more than 255 caracteres
+    And fill the others fields with valid values without Titulo
+    Then I am still on ferramenta page
+
+   Scenario: remove existing ferramenta
+     Given the system has a ferramenta entitled "ToolDelete" with file name "tooldelete.pdf"
+     When I remove the ferramenta entitled "ToolDelete"
+     Then the ferramenta "ToolDelete" is not stored

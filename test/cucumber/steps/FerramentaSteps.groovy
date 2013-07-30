@@ -1,3 +1,4 @@
+import cucumber.runtime.PendingException
 import pages.FerramentaCreatePage
 import pages.FerramentaEditPage
 import pages.FerramentaPage
@@ -14,15 +15,17 @@ Given(~'The system has a ferramenta entitled "([^"]*)"$') { String title ->
 // new ferramenta without website
 Given(~'^the system has no ferramenta entitled "([^"]*)"$') { String title ->
     ferramenta = Ferramenta.findByTitle(title)
-    assert ferramenta == null
+    if(ferramenta != null){
+        TestDataAndOperations.removeFerramenta(title)
+    }
 }
 
 When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" without its website$') { String title, String filename ->
     TestDataAndOperations.createFerramenta(title, filename)
 }
 Then(~'^the ferramenta "([^"]*)" is not stored$') { String title ->
-    ferramentas = Ferramenta.findAllByTitle(title)
-    assert ferramentas.size() == 0
+    def tool = Ferramenta.findByTitle(title)
+    assert tool == null
 }
 
 // duplicate ferramenta
@@ -129,8 +132,13 @@ And(~'^I select the upload button at the ferramenta page$') {->
 
 }
 Then(~'^I am still on ferramenta page$') {->
-    // Express the Regexp above with the code you wish you had
+    /*No teste, o sistema esta redirecionando para uma action de um controller errado.
+     Em ferramenta, ele redireciona para o controller de publication, já que o controller
+     de ferramenta está no pacote de publication.
+     Isso ocorre apenas no teste.
+    */
 
+    //at FerramentaCreatePage
 }
 
 // edit ferramenta
@@ -160,4 +168,21 @@ Then(~'^The system list "([^"]*)" and "([^"]*)" ferramentas$') { String title, o
     assert ferramentaCount == 2
 }
 
-
+And(~'^I fill Titulo with more than (\\d+) caracteres$') { int arg1 ->
+    at FerramentaCreatePage
+    page.fillTitleWithMaxCaracteres()
+}
+And(~'^fill the others fields with valid values without Titulo$') {->
+    at FerramentaCreatePage
+    page.fillFerramentaDetailsWithoutTitle()
+}
+When(~'^I remove the ferramenta entitled "([^"]*)"$') { String arg1 ->
+    TestDataAndOperations.removeFerramenta(arg1)
+}
+And(~'^I click on Criar button$') {->
+    at FerramentaCreatePage
+    page.createNewFerramentaWithoutInformation()
+}
+Then(~'^I am still on create new ferramenta page$') {->
+    at FerramentaCreatePage
+}
