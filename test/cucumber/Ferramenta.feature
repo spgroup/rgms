@@ -28,8 +28,8 @@ Feature: Ferramenta
     Given I am at the publications menu
     When I select the "Ferramenta" option at the program menu
     And I select the new ferramenta option at the ferramenta page
-    And I select the create option at the ferramenta page
-    Then The ferramenta is not stored
+    And I click on Criar button
+    Then I am still on create new ferramenta page
 
   Scenario: upload dissertation without a file
     Given I am at the publications menu
