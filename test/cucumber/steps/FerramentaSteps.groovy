@@ -177,3 +177,10 @@ And(~'^fill the others fields with valid values without Titulo$') {->
 When(~'^I remove the ferramenta entitled "([^"]*)"$') { String arg1 ->
     TestDataAndOperations.removeFerramenta(arg1)
 }
+And(~'^I click on Criar button$') {->
+    at FerramentaCreatePage
+    page.createNewFerramentaWithoutInformation()
+}
+Then(~'^I am still on create new ferramenta page$') {->
+    at FerramentaCreatePage
+}
