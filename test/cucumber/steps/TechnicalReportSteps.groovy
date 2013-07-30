@@ -34,12 +34,10 @@ Given(~'^The system has an technical report entitled "([^"]*)" with file name "(
     tech = TechnicalReport.findByTitle(title)
     assert tech != null
 }
-
 When(~'^I edit the technical report title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
     def updatedTech = TestDataAndOperations.editTech(oldtitle, newtitle)
     //assert updatedTech != null
 }
-
 Then(~'^The technical report "([^"]*)" is not updated by the system$') { String title ->
     tech = TechnicalReport.findByTitle(title)
     assert tech != null
@@ -139,7 +137,7 @@ And (~'^I select the option to edit$'){->
 
 And (~'^I press the button alterar$'){ ->
     at TechnicalReportEditPage
-    page.select("Alterar")
+    page.select('Alterar')
 }
 
 Then(~'^The technical report is not saved by the system$'){ ->
@@ -149,4 +147,10 @@ Then(~'^The technical report is not saved by the system$'){ ->
 
 And(~'^I remain at the technical report edit page$'){ ->
     at TechnicalReportEditPage
+}
+
+And(~'^I change the technical report title to "([^"]*)" filename to "([^"]*)" and institution to "([^"]*)"$') {String t, fn, i ->
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator
+    at TechnicalReportEditPage
+    page.edit(t, path + fn, i)
 }
