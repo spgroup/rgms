@@ -36,7 +36,11 @@ class TestDataAndOperations {
                     publicationDate: (new Date("12 October 2012"))],
             [website: "http://www.new.com", description: "Ferramenta New",
                     title: "New",
+                    publicationDate: (new Date("12 October 2012"))],
+            [website: "http://www.tooldelete.com", description: "Ferramenta ToolDelete",
+                    title: "ToolDelete",
                     publicationDate: (new Date("12 October 2012"))]
+
     ]
 
 
@@ -642,6 +646,17 @@ class TestDataAndOperations {
 
         def updatedferramenta = Ferramenta.findByTitle(newtitle)
         return updatedferramenta
+    }
+
+    static public void removeFerramenta(String title){
+        def cont = new FerramentaController()
+        cont.params << [id: Ferramenta.findByTitle(title).id]
+        cont.delete()
+        cont.response.reset()
+    }
+
+    static public Ferramenta getFerramenta(title){
+        return Ferramenta.findByTitle(title)
     }
 
     static public void removeConferencia(String title) {

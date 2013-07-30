@@ -23,8 +23,8 @@ When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" without its w
     TestDataAndOperations.createFerramenta(title, filename)
 }
 Then(~'^the ferramenta "([^"]*)" is not stored$') { String title ->
-    ferramentas = Ferramenta.findAllByTitle(title)
-    assert ferramentas.size() == 0
+    def tool = Ferramenta.findByTitle(title)
+    assert tool == null
 }
 
 // duplicate ferramenta
@@ -175,4 +175,7 @@ And(~'^I fill Titulo with more than (\\d+) caracteres$') { int arg1 ->
 And(~'^fill the others fields with valid values without Titulo$') {->
     at FerramentaCreatePage
     page.fillFerramentaDetailsWithoutTitle()
+}
+When(~'^I remove the ferramenta entitled "([^"]*)"$') { String arg1 ->
+    TestDataAndOperations.removeFerramenta(arg1)
 }
