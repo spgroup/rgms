@@ -385,6 +385,14 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    static public void createMember2(String username, String phone) {
+        def cont = new MemberController()
+        cont.params << [username: username, phone: phone]
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
     static public TechnicalReport editTech(oldtitle, newtitle) {
         def tech = TechnicalReport.findByTitle(oldtitle)
         tech.setTitle(newtitle)
@@ -619,7 +627,14 @@ class TestDataAndOperations {
         visitors.find { visitor ->
             visitor.name == name
         }
-    }
+	}
+
+    static public boolean containsMember(username) {
+        def member = Member.findByUsername(username)
+        def cont = new MemberController()
+        def result = cont.list().memberInstanceList
+        return result.contains(member)
+	}
 //#end
 
     static public ResearchGroup createAndGetResearchGroupByName(String name) {

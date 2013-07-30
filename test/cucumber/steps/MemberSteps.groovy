@@ -16,10 +16,19 @@ When(~'^I create a member with username "([^"]*)"$') { String username ->
     TestDataAndOperations.createMember(username)
 }
 
+When(~'^I create a member with "([^"]*)" "([^"]*)"$') { String username, phone ->
+    TestDataAndOperations.createMember2(username, phone)
+}
+
 Then(~'^the member with username "([^"]*)" is properly stored by the system$') { String username ->
     member = Member.findByUsername(username)
     //assert TestDataAndOperations.memberCompatibleTo(member, username)
     assert member != null
+}
+
+Then(~'^the system has no member with "([^"]*)"$') { String username ->
+    member = Member.findByUsername(username);
+    assert member == null
 }
 
 Given(~'^I am at the login page$') {->
@@ -120,4 +129,22 @@ Then(~'^I am still on the create member page with the error message$') {->
     at MemberCreatePage
     //assert mensagem != null
 
+}
+
+When(~'^I fill many user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university, additionalInfo ->
+    page.fillMemberDetails2(name, username, email, university, additionalInfo)
+}
+
+When(~'^I fill user detail with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
+    page.fillSomeMemberDetails(name, username, email, university)
+}
+
+When(~"^I view the member list\$") {->
+    members = Member.findAll()
+    assert members != null
+}
+
+Then(~'my list members contains member "([^"]*)"$') { String username ->
+    members = Member.findAll()
+    assert TestDataAndOperations.containsMember(username)
 }
