@@ -777,6 +777,7 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    //não funciona
     static public void editResearchGroupTwitter(researchGroup, String newTwitter) {
         def researchGroupController = new ResearchGroupController()
         researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
@@ -790,6 +791,13 @@ class TestDataAndOperations {
         member.access_token =  "CAAJIlmRWCUwBAN0r1puBTUa4vDZAKxWWlR5gN4qtgZAosBDKGUOLBquyKuHYQ0zxICioiarTJ66mpdZC08U4rHJOrtvXJCB8hMBcLKlQaTdwYZCgMTJtbFnQfIBZAxi6hRIkfw2fCSyCS6DuFIrGRThI53ZCzBOLsZD"
         member.facebook_id = "100006411132660"
         PublicationController.sendPostFacebook(member, title)
+    }
+
+    static public ResearchGroup editResearchGroupTwitterAcount(researchGroup, String newTwitter){
+        def researchGroupController = new ResearchGroupController()
+        researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
+        researchGroupController.update()
+        researchGroupController.response.reset()
     }
 
     static public void createTechnicalReportWithEmptyInstitution(String title, filename) {
