@@ -2,6 +2,7 @@ package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.news.News
+import rgms.news.NewsController
 import rgms.news.TwitterConnection
 import twitter4j.Status
 
@@ -171,7 +172,12 @@ class ResearchGroupController {
         TwitterConnection twConn = new TwitterConnection()
         List<Status> timeline = twConn.getTimeLine(researchGroupInstance.twitter)
         timeline.each {
-            researchGroupInstance.addToNews(new News(description: it.getText(), date: it.getCreatedAt()))
+            def newContr = new NewsController()
+            newContr.params << [description: it.getText(), date: it.getCreatedAt(), researchGroup: researchGroupInstance]
+            newContr.create()
+            newContr.save()
+            newContr.response.reset()
+            //researchGroupInstance.addToNews(new News(description: it.getText(), date: it.getCreatedAt()))
         }
         researchGroupInstance.save()
         redirect(action: "show", id: researchGroupInstance.id)

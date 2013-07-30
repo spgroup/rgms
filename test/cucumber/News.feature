@@ -24,6 +24,11 @@ Feature: news
 
   Scenario: integrate Twitter account
     Given the research group "SPG" in the system has no Twitter account associated
-    When I associate the account "@testetwitteracount" to "SPG" group
-    Then "SPG" research group has a twitter account "@testetwitteracount" registred
+    When I associate the account "@HumanBrainProj" to "SPG" group
+    Then "SPG" research group has a twitter account "@HumanBrainProj" registred
     #Then the news can be retrieved by a Twitter post with "@testetwitteracount"
+
+  Scenario: update news from twitter account
+    Given the research group "SPG" in the system has a Twitter account "@HumanBrainProj" associated
+     When I request to update the news from Twitter to research group "SPG"
+     Then news of "SPG" research group has been updated
