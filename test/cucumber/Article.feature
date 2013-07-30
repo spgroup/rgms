@@ -11,7 +11,7 @@ Feature: journal article
 
   Scenario: new invalid article
     Given the system has no article entitled "Algebraic reasoning for object-oriented programming"
-    When I create the article "Algebraic reasoning for object-oriented programming" with file name "SCP.pdf"
+    When I create the article "Algebraic reasoning for object-oriented programming" without file
     Then the article "Algebraic reasoning for object-oriented programming" is not stored by the system because it is invalid
 
   Scenario: duplicate article
@@ -43,7 +43,7 @@ Feature: journal article
 
   Scenario: edit existing article
     Given    the system has article entitled "A theory of software product line refinement" with file name "TCS-66.pdf"
-    When    I edit the article title from "A theory of software product line refinement" to "A theory of software product line refinement REVIEWED"
+    When    I edit the article title from "A theory of software product line refinement" to "A theory of software product line refinement REVIEWED" as the article journal from "Theoretical Computer Science" to "The Big Bang Theory"
     Then    the article "A theory of software product line refinement" is properly updated by the system
 
   Scenario: remove existing article web
@@ -52,13 +52,13 @@ Feature: journal article
     Then    the article details are showed and I can select the option to remove
     And     the article "A theory of software product line refinement" is properly removed by the system
 
-  Scenario: list existing article web
-    Given    I am at the articles page and the article "A theory of software product line refinement" is stored in the system with file name "TCS-88.pdf"
+ Scenario: list existing article web
+    Given    I am at the articles page and the article "A theory of software product line refinement" is stored in the system with file name "TCS-88.pdf" and journal "Theoretical Computer Science"
     Then    my resulting articles list contains "A theory of software product line refinement"
 
   Scenario: edit existing article web
     Given    I am at the articles page and the article "A theory of software product line refinement" is stored in the system with file name "TCS-99.pdf"
-    When    I select to view "A theory of software product line refinement" in resulting list and I change the article title to "REVIEWED"
+    When    I select to view "A theory of software product line refinement" in resulting list and I change the article title to "REVIEWED" and the journal article from "Theoretical Computer Science" to "The Big Bang Theory"
     Then    I can select the "Alterar" option
 
   Scenario: Add a new article twitting it

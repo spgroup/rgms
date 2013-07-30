@@ -558,9 +558,10 @@ class TestDataAndOperations {
         return result.contains(testarticle)
     }
 
-    static public Periodico editArticle(oldtitle, newtitle) {
+    static public Periodico editArticle(oldtitle, newtitle, oldjournal, newjournal) {
         def article = Periodico.findByTitle(oldtitle)
         article.setTitle(newtitle)
+        article.setJournal(newjournal)
         def cont = new PeriodicoController()
         cont.params << article.properties
         cont.update()

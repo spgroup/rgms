@@ -14,8 +14,10 @@ class ArticleEditPage extends Page {
         title ==~ currentTitle
     }
 
-    def edit(String novovalor) {
-        $("form").title = novovalor
+    def edit(String novotitulo, novojournal){
+        $("form").title = novotitulo
+        $("form").journal = novojournal
+
     }
 
     def select(String s) {
