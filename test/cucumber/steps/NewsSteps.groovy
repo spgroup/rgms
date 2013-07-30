@@ -76,17 +76,24 @@ Then(~'^"([^"]*)" research group has a twitter account "([^"]*)" registred$') { 
     assert researchGroup.getTwitter() == twitter
 }
 
-Given(~'^the research group "([^"]*)" in the system has Twitter account "([^"]*)" associated$') { String groupName, String twitter ->
-    TestDataAndOperations.createResearchGroup(groupName)
+Given(~'^the research group "([^"]*)" in the system has a Twitter account "([^"]*)" associated$') { String groupName, String twitter ->
+    TestDataAndOperations.createAndGetResearchGroupByNameWithTwitter(groupName, twitter)
     researchGroup = ResearchGroup.findByName(groupName)
-    assert researchGroup.twitter == twitter
+    assert researchGroup != null
+    assert researchGroup.getTwitter() == twitter
 }
 
-When(~'^I request to update the news from Twitter "([^"]*)"$') { String twitter ->
+When(~'^I request to update the news from Twitter to research group "([^"]*)"$') { String nomeRGroup ->
+    researchGroup = ResearchGroup.findByName(nomeRGroup)
     TestDataAndOperations.requestNewsFromTwitter(researchGroup)
 }
 
 Then(~'^news of "([^"]*)" research group has been updated$') { String groupName ->
     researchGroup = ResearchGroup.findByName(groupName)
-    assert researchGroup.news.size() == 10
+    newsByResearchGroup = News.getCurrentNews(researchGroup)
+    //assert researchGroup.getNews() != null
+    //assert researchGroup.news.size() > 0
+    assert newsByResearchGroup != null
+    assert newsByResearchGroup.size() == 10
+
 }
