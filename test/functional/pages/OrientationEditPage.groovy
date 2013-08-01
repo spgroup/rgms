@@ -7,11 +7,15 @@ class OrientationEditPage extends Page {
 
     static at = {
 
+        //title ==~ /Editar Orientation/
 
-        /* def currentOrientation = gp.msg("orientation.label")
-        def currentTitle = gp.msg("default.edit.label", [currentOrientation])*/
+        GetPageTitle gp = new GetPageTitle()
+        def currentOrientation = gp.msg("default.orientation.label")
+        def currentTitle = gp.msg("default.edit.label", [currentOrientation])
 
-        title ==~ /Editar Orientation/
+        title ==~ currentTitle
+
+
 
     }
 

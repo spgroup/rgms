@@ -10,7 +10,7 @@ Feature: orientations
     Then the orientation "The Book is on the table" is properly stored by the system
 
   Scenario: remove existing orientation
-    Given   the system has thesis entitled "The Book is on the table" coached for someone
+    Given   the system has thesis entitled "The Book is on the table" supervised for someone
     When    I delete the orientation for "The Book is on the table"
     Then    the orientation for "The Book is on the table" is properly removed by the system
 
@@ -20,6 +20,8 @@ Feature: orientations
     Then I am on the orientation show page
 
   Scenario: edit existing orientation web
-    Given    I am at the orientation page and the orientation "The Book is on the table" is stored in the system
-    When    I select to view "The Book is on the table" in resulting list and I change the orientation tituloTese to "Hexa"
-    Then    I select the "Alterar" option
+    Given I am at the orientation page and the orientation "The Book is on the table" is stored in the system
+    When I select to view orientation "The Book is on the table" in resulting list
+    And I change the orientation tituloTese to "Hexa"
+    And I select the "Alterar" option
+    Then I am on the orientation show page

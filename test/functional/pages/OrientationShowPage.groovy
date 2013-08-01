@@ -7,11 +7,12 @@ class OrientationShowPage extends Page {
 
 	static at = {
 		//title ==~ /Ver orientation/
-		//GetPageTitle gp = new GetPageTitle()
-		//def currentOrientation = gp.msg("default.orientation.label")
-		//def currentTitle = gp.msg("default.show.label", [currentOrientation])
+
+		GetPageTitle gp = new GetPageTitle()
+	    def currentOrientation = gp.msg("default.orientation.label")
+		def currentTitle = gp.msg("default.show.label", [currentOrientation])
 		
-		title ==~ /Ver Orientation/
+		title ==~ currentTitle
 	}
 
     static content = {

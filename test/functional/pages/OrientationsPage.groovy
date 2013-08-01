@@ -9,11 +9,12 @@ class OrientationsPage extends Page {
 
 	static at = {
 		//title ==~ /Orientation Listagem/
-		/*GetPageTitle gp = new GetPageTitle()
+
+        GetPageTitle gp = new GetPageTitle()
 		def currentOrientation = gp.msg("default.orientation.label")
-		def currentTitle = gp.msg("default.list.label", [currentOrientation])*/
+		def currentTitle = gp.msg("default.list.label", [currentOrientation])
 		
-		title ==~ /Orientation Listagem/
+		title ==~ currentTitle
 	}
 
 	static content = {

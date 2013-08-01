@@ -1,17 +1,19 @@
 package pages
 
 import geb.Page
-import steps.TestDataAndOperations
+
 
 class OrientationCreatePage extends Page {
     static url = "orientation/create"
 
     static at = {
         //title ==~ /Criar Orientation/
-        //GetPageTitle gp = new GetPageTitle()
-        //def currentOrientation = gp.msg("default.orientation.label")
-        //def currentTitle = gp.msg("default.create.label", [currentOrientation])
-        title ==~ /Criar Orientation/
+
+        GetPageTitle gp = new GetPageTitle()
+        def currentOrientation = gp.msg("default.orientation.label")
+        def currentTitle = gp.msg("default.create.label", [currentOrientation])
+
+        title ==~ currentTitle
         tituloTese != null
     }
 

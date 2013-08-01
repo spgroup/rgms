@@ -10,8 +10,8 @@ import static cucumber.api.groovy.EN.*
 // create
 Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTese ->
     // Express the Regexp above with the code you wish you had
-    article = Orientation.findByTituloTese(tituloTese)
-    assert article == null
+    orientation = Orientation.findByTituloTese(tituloTese)
+    assert orientation == null
 }
 
 When(~'^I create a orientation for the thesis "([^"]*)"$') { String tituloTese ->
@@ -21,13 +21,13 @@ When(~'^I create a orientation for the thesis "([^"]*)"$') { String tituloTese -
 
 Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String tituloTese ->
     // Express the Regexp above with the code you wish you had
-    article = Orientation.findByTituloTese(tituloTese)
-    assert TestDataAndOperations.compatibleTo(article, tituloTese)
+    orientation = Orientation.findByTituloTese(tituloTese)
+    assert TestDataAndOperations.compatibleTo(orientation, tituloTese)
 }
 
 
 //delete
-Given(~'^the system has thesis entitled "([^"]*)" coached for someone$') { String tituloTese ->
+Given(~'^the system has thesis entitled "([^"]*)" supervised for someone$') { String tituloTese ->
 
     TestDataAndOperations.createOrientation(tituloTese)
     orientation = TestDataAndOperations.findOrientationByTitle(tituloTese)
@@ -44,7 +44,10 @@ Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { Str
     assert orientation == null
 
 }
+
+//create web
 Given(~'^I am at the create orientation page$') {->
+
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -54,6 +57,7 @@ Given(~'^I am at the create orientation page$') {->
 }
 
 When(~'^I fill the orientation title with "([^"]*)"$') { String title ->
+
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
 }
@@ -86,7 +90,7 @@ Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in
 
 }
 
-When(~'^I select to view "([^"]*)" in resulting list and I change the orientation tituloTese to "([^"]*)"$') { String oldtitle, String newtitle ->
+When(~'^I select to view orientation "([^"]*)" in resulting list$') { String oldtitle ->
 
     at OrientationsPage
     page.selectViewOrientation(oldtitle)
@@ -94,13 +98,15 @@ When(~'^I select to view "([^"]*)" in resulting list and I change the orientatio
     to OrientationShowPage
     at OrientationShowPage
     page.select('a', 'edit')
+}
+
+When(~'^I change the orientation tituloTese to "([^"]*)"$') { String newtitle ->
 
     at OrientationEditPage
     page.edit(newtitle)
-
 }
 
-Then(~'^I select the "([^"]*)" option$') { String option ->
+When(~'^I select the "([^"]*)" option$') { String option ->
     at OrientationEditPage
     page.select(option)
 }
