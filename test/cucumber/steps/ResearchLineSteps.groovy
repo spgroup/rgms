@@ -25,17 +25,18 @@ Then(~'^the research line "([^"]*)" is properly removed by the system'){String n
 	assert research_line == null
 }
 
-Given(~'^the system has a research line named "([^"]*)" with a description "([^"]*)"$') { String name,description ->
+
+Given(~'^the system has a research line "([^"]*)"$') { String name ->
 	TestDataAndOperations.insertsResearchLine(name)
 	research_line = ResearchLine.findByName(name)
-	assert research_line != null && research_line.description == description
+	assert research_line != null
 }
 
 When(~'^I update the research line "([^"]*)" with a description "([^"]*)"$') { String name,description ->
 	TestDataAndOperations.updateResearchLine(name,description)
 }
 
-Then(~'^the research line "([^"]*)" has description "([^"]*)"$'){String name, description ->
+Then(~'^the research line "([^"]*)" has the description updated to "([^"]*)"$'){String name, description ->
 	research_line = ResearchLine.findByName(name)
 	assert research_line != null && research_line.description == description
 }
@@ -53,7 +54,17 @@ Then(~'^the research line "([^"]*)" is not stored, because is invalid$'){String 
 	research_line = ResearchLine.findByName(name)
 	assert research_line == null
 }
-
+Given(~'^the system has no research line "([^"]*)"$') { String name ->
+    research_line = ResearchLine.findByName(name)
+    assert research_line == null
+}
+When (~'I create the research line "([^"]*)" with description "([^"]*)" with no member assigned'){String name, description ->
+    TestDataAndOperations.createResearchLine(name)
+}
+Then (~'the research line "([^"]*)" is properly saved with no error'){String name ->
+    research_line = ResearchLine.findByName(name)
+    assert research_line != null
+}
 
 When(~'^I select the new research line option at the research line page$') {->
 	at ResearchLinePage
@@ -109,4 +120,8 @@ When(~'^I click the edit button$') { ->
 Then(~'^I can change the research line "([^"]*)" details$') {String name->
 	at ResearchLineEditPage
 	page.changeResearchLineDetails(name)
+}
+Then (~'I can click tha save button to save editions$'){->
+    at ResearchLineEditPage
+    page.select()
 }
