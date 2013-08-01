@@ -67,6 +67,12 @@ Feature: journal article
     And I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then A twitter is added to my twitter account regarding the new article "A theory of software product line refinement 1"
 
+  Scenario: Add a new article try to twitte it with wrong login and password
+    Given I am logged as "admin" and at the Add Article Page
+    When I try to create an article named as "Teoria de Sw" with filename "TCS-102.pdf"
+    And I click on Share it in Twitter with "fake" and "fake2013"
+    Then The twitter is not posted about "Teoria de Sw"
+
   Scenario: Add a new article with twitter, but don't twitte it
     Given I am logged as "admin" and at the Add Article Page
     When I try to create an article named as "Empirical Studies in Product Line 2" with filename "TCS.pdf"

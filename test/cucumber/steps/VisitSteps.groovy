@@ -86,7 +86,7 @@ Then(~'^A twitter is added to my twitter account regarding the new visit "([^"]*
   assert TwitterTool.consult(visita)
  }
 
-Then(~'^No twitter should be post$') { ->
+Then(~'^The visit is created but no twitter should be post$') { ->
   assert !TwitterTool.consult(null)
 	 }
 
