@@ -62,11 +62,6 @@ When(~'^I select the Novo BookChapter option at the book chapter page$') {->
     page.selectNewBookChapter()
 }
 
-Then(~'^I can fill the book chapter details$') {->
-    at BookChapterCreatePage
-    page.fillBookChapterDetails()
-}
-
 Given(~'^I am at the book chapter page$') {->
     to LoginPage
     at LoginPage
@@ -103,8 +98,6 @@ Given(~'the system has book chapter entitled "([^"]*)" with file name "([^"]*)"$
 
 When(~'^I view the book chapter list$') {->
     at BookChapterPage
-    bookChapter = BookChapter.findAll()
-    assert bookChapter != null
 }
 
 Then(~'my book chapter list contains "([^"]*)"$') { String title ->
@@ -116,7 +109,7 @@ And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$')
     page.selectNewBookChapter()
     to BookChapterCreatePage
     at BookChapterCreatePage
-    page.fillBookChapterDetails(title)
+    page.fillBookChapterDetails(title, filename)
     page.clickSaveBookChapter()
     book = BookChapter.findByTitle(title)
     assert book != null
@@ -136,7 +129,7 @@ When(~'^I go to NewBookChapter page$'){->
 }
 And(~'^I use the webpage to create the book chapter "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
     at BookChapterCreatePage
-    page.fillBookChapterDetails(title)
+    page.fillBookChapterDetails(title, filename)
     page.clickSaveBookChapter()
     book = BookChapter.findByTitle(title)
     assert book != null

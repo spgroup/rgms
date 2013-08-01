@@ -20,11 +20,11 @@ class BookChapterCreatePage extends FormPage {
         }
     }
 
-    def fillBookChapterDetails(title){
+    def fillBookChapterDetails(title, filename){
         fillTitle(title)
         $("form").publisher = "Person"
         $("form").chapter = 1
-        $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + ".pdf"
+        $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     }
 
     def clickSaveBookChapter(){

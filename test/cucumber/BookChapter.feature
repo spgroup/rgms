@@ -51,5 +51,5 @@ Feature: BookChapter
 
   Scenario: list existing book chapter web
     Given I am at the book chapter page
-    And the book chapter "Next Generation Software Product Line Engineering" with file name "NGSPL-0.pdf" was created before
+    And the book chapter "Next Generation Software Product Line Engineering" with file name "Ngs.pdf" was created before
     Then My resulting book chapter list contains "Next Generation Software Product Line Engineering"
