@@ -241,7 +241,17 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-
+    static public void createTese(String title, filename, school) {
+        def cont = new TeseController()
+        def date = new Date()
+        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
+                school: school, address: "Boa Viagem", file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+    
     static public void createDissertacaoWithotSchool(String title, filename) {
         def cont = new DissertacaoController()
         def date = new Date()
@@ -407,10 +417,10 @@ class TestDataAndOperations {
 
     static public void createMembership(String username, String rgroup, String date1, String date2) {
         //TODO Deveria pegar os dados dos parametros, mas
-        //		esta dando problema na criacao. Entao para
-        //		simplificar o entendimento do problema,
-        //		os valores est�o fixos. O problema n�o
-        //		est� nos par�metros passados.
+        //      esta dando problema na criacao. Entao para
+        //      simplificar o entendimento do problema,
+        //      os valores est�o fixos. O problema n�o
+        //      est� nos par�metros passados.
 
         def cont = new MembershipController()
 
