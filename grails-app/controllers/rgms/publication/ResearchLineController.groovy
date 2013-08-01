@@ -1,9 +1,7 @@
 package rgms.publication
 
 import rgms.member.Member
-
-//#if($ResearchLineNotification)
-//#end
+import org.apache.shiro.SecurityUtils
 
 class ResearchLineController {
 
@@ -170,6 +168,10 @@ class ResearchLineController {
             //#if($ResearchLineNotification)
             sendNotifications(researchLineInstance, oldMembers)
             //#end
+	//#if($facebook)
+        //def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        //PublicationController.sendPostFacebook(user, researchLineInstance.toString())
+        //#end
             flash.message = message(code: 'default.' + action + '.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), researchLineInstance.id])
             redirect(action: "show", id: researchLineInstance.id)
         }

@@ -141,12 +141,27 @@
 
                 <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "country")}</td>
 
-            </tr>
 
-            <tr class="prop">
+        </tr>
+        <!-- #if($facebook) -->
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.facebook_id.label" default="Facebook ID" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "facebook_id")}</td>
+
+        </tr>
+
+        <tr class="prop">
+          <td valign="top" class="name"><g:message code="member.access_token.label" default="Access Token" /></td>
+
+        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "access_token")}</td>
+
+        </tr>
+        <!-- #end -->
+              
+<tr class="prop">
                 <td valign="top" class="name"><g:message code="member.active.label" default="Active"/></td>
-
-                <td valign="top" style="text-align: left;" class="value">
+  <td valign="top" style="text-align: left;" class="value">
                     <g:if test="${memberInstance?.active}">
                         <li><g:formatBoolean boolean="${memberInstance?.active}"/></li>
                     </g:if>
@@ -168,7 +183,6 @@
             </tbody>
         </table>
     </div>
-
     <div class="buttons">
         <g:form>
             <g:hiddenField name="id" value="${memberInstance?.id}"/>

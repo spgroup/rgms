@@ -2,8 +2,8 @@ package rgms.publication
 
 import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
+import rgms.GoogleScholarService
 import rgms.XMLService
-import rgms.member.Member
 
 class PeriodicoController {
 
@@ -18,30 +18,28 @@ class PeriodicoController {
         [periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count()]
     }
 
+    //#if($Report)
+    //
+    def report() {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        def GoogleScholarService gss = new GoogleScholarService()
+        gss.findCitations(Periodico.list(params))
+        [periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count()]
+    }
+    //#end
+
     def create() {
         def periodicoInstance = new Periodico(params)
         //#if($publicationContext)
         def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
-        if(publcContextOn){
-            if(SecurityUtils.subject?.principal != null){
+        if (publcContextOn) {
+            if (SecurityUtils.subject?.principal != null) {
                 PublicationController.addAuthor(periodicoInstance)
             }
         }
         //#end
         [periodicoInstance: periodicoInstance]
     }
-
-    /*def save () {
-        def periodicoInstance = new Periodico(params)
-
-        if (!PublicationController.newUpload(periodicoInstance, flash, request) || !periodicoInstance.save(flush: true)) {
-            render(view: "create", model: [periodicoInstance: periodicoInstance])
-            return
-        }
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
-        redirect(action: "show", id: periodicoInstance.id)
-    }*/
 
     def save() {
         //def pb = new PublicationController()
@@ -59,6 +57,12 @@ class PeriodicoController {
             handleSavingError(periodicoInstance, 'periodico.saving.failure')
             return
         }
+
+        //#if($facebook)
+        // def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        //PublicationController.sendPostFacebook(user, periodicoInstance.toString())
+        //#end
+
         flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
         redirect(action: "show", id: periodicoInstance.id)
     }

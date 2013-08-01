@@ -2,7 +2,7 @@ package rgms.publication
 
 import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
-import rgms.member.Member
+import rgms.GoogleScholarService
 
 class TechnicalReportController {
 
@@ -17,21 +17,31 @@ class TechnicalReportController {
         [technicalReportInstanceList: TechnicalReport.list(params), technicalReportInstanceTotal: TechnicalReport.count()]
     }
 
-	def create() {
+    //#if($Report)
+    //
+    def report() {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        def GoogleScholarService gss = new GoogleScholarService()
+        gss.findCitations(TechnicalReport.list(params))
+        [technicalReportInstanceList: TechnicalReport.list(params), technicalReportInstanceTotal: TechnicalReport.count()]
+    }
+    //#end
+
+    def create() {
         def technicalReportInstance = new TechnicalReport(params)
         //#if($publicationContext)
         def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
-        if(publcContextOn){
-            if(SecurityUtils.subject?.principal != null){
+        if (publcContextOn) {
+            if (SecurityUtils.subject?.principal != null) {
                 def user = PublicationController.addAuthor(technicalReportInstance)
-                if(!user.university.isEmpty()){
+                if (!user.university.isEmpty()) {
                     technicalReportInstance.institution = user.university
                 }
             }
         }
         //#end
-		[technicalReportInstance: technicalReportInstance]
-	}
+        [technicalReportInstance: technicalReportInstance]
+    }
 
     def save() {
         def technicalReportInstance = new TechnicalReport(params)
@@ -43,6 +53,10 @@ class TechnicalReportController {
             handleSavingError(technicalReportInstance, 'technicalReport.saving.failure')
             return
         }
+        //#if($facebook)
+        //def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        //PublicationController.sendPostFacebook(user, technicalReportInstance.toString())
+        //#end
         flash.message = message(code: 'default.created.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), technicalReportInstance.id])
         redirect(action: "show", id: technicalReportInstance.id)
     }

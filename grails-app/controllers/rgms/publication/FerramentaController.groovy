@@ -6,7 +6,6 @@ import org.springframework.dao.DataIntegrityViolationException
 //#if($upXMLFerramenta)
 import rgms.XMLService
 //#end
-
 import rgms.member.Member
 import rgms.publication.Ferramenta;
 
@@ -45,7 +44,10 @@ class FerramentaController {
             render(view: "create", model: [ferramentaInstance: ferramentaInstance])
             return
         }
-
+        //#if($facebook)
+        //def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        //pb.sendPostFacebook(user, ferramentaInstance.toString())
+        //#end
 		flash.message = messageGenerator('default.created.message',ferramentaInstance.id)
         redirect(action: "show", id: ferramentaInstance.id)
     }

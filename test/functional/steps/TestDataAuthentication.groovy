@@ -34,8 +34,10 @@ class TestDataAuthentication{
             String email = "asd"+(numero.nextInt()%100)+"@hotmail.com";
             String university = "Federal University of Pernambuco";
             String status = "Graduate Student";
+			//String facebook_id = "12312fdsfsd".toString();
+			String access_token = "134gdsf";
             user = new Member(name: nome, username: username, passwordHash: new Sha256Hash(password).toHex(),
-                        email: email, university: university, status: status, enabled: false)
+                        email: email, university: university, status: status, enabled: false, access_token: access_token, facebook_id: "teste")
         }
         def userMapping = user.properties as LinkedHashMap
         userMapping << [password: "12345"]

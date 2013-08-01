@@ -1,9 +1,8 @@
 package pages
 
 import geb.Page
-import geb.navigator.Navigator
 import rgms.member.Member
-import steps.TestDataAndOperations
+
 import steps.TestDataAuthentication
 
 class UserRegisterPage extends Page {
@@ -39,6 +38,8 @@ class UserRegisterPage extends Page {
         email.value(user.email);
         university.value(user.university);
         status.value(user.status);
+		//facebook_id.value("teste");
+		//access_token.value(user.access_token);
         submitForm();
         Member.findByUsername(user.username)
     }

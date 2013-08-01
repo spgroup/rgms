@@ -2,12 +2,12 @@ package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.news.News
-import rgms.news.TwitterConnection
-import twitter4j.Status
 
 class ResearchGroupController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
+    def mailService
 
     def index() {
         redirect(action: "list", params: params)
@@ -29,6 +29,9 @@ class ResearchGroupController {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return
         }
+        //#if($researchGroupHierarchyNotify)
+        if (researchGroupInstance.getChildOf() != null) notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+        //#end
         Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), researchGroupInstance.id])
@@ -53,7 +56,6 @@ class ResearchGroupController {
             //return
         }
         def members = refreshMemberList()
-
         //def deb = [session["groups"],session["groups"].contains(params.groups),entrou1,entrou2,entrou3,params]
         [researchGroupInstance: researchGroupInstance, membersInstance: members]
     }
@@ -80,6 +82,12 @@ class ResearchGroupController {
 
     def update() {
         def researchGroupInstance = ResearchGroup.get(params.id)
+        //#if($researchGroupHierarchyNotify)
+        def researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
+        if (isChildOfResearchGroupChanged(researchGroupInstance, researchGroupInstanceChildOf)) {
+            notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+        }
+        //#end
         if (!verifyResearchGroupInstance(researchGroupInstance, params.id)) {
             return
         }
@@ -130,7 +138,9 @@ class ResearchGroupController {
         for (groupId in session["groups"]) {
             def rGroup = ResearchGroup.get(groupId as Long)
             if (rGroup) {
-                def collection = rGroup?.memberships?.collect { it.member }
+                def collection = rGroup?.memberships?.collect {
+                    it.member
+                }
                 if (collection) {
                     members.addAll(collection)
                 }
@@ -142,7 +152,9 @@ class ResearchGroupController {
         def members = [] as Set
 
         if (request.post == false) {
-            session["groups"] = ResearchGroup.list()?.collect { it.id }
+            session["groups"] = ResearchGroup.list()?.collect {
+                it.id
+            }
         } else {
             addOrRemoveGroupsOfSession()
         }
@@ -163,17 +175,29 @@ class ResearchGroupController {
         def researchGroupInstance = ResearchGroup.get(params.id)
         def list = ResearchGroup.getPublications(researchGroupInstance)
         return list
-
     }
 
-    def updateNewsFromTwitter() {
-        def researchGroupInstance = ResearchGroup.get(params.id)
-        TwitterConnection twConn = new TwitterConnection()
-        List<Status> timeline = twConn.getTimeLine(researchGroupInstance.twitter)
-        timeline.each {
-            researchGroupInstance.addToNews(new News(description: it.getText(), date: it.getCreatedAt()))
+    //#if($researchGroupHierarchyNotify)
+    void notifyChangeChildOfResearchGroup(researchGroup, members) {
+        for (memberId in members) {
+            def member = Member.get(memberId)
+            assert member != null
+            if (member.getEmail()) {
+                mailService.sendMail {
+                    to member.getEmail()
+                    subject "Research Group change hierarchy"
+                    body "Hello " + member.name + ",\n\nThe Research Group is now child of the Research Group ${researchGroup.getChildOf().getName()}".toString()
+                }
+            }
         }
-        researchGroupInstance.save()
-        redirect(action: "show", id: researchGroupInstance.id)
     }
+
+    boolean isChildOfResearchGroupChanged(researchGroupInstance, newResearchGroupChildOf) {
+        def result = (researchGroupInstance != null) && (newResearchGroupChildOf != null) && (researchGroupInstance.getChildOf() != null)
+        result = result && (newResearchGroupChildOf != researchGroupInstance.getChildOf())
+        result
+    }
+    //#end
+
+
 }
