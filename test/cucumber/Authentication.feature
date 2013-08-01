@@ -2,13 +2,11 @@ Feature: Authentication Process
   As a registered member in the system
   I want to have access to all of its internal features, which are only accessible after a successful login procedure
 
-
 Scenario: Login with user that doesn't exist fail message
   Given I am at the Login Page
   When I try to login with an user that does not exist
   Then I am redirected to the Login Page
   And A login failure message is displayed
-
 
 Scenario: Login with user's wrong password fail message
   Given I am at the Login Page
@@ -43,7 +41,7 @@ Scenario: Field University filled with "Federal University of Pernambuco"
   Then I am redirected to the User Register Page
   And The University field is filled with "Federal University of Pernambuco"
 
-Scenario: Not permited go to "Principal" Menu from Member Listagem
+Scenario: Unpermitted go to "Principal" Menu from Member Listagem
   Given I am at the Member Listagem page
   When I select the "Principal" menu option
   Then I am redirected to the Publications Menu page
@@ -56,7 +54,7 @@ Scenario: Not permited go to "Principal" Menu from Member Listagem
    And The password fields are empty
    And My remaining user data is still at their corresponding fields
 
-Scenario:  User not abilited not permitted message
+Scenario:  User unabilited receive not permitted message
   Given I am at the Login Page
   And The user of "naoHabilitado" username is not yet enabled
   When I try loggin with "naoHabilitado"
