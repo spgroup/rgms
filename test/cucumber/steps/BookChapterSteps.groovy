@@ -76,7 +76,7 @@ Given(~'^I am at the book chapter page$') {->
     at BookChapterPage
 }
 
-And(~'^I fill only the title field at book chapter create page with the value "([^"]*)"$') { String title ->
+And(~'^I fill only the title field with the value "([^"]*)"$') { String title ->
     at BookChapterCreatePage
     page.fillTitle(title)
 }
@@ -85,7 +85,7 @@ Then(~'^A failure message is displayed$') {->
     assert ( page.readFlashMessage() != null )
 
 }
-And(~'^A failure message is displayed and I still on the book chapter create page$'){->
+And(~'^I still on the book chapter create page$'){->
     at BookChapterCreatePage
 }
 

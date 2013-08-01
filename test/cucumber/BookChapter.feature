@@ -23,8 +23,9 @@ Feature: BookChapter
     Given I am at the publication menu
     When I select the "Book Chapter" option at the publication menu
     And I select the Novo BookChapter option at the book chapter page
-    And I fill only the title field at book chapter create page with the value "Next Generation Software Product Line Engineering"
-    Then A failure message is displayed and I still on the book chapter create page
+    And I fill only the title field with the value "Next Generation Software Product Line Engineering"
+    Then A failure message is displayed
+    And I still on the book chapter create page
 
   Scenario: new book chapter web
     Given I am at the book chapter page
