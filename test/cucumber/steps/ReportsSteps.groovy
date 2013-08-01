@@ -92,7 +92,7 @@ When(~'^I select the Novo Member option$') { ->
     at MemberCreatePage
 }
 
-Then(~'^I fill the Member details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
+Then(~'^I fill the Member details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)" and create a new one$') { String name, username, email, university ->
     at MemberCreatePage
     page.fillMemberDetails(name, username, email, university)
     to MemberListPage
@@ -109,11 +109,6 @@ Given(~'^I am at the Research Group list page$') { ->
     at ResearchGroupListPage
 }
 
-When(~'^i select the "([^"]*)" option at publications page') { String option ->
-    at PublicationsPage
-    page.select(option)
-    at ResearchGroupPage
-}
 
 Then(~'^I select the "([^"]*)" option at the Research Group list$') { String researchGroupName ->
     to ResearchGroupListPage
