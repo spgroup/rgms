@@ -2,60 +2,53 @@ Feature: Authentication Process
   As a registered member in the system
   I want to have access to all of its internal features, which are only accessible after a successful login procedure
 
-  # Login with user that doesn't exist fail message
-Scenario:
+
+Scenario: Login with user that doesn't exist fail message
   Given I am at the Login Page
   When I try to login with an user that does not exist
   Then I am redirected to the Login Page
   And A login failure message is displayed
 
-  # Login with user's wrong password fail message
-Scenario:
+
+Scenario: Login with user's wrong password fail message
   Given I am at the Login Page
   When I try to login with an existent user, though with wrong password
   Then I am redirected to the Login Page
   And A login failure message is displayed
 
-  # New user register success message
-Scenario:
+Scenario:New user register success message
   Given I am at the User Register Page
   When I register a user with success
   And I am redirected to the User Register Page
   Then A message indicating the user was successfully registered is displayed
 
-  # New user register with invalid email fail message
-Scenario:
+Scenario: New user register with invalid email fail message
   Given I am at the Login Page
   When I try to create a "newuser" username with the "invalid email abcde" email
   Then A message indicating the email is invalid is displayed
 
-  # try to access Member List Page without being logged in
-Scenario:
+Scenario: Try to access Member List Page without being logged in
   Given I am not logged
   When I directly access the Member List Page
   Then I am redirected to the Login Page
 
-  # try to access root page without being logged in
-Scenario:
+Scenario: Try to access root page without being logged in
   Given I am not logged
   When I access the Root Page
   Then I am redirected to the Login Page
 
-  # Field University filled with "Federal University of Pernambuco"
-Scenario:
+Scenario: Field University filled with "Federal University of Pernambuco"
   Given I am at the Login Page
   When I click the "Create an account" link
   Then I am redirected to the User Register Page
   And The University field is filled with "Federal University of Pernambuco"
 
-  # Not permited go to "Principal" Menu from Member Listagem
-Scenario:
+Scenario: Not permited go to "Principal" Menu from Member Listagem
   Given I am at the Member Listagem page
   When I select the "Principal" menu option
   Then I am redirected to the Publications Menu page
 
-  # Invalid password validation registration data remaining
- Scenario:
+ Scenario: Invalid password validation registration data remaining
    Given I am at Register Page registering myself
    And I mistype my confirmation password at Register Page
    When I submit the form
@@ -63,8 +56,7 @@ Scenario:
    And The password fields are empty
    And My remaining user data is still at their corresponding fields
 
-  # User not abilited not permitted message
-Scenario:
+Scenario:  User not abilited not permitted message
   Given I am at the Login Page
   And The user of "naoHabilitado" username is not yet enabled
   When I try loggin with "naoHabilitado"
