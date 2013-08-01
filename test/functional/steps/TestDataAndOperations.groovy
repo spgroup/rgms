@@ -10,7 +10,6 @@ import rgms.visit.Visitor
 
 class TestDataAndOperations {
 
-<<<<<<< HEAD
     static articles = [
             [journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
                     title: "A theory of software product line refinement",
@@ -1191,4 +1190,3 @@ class TestDataAndOperations {
 	}
 
 }
->>>>>>> e3d006d20ee6e461e92ae32c310d0b97a0bed39e
