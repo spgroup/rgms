@@ -38,24 +38,28 @@ class ResearchGroupController {
 
         System.out.println("\nTerminando a execução!!!!\nvalidarChildOf\n")
 
-        if(current != null) {
-            throw new RuntimeException("Há um ciclo relacionado à este research group!")
-        }
-
+        if(current != null)
+        	throw new RuntimeException("Cycle found")
     }
     //#end
 
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
 
+        //#if($researchGroupHierarchy)
+        try {
+            validarChildOf(researchGroupInstance, researchGroupInstance.getChildOf())
+        } catch(Exception e) {
+            flash.message = "Há um ciclo relacionado à este research group!"
+            redirect(action: "edit", id: params.id)
+            return;
+        }
+        //#end
+
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return
         }
-
-        //#if($researchGroupHierarchy)
-        validarChildOf(researchGroupInstance, researchGroupInstance.getChildOf())
-        //#end
 
         //#if($researchGroupHierarchyNotify)
         if (researchGroupInstance.getChildOf() != null) {
@@ -115,6 +119,11 @@ class ResearchGroupController {
 
         //#if($researchGroupHierarchyNotify)
         def researchGroupInstanceChildOf = null
+        System.out.println("AA")
+        System.out.println(params)
+//        System.out.println(params.childOf)
+//        System.out.println(params.childOf?.id)
+
         try {
             researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
         } catch(Exception e) {}
@@ -123,7 +132,7 @@ class ResearchGroupController {
         try {
             validarChildOf(researchGroupInstance, researchGroupInstanceChildOf)
         } catch(Exception e) {
-            flash.message = e.getMessage()
+            flash.message = "Há um ciclo relacionado à este research group!"
             redirect(action: "edit", id: params.id)
             return;
         }
