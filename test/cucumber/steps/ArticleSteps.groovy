@@ -12,6 +12,10 @@ Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
     assert article == null
 }
 
+When(~'^I create the article "([^"]*)" without file$') { String articleTitle ->
+    TestDataAndOperations.createArticle(articleTitle, null)
+}
+
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     TestDataAndOperations.createArticle(title, filename)
 }
@@ -65,8 +69,8 @@ Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') {
 /**
  * @author Guilherme
  */
-
-Given(~'^I am at the articles page and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+ 
+ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -84,6 +88,25 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
     at ArticlesPage
 }
 
+Given(~'^I am at the articles page and the article "([^"]*)" is stored in the system with file name "([^"]*)" and journal "([^"]*)"$') { String title, String filename, String journal ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    page.select("Periodico")
+    at ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    page.fillArticleDetails(path + filename, title, journal)
+    page.selectCreateArticle()
+    article = Periodico.findByTitle(title)
+    assert article != null
+    to ArticlesPage
+    at ArticlesPage
+
+}
+
 /**
  * @author Guilherme
  */
@@ -94,8 +117,8 @@ When(~'^I delete the article "([^"]*)"$') { String title ->
 /**
  * @author Guilherme
  */
-When(~'^I edit the article title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
-    def updatedArticle = TestDataAndOperations.editArticle(oldtitle, newtitle)
+When(~'^I edit the article title from "([^"]*)" to "([^"]*)" as the article journal from "([^"]*)" to "([^"]*)"$') { String oldtitle, String newtitle, String oldjournal, String newjournal ->
+    def updatedArticle = TestDataAndOperations.editArticle(oldtitle, newtitle, oldjournal, newjournal)
     assert updatedArticle != null
 }
 
@@ -118,13 +141,13 @@ When(~'^I select to view "([^"]*)" in resulting list$') { String title ->
 /**
  * @author Guilherme
  */
-When(~'^I select to view "([^"]*)" in resulting list and I change the article title to "([^"]*)"$') { String oldtitle, newtitle ->
+When(~'^I select to view "([^"]*)" in resulting list and I change the article title to "([^"]*)" and the journal article from "([^"]*)" to "([^"]*)"$') { String oldtitle, String newtitle, String oldjournal, String newjournal ->
     at ArticlesPage
     page.selectViewArticle(oldtitle)
     at ArticleShowPage
     page.select('a', 'edit')
     at ArticleEditPage
-    page.edit(newtitle)
+    page.edit(newtitle, newjournal)
 }
 
 /**

@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import rgms.XMLService
 
+
 class OrientationController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -25,7 +26,7 @@ class OrientationController {
 
     def save() {
         def orientationInstance = new Orientation(params)
-        if(orientationInstance.orientador.id == orientationInstance.orientando.id)
+        if(orientationInstance.orientador.name .equalsIgnoreCase(orientationInstance.orientando))
         {
             render(view: "create", model: [orientationInstance: orientationInstance])
             flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
@@ -79,7 +80,7 @@ class OrientationController {
         }
 
         orientationInstance.properties = params
-        if(orientationInstance.orientador.id == orientationInstance.orientando.id)
+        if(orientationInstance.orientador.name .equalsIgnoreCase(orientationInstance.orientando))
         {
             render(view: "edit", model: [orientationInstance: orientationInstance])
             flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
@@ -89,6 +90,7 @@ class OrientationController {
             render(view: "edit", model: [orientationInstance: orientationInstance])
             return
         }
+
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
         redirect(action: "show", id: orientationInstance.id)
