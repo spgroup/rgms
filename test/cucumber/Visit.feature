@@ -32,7 +32,8 @@ Feature: Visit
     Then the list is returned with the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000"
 
   Scenario: list existing visit web
-    Given I am logged as "admin" and at the visits page and the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is stored in the system
+    Given I am logged as "admin" and at the visits page
+    And the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is stored in the system
     Then my resulting visits list contains the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000"
 
   Scenario: remove existing visit
@@ -41,7 +42,8 @@ Feature: Visit
     Then the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is properly removed by the system
 
   Scenario: remove existing visit web
-    Given I am logged as "admin" and at the visits page and the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is stored in the system
+    Given I am logged as "admin" and at the visits page
+    And the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is stored in the system
     When I select to view the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" in resulting list
     Then the visit details are showed and I can select the option to remove
     And the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is properly removed by the system
@@ -52,7 +54,8 @@ Feature: Visit
     Then the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is properly updated by the system
 
   Scenario: edit existing visit web
-    Given I am logged as "admin" and at the visits page and the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is stored in the system
+    Given I am logged as "admin" and at the visits page
+    And the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" is stored in the system
     When I select to view the visit of the visitor named "Pessoa" with initial date "11/11/2000" and final date "12/11/2000" in resulting list
     And I change the visitor name
     Then I can select the "Alterar" option visit

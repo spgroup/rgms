@@ -80,19 +80,25 @@ Then(~'^the list is returned with the visit of the visitor named "([^"]*)" with 
 /**
  * @author carloscemb
  */
-Given(~'^I am logged as "([^"]*)" and at the visits page and the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is stored in the system$') { String userName, String name, String initialDate, String finalDate ->
+Given(~'^I am logged as "([^"]*)" and at the visits page\$') { String userName ->
     to LoginPage
     at LoginPage
     page.fillLoginData(userName, "adminadmin")
     at PublicationsPage
     page.select("Visita")
     at VisitPage
-    page.selectNewVisit()
-    at VisitCreatePage
-    page.fillVisitDetails()
-    page.clickOnCreate()
-    visit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
-    assert visit != null
+}
+
+/**
+ * @author carloscemb
+ */
+Given(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is stored in the system$') { String name, String initialDate, String finalDate ->
+at VisitPage
+page.selectNewVisit()
+at VisitCreatePage
+page.fillVisitDetails()
+visit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
+assert visit != null
 }
 
 /**
@@ -221,7 +227,6 @@ When(~'^I try to create an visit  and I click on Share it in Twitter with "([^"]
     page.selectNewVisit()
     at VisitCreatePage
     page.fillVisitDetails()
-    page.clickOnCreate()
     at VisitShowPage
     page.clickOnTwitteIt(twitterLogin, twitterPw)
 }
@@ -230,7 +235,6 @@ When(~'^I try to create an visit$') { ->
     page.selectNewVisit()
     at VisitCreatePage
     page.fillVisitDetails()
-    page.clickOnCreate()
 }
 
 Then(~'^A twitter is added to my twitter account regarding the new visit "([^"]*)"$') { String visita ->

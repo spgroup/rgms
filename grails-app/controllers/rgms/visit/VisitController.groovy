@@ -10,8 +10,8 @@ class VisitController {
         redirect(action: "list", params: params)
     }
 
-    def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+    def list(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
         [visitInstanceList: Visit.list(params), visitInstanceTotal: Visit.count()]
     }
 
