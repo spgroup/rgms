@@ -26,17 +26,13 @@ class ResearchGroupController {
     //#if($researchGroupHierarchy)
     def validarChildOf(def researchGroupInstance, def researchGroupParent) {
 
-        System.out.println("validarChildOf")
-        System.out.println(researchGroupInstance)
-
         def parents = [researchGroupInstance]
         def current = researchGroupParent
+
         while(current != null && ! parents.contains(current)) {
             parents.add(current)
             current = current.childOf
         }
-
-        System.out.println("\nTerminando a execução!!!!\nvalidarChildOf\n")
 
         if(current != null)
         	throw new RuntimeException("Cycle found")
@@ -117,18 +113,12 @@ class ResearchGroupController {
     def update() {
         def researchGroupInstance = ResearchGroup.get(params.id)
 
-        //#if($researchGroupHierarchyNotify)
-        def researchGroupInstanceChildOf = null
-        System.out.println("AA")
-        System.out.println(params)
-//        System.out.println(params.childOf)
-//        System.out.println(params.childOf?.id)
-
-        try {
-            researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
-        } catch(Exception e) {}
-
         //#if($researchGroupHierarchy)
+        def researchGroupInstanceChildOf = null
+        if(params.childOf?.id != "null") {
+            researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
+        }
+
         try {
             validarChildOf(researchGroupInstance, researchGroupInstanceChildOf)
         } catch(Exception e) {
@@ -138,10 +128,12 @@ class ResearchGroupController {
         }
         //#end
 
+        //#if($researchGroupHierarchyNotify)
         if (isChildOfResearchGroupChanged(researchGroupInstance, researchGroupInstanceChildOf)) {
             notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
         }
         //#end
+
         if (!verifyResearchGroupInstance(researchGroupInstance, params.id)) {
             return
         }
