@@ -54,8 +54,7 @@
                 <span id="visitor-label" class="property-label"><g:message code="visit.visitor.label"
                                                                            default="Visitor"/></span>
 
-                <span class="property-value" aria-labelledby="visitor-label"><g:link controller="visit" action="show"
-                                                                                     id="${visitInstance?.visitor?.id}">${visitInstance?.visitor?.encodeAsHTML()}</g:link></span>
+                <span class="property-value" aria-labelledby="visitor-label" id="${visitInstance?.visitor?.id}">${visitInstance?.visitor?.encodeAsHTML()}</span>
 
             </li>
         </g:if>

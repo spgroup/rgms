@@ -72,6 +72,14 @@ grails.exceptionresolver.params.exclude = ['password']
 // enable query caching by default
 grails.hibernate.cache.queries = true
 
+/**
+ * @author penc
+ */
+//#if($contextualInformation)
+defaultUniversity   = "Federal University of Pernambuco";
+defaultCity         = "Recife";
+//#end
+
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {

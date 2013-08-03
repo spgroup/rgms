@@ -1,13 +1,17 @@
 package pages
 
 import geb.Page
-import rgms.tool.TwitterTool
 
 class VisitCreatePage extends Page {
     static url = "visit/create"
 
     static at = {
-        //this.name == "Visitante"
+        //title ==~ /Criar Visita/
+        GetPageTitle gp = new GetPageTitle()
+        def currentVisit = gp.msg("default.visit.label")
+        def currentTitle = gp.msg("default.create.label", [currentVisit])
+
+        title ==~ currentTitle
     }
 
     static content = {
@@ -17,20 +21,10 @@ class VisitCreatePage extends Page {
         $('input.save').click()
     }
 
-    def fillVisitDetailsTwitter() {
-        $("form").name = "Visitante"
-        $("form").descricao = "Primeira Visita"
-
-        $("input.save").click()
-
-        TwitterTool.addTwitterHistory("Primeira Visita", null)
-    }
-
     def fillVisitDetails() {
-        $("form").name = "Visitante"
+        $("form").nameVisitor = "Visitante"
         $("form").descricao = "Primeira Visita"
 
-        $("input.save").click()
-
+        clickOnCreate()
     }
 }
