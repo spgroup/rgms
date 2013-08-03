@@ -47,9 +47,9 @@ Feature: member
 #if ($Autofill)
   Scenario: new member filled with default data
     Given I am at the create member page
-    Then I see default date filled on create form
+    Then I see default data filled on create form
 
   Scenario: user registration with default data
     Given I am at the register page
-    Then I see default date filled on register form
+    Then I see default data filled on register form
 #end
