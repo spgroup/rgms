@@ -26,6 +26,14 @@ class VisitShowPage extends Page {
         }
     }
 
+    def deleteVisit() {
+        assert withConfirm(true) { $("form").find('input', class: 'delete').click() }
+    }
+
+    def editVisit() {
+        $("form").find('a', class: 'edit').click()
+    }
+
     def addTwitter(String visita) {
         TwitterTool.addTwitterHistory(visita, null)
     }

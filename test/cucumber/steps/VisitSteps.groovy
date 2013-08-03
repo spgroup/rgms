@@ -142,7 +142,7 @@ When(~'^I select to view the visit of the visitor named "([^"]*)" with initial d
  */
 Then(~'the visit details are showed and I can select the option to remove$') {->
     at VisitShowPage
-    page.select('input', 'delete')
+    page.deleteVisit()
 }
 
 /**
@@ -169,7 +169,7 @@ Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and
  */
 When(~'^I change the visitor name$') {->
     at VisitShowPage
-    page.select('a', 'edit')
+    page.editVisit()
     at VisitEditPage
     page.edit()
 }
