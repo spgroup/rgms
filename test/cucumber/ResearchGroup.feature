@@ -35,7 +35,7 @@ Feature: research group
   Scenario: editing the researchgroup's name to none
     Given the system has a research group entitled "modcs-3" with the description "modcs-3 research group" stored in the system
     When I modify the name of research group entitled "modcs-3" to none
-    Then there is not exists research group entitled none
+    Then there is no research group entitled none
 
 
     Scenario:edit research group
@@ -82,7 +82,7 @@ Feature: research group
     When  i select a research group called "rg"
     And   i select the edit option
     And   i change the field childof to research group called "rg"
-    And   i click on alterar button
+    And   i click on update button
     Then  the childof of research group "rg" is none
 
 

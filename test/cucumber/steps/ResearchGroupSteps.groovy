@@ -189,7 +189,7 @@ When(~'^I modify the name of research group entitled "([^"]*)" to none$') { Stri
     TestDataAndOperations.editResearchGroup(researchGroup, oldName, "")
 }
 
-Then(~'^there is not exists research group entitled none$') { ->
+Then(~'^there is no research group entitled none$') { ->
     researchGroup = ResearchGroup.findByName("")
     assert researchGroup == null
 }
@@ -244,7 +244,7 @@ When(~'^i change the field childof to research group called "([^"]*)"$') { Strin
     page.changeChildOfTo(name)
 }
 
-When(~'^i click on alterar button$') { ->
+When(~'^i click on update button$') { ->
     at ResearchGroupEditarPage
     page.selectAlterarResearchGroup()
 }
