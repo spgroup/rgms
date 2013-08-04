@@ -71,12 +71,13 @@ Feature: Dissertation Tests
     Then I'm still on dissertation page
 
   Scenario: upload dissertation with a file
-    Given the system has some dissertation stored, has no dissertation entitled "New dissertation"
+    Given the system has some dissertation stored
+    Given the system has no dissertation called "New dissertation" stored
     When I upload a new dissertation "curriculo.xml" with title "New dissertation"
     Then the system has more dissertations now
     
   Scenario: upload a dissertation and system has no dissertation stored
-    Given the system has no dissertation stored
+    Given the system has no dissertation called "New dissertation" stored
     When I upload a new dissertation "curriculo.xml" with title "New dissertation"
     Then the system has more dissertations now
 
