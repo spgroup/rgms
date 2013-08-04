@@ -52,7 +52,8 @@ Feature: Dissertation Tests
     Then the system has a dissertation entitled "Dissertacao Teste 1"
 
   Scenario: edit dissertation
-    Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt", has no dissertation entitled "Edit dissertation reviewed"
+    Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt"
+    Given the system has no dissertation called "Edit dissertation reviewed" stored
     When    I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
     Then    the dissertation "Edit dissertation" is properly updated by the system
 

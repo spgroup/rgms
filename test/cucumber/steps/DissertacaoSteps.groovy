@@ -150,10 +150,7 @@ When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filenam
     // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
 
-Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)", has no dissertation entitled "([^"]*)"$') { String title, filename, String newtitle ->
-    article = Dissertacao.findByTitle(title)
-    assert article == null
-
+Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename, String newtitle ->
     TestDataAndOperations.createDissertacao(title, filename, "UFPE")
     article = Dissertacao.findByTitle(title)
     assert article != null
