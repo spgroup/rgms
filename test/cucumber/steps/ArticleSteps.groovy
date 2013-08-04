@@ -240,10 +240,13 @@ When(~'^I click on Share on Facebook$') { ->
 
 
 Then(~'^A facebook message was posted$') { ->
+    //TODO
     assert true
 }
 
+
 Then(~'^No facebook message was posted$') { ->
+    //TODO
     assert true
 }
 
