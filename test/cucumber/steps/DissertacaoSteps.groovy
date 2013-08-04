@@ -90,7 +90,7 @@ When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without sch
 }
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without address$') { String title, filename ->
-    TestDataAndOperations.createDissertacaoWithotAddress(title, filename);
+    TestDataAndOperations.createDissertacaoWithoutAddress(title, filename);
 }
 
 When(~'^I edit the dissertation title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->

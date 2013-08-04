@@ -252,7 +252,7 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
-    static public void createDissertacaoWithotAddress(String title, filename) {
+    static public void createDissertacaoWithoutAddress(String title, filename) {
         def cont = new DissertacaoController()
         def date = new Date()
         cont.params << [title: title, publicationDate: new Date(2013, 03, 02),school: "UFPE", file: filename]
