@@ -148,9 +148,9 @@ Given(~'^the system has some dissertation stored, has no dissertation entitled "
     inicialSize = Dissertacao.findAll().size()
 }
 
-Given(~'^the system has no dissertation stored$') { ->
-   inicialSize = Dissertacao.findAll().size()
-   assert inicialSize == 0
+Given(~'^the system has no dissertation called "([^"]*)" stored$') { String title->
+   dissertation = Dissertacao.findByTitle (title)
+   assert dissertation == null
 }
 
 When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->

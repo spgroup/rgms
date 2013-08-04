@@ -40,7 +40,7 @@ Feature: Dissertation Tests
     Then the system has no dissertation entitled "Dissertacao sem arquivo"
 
   Scenario: upload a dissertation and system has no dissertation stored
-    Given the system has no dissertation stored
+    Given the system has no dissertation called "New dissertation" stored
     When I upload a new dissertation "curriculo.xml" with title "New dissertation"
     Then the system has more dissertations now
 

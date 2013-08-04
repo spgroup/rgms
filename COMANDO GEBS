@@ -1,13 +1,1 @@
--Dgeb.env=chrome -Dwebdriver.chrome.driver=/Users/Rodrigo/Documents/workspaces/TAES/gitsource/rgms/chromedrivers/chromedrivermac test-app functional:cucumber --stacktrace
--Dgeb.env=chrome -Dwebdriver.chrome.driver=/home/raony/IDEAProjects/rgms2/rgms/chromedrivers/chromedriverlinux32 test-app functional:cucumber Dissertacao.feature --stacktrace
-
-  Scenario: upload dissertation without a file
-    Given I am at the publications menu
-    When I select the "Dissertacao" option at the program menu
-    And I select the upload button at the dissertation page
-    Then I'm still on dissertation page
-
-  Scenario: upload dissertation with a file
-    Given the system has some dissertation stored
-    When I upload a new dissertation "curriculo.xml"
-    Then the system has more dissertations now
+-Dgeb.env=chrome -Dwebdriver.chrome.driver=/Users/Rodrigo/Documents/workspaces/TAES/gitsource/rgms/chromedrivers/chromedrivermac test-app functional:cucumber
