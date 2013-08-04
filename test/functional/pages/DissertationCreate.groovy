@@ -32,12 +32,5 @@ class DissertationCreate extends FormPage {
     def currentSchool() {
         $("form").school
     }
-    def fillDissertationDetailsWithFile(filename) {
-        $("form").title = "Dissertacao Teste 1"
-        $("form").file = filename
-        $("form").school = "WebSite"
-        $("form").address = "Description"
-        $("form").create().click()
-    }
 	
 }

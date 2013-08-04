@@ -111,10 +111,7 @@ Then(~'^I\'m still on dissertation page$') {->
     //TO DO
     //at DissertationPage
 }
-Given(~'^the system has some dissertation stored$') {->
-    inicialSize = Dissertacao.findAll().size()
 
-}
 When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
@@ -146,12 +143,6 @@ When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filenam
     // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
 
-Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename, String newtitle ->
-    TestDataAndOperations.createDissertacao(title, filename, "UFPE")
-    article = Dissertacao.findByTitle(title)
-    assert article != null
-}
-
 Then(~'^I see my user listed as an author member of dissertation by default$') {->
     at DissertationCreate
     userData = Member.findByUsername('admin').id.toString()
@@ -164,27 +155,11 @@ Then(~'^I see my school name as school of dissertation by default$') {->
     assert page.currentSchool() == userData
 }
 
-Given(~'^the system has some dissertation stored, has no dissertation entitled "([^"]*)"$') { String title ->
-    article = Dissertacao.findByTitle(title)
-    assert article == null
-
-    inicialSize = Dissertacao.findAll().size()
+Given(~'^the system has no dissertation stored$')   {->
+    intialSize = Dissertacao.findAll().size()
+    assert intialSize == 0
 }
 
-Given(~'^the system has no dissertation called "([^"]*)" stored$') { String title->
-   dissertation = Dissertacao.findByTitle (title)
-   assert dissertation == null
-}
-
-When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
-    String path = "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = Dissertacao.findAll().size()
-    TestDataAndOperations.uploadDissertacao(path)
-    finalSize = Dissertacao.findAll().size()
-    assert inicialSize<finalSize
-    //para funcionar é necessario que tenha um FilePath válido
-    // não consegui fazer de uma maneira que todos os passos sejam independentes
-}
 
 Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)", has no dissertation entitled "([^"]*)"$') { String title, filename, String newtitle ->
     article = Dissertacao.findByTitle(title)

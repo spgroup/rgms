@@ -3,6 +3,15 @@ Feature: Dissertation Tests
   As a member of a research group
   I want to add, remove and modify dissertations I have added
 
+  Scenario:  first dissertation and delete
+    Given the system has no dissertation stored
+    When I create the dissertation "New dissertation" with file name "dissertation.txt" and school "federal"
+    And I am at the publications menu
+    And I select the "Dissertacao" option at the program menu
+    And I select "Delete dissertation" at the dissertation page
+    And I delete "New dissertation"
+    Then the system has no dissertation stored
+
   Scenario: new dissertation without school
     Given the system has no dissertation entitled "Dissertation without school"
     When I create the dissertation "Dissertation without school" with file name "Dissertationwithoutschool.txt" without school
@@ -22,15 +31,6 @@ Feature: Dissertation Tests
     Given the dissertation "Dissertation duplicated" is stored in the system with file name "Dissertationduplicated.txt"
     When I create the dissertation "Dissertation duplicated" with file name "Dissertationduplicated2.txt" and school "UFPE"
     Then the dissertation "Dissertation duplicated" is not stored twice
-
-  Scenario:  first dissertation and delete
-    Given the system has no dissertation stored
-    When I create the dissertation "New dissertation" with file name "dissertation.txt" and school "federal"
-    And I am at the publications menu
-    And I select the "Dissertacao" option at the program menu
-    And I select "Delete dissertation" at the dissertation page
-    And I delete "New dissertation"
-    Then the system has no dissertation stored
 
   Scenario: new dissertation without file
     Given I am at the publications menu
