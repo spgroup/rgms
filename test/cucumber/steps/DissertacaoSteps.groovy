@@ -135,10 +135,6 @@ Given(~'^the system has some dissertation stored$'){->
 
 }
 
-Given(~'^the system has no dissertation called "([^"]*)" stored$') { String title->
-   dissertation = Dissertacao.findByTitle (title)
-   assert dissertation == null
-}
 
 When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
     String path = "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
