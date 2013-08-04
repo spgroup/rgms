@@ -143,6 +143,20 @@ When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filenam
     // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
 
+    assert inicialSize<finalSize
+    //para funcionar é necessario que tenha um FilePath válido
+    // não consegui fazer de uma maneira que todos os passos sejam independentes
+}
+
+Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)", has no dissertation entitled "([^"]*)"$') { String title, filename, String newtitle ->
+    article = Dissertacao.findByTitle(title)
+    assert article == null
+
+    TestDataAndOperations.createDissertacao(title, filename, "UFPE")
+    article = Dissertacao.findByTitle(title)
+    assert article != null
+}
+
 Then(~'^I see my user listed as an author member of dissertation by default$') {->
     at DissertationCreate
     userData = Member.findByUsername('admin').id.toString()
@@ -160,6 +174,22 @@ Given(~'^the system has no dissertation stored$')   {->
     assert intialSize == 0
 }
 
+
+Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)", has no dissertation entitled "([^"]*)"$') { String title, filename, String newtitle ->
+    article = Dissertacao.findByTitle(title)
+    assert article == null
+
+    TestDataAndOperations.createDissertacao(title, filename, "UFPE")
+    article = Dissertacao.findByTitle(title)
+    assert article != null
+}
+    inicialSize = Dissertacao.findAll().size()
+    TestDataAndOperations.uploadDissertacao(path)
+    finalSize = Dissertacao.findAll().size()
+    assert inicialSize<finalSize
+    //para funcionar é necessario que tenha um FilePath válido
+    // não consegui fazer de uma maneira que todos os passos sejam independentes
+}
 
 Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)", has no dissertation entitled "([^"]*)"$') { String title, filename, String newtitle ->
     article = Dissertacao.findByTitle(title)
