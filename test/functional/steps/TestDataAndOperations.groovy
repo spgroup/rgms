@@ -252,6 +252,15 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+    static public void createDissertacaoWithoutAddress(String title, filename) {
+        def cont = new DissertacaoController()
+        def date = new Date()
+        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),school: "UFPE", file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
 
     static public Dissertacao editDissertatacao(oldtitle, newtitle) {
         def article = Dissertacao.findByTitle(oldtitle)
