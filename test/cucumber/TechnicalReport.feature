@@ -66,7 +66,7 @@ Feature: technical report
     When   I select to view the technical report "Joe-E" in resulting list
     And    I select the option to remove
     Then   The technical report "Joe-E" is properly removed by the system
-    And    The system go to the technical reports page
+    And    The system goes to the technical reports page
 
 #if ($Autofill)
   Scenario: new technical report web has user data already filled by default
