@@ -149,8 +149,9 @@ When(~'^I can modify the name to "([^"]*)" at the edit ferramenta page$') { Stri
     at FerramentaEditPage
     page.editTitle(title)
 }
-Then(~'^I am on ferramenta page$') {->
-    at FerramentaPage
+Then(~'^I can see the new title "([^"]*)" at ferramenta show page$') { String newTitle->
+    at FerramentaShowPage
+    page.checkFerramentaTitle(newTitle)
 }
 
 // list ferramentas

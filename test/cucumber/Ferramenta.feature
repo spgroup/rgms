@@ -58,7 +58,7 @@ Feature: Ferramenta
     And I create a new ferramenta at ferramenta create page
     And I select the edit option at ferramenta show page
     And I can modify the name to "TestCucumber" at the edit ferramenta page
-    Then I am on ferramenta page
+    Then I can see the new title "TestCucumber" at ferramenta show page
 
   Scenario: list ferramentas
     Given the ferramenta "Emergo" is stored in the system with file name "emergo.pdf"
