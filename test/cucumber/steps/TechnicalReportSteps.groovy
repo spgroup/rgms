@@ -115,7 +115,7 @@ Then(~'^The technical report "([^"]*)" is properly removed by the system$') { St
 	assert techReport == null
 }
 
-And(~'^The system go to the technical reports page$') { ->
+And(~'^The system goes to the technical reports page$') { ->
     at TechnicalReportPage
 }
 
