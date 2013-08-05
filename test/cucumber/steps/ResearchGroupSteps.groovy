@@ -241,7 +241,8 @@ Given(~'^i created a research group entitled "([^"]*)" with childof none$') { St
 
 When(~'^i change the field childof to research group called "([^"]*)"$') { String name ->
     at ResearchGroupEditarPage
-    page.changeChildOfTo(name)
+    researchGroup = ResearchGroup.findByName(name)
+    page.changeChildOfTo(researchGroup.getId())
 }
 
 When(~'^i click on update button$') { ->

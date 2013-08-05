@@ -24,17 +24,8 @@ class ResearchGroupEditarPage extends Page {
     }
 
 
-    def changeChildOfTo(name) {
-
-        //It's not working
-        //$("form select").find("option[value=" + id + "]").attr("selected", "")
-
-        try {
-            WebDriver driver = new ChromeDriver()
-            Select select = new Select( driver.findElement(By.cssSelector("#childOf")) );
-            select.selectByVisibleText(name)
-        } catch(Exception e) {}
-
+    def changeChildOfTo(long id) {
+        $("#childOf").value(id.toString())
     }
 
 }
