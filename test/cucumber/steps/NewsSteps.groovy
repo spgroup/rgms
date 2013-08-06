@@ -32,7 +32,7 @@ Given(~'^the system has a news with description "([^"]*)" and date "([^"]*)" for
     assert news != null
 }
 
-When(~'^I delete a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
+When(~'^I delete the news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     def researchGroup = ResearchGroup.findByName(group)
     TestDataAndOperations.deleteNews(description, dateAsDateObj, researchGroup)
@@ -70,7 +70,7 @@ When(~'^I associate the account "([^"]*)" to "([^"]*)" group$') { String twitter
     assert researchGroup.getTwitter() == twitter
 }
 
-Then(~'^"([^"]*)" research group has a twitter account "([^"]*)" registred$') { String groupName, String twitter ->
+Then(~'^"([^"]*)" research group has a twitter account "([^"]*)" registered$') { String groupName, String twitter ->
     researchGroup = ResearchGroup.findByName(groupName)
     assert researchGroup != null
     assert researchGroup.getTwitter() == twitter
