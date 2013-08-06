@@ -61,8 +61,9 @@ Feature: journal article
     When    I select to view "A theory of software product line refinement" in resulting list and I change the article title to "REVIEWED"
     Then    I can select the "Alterar" option
 
-  Scenario: Add a new article twitting it
-    Given I am logged as "admin" and at the Add Article Page
+  Scenario: Add a new article tweeting it
+     Given I am logged as "admin"
+    And I select the "Periodico" option at the publications menu
     When I try to create an article named as "A theory of software product line refinement 1" with filename "TCS-101.pdf"
     And I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then A tweet is added to my twitter account regarding the new article "A theory of software product line refinement 1"
