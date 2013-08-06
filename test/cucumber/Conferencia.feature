@@ -47,13 +47,6 @@ Feature: conferencia
     And I select the home option at the conferencia page
     Then I am back at the publications and conferencias menu
 
-  Scenario: remove conferencia web
-    Given I am at the conferencias page
-    When I create the conferencia "IV Conference on Software Product Lines" with file name "SPLC.pdf"
-    And I select the conferencia "IV Conference on Software Product Lines"
-    And I click on remove
-    Then the conferencia "IV Conference on Software Product Lines" is properly removed by the system
-
   Scenario: remove conferencia that does not exist
       Given the system has no conferencia entitled "IV Conference on Software Product Lines"
       When I try to remove the conferencia "IV Conference on Software Product Lines"

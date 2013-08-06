@@ -21,4 +21,8 @@ class ConferenciaPage extends Page{
     def listConferencia() {
         $('a.list').click()
     }
+
+    def selectHome() {
+        $('a.home').click()
+    }
 }
