@@ -112,15 +112,6 @@ Then(~'^I\'m still on dissertation page$') {->
     //at DissertationPage
 }
 
-When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
-    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = Dissertacao.findAll().size()
-    TestDataAndOperations.uploadDissertacao(path)
-    finalSize = Dissertacao.findAll().size()
-    assert inicialSize < finalSize
-    //para funcionar é necessario que tenha um FilePath válido
-    // não consegui fazer de uma maneira que todos os passos sejam independentes
-}
 Then(~'the system has more dissertations now$') {->
     finalSize = Dissertacao.findAll().size()
 
