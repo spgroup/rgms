@@ -180,3 +180,8 @@ And(~'^I click on Criar button$') {->
 Then(~'^I am still on create new ferramenta page$') {->
     at FerramentaCreatePage
 }
+And(~'^the ferramenta is not displayed in the ferramentas list page$') {->
+    to FerramentaPage
+    at FerramentaPage
+    page.checkAnyFerramentaAtList()
+}

@@ -73,6 +73,7 @@ Feature: Ferramenta
     And I fill Titulo with more than 255 caracteres
     And fill the others fields with valid values without Titulo
     Then I am still on ferramenta page
+    And the ferramenta is not displayed in the ferramentas list page
 
    Scenario: remove existing ferramenta
      Given the system has a ferramenta entitled "ToolDelete" with file name "tooldelete.pdf"
