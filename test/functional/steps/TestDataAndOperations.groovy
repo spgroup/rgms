@@ -664,7 +664,7 @@ class TestDataAndOperations {
         researchGroupController.response.reset()
     }
 
-	//mapmf_tasj
+    //mapmf_tasj
 
     //orientation
     static orientations = [
@@ -695,6 +695,8 @@ class TestDataAndOperations {
         cont.delete()
     }
     //article
+
+    static public def path(){
+        return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    }
 }
-
-
