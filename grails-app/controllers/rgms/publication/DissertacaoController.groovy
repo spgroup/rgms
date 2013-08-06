@@ -5,7 +5,6 @@ import org.apache.shiro.SecurityUtils
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
-import rgms.publication.Dissertacao;
 
 
 class DissertacaoController {
@@ -56,7 +55,11 @@ class DissertacaoController {
             handleSavingError(dissertacaoInstance, 'dissertacao.saving.failure')
             return
         }
-        flash.message = message(code: 'default.created.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), dissertacaoInstance.id])
+        //#if($facebook)
+        //def user = Member.findByUsername(SecurityUtils.subject?.principal)
+		//pb.sendPostFacebook(user, dissertacaoInstance.toString())
+        //#end
+		flash.message = message(code: 'default.created.message', args: [message(code: 'dissertacao.label', default: 'Dissertacao'), dissertacaoInstance.id])
         redirect(action: "show", id: dissertacaoInstance.id)
     }
 

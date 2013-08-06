@@ -240,9 +240,10 @@ class AuthController {
         def enabled = false
         
         def pwdHash = new Sha256Hash(params.password1).toHex()
+		
+        memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university, facebook_id:params.facebook_id, access_token:params.access_token)
         
-        memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university)
-        def name = memberInstance?.name
+		def name = memberInstance?.name
         def emailAddress = memberInstance?.email
         
         if (!memberInstance.save(flush: true)) {
@@ -266,7 +267,6 @@ class AuthController {
 
         flash.message = "User successfully created";
         render(view: "register")
-
     }
 
     private sendRegistrationMailToAdmin(name) {
