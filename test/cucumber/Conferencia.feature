@@ -20,7 +20,7 @@ Feature: conferencia
     Then the conferencia "I International Conference on Software Engineering" is properly removed by the system
 
   Scenario: new conferencia web
-    Given I am at the publications and conferencias menu
+    Given I am at the publications
     When I select the conferencia option at the publications menu
     And I select the new conferencia option at the conferencia page
     Then I can fill the conferencia details
@@ -33,15 +33,16 @@ Feature: conferencia
 #if ($Autofill)
 
   Scenario: new conferencia web has user data filled by default
-    Given I am at the publications and conferencias menu
+    Given I am at the publications
     When I select the conferencia option at the publications menu
     And I select the new conferencia option at the conferencia page
     Then I see my user listed as an author member of conferencia by default
+
 #end
 
 
   Scenario: back to main menu web
-    Given I am at the publications and conferencias menu
+    Given I am at the publications
     When I select the conferencia option at the publications menu
     And I select the home option at the conferencia page
     Then I am back at the publications and conferencias menu
@@ -53,7 +54,7 @@ Feature: conferencia
     And I click on remove
     Then the conferencia "IV Conference on Software Product Lines" is properly removed by the system
 
-  Scenario: remove conferencia that doesnt exist
-    Given the system has no conferencia entitled "IV Conference on Software Product Lines"
-    When I remove the conferencia "IV Conference on Software Product Lines"
-    Then the conferencia "IV Conference on Software Product Lines" is properly removed by the system
+  Scenario: remove conferencia that does not exist
+      Given the system has no conferencia entitled "IV Conference on Software Product Lines"
+      When I try to remove the conferencia "IV Conference on Software Product Lines"
+      Then nothing happens

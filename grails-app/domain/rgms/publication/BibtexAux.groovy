@@ -6,7 +6,7 @@ import rgms.member.Member;
 
 class BibtexAux {
 
-    static String organizeAuthors(Set<Member> members) {
+    static String organizeAuthors(List<Member> members) {
         def returning = ""
         for (Member member : members) {
             returning = returning + member.name + " and "

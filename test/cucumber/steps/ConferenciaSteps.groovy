@@ -42,7 +42,7 @@ Then(~'^the conferencia "([^"]*)" is properly removed by the system$') { String 
     assert conferencia == null
 }
 
-Given(~'^I am at the publications and conferencias menu$') {->
+Given(~'^I am at the publications$') {->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -99,4 +99,14 @@ Then(~'^I see my user listed as an author member of conferencia by default$') {-
 
 Then(~'^I am back at the publications and conferencias menu$') {->
     at PublicationsPage
+}
+
+When(~'^I try to remove the conferencia "([^"]*)"$') { String title ->
+    assert Conferencia.findByTitle(title) == null
+    //TestDataAndOperations.removeConferencia(title)
+}
+
+
+Then(~'^nothing happens$') {->
+
 }
