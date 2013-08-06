@@ -1,7 +1,6 @@
 package pages
 
 import geb.Page
-import steps.TestDataAndOperations
 
 class MemberEditionPage extends Page {
 

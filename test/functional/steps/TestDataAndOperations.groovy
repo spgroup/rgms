@@ -44,7 +44,9 @@ class TestDataAndOperations {
             [title: "Next Generation Software Product Line Engineering", publicationDate: (new Date("12 October 2012")),
                     publisher: "Person", chapter: 1],
             [title: "SPL Development", publicationDate: (new Date("12 October 2012")),
-                    publisher: "Addison", chapter: 5]
+                    publisher: "Addison", chapter: 5],
+            [title: "Artificial Neural Networks", publicationDate: (new Date("25 July 2012")),
+                    publisher: "Penguim", chapter: 3]
     ]
 
     static conferencias = [
@@ -586,6 +588,13 @@ class TestDataAndOperations {
         def cont = new BookChapterController()
         cont.params << [id: testBookChapter.id]
         cont.delete()
+    }
+
+    static public boolean containsBookChapter(title, bookList) {
+        def testarbook = BookChapter.findByTitle(title)
+        def cont = new BookChapterController()
+        def result = cont.list().bookChapterInstanceList
+        return result.contains(testarbook)
     }
 
     static public boolean containsArticle(title, articles) {
