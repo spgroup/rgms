@@ -32,15 +32,6 @@ Feature: Dissertation Tests
     When I create the dissertation "Dissertation duplicated" with file name "Dissertationduplicated2.txt" and school "UFPE"
     Then the dissertation "Dissertation duplicated" is not stored twice
 
-  Scenario:  first dissertation and delete
-    Given the system has no dissertation stored
-    When I create the dissertation "New dissertation" with file name "dissertation.txt" and school "federal"
-    And I am at the publications menu
-    And I select the "Dissertacao" option at the program menu
-    And I select "Delete dissertation" at the dissertation page
-    And I delete "New dissertation"
-    Then the system has no dissertation stored
-
   Scenario: new dissertation without file
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
@@ -61,7 +52,7 @@ Feature: Dissertation Tests
     Then the system has a dissertation entitled "Dissertacao Teste 1"
 
   Scenario: edit dissertation
-    Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt", has no dissertation entitled "Edit dissertation reviewed"
+    Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt"
     Given the system has no dissertation entitled "Edit dissertation reviewed"
     When    I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
     Then    the dissertation "Edit dissertation" is properly updated by the system
@@ -81,7 +72,7 @@ Feature: Dissertation Tests
     Then I'm still on dissertation page
 
   Scenario: upload dissertation with a file
-    Given the system has some dissertation stored, has no dissertation entitled "New dissertation"
+    Given the system has some dissertation stored
     Given the system has no dissertation entitled "New dissertation"
     When I upload a new dissertation "curriculo.xml" with title "New dissertation"
     Then the system has more dissertations now
@@ -90,15 +81,6 @@ Feature: Dissertation Tests
     Given the system has no dissertation entitled "New dissertation"
     When I upload a new dissertation "curriculo.xml" with title "New dissertation"
     Then the system has more dissertations now
-    
-  Scenario:  first dissertation and delete
-    Given the system has no dissertation stored
-    When I create the dissertation "New dissertation" with file name "dissertation.txt" and school "federal"
-    And I am at the publications menu
-    And I select the "Dissertacao" option at the program menu
-    And I select "Delete dissertation" at the dissertation page
-    And I delete "New dissertation"
-    Then the system has no dissertation stored
     
 #if ($Autofill)
 
