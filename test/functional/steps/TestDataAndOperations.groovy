@@ -409,8 +409,8 @@ class TestDataAndOperations {
         //TODO Deveria pegar os dados dos parametros, mas
         //		esta dando problema na criacao. Entao para
         //		simplificar o entendimento do problema,
-        //		os valores est�o fixos. O problema n�o
-        //		est� nos par�metros passados.
+        //		os valores est?o fixos. O problema n?o
+        //		est? nos par?metros passados.
 
         def cont = new MembershipController()
 
@@ -558,10 +558,9 @@ class TestDataAndOperations {
         return result.contains(testarticle)
     }
 
-    static public Periodico editArticle(oldtitle, newtitle, oldjournal, newjournal) {
+    static public Periodico editArticle(oldtitle, newtitle) {
         def article = Periodico.findByTitle(oldtitle)
         article.setTitle(newtitle)
-        article.setJournal(newjournal)
         def cont = new PeriodicoController()
         cont.params << article.properties
         cont.update()
@@ -664,7 +663,7 @@ class TestDataAndOperations {
         researchGroupController.save()
         researchGroupController.response.reset()
     }
-	
+
 	//mapmf_tasj
 
     //orientation
