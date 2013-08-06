@@ -12,11 +12,11 @@ Feature: news
 
   Scenario: delete news
     Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group
-    When I delete a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group
+    When I delete the news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group
     Then the news with "noticiaTeste" and date "07-04-2012" doesnt exists to "SPG" research group
 
 
-  Scenario: new news with existing
+  Scenario: new news with existing matching news
     Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group
     When I create a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group
     Then the news  with "noticiaTeste" and date "07-04-2012" is not registered to "SPG" research group
@@ -25,7 +25,7 @@ Feature: news
   Scenario: integrate Twitter account
     Given the research group "SPG" in the system has no Twitter account associated
     When I associate the account "@HumanBrainProj" to "SPG" group
-    Then "SPG" research group has a twitter account "@HumanBrainProj" registred
+    Then "SPG" research group has a twitter account "@HumanBrainProj" registered
     #Then the news can be retrieved by a Twitter post with "@testetwitteracount"
 
   Scenario: update news from twitter account
