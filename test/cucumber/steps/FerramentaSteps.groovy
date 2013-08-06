@@ -133,13 +133,7 @@ And(~'^I select the upload button at the ferramenta page$') {->
 
 }
 Then(~'^I am still on ferramenta page$') {->
-    /*No teste, o sistema esta redirecionando para uma action de um controller errado.
-     Em ferramenta, ele redireciona para o controller de publication, já que o controller
-     de ferramenta está no pacote de publication.
-     Isso ocorre apenas no teste.
-    */
-
-    //at FerramentaCreatePage
+    at FerramentaCreatePage
 }
 
 // edit ferramenta

@@ -26,9 +26,10 @@ class FerramentaController {
     def save() {
         def ferramentaInstance = new Ferramenta(params)
 
-		PublicationController pb = new PublicationController()
+		//PublicationController pb = new PublicationController()
 
-        if (!pb.upload(ferramentaInstance) || !ferramentaInstance.save(flush: true)) {
+        if (!PublicationController.newUpload(ferramentaInstance, flash, request) || !ferramentaInstance.save(flush: true)) {     // (!pb.upload(periodicoInstance)) {
+            // com a segunda opção, o sistema se perde e vai para publication controller no teste Add a new article twitting it
             render(controller: "ferramenta", view: "create", model: [ferramentaInstance: ferramentaInstance])
             return
         }
