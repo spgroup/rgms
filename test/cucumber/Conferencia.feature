@@ -14,6 +14,7 @@ Feature: conferencia
     When I create the conferencia "I International Conference on Software Engineering" with file name "IICSE-0.pdf"
     Then the conferencia "I International Conference on Software Engineering" is not stored twice
 
+
   Scenario: remove conferencia
     Given the conferencia "I International Conference on Software Engineering" is stored in the system with file name "IICSE-1.pdf"
     When I remove the conferencia "I International Conference on Software Engineering"
@@ -51,3 +52,6 @@ Feature: conferencia
       Given the system has no conferencia entitled "IV Conference on Software Product Lines"
       When I try to remove the conferencia "IV Conference on Software Product Lines"
       Then nothing happens
+
+
+

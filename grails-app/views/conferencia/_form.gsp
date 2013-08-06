@@ -23,7 +23,7 @@
         <g:message code="conferencia.file.label" default="File"/>
 
     </label>
-    <g:field type="file" name="file" id="file" required=""
+    <g:field type="file" name="file" id="file" required="" accept="application/pdf"
              value="${fieldValue(bean: conferenciaInstance, field: 'file')}"/>
 </div>
 

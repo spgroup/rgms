@@ -11,8 +11,8 @@ class TechnicalReport extends Publication {
     //#if($Bibtex)
     String generateBib() {
         return "@techreport{"
-        + "author=\"" + BibtexAux.organizeAuthors(super.members) + "\",\n title=\"" + super.title + "\",\n institution=\""
-        + this.institution + "\",\n year=\"" + super.publicationDate.getAt(Calendar.YEAR) + "\"}"
+        + "author=\"" + BibtexAux.organizeAuthors(members) + "\",\n title=\"" + title + "\",\n institution=\""
+        + this.institution + "\",\n year=\"" + publicationDate.getAt(Calendar.YEAR) + "\"}"
     }
     //#end
 	
