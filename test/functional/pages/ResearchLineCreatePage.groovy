@@ -1,6 +1,8 @@
 package pages
-import steps.TestDataAndOperations
+
 import geb.Page
+import steps.TestDataAndOperations
+
 
 class ResearchLineCreatePage extends Page {
 	static url = "researchline/create"

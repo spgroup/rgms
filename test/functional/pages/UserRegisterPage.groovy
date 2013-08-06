@@ -1,9 +1,8 @@
 package pages
 
 import geb.Page
-import geb.navigator.Navigator
 import rgms.member.Member
-import steps.TestDataAndOperations
+
 import steps.TestDataAuthentication
 
 class UserRegisterPage extends Page {
