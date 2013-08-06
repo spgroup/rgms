@@ -159,7 +159,7 @@ margin-top: 0;
                     
                     <script>
                           // initialize the library with the API key
-                        FB.init({ appId: '424490127646893',oauth: true});
+                        FB.init({ appId: ${grailsApplication.config.appid},oauth: true});
 
                           // fetch the status on load
                         //FB.getLoginStatus(handleSessionResponse2);
