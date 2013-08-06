@@ -30,6 +30,7 @@ Feature: Ferramenta
     And I select the new ferramenta option at the ferramenta page
     And I click on Criar button
     Then I am still on create new ferramenta page
+    And the ferramenta is not displayed in the ferramentas list page
 
   Scenario: upload dissertation without a file
     Given I am at the publications menu
