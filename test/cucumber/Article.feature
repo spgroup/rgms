@@ -73,12 +73,25 @@ Feature: journal article
     Then No twitte should be post about "Empirical Studies in Product Line 2"
 
   Scenario: Add a new article and post it in the facebook
-    Given I am logged as "admin" and at the Add Article Page
-    When I try to create an article named as "A theory of software product line refinement 2" with filename "TCS-100.pdf"
-    And I click on share it on Facebook, with login "rgms.ufpe@gmail.com", password "rgmsadmin2013", and message "New Article"
-    Then A facebook message is added for "A theory of software product line refinement 2"
+    Given I am logged as "admin"
+    And   I am at the Add Article Page
+    When  I try to create an article named as "A theory of software product line refinement 2" with filename "TCS-01.pdf"
+    And   I click on Share on Facebook
+    Then  A facebook message was posted
 
   Scenario: Add a new article but don't post it in the facebook
-    Given I am logged as "admin" and at the Add Article Page
-    When I try to create an article named as "Empirical Studies in Product Line 4" with filename "TCS.pdf"
-    Then No facebook message is added for "Empirical Studies in Product Line 4"
+    Given I am logged as "admin"
+    And   I am at the Add Article Page
+    When  I try to create an article named as "Empirical Studies in Product Line 4" with filename "TCS-02.pdf"
+    Then  No facebook message was posted
+
+  Scenario: Post an existing article on facebook
+    Given   the system has article entitled "A theory of software product line refinement" with file name "TCS-03.pdf"
+    When    I share the article entitled "A theory of software product line refinement" on facebook
+    Then    A facebook message was posted
+
+  Scenario: Post an existing article on facebook web
+    Given   I am at the articles page and the article "A theory of software product line refinement 3" is stored in the system with file name "TCS-04.pdf"
+    When    I select to view "A theory of software product line refinement 3" in resulting list
+    And     I click on Share on Facebook
+    Then    A facebook message was posted

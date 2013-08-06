@@ -36,7 +36,7 @@
 
     </label>
     <g:select id="childOf" name="childOf.id" from="${rgms.member.ResearchGroup.list()}" optionKey="id"
-              value="${researchGroupInstance?.childOf?.id}" class="many-to-one"/>
+              value="${researchGroupInstance?.childOf?.id}" noSelection="['null': '']" class="many-to-one"/>
 </div>
 <!-- #end -->
 <div>

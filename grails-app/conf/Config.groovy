@@ -123,3 +123,6 @@ log4j = {
             'org.hibernate',
             'net.sf.ehcache.hibernate'
 }
+
+
+grails.config.locations = ["classpath:facebook.properties" ,"file: ../rgms/grails-app/conf/facebook.properties"]

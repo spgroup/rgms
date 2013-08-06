@@ -11,11 +11,8 @@ class ResearchGroup {
 //#if($researchGroupHierarchy)
     ResearchGroup childOf;
 //#end
+	
     static hasMany = [memberships: Membership, news: News]
-
-    public String toString() {
-        return this.name
-    }
 
     static constraints = {
         name(maxSize: 10, blank: false, unique: true)
@@ -23,13 +20,18 @@ class ResearchGroup {
         twitter(nullable: true)
 
 //#if($researchGroupHierarchy)
-        childOf(nullable: true)
+        childOf(nullable: true, blank: true)
 //#end
-
     }
 
+    public String toString() {
+        return this.name
+    }
+    
     static getPublications(researchGroup) {
         def memberships = Membership.getAllMembers(researchGroup)
         return Publication.getPublicationsByMembershipList(memberships)
     }
+    
 }
+

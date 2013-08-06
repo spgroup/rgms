@@ -103,13 +103,15 @@ class PublicationController {
 	//#if($facebook)
 	def static sendPostFacebook(Member user, String title){
         def url = "https://graph.facebook.com/me/feed?access_token=" + user?.access_token 
-        
+        System.out.println(title);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         
         HttpPost post = new HttpPost(url);
 
         params.add(new BasicNameValuePair("access_token", user?.access_token));
         params.add(new BasicNameValuePair("message", "Confira a minha nova publicação no sistema RGMS! O title da publicação é " + title));
+
+        System.out.println("Confira a minha nova publicação no sistema RGMS! O title da publicação é " + title);
 
         UrlEncodedFormEntity postEntity = new UrlEncodedFormEntity(params, HTTP.UTF_8);
         post.setEntity(postEntity);
