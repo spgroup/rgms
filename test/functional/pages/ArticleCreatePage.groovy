@@ -29,19 +29,6 @@ class ArticleCreatePage extends Page {
         // Could parametrize, obtaining data from class TestDataAndOperations
     }
 
-    def fillArticleDetails(filename, title, journal) {
-        $("form").title = title
-        $("form").journal = journal
-
-        // possuimos um clone aqui, porem muda-lo não acrecentaria nada na inteligibilidade do código e
-        // pioraria a legibilidade.
-        $("form").file = filename
-        $("form").volume = 455
-        $("form").number = 1
-        $("form").pages = "2-30"
-        // Could parametrize, obtaining data from class TestDataAndOperations
-    }
-
     def selectCreateArticle() {
         $("input", name: "create").click()
     }
