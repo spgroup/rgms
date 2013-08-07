@@ -381,4 +381,28 @@ target/test-reports/plain/TEST-functional-cucumber-news-out.txt
 
 target/test-reports/plain/TEST-functional-cucumber-news.txt
 
-"COMAND GEBS"
+.idea/.name
+
+.idea/compiler.xml
+
+.idea/copyright/profiles_settings.xml
+
+.idea/modules.xml
+
+.idea/workspace.xml
+
+.idea/uiDesigner.xml
+
+.idea/vcs.xml
+
+rgms-grailsPlugins.iml
+
+rgms.iml
+
+.idea/scopes/scope_settings.xml
+
+.idea/misc.xml
+
+.idea/encodings.xml
+
+target/test-reports/html/0_Dissertation Tests.html
