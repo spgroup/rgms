@@ -39,7 +39,6 @@ def getDissertacaoInstance(def id)
     }
     def show() {
         getDissertacaoInstance(params.id)
-    }
     def edit (){
         getDissertacaoInstance(params.id)
     }
