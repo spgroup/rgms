@@ -28,8 +28,7 @@ class LoginPage extends Page {
     }
 
     def fillLoginDataAndSubmit(String username, String password) {
-        $("form").username = username
-        $("form").password = password
+        fillLoginDataOnly(username, password);
         $("form").signIn().click()
     }
 
