@@ -64,3 +64,4 @@ Feature: BookChapter
     When I select the "Book Chapter" option at the program menu
     And I select the upload button at the book chapter page
     Then I'm still on book chapter page
+    And The chapters are not stored by the system
