@@ -10,7 +10,11 @@ class VisitShowPage extends Page {
 
 	static content = {
 	}
-
+/*
+    Identificamos aqui uma duplicação de código. o método abaixo é repetido em pages.ArticleShowPage e pages.OrientationShowPage.
+    Entretanto, achamos que não há a necessidade de remover esta duplicação, pois a estratégia que pensamos não abrange o pages.TechnicalReportShowPage
+    que também possui o mesmo método, mas com escopo diferente
+ */
 	def select(String e,v) {
 		if(v == 'delete'){
 			assert withConfirm(true) { $("form").find(e, class: v).click() }

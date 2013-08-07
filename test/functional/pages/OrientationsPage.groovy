@@ -24,23 +24,25 @@ class OrientationsPage extends Page {
 	def selectNewOrientation() {
 		$('a.create').click()
 	}
-   
 
-
-	def selectViewOrientation(title) {
-		def listDiv = $('div', id: 'list-orientation')
+    //Faltou craitividade pro nome
+    def geRow(){
+        def listDiv = $('div', id: 'list-orientation')
         def orientationTable = (listDiv.find('table'))[0]
         def orientationRow  = orientationTable.find('tbody').find('tr')
-        def showLink = orientationRow.find('td').find([text:title])
+        return orientationRow
+    }
+
+	def selectViewOrientation(title) {
+        getRow()
+        def showLink = getRow().find('td').find([text:title])
         showLink.click()
 	}
 
 
 	def checkOrientationAtList(title,row){
-		def listDiv = $('div', id: 'list-orientation')
-		def orientationTable = (listDiv.find('table'))[0]
-		def orientantionRows  = orientationTable.find('tbody').find('tr')
-		def orientationColumns = orientationRows[row].find('td')
+
+        def orientationColumns = getRow()[row].find('td')
 
 		def testorientation = Orientation.findByTituloTese(title)
 		assert orientationColumns[1].text() == testorientation.tipo
