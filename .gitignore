@@ -406,3 +406,13 @@ rgms.iml
 .idea/encodings.xml
 
 target/test-reports/html/0_Dissertation Tests.html
+
+target/test-reports/TEST-functional-cucumber-Visit.xml
+
+target/test-reports/html/6_Visit.html
+
+target/test-reports/plain/TEST-functional-cucumber-Visit-err.txt
+
+target/test-reports/plain/TEST-functional-cucumber-Visit-out.txt
+
+target/test-reports/plain/TEST-functional-cucumber-Visit.txt

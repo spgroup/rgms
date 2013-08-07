@@ -113,7 +113,7 @@ Then(~'^I\'m still on dissertation page$') {->
 }
 
 When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
-    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
     TestDataAndOperations.uploadDissertacao(path)
     finalSize = Dissertacao.findAll().size()
@@ -134,7 +134,7 @@ Given(~'^the system has some dissertation stored$'){->
 
 
 When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
-    String path = "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
     TestDataAndOperations.uploadDissertacao(path)
     finalSize = Dissertacao.findAll().size()

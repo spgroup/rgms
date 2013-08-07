@@ -41,14 +41,14 @@ Feature: Dissertation Tests
 
   Scenario: upload a dissertation and system has no dissertation stored
     Given the system has no dissertation entitled "New dissertation"
-    When I upload a new dissertation "curriculo.xml" with title "New dissertation"
+    When I upload a new dissertation "curriculo4.xml" with title "New dissertation"
     Then the system has more dissertations now
 
   Scenario: new dissertation with file
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
     And I select the new dissertation option at the dissertation page
-    And I can add the dissertation with a file "TCS.pdf"
+    And I can add the dissertation with a file "Modularity.pdf"
     Then the system has a dissertation entitled "Dissertacao Teste 1"
 
   Scenario: edit dissertation
@@ -74,12 +74,12 @@ Feature: Dissertation Tests
   Scenario: upload dissertation with a file
     Given the system has some dissertation stored
     Given the system has no dissertation entitled "New dissertation"
-    When I upload a new dissertation "curriculo.xml" with title "New dissertation"
+    When I upload a new dissertation "curriculo3.xml" with title "New dissertation"
     Then the system has more dissertations now
     
   Scenario: upload a dissertation and system has no dissertation stored
     Given the system has no dissertation entitled "New dissertation"
-    When I upload a new dissertation "curriculo.xml" with title "New dissertation"
+    When I upload a new dissertation "curriculo2.xml" with title "New dissertation"
     Then the system has more dissertations now
     
 #if ($Autofill)
