@@ -61,18 +61,17 @@ Given(~'^the research group "([^"]*)" in the system has no Twitter account assoc
 
 When(~'^I associate the account "([^"]*)" to "([^"]*)" group$') { String twitter, String groupName ->
     researchGroup = ResearchGroup.findByName(groupName)
-    assert researchGroup != null
+    //assert researchGroup != null
     //researchGroup.twitter = twitter
     //researchGroup.save()
     //TestDataAndOperations.editResearchGroupTwitter(researchGroup, twitter)
     TestDataAndOperations.editResearchGroupTwitterAcount(researchGroup, twitter)
-    assert researchGroup != null
+
     assert researchGroup.getTwitter() == twitter
 }
 
 Then(~'^"([^"]*)" research group has a twitter account "([^"]*)" registered$') { String groupName, String twitter ->
     researchGroup = ResearchGroup.findByName(groupName)
-    assert researchGroup != null
     assert researchGroup.getTwitter() == twitter
 }
 
