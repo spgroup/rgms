@@ -58,7 +58,8 @@ Feature: technical report
     And   I select the option to edit
     And   I change the technical report title to "TC88" filename to "TCS-88.pdf" and institution to "UFRPE"
     And   I press the button alterar
-    Then  The technical report "TechRepo" details page is shown
+    Then  The technical report "TC88" with filename "TCS-88.pdf" and institution "UFRPE" is properly updated.
+    And   The technical report "TC88" details page is shown
 
   Scenario: remove existing technical report
     Given  I am at the technical reports page

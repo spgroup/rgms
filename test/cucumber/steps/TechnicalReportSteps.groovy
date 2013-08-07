@@ -198,3 +198,9 @@ And(~'^I am at the technical reports list page$') { ->
     at TechnicalReportPage
 }
 
+Then(~'^The technical report "([^"]*)" with filename "([^"]*)" and institution "([^"]*)" is properly updated.$'){ String t, fn, i ->
+    tech = TechnicalReport.findByTitleAndFileAndInstitution(t, fn, i)
+    assert tech != null
+}
+
+
