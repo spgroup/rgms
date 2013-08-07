@@ -18,12 +18,8 @@ class OrientationShowPage extends Page {
     static content = {
     }
 
-	def select(String e,v) {
-		if(v == 'delete'){
-			assert withConfirm(true) { $("form").find(e, class: v).click() }
-		} else {
-			$("form").find(e, class: v).click()
-		}
+	def select() {
+		$("form").find('a', class: 'edit').click()
 	}
 //#if( $Twitter )
 	def clickOnTwitteIt (String login, pw){

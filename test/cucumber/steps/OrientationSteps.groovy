@@ -92,7 +92,7 @@ When(~'^I select to view orientation "([^"]*)" in resulting list$') { String old
 
     to OrientationShowPage
     at OrientationShowPage
-    page.select('a', 'edit')
+    page.select()
 }
 
 When(~'^I change the orientation tituloTese to "([^"]*)"$') { String newtitle ->
