@@ -16,9 +16,10 @@ Feature: conferencia
 
 
   Scenario: remove conferencia
-    Given the conferencia "I International Conference on Software Engineering" is stored in the system with file name "IICSE-1.pdf"
-    When I remove the conferencia "I International Conference on Software Engineering"
-    Then the conferencia "I International Conference on Software Engineering" is properly removed by the system
+    Given the conferencia "IV Conference on Software Product Lines" is stored in the system with file name "IICSE-1.pdf"
+    When I remove the conferencia "IV Conference on Software Product Lines"
+    Then the conferencia "IV Conference on Software Product Lines" is properly removed by the system
+
 
   Scenario: new conferencia web
     Given I am at the publications
@@ -49,9 +50,13 @@ Feature: conferencia
     Then I am back at the publications and conferencias menu
 
   Scenario: remove conferencia that does not exist
-      Given the system has no conferencia entitled "IV Conference on Software Product Lines"
-      When I try to remove the conferencia "IV Conference on Software Product Lines"
-      Then nothing happens
+    Given the system has no conferencia entitled "IV Conference on Software Product Lines"
+    When I try to remove the conferencia "IV Conference on Software Product Lines"
+    Then nothing happens
 
-
+  Scenario: remove and create the same conferencia
+    Given the conferencia "V Conference on Software Product Lines" is stored in the system with file name "IICSE-10.pdf"
+    When I remove the conferencia "V Conference on Software Product Lines"
+    And I create the conferencia "V Conference on Software Product Lines" with file name "IICSE-12.pdf"
+    Then the conferencia "V Conference on Software Product Lines" is properly stored by the system
 
