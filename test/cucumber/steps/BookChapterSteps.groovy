@@ -95,14 +95,14 @@ Then(~'^I see my user listed as a member of book chapter by default$') {->
 }
 
 Given(~'^the system has some book chapters stored$') {->
-    inicialSize = BookChapter.findAll().size()
+    initialSize = BookChapter.findAll().size()
 }
 When(~'^I upload some book chapters of "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = BookChapter.findAll().size()
     TestDataAndOperations.uploadBookChapter(path)
     finalSize = BookChapter.findAll().size()
-    assert inicialSize < finalSize
+    assert initialSize < finalSize
 }
 Then(~'^the system has more book chapters now$') {->
     finalSize = BookChapter.findAll().size()
@@ -114,4 +114,8 @@ And(~'^I select the upload button at the book chapter page$') {->
 }
 Then(~'^I\'m still on book chapter page$') {->
     at BookChapterPage
+}
+And(~'^The chapters are not stored by the system$') {->
+    at BookChapterPage
+    page.checkIfBookChapterListIsEmpty()
 }
