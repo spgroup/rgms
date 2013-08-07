@@ -151,15 +151,20 @@ And(~'^it is shown in the book chapter list with title "([^"]*)"$'){ String titl
 Given(~'^the system has some book chapters stored$') {->
     initialSize = BookChapter.findAll().size()
 }
-When(~'^I upload some book chapters of "([^"]*)"$') { filename ->
+When(~'^I upload the book chapters of "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = BookChapter.findAll().size()
     TestDataAndOperations.uploadBookChapter(path)
     finalSize = BookChapter.findAll().size()
     assert initialSize < finalSize
 }
-Then(~'^the system has more book chapters now$') {->
-    finalSize = BookChapter.findAll().size()
+Then(~'^the system has all the book chapters of the xml file$') {->
+    assert BookChapter.findByTitle("Refinement of Concurrent Object Oriented Programs") != null
+    assert BookChapter.findByTitle("A RUP-Based Software Process Supporting Progressive Implementation") != null
+    assert BookChapter.findByTitle("Transformation Laws for Sequential Object-Oriented Programming") != null
+    assert BookChapter.findByTitle("Mapping Features to Aspects: A Model-Based Generative Approach") != null
+    assert BookChapter.findByTitle("Recommending Mechanisms for Modularizing Mobile Software Variabilities") != null
+    assert BookChapter.findByTitle("An Introduction to Software Product Line Refactoring") != null
 }
 
 And(~'^I select the upload button at the book chapter page$') {->
@@ -169,7 +174,7 @@ And(~'^I select the upload button at the book chapter page$') {->
 Then(~'^I\'m still on book chapter page$') {->
     at BookChapterPage
 }
-And(~'^The chapters are not stored by the system$') {->
+And(~'^the book chapters are not stored by the system$') {->
     at BookChapterPage
     page.checkIfBookChapterListIsEmpty()
 }

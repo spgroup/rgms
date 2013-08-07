@@ -56,12 +56,12 @@ Feature: BookChapter
 
   Scenario: upload book chapter with a file
     Given the system has some book chapters stored
-    When I upload some book chapters of "curriculo.xml"
-    Then the system has more book chapters now
+    When I upload the book chapters of "curriculo.xml"
+    Then the system has all the book chapters of the xml file
 
   Scenario: upload book chapters without a file
     Given I am at the publications menu
     When I select the "Book Chapter" option at the program menu
     And I select the upload button at the book chapter page
     Then I'm still on book chapter page
-    And The chapters are not stored by the system
+    And the book chapters are not stored by the system
