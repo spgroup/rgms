@@ -103,8 +103,6 @@ class AuthController {
             m["targetUri"] = params.targetUri
         }
 
-        log.info "Authentication failure for user '${params.username}'." + " Error:" + ex.toString()
-        flash.message = message(code: "login.failed")
         // Now redirect back to the login page.
         redirect(uri: "/auth/login")
 //            redirect(action: "login", params: m) //action: "login"
