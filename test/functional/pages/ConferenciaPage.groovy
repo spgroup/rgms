@@ -25,4 +25,8 @@ class ConferenciaPage extends Page{
     def selectHome() {
         $('a.home').click()
     }
+
+    def removeConferencia() {
+        $('a.delete').click()
+    }
 }

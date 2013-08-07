@@ -80,7 +80,6 @@ When(~'^I click on remove$') {->
     page.select("Remove")
 }
 
-
 Then(~'^I can fill the conferencia details$') {->
     at ConferenciaCreatePage
     page.fillConferenciaDetails()
@@ -89,6 +88,11 @@ Then(~'^I can fill the conferencia details$') {->
 Then(~'^a list of conferencias stored by the system is displayed at the conferencia page$') {->
     at ConferenciaPage
     page.listConferencia()
+}
+
+Then(~'^I can remove one conferencia$') {->
+    at ConferenciaPage
+    page.removeConferencia()
 }
 
 Then(~'^I see my user listed as an author member of conferencia by default$') {->

@@ -60,3 +60,8 @@ Feature: conferencia
     And I create the conferencia "V Conference on Software Product Lines" with file name "IICSE-12.pdf"
     Then the conferencia "V Conference on Software Product Lines" is properly stored by the system
 
+  Scenario: remove conferencia web
+    Given I am at the publications menu
+    When I select the conferencia option at the publications menu
+    And a list of conferencias stored by the system is displayed at the conferencia page
+    Then I can remove one conferencia
