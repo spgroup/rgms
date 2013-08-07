@@ -81,17 +81,6 @@ class DissertacaoController {
         [dissertacaoInstance: dissertacaoInstance]
     }
 
-    def edit() {
-        def dissertacaoInstance = Dissertacao.get(params.id)
-        if (!dissertacaoInstance) {
-            flash.message = messageGenerator('default.not.found.message', params.id)
-            redirect(action: "list")
-            return
-        }
-
-        [dissertacaoInstance: dissertacaoInstance]
-    }
-
     def update() {
         def dissertacaoInstance = Dissertacao.get(params.id)
         if (!dissertacaoInstance) {
