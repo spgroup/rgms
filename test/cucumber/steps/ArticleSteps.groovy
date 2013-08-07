@@ -10,7 +10,7 @@ import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
     //article = Periodico.findByTitle(title)
-    assert isNull(title) == true
+    assert isNull(title)
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
@@ -30,7 +30,7 @@ When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*
 
 Then(~'^the article "([^"]*)" is not stored by the system because it is invalid$') { String title ->
     //article = Periodico.findByTitle(title)
-    assert isNull(title) == true
+    assert isNull(title)
 }
 /*
 Given(~'^the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
@@ -68,7 +68,7 @@ Then(~'^I can fill the article details$') {->
 Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     TestDataAndOperations.createArticle(title, filename)
     //article = Periodico.findByTitle(title)
-    assert isNull(title) == false
+    assert !isNull(title)
 }
 
 /**
@@ -86,7 +86,7 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
     page.fillArticleDetails(TestDataAndOperations.path() + filename, title)
     page.selectCreateArticle()
     //article = Periodico.findByTitle(title)
-    assert isNull(title) == false
+    assert !isNull(title)
     to ArticlesPage
     at ArticlesPage
 }
@@ -143,7 +143,7 @@ When(~'^I change the article title to "([^"]*)"$') { String newtitle ->
  */
 Then(~'^the article "([^"]*)" is properly updated by the system$') { String title ->
     //article = Periodico.findByTitle(title)
-    assert isNull(title) == true
+    assert isNull(title)
 }
 
 /**
@@ -151,7 +151,7 @@ Then(~'^the article "([^"]*)" is properly updated by the system$') { String titl
  */
 Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
     //article = Periodico.findByTitle(title)
-    assert isNull(title) == true
+    assert isNull(title)
 }
 
 /**
