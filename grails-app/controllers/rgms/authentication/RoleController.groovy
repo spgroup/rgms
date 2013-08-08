@@ -34,20 +34,19 @@ class RoleController {
 
     def getShiroRoleInstanceById(id) {
         def shiroRoleInstance = Role.get(id)
-        if (!shiroRoleInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
-            redirect(action: "list")
-            return
-        }
+        assert shiroRoleInstance != null
         shiroRoleInstance
     }
 
     def returnShiroRoleInstance() {
-        def shiroRoleInstance =  getShiroRoleInstanceById(params.id)
-        if(!shiroRoleInstance)
-            return
-
-        [shiroRoleInstance: shiroRoleInstance]
+       try{
+           def shiroRoleInstance =  getShiroRoleInstanceById(params.id)
+           [shiroRoleInstance: shiroRoleInstance]
+       }
+       catch (AssertionError e){
+           flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
+           redirect(action: "list")
+       }
     }
 
     def show = {
@@ -59,38 +58,38 @@ class RoleController {
     }
 
     def update = {
-        def shiroRoleInstance = getShiroRoleInstanceById(params.id)
-        if(!shiroRoleInstance)
-            return
+        try{
+            def shiroRoleInstance = getShiroRoleInstanceById(params.id)
+            if (params.version) {
+                def version = params.version.toLong()
+                if (shiroRoleInstance.version > version) {
+                    shiroRoleInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                            [message(code: 'shiroRole.label', default: 'Role')] as Object[],
+                            "Another user has updated this Role while you were editing")
+                    render(view: "edit", model: [shiroRoleInstance: shiroRoleInstance])
+                    return
+                }
+            }
 
-        if (params.version) {
-            def version = params.version.toLong()
-            if (shiroRoleInstance.version > version) {
-                shiroRoleInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'shiroRole.label', default: 'Role')] as Object[],
-                          "Another user has updated this Role while you were editing")
+            shiroRoleInstance.properties = params
+
+            if (!shiroRoleInstance.save(flush: true)) {
                 render(view: "edit", model: [shiroRoleInstance: shiroRoleInstance])
                 return
             }
+
+            flash.message = message(code: 'default.updated.message', args: [message(code: 'shiroRole.label', default: 'Role'), shiroRoleInstance.id])
+            redirect(action: "show", id: shiroRoleInstance.id)
+
+        }catch (AssertionError e){
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
+            redirect(action: "list")
         }
-
-        shiroRoleInstance.properties = params
-
-        if (!shiroRoleInstance.save(flush: true)) {
-            render(view: "edit", model: [shiroRoleInstance: shiroRoleInstance])
-            return
-        }
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'shiroRole.label', default: 'Role'), shiroRoleInstance.id])
-        redirect(action: "show", id: shiroRoleInstance.id)
     }
 
     def delete = {
-        def shiroRoleInstance = getShiroRoleInstanceById(params.id)
-        if(!shiroRoleInstance)
-            return
-
         try {
+            def shiroRoleInstance = getShiroRoleInstanceById(params.id)
             shiroRoleInstance.delete(flush: true)
 			flash.message = message(code: 'default.deleted.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
             redirect(action: "list")
@@ -98,6 +97,9 @@ class RoleController {
         catch (DataIntegrityViolationException e) {
 			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])+" Error:"+e.toString()
             redirect(action: "show", id: params.id)
+        }catch (AssertionError e){
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'shiroRole.label', default: 'Role'), params.id])
+            redirect(action: "list")
         }
     }
 }
