@@ -70,12 +70,10 @@ class AuthController {
             //("ENTROU NO TRY")
             
            // print(member)
-            
+            log.info "Redirecting to '${targetUri}'."
             if (member.passwordChangeRequiredOnNextLogon) {
-                log.info "Redirecting to '${targetUri}'."
                 redirect(action: newPassword)
             } else {
-                log.info "Redirecting to '${targetUri}'."
                 render(view: "/initial")
 //                redirect(uri: targetUri)
             }
