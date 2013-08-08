@@ -33,22 +33,22 @@ Then(~'^the system output the message error "([^"]*)"$') { String arg1 ->
 Then(~'^none publication is stored$') {->
 }
 
-When(~'^selected a bibtex file with one Dissertacao and two Tese and I click "([^"]*)"$') { String arg1 ->
+When(~'^selected a bibtex file with one Dissertation and two Thesis and I click "([^"]*)"$') { String arg1 ->
 }
 
-Then(~'^is created one Dissertacao publication$') {->
+Then(~'^is created one Dissertation publication$') {->
     BibtexFileController bibtexFileController = new BibtexFileController()
     BibtexFile bibtexFile = bibtexFileController.transform(new File("test//cucumber//steps//sample.bibtex"))
     assert bibtexFile.getPublications(Conferencia.class).isEmpty()
     assert bibtexFile.getPublications(Dissertacao.class).size() == 1
 }
 
-Then(~'^is created two Tese publications$') {->
+Then(~'^is created two Thesis publications$') {->
     BibtexFileController bibtexFileController = new BibtexFileController()
     BibtexFile bibtexFile = bibtexFileController.transform(new File("test//cucumber//steps//sample.bibtex"))
     assert bibtexFile.getPublications(TechnicalReport.class).isEmpty()
     assert bibtexFile.getPublications(Tese.class).size() == 2
 }
 
-Then(~'^one Dissertacao is stored and two Tese is stored$') {->
+Then(~'^one Dissertation is stored and two Thesis is stored$') {->
 }
