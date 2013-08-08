@@ -46,32 +46,16 @@ class VisitController {
     }
 
     def show(Long id) {
-        def visitInstance = Visit.get(id)
-        if (!visitInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visit.label', default: 'Visit'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [visitInstance: visitInstance]
+        showOrEdit(id)
     }
 
     def edit(Long id) {
-        def visitInstance = Visit.get(id)
-        if (!visitInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visit.label', default: 'Visit'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [visitInstance: visitInstance]
+        showOrEdit(id)
     }
 
     def update(Long id, Long version) {
-        def visitInstance = Visit.get(id)
+        def visitInstance = getVisitInstance(id)
         if (!visitInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visit.label', default: 'Visit'), id])
-            redirect(action: "list")
             return
         }
 
@@ -105,10 +89,8 @@ class VisitController {
     }
 
     def delete(Long id) {
-        def visitInstance = Visit.get(id)
+        def visitInstance = getVisitInstance(id)
         if (!visitInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visit.label', default: 'Visit'), id])
-            redirect(action: "list")
             return
         }
 
@@ -121,5 +103,22 @@ class VisitController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'visit.label', default: 'Visit'), id])
             redirect(action: "show", id: id)
         }
+    }
+
+    def showOrEdit(Long id) {
+        def visitInstance = getVisitInstance(id)
+        if(!visitInstance) {
+            return
+        }
+        [visitInstance: visitInstance]
+    }
+
+    def getVisitInstance(Long id) {
+        def visitInstance = Visit.get(id)
+        if (!visitInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visit.label', default: 'Visit'), id])
+            redirect(action: "list")
+        }
+        return visitInstance
     }
 }
