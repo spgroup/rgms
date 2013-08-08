@@ -8,17 +8,17 @@ Feature: research line
 	When I remove the research line "Novo Padrao Arquitetural MVCE"
 	Then the research line "Novo Padrao Arquitetural MVCE" is properly removed by the system
 			
-	Scenario: Update research line not knowing the description
+	Scenario: Update research line
 	Given the system has a research line named "Teoria da informacao - Complexidade no espaco"
 	When I update the research line "Teoria da informacao - Complexidade no espaco" with a description "P != NP"
 	Then the research line "Teoria da informacao - Complexidade no espaco" has the description updated to "P != NP"
 	
 	Scenario: Create invalid research line
-	Given the system has no research line "IA Avancada"
+	Given the system has no research line named "IA Avancada"
 	When I create the research line named "IA Avancada" with empty description
 	Then the research line "IA Avancada" is not stored, because is invalid
 
-    Scenario: Create research line with no member
+    Scenario: Create research line without member assigned
     Given: the system has no research line named "Redes Avancadas"
     When I create the research line "Redes Avancadas" with description "Redes de Computadores Avancadas" with no member assigned
     Then the research line "Redes Avancadas" is properly saved with no error
