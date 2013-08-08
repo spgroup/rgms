@@ -186,7 +186,7 @@ Then(~'^the description of research group entitled "([^"]*)" is not none$') { St
 
 When(~'^I modify the name of research group entitled "([^"]*)" to none$') { String oldName ->
     researchGroup = ResearchGroup.findByName(oldName)
-    TestDataAndOperations.editResearchGroup(researchGroup, oldName, "")
+    TestDataAndOperations.editResearchGroup(researchGroup, "", "new description")
 }
 
 Then(~'^there is no research group entitled none$') { ->
