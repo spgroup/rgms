@@ -1,5 +1,6 @@
 package rgms.publication
 
+import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 
 class DissertacaoController extends ThesisOrDissertationController {
@@ -39,7 +40,7 @@ class DissertacaoController extends ThesisOrDissertationController {
         String flashMessage = 'The non existent dissertations were successfully imported'
 
         XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request)
+        Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
         if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile))
             return
     }
