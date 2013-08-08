@@ -13,9 +13,12 @@ class Conferencia extends Publication {
 
 //#if($Bibtex)
     String generateBib() {
-        return "@inproceedings{" + members.toList()[0] + publicationDate.getAt(Calendar.YEAR)
+
+        Date yearDate = publicationDate.getAt(Calendar.YEAR)
+
+        return "@inproceedings{" + members.toList()[0] + yearDate
         +",author=\"" + BibtexAux.organizeAuthors(members) + "\",\n title=\"" + title + "\",\n booktitle=\""
-        +this.booktitle + "\",\n year=\"" + publicationDate.getAt(Calendar.YEAR) + "\",\n pages=\""
+        +this.booktitle + "\",\n year=\"" + yearDate + "\",\n pages=\""
         +this.pages + "\",\n month=\"" + publicationDate.getAt(Calendar.MONTH) + "\"}"
     }
 //#end
