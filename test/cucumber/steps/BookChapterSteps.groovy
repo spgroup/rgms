@@ -40,17 +40,6 @@ Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String
     assert bookChapter == null
 }
 
-Given(~'^I am at the publication menu$') {->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-}
-
-When(~'^I select the "([^"]*)" option at the publication menu$') { String option ->
-    page.select(option)
-}
-
 When(~'^I select the Novo BookChapter option at the book chapter page$') {->
     at BookChapterPage
     page.selectNewBookChapter()
