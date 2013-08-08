@@ -26,10 +26,10 @@ Then(~'^the research line "([^"]*)" is properly removed by the system'){String n
 }
 
 
-Given(~'^the system has a research line "([^"]*)"$') { String name ->
+Given(~'^the system has a research line "([^"]*)" with a description "([^"]*)"$') { String name, description ->
 	TestDataAndOperations.insertsResearchLine(name)
 	research_line = ResearchLine.findByName(name)
-	assert research_line != null
+	assert research_line != null && research_line.description == description
 }
 
 When(~'^I update the research line "([^"]*)" with a description "([^"]*)"$') { String name,description ->
@@ -54,10 +54,7 @@ Then(~'^the research line "([^"]*)" is not stored, because is invalid$'){String 
 	research_line = ResearchLine.findByName(name)
 	assert research_line == null
 }
-Given(~'^the system has no research line "([^"]*)"$') { String name ->
-    research_line = ResearchLine.findByName(name)
-    assert research_line == null
-}
+
 When (~'I create the research line "([^"]*)" with description "([^"]*)" with no member assigned'){String name, description ->
     TestDataAndOperations.createResearchLine(name)
 }
