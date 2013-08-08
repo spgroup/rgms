@@ -816,4 +816,7 @@ class TestDataAndOperations {
         return news != null
     }
 
+    static public String getTestFilesPath(String filename){
+        new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    }
 }
