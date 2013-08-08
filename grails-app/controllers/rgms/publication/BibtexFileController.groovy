@@ -33,7 +33,7 @@ class BibtexFileController {
             System.out.println("************************** Title  : " + publication.getTitle());
             System.out.println("************************** Date   : " + publication.getPublicationDate());
             if (publication.save(failOnError: true)) {
-                System.out.println("salvando o objeto");
+                System.out.println("Saving the Object");
             }
         }
         redirect(action: "home")
