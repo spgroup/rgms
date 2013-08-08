@@ -125,11 +125,9 @@ class AuthController {
         render(view:'resetPassword')
     }
     def doResetPassword = {
-        if (params.password1!=params.password2) {
-            flash.message = "Please enter same passwords."
-            flash.status = "error"
+        if (checkPasswordWithConfirmation(params.password1,params.password2))
             redirect(action:'resetPassword',id:params.token)
-        } else {
+         else {
             def resetRequest = (params.token ? PasswordResetRequest.findByToken(params.token) : null)
             def connectedUser = SecurityUtils.subject?.principal
             def user = resetRequest?.user ?: (connectedUser ? Member.findByUsername(connectedUser) : null)
@@ -219,13 +217,8 @@ class AuthController {
 
         //("ENTROU no register")
 
-        if (params.password1 != params.password2) {
-            flash.message = "Please enter same passwords."
-            flash.status = "error"
-            params.password1 = ""
-            params.password2 = ""
+        if ( checkPasswordWithConfirmation(params.password1 , params.password2))
             return [memberInstance: new Member(params)]
-        }
 
         def memberInstance = new Member(params)
         
@@ -283,5 +276,15 @@ class AuthController {
                 body "Hello Administrator,\n\nYou received a request to authenticate an account.\n\nWho requested was ${name}. His/Her email address is ${emailAddress}\n\n${createLink(absolute: true, uri: '/member/list')}\n\nBest Regards,\nResearch Group Management System".toString()
             }
         }
+    }
+
+    private checkPasswordWithConfirmation(p1, p2){
+        if (p1!=p2) {
+            flash.message = "Please enter same passwords."
+            flash.status = "error"
+            params.password1 = ""
+            params.password2 = ""
+        }
+        return p1!=p2;
     }
 }
