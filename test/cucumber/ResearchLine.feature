@@ -9,7 +9,7 @@ Feature: research line
 	Then the research line "Novo Padrao Arquitetural MVCE" is properly removed by the system
 			
 	Scenario: Update research line
-	Given the system has a research line named "Teoria da informacao - Complexidade no espaco"
+	Given the system has a research line "Teoria da informacao - Complexidade no espaco" with a description "P != NP"
 	When I update the research line "Teoria da informacao - Complexidade no espaco" with a description "P != NP"
 	Then the research line "Teoria da informacao - Complexidade no espaco" has the description updated to "P != NP"
 	
