@@ -30,8 +30,8 @@ class TechnicalReportController {
     def create() {
         def technicalReportInstance = new TechnicalReport(params)
         //#if($publicationContext)
-        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
-        if (publcContextOn) {
+        def publicationContextOn = grailsApplication.getConfig().getProperty("publicationContext");
+        if (publicationContextOn) {
             if (SecurityUtils.subject?.principal != null) {
                 def user = PublicationController.addAuthor(technicalReportInstance)
                 if (!user.university.isEmpty()) {
