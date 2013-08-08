@@ -79,11 +79,8 @@ class TechnicalReportController {
 
     def update(Long id, Long version) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if (!technicalReportInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
-            redirect(action: "list")
+        if(!checkTechnicalReportInstance(id, technicalReportInstance))
             return
-        }
 
         if (version != null) {
             if (technicalReportInstance.version > version) {
@@ -108,11 +105,8 @@ class TechnicalReportController {
 
     def delete(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if (!technicalReportInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
-            redirect(action: "list")
+        if(!checkTechnicalReportInstance(id, technicalReportInstance))
             return
-        }
 
         try {
             technicalReportInstance.members.each {
