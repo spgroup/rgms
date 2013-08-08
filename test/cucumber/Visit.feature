@@ -33,6 +33,6 @@ Scenario: visita de um periodo para visitante cadastrado
   Scenario: Add a new visit with twitter, but don't twitte it
    Given I am logged as "admin" and at the Add Visit Page
    When I try to create an visit
-   Then The visit is created but no twitter should be post
+   Then The visit "Primeira Visita" is created but no twitter should be post
 
 #end
