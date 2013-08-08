@@ -86,8 +86,8 @@ Then(~'^A twitter is added to my twitter account regarding the new visit "([^"]*
   assert TwitterTool.consult(visita)
  }
 
-Then(~'^The visit is created but no twitter should be post$') { ->
-  assert !TwitterTool.consult(null)
+Then(~'^The visit "([^"]*)" is created but no twitter should be post$') { -> String visita ->
+   assert TwitterTool.consult(visita) && assert !TwitterTool.consult(null
 	 }
 
 //#end
