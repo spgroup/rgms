@@ -1,5 +1,6 @@
 package rgms.publication
 
+import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 import org.apache.shiro.SecurityUtils
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
@@ -138,7 +139,7 @@ class DissertacaoController {
         String flashMessage = 'The non existent dissertations were successfully imported'
 
         XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request)
+        Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
         if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile))
             return
     }
