@@ -1,18 +1,20 @@
 package rgms.publication
 
-import rgms.XMLService
 import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
+
 import org.apache.shiro.SecurityUtils
+
 import rgms.member.Member;
 //import Tese;
 
 class TeseController {
+
     def grailsApplication
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def index() {
+    public def index() {
         redirect(action: "list", params: params)
     }
 
@@ -40,68 +42,37 @@ class TeseController {
     def save() {
         def teseInstance = new Tese(params)
         PublicationController pb = new PublicationController()
-        
         if (Tese.findByTitle(params.title)) {
-            handleSavingError(teseInstance, 'tese.duplicatetitle.failure')
+            flash.message = message(code: 'tese.duplicatetitle.failure', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
+            render(view: "create", model: [teseInstance: teseInstance])
             return
         }
-        
-        if (!pb.upload(teseInstance)) {
-            handleSavingError(teseInstance, 'tese.filesaving.failure')
+        if (!pb.upload(teseInstance) || !teseInstance.save(flush: true)) {
+            render(view: "create", model: [teseInstance: teseInstance])
             return
         }
-
-        if (!teseInstance.save(flush: true)) {
-            handleSavingError(teseInstance, 'tese.saving.failure')
-            return
-        }
-       
         //#if($facebook)
         //def user = Member.findByUsername(SecurityUtils.subject?.principal)
         //pb.sendPostFacebook(user, teseInstance.toString())
         //#end
-
         flash.message = message(code: 'default.created.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
         redirect(controller: "tese", action: "show", id: teseInstance.id)
     }
-    
-    def handleSavingError(Tese teseInstance, String message) {
-        teseInstance.discardMembers()
-        flash.message = message
-        render(view: "create", model: [teseInstance: teseInstance])
-    }
 
     def show() {
-        def teseInstance = Tese.get(params.id)
-        
-        if (!teseInstance) {
-            flash.message = messageGenerator('default.not.found.message',  params.id)
-            redirect(action: "list")
-            return
-        }
-
-        [teseInstance: teseInstance]
+        ShowOrEdit()
     }
 
     def edit() {
-        def teseInstance = Tese.get(params.id)
-        if (!teseInstance) {
-            flash.message = messageGenerator('default.not.found.message',  params.id)
-            redirect(action: "list")
-            return
-        }
-
-        [teseInstance: teseInstance]
+        ShowOrEdit()
     }
 
     def update() {
         def teseInstance = Tese.get(params.id)
         if (!teseInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
-            redirect(action: "list")
+            messageGenerator()
             return
         }
-
         if (params.version) {
             def version = params.version.toLong()
             if (teseInstance.version > version) {
@@ -112,84 +83,43 @@ class TeseController {
                 return
             }
         }
-
         teseInstance.properties = params
-
         if (!teseInstance.save(flush: true)) {
             render(view: "edit", model: [teseInstance: teseInstance])
             return
         }
-
-        flash.message = messageGenerator('default.updated.message',  teseInstance.id)
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
         redirect(action: "show", id: teseInstance.id)
     }
 
     def delete() {
         def teseInstance = Tese.get(params.id)
         if (!teseInstance) {
-            flash.message = messageGenerator('default.not.found.message', params.id)
-            redirect(action: "list")
+            messageGenerator()
             return
         }
-
         try {
             teseInstance.delete(flush: true)
-            flash.message = messageGenerator('default.deleted.message', params.id)
-            redirect(action: "list")
+            messageGenerator()
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = messageGenerator('default.not.deleted.message' + ' Erro: '+e.message, params.id)
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
             redirect(action: "show", id: params.id)
         }
     }
-    
-    def messageGenerator (String code, def id)
-    {
-        return message(code: code, args: [message(code: 'tese.label', default: 'Tese'), id])
-    }
-//#if($upXMLTese)
-    def uploadXMLTese()
-    {
-        String flashMessage = 'The non existent theses were successfully imported'
-        XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request)
-        if (!serv.Import(saveTheses, returnWithMessage, xmlFile, flashMessage))
+
+    def ShowOrEdit(){   
+        def teseInstance = Tese.get(params.id)
+        if (!teseInstance) {
+            messageGenerator()
             return
+        }
+        [teseInstance: teseInstance]
     }
 
-    Closure returnWithMessage = {
-        String msg ->
-
-            redirect(action: "list")
-            flash.message = message(code: msg)
+    def messageGenerator()
+    {
+        flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
+        redirect(action: "list")
     }
-
-    def createThesis(Node xmlNode) {
-
-            Tese newThesis = new Tese()
-            newThesis.title =  XMLService.getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")
-
-            newThesis.publicationDate = new Date()
-
-            String tryingToParse = XMLService.getAttributeValueFromNode(xmlNode, "ANO-DE-OBTENCAO-DO-TITULO")
-            if (tryingToParse.isInteger())
-                newThesis.publicationDate.set(year: tryingToParse.toInteger())
-
-            newThesis.school = XMLService.getAttributeValueFromNode(xmlNode, "NOME-INSTITUICAO")
-            newThesis.file = 'no File'
-            newThesis.address = 'no Address'
-            newThesis.save(flush: false)
-
-    }
-
-    Closure saveTheses = {
-        Node xmlFile ->
-            Node dadosGerais = (Node)xmlFile.children()[0]
-            Node mestrado = (Node) ((Node) dadosGerais.children()[3]).children()[1]
-            Node doutorado = (Node) ((Node) dadosGerais.children()[3]).children()[2]
-
-            createThesis(mestrado)
-            createThesis(doutorado)
-    }
-//#end
 }

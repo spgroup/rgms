@@ -2,6 +2,7 @@ import pages.FerramentaCreatePage
 import pages.FerramentaEditPage
 import pages.FerramentaPage
 import pages.FerramentaShowPage
+import rgms.member.Member
 import rgms.publication.Ferramenta
 import steps.TestDataAndOperations
 
@@ -122,9 +123,11 @@ Then(~'^The ferramenta is not stored$') {->
 }
 
 Then(~'^I see my user listed as an author member of ferramenta by default$') {->
-    // Express the Regexp above with the code you wish you had
-
+    at FerramentaCreatePage
+    userData = Member.findByUsername('admin').id.toString()
+    assert page.selectedMembers().contains(userData)
 }
+
 And(~'^I select the upload button at the ferramenta page$') {->
     // Express the Regexp above with the code you wish you had
 

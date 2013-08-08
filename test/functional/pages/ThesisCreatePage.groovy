@@ -1,7 +1,6 @@
 package pages
 
 import geb.Page
-import org.codehaus.groovy.grails.web.context.ServletContextHolder 
 
 class ThesisCreatePage extends Page {
 	static url = "tese/create"
@@ -19,20 +18,18 @@ class ThesisCreatePage extends Page {
 		}*/
 	}
 
-	def fillThesisDetails() {
-    	def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/NewthesisGUI.txt")
-    	absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
-        $("form").file = absolutePath
-        fillSomeThesisDetails()
+	def fillThesisDetails(title, pub_day, pub_month, pub_year, school, address, path) {
+        $("form").file = path
+        fillSomeThesisDetails(title, pub_day, pub_month, pub_year, school, address)
     }
 
-    def fillSomeThesisDetails() {
-        $("form").title = "Tese001"
-        $("form").publicationDate_day = 20
-        $("form").publicationDate_month = 05
-        $("form").publicationDate_year = 1998
-        $("form").school = "UFPE"
-        $("form").address = "Recife"
+    def fillSomeThesisDetails(title, pub_day, pub_month, pub_year, school, address) {
+        $("form").title = title
+        $("form").publicationDate_day = pub_day 
+        $("form").publicationDate_month = pub_month
+        $("form").publicationDate_year = pub_year
+        $("form").school = school
+        $("form").address = address
         $("input", id: "create").click()
     }
 	

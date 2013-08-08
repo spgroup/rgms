@@ -15,10 +15,11 @@ Feature: Thesis Tests
 
   Scenario: create thesis web
     Given I am at the create thesis page
-    When  I fill the thesis details
+    When  I fill the thesis details with "Software Engineering", "10", "8", "1998", "UFPE" and "Recife"
     Then  I am on the thesis show page
+    And   The thesis "Software Engineering" is properly stored by the system
 
   Scenario: create thesis web with partial information
     Given I am at the create thesis page
-    When  I fill some thesis details
+    When  I fill some thesis details with "Tese002", "10", "8", "1998", "UFPE" and "Recife"
     Then  I am still on the create thesis page with the error message

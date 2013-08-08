@@ -4,10 +4,12 @@ import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.GoogleScholarService
 import rgms.XMLService
+import rgms.member.*
+import rgms.publication.*
 
 class PeriodicoController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST", share: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
@@ -232,6 +234,19 @@ class PeriodicoController {
         String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO-DO-ARTIGO")
         if (tryingToParse.isInteger())
             newJournal.publicationDate.set(year: tryingToParse.toInteger() - 1900)
+    }
+    //#end
+
+    //#if( $Facebook )
+    def share(){
+        def periodicoInstance = Periodico.get(params.id)
+        System.out.println("1");
+        def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        System.out.println("2");
+        if(user.getFacebook_id()!= null && user.getFacebook_id().compareTo("") != 0)
+            PublicationController.sendPostFacebook(user, periodicoInstance.toString())
+        System.out.println("3");
+        redirect(action: "show", id: params.id)
     }
     //#end
 }

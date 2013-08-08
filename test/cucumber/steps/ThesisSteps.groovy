@@ -7,6 +7,7 @@ import rgms.publication.Tese
 import java.io.File
 
 import static cucumber.api.groovy.EN.*
+import org.codehaus.groovy.grails.web.context.ServletContextHolder 
 
 Given(~'^The system has no thesis entitled "([^"]*)"$') {String title ->
     article = Tese.findByTitle(title)
@@ -43,12 +44,16 @@ Given(~'^I am at the create thesis page$') {->
     at ThesisCreatePage
 }
 
-When(~'^I fill the thesis details$') {->
-    page.fillThesisDetails()
+When(~'^I fill the thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') {
+    title, pub_day, pub_month, pub_year, school, address ->
+    def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/NewthesisGUI.txt")
+    absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
+    page.fillThesisDetails(title, pub_day, pub_month, pub_year, school, address, absolutePath)
 }
 
-When(~'^I fill some thesis details$') {->
-    page.fillSomeThesisDetails()
+When(~'^I fill some thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') {
+    title, pub_day, pub_month, pub_year, school, address ->
+    page.fillSomeThesisDetails(title, pub_day, pub_month, pub_year, school, address)
 }
 
 Then(~'^I am on the thesis show page$') {->

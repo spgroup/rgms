@@ -16,6 +16,7 @@ import pages.LoginPage
 import pages.MemberListPage
 import pages.PublicationsPage
 import pages.RootPage
+import pages.UnauthorizedPage
 import pages.UserRegisterPage
 import rgms.publication.Periodico
 import rgms.member.Member
@@ -53,9 +54,15 @@ Given(~'I am at the User Register Page') {  ->
 Given(~'I am at the Member Listagem page') { ->
     to LoginPage
     at LoginPage
-    page.fillLoginDataAndSubmit("admin", "adminadmin")
+    page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
-    page.getLink("Member").click()
+    page.select("Member")
+    //to LoginPage
+    //at LoginPage
+    //page.fillLoginDataAndSubmit("admin", "adminadmin")
+    //to PublicationsPage
+    //at PublicationsPage
+    //page.getLink("Member").click()
     at MemberListPage
 }
 
@@ -98,10 +105,6 @@ Given (~'The user of "([^"]*)" username is not yet enabled') { username ->
     def user = Member.findByUsername(username)
     assert( !user?.enabled )
 }
-When (~'I miss the password for "([^"]*)" username') { username ->
-    page.fillLoginDataAndSubmit(username, "senhaerrada")
-}
-
 
 When (~'I try to create a "([^"]*)" username with the "([^"]*)" email') {String novoUsuario, String emailInvalido  ->
     to UserRegisterPage
@@ -123,23 +126,18 @@ Then (~"A message indicating the email is invalid is displayed") { ->
 
 
 Then (~'The University field is filled with "([^"]*)"') { defaultName ->
+    to UserRegisterPage
+    at UserRegisterPage
     assert( page.university.value() ==~ /${defaultName}/ )
 }
 
 
-When (~'I mistype my password at the second password field') { ->
+When (~'I mistype my confirmation password at Register Page') { ->
     def user = TestDataAuthentication.findByUsername("user186")
     page.password1.value(user.password)
     page.password2.value(user.password+"aa")
 }
-When (~'I fill my remaining user data') { ->
-    def user = TestDataAuthentication.findByUsername("user186")
-    page.name.value(user.name)
-    page.username.value(user.username)
-    page.email.value(user.email)
-    page.university.value(user.university)
-    page.status.value(user.status)
-}
+
 Then (~'The password fields are empty') {->
     assert(
         page.password1.value() == "" &&
@@ -162,9 +160,6 @@ Given (~'I am not logged') { ->
     page.browser.config.setAutoClearCookies(false)
     page.driver.manage().deleteAllCookies()
 }
-
-
-
 
 
 
@@ -207,3 +202,28 @@ When (~'The login procedure is successful') { ->
     at PublicationsPage
 }
 
+
+
+
+
+
+
+When(~'I try loggin with "([^"]*)"'){ username ->
+    page.fillLoginDataAndSubmit(username, "senha")
+}
+
+Then(~'Inform the user that don`t have permission to loggin yet'){ ->
+    to UnauthorizedPage
+    at UnauthorizedPage
+}
+
+Given(~'I am at Register Page registering myself'){ ->
+    to UserRegisterPage
+    at UserRegisterPage
+    def user = TestDataAuthentication.findByUsername("user186")
+    page.name.value(user.name)
+    page.username.value(user.username)
+    page.email.value(user.email)
+    page.university.value(user.university)
+    page.status.value(user.status)
+}

@@ -161,7 +161,7 @@
                             <!--#if($facebook) -->
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="facebook">Atualizar Access Token: </label>
+                                    <label>Atualizar Access Token: </label>
                                 </td>
                                 <td valign="top" >
                                     <div id="login_" style="text-align: left;">
@@ -178,7 +178,7 @@
                                         
                                         <script>
                                               // initialize the library with the API key
-                                            FB.init({ appId: '424490127646893',oauth: true});
+                                            FB.init({ appId: ${grailsApplication.config.appid},oauth: true});
 
                                               // fetch the status on load
                                             //FB.getLoginStatus(handleSessionResponse2);

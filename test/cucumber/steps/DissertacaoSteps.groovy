@@ -22,6 +22,16 @@ When(~'^I cant add the dissertation without a file$') {->
     page.fillDissertationDetailsWithoutFile()
 }
 
+When(~'^I can add the dissertation with a file "([^"]*)"$'){ String filename->
+    at DissertationCreate
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + filename
+    page.fillDissertationDetailsWithFile(path)
+}
+Then((~'^the system has a dissertation entitled "([^"]*)"$')){ String title->
+    article = Dissertacao.findByTitle(title)
+    assert article != null
+}
+
 
 
 When(~'^I select "([^"]*)" at the dissertation page$') { String title ->
@@ -79,6 +89,10 @@ When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without sch
     TestDataAndOperations.createDissertacaoWithotSchool(title, filename);
 }
 
+When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without address$') { String title, filename ->
+    TestDataAndOperations.createDissertacaoWithoutAddress(title, filename);
+}
+
 When(~'^I edit the dissertation title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
     def updatedDissertation = TestDataAndOperations.editDissertatacao(oldtitle, newtitle)
     assert updatedDissertation != null
@@ -97,12 +111,9 @@ Then(~'^I\'m still on dissertation page$') {->
     //TO DO
     //at DissertationPage
 }
-Given(~'^the system has some dissertation stored$') {->
-    inicialSize = Dissertacao.findAll().size()
 
-}
 When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
-    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
     TestDataAndOperations.uploadDissertacao(path)
     finalSize = Dissertacao.findAll().size()
@@ -113,6 +124,23 @@ When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
 Then(~'the system has more dissertations now$') {->
     finalSize = Dissertacao.findAll().size()
 
+}
+
+Given(~'^the system has some dissertation stored$'){->
+    size = Dissertacao.findAll().size()
+    assert size > 0
+
+}
+
+
+When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
+    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    inicialSize = Dissertacao.findAll().size()
+    TestDataAndOperations.uploadDissertacao(path)
+    finalSize = Dissertacao.findAll().size()
+    assert inicialSize<finalSize
+    //para funcionar é necessario que tenha um FilePath válido
+    // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
 
 Then(~'^I see my user listed as an author member of dissertation by default$') {->
@@ -126,4 +154,10 @@ Then(~'^I see my school name as school of dissertation by default$') {->
     userData = Member.findByUsername('admin').university
     assert page.currentSchool() == userData
 }
+
+Given(~'^the system has no dissertation stored$')   {->
+    intialSize = Dissertacao.findAll().size()
+    assert intialSize == 0
+}
+
 

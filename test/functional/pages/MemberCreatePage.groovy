@@ -31,5 +31,13 @@ class MemberCreatePage extends Page {
         $("form").university = university
         $("input", id: "create").click()
     }
+
+    def compareMemberUniversity(String university){
+        $("form").university ==~ /${university}/
+    }
+
+    def compareMemberCity(String city){
+        $("form").city ==~ /${city}/
+    }
 }
 

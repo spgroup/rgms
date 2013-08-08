@@ -26,4 +26,8 @@ class RegisterPage extends Page {
 		$("form").status = "Graduate Student"
 		$("form").register().click()
 	}
+
+    def compareMemberUniversity(String university){
+        $("form").university ==~ /${university}/
+    }
 }

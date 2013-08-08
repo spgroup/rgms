@@ -2,95 +2,63 @@ Feature: Authentication Process
   As a registered member in the system
   I want to have access to all of its internal features, which are only accessible after a successful login procedure
 
- #Issue#73 - Informar erro ao submeter username inexistente, na tela de Login
-
-Scenario:
+Scenario: Login with user that doesn't exist fail message
   Given I am at the Login Page
   When I try to login with an user that does not exist
   Then I am redirected to the Login Page
   And A login failure message is displayed
 
- #Issue#66 - Informar erro ao submeter usuário com senha inválida, na tela de Login
-
-Scenario:
+Scenario: Login with user's wrong password fail message
   Given I am at the Login Page
   When I try to login with an existent user, though with wrong password
   Then I am redirected to the Login Page
   And A login failure message is displayed
 
- #Issue#63 - Informar quando um usuário é cadastrado com sucesso
-
-Scenario:
+Scenario:New user register success message
   Given I am at the User Register Page
   When I register a user with success
   And I am redirected to the User Register Page
   Then A message indicating the user was successfully registered is displayed
 
- #Issue#69 - Informar quando tentar cadastrar novo usuário com e-mail inválido
-
-Scenario:
+Scenario: New user register with invalid email fail message
   Given I am at the Login Page
   When I try to create a "newuser" username with the "invalid email abcde" email
   Then A message indicating the email is invalid is displayed
 
- #Issue#67 - Durante o login, ao errar o password de um usuário existente, cuja conta ainda não foi liberada pelo
- #administrador, redirecionar à Tela de login e exibir uma mensagem de 'usuário ou senha inválida'
-
-Scenario:
-  Given I am at the Login Page
-   And The user of "naoHabilitado" username is not yet enabled
-  When I miss the password for "naoHabilitado" username
-  Then I am redirected to the Login Page
-  And A login failure message is displayed
-
-
- #Issue#86 - Duas telas diferentes de login existentes durante a navegação: uma 'oficial', acessada pelo caminho auth/login, e outra
- #encontrada no caminho raiz '/' da aplicação
-
-Scenario:
+Scenario: Try to access Member List Page without being logged in
   Given I am not logged
   When I directly access the Member List Page
   Then I am redirected to the Login Page
 
-Scenario:
+Scenario: Try to access root page without being logged in
   Given I am not logged
   When I access the Root Page
   Then I am redirected to the Login Page
 
- #Issue#9 - Preencher com valores default campos de formulários quando relevante
-
-Scenario:
+Scenario: Field University filled with "Federal University of Pernambuco"
   Given I am at the Login Page
   When I click the "Create an account" link
   Then I am redirected to the User Register Page
   And The University field is filled with "Federal University of Pernambuco"
 
- #Issue#76 - Usuário é direcionado para tela de login repetidas vezes
-
-Scenario:
+Scenario: Unpermitted go to "Principal" Menu from Member Listagem
   Given I am at the Member Listagem page
   When I select the "Principal" menu option
   Then I am redirected to the Publications Menu page
 
- #Issue#65 - Ao tentar realizar cadastro de usuário com dado inválido o form de cadastro deve ser retornado com os
- #dados previamente preenchidos
+ Scenario: Invalid password validation registration data remaining
+   Given I am at Register Page registering myself
+   And I mistype my confirmation password at Register Page
+   When I submit the form
+   Then I am redirected to the User Register Page
+   And The password fields are empty
+   And My remaining user data is still at their corresponding fields
 
-Scenario:
+Scenario:  User unabilited receive not permitted message
   Given I am at the Login Page
-  When I click the "Create an account" link
-  And I am redirected to the User Register Page
-  And I mistype my password at the second password field
-  And I fill my remaining user data
-  And I submit the form
-  Then I am redirected to the User Register Page
-  And The password fields are empty
-  And My remaining user data is still at their corresponding fields
-
-
-
-
-
-
+  And The user of "naoHabilitado" username is not yet enabled
+  When I try loggin with "naoHabilitado"
+  Then Inform the user that don`t have permission to loggin yet
 
 
  #O campo 'Remember me' da tela de login não surte efeito, ao reinicializar o browser.
