@@ -27,11 +27,7 @@ class VisitController {
     }
 
     def save() {
-        def visitor = Visitor.findByName(params.nameVisitor)
-
-        if(!visitor) {
-            visitor = createVisitor()
-        }
+        def visitor = getVisitor(params.nameVisitor)
 
         def visitInstance = new Visit(params)
         visitInstance.visitor = visitor
@@ -71,11 +67,7 @@ class VisitController {
 
         visitInstance.properties = params
 
-        def visitor = Visitor.findByName(params.nameVisitor)
-
-        if(!visitor) {
-            visitor = createVisitor()
-        }
+        def visitor = getVisitor(params.nameVisitor)
 
         visitInstance.visitor = visitor
 
@@ -120,5 +112,13 @@ class VisitController {
             redirect(action: "list")
         }
         return visitInstance
+    }
+
+    def getVisitor(String nameVisitor) {
+        def visitor = Visitor.findByName(nameVisitor)
+        if(!visitor) {
+            visitor = createVisitor()
+        }
+        return visitor
     }
 }
