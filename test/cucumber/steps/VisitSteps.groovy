@@ -12,8 +12,7 @@ import steps.TestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no visitor named "([^"]*)"$') { String name ->
-    def visitor = Visitor.findByName(name)
-    assert visitor == null
+    assert Visitor.findByName(name) == null
 }
 
 When(~'^I create the visit for the visitor "([^"]*)" with initial date "([^"]*)"$') { String name, String date ->
@@ -21,15 +20,11 @@ When(~'^I create the visit for the visitor "([^"]*)" with initial date "([^"]*)"
 }
 
 Then(~'^the visitor named "([^"]*)" is properly stored by the system$') { String name ->
-    def visitor = Visitor.findByName(name)
-    assert visitor != null
+    assert Visitor.findByName(name) != null
 }
 
 And(~'^the visit for the visitor "([^"]*)" with initial and final date equal to "([^"]*)" is properly stored by the system$') { String name, String date ->
-    Date day = Date.parse("dd/MM/yyyy", date)
-    def visitor = Visitor.findByName(name)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day, day)
-    assert visit != null
+    assert TestDataAndOperations.searchVisit(name, date, date) != null
 }
 
 When(~'^I create the visit for the visitor "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)"$') { String name, String initialDate, String finalDate ->
@@ -42,8 +37,7 @@ And(~'^the visit for the visitor "([^"]*)" with initial date "([^"]*)" and final
 
 Given(~'^the system has visitor named "([^"]*)"$') { String name ->
     TestDataAndOperations.createVisitor(name)
-    def visitor = Visitor.findByName(name)
-    assert visitor != null
+    assert Visitor.findByName(name) != null
 }
 
 /**
@@ -51,11 +45,9 @@ Given(~'^the system has visitor named "([^"]*)"$') { String name ->
  */
 Given(~'^the system has a visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" stored$') { String name, String initialDate, String finalDate ->
     TestDataAndOperations.createVisitor(name)
-    def visitor = Visitor.findByName(name)
-    assert visitor != null
+    assert Visitor.findByName(name) != null
     TestDataAndOperations.createVisit(name, initialDate, finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, Date.parse("dd/MM/yyyy", initialDate), Date.parse("dd/MM/yyyy", finalDate))
-    assert visit != null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) != null
 }
 
 /**
