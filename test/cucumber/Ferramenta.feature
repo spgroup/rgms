@@ -52,6 +52,7 @@ Feature: Ferramenta
     Then I see my user listed as an author member of ferramenta by default
 #end
 
+  @ignore
   Scenario: edit ferramenta
     Given I am at the publications menu
     When I select the "Ferramenta" option at the program menu

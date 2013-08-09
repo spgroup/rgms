@@ -157,8 +157,6 @@ Then(~'^The system list "([^"]*)" and "([^"]*)" ferramentas$') { String title, o
     assert ferramentas.size() == 1
     ferramentas = Ferramenta.findAllByTitle(otherTitle)
     assert ferramentas.size() == 1
-    ferramentaCount = Ferramenta.count()
-    assert ferramentaCount == 2
 }
 
 And(~'^I fill Titulo with more than (\\d+) caracteres$') { int arg1 ->
