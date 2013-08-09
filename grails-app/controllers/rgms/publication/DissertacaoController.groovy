@@ -3,9 +3,9 @@ package rgms.publication
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
 class DissertacaoController extends ThesisOrDissertationController {
 
-import javax.servlet.http.HttpServletRequest
 
 import javax.servlet.http.HttpServletRequest
 
