@@ -63,9 +63,9 @@ Feature: Ferramenta
     Then I can see the new title "TestCucumber" at ferramenta show page
 
   Scenario: list ferramentas
-    Given the ferramenta "Emergo" is stored in the system with file name "emergo.pdf"
-    When I create the ferramenta "Target" with file name "target.pdf"
-    Then The system list "Emergo" and "Target" ferramentas
+    Given the ferramenta "Tool" is stored in the system with file name "tool.pdf"
+    When I create the ferramenta "New" with file name "new.pdf"
+    Then The system list "Tool" and "New" ferramentas
 
   Scenario: new ferramenta with Titulo exceding caracteres limits
     Given I am at the publications menu
@@ -73,7 +73,7 @@ Feature: Ferramenta
     And I select the new ferramenta option at the ferramenta page
     And I fill Titulo with more than 255 caracteres
     And fill the others fields with valid values without Titulo
-    Then I am still on ferramenta page
+    Then I am still on create new ferramenta page
     And the ferramenta is not displayed in the ferramentas list page
 
    Scenario: remove existing ferramenta

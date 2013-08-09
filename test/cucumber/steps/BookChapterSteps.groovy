@@ -178,3 +178,4 @@ And(~'^it is shown in the book chapter list with title "([^"]*)"$'){ String titl
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
 }
+}

@@ -133,7 +133,7 @@ And(~'^I select the upload button at the ferramenta page$') {->
 
 }
 Then(~'^I am still on ferramenta page$') {->
-    at FerramentaCreatePage
+    at FerramentaPage
 }
 
 // edit ferramenta
@@ -168,7 +168,7 @@ And(~'^I fill Titulo with more than (\\d+) caracteres$') { int arg1 ->
 }
 And(~'^fill the others fields with valid values without Titulo$') {->
     at FerramentaCreatePage
-    page.fillFerramentaDetailsWithoutTitle()
+    page.fillFerramentaDetailsWithoutTitle("Without title")
 }
 When(~'^I remove the ferramenta entitled "([^"]*)"$') { String arg1 ->
     TestDataAndOperations.removeFerramenta(arg1)
