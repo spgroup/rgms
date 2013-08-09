@@ -30,15 +30,8 @@ class VisitController {
         def visitor = getVisitor(params.nameVisitor)
 
         def visitInstance = new Visit(params)
-        visitInstance.visitor = visitor
 
-        if (!visitInstance.save(flush: true)) {
-            render(view: "create", model: [visitInstance: visitInstance])
-            return
-        }
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'visit.label', default: 'Visit'), visitInstance.id])
-        redirect(action: "show", id: visitInstance.id)
+        saveVisit(visitInstance, visitor, "create", "created")
     }
 
     def show(Long id) {
@@ -69,15 +62,7 @@ class VisitController {
 
         def visitor = getVisitor(params.nameVisitor)
 
-        visitInstance.visitor = visitor
-
-        if (!visitInstance.save(flush: true)) {
-            render(view: "edit", model: [visitInstance: visitInstance])
-            return
-        }
-
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'visit.label', default: 'Visit'), visitInstance.id])
-        redirect(action: "show", id: visitInstance.id)
+        saveVisit(visitInstance, visitor, "edit", "updated")
     }
 
     def delete(Long id) {
@@ -120,5 +105,17 @@ class VisitController {
             visitor = createVisitor()
         }
         return visitor
+    }
+
+    def saveVisit(Visit visitInstance, Visitor visitor, String view, String typeMessage) {
+        visitInstance.visitor = visitor
+
+        if (!visitInstance.save(flush: true)) {
+            render(view: view, model: [visitInstance: visitInstance])
+            return
+        }
+
+        flash.message = message(code: 'default.' + typeMessage + '.message', args: [message(code: 'visit.label', default: 'Visit'), visitInstance.id])
+        redirect(action: "show", id: visitInstance.id)
     }
 }
