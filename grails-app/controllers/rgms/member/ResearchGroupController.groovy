@@ -10,6 +10,8 @@ class ResearchGroupController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    def mailService
+
     def index() {
         redirect(action: "list", params: params)
     }
@@ -115,6 +117,7 @@ class ResearchGroupController {
 
     def update() {
         def researchGroupInstance = ResearchGroup.get(params.id)
+
         //#if($researchGroupHierarchy)
         def researchGroupInstanceChildOf = null
         if(params.childOf?.id != "null") {
@@ -219,8 +222,29 @@ class ResearchGroupController {
         def researchGroupInstance = ResearchGroup.get(params.id)
         def list = ResearchGroup.getPublications(researchGroupInstance)
         return list
-
     }
+
+    //#if($researchGroupHierarchyNotify)
+    void notifyChangeChildOfResearchGroup(researchGroup, members) {
+        for (memberId in members) {
+            def member = Member.get(memberId)
+            assert member != null
+            if (member.getEmail()) {
+                mailService.sendMail {
+                    to member.getEmail()
+                    subject "Research Group change hierarchy"
+                    body "Hello " + member.name + ",\n\nThe Research Group is now child of the Research Group ${researchGroup.getChildOf().getName()}".toString()
+                }
+            }
+        }
+    }
+
+    boolean isChildOfResearchGroupChanged(researchGroupInstance, newResearchGroupChildOf) {
+        def result = (researchGroupInstance != null) && (newResearchGroupChildOf != null) && (researchGroupInstance.getChildOf() != null)
+        result = result && (newResearchGroupChildOf != researchGroupInstance.getChildOf())
+        result
+    }
+    //#end
 
     def updateNewsFromTwitter() {
         def researchGroupInstance = ResearchGroup.get(params.id)
