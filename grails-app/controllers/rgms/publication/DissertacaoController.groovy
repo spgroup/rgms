@@ -42,8 +42,7 @@ class DissertacaoController extends ThesisOrDissertationController {
 
         XMLService serv = new XMLService()
         Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
-        if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile as HttpServletRequest))
-            return
+        serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile as HttpServletRequest)
     }
 
     Closure returnWithMessage = {
