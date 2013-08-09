@@ -93,12 +93,12 @@ Given(~'^I am logged as "([^"]*)" and at the visits page\$') { String userName -
  * @author carloscemb
  */
 Given(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is stored in the system$') { String name, String initialDate, String finalDate ->
-at VisitPage
-page.selectNewVisit()
-at VisitCreatePage
-page.fillVisitDetails()
-visit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
-assert visit != null
+    at VisitPage
+    page.selectNewVisit()
+    at VisitCreatePage
+    page.fillVisitDetails()
+    visit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
+    assert visit != null
 }
 
 /**
@@ -121,11 +121,7 @@ When(~'^I delete the visit of the visitor named "([^"]*)" with initial date "([^
  * @author carloscemb
  */
 Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is properly removed by the system$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
-    Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day_1, day_2)
-    assert visit == null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) == null
 }
 
 /**
@@ -157,11 +153,7 @@ When(~'^I edit the visit of the visitor named "([^"]*)" with initial date "([^"]
  * @author carloscemb
  */
 Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is properly updated by the system$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
-    Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day_1, day_2)
-    assert visit == null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) == null
 }
 
 /**
@@ -186,11 +178,7 @@ Then(~'I can select the "([^"]*)" option visit$') { String option ->
  * @author penc
  */
 Then(~'^the visit for the visitor "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is not stored by the system because it is invalid$') { String name, String initialDate, String finalDate ->
-    Visitor visitor = Visitor.findByName(name)
-    Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
-    Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day_1, day_2)
-    assert visit == null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) == null
 }
 
 /**
