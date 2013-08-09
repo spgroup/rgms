@@ -195,10 +195,12 @@ Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName -
     page.editEnableUser(userName)
 }
 
-Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
+Given(~'^I am logged as "([^"]*)"$') { String userName ->
     to LoginPage
     at LoginPage
     page.fillLoginData(userName, "adminadmin")
+}
+And (~'^I select the "([^"]*)" option at the publications menu $') {->
     at PublicationsPage
     page.select("Periodico")
     to ArticlesPage
@@ -223,11 +225,11 @@ When(~'^I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String 
     at ArticleShowPage
 }
 
-Then(~'^A twitter is added to my twitter account regarding the new article "([^"]*)"$') { String articleTitle ->
+Then(~'^A tweet is added to my twitter account regarding the new article "([^"]*)"$') { String articleTitle ->
     assert TwitterTool.consult(articleTitle)
 }
 
-Then (~'The twitter is not posted about "([^"]*)"$'){ String article ->
+Then (~'The tweet is not posted about "([^"]*)"$'){ String article ->
     assert !TwitterTool.consult(null)
 }
 
