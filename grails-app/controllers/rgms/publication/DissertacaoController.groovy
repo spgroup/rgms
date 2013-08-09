@@ -7,6 +7,8 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
 
+import javax.servlet.http.HttpServletRequest
+
 
 class DissertacaoController {
 
@@ -140,7 +142,7 @@ class DissertacaoController {
 
         XMLService serv = new XMLService()
         Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
-        if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile))
+        if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile as HttpServletRequest))
             return
     }
 
