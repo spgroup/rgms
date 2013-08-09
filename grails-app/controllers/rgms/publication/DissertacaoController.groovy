@@ -3,7 +3,6 @@ package rgms.publication
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 import org.apache.shiro.SecurityUtils
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
 
