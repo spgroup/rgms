@@ -1,10 +1,12 @@
 import pages.LoginPage
 import pages.MemberListPage
 import pages.MemberPage
+import pages.MemberCreatePage
 
 import pages.PublicationsPage
 import pages.ResearchGroupListPage
 import pages.ResearchGroupPage
+import pages.ResearchGroupShowPage
 
 import static cucumber.api.groovy.EN.*
 
@@ -77,7 +79,29 @@ Then(~'^I can generate a XML report about Member "([^"]*)"$') { String memberNam
     page.compareXML(memberName)
 }
 //-------------------------------------------------------------------------------------------------
-Given(~'^I am at the Research Group list page and I select the "([^"]*)" group$') { String researchGroupName ->
+
+Given(~'^I am at the Publications page$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+
+}
+
+When(~'^I select the Novo Member option$') { ->
+    to MemberCreatePage
+    at MemberCreatePage
+}
+
+Then(~'^I fill the Member details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)" and create a new one$') { String name, username, email, university ->
+    at MemberCreatePage
+    page.fillMemberDetails(name, username, email, university)
+    to MemberListPage
+    at MemberListPage
+}
+
+//-------------------------------------------------------------------------------------------------
+Given(~'^I am at the Research Group list page$') { ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -86,16 +110,22 @@ Given(~'^I am at the Research Group list page and I select the "([^"]*)" group$'
     at ResearchGroupListPage
 }
 
-When(~'^I select the "([^"]*)" option at the Research Group list$') { String researchGroupName ->
+
+And(~'^I select the "([^"]*)" option at the Research Group list$') { String researchGroupName ->
+    to ResearchGroupListPage
+    at ResearchGroupListPage
     page.selectResearchGroup(researchGroupName)
 }
 
+
+//-------------------------------------------------------------------------------------------------
+
 And(~'^I can select the option Export to PDF at the Research Group show$') { ->
-    at ResearchGroupPage
+    at ResearchGroupShowPage
     page.checkPDF()
 }
 
-Then(~'^I can generate a PDF report about Research Group "([^"]*)"$') { String researchGroupName ->
+And(~'^I can generate a PDF report about Research Group "([^"]*)"$') { String researchGroupName ->
     page.comparePDF(researchGroupName)
 }
 //-------------------------------------------------------------------------------------------------
@@ -113,11 +143,11 @@ When(~'^I select the "([^"]*)" option at the Research Group list$') { String res
 }  */
 
 And(~'^I can select the option Export to HTML at the Research Group show$') {  ->
-    at ResearchGroupPage
+    at ResearchGroupShowPage
     page.checkHtml()
 }
 
-Then(~'^I can generate a HTML report about Research Group "([^"]*)"$') { String researchGroupName ->
+And(~'^I can generate a HTML report about Research Group "([^"]*)"$') { String researchGroupName ->
     page.compareHTML(researchGroupName)
 }
 //-------------------------------------------------------------------------------------------------
@@ -135,10 +165,12 @@ When(~'^I select the "([^"]*)" option at the Research Group list$') { String res
 } */
 
 And(~'^I can select the option Export to XML at the Research Group show$') {  ->
-    at ResearchGroupPage
+    at ResearchGroupShowPage
     page.checkXml()
 }
 
-Then(~'^I can generate a XML report about Research Group "([^"]*)"$') { String researchGroupName ->
+And(~'^I can generate a XML report about Research Group "([^"]*)"$') { String researchGroupName ->
     page.compareXML(researchGroupName)
 }
+
+//---------------------------------------------------------------------------------------------------

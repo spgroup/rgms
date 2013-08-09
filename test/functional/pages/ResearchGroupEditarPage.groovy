@@ -1,6 +1,10 @@
 package pages
 
 import geb.Page
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.*
+import org.openqa.selenium.support.ui.*
 
 class ResearchGroupEditarPage extends Page {
 
@@ -18,4 +22,10 @@ class ResearchGroupEditarPage extends Page {
         $("form").twitter = "SPG1"
         $("form").description = "grupo de pesquisa " + name
     }
+
+
+    def changeChildOfTo(long id) {
+        $("#childOf").value(id.toString())
+    }
+
 }

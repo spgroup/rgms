@@ -23,14 +23,17 @@ Feature: BookChapter
     Given I am at the publication menu
     When I select the "Book Chapter" option at the publication menu
     And I select the Novo BookChapter option at the book chapter page
-    And I fill only the title field at book chapter create page
-    Then I still on the book chapter create page
+    And I fill only the title field with the value "Next Generation Software Product Line Engineering"
+    Then A failure message is displayed
+    And I still on the book chapter create page
 
   Scenario: new book chapter web
-    Given I am at the publication menu
-    When I select the "Book Chapter" option at the publication menu
-    And I select the Novo BookChapter option at the book chapter page
-    Then I can fill the book chapter details
+    Given I am at the book chapter page
+    And the system has no book chapter entitled "Next Generation Software Product Line Engineering"
+    When I go to NewBookChapter page
+    And I use the webpage to create the book chapter "Next Generation Software Product Line Engineering" with file name "NGSPL-0.pdf"
+    Then the book chapter "Next Generation Software Product Line Engineering" was stored by the system
+    And it is shown in the book chapter list with title "Next Generation Software Product Line Engineering"
 
 #if ($Autofill)
 
@@ -52,3 +55,13 @@ Feature: BookChapter
     And I select the upload button at the book chapter page
     Then I'm still on book chapter page
     And the book chapters are not stored by the system
+
+  Scenario: list existing book chapter
+    Given the system has book chapter entitled "Artificial Neural Networks" with file name "ANN.pdf"
+    When I view the book chapter list
+    Then my book chapter list contains "Artificial Neural Networks"
+
+  Scenario: list existing book chapter web
+    Given I am at the book chapter page
+    And the book chapter "Next Generation Software Product Line Engineering" with file name "Ngs.pdf" was created before
+    Then My resulting book chapter list contains "Next Generation Software Product Line Engineering"

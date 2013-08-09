@@ -1,1 +1,1 @@
--Dgeb.env=chrome -Dwebdriver.chrome.driver=/Users/Rodrigo/Documents/workspaces/TAES/gitsource/rgms/chromedrivers/chromedrivermac test-app functional:cucumber --stacktrace
+-Dgeb.env=chrome -Dwebdriver.chrome.driver=/Users/Rodrigo/Documents/workspaces/TAES/gitsource/rgms/chromedrivers/chromedrivermac test-app functional:cucumber

@@ -149,7 +149,9 @@ class DissertacaoController {
     def uploadXMLDissertacao() {
         String flashMessage = 'The non existent dissertations were successfully imported'
 
-        if (XMLService.Import(saveDissertations, returnWithMessage, flashMessage, request))
+        XMLService serv = new XMLService()
+        Node xmlFile = serv.parseReceivedFile(request)
+        if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile))
             return
     }
 

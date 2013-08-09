@@ -6,7 +6,7 @@ class ArticleShowPage extends Page {
     static url = "periodico/show/1"
 
 	static at = {
-		//title ==~ /Ver Periódico/
+		//title ==~ /Ver Periï¿½dico/
 		GetPageTitle gp = new GetPageTitle()
 		def currentPeriodico = gp.msg("default.periodico.label")
 		def currentTitle = gp.msg("default.show.label", [currentPeriodico])
@@ -41,5 +41,9 @@ class ArticleShowPage extends Page {
 		//$("input", type:"submit", class:"button selected submit", value:"Entrar e Tweetar").click()
 		//<input type="submit" class="button selected submit" value="Entrar e Tweetar">
 	}
+
+    def clickOnShareOnFacebook (){
+        $("form").find(id: 'share').click()
+    }
 //#end
 }

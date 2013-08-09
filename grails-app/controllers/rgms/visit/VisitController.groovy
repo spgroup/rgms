@@ -12,90 +12,113 @@ class VisitController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [visitorInstanceList: Visitor.list(params), visitorInstanceTotal: Visitor.count()]
+        [visitInstanceList: Visit.list(params), visitInstanceTotal: Visit.count()]
     }
 
     def create() {
-        [visitorInstance: new Visitor(params)]
+        [visitInstance: new Visit(params)]
+    }
+
+    def createVisitor() {
+        def visitor = new Visitor()
+        visitor.name = params.nameVisitor
+        visitor = visitor.save(flush: true)
+        return visitor
     }
 
     def save() {
-        def visitorInstance = new Visitor(params)
-        if (!visitorInstance.save(flush: true)) {
-            render(view: "create", model: [visitorInstance: visitorInstance])
+        def visitor = Visitor.findByName(params.nameVisitor)
+
+        if(!visitor) {
+            visitor = createVisitor()
+        }
+
+        def visitInstance = new Visit(params)
+        visitInstance.visitor = visitor
+
+        if (!visitInstance.save(flush: true)) {
+            render(view: "create", model: [visitInstance: visitInstance])
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'visitor.label', default: 'Visitor'), visitorInstance.id])
-        redirect(action: "show", id: visitorInstance.id)
+        flash.message = message(code: 'default.created.message', args: [message(code: 'visit.label', default: 'Visit'), visitInstance.id])
+        redirect(action: "show", id: visitInstance.id)
     }
 
     def show(Long id) {
-        def visitorInstance = Visitor.get(id)
-        if (!visitorInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visitor.label', default: 'Visitor'), id])
+        def visitInstance = Visit.get(id)
+        if (!visitInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visit.label', default: 'Visit'), id])
             redirect(action: "list")
             return
         }
 
-        [visitorInstance: visitorInstance]
+        [visitInstance: visitInstance]
     }
 
     def edit(Long id) {
-        def visitorInstance = Visitor.get(id)
-        if (!visitorInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visitor.label', default: 'Visitor'), id])
+        def visitInstance = Visit.get(id)
+        if (!visitInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visit.label', default: 'Visit'), id])
             redirect(action: "list")
             return
         }
 
-        [visitorInstance: visitorInstance]
+        [visitInstance: visitInstance]
     }
 
     def update(Long id, Long version) {
-        def visitorInstance = Visitor.get(id)
-        if (!visitorInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visitor.label', default: 'Visitor'), id])
+        def visitInstance = Visit.get(id)
+        if (!visitInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visit.label', default: 'Visit'), id])
             redirect(action: "list")
             return
         }
 
         if (version != null) {
-            if (visitorInstance.version > version) {
-                visitorInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'visitor.label', default: 'Visitor')] as Object[],
-                        "Another user has updated this Visitor while you were editing")
-                render(view: "edit", model: [visitorInstance: visitorInstance])
+            if (visitInstance.version > version) {
+                visitInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'visit.label', default: 'Visit')] as Object[],
+                        "Another user has updated this Visit while you were editing")
+                render(view: "edit", model: [visitInstance: visitInstance])
                 return
             }
         }
 
-        visitorInstance.properties = params
+        visitInstance.properties = params
 
-        if (!visitorInstance.save(flush: true)) {
-            render(view: "edit", model: [visitorInstance: visitorInstance])
+        def visitor = Visitor.findByName(params.nameVisitor)
+
+        if(!visitor) {
+            visitor = createVisitor()
+        }
+
+        visitInstance.visitor = visitor
+
+        if (!visitInstance.save(flush: true)) {
+            render(view: "edit", model: [visitInstance: visitInstance])
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'visitor.label', default: 'Visitor'), visitorInstance.id])
-        redirect(action: "show", id: visitorInstance.id)
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'visit.label', default: 'Visit'), visitInstance.id])
+        redirect(action: "show", id: visitInstance.id)
     }
 
     def delete(Long id) {
-        def visitorInstance = Visitor.get(id)
-        if (!visitorInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visitor.label', default: 'Visitor'), id])
+        def visitInstance = Visit.get(id)
+        if (!visitInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'visit.label', default: 'Visit'), id])
             redirect(action: "list")
             return
         }
 
         try {
-            visitorInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'visitor.label', default: 'Visitor'), id])
+            visitInstance.delete(flush: true)
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'visit.label', default: 'Visit'), id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'visitor.label', default: 'Visitor'), id])
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'visit.label', default: 'Visit'), id])
             redirect(action: "show", id: id)
         }
     }

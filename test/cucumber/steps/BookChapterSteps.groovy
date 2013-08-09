@@ -1,10 +1,8 @@
 import cucumber.runtime.PendingException
-import pages.BookChapterCreatePage
-import pages.BookChapterPage
-import pages.LoginPage
-import pages.PublicationsPage
+import pages.*
 import rgms.member.Member
 import rgms.publication.BookChapter
+import rgms.publication.Periodico
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -65,11 +63,6 @@ When(~'^I select the Novo BookChapter option at the book chapter page$') {->
     page.selectNewBookChapter()
 }
 
-Then(~'^I can fill the book chapter details$') {->
-    at BookChapterCreatePage
-    page.fillBookChapterDetails()
-}
-
 Given(~'^I am at the book chapter page$') {->
     to LoginPage
     at LoginPage
@@ -79,12 +72,16 @@ Given(~'^I am at the book chapter page$') {->
     at BookChapterPage
 }
 
-And(~'^I fill only the title field at book chapter create page$') {->
+And(~'^I fill only the title field with the value "([^"]*)"$') { String title ->
     at BookChapterCreatePage
-    page.fillTitle()
+    page.fillTitle(title)
 }
 
-Then(~'^I still on the book chapter create page$') {->
+Then(~'^A failure message is displayed$') {->
+    assert ( page.readFlashMessage() != null )
+
+}
+And(~'^I still on the book chapter create page$'){->
     at BookChapterCreatePage
 }
 
@@ -123,4 +120,61 @@ Then(~'^I\'m still on book chapter page$') {->
 And(~'^the book chapters are not stored by the system$') {->
     at BookChapterPage
     page.checkIfBookChapterListIsEmpty()
+
+Given(~'the system has book chapter entitled "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
+    TestDataAndOperations.createBookChapter(title, filename)
+    bookChapter = BookChapter.findByTitle(title)
+    assert bookChapter != null
+}
+
+When(~'^I view the book chapter list$') {->
+    at BookChapterPage
+}
+
+Then(~'my book chapter list contains "([^"]*)"$') { String title ->
+    at BookChapterPage
+    bookChapterList = BookChapter.findAll()
+    assert TestDataAndOperations.containsBookChapter(title, bookChapterList)
+}
+And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$'){ String title, filename ->
+    page.selectNewBookChapter()
+    to BookChapterCreatePage
+    at BookChapterCreatePage
+    page.fillBookChapterDetails(title, filename)
+    page.clickSaveBookChapter()
+    book = BookChapter.findByTitle(title)
+    assert book != null
+    to BookChapterPage
+    at BookChapterPage
+}
+
+Then(~'My resulting book chapter list contains "([^"]*)"$') { String title ->
+    at BookChapterPage
+    page.checkBookChapterAtList(title, 0)
+}
+When(~'^I go to NewBookChapter page$'){->
+    to BookChapterPage
+    at BookChapterPage
+    page.selectNewBookChapter()
+    at BookChapterCreatePage
+}
+And(~'^I use the webpage to create the book chapter "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
+    at BookChapterCreatePage
+    page.fillBookChapterDetails(title, filename)
+    page.clickSaveBookChapter()
+    book = BookChapter.findByTitle(title)
+    assert book != null
+    to BookChapterPage
+    at BookChapterPage
+}
+Then(~'^the book chapter "([^"]*)" was stored by the system$'){String title ->
+    book = BookChapter.findByTitle(title)
+    assert book != null
+    to BookChapterPage
+    at BookChapterPage
+}
+And(~'^it is shown in the book chapter list with title "([^"]*)"$'){ String title ->
+    to BookChapterPage
+    at BookChapterPage
+    page.checkBookChapterAtList(title, 0)
 }

@@ -22,6 +22,14 @@ class MemberController {
     def create = {
         def member = new Member(params)
 
+/**
+ * @author penc
+ */
+//#if($contextualInformation)
+        member.setUniversity(params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity"));
+        member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity"));
+//#end
+
         [memberInstance: member]
     }
 

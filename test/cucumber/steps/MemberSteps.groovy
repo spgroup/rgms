@@ -121,3 +121,16 @@ Then(~'^I am still on the create member page with the error message$') {->
     //assert mensagem != null
 
 }
+
+Then(~'^I see default data filled on create form$'){ ->
+    at MemberCreatePage
+    defaultUniversity   = "Federal University of Pernambuco"
+    defaultCity         = "Recife"
+    assert page.compareMemberUniversity(defaultUniversity) && page.compareMemberCity(defaultCity)
+}
+
+Then(~'^I see default data filled on register form$'){ ->
+    at RegisterPage
+    defaultUniversity   = "Federal University of Pernambuco"
+    assert page.compareMemberUniversity(defaultUniversity)
+}

@@ -42,3 +42,14 @@ Feature: member
     Given I am at the create member page
     When I fill the user details with "jose" "josesilva" "jose@com" "UFPE"
     Then I am still on the create member page with the error message
+
+
+#if ($Autofill)
+  Scenario: new member filled with default data
+    Given I am at the create member page
+    Then I see default data filled on create form
+
+  Scenario: user registration with default data
+    Given I am at the register page
+    Then I see default data filled on register form
+#end
