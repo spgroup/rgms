@@ -5,6 +5,7 @@ import rgms.XMLService
 
 class DissertacaoController extends ThesisOrDissertationController {
 
+
    
     def grailsApplication
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
