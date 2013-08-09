@@ -696,7 +696,7 @@ class TestDataAndOperations {
     /**
      * @author carloscemb
      */
-    static public Visit editVisit(String oldVisitante, String oldDataInicio, String oldDataFim, String newVisitante) {
+    static public def editVisit(String oldVisitante, String oldDataInicio, String oldDataFim, String newVisitante) {
         def visit = searchVisit(oldVisitante, oldDataInicio, oldDataFim)
 
         def novoVisitor = Visitor.findByName(newVisitante)
@@ -717,7 +717,7 @@ class TestDataAndOperations {
     /**
      * @author penc
      */
-    static public Visit editVisitChangeData(String visitante, String dataInicio, String oldDataFim, String newDataFim) {
+    static public def editVisitChangeData(String visitante, String dataInicio, String oldDataFim, String newDataFim) {
         def visit = searchVisit(visitante, dataInicio, oldDataFim)
 
         Date newFinalDate = Date.parse("dd/MM/yyyy", newDataFim)
@@ -729,7 +729,7 @@ class TestDataAndOperations {
     /**
      * @author carloscemb
      */
-    static public Visit updateVisit(Visit visit) {
+    static public def updateVisit(Visit visit) {
         def visitController = new VisitController()
         visitController.params << visit.properties
         visitController.update()

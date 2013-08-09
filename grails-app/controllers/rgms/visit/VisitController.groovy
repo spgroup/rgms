@@ -100,7 +100,7 @@ class VisitController {
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'visit.label', default: 'Visit'), id])
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'visit.label', default: 'Visit'), id]) + " " + e.getMessage()
             redirect(action: "show", id: id)
         }
     }
