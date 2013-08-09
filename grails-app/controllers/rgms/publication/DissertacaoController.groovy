@@ -5,6 +5,8 @@ import rgms.XMLService
 
 class DissertacaoController extends ThesisOrDissertationController {
 
+import javax.servlet.http.HttpServletRequest
+
 
    
     def grailsApplication
