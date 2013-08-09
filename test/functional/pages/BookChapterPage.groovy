@@ -35,6 +35,7 @@ class BookChapterPage extends Page {
         def bookChapterColumns = bookChapterRows[0].find('td')
 
         assert bookChapterColumns.size() == 0
+    }
 
     def checkBookChapterAtList(title,row){
         def listDiv = $('div', id: 'list-bookChapter')
