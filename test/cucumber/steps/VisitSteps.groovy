@@ -37,9 +37,7 @@ When(~'^I create the visit for the visitor "([^"]*)" with initial date "([^"]*)"
 }
 
 And(~'^the visit for the visitor "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is properly stored by the system$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, Date.parse("dd/MM/yyyy", initialDate), Date.parse("dd/MM/yyyy", finalDate))
-    assert visit != null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) != null
 }
 
 Given(~'^the system has visitor named "([^"]*)"$') { String name ->
@@ -72,8 +70,7 @@ When(~"^I view the list of visits\$") {->
  * @author carloscemb
  */
 Then(~'^the list is returned with the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)"$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, Date.parse("dd/MM/yyyy", initialDate), Date.parse("dd/MM/yyyy", finalDate))
+    def visit = TestDataAndOperations.searchVisit(name, initialDate, finalDate)
     assert TestDataAndOperations.containsVisit(visit)
 }
 
@@ -192,23 +189,10 @@ When(~'^I try to edit the visit of the visitor named "([^"]*)" with initial date
  * @author penc
  */
 Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is not properly updated by the system because it is invalid$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
-    Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day_1, day_2)
-    assert visit != null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) != null
 }
 
 //#if( $Twitter )
-
-Given(~'^I am logged as "([^"]*)" and at the Add Visit Page$') { String userName ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData(userName, "adminadmin")
-    at PublicationsPage
-    page.select("Visita")
-    at VisitPage
-}
 
 When(~'^I try to create an visit  and I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
     at VisitPage

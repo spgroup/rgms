@@ -25,13 +25,21 @@ class VisitPage extends Page {
         $('a.create').click()
     }
 
-    def selectViewVisit(name, initialDate, finalDate) {
+    /**
+     * @author carloscemb
+     */
+    def getVisitRows() {
         def listDiv = $('div', id: 'list-visit')
         def visitTable = (listDiv.find('table'))[0]
-        def visitRow  = visitTable.find('tbody').find('tr')
+        def visitRows  = visitTable.find('tbody').find('tr')
+        return visitRows
+    }
+
+    def selectViewVisit(name, initialDate, finalDate) {
+        def visitRows = getVisitRows()
         def testVisit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
         def dataInicio = testVisit.dataInicio[0].format('dd/MM/yyyy')
-        def showLink = visitRow.find('td').find([text:dataInicio])
+        def showLink = visitRows.find('td').find([text:dataInicio])
         showLink.click()
     }
 
@@ -39,9 +47,7 @@ class VisitPage extends Page {
      * @author carloscemb
      */
     def checkVisitAtList(name, initialDate, finalDate, row){
-        def listDiv = $('div', id: 'list-visit')
-        def visitTable = (listDiv.find('table'))[0]
-        def visitRows  = visitTable.find('tbody').find('tr')
+        def visitRows = getVisitRows()
         def visitColumns = visitRows[row].find('td')
 
         def testVisit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
