@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 
 class DissertacaoController extends ThesisOrDissertationController {
+
    
     def grailsApplication
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -41,7 +42,7 @@ class DissertacaoController extends ThesisOrDissertationController {
 
         XMLService serv = new XMLService()
         Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
-        if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile))
+        if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile as HttpServletRequest))
             return
     }
 
