@@ -382,7 +382,7 @@ target/test-reports/plain/TEST-functional-cucumber-news-out.txt
 
 target/test-reports/plain/TEST-functional-cucumber-news.txt
 
-.swp
+*.swp
 
 .idea/.name
 

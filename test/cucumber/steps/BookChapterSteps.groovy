@@ -120,6 +120,7 @@ Then(~'^I\'m still on book chapter page$') {->
 And(~'^the book chapters are not stored by the system$') {->
     at BookChapterPage
     page.checkIfBookChapterListIsEmpty()
+}
 
 Given(~'the system has book chapter entitled "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
     TestDataAndOperations.createBookChapter(title, filename)
@@ -177,5 +178,4 @@ And(~'^it is shown in the book chapter list with title "([^"]*)"$'){ String titl
     to BookChapterPage
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
-}
 }
