@@ -81,24 +81,6 @@ Given(~'^I am at the technical reports page and the technical report "([^"]*)" i
     at TechnicalReportPage
 }
 
-When(~'^I select the new technical report button$'){ ->
-    page.selectNewTechnicalReport()
-    at TechnicalReportCreatePage
-}
-
-And(~'^I fill the technical report details with title "([^"]*)" file name "([^"]*)" and institution "([^"]*)"$'){String title, filename, institution ->
-    def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator
-    page.fillTechnicalReportDetails(path + filename, title, institution)
-}
-
-And(~'^I select the save technical report button$'){ ->
-    page.selectCreateTechnicalReport()
-}
-
-Then(~'^The technical report "([^"]*)" details page is shown$') { String title ->
-    at TechnicalReportShowPage
-}
-
 // edit existing technical report with invalid title web
 
 And(~'^the technical report "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->

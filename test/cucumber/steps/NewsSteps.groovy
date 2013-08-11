@@ -122,24 +122,3 @@ And(~'^the research group "([^"]*)" news list is empty$'){ String groupName ->
     assert newsByResearchGroup != null
     assert newsByResearchGroup.size() == 0
 }
-
-And(~'^twitter account associated with "([^"]*)" research group has been updated once$'){ String groupName ->
-    researchGroup = ResearchGroup.findByName(groupName)
-    TestDataAndOperations.requestNewsFromTwitter(researchGroup)
-    newsByResearchGroup = News.getCurrentNews(researchGroup)
-    assert newsByResearchGroup != null
-    assert newsByResearchGroup.size() > 0
-}
-
-Then(~'^there is no duplicated news in Twitter account associated with research group "([^"]*)"$'){String groupName ->
-    researchGroup = ResearchGroup.findByName(groupName)
-    newsByResearchGroup = News.getCurrentNews(researchGroup)
-    assert newsByResearchGroup != null
-    while  (newsByResearchGroup.size() > 0){
-        news = newsByResearchGroup.pop()
-        newsByResearchGroup.each {
-           assert (it.date != news.date) || (it.description != news.description)
-        }
-    }
-}
-
