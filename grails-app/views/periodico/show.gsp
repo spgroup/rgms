@@ -206,6 +206,8 @@
             <g:link class="edit" action="edit" id="${periodicoInstance?.id}">
                 <g:message code="default.button.edit.label" default="Edit"/>
             </g:link>
+            <g:actionSubmit action="share" id="share" name="share" update="[success:'success',failure:'error']"
+                          on404="alert('not found');" value="Share on Facebook"></g:actionSubmit>
             <g:actionSubmit class="delete" action="delete"
                             value="${message(code: 'default.button.delete.label', default: 'Delete')}"
                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>

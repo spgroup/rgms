@@ -1,5 +1,8 @@
 package pages
 
+import geb.Page
+import rgms.publication.BookChapter
+
 class BookChapterCreatePage extends FormPage {
     static url = "bookChapter/create"
 
@@ -17,15 +20,19 @@ class BookChapterCreatePage extends FormPage {
         }
     }
 
-    def fillBookChapterDetails() {
-        $("form").title = "A theory of Software Product Line Refinement"
-        $("form").publisher = "Theoretical Computer Science"
+    def fillBookChapterDetails(title, filename){
+        fillTitle(title)
+        $("form").publisher = "Person"
         $("form").chapter = 1
-        // Could parametrize, obtaining data from class TestDataAndOperations
+        $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     }
 
-    def fillTitle() {
-        $("form").title = "A theory of Software Product Line Refinement"
+    def clickSaveBookChapter(){
         $("form").create().click()
+    }
+
+    def fillTitle(title) {
+        $("form").title = title
+        clickSaveBookChapter()
     }
 }

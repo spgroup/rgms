@@ -3,10 +3,24 @@ Feature: Dissertation Tests
   As a member of a research group
   I want to add, remove and modify dissertations I have added
 
+  Scenario:  first dissertation and delete
+    Given the system has no dissertation stored
+    When I create the dissertation "New dissertation" with file name "dissertation.txt" and school "federal"
+    And I am at the publications menu
+    And I select the "Dissertacao" option at the program menu
+    And I select "Delete dissertation" at the dissertation page
+    And I delete "New dissertation"
+    Then the system has no dissertation stored
+
   Scenario: new dissertation without school
     Given the system has no dissertation entitled "Dissertation without school"
     When I create the dissertation "Dissertation without school" with file name "Dissertationwithoutschool.txt" without school
     Then the system has no dissertation entitled "Dissertation without school"
+
+  Scenario: new dissertation without address
+    Given the system has no dissertation entitled "Dissertation without address"
+    When I create the dissertation "Dissertation without address" with file name "Dissertationwithoutaddress.txt" without address
+    Then the system has no dissertation entitled "Dissertation without address"
 
   Scenario: new dissertation
     Given the system has no dissertation entitled "New dissertation"
@@ -25,8 +39,21 @@ Feature: Dissertation Tests
     And I cant add the dissertation without a file
     Then the system has no dissertation entitled "Dissertacao sem arquivo"
 
+  Scenario: upload a dissertation and system has no dissertation stored
+    Given the system has no dissertation entitled "New dissertation"
+    When I upload a new dissertation "curriculo4.xml" with title "New dissertation"
+    Then the system has more dissertations now
+
+  Scenario: new dissertation with file
+    Given I am at the publications menu
+    When I select the "Dissertacao" option at the program menu
+    And I select the new dissertation option at the dissertation page
+    And I can add the dissertation with a file "Modularity.pdf"
+    Then the system has a dissertation entitled "Dissertacao Teste 1"
+
   Scenario: edit dissertation
     Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt"
+    Given the system has no dissertation entitled "Edit dissertation reviewed"
     When    I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
     Then    the dissertation "Edit dissertation" is properly updated by the system
 
@@ -46,9 +73,15 @@ Feature: Dissertation Tests
 
   Scenario: upload dissertation with a file
     Given the system has some dissertation stored
-    When I upload a new dissertation "curriculo.xml"
+    Given the system has no dissertation entitled "New dissertation"
+    When I upload a new dissertation "curriculo3.xml" with title "New dissertation"
     Then the system has more dissertations now
-
+    
+  Scenario: upload a dissertation and system has no dissertation stored
+    Given the system has no dissertation entitled "New dissertation"
+    When I upload a new dissertation "curriculo2.xml" with title "New dissertation"
+    Then the system has more dissertations now
+    
 #if ($Autofill)
 
   Scenario: create a new dissertation with user data already filled by default

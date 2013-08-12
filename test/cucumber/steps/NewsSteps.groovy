@@ -122,3 +122,5 @@ And(~'^the research group "([^"]*)" news list is empty$'){ String groupName ->
     assert newsByResearchGroup != null
     assert newsByResearchGroup.size() == 0
 }
+
+

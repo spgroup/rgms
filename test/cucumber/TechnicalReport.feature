@@ -20,7 +20,6 @@ Feature: technical report
     When    I edit the technical report title from "NFL Languages System" to ""
     Then    The technical report "NFL Languages System" is not updated by the system
 
-#GUI tests
   Scenario: new valid technical report
     Given   I am at the technical reports page
     And 	The system has no technical report entitled "TechRepo"
@@ -58,7 +57,6 @@ Feature: technical report
     And    The system goes to the technical reports page
 
 #if ($Autofill)
-
   Scenario: new technical report web has user data already filled by default
     Given I am at the publications menu
     And I select the "Technical Report" option at the publications menu

@@ -21,7 +21,7 @@ class BootStrap {
         if (!admin) {
 
             admin = new Member(name: "Administrador do sistema", username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),
-                    email: "admin@cin.ufpe.br", status: "MSc Student", enabled: true, university: "UFPE")
+                    email: "admin@cin.ufpe.br", status: "MSc Student", enabled: true, university: "UFPE", facebook_id: "100006411132660", access_token: "CAAJIlmRWCUwBAAJWKPF6fRRwSxxaVruqamqGLGhWXGsyi0nJeZAcKjpNxZAkZBfDoNgjkc1LH9HpUXhdcCSeq8FcgVxZBGz5xgC1tZA23TwNGbgl1tEQmIZCtERXMRLlpTwiBuvKQCtcMZB5dn6pFqpwdatB2yW1tIZD")
 
 
             adminRole.addToUsers(admin)

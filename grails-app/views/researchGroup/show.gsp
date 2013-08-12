@@ -9,26 +9,31 @@
 </head>
 
 <body>
-<!-- #if($XML) 
-  <br>
-  <g:jasperReport jasper="researchGroup" format="XML" name="export">
+-<!-- #if($XML) -->
+-  <br>
+-  <g:jasperReport jasper="report" format="XML" name="export">
     <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
 </g:jasperReport>
- #end -->
+<!-- #end -->
 
-<!-- #if($HTML) 
-  <br>
-  <g:jasperReport jasper="researchGroup" format="HTML" name="export">
+-<!-- #if($HTML)  -->
+-  <br>
+-  <g:jasperReport jasper="report" format="HTML" name="export">
     <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
 </g:jasperReport>
-#end -->
+<!--#end -->
 
-<!-- #if($PDF) -->
-<br>
-<g:jasperReport jasper="researchGroup" format="PDF" name="export">
+ <!-- #if($PDF) -->
+-<br>
+-<g:jasperReport jasper="report" format="PDF" name="export">
     <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}"/>
 </g:jasperReport>
 <!--#end -->
+
+<g:link class="edit" action="updateNewsFromTwitter" id="${researchGroupInstance?.id}">
+    <g:message code="default.button.update.twitter.label" default="xxx"/>
+</g:link>
+
 <g:link class="edit" action="updateNewsFromTwitter" id="${researchGroupInstance?.id}">
     <g:message code="default.button.update.twitter.label" default="xxx"/>
 </g:link>

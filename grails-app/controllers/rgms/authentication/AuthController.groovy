@@ -213,11 +213,16 @@ class AuthController {
 //    }
     
     def register = {
-        String defaultUniversity = "Federal University of Pernambuco"
-        params.university = params.university ?: defaultUniversity
+
+//#if($contextualInformation)
+        /**
+         * @author penc
+         */
+         params.university   = params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity");
+//#end
 
         //("ENTROU no register")
-        
+
         if (params.password1 != params.password2) {
             flash.message = "Please enter same passwords."
             flash.status = "error"

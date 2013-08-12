@@ -6,6 +6,7 @@ import rgms.news.NewsController
 import rgms.news.TwitterConnection
 import twitter4j.Status
 
+
 class ResearchGroupController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -26,14 +27,44 @@ class ResearchGroupController {
         [researchGroupInstance: new ResearchGroup(params), membersInstance: members]
     }
 
+    //#if($researchGroupHierarchy)
+    def validarChildOf(def researchGroupInstance, def researchGroupParent) {
+
+        def parents = [researchGroupInstance]
+        def current = researchGroupParent
+
+        while(current != null && ! parents.contains(current)) {
+            parents.add(current)
+            current = current.childOf
+        }
+
+        if(current != null)
+        	throw new RuntimeException("Cycle found")
+    }
+    //#end
+
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
+
+        //#if($researchGroupHierarchy)
+        try {
+            validarChildOf(researchGroupInstance, researchGroupInstance.getChildOf())
+        } catch(Exception e) {
+            flash.message = "Há um ciclo relacionado à este research group!"
+            redirect(action: "edit", id: params.id)
+            return;
+        }
+        //#end
+
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
             return
         }
+
         //#if($researchGroupHierarchyNotify)
-        if (researchGroupInstance.getChildOf() != null) notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+        if (researchGroupInstance.getChildOf() != null) {
+            notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+        }
         //#end
         Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
 
@@ -86,12 +117,28 @@ class ResearchGroupController {
 
     def update() {
         def researchGroupInstance = ResearchGroup.get(params.id)
+
+        //#if($researchGroupHierarchy)
+        def researchGroupInstanceChildOf = null
+        if(params.childOf?.id != "null") {
+            researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
+        }
+
+        try {
+            validarChildOf(researchGroupInstance, researchGroupInstanceChildOf)
+        } catch(Exception e) {
+            flash.message = "Há um ciclo relacionado à este research group!"
+            redirect(action: "edit", id: params.id)
+            return;
+        }
+        //#end
+
         //#if($researchGroupHierarchyNotify)
-        def researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
         if (isChildOfResearchGroupChanged(researchGroupInstance, researchGroupInstanceChildOf)) {
             notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
         }
         //#end
+
         if (!verifyResearchGroupInstance(researchGroupInstance, params.id)) {
             return
         }
@@ -214,4 +261,5 @@ class ResearchGroupController {
         researchGroupInstance.save()
         redirect(action: "show", id: researchGroupInstance.id)
     }
+
 }
