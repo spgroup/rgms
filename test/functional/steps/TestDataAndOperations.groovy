@@ -55,7 +55,10 @@ class TestDataAndOperations {
                     booktitle: "Software Engineering", pages: "20-120"],
             [title: "IV Conference on Software Product Lines",
                     publicationDate: (new Date("14 October 2012")),
-                    booktitle: "Practices and Patterns", pages: "150-200"]
+                    booktitle: "Practices and Patterns", pages: "150-200"],
+            [title: "V Conference on Software Product Lines",
+                    publicationDate: (new Date("16 October 2012")),
+                    booktitle: "Practices and Patterns", pages: "50-100"]
     ]
 
     static records = [
