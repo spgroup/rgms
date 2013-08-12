@@ -25,7 +25,6 @@ class FerramentaController {
 
     def save() {
         def ferramentaInstance = new Ferramenta(params)
-
 		//PublicationController pb = new PublicationController()
 
         if (!PublicationController.newUpload(ferramentaInstance, flash, request) || !ferramentaInstance.save(flush: true)) {     // (!pb.upload(periodicoInstance)) {
@@ -39,75 +38,53 @@ class FerramentaController {
     }
 
     def show() {
-        def ferramentaInstance = Ferramenta.get(params.id)
-
-        if (!ferramentaInstance) {
-			flash.message = messageGenerator('default.not.found.message', params.id)
-            redirect(action: "list")
-            return
+        returnIfNotInstance { ferramentaInstance ->
+            [ferramentaInstance: ferramentaInstance]
         }
-
-        [ferramentaInstance: ferramentaInstance]
     }
 
     def edit() {
-        def ferramentaInstance = Ferramenta.get(params.id)
-
-        if (!ferramentaInstance) {
-            flash.message = messageGenerator('default.not.found.message', params.id)
-            redirect(action: "list")
-            return
+        returnIfNotInstance { ferramentaInstance ->
+            [ferramentaInstance: ferramentaInstance]
         }
-
-        [ferramentaInstance: ferramentaInstance]
     }
 
     def update() {
-        def ferramentaInstance = Ferramenta.get(params.id)
-        if (!ferramentaInstance) {
-            flash.message = messageGenerator('default.not.found.message', params.id)
-            redirect(action: "list")
-            return
+       returnIfNotInstance { ferramentaInstance ->
+           if (params.version) {
+               def version = params.version.toLong()
+               if (ferramentaInstance.version > version) {
+                   ferramentaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                   [message(code: 'ferramenta.label', default: 'Ferramenta')] as Object[],
+                   "Another user has updated this Ferramenta while you were editing")
+                   render(view: "edit", model: [ferramentaInstance: ferramentaInstance])
+                   return
+               }
+           }
+
+           ferramentaInstance.properties = params
+
+           if (!ferramentaInstance.save(flush: true)) {
+               render(view: "edit", model: [ferramentaInstance: ferramentaInstance])
+               return
+           }
+
+           flash.message = messageGenerator('default.updated.message', ferramentaInstance.id)
+           redirect(action: "show", id: ferramentaInstance.id)
         }
-
-        if (params.version) {
-            def version = params.version.toLong()
-            if (ferramentaInstance.version > version) {
-                ferramentaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'ferramenta.label', default: 'Ferramenta')] as Object[],
-                          "Another user has updated this Ferramenta while you were editing")
-                render(view: "edit", model: [ferramentaInstance: ferramentaInstance])
-                return
-            }
-        }
-
-        ferramentaInstance.properties = params
-
-        if (!ferramentaInstance.save(flush: true)) {
-            render(view: "edit", model: [ferramentaInstance: ferramentaInstance])
-            return
-        }
-
-		flash.message = messageGenerator('default.updated.message', ferramentaInstance.id)
-        redirect(action: "show", id: ferramentaInstance.id)
     }
 
     def delete() {
-        def ferramentaInstance = Ferramenta.get(params.id)
-        if (!ferramentaInstance) {
-			flash.message = messageGenerator ('default.not.found.message', params.id)
-            redirect(action: "list")
-            return
-        }
-
-        try {
-            ferramentaInstance.delete(flush: true)
-			flash.message = messageGenerator ('default.deleted.message', params.id)
-            redirect(action: "list")
-        }
-        catch (DataIntegrityViolationException e) {
-			flash.message = messageGenerator ('default.not.deleted.message'+' Erro: '+e.message, params.id)
-            redirect(action: "show", id: params.id)
+        returnIfNotInstance { ferramentaInstance ->
+            try {
+                ferramentaInstance.delete(flush: true)
+                flash.message = messageGenerator ('default.deleted.message', params.id)
+                redirect(action: "list")
+            }
+            catch (DataIntegrityViolationException e) {
+                flash.message = messageGenerator ('default.not.deleted.message'+' Erro: '+e.message, params.id)
+                redirect(action: "show", id: params.id)
+            }
         }
     }
 
@@ -174,4 +151,15 @@ class FerramentaController {
             }
     }
 //#end
+
+    private def returnIfNotInstance (Closure c){
+        def ferramentaInstance = Ferramenta.get(params.id)
+        if (!ferramentaInstance) {
+			flash.message = messageGenerator ('default.not.found.message', params.id)
+            redirect(action: "list")
+            return
+        }
+
+        c.call ferramentaInstance
+    }
 }
