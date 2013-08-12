@@ -70,6 +70,5 @@ Then(~'^a list of conferencias stored by the system is displayed at the conferen
 
 Then(~'^I see my user listed as an author member of conferencia by default$') {->
     at ConferenciaCreatePage
-    userData = Member.findByUsername('admin').id.toString()
-    assert page.selectedMembers().contains(userData)
+    assert TestDataAndOperations.containsUser(page.selectedMembers())
 }

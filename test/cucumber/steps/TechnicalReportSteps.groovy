@@ -89,6 +89,5 @@ When(~'^I click on "New TechnicalReport" option at Technical Report list$') {->
 
 Then(~'^I see my user listed as an author member of technical report by default$') {->
     at TechnicalReportCreatePage
-    userData = Member.findByUsername('admin').id.toString()
-    assert page.selectedMembers().contains(userData)
+    assert TestDataAndOperations.containsUser(page.selectedMembers())
 }
