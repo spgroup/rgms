@@ -679,7 +679,7 @@ class TestDataAndOperations {
      */
     static public boolean containsVisit(Visit visit) {
         def visitController = new VisitController()
-        def result = visitController.list().visitInstanceList
+        def result = visitController.list(100).visitInstanceList
         return result.contains(visit)
     }
 
@@ -690,7 +690,7 @@ class TestDataAndOperations {
         def visitController = new VisitController()
         def visit = searchVisit(name, initialDate, finalDate)
         visitController.params << [id: visit.id]
-        visitController.delete()
+        visitController.delete((Long)visitController.params.id)
     }
 
     /**
@@ -732,7 +732,7 @@ class TestDataAndOperations {
     static public def updateVisit(Visit visit) {
         def visitController = new VisitController()
         visitController.params << visit.properties
-        visitController.update()
+        visitController.update((Long)visitController.params.id, (Long)visitController.params.version)
     }
 
     /**

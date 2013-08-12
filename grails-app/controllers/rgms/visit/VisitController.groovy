@@ -27,7 +27,7 @@ class VisitController {
     }
 
     def save() {
-        def visitor = getVisitor(params.nameVisitor)
+        def visitor = getVisitor((String)params.nameVisitor)
 
         def visitInstance = new Visit(params)
 
@@ -60,7 +60,7 @@ class VisitController {
 
         visitInstance.properties = params
 
-        def visitor = getVisitor(params.nameVisitor)
+        def visitor = getVisitor((String)params.nameVisitor)
 
         saveVisit(visitInstance, visitor, "edit", "updated")
     }
