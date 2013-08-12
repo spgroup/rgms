@@ -71,10 +71,10 @@
         <thead>
         <tr>
 
-            <g:sortableColumn property="dataInicio"
-                              title="${message(code: 'visit.dataInicio.label', default: 'Data Inicio')}"/>
+            <g:sortableColumn property="initialDate"
+                              title="${message(code: 'visit.initialDate.label', default: 'Initial Date')}"/>
 
-            <g:sortableColumn property="dataFim" title="${message(code: 'visit.dataFim.label', default: 'Data Fim')}"/>
+            <g:sortableColumn property="finalDate" title="${message(code: 'visit.finalDate.label', default: 'Final Date')}"/>
 
             <th><g:message code="visit.visitor.label" default="Visitor"/></th>
 
@@ -83,7 +83,7 @@
             <!-- #end -->
 
             <!-- #if( $descricaovisita ) -->
-            <th><g:message code="visit.descricao.label" default="Descrição"/></th>
+            <th><g:message code="visit.description.label" default="Description"/></th>
             <!-- #end -->
 
         </tr>
@@ -95,12 +95,12 @@
                 <td>
                     <g:link action="show" id="${visitInstance.id}">
                         <g:formatDate format="dd/MM/yyyy">
-                            ${fieldValue(bean: visitInstance, field: "dataInicio")}
+                            ${fieldValue(bean: visitInstance, field: "initialDate")}
                         </g:formatDate>
                     </g:link>
                 </td>
 
-                <td><g:formatDate format="dd/MM/yyyy" date="${visitInstance.dataFim}"/></td>
+                <td><g:formatDate format="dd/MM/yyyy" date="${visitInstance.finalDate}"/></td>
 
                 <td>${fieldValue(bean: visitInstance, field: "visitor")}</td>
 
@@ -112,12 +112,12 @@
                 <td>
                     <a href="#" id="lk_1" class="dialog_link ">
                         <span class="ui-icon ui-icon-newwin"></span>
-                        ${fieldValue(bean: visitInstance, field: "descricao", maxLengh: "10")}
+                        ${fieldValue(bean: visitInstance, field: "description", maxLengh: "10")}
                     </a>
                 </td>
 
                 <div title="Descrição" id="txt_1" class="dialog">
-                    ${fieldValue(bean: visitInstance, field: "descricao")}
+                    ${fieldValue(bean: visitInstance, field: "description")}
                 </div>
                 <!-- #end -->
             </tr>

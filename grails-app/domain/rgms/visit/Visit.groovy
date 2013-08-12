@@ -4,8 +4,8 @@ import rgms.member.ResearchGroup
 
 class Visit {
 
-    Date    dataInicio
-    Date    dataFim
+    Date initialDate
+    Date finalDate
     Visitor visitor
 
     //#if( $reserchgroupobrigatorio )
@@ -13,15 +13,15 @@ class Visit {
     //#end
 
     //#if( $descricaovisita )
-    String descricao
+    String description
     //#end
 
     static constraints = {
-        dataInicio(nullable:false,blank:false)
+        initialDate(nullable:false,blank:false)
         researchGroup(nullable:true,blank:true)
-        descricao(nullable:true,blank:true)
-        dataFim(validator: { val, obj ->
-            (val?.compareTo(obj.dataInicio) >= 0)
+        description(nullable:true,blank:true)
+        finalDate(validator: { val, obj ->
+            (val?.compareTo(obj.initialDate) >= 0)
         })
     }
 }

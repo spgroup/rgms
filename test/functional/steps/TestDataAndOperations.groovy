@@ -1,6 +1,5 @@
 package steps
 
-import rgms.authentication.AuthController
 import rgms.member.*
 import rgms.news.News
 import rgms.news.NewsController
@@ -8,7 +7,6 @@ import rgms.publication.*
 import rgms.visit.Visit
 import rgms.visit.VisitController
 import rgms.visit.Visitor
-import org.apache.shiro.SecurityUtils
 
 class TestDataAndOperations {
 
@@ -115,8 +113,8 @@ class TestDataAndOperations {
      */
     static visits = [
             [visitor: new Visitor(visitors[0]),
-                    dataInicio: (new Date("11 November 2000")),
-                    dataFim: (new Date("12 November 2000"))]
+                    initialDate: (new Date("11 November 2000")),
+                    finalDate: (new Date("12 November 2000"))]
     ]
 
     /**
@@ -125,8 +123,8 @@ class TestDataAndOperations {
     static public def findVisitByVisitorAndInitialDateAndFinalDate(String name, String initialDate, String finalDate) {
         visits.find { visit ->
             visit.visitor.name == name &&
-                    visit.dataInicio.format("dd/MM/YYYY") == initialDate &&
-                    visit.dataFim.format("dd/MM/YYYY") == finalDate
+                    visit.initialDate.format("dd/MM/YYYY") == initialDate &&
+                    visit.initialDate.format("dd/MM/YYYY") == finalDate
         }
     }
 //#end
@@ -666,8 +664,8 @@ class TestDataAndOperations {
     static public void createVisit(String name, String initialDate, String finalDate) {
         def visitController = new VisitController()
         visitController.params.nameVisitor = name
-        visitController.params.dataInicio = Date.parse("dd/MM/yyyy", initialDate)
-        visitController.params.dataFim = Date.parse("dd/MM/yyyy", finalDate)
+        visitController.params.initialDate = Date.parse("dd/MM/yyyy", initialDate)
+        visitController.params.finalDate = Date.parse("dd/MM/yyyy", finalDate)
         visitController.request.setContent(new byte[1000]) // Could also vary the request content.
         visitController.create()
         visitController.save()
@@ -696,32 +694,31 @@ class TestDataAndOperations {
     /**
      * @author carloscemb
      */
-    static public def editVisit(String oldVisitante, String oldDataInicio, String oldDataFim, String newVisitante) {
-        def visit = searchVisit(oldVisitante, oldDataInicio, oldDataFim)
+    static public def editVisit(String oldVisitor, String oldInitialDate, String oldFinalDate, String newVisitorName) {
+        def visit = searchVisit(oldVisitor, oldInitialDate, oldFinalDate)
 
-        def novoVisitor = Visitor.findByName(newVisitante)
+        def newVisitor = Visitor.findByName(newVisitorName)
 
-        if(novoVisitor == null) {
-            createVisitor(newVisitante)
-            novoVisitor = Visitor.findByName(newVisitante)
+        if(newVisitor == null) {
+            createVisitor(newVisitorName)
+            newVisitor = Visitor.findByName(newVisitorName)
         }
 
-        visit.setVisitor(novoVisitor)
+        visit.setVisitor(newVisitor)
 
         updateVisit(visit)
 
-        def updatedVisit = searchVisit(newVisitante, oldDataInicio, oldDataFim)
+        def updatedVisit = searchVisit(newVisitorName, oldInitialDate, oldFinalDate)
         return updatedVisit
     }
 
     /**
      * @author penc
      */
-    static public def editVisitChangeData(String visitante, String dataInicio, String oldDataFim, String newDataFim) {
-        def visit = searchVisit(visitante, dataInicio, oldDataFim)
+    static public def editVisitChangeData(String visitorName, String initialDate, String oldFinalDate, String newFinalDate) {
+        def visit = searchVisit(visitorName, initialDate, oldFinalDate)
 
-        Date newFinalDate = Date.parse("dd/MM/yyyy", newDataFim)
-        visit.setDataFim(newFinalDate);
+        visit.setFinalDate(Date.parse("dd/MM/yyyy", newFinalDate))
 
         updateVisit(visit)
     }
@@ -742,7 +739,7 @@ class TestDataAndOperations {
         def visitor = Visitor.findByName(name)
         Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
         Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
-        def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day_1, day_2)
+        def visit = Visit.findByVisitorAndInitialDateAndFinalDate(visitor, day_1, day_2)
         return visit
     }
 

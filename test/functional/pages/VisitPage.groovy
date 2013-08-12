@@ -1,8 +1,6 @@
 package pages
 
 import geb.Page
-import rgms.visit.Visit
-import rgms.visit.Visitor
 import steps.TestDataAndOperations
 
 
@@ -38,7 +36,7 @@ class VisitPage extends Page {
     def selectViewVisit(name, initialDate, finalDate) {
         def visitRows = getVisitRows()
         def testVisit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
-        def dataInicio = testVisit.dataInicio[0].format('dd/MM/yyyy')
+        def dataInicio = testVisit.initialDate[0].format('dd/MM/yyyy')
         def showLink = visitRows.find('td').find([text:dataInicio])
         showLink.click()
     }
@@ -53,8 +51,8 @@ class VisitPage extends Page {
         def testVisit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
 
         assert testVisit != null
-        assert visitColumns[0].text() == testVisit.dataInicio[0].format('dd/MM/yyyy')
-        assert visitColumns[1].text() == testVisit.dataFim[0].format('dd/MM/yyyy')
+        assert visitColumns[0].text() == testVisit.initialDate[0].format('dd/MM/yyyy')
+        assert visitColumns[1].text() == testVisit.finalDate[0].format('dd/MM/yyyy')
         assert visitColumns[2].text() == testVisit.visitor[0].name
     }
 }
