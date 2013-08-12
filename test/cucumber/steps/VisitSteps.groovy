@@ -43,9 +43,7 @@ Given(~'^the system has visitor named "([^"]*)"$') { String name ->
 /**
  * @author carloscemb
  */
-Given(~'^the system has a visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" stored$') { String name, String initialDate, String finalDate ->
-    TestDataAndOperations.createVisitor(name)
-    assert Visitor.findByName(name) != null
+And(~'^a visit for the visitor "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)"$') { String name, String initialDate, String finalDate ->
     TestDataAndOperations.createVisit(name, initialDate, finalDate)
     assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) != null
 }

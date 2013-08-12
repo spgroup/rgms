@@ -27,7 +27,8 @@ Feature: Visit
     Then the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" is properly stored by the system
 
   Scenario: list existing visit
-    Given the system has a visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" stored
+    Given the system has visitor named "Person"
+    And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
     When I view the list of visits
     Then the list is returned with the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000"
 
@@ -37,7 +38,8 @@ Feature: Visit
     Then my resulting visits list contains the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000"
 
   Scenario: remove existing visit
-    Given the system has a visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" stored
+    Given the system has visitor named "Person"
+    And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
     When I delete the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000"
     Then the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is properly removed by the system
 
@@ -49,7 +51,8 @@ Feature: Visit
     And the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is properly removed by the system
 
   Scenario: edit existing visit
-    Given the system has a visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" stored
+    Given the system has visitor named "Person"
+    And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
     When I edit the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" to the visitor named "Person Updated"
     Then the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is properly updated by the system
 
@@ -67,7 +70,8 @@ Feature: Visit
     Then the visit for the visitor "Person" with initial date "11/11/2000" and final date "10/11/2000" is not stored by the system because it is invalid
 
   Scenario: invalid edit existing visit
-    Given the system has a visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" stored
+    Given the system has visitor named "Person"
+    And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
     When I try to edit the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" changing the final date to "10/11/2000"
     Then the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is not properly updated by the system because it is invalid
 

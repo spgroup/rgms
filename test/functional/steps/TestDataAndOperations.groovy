@@ -105,7 +105,7 @@ class TestDataAndOperations {
 
 //#if ($visit)
     static visitors = [
-            [name: "Pessoa"]
+            [name: "Person"]
     ]
 
     /**
