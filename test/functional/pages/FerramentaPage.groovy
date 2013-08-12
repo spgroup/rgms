@@ -22,4 +22,19 @@ class FerramentaPage extends Page {
     def uploadWithoutFile(){
         $('input.save').click()
     }
+
+    def checkAnyFerramentaAtList(){
+        checkFirstFerramentaNameAtList(null)
+    }
+
+    def checkFirstFerramentaNameAtList(name){
+        def listDiv = $('div', id: 'list-ferramenta')
+        def ferramentaTable = (listDiv.find('table'))[0]
+        def ferramentaRows  = ferramentaTable.find('tbody').find('tr')
+        def ferramentaColumns = ferramentaRows[1].find('td')
+
+        assert ferramentaColumns[1].text() == name
+    }
+
+
 }

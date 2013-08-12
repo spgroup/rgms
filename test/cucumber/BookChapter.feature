@@ -44,6 +44,18 @@ Feature: BookChapter
     Then I see my user listed as a member of book chapter by default
 #end
 
+  Scenario: upload book chapter with a file
+    Given the system has some book chapters stored
+    When I upload the book chapters of "curriculo.xml"
+    Then the system has all the book chapters of the xml file
+
+  Scenario: upload book chapters without a file
+    Given I am at the publications menu
+    When I select the "Book Chapter" option at the program menu
+    And I select the upload button at the book chapter page
+    Then I'm still on book chapter page
+    And the book chapters are not stored by the system
+
   Scenario: list existing book chapter
     Given the system has book chapter entitled "Artificial Neural Networks" with file name "ANN.pdf"
     When I view the book chapter list
