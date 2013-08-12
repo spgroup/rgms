@@ -103,32 +103,6 @@ class TestDataAndOperations {
         }
     }
 
-//#if ($visit)
-    static visitors = [
-            [name: "Person"]
-    ]
-
-    /**
-     * @author carloscemb
-     */
-    static visits = [
-            [visitor: new Visitor(visitors[0]),
-                    initialDate: (new Date("11 November 2000")),
-                    finalDate: (new Date("12 November 2000"))]
-    ]
-
-    /**
-     * @author carloscemb
-     */
-    static public def findVisitByVisitorAndInitialDateAndFinalDate(String name, String initialDate, String finalDate) {
-        visits.find { visit ->
-            visit.visitor.name == name &&
-                    visit.initialDate.format("dd/MM/YYYY") == initialDate &&
-                    visit.initialDate.format("dd/MM/YYYY") == finalDate
-        }
-    }
-//#end
-
     static public def findFerramentaByTitle(String title) {
         ferramentas.find { ferramenta ->
             ferramenta.title == title
