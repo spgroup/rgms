@@ -4,7 +4,6 @@ import org.springframework.dao.DataIntegrityViolationException
 //#if($upXMLFerramenta)
 import rgms.XMLService
 //#end
-import rgms.publication.Ferramenta;
 
 class FerramentaController {
 
