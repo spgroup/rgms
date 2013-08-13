@@ -48,7 +48,9 @@ Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { Str
 //create web
 Given(~'^I am at the create orientation page$') {->
 
-    Login()
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
 
     to OrientationCreatePage
     at OrientationCreatePage
@@ -67,7 +69,10 @@ Then(~'^I am on the orientation show page$') {->
 //edit web
 Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in the system$') { String title ->
 
-    Login()
+    to LoginPage
+    at LoginPage
+
+    page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
     page.select("Orientation")
     at OrientationsPage
@@ -104,13 +109,5 @@ When(~'^I change the orientation tituloTese to "([^"]*)"$') { String newtitle ->
 When(~'^I select the "([^"]*)" option$') { String option ->
     at OrientationEditPage
     page.select(option)
-}
-
-//FUNCOES AUXILIARES
-// o problema de duplicação que este método resolve não foi identificado pela ferramenta de detecção de clones
-def Login(){
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
 }
 

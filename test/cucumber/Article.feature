@@ -15,7 +15,7 @@ Feature: journal article
     Then the article "Algebraic reasoning for object-oriented programming" is not stored by the system because it is invalid
 
   Scenario: duplicate article
-    Given the system has article entitled "A theory of software product line refinement" with file name "TCS-0.pdf"
+    Given the article "A theory of software product line refinement" is stored in the system with file name "TCS-0.pdf"
     When I create the article "A theory of software product line refinement" with file name "TCS-1.pdf"
     Then the article "A theory of software product line refinement" is not stored twice
 

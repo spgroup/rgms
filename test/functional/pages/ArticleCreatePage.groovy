@@ -15,7 +15,6 @@ class ArticleCreatePage extends Page {
     }
 
     def fillArticleDetails() {
-        //Também há uma duplicacao aqui a mesma variavel com o mesmo valor declarado abaixo é criada em ArticleSteps, mas não há necessidade de remoção de clone
         def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
         fillArticleDetails(path, "A theory of software product line refinement")
     }
