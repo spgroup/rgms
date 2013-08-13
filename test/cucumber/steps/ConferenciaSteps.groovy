@@ -108,7 +108,6 @@ Then(~'^I am back at the publications and conferencias menu$') {->
 
 When(~'^I try to remove the conferencia "([^"]*)"$') { String title ->
     assert Conferencia.findByTitle(title) == null
-    //TestDataAndOperations.removeConferencia(title)
 }
 
 
