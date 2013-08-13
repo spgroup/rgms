@@ -20,7 +20,8 @@ Feature: BookChapter
     Then the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
 
   Scenario: register book chapter with invalid data
-    Given I am at the book chapter page
+    Given I am at the publication menu
+    When I select the "Book Chapter" option at the publication menu
     And I select the Novo BookChapter option at the book chapter page
     And I fill only the title field with the value "Next Generation Software Product Line Engineering"
     Then A failure message is displayed
@@ -37,13 +38,14 @@ Feature: BookChapter
 #if ($Autofill)
 
   Scenario: new book chapter filled with user data by default
-    Given I am at the book chapter page
+    Given I am at the publication menu
+    When I select the "Book Chapter" option at the publication menu
     And I select the Novo BookChapter option at the book chapter page
     Then I see my user listed as a member of book chapter by default
 #end
 
   Scenario: list existing book chapter
-    Given the book chapter "Artificial Neural Networks" is stored in the system with file name "ANN.pdf"
+    Given the system has book chapter entitled "Artificial Neural Networks" with file name "ANN.pdf"
     When I view the book chapter list
     Then my book chapter list contains "Artificial Neural Networks"
 

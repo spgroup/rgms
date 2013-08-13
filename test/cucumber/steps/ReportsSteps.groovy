@@ -80,6 +80,14 @@ Then(~'^I can generate a XML report about Member "([^"]*)"$') { String memberNam
 }
 //-------------------------------------------------------------------------------------------------
 
+Given(~'^I am at the Publications page$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+
+}
+
 When(~'^I select the Novo Member option$') { ->
     to MemberCreatePage
     at MemberCreatePage

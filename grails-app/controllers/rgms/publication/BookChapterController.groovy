@@ -50,20 +50,21 @@ class BookChapterController {
         flash.message = message(code: 'default.created.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
         redirect(action: "show", id: bookChapterInstance.id)
     }
-    def accessBookChapter(Long id) {
-        def bookChapterInstance = BookChapter.get(id)
-        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
-        if(!isReturned){
-            [bookChapterInstance: bookChapterInstance]
-        }
-    }
 
     def show(Long id) {
-        accessBookChapter(id)
+        def bookChapterInstance = BookChapter.get(id)
+		boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
+		if(!isReturned){
+			[bookChapterInstance: bookChapterInstance]
+		}
     }
 
     def edit(Long id) {
-        accessBookChapter(id)
+        def bookChapterInstance = BookChapter.get(id)
+        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
+		if(!isReturned){
+			[bookChapterInstance: bookChapterInstance]
+		}
     }
 
     def update(Long id, Long version) {

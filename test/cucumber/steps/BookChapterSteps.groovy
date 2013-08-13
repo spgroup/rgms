@@ -40,6 +40,23 @@ Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String
     assert bookChapter == null
 }
 
+Given(~'^the book chapter "([^"]*)" is stored in the system with file name  "([^"]*)"$') { String title, String filename ->
+    TestDataAndOperations.createBookChapter(title, filename)
+    bookChapter = BookChapter.findByTitle(title)
+    assert bookChapter != null
+}
+
+Given(~'^I am at the publication menu$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+}
+
+When(~'^I select the "([^"]*)" option at the publication menu$') { String option ->
+    page.select(option)
+}
+
 When(~'^I select the Novo BookChapter option at the book chapter page$') {->
     at BookChapterPage
     page.selectNewBookChapter()
@@ -71,6 +88,12 @@ Then(~'^I see my user listed as a member of book chapter by default$') {->
     at BookChapterCreatePage
     userData = Member.findByUsername('admin').id.toString()
     assert page.selectedMembers().contains(userData)
+}
+
+Given(~'the system has book chapter entitled "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
+    TestDataAndOperations.createBookChapter(title, filename)
+    bookChapter = BookChapter.findByTitle(title)
+    assert bookChapter != null
 }
 
 When(~'^I view the book chapter list$') {->
