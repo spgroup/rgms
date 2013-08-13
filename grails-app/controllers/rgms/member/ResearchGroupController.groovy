@@ -2,6 +2,10 @@ package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.news.News
+import rgms.news.NewsController
+import rgms.news.TwitterConnection
+import twitter4j.Status
+
 
 class ResearchGroupController {
 
@@ -86,6 +90,7 @@ class ResearchGroupController {
             //return
         }
         def members = refreshMemberList()
+
         //def deb = [session["groups"],session["groups"].contains(params.groups),entrou1,entrou2,entrou3,params]
         [researchGroupInstance: researchGroupInstance, membersInstance: members]
     }
@@ -184,9 +189,7 @@ class ResearchGroupController {
         for (groupId in session["groups"]) {
             def rGroup = ResearchGroup.get(groupId as Long)
             if (rGroup) {
-                def collection = rGroup?.memberships?.collect {
-                    it.member
-                }
+                def collection = rGroup?.memberships?.collect { it.member }
                 if (collection) {
                     members.addAll(collection)
                 }
@@ -198,9 +201,7 @@ class ResearchGroupController {
         def members = [] as Set
 
         if (request.post == false) {
-            session["groups"] = ResearchGroup.list()?.collect {
-                it.id
-            }
+            session["groups"] = ResearchGroup.list()?.collect { it.id }
         } else {
             addOrRemoveGroupsOfSession()
         }
@@ -245,5 +246,20 @@ class ResearchGroupController {
     }
     //#end
 
+    def updateNewsFromTwitter() {
+        def researchGroupInstance = ResearchGroup.get(params.id)
+        TwitterConnection twConn = new TwitterConnection()
+        List<Status> timeline = twConn.getTimeLine(researchGroupInstance.twitter)
+        timeline.each {
+            def newContr = new NewsController()
+            newContr.params << [description: it.getText(), date: it.getCreatedAt(), researchGroup: researchGroupInstance]
+            newContr.create()
+            newContr.save()
+            newContr.response.reset()
+            //researchGroupInstance.addToNews(new News(description: it.getText(), date: it.getCreatedAt()))
+        }
+        researchGroupInstance.save()
+        redirect(action: "show", id: researchGroupInstance.id)
+    }
 
 }

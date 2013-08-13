@@ -17,6 +17,12 @@ class TechnicalReportEditPage extends Page {
         $("form").title = novovalor
     }
 
+    def edit(String title, String file, institution) {
+        $("form").title = title
+        $("form").file = file
+        $("form").institution = institution
+    }
+
     def select(String s) {
         if (s == "Alterar")
             $("form").find("input", value: s).click()
