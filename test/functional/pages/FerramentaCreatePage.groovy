@@ -24,7 +24,8 @@ class FerramentaCreatePage extends FormPage {
 
     // Fill form means submit form too
     def fillFerramentaDetails() {
-        fillFerramentaTitle("CCFinder")
+        def name = "CCFinder"
+        fillFerramentaTitle(name)
         fillFerramentaDetailsWithoutTitle()
     }
 
@@ -32,8 +33,8 @@ class FerramentaCreatePage extends FormPage {
         $("form").title = title
     }
 
-    def fillFerramentaDetailsWithoutTitle() {
-        def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + "CCFinder.pdf"
+    def fillFerramentaDetailsWithoutTitle(name) {
+        def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + name + ".pdf"
         $("form").description = "Description"
         $("form").website = "website"
         $("form").file = path

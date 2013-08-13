@@ -73,7 +73,7 @@ Feature: Ferramenta
     And I select the new ferramenta option at the ferramenta page
     And I fill Titulo with more than 255 caracteres
     And fill the others fields with valid values without Titulo
-    Then I am still on ferramenta page
+    Then I am still on create new ferramenta page
     And the ferramenta is not displayed in the ferramentas list page
 
    Scenario: remove existing ferramenta

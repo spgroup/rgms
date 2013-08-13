@@ -31,10 +31,8 @@ class FerramentaPage extends Page {
         def listDiv = $('div', id: 'list-ferramenta')
         def ferramentaTable = (listDiv.find('table'))[0]
         def ferramentaRows  = ferramentaTable.find('tbody').find('tr')
-        def ferramentaColumns = ferramentaRows[0].find('td')
+        def ferramentaColumns = ferramentaRows[1].find('td')
 
-        assert ferramentaColumns[0].text() == name
+        assert ferramentaColumns[1].text() == name
     }
-
-
 }
