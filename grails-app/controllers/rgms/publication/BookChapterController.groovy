@@ -124,7 +124,6 @@ class BookChapterController {
 					List<Object> bookChapter = ((Node)bookChaptersChildren[i]).children()
 					
 					Node dadosBasicos = (Node) bookChapter[0]
-					Node detalhamentoCapitulo = (Node) bookChapter[1]
 								
 					BookChapter newBookChapter = new BookChapter()
 					newBookChapter.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
