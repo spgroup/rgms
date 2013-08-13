@@ -62,6 +62,6 @@ Feature: Ferramenta
     Then I can see the new title "TestCucumber" at ferramenta show page
 
   Scenario: list ferramentas
-    Given the ferramenta "Emergo" is stored in the system with file name "emergo.pdf"
-    When I create the ferramenta "Target" with file name "target.pdf"
-    Then The system list "Emergo" and "Target" ferramentas
+    Given the ferramenta "Tool" is stored in the system with file name "tool.pdf"
+    When I create the ferramenta "New" with file name "new.pdf"
+    Then The system list "Tool" and "New" ferramentas

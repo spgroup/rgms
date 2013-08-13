@@ -30,6 +30,12 @@ class TestDataAndOperations {
                     publicationDate: (new Date("12 October 2012"))],
             [website: "http://www.ccfinder.com", description: "Ferramenta CCfinder",
                     title: "CCFinder",
+                    publicationDate: (new Date("12 October 2012"))],
+            [website: "http://www.tool.com", description: "Ferramenta Tool",
+                    title: "Tool",
+                    publicationDate: (new Date("12 October 2012"))],
+            [website: "http://www.new.com", description: "Ferramenta New",
+                    title: "New",
                     publicationDate: (new Date("12 October 2012"))]
     ]
 
