@@ -7,8 +7,7 @@ import steps.TestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no book chapter entitled "([^"]*)"$') { String title ->
-    bookChapter = BookChapter.findByTitle(title)
-    assert bookChapter == null
+    checkIfExists(title)
 }
 
 When(~'^I create the book chapter "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
@@ -36,8 +35,7 @@ When(~'^I remove the book chapter "([^"]*)"$') { String title ->
 }
 
 Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String title ->
-    bookChapter = BookChapter.findByTitle(title)
-    assert bookChapter == null
+    checkIfExists(title)
 }
 
 When(~'^I select the Novo BookChapter option at the book chapter page$') {->
@@ -86,10 +84,7 @@ And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$')
     page.selectNewBookChapter()
     to BookChapterCreatePage
     at BookChapterCreatePage
-    page.fillBookChapterDetails(title, filename)
-    page.clickSaveBookChapter()
-    book = BookChapter.findByTitle(title)
-    assert book != null
+    createAndCheckBookOnBrowser(title, filename)
     to BookChapterPage
     at BookChapterPage
 }
@@ -106,10 +101,7 @@ When(~'^I go to NewBookChapter page$'){->
 }
 And(~'^I use the webpage to create the book chapter "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
     at BookChapterCreatePage
-    page.fillBookChapterDetails(title, filename)
-    page.clickSaveBookChapter()
-    book = BookChapter.findByTitle(title)
-    assert book != null
+    createAndCheckBookOnBrowser(title, filename)
     to BookChapterPage
     at BookChapterPage
 }
@@ -123,4 +115,16 @@ And(~'^it is shown in the book chapter list with title "([^"]*)"$'){ String titl
     to BookChapterPage
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
+}
+
+def createAndCheckBookOnBrowser(String title, String filename){
+    page.fillBookChapterDetails(title, filename)
+    page.clickSaveBookChapter()
+    book = BookChapter.findByTitle(title)
+    assert book != null
+}
+
+def checkIfExists(String title){
+    bookChapter = BookChapter.findByTitle(title)
+    assert bookChapter == null
 }
