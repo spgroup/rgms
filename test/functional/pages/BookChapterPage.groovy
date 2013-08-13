@@ -10,8 +10,8 @@ class BookChapterPage extends Page {
         //title ==~ /Capítulo de livro Listagem/
 
         GetPageTitle gp = new GetPageTitle()
-        def currentBookChapter = gp.msg("default.bookchapter.label")
-        def currentTitle = gp.msg("default.list.label", [currentBookChapter])
+        def currentBookChapter = gp.getMessageServerLocale("default.bookchapter.label")
+        def currentTitle = currentBookChapter + " " + gp.getMessageServerLocale("default.button.list.label")
 
         title ==~ currentTitle
     }

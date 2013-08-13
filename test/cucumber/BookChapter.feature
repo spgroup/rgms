@@ -45,7 +45,8 @@ Feature: BookChapter
 #end
 
   Scenario: list existing book chapter
-    Given the system has book chapter entitled "Artificial Neural Networks" with file name "ANN.pdf"
+    Given I am at the publication menu
+    And the system has book chapter entitled "Artificial Neural Networks" with file name "ANN.pdf"
     When I view the book chapter list
     Then my book chapter list contains "Artificial Neural Networks"
 

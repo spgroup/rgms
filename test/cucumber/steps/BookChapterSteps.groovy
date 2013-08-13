@@ -68,7 +68,7 @@ Given(~'^I am at the book chapter page$') {->
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
-    page.select("BookChapter")
+    to BookChapterPage
     at BookChapterPage
 }
 
@@ -91,14 +91,14 @@ Then(~'^I see my user listed as a member of book chapter by default$') {->
     assert page.selectedMembers().contains(userData)
 }
 
-Given(~'the system has book chapter entitled "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
+And(~'the system has book chapter entitled "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
     TestDataAndOperations.createBookChapter(title, filename)
     bookChapter = BookChapter.findByTitle(title)
     assert bookChapter != null
 }
 
 When(~'^I view the book chapter list$') {->
-    at BookChapterPage
+    to BookChapterPage
 }
 
 Then(~'my book chapter list contains "([^"]*)"$') { String title ->
