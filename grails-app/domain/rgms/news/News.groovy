@@ -17,7 +17,8 @@ class News {
 
 
     static List getCurrentNews(researchGroup) {
-        def list = News.findAllByResearchGroup(researchGroup)
+        def list
+        list = News.findAllByResearchGroup(researchGroup)
         return list
     }
 
