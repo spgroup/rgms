@@ -808,4 +808,11 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    static public boolean checkExistingNews(String description, String date, String group){
+        Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
+        def researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
+        def news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
+        return news != null
+    }
+
 }

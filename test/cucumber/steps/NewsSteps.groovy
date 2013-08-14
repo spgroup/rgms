@@ -5,10 +5,7 @@ import steps.TestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
-    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-    researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
-    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
-    assert news == null
+    assert !TestDataAndOperations.checkExistingNews(description,date,group)
 }
 
 When(~'^I create a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
@@ -39,10 +36,7 @@ When(~'^I delete the news with description "([^"]*)" and date "([^"]*)" for "([^
 }
 
 Then(~'^the news with "([^"]*)" and date "([^"]*)" doesnt exists to "([^"]*)" research group$') { String description, String date, String group ->
-    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-    researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group);
-    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
-    assert news == null
+    assert !TestDataAndOperations.checkExistingNews(description,date,group)
 }
 
 Then(~'^the news  with "([^"]*)" and date "([^"]*)" is not registered to "([^"]*)" research group$') { String description, String date, String group ->
