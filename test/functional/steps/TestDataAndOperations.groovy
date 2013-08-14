@@ -791,6 +791,7 @@ class TestDataAndOperations {
         researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
         researchGroupController.update()
         researchGroupController.response.reset()
+        return researchGroup
     }
 
     static public boolean containsUser(members){
