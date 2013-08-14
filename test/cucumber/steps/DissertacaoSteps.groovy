@@ -145,8 +145,7 @@ When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filenam
 
 Then(~'^I see my user listed as an author member of dissertation by default$') {->
     at DissertationCreate
-    userData = Member.findByUsername('admin').id.toString()
-    assert page.selectedMembers().contains(userData)
+    assert TestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 Then(~'^I see my school name as school of dissertation by default$') {->

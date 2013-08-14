@@ -97,8 +97,7 @@ Then(~'^I can remove one conferencia$') {->
 
 Then(~'^I see my user listed as an author member of conferencia by default$') {->
     at ConferenciaCreatePage
-    userData = Member.findByUsername('admin').id.toString()
-    assert page.selectedMembers().contains(userData)
+    assert TestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 Then(~'^I am back at the publications and conferencias menu$') {->

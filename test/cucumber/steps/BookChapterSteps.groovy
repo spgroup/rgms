@@ -86,8 +86,7 @@ And(~'^I still on the book chapter create page$'){->
 
 Then(~'^I see my user listed as a member of book chapter by default$') {->
     at BookChapterCreatePage
-    userData = Member.findByUsername('admin').id.toString()
-    assert page.selectedMembers().contains(userData)
+    assert TestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 Given(~'the system has book chapter entitled "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->

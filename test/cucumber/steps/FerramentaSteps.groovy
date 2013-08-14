@@ -124,8 +124,7 @@ Then(~'^The ferramenta is not stored$') {->
 
 Then(~'^I see my user listed as an author member of ferramenta by default$') {->
     at FerramentaCreatePage
-    userData = Member.findByUsername('admin').id.toString()
-    assert page.selectedMembers().contains(userData)
+    assert TestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 And(~'^I select the upload button at the ferramenta page$') {->

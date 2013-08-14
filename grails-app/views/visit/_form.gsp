@@ -1,19 +1,19 @@
 <%@ page import="rgms.visit.Visit" %>
 
-<div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'dataInicio', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'initialDate', 'error')} required">
     <label for="dataInicio">
-        <g:message code="visit.dataInicio.label" default="Data Inicio" />
+        <g:message code="visit.initialDate.label" default="Initial Date" />
         <span class="required-indicator">*</span>
     </label>
-    <g:datePicker name="dataInicio" precision="day"  value="${visitInstance?.dataInicio}"  />
+    <g:datePicker name="initialDate" precision="day"  value="${visitInstance?.initialDate}"  />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'dataFim', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'finalDate', 'error')} required">
     <label for="dataFim">
-        <g:message code="visit.dataFim.label" default="Data Fim" />
+        <g:message code="visit.finalDate.label" default="Final Date" />
         <span class="required-indicator">*</span>
     </label>
-    <g:datePicker name="dataFim" precision="day"  value="${visitInstance?.dataFim}"  />
+    <g:datePicker name="finalDate" precision="day"  value="${visitInstance?.finalDate}"  />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'visitor', 'error')} required">
@@ -34,10 +34,10 @@
 <!-- #end  -->
 
 <!-- #if( $descricaovisita ) -->
-<div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'descricao', 'error')} ">
-    <label for="descricao">
-        <g:message code="visit.descricao.label" default="Descrição" />
+<div class="fieldcontain ${hasErrors(bean: visitInstance, field: 'description', 'error')} ">
+    <label for="description">
+        <g:message code="visit.descricao.label" default="Description" />
     </label>
-    <g:textArea name="descricao" cols="40" rows="5" maxlength="100000" value="${visitInstance?.descricao}"/>
+    <g:textArea name="description" cols="40" rows="5" maxlength="100000" value="${visitInstance?.description}"/>
 </div>
 <!-- #end -->

@@ -1,6 +1,5 @@
 package steps
 
-import rgms.authentication.AuthController
 import rgms.member.*
 import rgms.news.News
 import rgms.news.NewsController
@@ -8,7 +7,6 @@ import rgms.publication.*
 import rgms.visit.Visit
 import rgms.visit.VisitController
 import rgms.visit.Visitor
-import org.apache.shiro.SecurityUtils
 
 class TestDataAndOperations {
 
@@ -107,32 +105,6 @@ class TestDataAndOperations {
             article.title == title
         }
     }
-
-//#if ($visit)
-    static visitors = [
-            [name: "Pessoa"]
-    ]
-
-    /**
-     * @author carloscemb
-     */
-    static visits = [
-            [visitor: new Visitor(visitors[0]),
-                    dataInicio: (new Date("11 November 2000")),
-                    dataFim: (new Date("12 November 2000"))]
-    ]
-
-    /**
-     * @author carloscemb
-     */
-    static public def findVisitByVisitorAndInitialDateAndFinalDate(String name, String initialDate, String finalDate) {
-        visits.find { visit ->
-            visit.visitor.name == name &&
-                    visit.dataInicio.format("dd/MM/YYYY") == initialDate &&
-                    visit.dataFim.format("dd/MM/YYYY") == finalDate
-        }
-    }
-//#end
 
     static public def findFerramentaByTitle(String title) {
         ferramentas.find { ferramenta ->
@@ -669,8 +641,8 @@ class TestDataAndOperations {
     static public void createVisit(String name, String initialDate, String finalDate) {
         def visitController = new VisitController()
         visitController.params.nameVisitor = name
-        visitController.params.dataInicio = Date.parse("dd/MM/yyyy", initialDate)
-        visitController.params.dataFim = Date.parse("dd/MM/yyyy", finalDate)
+        visitController.params.initialDate = Date.parse("dd/MM/yyyy", initialDate)
+        visitController.params.finalDate = Date.parse("dd/MM/yyyy", finalDate)
         visitController.request.setContent(new byte[1000]) // Could also vary the request content.
         visitController.create()
         visitController.save()
@@ -682,7 +654,7 @@ class TestDataAndOperations {
      */
     static public boolean containsVisit(Visit visit) {
         def visitController = new VisitController()
-        def result = visitController.list().visitInstanceList
+        def result = visitController.list(100).visitInstanceList
         return result.contains(visit)
     }
 
@@ -691,55 +663,61 @@ class TestDataAndOperations {
      */
     static public void removeVisit(String name, String initialDate, String finalDate) {
         def visitController = new VisitController()
-        def visitor = Visitor.findByName(name)
-        Date dia_1 = Date.parse("dd/MM/yyyy", initialDate)
-        Date dia_2 = Date.parse("dd/MM/yyyy", finalDate)
-        def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, dia_1, dia_2)
+        def visit = searchVisit(name, initialDate, finalDate)
         visitController.params << [id: visit.id]
-        visitController.delete()
+        visitController.delete((Long)visitController.params.id)
     }
 
     /**
      * @author carloscemb
      */
-    static public Visit editVisit(String oldVisitante, String oldDataInicio, String oldDataFim, String newVisitante) {
-        def visitor = Visitor.findByName(oldVisitante)
-        Date dia_1 = Date.parse("dd/MM/yyyy", oldDataInicio)
-        Date dia_2 = Date.parse("dd/MM/yyyy", oldDataFim)
-        def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, dia_1, dia_2)
+    static public def editVisit(String oldVisitor, String oldInitialDate, String oldFinalDate, String newVisitorName) {
+        def visit = searchVisit(oldVisitor, oldInitialDate, oldFinalDate)
 
-        def novoVisitor = Visitor.findByName(newVisitante)
+        def newVisitor = Visitor.findByName(newVisitorName)
 
-        if(novoVisitor == null) {
-            createVisitor(newVisitante)
-            novoVisitor = Visitor.findByName(newVisitante)
+        if(newVisitor == null) {
+            createVisitor(newVisitorName)
+            newVisitor = Visitor.findByName(newVisitorName)
         }
 
-        visit.setVisitor(novoVisitor)
+        visit.setVisitor(newVisitor)
 
-        def visitController = new VisitController()
-        visitController.params << visit.properties
-        visitController.update()
+        updateVisit(visit)
 
-        def updatedVisit = Visit.findByVisitorAndDataInicioAndDataFim(novoVisitor, dia_1, dia_2)
+        def updatedVisit = searchVisit(newVisitorName, oldInitialDate, oldFinalDate)
         return updatedVisit
     }
 
     /**
      * @author penc
      */
-    static public Visit editVisitChangeData(String visitante, String dataInicio, String oldDataFim, String newDataFim) {
-        def visitor = Visitor.findByName(visitante)
-        Date dia_1 = Date.parse("dd/MM/yyyy", dataInicio)
-        Date dia_2 = Date.parse("dd/MM/yyyy", oldDataFim)
-        def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, dia_1, dia_2)
+    static public def editVisitChangeData(String visitorName, String initialDate, String oldFinalDate, String newFinalDate) {
+        def visit = searchVisit(visitorName, initialDate, oldFinalDate)
 
-        Date newFinalDate = Date.parse("dd/MM/yyyy", newDataFim)
-        visit.setDataFim(newFinalDate);
+        visit.setFinalDate(Date.parse("dd/MM/yyyy", newFinalDate))
 
+        updateVisit(visit)
+    }
+
+    /**
+     * @author carloscemb
+     */
+    static public def updateVisit(Visit visit) {
         def visitController = new VisitController()
         visitController.params << visit.properties
-        visitController.update()
+        visitController.update((Long)visitController.params.id, (Long)visitController.params.version)
+    }
+
+    /**
+     * @author carloscemb
+     */
+    static public Visit searchVisit(String name, String initialDate, String finalDate) {
+        def visitor = Visitor.findByName(name)
+        Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
+        Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
+        def visit = Visit.findByVisitorAndInitialDateAndFinalDate(visitor, day_1, day_2)
+        return visit
     }
 
 //#end
@@ -787,10 +765,14 @@ class TestDataAndOperations {
     }
 
     static public void ShareArticleOnFacebook(String title){
-       def member = new Member()
+        def member = new Member()
         member.access_token =  "CAAJIlmRWCUwBAN0r1puBTUa4vDZAKxWWlR5gN4qtgZAosBDKGUOLBquyKuHYQ0zxICioiarTJ66mpdZC08U4rHJOrtvXJCB8hMBcLKlQaTdwYZCgMTJtbFnQfIBZAxi6hRIkfw2fCSyCS6DuFIrGRThI53ZCzBOLsZD"
         member.facebook_id = "100006411132660"
         PublicationController.sendPostFacebook(member, title)
     }
 
+    static public boolean containsUser(members){
+        def userData = Member.findByUsername('admin').id.toString()
+        return members.contains(userData)
+    }
 }

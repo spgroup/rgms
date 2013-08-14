@@ -27,24 +27,24 @@
     </g:if>
     <ol class="property-list visit">
 
-        <g:if test="${visitInstance?.dataInicio}">
+        <g:if test="${visitInstance?.initialDate}">
             <li class="fieldcontain">
-                <span id="dataInicio-label" class="property-label"><g:message code="visit.dataInicio.label"
-                                                                              default="Data Inicio"/></span>
+                <span id="initialDate-label" class="property-label"><g:message code="visit.initialDate.label"
+                                                                              default="Initial Date"/></span>
 
-                <span class="property-value" aria-labelledby="dataInicio-label"><g:formatDate format="dd-MM-yyyy"
-                                                                                              date="${visitInstance?.dataInicio}"/></span>
+                <span class="property-value" aria-labelledby="initialDate-label"><g:formatDate format="dd-MM-yyyy"
+                                                                                              date="${visitInstance?.initialDate}"/></span>
 
             </li>
         </g:if>
 
-        <g:if test="${visitInstance?.dataFim}">
+        <g:if test="${visitInstance?.finalDate}">
             <li class="fieldcontain">
-                <span id="dataFim-label" class="property-label"><g:message code="visit.dataFim.label"
-                                                                           default="Data Fim"/></span>
+                <span id="finalDate-label" class="property-label"><g:message code="visit.finalDate.label"
+                                                                           default="Final Date"/></span>
 
                 <span class="property-value" aria-labelledby="dataFim-label"><g:formatDate format="dd-MM-yyyy"
-                                                                                           date="${visitInstance?.dataFim}"/></span>
+                                                                                           date="${visitInstance?.finalDate}"/></span>
 
             </li>
         </g:if>
@@ -74,13 +74,13 @@
         </g:if>
 
     <!-- #if( $descricaovisita ) -->
-        <g:if test="${visitInstance?.descricao}">
+        <g:if test="${visitInstance?.description}">
             <li class="fieldcontain">
-                <span id="descricao-label" class="property-label"><g:message code="ferramenta.descricao.label"
-                                                                             default="Descricao"/></span>
+                <span id="description-label" class="property-label"><g:message code="visit.description.label"
+                                                                             default="Description"/></span>
 
                 <span class="property-value" aria-labelledby="visitor-label">
-                    ${visitInstance?.descricao}
+                    ${visitInstance?.description}
 
                 </span>
 
