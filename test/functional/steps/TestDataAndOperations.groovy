@@ -850,6 +850,7 @@ class TestDataAndOperations {
         researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
         researchGroupController.update()
         researchGroupController.response.reset()
+        return researchGroup
     }
 
     static public void createTechnicalReportWithEmptyInstitution(String title, filename) {
