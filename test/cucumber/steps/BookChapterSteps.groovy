@@ -1,4 +1,5 @@
 import pages.*
+import cucumber.runtime.PendingException
 import rgms.member.Member
 import rgms.publication.BookChapter
 import rgms.publication.Periodico
@@ -67,7 +68,7 @@ Given(~'^I am at the book chapter page$') {->
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
-    page.select("BookChapter")
+    to BookChapterPage
     at BookChapterPage
 }
 
@@ -89,14 +90,14 @@ Then(~'^I see my user listed as a member of book chapter by default$') {->
     assert TestDataAndOperations.containsUser(page.selectedMembers())
 }
 
-Given(~'the system has book chapter entitled "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
+And(~'the system has book chapter entitled "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
     TestDataAndOperations.createBookChapter(title, filename)
     bookChapter = BookChapter.findByTitle(title)
     assert bookChapter != null
 }
 
 When(~'^I view the book chapter list$') {->
-    at BookChapterPage
+    to BookChapterPage
 }
 
 Then(~'my book chapter list contains "([^"]*)"$') { String title ->
@@ -145,4 +146,34 @@ And(~'^it is shown in the book chapter list with title "([^"]*)"$'){ String titl
     to BookChapterPage
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
+}
+Given(~'^the system has some book chapters stored$') {->
+    initialSize = BookChapter.findAll().size()
+}
+When(~'^I upload the book chapters of "([^"]*)"$') { filename ->
+    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    inicialSize = BookChapter.findAll().size()
+    TestDataAndOperations.uploadBookChapter(path)
+    finalSize = BookChapter.findAll().size()
+    assert initialSize < finalSize
+}
+Then(~'^the system has all the book chapters of the xml file$') {->
+    assert BookChapter.findByTitle("Refinement of Concurrent Object Oriented Programs") != null
+    assert BookChapter.findByTitle("A RUP-Based Software Process Supporting Progressive Implementation") != null
+    assert BookChapter.findByTitle("Transformation Laws for Sequential Object-Oriented Programming") != null
+    assert BookChapter.findByTitle("Mapping Features to Aspects: A Model-Based Generative Approach") != null
+    assert BookChapter.findByTitle("Recommending Mechanisms for Modularizing Mobile Software Variabilities") != null
+    assert BookChapter.findByTitle("An Introduction to Software Product Line Refactoring") != null
+}
+
+And(~'^I select the upload button at the book chapter page$') {->
+    at BookChapterPage
+    page.uploadWithoutFile()
+}
+Then(~'^I\'m still on book chapter page$') {->
+    at BookChapterPage
+}
+And(~'^the book chapters are not stored by the system$') {->
+    at BookChapterPage
+    page.checkIfBookChapterListIsEmpty()
 }
