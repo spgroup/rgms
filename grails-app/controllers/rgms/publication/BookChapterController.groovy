@@ -50,21 +50,20 @@ class BookChapterController {
         flash.message = message(code: 'default.created.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
         redirect(action: "show", id: bookChapterInstance.id)
     }
+    def accessBookChapter(Long id) {
+        def bookChapterInstance = BookChapter.get(id)
+        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
+        if(!isReturned){
+            [bookChapterInstance: bookChapterInstance]
+        }
+    }
 
     def show(Long id) {
-        def bookChapterInstance = BookChapter.get(id)
-		boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
-		if(!isReturned){
-			[bookChapterInstance: bookChapterInstance]
-		}
+        accessBookChapter(id)
     }
 
     def edit(Long id) {
-        def bookChapterInstance = BookChapter.get(id)
-        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
-		if(!isReturned){
-			[bookChapterInstance: bookChapterInstance]
-		}
+        accessBookChapter(id)
     }
 
     def update(Long id, Long version) {
@@ -125,7 +124,6 @@ class BookChapterController {
 					List<Object> bookChapter = ((Node)bookChaptersChildren[i]).children()
 					
 					Node dadosBasicos = (Node) bookChapter[0]
-					Node detalhamentoCapitulo = (Node) bookChapter[1]
 								
 					BookChapter newBookChapter = new BookChapter()
 					newBookChapter.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")

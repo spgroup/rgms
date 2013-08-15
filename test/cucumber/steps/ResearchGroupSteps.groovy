@@ -104,10 +104,7 @@ When(~'^I create a research group with name "([^"]*)" and with no description$')
 Given(~'^i am at publication menu$') {
 	->
 	// Express the Regexp above with the code you wish you had
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
-	at PublicationsPage
+	Login("admin", "adminadmin")
 }
 
 When(~'^i select the "([^"]*)" option at publications menu$') { String option ->
@@ -131,10 +128,7 @@ Then(~'^i can fill the research group details with name "([^"]*)" and create a n
 }
 
 Given(~'^the system has a Research Group named "([^"]*)" stored in the system$') { String arg1 ->
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
-	at PublicationsPage
+	Login("admin", "adminadmin")
 
 	page.select("Research Group")
 	at ResearchGroupPage
@@ -251,3 +245,9 @@ When(~'^i click on update button$') { ->
 }
 
 
+def Login(String user, String password) {
+    to LoginPage
+    at LoginPage
+    page.fillLoginData(user, password)
+    at PublicationsPage
+}

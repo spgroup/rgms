@@ -14,10 +14,7 @@ this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
 Given(~'^I am at the Member list page$') {->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
+    Login("admin","adminadmin")
     to MemberListPage
     at MemberListPage
 }
@@ -80,14 +77,6 @@ Then(~'^I can generate a XML report about Member "([^"]*)"$') { String memberNam
 }
 //-------------------------------------------------------------------------------------------------
 
-Given(~'^I am at the Publications page$') {->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-
-}
-
 When(~'^I select the Novo Member option$') { ->
     to MemberCreatePage
     at MemberCreatePage
@@ -102,10 +91,7 @@ Then(~'^I fill the Member details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)" a
 
 //-------------------------------------------------------------------------------------------------
 Given(~'^I am at the Research Group list page$') { ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
+    Login("admin","adminadmin")
     to ResearchGroupListPage
     at ResearchGroupListPage
 }
@@ -174,3 +160,10 @@ And(~'^I can generate a XML report about Research Group "([^"]*)"$') { String re
 }
 
 //---------------------------------------------------------------------------------------------------
+
+def Login(String user, String password) {
+    to LoginPage
+    at LoginPage
+    page.fillLoginData(user, password)
+    at PublicationsPage
+}
