@@ -432,8 +432,8 @@ class TestDataAndOperations {
         //TODO Deveria pegar os dados dos parametros, mas
         //		esta dando problema na criacao. Entao para
         //		simplificar o entendimento do problema,
-        //		os valores est�o fixos. O problema n�o
-        //		est� nos par�metros passados.
+        //		os valores est?o fixos. O problema n?o
+        //		est? nos par?metros passados.
 
         def cont = new MembershipController()
 
@@ -769,10 +769,42 @@ class TestDataAndOperations {
         member.access_token =  "CAAJIlmRWCUwBAN0r1puBTUa4vDZAKxWWlR5gN4qtgZAosBDKGUOLBquyKuHYQ0zxICioiarTJ66mpdZC08U4rHJOrtvXJCB8hMBcLKlQaTdwYZCgMTJtbFnQfIBZAxi6hRIkfw2fCSyCS6DuFIrGRThI53ZCzBOLsZD"
         member.facebook_id = "100006411132660"
         PublicationController.sendPostFacebook(member, title)
-    }
+}
 
     static public boolean containsUser(members){
         def userData = Member.findByUsername('admin').id.toString()
         return members.contains(userData)
+}
+
+    //mapmf_tasj
+
+    //orientation
+    static orientations = [
+            [tipo: "Mestrado", orientando: "Tomaz", tituloTese: "The Book is on the table", anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
+    ]
+
+    static public def findOrientationByTitle(String title) {
+        orientations.find { orientation ->
+            orientation.tituloTese == title
+        }
     }
+
+    static public void createOrientation(String tituloTese) {
+
+        def cont = new OrientationController()
+        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
+    static public void removeOrientation(String tituloTese) {
+
+        def testOrientation = TestDataAndOperations.findOrientationByTitle(tituloTese)
+        def cont = new OrientationController()
+        cont.params << [id: testOrientation.id]
+        cont.delete()
+    }
+    //article
 }
