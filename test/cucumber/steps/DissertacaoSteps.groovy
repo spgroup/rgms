@@ -108,8 +108,7 @@ When(~'^I select the upload button at the dissertation page$') {->
     page.uploadWithoutFile()
 }
 Then(~'^I\'m still on dissertation page$') {->
-    //TO DO
-    //at DissertationPage
+    at DissertationPage
 }
 
 When(~'^I upload a new dissertation "([^"]*)"$') { filename ->

@@ -1,12 +1,9 @@
 package rgms.publication
 
-import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
-
 //#if($upXMLFerramenta)
 import rgms.XMLService
 //#end
-import rgms.member.Member
 import rgms.publication.Ferramenta;
 
 class FerramentaController {
@@ -23,33 +20,22 @@ class FerramentaController {
     }
 
     def create() {
-        def ferramentaInstance = new Ferramenta(params)
-        //#if($publicationContext)
-        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
-        if(publcContextOn){
-            if(SecurityUtils.subject?.principal != null){
-                PublicationController.addAuthor(ferramentaInstance)
-            }
-        }
-        //#end
-        [ferramentaInstance: ferramentaInstance]
+        [ferramentaInstance: new Ferramenta(params)]
     }
 
     def save() {
         def ferramentaInstance = new Ferramenta(params)
-		
-		PublicationController pb = new PublicationController()
-		
-        if (!pb.upload(ferramentaInstance) || !ferramentaInstance.save(flush: true)) {
-            render(view: "create", model: [ferramentaInstance: ferramentaInstance])
+
+		//PublicationController pb = new PublicationController()
+
+        if (!PublicationController.newUpload(ferramentaInstance, flash, request) || !ferramentaInstance.save(flush: true)) {     // (!pb.upload(periodicoInstance)) {
+            // com a segunda opção, o sistema se perde e vai para publication controller no teste Add a new article twitting it
+            render(controller: "ferramenta", view: "create", model: [ferramentaInstance: ferramentaInstance])
             return
         }
-        //#if($facebook)
-        //def user = Member.findByUsername(SecurityUtils.subject?.principal)
-        //pb.sendPostFacebook(user, ferramentaInstance.toString())
-        //#end
+
 		flash.message = messageGenerator('default.created.message',ferramentaInstance.id)
-        redirect(action: "show", id: ferramentaInstance.id)
+        redirect(controller: "ferramenta", action: "show", id: ferramentaInstance.id)
     }
 
     def show() {
@@ -66,7 +52,7 @@ class FerramentaController {
 
     def edit() {
         def ferramentaInstance = Ferramenta.get(params.id)
-		
+
         if (!ferramentaInstance) {
             flash.message = messageGenerator('default.not.found.message', params.id)
             redirect(action: "list")
@@ -124,7 +110,7 @@ class FerramentaController {
             redirect(action: "show", id: params.id)
         }
     }
-	
+
 	def messageGenerator (String code, def id)
 	{
 		return message(code: code, args: [message(code: 'ferramenta.label', default: 'Ferramenta'), id])
