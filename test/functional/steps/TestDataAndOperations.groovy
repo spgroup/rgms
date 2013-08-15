@@ -68,7 +68,11 @@ class TestDataAndOperations {
             [title: 'Evaluating Natural Languages System',
                     publicationDate: (new Date('13 November 2012')), institution: 'UFPE'],
             [title: 'NFL Languages System',
-                    publicationDate: (new Date('27 October 2011')), institution: 'NFL']
+                    publicationDate: (new Date('27 October 2011')), institution: 'NFL'],
+            [title: 'Joe-E',
+                    publicationDate: (new Date('1 May 2013')), institution: 'TG'],
+            [title: 'RC77-1',
+                    publicationDate: (new Date('15 May 2013')), institution: 'MIT', file: "TCS-77.pdf"]
     ]
 
     static members = [
@@ -731,6 +735,16 @@ class TestDataAndOperations {
         return ResearchGroup.findByName(name)
     }
 
+    static public ResearchGroup createAndGetResearchGroupByNameWithTwitter(String name, String twitter) {
+        def researchGroupController = new ResearchGroupController()
+        researchGroupController.params << findResearchGroupByGroupName(name)
+        researchGroupController.params << [twitter: twitter]
+        researchGroupController.create()
+        researchGroupController.save()
+        researchGroupController.response.reset()
+        return ResearchGroup.findByName(name)
+    }
+
     static public void createNews(String descriptionParam, Date dateParam, ResearchGroup groupParam) {
         def cont = new NewsController()
         cont.params << [description: descriptionParam, date: dateParam, researchGroup: groupParam]
@@ -756,6 +770,7 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    //não funciona
     static public void editResearchGroupTwitter(researchGroup, String newTwitter) {
         def researchGroupController = new ResearchGroupController()
         researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
@@ -771,8 +786,37 @@ class TestDataAndOperations {
         PublicationController.sendPostFacebook(member, title)
     }
 
+    static public ResearchGroup editResearchGroupTwitterAcount(researchGroup, String newTwitter){
+        def researchGroupController = new ResearchGroupController()
+        researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
+        researchGroupController.update()
+        researchGroupController.response.reset()
+        return researchGroup
+    }
+
     static public boolean containsUser(members){
         def userData = Member.findByUsername('admin').id.toString()
         return members.contains(userData)
+    }
+    static public void createTechnicalReportWithEmptyInstitution(String title, filename) {
+        def cont = new TechnicalReportController()
+        def params = TestDataAndOperations.findTechnicalReportByTitle(title)
+        params["institution"] = ""
+        cont.params << params << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
+    static public boolean checkExistingNews(String description, String date, String group){
+        Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
+        def researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
+        def news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
+        return news != null
+    }
+
+    static public String getTestFilesPath(String filename){
+        new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     }
 }

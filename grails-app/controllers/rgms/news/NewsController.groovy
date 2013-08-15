@@ -39,7 +39,7 @@ class NewsController {
         def newsDB = News.findByDescriptionAndDateAndResearchGroup(newsInstance.description, newsInstance.date, newsInstance.researchGroup);
         if (newsDB) {
             flash.message = message(code: 'news.not.created.unicity.rule.message', args: [message(code: 'news.label', default: 'News'), params.id])
-            redirect(action: "show", id: params.id)
+            //redirect(action: "show", id: params.id)
             return
 
         }
