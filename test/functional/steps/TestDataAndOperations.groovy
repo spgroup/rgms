@@ -756,18 +756,14 @@ class TestDataAndOperations {
 //#end
 
     static public ResearchGroup createAndGetResearchGroupByName(String name) {
-        def researchGroupController = new ResearchGroupController()
-        researchGroupController.params << findResearchGroupByGroupName(name)
-        researchGroupController.create()
-        researchGroupController.save()
-        researchGroupController.response.reset()
-        return ResearchGroup.findByName(name)
+        return createAndGetResearchGroupByNameWithTwitter(name,null)
     }
 
     static public ResearchGroup createAndGetResearchGroupByNameWithTwitter(String name, String twitter) {
         def researchGroupController = new ResearchGroupController()
         researchGroupController.params << findResearchGroupByGroupName(name)
-        researchGroupController.params << [twitter: twitter]
+        if(twitter != null)
+            researchGroupController.params << [twitter: twitter]
         researchGroupController.create()
         researchGroupController.save()
         researchGroupController.response.reset()
