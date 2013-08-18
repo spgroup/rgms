@@ -38,22 +38,12 @@ Then(~'^the research group "([^"]*)" is not stored in the system because exceeds
 	assert researchGroup.size() == 0
 }
 
-Given(~'^the system has no research group with no name stored in the system$') { ->
-	researchGroup = ResearchGroup.findByName("")
-	assert researchGroup == null
-}
-
 When(~'^I create a research group with no name and with the description "([^"]*)" $') { String arg1 ->
     TestDataAndOperations.createResearchGroup("", arg1)
 }
 
 Then(~'^the research group is not stored in the system because it has no name$') { ->
 	researchGroup = ResearchGroup.findByName("")
-	assert researchGroup == null
-}
-
-Given(~'^the system has no research group with name "([^"]*)"$') { String name ->
-	researchGroup = ResearchGroup.findByName(name)
 	assert researchGroup == null
 }
 
