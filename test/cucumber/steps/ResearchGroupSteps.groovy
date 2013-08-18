@@ -69,12 +69,6 @@ Then(~'^the research group "([^"]*)" is properly deleted of the system$') { Stri
 	assert researchGroup == null
 }
 
-Then(~'^the research group is not stored in the system because is invalid$') {
-	->
-	researchGroup = ResearchGroup.findByName("")
-	assert researchGroup == null
-}
-
 Given(~'^i am at publication menu$') {
 	->
 	// Express the Regexp above with the code you wish you had

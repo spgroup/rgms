@@ -7,14 +7,14 @@ Feature: research group
     Then the research group "modcs" is properly stored by the system
     
     Scenario: new research group with no name. 
-    Given the system has no research group entitled "modcs" stored in the system
+    Given the system has no research group entitled "" stored in the system
     When I create a research group named "" with the description "modcs research group"
-    Then the research group is not stored in the system because is invalid
+    Then the research group is not stored in the system because it has no name
     
     Scenario: new research group with no description. 
-    Given the system has no research group entitled "modcs" stored in the system
-    When I create a research group named "modcs" with the description ""
-    Then the research group is not stored in the system because is invalid
+    Given the system has no research group entitled "modcs-20" stored in the system
+    When I create a research group named "modcs-20" with the description ""
+    Then the research group with name "modcs-20" is not stored in the system because it has no description
     
     Scenario: duplicate researchgroup
     Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
@@ -35,7 +35,7 @@ Feature: research group
   Scenario: editing the researchgroup's name to none
     Given the system has a research group entitled "modcs-3" with the description "modcs-3 research group" stored in the system
     When I modify the name of research group entitled "modcs-3" to none
-    Then there is no research group entitled none
+    Then the research group is not stored in the system because it has no name
 
 
     Scenario:edit research group
