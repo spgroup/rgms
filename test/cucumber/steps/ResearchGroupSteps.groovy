@@ -69,12 +69,7 @@ Then(~'^the research group "([^"]*)" is properly deleted of the system$') { Stri
 	assert researchGroup == null
 }
 
-Given(~'^i am at publication menu$') {
-	->
-	// Express the Regexp above with the code you wish you had
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
+Given(~'^I am at publication menu$') { ->
 	at PublicationsPage
 }
 
@@ -99,11 +94,6 @@ Then(~'^i can fill the research group details with name "([^"]*)" and create a n
 }
 
 Given(~'^the system has a Research Group named "([^"]*)" stored in the system$') { String arg1 ->
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
-	at PublicationsPage
-
 	page.select("Research Group")
 	at ResearchGroupPage
 
@@ -185,13 +175,11 @@ Then(~'^the childof of research group "([^"]*)" is none$') { String name ->
     assert researchGroup.getChildOf() == null
 }
 
-
-Given(~'^i am logged as "([^"]*)"$') { String userName ->
+Given(~'^I am logged using username "([^"]*)" and password "([^"]*)"$') { String username, String password ->
     to LoginPage
     at LoginPage
-    page.fillLoginData(userName, "adminadmin")
+    page.fillLoginData(username, password)
 }
-
 
 Given(~'^i created a research group entitled "([^"]*)" with childof none$') { String name ->
     at PublicationsPage
