@@ -8,12 +8,12 @@ Feature: research group
     
     Scenario: new research group with no name. 
     Given the system has no research group entitled "modcs" stored in the system
-    When I create a research group with no name and with the description "modcs research group"
+    When I create a research group named "" with the description "modcs research group"
     Then the research group is not stored in the system because is invalid
     
     Scenario: new research group with no description. 
     Given the system has no research group entitled "modcs" stored in the system
-    When I create a research group with name "modcs" and with no description
+    When I create a research group named "modcs" with the description ""
     Then the research group is not stored in the system because is invalid
     
     Scenario: duplicate researchgroup

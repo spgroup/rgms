@@ -38,17 +38,9 @@ Then(~'^the research group "([^"]*)" is not stored in the system because exceeds
 	assert researchGroup.size() == 0
 }
 
-When(~'^I create a research group with no name and with the description "([^"]*)" $') { String arg1 ->
-    TestDataAndOperations.createResearchGroup("", arg1)
-}
-
 Then(~'^the research group is not stored in the system because it has no name$') { ->
 	researchGroup = ResearchGroup.findByName("")
 	assert researchGroup == null
-}
-
-When(~'^I create a research group with  with name "([^"]*)" and with no description$') { String arg1 ->
-	TestDataAndOperations.createResearchGroup(arg1, "")
 }
 
 Then(~'^the research group with name "([^"]*)" is not stored in the system because it has no description$') { String arg1 ->
@@ -77,18 +69,10 @@ Then(~'^the research group "([^"]*)" is properly deleted of the system$') { Stri
 	assert researchGroup == null
 }
 
-When(~'^I create a research group with no name and with the description "([^"]*)"$') { String description ->
-	TestDataAndOperations.createResearchGroup("", description)
-}
-
 Then(~'^the research group is not stored in the system because is invalid$') {
 	->
 	researchGroup = ResearchGroup.findByName("")
 	assert researchGroup == null
-}
-
-When(~'^I create a research group with name "([^"]*)" and with no description$') { String name ->
-	TestDataAndOperations.createResearchGroup(name, "")
 }
 
 Given(~'^i am at publication menu$') {
