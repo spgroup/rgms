@@ -143,7 +143,7 @@
         <li class="fieldcontain">
             <label>Inference:</label>
             <g:select name="members" from="${publicationsInstance}" multiple="multiple" optionKey="id" size="5"
-                      value="${publicationsInstance*.id}" id="${researchGroupInstance?.id}"" class="many-to-many"/>
+                      value="${publicationsInstance*.id}" id="${researchGroupInstance?.id}" class="many-to-many"/>
         </li>
     </ol>
 
