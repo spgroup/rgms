@@ -75,9 +75,8 @@ Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') {
  */
 
 Given(~'^I am at the articles page and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
+
+    Login(null)
     at PublicationsPage
     page.select("Periodico")
     createArticle()
@@ -132,6 +131,7 @@ When(~'^I select to view "([^"]*)" in resulting list$') { String title ->
 When(~'^I change the article title to "([^"]*)"$') { String newtitle ->
     page.select('a', 'edit')
     at ArticleEditPage
+    //aqui também existe uma duplicação (a linha abaixo é repetida em FerramentaSteps) mas não achamos necessário a remoção do mesmo
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
     page.edit(newtitle, path + "TCS-99.pdf")
 }
@@ -200,9 +200,7 @@ Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName -
 
     page.submitForm()
 
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
+    Login(null)
 
     member = Member.findByUsername(userName)
     MemberEditionPage.url = "member/edit/" + member.getId()
@@ -213,9 +211,8 @@ Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName -
 }
 
 Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData(userName, "adminadmin")
+
+    Login(null)
     at PublicationsPage
     page.select("Periodico")
     to ArticlesPage
@@ -262,6 +259,7 @@ Then(~'^No facebook message is added for "([^"]*)"$') { String articleTitle ->
 }
 //#end
 
+//FUNCOES AUXILIARES
 def createArticle(){
     at ArticlesPage
     page.selectNewArticle()
@@ -271,5 +269,18 @@ def createArticle(){
 
 def isNull(String title){
       return Periodico.findByTitle(title) == null
+    }
+
+// o problema de duplicação que este método resolve não foi identificado pela ferramenta de detecção de clones
+def Login(String userName){
+    to LoginPage
+    at LoginPage
+    if(userName == null){
+        page.fillLoginData("admin", "adminadmin")
+       }
+    else{
+        page.fillLoginData(userName, "adminadmin")
+    }
+
     }
 
