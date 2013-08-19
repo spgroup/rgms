@@ -8,8 +8,8 @@ import steps.TestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
-    article = Periodico.findByTitle(title)
-    assert article == null
+    //article = Periodico.findByTitle(title)
+    assert isNull(title)
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
@@ -28,15 +28,17 @@ When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*
 }
 
 Then(~'^the article "([^"]*)" is not stored by the system because it is invalid$') { String title ->
-    article = Periodico.findByTitle(title)
-    assert article == null
+    //article = Periodico.findByTitle(title)
+    assert isNull(title)
 }
 
+/*
 Given(~'^the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     TestDataAndOperations.createArticle(title, filename)
     article = Periodico.findByTitle(title)
     assert article != null
 }
+*/
 
 Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
     articles = Periodico.findAllByTitle(title)
@@ -64,8 +66,8 @@ Then(~'^I can fill the article details$') {->
  */
 Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     TestDataAndOperations.createArticle(title, filename)
-    article = Periodico.findByTitle(title)
-    assert article != null
+    //article = Periodico.findByTitle(title)
+    assert !isNull(title)
 }
 
 /**
@@ -78,14 +80,11 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
     page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
     page.select("Periodico")
-    at ArticlesPage
-    page.selectNewArticle()
-    at ArticleCreatePage
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    page.fillArticleDetails(path + filename, title)
+    createArticle()
+    page.fillArticleDetails(TestDataAndOperations.path() + filename, title)
     page.selectCreateArticle()
-    article = Periodico.findByTitle(title)
-    assert article != null
+    //article = Periodico.findByTitle(title)
+    assert !isNull(title)
     to ArticlesPage
     at ArticlesPage
 }
@@ -140,16 +139,16 @@ When(~'^I change the article title to "([^"]*)"$') { String newtitle ->
  * @author Guilherme
  */
 Then(~'^the article "([^"]*)" is properly updated by the system$') { String title ->
-    article = Periodico.findByTitle(title)
-    assert article == null
+    //article = Periodico.findByTitle(title)
+    assert isNull(title)
 }
 
 /**
  * @author Guilherme
  */
 Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
-    article = Periodico.findByTitle(title)
-    assert article == null
+    //article = Periodico.findByTitle(title)
+    assert isNull(title)
 }
 
 /**
@@ -227,11 +226,8 @@ Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userNa
 }
 
 When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$') { String articleName, String filename ->
-    at ArticlesPage
-    page.selectNewArticle()
-    at ArticleCreatePage
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    page.fillArticleDetails(path + filename, articleName)
+    createArticle()
+    page.fillArticleDetails(TestDataAndOperations.path() + filename, articleName)
     page.selectCreateArticle()
 }
 
@@ -265,3 +261,15 @@ Then(~'^No facebook message is added for "([^"]*)"$') { String articleTitle ->
     assert !FacebookTool.consult(articleTitle)
 }
 //#end
+
+def createArticle(){
+    at ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+
+    }
+
+def isNull(String title){
+      return Periodico.findByTitle(title) == null
+    }
+
