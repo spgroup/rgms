@@ -63,26 +63,27 @@ Feature: journal article
     And I select the "Alterar" option in Article Show Page
     Then I am at Article show page
 
+  
   Scenario: Add a new article tweeting it
-     Given I am logged as "admin"
-    And I select the "Periodico" option at the publications menu
+    Given I am logged as "admin"
+    And I am at the Article Page
     When I try to create an article named as "A theory of software product line refinement 1" with filename "TCS-101.pdf"
     And I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then A tweet is added to my twitter account regarding the new article "A theory of software product line refinement 1"
 
   Scenario: Add a new article and try to tweet the article using wrong login and password 
     Given I am logged as "admin"
-    And I select the "Periodico" option at the publications menu
+    And I am at the Article Page
     When I try to create an article named as "Teoria de Sw" with filename "TCS-102.pdf"
     And I click on Share it in Twitter with "fake" and "fake2013"
-    Then The tweet is not posted about "Teoria de Sw"
+    Then No tweet should be post about "Teoria de Sw"
 
   Scenario: Add a new article with twitter, but don't tweet it
     Given I am logged as "admin"
-    And I select the "Periodico" option at the publications menu
+    And I am at the Article Page
     When I try to create an article named as "Empirical Studies in Product Line 2" with filename "TCS.pdf"
     Then No tweet should be post about "Empirical Studies in Product Line 2"
-
+	
   Scenario: Add a new article and post it in the facebook
     Given I am logged as "admin"
     And   I am at the Add Article Page

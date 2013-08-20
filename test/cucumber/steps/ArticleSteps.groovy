@@ -193,31 +193,12 @@ Then(~'^I am at Article show page$') { ->
 
 
 //#if( $Twitter )
-Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName ->
-    to UserRegisterPage
-    at UserRegisterPage
-    page.fillFormData(userName)
-
-    page.submitForm()
-
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-
-    member = Member.findByUsername(userName)
-    MemberEditionPage.url = "member/edit/" + member.getId()
-
-    to MemberEditionPage
-    at MemberEditionPage
-    page.editEnableUser(userName)
-}
-
 Given(~'^I am logged as "([^"]*)"$') { String userName ->
     to LoginPage
     at LoginPage
     page.fillLoginData(userName, "adminadmin")
 }
-And (~'^I select the "([^"]*)" option at the publications menu $') {->
+Given (~'^I am at the Article Page$'){->
     at PublicationsPage
     page.select("Periodico")
     to ArticlesPage
@@ -225,6 +206,20 @@ And (~'^I select the "([^"]*)" option at the publications menu $') {->
     println path
     def f = new File(path)
     println "exist Path?" + f.exists()
+}
+Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData(userName, "adminadmin")
+    at PublicationsPage
+    page.select("Periodico")
+    to ArticlesPage
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
+    println path
+    def f = new File(path)
+    println "exist Path?" + f.exists()
+    //Mantive esse Given para testes do facebook.
+    // As duplicacoes de Twitter so dizem respeito a esse teste que pode ser removido. Renato Ferreira.
 }
 
 When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$') { String articleName, String filename ->
@@ -246,12 +241,12 @@ Then(~'^A tweet is added to my twitter account regarding the new article "([^"]*
     assert TwitterTool.consult(articleTitle)
 }
 
-Then (~'The tweet is not posted about "([^"]*)"$'){ String article ->
+Then (~'No tweet should be post about "([^"]*)"$'){ String article ->
     assert !TwitterTool.consult(null)
 }
 
 
-Then(~'^No tweet should be post about "([^"]*)"$') { String articleTitle ->
+Then(~'^No twitte should be post about "([^"]*)"$') { String articleTitle ->
     assert !TwitterTool.consult(articleTitle)
 }
 
@@ -276,12 +271,6 @@ Then(~'^A facebook message was posted$') { ->
 Then(~'^No facebook message was posted$') { ->
     //TODO
     assert true
-}
-
-Given(~'^I am logged as "([^"]*)"$') { String userName ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData(userName, "adminadmin")
 }
 
 Given(~'^I am at the Add Article Page$') {  ->
