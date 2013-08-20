@@ -11,8 +11,8 @@ class TestDataAndOperationsVisit {
     static public def findVisit(String name, String initialDate, String finalDate) {
         def visitController = new VisitController()
         visitController.params.visitor = Visitor.findByName(name)
-        visitController.params.dataInicio = Date.parse("dd/MM/yyyy", initialDate)
-        visitController.params.dataFim = Date.parse("dd/MM/yyyy", finalDate)
+        visitController.params.initialDate = Date.parse("dd/MM/yyyy", initialDate)
+        visitController.params.finalDate = Date.parse("dd/MM/yyyy", finalDate)
         def result = Visit.list(visitController.params)
         return result
     }
@@ -63,18 +63,8 @@ class TestDataAndOperationsVisit {
      */
     static public def editVisit(String oldVisitor, String oldInitialDate, String oldFinalDate, String newVisitorName) {
         def visit = searchVisit(oldVisitor, oldInitialDate, oldFinalDate)
-
-        def newVisitor = Visitor.findByName(newVisitorName)
-
-        if(newVisitor == null) {
-            createVisitor(newVisitorName)
-            newVisitor = Visitor.findByName(newVisitorName)
-        }
-
-        visit.setVisitor(newVisitor)
-
+        visit.setVisitor(getNewVisitor(newVisitorName))
         updateVisit(visit)
-
         def updatedVisit = searchVisit(newVisitorName, oldInitialDate, oldFinalDate)
         return updatedVisit
     }
@@ -84,9 +74,7 @@ class TestDataAndOperationsVisit {
      */
     static public def editVisitChangeData(String visitorName, String initialDate, String oldFinalDate, String newFinalDate) {
         def visit = searchVisit(visitorName, initialDate, oldFinalDate)
-
         visit.setFinalDate(Date.parse("dd/MM/yyyy", newFinalDate))
-
         updateVisit(visit)
     }
 
@@ -108,6 +96,18 @@ class TestDataAndOperationsVisit {
         Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
         def visit = Visit.findByVisitorAndInitialDateAndFinalDate(visitor, day_1, day_2)
         return visit
+    }
+
+    /**
+     * @author carloscemb
+     */
+    static public def getNewVisitor(String newVisitorName) {
+        def newVisitor = Visitor.findByName(newVisitorName)
+        if(newVisitor == null) {
+            createVisitor(newVisitorName)
+            newVisitor = Visitor.findByName(newVisitorName)
+        }
+        return newVisitor
     }
 
 //#end
