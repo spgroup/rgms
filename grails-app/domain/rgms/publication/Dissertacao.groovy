@@ -5,10 +5,9 @@ class Dissertacao extends TeseOrDissertacao {
 
 //#if($Bibtex)
     String generateBib() {
-        return "@masterthesis{" + super.members.get(0) + super.publicationDate.getAt(Calendar.YEAR)
-        +", author=\"" + BibtexAux.organizeAuthors(super.members) + "\",\n title=\"" + super.title + "\",\n school=\""
-        +this.school + "\",\n year=\"" + super.publicationDate.getAt(Calendar.YEAR) + "\",\n address=\""
-        +this.address + "\",\n month=\"" + super.publicationDate.getAt(Calendar.MONTH) + "\"}"
+        return "@masterthesis{" + "author=\"" + BibtexAux.organizeAuthors(members) + "\",\n title=\"" + title + "\",\n school=\""
+        +this.school + "\",\n year=\"" + publicationDate.getAt(Calendar.YEAR) + "\",\n address=\""
+        +this.address + "\",\n month=\"" + publicationDate.getAt(Calendar.MONTH) + "\"}"
     }
 //#end
 }

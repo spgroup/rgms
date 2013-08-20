@@ -6,7 +6,7 @@ class VisitCreatePage extends Page {
     static url = "visit/create"
 
     static at = {
-        //title ==~ /Criar Visita/
+        //title ==~ /Criar Visit/
         GetPageTitle gp = new GetPageTitle()
         def currentVisit = gp.msg("default.visit.label")
         def currentTitle = gp.msg("default.create.label", [currentVisit])
@@ -22,8 +22,8 @@ class VisitCreatePage extends Page {
     }
 
     def fillVisitDetails() {
-        $("form").nameVisitor = "Visitante"
-        $("form").descricao = "Primeira Visita"
+        $("form").nameVisitor = "Visitor"
+        $("form").description = "First Visit"
 
         clickOnCreate()
     }

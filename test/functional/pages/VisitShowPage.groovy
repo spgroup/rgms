@@ -15,17 +15,6 @@ class VisitShowPage extends Page {
         title ==~ currentTitle
     }
 
-    static content = {
-    }
-
-    def select(String e,v) {
-        if(v == 'delete'){
-            assert withConfirm(true) { $("form").find(e, class: v).click() }
-        } else {
-            $("form").find(e, class: v).click()
-        }
-    }
-
     def deleteVisit() {
         assert withConfirm(true) { $("form").find('input', class: 'delete').click() }
     }

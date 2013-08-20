@@ -12,8 +12,7 @@ import steps.TestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no visitor named "([^"]*)"$') { String name ->
-    def visitor = Visitor.findByName(name)
-    assert visitor == null
+    assert Visitor.findByName(name) == null
 }
 
 When(~'^I create the visit for the visitor "([^"]*)" with initial date "([^"]*)"$') { String name, String date ->
@@ -21,15 +20,11 @@ When(~'^I create the visit for the visitor "([^"]*)" with initial date "([^"]*)"
 }
 
 Then(~'^the visitor named "([^"]*)" is properly stored by the system$') { String name ->
-    def visitor = Visitor.findByName(name)
-    assert visitor != null
+    assert Visitor.findByName(name) != null
 }
 
 And(~'^the visit for the visitor "([^"]*)" with initial and final date equal to "([^"]*)" is properly stored by the system$') { String name, String date ->
-    Date day = Date.parse("dd/MM/yyyy", date)
-    def visitor = Visitor.findByName(name)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day, day)
-    assert visit != null
+    assert TestDataAndOperations.searchVisit(name, date, date) != null
 }
 
 When(~'^I create the visit for the visitor "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)"$') { String name, String initialDate, String finalDate ->
@@ -37,27 +32,20 @@ When(~'^I create the visit for the visitor "([^"]*)" with initial date "([^"]*)"
 }
 
 And(~'^the visit for the visitor "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is properly stored by the system$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, Date.parse("dd/MM/yyyy", initialDate), Date.parse("dd/MM/yyyy", finalDate))
-    assert visit != null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) != null
 }
 
 Given(~'^the system has visitor named "([^"]*)"$') { String name ->
     TestDataAndOperations.createVisitor(name)
-    def visitor = Visitor.findByName(name)
-    assert visitor != null
+    assert Visitor.findByName(name) != null
 }
 
 /**
  * @author carloscemb
  */
-Given(~'^the system has a visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" stored$') { String name, String initialDate, String finalDate ->
-    TestDataAndOperations.createVisitor(name)
-    def visitor = Visitor.findByName(name)
-    assert visitor != null
+And(~'^a visit for the visitor "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)"$') { String name, String initialDate, String finalDate ->
     TestDataAndOperations.createVisit(name, initialDate, finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, Date.parse("dd/MM/yyyy", initialDate), Date.parse("dd/MM/yyyy", finalDate))
-    assert visit != null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) != null
 }
 
 /**
@@ -72,8 +60,7 @@ When(~"^I view the list of visits\$") {->
  * @author carloscemb
  */
 Then(~'^the list is returned with the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)"$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, Date.parse("dd/MM/yyyy", initialDate), Date.parse("dd/MM/yyyy", finalDate))
+    def visit = TestDataAndOperations.searchVisit(name, initialDate, finalDate)
     assert TestDataAndOperations.containsVisit(visit)
 }
 
@@ -93,12 +80,12 @@ Given(~'^I am logged as "([^"]*)" and at the visits page\$') { String userName -
  * @author carloscemb
  */
 Given(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is stored in the system$') { String name, String initialDate, String finalDate ->
-at VisitPage
-page.selectNewVisit()
-at VisitCreatePage
-page.fillVisitDetails()
-visit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
-assert visit != null
+    at VisitPage
+    page.selectNewVisit()
+    at VisitCreatePage
+    page.fillVisitDetails()
+    visit = TestDataAndOperations.findVisit(name, initialDate, finalDate)
+    assert visit != null
 }
 
 /**
@@ -121,11 +108,7 @@ When(~'^I delete the visit of the visitor named "([^"]*)" with initial date "([^
  * @author carloscemb
  */
 Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is properly removed by the system$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
-    Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day_1, day_2)
-    assert visit == null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) == null
 }
 
 /**
@@ -157,11 +140,7 @@ When(~'^I edit the visit of the visitor named "([^"]*)" with initial date "([^"]
  * @author carloscemb
  */
 Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is properly updated by the system$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
-    Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day_1, day_2)
-    assert visit == null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) == null
 }
 
 /**
@@ -186,11 +165,7 @@ Then(~'I can select the "([^"]*)" option visit$') { String option ->
  * @author penc
  */
 Then(~'^the visit for the visitor "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is not stored by the system because it is invalid$') { String name, String initialDate, String finalDate ->
-    Visitor visitor = Visitor.findByName(name)
-    Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
-    Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day_1, day_2)
-    assert visit == null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) == null
 }
 
 /**
@@ -204,23 +179,10 @@ When(~'^I try to edit the visit of the visitor named "([^"]*)" with initial date
  * @author penc
  */
 Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and final date "([^"]*)" is not properly updated by the system because it is invalid$') { String name, String initialDate, String finalDate ->
-    def visitor = Visitor.findByName(name)
-    Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
-    Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
-    def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, day_1, day_2)
-    assert visit != null
+    assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) != null
 }
 
 //#if( $Twitter )
-
-Given(~'^I am logged as "([^"]*)" and at the Add Visit Page$') { String userName ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData(userName, "adminadmin")
-    at PublicationsPage
-    page.select("Visita")
-    at VisitPage
-}
 
 When(~'^I try to create an visit  and I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
     at VisitPage

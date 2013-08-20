@@ -4,11 +4,16 @@ import geb.Page
 import rgms.publication.BookChapter
 
 class BookChapterPage extends Page {
-
     static url = "bookChapter/list"
 
     static at = {
-        //title ==~ /BookChapter Listagem/
+        //title ==~ /Capítulo de livro Listagem/
+
+        GetPageTitle gp = new GetPageTitle()
+        def currentBookChapter = gp.getMessageServerLocale("default.bookchapter.label")
+        def currentTitle = currentBookChapter + " " + gp.getMessageServerLocale("default.button.list.label")
+
+        title ==~ currentTitle
     }
 
     static content = {
@@ -18,6 +23,7 @@ class BookChapterPage extends Page {
     def selectNewBookChapter() {
         $('a.create').click()
     }
+
     def checkBookChapterAtList(title,row){
         def listDiv = $('div', id: 'list-bookChapter')
         def bookTable = (listDiv.find('table'))[0]
@@ -30,5 +36,18 @@ class BookChapterPage extends Page {
         assert bookColumns[0].text() == testarbook.title
         assert bookColumns[2].text() == testarbook.file
         assert bookColumns[4].text() == testarbook.publisher
+    }
+
+    def uploadWithoutFile(){
+        $('input.save').click()
+    }
+
+    def checkIfBookChapterListIsEmpty(){
+        def listDiv = $('div', id: 'list-bookchapter')
+        def bookChapterTable = (listDiv.find('table'))[0]
+        def bookChapterRows  = bookChapterTable.find('tbody').find('tr')
+        def bookChapterColumns = bookChapterRows[0].find('td')
+
+        assert bookChapterColumns.size() == 0
     }
 }

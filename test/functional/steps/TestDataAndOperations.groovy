@@ -30,7 +30,17 @@ class TestDataAndOperations {
                     publicationDate: (new Date("12 October 2012"))],
             [website: "http://www.ccfinder.com", description: "Ferramenta CCfinder",
                     title: "CCFinder",
+                    publicationDate: (new Date("12 October 2012"))],
+            [website: "http://www.tool.com", description: "Ferramenta Tool",
+                    title: "Tool",
+                    publicationDate: (new Date("12 October 2012"))],
+            [website: "http://www.new.com", description: "Ferramenta New",
+                    title: "New",
+                    publicationDate: (new Date("12 October 2012"))],
+            [website: "http://www.tooldelete.com", description: "Ferramenta ToolDelete",
+                    title: "ToolDelete",
                     publicationDate: (new Date("12 October 2012"))]
+
     ]
 
 
@@ -55,7 +65,10 @@ class TestDataAndOperations {
                     booktitle: "Software Engineering", pages: "20-120"],
             [title: "IV Conference on Software Product Lines",
                     publicationDate: (new Date("14 October 2012")),
-                    booktitle: "Practices and Patterns", pages: "150-200"]
+                    booktitle: "Practices and Patterns", pages: "150-200"],
+            [title: "V Conference on Software Product Lines",
+                    publicationDate: (new Date("16 October 2012")),
+                    booktitle: "Practices and Patterns", pages: "50-100"]
     ]
 
     static records = [
@@ -67,7 +80,11 @@ class TestDataAndOperations {
             [title: 'Evaluating Natural Languages System',
                     publicationDate: (new Date('13 November 2012')), institution: 'UFPE'],
             [title: 'NFL Languages System',
-                    publicationDate: (new Date('27 October 2011')), institution: 'NFL']
+                    publicationDate: (new Date('27 October 2011')), institution: 'NFL'],
+            [title: 'Joe-E',
+                    publicationDate: (new Date('1 May 2013')), institution: 'TG'],
+            [title: 'RC77-1',
+                    publicationDate: (new Date('15 May 2013')), institution: 'MIT', file: "TCS-77.pdf"]
     ]
 
     static members = [
@@ -315,6 +332,14 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    static public void uploadBookChapter(filename) {
+        def cont = new BookChapterController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.saveBookChapters(records.parse(xml));
+        cont.response.reset()
+    }
+
     static public void removeDissertacao(String title) {
         def testDissertation = Dissertacao.findByTitle(title)
         def cont = new DissertacaoController()
@@ -465,10 +490,10 @@ class TestDataAndOperations {
 
     static public void createMembership(String username, String rgroup, String date1, String date2) {
         //TODO Deveria pegar os dados dos parametros, mas
-        //      esta dando problema na criacao. Entao para
-        //      simplificar o entendimento do problema,
-        //      os valores est�o fixos. O problema n�o
-        //      est� nos par�metros passados.
+        //		esta dando problema na criacao. Entao para
+        //		simplificar o entendimento do problema,
+        //		os valores est?o fixos. O problema n?o
+        //		est? nos par?metros passados.
 
         def cont = new MembershipController()
 
@@ -645,6 +670,17 @@ class TestDataAndOperations {
         return updatedferramenta
     }
 
+    static public void removeFerramenta(String title){
+        def cont = new FerramentaController()
+        cont.params << [id: Ferramenta.findByTitle(title).id]
+        cont.delete()
+        cont.response.reset()
+    }
+
+    static public Ferramenta getFerramenta(title){
+        return Ferramenta.findByTitle(title)
+    }
+
     static public void removeConferencia(String title) {
         def cont = new ConferenciaController()
         def date = new Date()
@@ -676,8 +712,8 @@ class TestDataAndOperations {
     static public void createVisit(String name, String initialDate, String finalDate) {
         def visitController = new VisitController()
         visitController.params.nameVisitor = name
-        visitController.params.dataInicio = Date.parse("dd/MM/yyyy", initialDate)
-        visitController.params.dataFim = Date.parse("dd/MM/yyyy", finalDate)
+        visitController.params.initialDate = Date.parse("dd/MM/yyyy", initialDate)
+        visitController.params.finalDate = Date.parse("dd/MM/yyyy", finalDate)
         visitController.request.setContent(new byte[1000]) // Could also vary the request content.
         visitController.create()
         visitController.save()
@@ -689,7 +725,7 @@ class TestDataAndOperations {
      */
     static public boolean containsVisit(Visit visit) {
         def visitController = new VisitController()
-        def result = visitController.list().visitInstanceList
+        def result = visitController.list(100).visitInstanceList
         return result.contains(visit)
     }
 
@@ -698,55 +734,61 @@ class TestDataAndOperations {
      */
     static public void removeVisit(String name, String initialDate, String finalDate) {
         def visitController = new VisitController()
-        def visitor = Visitor.findByName(name)
-        Date dia_1 = Date.parse("dd/MM/yyyy", initialDate)
-        Date dia_2 = Date.parse("dd/MM/yyyy", finalDate)
-        def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, dia_1, dia_2)
+        def visit = searchVisit(name, initialDate, finalDate)
         visitController.params << [id: visit.id]
-        visitController.delete()
+        visitController.delete((Long)visitController.params.id)
     }
 
     /**
      * @author carloscemb
      */
-    static public Visit editVisit(String oldVisitante, String oldDataInicio, String oldDataFim, String newVisitante) {
-        def visitor = Visitor.findByName(oldVisitante)
-        Date dia_1 = Date.parse("dd/MM/yyyy", oldDataInicio)
-        Date dia_2 = Date.parse("dd/MM/yyyy", oldDataFim)
-        def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, dia_1, dia_2)
+    static public def editVisit(String oldVisitor, String oldInitialDate, String oldFinalDate, String newVisitorName) {
+        def visit = searchVisit(oldVisitor, oldInitialDate, oldFinalDate)
 
-        def novoVisitor = Visitor.findByName(newVisitante)
+        def newVisitor = Visitor.findByName(newVisitorName)
 
-        if(novoVisitor == null) {
-            createVisitor(newVisitante)
-            novoVisitor = Visitor.findByName(newVisitante)
+        if(newVisitor == null) {
+            createVisitor(newVisitorName)
+            newVisitor = Visitor.findByName(newVisitorName)
         }
 
-        visit.setVisitor(novoVisitor)
+        visit.setVisitor(newVisitor)
 
-        def visitController = new VisitController()
-        visitController.params << visit.properties
-        visitController.update()
+        updateVisit(visit)
 
-        def updatedVisit = Visit.findByVisitorAndDataInicioAndDataFim(novoVisitor, dia_1, dia_2)
+        def updatedVisit = searchVisit(newVisitorName, oldInitialDate, oldFinalDate)
         return updatedVisit
     }
 
     /**
      * @author penc
      */
-    static public Visit editVisitChangeData(String visitante, String dataInicio, String oldDataFim, String newDataFim) {
-        def visitor = Visitor.findByName(visitante)
-        Date dia_1 = Date.parse("dd/MM/yyyy", dataInicio)
-        Date dia_2 = Date.parse("dd/MM/yyyy", oldDataFim)
-        def visit = Visit.findByVisitorAndDataInicioAndDataFim(visitor, dia_1, dia_2)
+    static public def editVisitChangeData(String visitorName, String initialDate, String oldFinalDate, String newFinalDate) {
+        def visit = searchVisit(visitorName, initialDate, oldFinalDate)
 
-        Date newFinalDate = Date.parse("dd/MM/yyyy", newDataFim)
-        visit.setDataFim(newFinalDate);
+        visit.setFinalDate(Date.parse("dd/MM/yyyy", newFinalDate))
 
+        updateVisit(visit)
+    }
+
+    /**
+     * @author carloscemb
+     */
+    static public def updateVisit(Visit visit) {
         def visitController = new VisitController()
         visitController.params << visit.properties
-        visitController.update()
+        visitController.update((Long)visitController.params.id, (Long)visitController.params.version)
+    }
+
+    /**
+     * @author carloscemb
+     */
+    static public Visit searchVisit(String name, String initialDate, String finalDate) {
+        def visitor = Visitor.findByName(name)
+        Date day_1 = Date.parse("dd/MM/yyyy", initialDate)
+        Date day_2 = Date.parse("dd/MM/yyyy", finalDate)
+        def visit = Visit.findByVisitorAndInitialDateAndFinalDate(visitor, day_1, day_2)
+        return visit
     }
 
 //#end
@@ -754,6 +796,16 @@ class TestDataAndOperations {
     static public ResearchGroup createAndGetResearchGroupByName(String name) {
         def researchGroupController = new ResearchGroupController()
         researchGroupController.params << findResearchGroupByGroupName(name)
+        researchGroupController.create()
+        researchGroupController.save()
+        researchGroupController.response.reset()
+        return ResearchGroup.findByName(name)
+    }
+
+    static public ResearchGroup createAndGetResearchGroupByNameWithTwitter(String name, String twitter) {
+        def researchGroupController = new ResearchGroupController()
+        researchGroupController.params << findResearchGroupByGroupName(name)
+        researchGroupController.params << [twitter: twitter]
         researchGroupController.create()
         researchGroupController.save()
         researchGroupController.response.reset()
@@ -785,6 +837,7 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    //não funciona
     static public void editResearchGroupTwitter(researchGroup, String newTwitter) {
         def researchGroupController = new ResearchGroupController()
         researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
@@ -794,10 +847,61 @@ class TestDataAndOperations {
     }
 
     static public void ShareArticleOnFacebook(String title){
-       def member = new Member()
+        def member = new Member()
         member.access_token =  "CAAJIlmRWCUwBAN0r1puBTUa4vDZAKxWWlR5gN4qtgZAosBDKGUOLBquyKuHYQ0zxICioiarTJ66mpdZC08U4rHJOrtvXJCB8hMBcLKlQaTdwYZCgMTJtbFnQfIBZAxi6hRIkfw2fCSyCS6DuFIrGRThI53ZCzBOLsZD"
         member.facebook_id = "100006411132660"
         PublicationController.sendPostFacebook(member, title)
+}
+
+    static public boolean containsUser(members){
+        def userData = Member.findByUsername('admin').id.toString()
+        return members.contains(userData)
+}
+
+    //mapmf_tasj
+
+    //orientation
+    static orientations = [
+            [tipo: "Mestrado", orientando: "Tomaz", tituloTese: "The Book is on the table", anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
+    ]
+
+    static public def findOrientationByTitle(String title) {
+        orientations.find { orientation ->
+            orientation.tituloTese == title
+        }
     }
 
+    static public void createOrientation(String tituloTese) {
+
+        def cont = new OrientationController()
+        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
+   }
+    static public void removeOrientation(String tituloTese) {
+
+        def testOrientation = TestDataAndOperations.findOrientationByTitle(tituloTese)
+        def cont = new OrientationController()
+        cont.params << [id: testOrientation.id]
+        cont.delete()
+    }
+
+ static public ResearchGroup editResearchGroupTwitterAcount(researchGroup, String newTwitter){
+        def researchGroupController = new ResearchGroupController()
+        researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
+        researchGroupController.update()
+        researchGroupController.response.reset()
+    }
+
+    static public void createTechnicalReportWithEmptyInstitution(String title, filename) {
+        def cont = new TechnicalReportController()
+        def params = TestDataAndOperations.findTechnicalReportByTitle(title)
+        params["institution"] = ""
+        cont.params << params << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
+
+    //article
 }

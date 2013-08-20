@@ -1,3 +1,4 @@
+import cucumber.runtime.PendingException
 import pages.FerramentaCreatePage
 import pages.FerramentaEditPage
 import pages.FerramentaPage
@@ -22,11 +23,11 @@ When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" without its w
     TestDataAndOperations.createFerramenta(title, filename)
 }
 Then(~'^the ferramenta "([^"]*)" is not stored$') { String title ->
-    ferramentas = Ferramenta.findAllByTitle(title)
-    assert ferramentas.size() == 0
+    def tool = Ferramenta.findByTitle(title)
+    assert tool == null
 }
 
-// duplicate ferramenta 
+// duplicate ferramenta
 Given(~'^the ferramenta "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     TestDataAndOperations.createFerramenta(title, filename)
     ferramenta = Ferramenta.findByTitle(title)
@@ -53,9 +54,8 @@ When(~'^I edit the ferramenta title from "([^"]*)" to "([^"]*)"$') { String oldt
     assert updatedFerramenta != null
 }
 Then(~'^the ferramenta "([^"]*)" is properly updated by the system$') { String title ->
-    ferramenta = Ferramenta.findByTitle(title)
-    assert ferramenta == null
-    // ideally, it should check whether the tool is stored with the new title
+    newFerramenta = Ferramenta.findByTitle(title)
+    assert newFerramenta != null
 }
 
 When(~'^I select "([^"]*)" at the ferramenta page$') { String title ->
@@ -74,7 +74,7 @@ Then(~'^The ferramenta entitle "([^"]*)" is properly deleted of the system$') { 
     assert article == null
 }
 
-Then(~'^I can fill the ferramenta details$') {->
+Then(~'^I can create a ferramenta filling the details$') {->
     at FerramentaCreatePage
     page.fillFerramentaDetails()
 }
@@ -124,8 +124,7 @@ Then(~'^The ferramenta is not stored$') {->
 
 Then(~'^I see my user listed as an author member of ferramenta by default$') {->
     at FerramentaCreatePage
-    userData = Member.findByUsername('admin').id.toString()
-    assert page.selectedMembers().contains(userData)
+    assert TestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 And(~'^I select the upload button at the ferramenta page$') {->
@@ -133,6 +132,55 @@ And(~'^I select the upload button at the ferramenta page$') {->
 
 }
 Then(~'^I am still on ferramenta page$') {->
-    // Express the Regexp above with the code you wish you had
+    at FerramentaPage
+}
 
+// edit ferramenta
+When(~'^I create a new ferramenta at ferramenta create page$') {->
+    at FerramentaCreatePage
+    page.fillFerramentaDetails()
+}
+When(~'^I select the edit option at ferramenta show page$') {->
+    at FerramentaShowPage
+    page.editFerramenta()
+}
+When(~'^I can modify the name to "([^"]*)" at the edit ferramenta page$') { String title ->
+    at FerramentaEditPage
+    page.editTitle(title)
+}
+Then(~'^I can see the new title "([^"]*)" at ferramenta show page$') { String newTitle->
+    at FerramentaShowPage
+    page.checkFerramentaTitle(newTitle)
+}
+
+// list ferramentas
+Then(~'^The system list "([^"]*)" and "([^"]*)" ferramentas$') { String title, otherTitle ->
+    ferramentas = Ferramenta.findAllByTitle(title)
+    assert ferramentas.size() == 1
+    ferramentas = Ferramenta.findAllByTitle(otherTitle)
+    assert ferramentas.size() == 1
+}
+
+And(~'^I fill Titulo with more than (\\d+) caracteres$') { int arg1 ->
+    at FerramentaCreatePage
+    page.fillTitleWithMaxCaracteres()
+}
+And(~'^fill the others fields with valid values without Titulo$') {->
+    at FerramentaCreatePage
+    page.fillFerramentaDetailsWithoutTitle("Tool without title")
+}
+When(~'^I remove the ferramenta entitled "([^"]*)"$') { String arg1 ->
+    TestDataAndOperations.removeFerramenta(arg1)
+}
+And(~'^I click on Criar button$') {->
+    at FerramentaCreatePage
+    page.createNewFerramentaWithoutInformation()
+}
+Then(~'^I am still on create new ferramenta page$') {->
+    at FerramentaCreatePage
+}
+And(~'^the ferramenta is not displayed in the ferramentas list page$') {->
+    to FerramentaPage
+    at FerramentaPage
+    page.checkAnyFerramentaAtList()
 }
