@@ -27,7 +27,7 @@ Then(~'^the research line "([^"]*)" is properly removed by the system'){String n
 
 
 Given(~'^the system has a research line "([^"]*)" with a description "([^"]*)"$') { String name, description ->
-	TestDataAndOperations.insertsResearchLine(name)
+
 	research_line = ResearchLine.findByName(name)
 	assert research_line != null && research_line.description == description
 }
@@ -73,6 +73,13 @@ Then(~'^I can fill the research line details$') {->
 	page.fillResearchLineDetails()
 }
 
+When (~'^I select the option Linha de pesquisa at the publications menu$'){ ->
+
+    at PublicationsPage
+    page.select("Linha de pesquisa")
+
+}
+
 When(~'^I click the research line "([^"]*)" at the research line list$') {String name ->
 	at ResearchLinePage
 	page.visualizeResearchLine(name)
@@ -83,21 +90,7 @@ Then(~'^I can visualize the research line "([^"]*)" details$') {String name->
 	page.checkResearchLineDetails(name)
 }
 
-Given(~'^the system has a research line named as "([^"]*)"$') { String name ->
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
-	at PublicationsPage
-	page.select("Linha de pesquisa")
-	at ResearchLinePage
-	page.selectNewResearchLine()
-	at ResearchLineCreatePage
-	page.createsResearchLine(name)
-	research_line = ResearchLine.findByName(name)
-	assert research_line != null
-}
-
-Given(~'^I am at the visualize page of the research line "([^"]*)"$') { String name ->
+/*Given(~'^I am at the visualize page of the research line "([^"]*)"$') { String name ->
 	to LoginPage
 	at LoginPage
 	page.fillLoginData("admin", "adminadmin")
@@ -107,7 +100,7 @@ Given(~'^I am at the visualize page of the research line "([^"]*)"$') { String n
 	page.visualizeResearchLine(name)
 	at ResearchLineVisualizePage
 	page.checkResearchLineDetails(name)
-}
+}*/
 
 When(~'^I click the edit button$') { ->
 	at ResearchLineVisualizePage
