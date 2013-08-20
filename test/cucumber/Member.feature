@@ -8,6 +8,11 @@ Feature: member
     When I create a member with username "usernametest"
     Then the member with username "usernametest" is properly stored by the system
 
+  Scenario: list existing member
+    Given   the system has member with username "usernametest"
+    When    I view the member list
+    Then    my list members contains member "usernametest"
+
   Scenario: delete member
     Given the system has member with username "usernametest"
     When I delete a member with username "usernametest"
@@ -25,7 +30,7 @@ Feature: member
 
   Scenario: user registration
     Given I am at the register page
-    When I fill the user details with "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student"
+    When I fill the user details with a name, username, passoword1, password2, email, university, status "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student"
     Then I am still on the register page with the message user created
 
   Scenario: create member web
@@ -43,6 +48,21 @@ Feature: member
     When I fill the user details with "jose" "josesilva" "jose@com" "UFPE"
     Then I am still on the create member page with the error message
 
+Scenario: register member invalid aditional info
+   Given  I am at the create member page
+   When   I fill many user details with username, name, e-mail, university, aditional info "berg" "bergU" "jus@cin.ufpe.br" "UFPE" "ajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   Then   I am still on the create member page with the error message
+
+Scenario: register member without phone city country
+   Given I am at the create member page
+   When  I fill user detail with "berg" "bergU" "jus@cin.ufpe.br" "UFPE"
+   Then  I am on the member show page
+   Then  the member with username "berg" is create
+
+Scenario: new member with invalid phone
+   Given the system has no member with username "usernametest"
+   When I create a member with username, phone "usernametest" "telefone"
+   Then the system has no member with a username "usernametest"
 
 #if ($Autofill)
   Scenario: new member filled with default data
