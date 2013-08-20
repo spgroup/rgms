@@ -78,8 +78,9 @@ Feature: Visit
 #if( $Twitter )
   Scenario: Add a new visit twitting it
     Given I am logged as "admin" and at the Add Visit Page
-    When I try to create an visit  and I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
-    Then A twitter is added to my twitter account regarding the new visit "Primeira Visita"
+    When I try to create a visit with Twitter details
+    And I click Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
+    Then A tweet is added to my twitter account regarding the new visit "Primeira Visita"
     
   Scenario: Add a new visit with twitter, but don't tweet it
    Given I am logged as "admin" and at the Add Visit Page
