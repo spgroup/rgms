@@ -4,7 +4,6 @@ package rgms.publication
 import rgms.XMLService
 //#end
 import org.apache.shiro.SecurityUtils
-import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
 
 class ConferenciaController {
