@@ -184,28 +184,39 @@ Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and
 
 //#if( $Twitter )
 
-When(~'^I try to create an visit  and I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
-    at VisitPage
-    page.selectNewVisit()
-    at VisitCreatePage
-    page.fillVisitDetails()
-    at VisitShowPage
-    page.clickOnTwitteIt(twitterLogin, twitterPw)
+Given(~'^I am logged as "([^"]*)" and at the Add Visit Page$') { String userName ->
+	to LoginPage
+	at LoginPage
+	page.fillLoginData(userName, "adminadmin")
+	to VisitPage
 }
+
+When(~'^I try to create an visit  and I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+	  at VisitPage
+	  page.selectNewVisit()
+	  at VisitCreatePage
+	  page.fillVisitDetailsTwitter()
+
+	  at VisitShowPage
+	  page.clickOnTwitteIt(twitterLogin, twitterPw)
+	  at VisitShowPage
+	 }
 
 When(~'^I try to create an visit$') { ->
-    page.selectNewVisit()
-    at VisitCreatePage
-    page.fillVisitDetails()
+	at VisitPage
+	page.selectNewVisit()
+	at VisitCreatePage
+  page.fillVisitDetails()
+
+
 }
 
-Then(~'^A twitter is added to my twitter account regarding the new visit "([^"]*)"$') { String visita ->
-    page.addTwitter(visita)
-    assert TwitterTool.consult(visita)
-}
+Then(~'^A tweet is added to my twitter account regarding the new visit "([^"]*)"$') { String visita ->
+  assert TwitterTool.consult(visita)
+ }
 
-Then(~'^No twitter should be post$') { ->
-    assert !TwitterTool.consult(null)
-}
+Then(~'^The visit "([^"]*)" is created but no tweet should be post$') { -> String visita ->
+   assert TwitterTool.consult(visita) && assert !TwitterTool.consult(null
+	 }
 
 //#end
