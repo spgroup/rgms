@@ -37,19 +37,19 @@ class FerramentaController {
     }
 
     def show() {
-        returnIfNotInstance { ferramentaInstance ->
+        redirectAndReturnIfNotInstance { ferramentaInstance ->
             [ferramentaInstance: ferramentaInstance]
         }
     }
 
     def edit() {
-        returnIfNotInstance { ferramentaInstance ->
+        redirectAndReturnIfNotInstance { ferramentaInstance ->
             [ferramentaInstance: ferramentaInstance]
         }
     }
 
     def update() {
-       returnIfNotInstance { ferramentaInstance ->
+       redirectAndReturnIfNotInstance { ferramentaInstance ->
            if (params.version) {
                def version = params.version.toLong()
                if (ferramentaInstance.version > version) {
@@ -74,7 +74,7 @@ class FerramentaController {
     }
 
     def delete() {
-        returnIfNotInstance { ferramentaInstance ->
+        redirectAndReturnIfNotInstance { ferramentaInstance ->
             try {
                 ferramentaInstance.delete(flush: true)
                 flash.message = messageGenerator ('default.deleted.message', params.id)
@@ -151,7 +151,7 @@ class FerramentaController {
     }
 //#end
 
-    private def returnIfNotInstance (Closure c){
+    private def redirectAndReturnIfNotInstance (Closure c){
         def ferramentaInstance = Ferramenta.get(params.id)
         if (!ferramentaInstance) {
 			flash.message = messageGenerator ('default.not.found.message', params.id)
