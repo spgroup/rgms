@@ -420,6 +420,8 @@ target/test-reports/plain/TEST-functional-cucumber-Visit.txt
 
 *.swp
 
+.idea/*
+
 target/test-reports/TEST-functional-cucumber-orientations.xml
 
 target/test-reports/html/11_orientations.html
