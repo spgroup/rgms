@@ -93,6 +93,9 @@ class TestDataAndOperations {
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            [name: "Invalid User", username: "userwithinvalidphone", email: "uwif@cin.ufpe.br",
+                    status: "Graduate Student", university: "UFPE", enabled: true, phone: "invalidphone"
             ]]
 
     static researchgroups = [
@@ -292,7 +295,7 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
-    
+
     static public void createDissertacaoWithotSchool(String title, filename) {
         def cont = new DissertacaoController()
         def date = new Date()
@@ -646,6 +649,13 @@ class TestDataAndOperations {
         def cont = new PeriodicoController()
         def result = cont.list().periodicoInstanceList
         return result.contains(testarticle)
+    }
+
+    static public boolean containsMember(username, members) {
+        def testmember = Member.findByUsername(username)
+        def cont = new MemberController()
+        def result = cont.list().memberInstanceList
+        return result.contains(testmember)
     }
 
     static public Periodico editArticle(oldtitle, newtitle) {

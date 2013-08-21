@@ -13,11 +13,11 @@ Given(~'^the system has no member with username "([^"]*)"$') { String username -
 }
 
 When(~'^I create a member with username "([^"]*)"$') { String username ->
-    TestDataAndOperations.createMember(username,"")
+    TestDataAndOperations.createMember(username)
 }
 
 When(~'^I create a member with username, phone "([^"]*)" "([^"]*)"$') { String username, phone ->
-    TestDataAndOperations.createMember(username, phone)
+    TestDataAndOperations.createMember(username)
 }
 
 Then(~'^the member with username "([^"]*)" is properly stored by the system$') { String username ->
@@ -63,7 +63,7 @@ Then(~'^I am still on the register page with the message user created$') {->
 
 
 Given(~'^the system has member with username "([^"]*)"$') { String username ->
-    TestDataAndOperations.createMember(username,"")
+    TestDataAndOperations.createMember(username)
     member = Member.findByUsername(username);
     assert member != null
 }
@@ -84,7 +84,7 @@ Then(~'^the member with "([^"]*)" doesnt exist$') { String username ->
 }*/
 
 When(~'^I create the member with username "([^"]*)"$') { String username ->
-    TestDataAndOperations.createMember(username,"")
+    TestDataAndOperations.createMember(username)
 }
 
 Then(~'^the member "([^"]*)" is not registered$') { String username ->
@@ -103,7 +103,7 @@ Given(~'^I am at the create member page$') {->
 }
 
 When(~'^I fill the user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
-    page.fillMemberDetails(name, username, email, university,"")
+    page.fillMemberDetails(name, username, email, university, "")
 }
 
 
@@ -131,11 +131,11 @@ Then(~'^I am still on the create member page with the error message$') {->
 
 }
 
-When(~'^I fill many user details with username, name, e-mail, university, aditional info "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university, additionalInfo ->
+When(~'^I fill many user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university, additionalInfo ->
     page.fillMemberDetails(name, username, email, university, additionalInfo)
 }
 
-When(~'^I fill user detail with username, name, e-mail, university "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
+When(~'^I fill user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
     page.fillSomeMemberDetails(name, username, email, university)
 }
 
@@ -146,10 +146,10 @@ When(~"^I view the member list\$") {->
 
 Then(~'my list members contains member "([^"]*)"$') { String username ->
     members = Member.findAll()
-    assert TestDataAndOperations.containsMember(username)
+    assert TestDataAndOperations.containsMember(username, members)
 }
 
-Then(~'the member with username "([^"]*)" is create $') { String username ->
+Then(~'the member with username "([^"]*)" is created$') { String username ->
     member = Member.findByUsername(username)
     assert member != null
 }

@@ -37,6 +37,7 @@ Feature: member
     Given I am at the create member page
     When I fill the user details with "jose" "josesilva" "jose@ufpe.br" "UFPE"
     Then I am on the member show page
+    Then  the member with username "josesilva" is created
 
   Scenario: create member web with partial information in chrome
     Given I am at the create member page
@@ -50,19 +51,13 @@ Feature: member
 
 Scenario: register member invalid aditional info
    Given  I am at the create member page
-   When   I fill many user details with username, name, e-mail, university, aditional info "berg" "bergU" "jus@cin.ufpe.br" "UFPE" "ajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   When   I fill many user details with "berg" "bergU" "jus@cin.ufpe.br" "UFPE" "ajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
    Then   I am still on the create member page with the error message
 
-Scenario: register member without phone city country
-   Given I am at the create member page
-   When  I fill user detail with "berg" "bergU" "jus@cin.ufpe.br" "UFPE"
-   Then  I am on the member show page
-   Then  the member with username "berg" is create
-
 Scenario: new member with invalid phone
-   Given the system has no member with username "usernametest"
-   When I create a member with username, phone "usernametest" "telefone"
-   Then the system has no member with a username "usernametest"
+   Given the system has no member with username "userwithinvalidphone"
+   When I create a member with username "userwithinvalidphone"
+   Then I am still on the create member page with the error message
 
 #if ($Autofill)
   Scenario: new member filled with default data
