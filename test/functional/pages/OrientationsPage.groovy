@@ -25,7 +25,7 @@ class OrientationsPage extends Page {
 		$('a.create').click()
 	}
 
-    def geRow(){
+    def getRow(){
 
         def listDiv = $('div', id: 'list-orientation')
         def orientationTable = (listDiv.find('table'))[0]
