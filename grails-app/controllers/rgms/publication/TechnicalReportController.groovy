@@ -112,7 +112,7 @@ class TechnicalReportController {
         }
     }
 
-    def technicalReportInstanceRedirectIfItsNull(Long id, TechnicalReport technicalReportInstance) {
+    private technicalReportInstanceRedirectIfItsNull(Long id, TechnicalReport technicalReportInstance) {
         if (!technicalReportInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
             redirect(action: "list")
@@ -122,7 +122,7 @@ class TechnicalReportController {
         [technicalReportInstance: technicalReportInstance]
     }
 
-    def validVersionRenderEditIfItsNot(long version, TechnicalReport technicalReportInstance) {
+    private validVersionRenderEditIfItsNot(long version, TechnicalReport technicalReportInstance) {
         if (version != null) {
             if (technicalReportInstance.version > version) {
                 technicalReportInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
