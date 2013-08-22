@@ -1,5 +1,4 @@
 import static cucumber.api.groovy.EN.*
-import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGroupCreatePage
 import pages.ResearchGroupPage
@@ -67,10 +66,6 @@ When(~'^i delete the research group entitled "([^"]*)"$') { String name ->
 Then(~'^the research group "([^"]*)" is properly deleted of the system$') { String name ->
 	researchGroup = ResearchGroup.findByName(name)
 	assert researchGroup == null
-}
-
-Given(~'^I am at publication menu$') { ->
-	at PublicationsPage
 }
 
 When(~'^i select the "([^"]*)" option at publications menu$') { String option ->
@@ -173,12 +168,6 @@ When(~'^I modify the childof of research group entitled "([^"]*)" to itself$') {
 Then(~'^the childof of research group "([^"]*)" is none$') { String name ->
     researchGroup = ResearchGroup.findByName(name)
     assert researchGroup.getChildOf() == null
-}
-
-Given(~'^I am logged using username "([^"]*)" and password "([^"]*)"$') { String username, String password ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData(username, password)
 }
 
 Given(~'^i created a research group entitled "([^"]*)" with childof none$') { String name ->

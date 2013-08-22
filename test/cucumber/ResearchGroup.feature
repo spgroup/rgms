@@ -49,23 +49,20 @@ Feature: research group
     Then the research group "modcs" is properly deleted of the system
  
     Scenario: new research group and show via web browser
-    Given I am logged using username "admin" and password "adminadmin"
-    And I am at publication menu
+    Given I am at the publications menu
     When i select the "Research Group" option at publications menu
     And i select the new research group option at research group list page
     Then i can fill the research group details with name "modcs" and create a new one
     
     Scenario: show research group via web browser
-    Given I am logged using username "admin" and password "adminadmin"
-    And I am at publication menu
+    Given I am at the publications menu
     And the system has a Research Group named "grupo" stored in the system
     And i am at Research Group list menu
     And i select a research group called "grupo"
     Then the system will show the details of this research group
     
     Scenario: edit research group via web browser
-    Given I am logged using username "admin" and password "adminadmin"
-    And I am at publication menu
+    Given I am at the publications menu
     And the system has a Research Group named "PESQUISA" stored in the system
     And i am at Research Group list menu
     When i select a research group called "PESQUISA"
@@ -81,7 +78,7 @@ Feature: research group
 
 
   Scenario: edit childof of research group web
-    Given I am logged using username "admin" and password "adminadmin"
+    Given I am at the publications menu
     And   i created a research group entitled "rg" with childof none
     And   i am at Research Group list menu
     When  i select a research group called "rg"
