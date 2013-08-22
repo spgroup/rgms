@@ -1,4 +1,4 @@
-package pages
+package pages.technicalReport
 
 import geb.Page
 import rgms.publication.TechnicalReport

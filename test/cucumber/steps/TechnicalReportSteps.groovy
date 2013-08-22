@@ -1,5 +1,8 @@
 import pages.*
-import rgms.member.Member
+import pages.technicalReport.TechnicalReportCreatePage
+import pages.technicalReport.TechnicalReportEditPage
+import pages.technicalReport.TechnicalReportPage
+import pages.technicalReport.TechnicalReportShowPage
 import rgms.publication.TechnicalReport
 import steps.TestDataAndOperations
 
