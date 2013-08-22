@@ -26,8 +26,8 @@ class MemberController {
  * @author penc
  */
 //#if($contextualInformation)
-        member.setUniversity(params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity"));
-        member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity"));
+        member.setUniversity(params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity") as String);
+        member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity") as String);
 //#end
 
         [memberInstance: member]
