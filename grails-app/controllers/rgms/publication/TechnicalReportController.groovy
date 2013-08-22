@@ -79,18 +79,8 @@ class TechnicalReportController {
 
     def update(Long id, Long version) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance))
+        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance) || !validVersionRenderEditIfItsNot(version, technicalReportInstance))
             return
-
-        if (version != null) {
-            if (technicalReportInstance.version > version) {
-                technicalReportInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'technicalReport.label', default: 'TechnicalReport')] as Object[],
-                        "Another user has updated this TechnicalReport while you were editing")
-                render(view: "edit", model: [technicalReportInstance: technicalReportInstance])
-                return
-            }
-        }
 
         technicalReportInstance.properties = params
 
@@ -132,4 +122,16 @@ class TechnicalReportController {
         [technicalReportInstance: technicalReportInstance]
     }
 
+    def validVersionRenderEditIfItsNot(long version, TechnicalReport technicalReportInstance) {
+        if (version != null) {
+            if (technicalReportInstance.version > version) {
+                technicalReportInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'technicalReport.label', default: 'TechnicalReport')] as Object[],
+                        "Another user has updated this TechnicalReport while you were editing")
+                render(view: "edit", model: [technicalReportInstance: technicalReportInstance])
+                return false
+            }
+        }
+        return true
+    }
 }
