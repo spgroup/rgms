@@ -7,14 +7,14 @@ Feature: research group
     Then the research group "modcs" is properly stored by the system
     
     Scenario: new research group with no name. 
-    Given the system has no research group entitled "modcs" stored in the system
-    When I create a research group with no name and with the description "modcs research group"
-    Then the research group is not stored in the system because is invalid
+    Given the system has no research group entitled "" stored in the system
+    When I create a research group named "" with the description "modcs research group"
+    Then the research group is not stored in the system because it has no name
     
     Scenario: new research group with no description. 
-    Given the system has no research group entitled "modcs" stored in the system
-    When I create a research group with name "modcs" and with no description
-    Then the research group is not stored in the system because is invalid
+    Given the system has no research group entitled "modcs-20" stored in the system
+    When I create a research group named "modcs-20" with the description ""
+    Then the research group with name "modcs-20" is not stored in the system because it has no description
     
     Scenario: duplicate researchgroup
     Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
@@ -35,7 +35,7 @@ Feature: research group
   Scenario: editing the researchgroup's name to none
     Given the system has a research group entitled "modcs-3" with the description "modcs-3 research group" stored in the system
     When I modify the name of research group entitled "modcs-3" to none
-    Then there is no research group entitled none
+    Then the research group is not stored in the system because it has no name
 
 
     Scenario:edit research group
@@ -49,19 +49,21 @@ Feature: research group
     Then the research group "modcs" is properly deleted of the system
  
     Scenario: new research group and show via web browser
-    Given i am at publication menu
+    Given I am at the publications menu
     When i select the "Research Group" option at publications menu
     And i select the new research group option at research group list page
     Then i can fill the research group details with name "modcs" and create a new one
     
     Scenario: show research group via web browser
-    Given the system has a Research Group named "grupo" stored in the system
+    Given I am at the publications menu
+    And the system has a Research Group named "grupo" stored in the system
     And i am at Research Group list menu
     And i select a research group called "grupo"
     Then the system will show the details of this research group
     
     Scenario: edit research group via web browser
-    Given the system has a Research Group named "PESQUISA" stored in the system
+    Given I am at the publications menu
+    And the system has a Research Group named "PESQUISA" stored in the system
     And i am at Research Group list menu
     When i select a research group called "PESQUISA"
     And i select the edit option
@@ -76,7 +78,7 @@ Feature: research group
 
 
   Scenario: edit childof of research group web
-    Given i am logged as "admin"
+    Given I am at the publications menu
     And   i created a research group entitled "rg" with childof none
     And   i am at Research Group list menu
     When  i select a research group called "rg"

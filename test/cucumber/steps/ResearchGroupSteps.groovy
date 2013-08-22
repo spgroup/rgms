@@ -1,5 +1,4 @@
 import static cucumber.api.groovy.EN.*
-import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGroupCreatePage
 import pages.ResearchGroupPage
@@ -38,27 +37,9 @@ Then(~'^the research group "([^"]*)" is not stored in the system because exceeds
 	assert researchGroup.size() == 0
 }
 
-Given(~'^the system has no research group with no name stored in the system$') { ->
-	researchGroup = ResearchGroup.findByName("")
-	assert researchGroup == null
-}
-
-When(~'^I create a research group with no name and with the description "([^"]*)" $') { String arg1 ->
-    TestDataAndOperations.createResearchGroup("", arg1)
-}
-
 Then(~'^the research group is not stored in the system because it has no name$') { ->
 	researchGroup = ResearchGroup.findByName("")
 	assert researchGroup == null
-}
-
-Given(~'^the system has no research group with name "([^"]*)"$') { String name ->
-	researchGroup = ResearchGroup.findByName(name)
-	assert researchGroup == null
-}
-
-When(~'^I create a research group with  with name "([^"]*)" and with no description$') { String arg1 ->
-	TestDataAndOperations.createResearchGroup(arg1, "")
 }
 
 Then(~'^the research group with name "([^"]*)" is not stored in the system because it has no description$') { String arg1 ->
@@ -87,29 +68,6 @@ Then(~'^the research group "([^"]*)" is properly deleted of the system$') { Stri
 	assert researchGroup == null
 }
 
-When(~'^I create a research group with no name and with the description "([^"]*)"$') { String description ->
-	TestDataAndOperations.createResearchGroup("", description)
-}
-
-Then(~'^the research group is not stored in the system because is invalid$') {
-	->
-	researchGroup = ResearchGroup.findByName("")
-	assert researchGroup == null
-}
-
-When(~'^I create a research group with name "([^"]*)" and with no description$') { String name ->
-	TestDataAndOperations.createResearchGroup(name, "")
-}
-
-Given(~'^i am at publication menu$') {
-	->
-	// Express the Regexp above with the code you wish you had
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
-	at PublicationsPage
-}
-
 When(~'^i select the "([^"]*)" option at publications menu$') { String option ->
 	at PublicationsPage
 	page.select(option)
@@ -131,11 +89,6 @@ Then(~'^i can fill the research group details with name "([^"]*)" and create a n
 }
 
 Given(~'^the system has a Research Group named "([^"]*)" stored in the system$') { String arg1 ->
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
-	at PublicationsPage
-
 	page.select("Research Group")
 	at ResearchGroupPage
 
@@ -186,7 +139,7 @@ Then(~'^the description of research group entitled "([^"]*)" is not none$') { St
 
 When(~'^I modify the name of research group entitled "([^"]*)" to none$') { String oldName ->
     researchGroup = ResearchGroup.findByName(oldName)
-    TestDataAndOperations.editResearchGroup(researchGroup, oldName, "")
+    TestDataAndOperations.editResearchGroup(researchGroup, "", researchGroup.getDescription())
 }
 
 Then(~'^there is no research group entitled none$') { ->
@@ -216,14 +169,6 @@ Then(~'^the childof of research group "([^"]*)" is none$') { String name ->
     researchGroup = ResearchGroup.findByName(name)
     assert researchGroup.getChildOf() == null
 }
-
-
-Given(~'^i am logged as "([^"]*)"$') { String userName ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData(userName, "adminadmin")
-}
-
 
 Given(~'^i created a research group entitled "([^"]*)" with childof none$') { String name ->
     at PublicationsPage

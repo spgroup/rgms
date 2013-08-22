@@ -39,8 +39,8 @@ class ResearchGroupShowPage extends Page {
 
     def comparePDF(String s) {
         $('form').find([title: "PDF"]).click()
-        def downloadLink = "/Users/phmb/Downloads/export.pdf"
         /*
+def downloadLink = "/Users/phmb/Downloads/export.pdf"
 def downloadLink = $('form').find([title: "PDF"]).@href
 def bytes = downloadBytes(downloadLink)
 PdfReader reader = new PdfReader(bytes)
@@ -54,8 +54,8 @@ assert description != null       */
 
     def compareHTML(String s) {
         $('form').find([title: "HTML"]).click()
-        def downloadLink = "http://localhost:8080/rgms/jasper/?_format=HTML&_name=export+HTML&_file=report&member_id=1"
         /*
+        def downloadLink = "http://localhost:8080/rgms/jasper/?_format=HTML&_name=export+HTML&_file=report&member_id=1"
         def downloadLink = $('form').find([title: "PDF"]).@href
         def xml = new XmlSlurper()
         xml.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false)
@@ -68,9 +68,9 @@ assert description != null       */
     }
 
     def compareXML(String s) {
-        def downloadLink = "/Users/phmb/Downloads/export.xml"
         $('form').find([title: "XML"]).click()
         /*
+        def downloadLink = "/Users/phmb/Downloads/export.xml"
         def downloadLink = $('form').find([title: "XML"]).@href
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance()
         DocumentBuilder db = dbf.newDocumentBuilder()
