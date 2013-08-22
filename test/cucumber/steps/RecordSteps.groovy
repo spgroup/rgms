@@ -60,10 +60,13 @@ Then(~'^the record with status "([^"]*)" is properly stored and the system has t
 	assert records.size() == 2 && records.get(0).status_H == status && records.get(1).status_H == status
 }
 
-Given(~'^I am at record list and the system has only one record with status "([^"]*)"$') {String status->
+Given(~'^I am logged$') {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
+}
+
+Given(~'^I am at record list and the system has only one record with status "([^"]*)"$') {String status->
     at PublicationsPage
     to RecordPage
 	def records = Record.findAllByStatus_H(status)
@@ -97,9 +100,6 @@ Then(~'^I am still at the edit page of the record with status "([^"]*)"$') { Str
 }
 
 Given(~'^I am at record list$') {->
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
 	at PublicationsPage
 	to RecordPage
 }
@@ -116,9 +116,6 @@ Then(~'^I can fill the record details$') {->
 
 Given(~'^I am at the visualize page of the record with status "([^"]*)"$') {
 	String status ->
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
 	at PublicationsPage
 	to RecordPage
 	page.visualizeRecord(status)

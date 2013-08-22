@@ -27,24 +27,28 @@ Feature: record
     Then the record with status "MSc Student" is properly stored and the system has two records with this status
 
   Scenario: visualize record web
-    Given I am at record list and the system has only one record with status "MSc Student"
+    Given I am logged
+    And I am at record list and the system has only one record with status "MSc Student"
     When I click the record with status "MSc Student" at the record list
     Then I can visualize the record with status "MSc Student"
 
   Scenario: new record web
-    Given I am at record list
+    Given I am logged
+    And I am at record list
     When I click the create record option
     Then I can fill the record details
 
   Scenario: update record with status empty web
-    Given I am at record list and the system has only one record with status "MSc Student"
+    Given I am logged
+    And I am at record list and the system has only one record with status "MSc Student"
     When I click the record with status "MSc Student" at the record list
     And I click the edit button of the record
     And I set the status to "" and I click the save button
     Then I am still at the edit page of the record with status "MSc Student"
 
   Scenario: delete record web with dependency
-    Given I am at the visualize page of the record with status "MSc Student"
+    Given I am logged
+    And I am at the visualize page of the record with status "MSc Student"
     And the system has only one record with status "MSc Student"
     And the record with status "MSc Student" is associated to a member
     When I click to remove the record
