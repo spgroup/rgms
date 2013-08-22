@@ -127,7 +127,7 @@ class TechnicalReportController {
             if (technicalReportInstance.version > version) {
                 technicalReportInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'technicalReport.label', default: 'TechnicalReport')] as Object[],
-                        "Another user has updated this TechnicalReport while you were editing")
+                        message(code: 'default.optimistic.locking.failure', args: [message(code: 'technicalReport.label', default: 'TechnicalReport')]))
                 render(view: "edit", model: [technicalReportInstance: technicalReportInstance])
                 return false
             }
