@@ -413,12 +413,8 @@ class TestDataAndOperations {
     }
 
     static public void createTechnicalReport(String title, filename) {
-        def cont = new TechnicalReportController()
-        cont.params << TestDataAndOperations.findTechnicalReportByTitle(title) << [file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        def params = TestDataAndOperations.findTechnicalReportByTitle(title)
+        prepareCreateSaveAndResetTechnicalReportController(params, filename)
     }
 
     static public void createMember(String username) {
@@ -854,14 +850,9 @@ class TestDataAndOperations {
     }
 
     static public void createTechnicalReportWithEmptyInstitution(String title, filename) {
-        def cont = new TechnicalReportController()
         def params = TestDataAndOperations.findTechnicalReportByTitle(title)
         params["institution"] = ""
-        cont.params << params << [file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        prepareCreateSaveAndResetTechnicalReportController(params, filename)
     }
 
     static public boolean checkExistingNews(String description, String date, String group){
@@ -869,6 +860,15 @@ class TestDataAndOperations {
         def researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
         def news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
         return news != null
+    }
+
+    static private void prepareCreateSaveAndResetTechnicalReportController(params, filename) {
+        def cont = new TechnicalReportController()
+        cont.params << params << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
     }
 
     static public String getTestFilesPath(String filename){
