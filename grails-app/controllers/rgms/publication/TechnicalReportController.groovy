@@ -69,17 +69,17 @@ class TechnicalReportController {
 
     def show(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        validTechnicalReportInstance(id, technicalReportInstance)
+        technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance)
     }
 
     def edit(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        validTechnicalReportInstance(id, technicalReportInstance)
+        technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance)
     }
 
     def update(Long id, Long version) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if(!validTechnicalReportInstance(id, technicalReportInstance))
+        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance))
             return
 
         if (version != null) {
@@ -105,7 +105,7 @@ class TechnicalReportController {
 
     def delete(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if(!validTechnicalReportInstance(id, technicalReportInstance))
+        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance))
             return
 
         try {
@@ -122,7 +122,7 @@ class TechnicalReportController {
         }
     }
 
-    def validTechnicalReportInstance(Long id, TechnicalReport technicalReportInstance) {
+    def technicalReportInstanceRedirectIfItsNull(Long id, TechnicalReport technicalReportInstance) {
         if (!technicalReportInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
             redirect(action: "list")
