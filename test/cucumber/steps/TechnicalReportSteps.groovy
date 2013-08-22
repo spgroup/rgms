@@ -5,6 +5,7 @@ import pages.technicalReport.TechnicalReportPage
 import pages.technicalReport.TechnicalReportShowPage
 import rgms.publication.TechnicalReport
 import steps.TestDataAndOperations
+import steps.TechnicalReportTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -16,15 +17,15 @@ Given(~'^The system has no technical report entitled "([^"]*)"$') { String title
 
 //new valid technical report
 When(~'^I create the technical report "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-    TestDataAndOperations.createTechnicalReport(title, filename)
+    TechnicalReportTestDataAndOperations.createTechnicalReport(title, filename)
 }
 Then(~'^The technical report "([^"]*)" is properly stored by the system.$') { String title ->
     tech = TechnicalReport.findByTitle(title)
-    assert TestDataAndOperations.technicalReportCompatibleTo(tech, title)
+    assert TechnicalReportTestDataAndOperations.technicalReportCompatibleTo(tech, title)
 }
 // new invalid technical report: empty institution
 When(~'^I create the technical report "([^"]*)" with file name "([^"]*)" and empty institution$') { String title, filename ->
-	TestDataAndOperations.createTechnicalReportWithEmptyInstitution(title, filename)
+    TechnicalReportTestDataAndOperations.createTechnicalReportWithEmptyInstitution(title, filename)
 }
 Then(~'^The technical report "([^"]*)" is not properly stored by the system$') { String title ->
 	tech = TechnicalReport.findByTitle(title)
@@ -33,12 +34,12 @@ Then(~'^The technical report "([^"]*)" is not properly stored by the system$') {
 
 // edit existing technical report with empty title
 Given(~'^The system has an technical report entitled "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-    TestDataAndOperations.createTechnicalReport(title, filename)
+    TechnicalReportTestDataAndOperations.createTechnicalReport(title, filename)
     tech = TechnicalReport.findByTitle(title)
     assert tech != null
 }
 When(~'^I edit the technical report title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
-    def updatedTech = TestDataAndOperations.editTech(oldtitle, newtitle)
+    def updatedTech = TechnicalReportTestDataAndOperations.editTech(oldtitle, newtitle)
     //assert updatedTech != null
 }
 Then(~'^The technical report "([^"]*)" is not updated by the system$') { String title ->
