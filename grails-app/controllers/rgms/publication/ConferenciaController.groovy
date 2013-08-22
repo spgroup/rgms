@@ -4,7 +4,7 @@ package rgms.publication
 import rgms.XMLService
 //#end
 import org.apache.shiro.SecurityUtils
-import rgms.member.Member
+import org.springframework.web.multipart.MultipartHttpServletRequest
 
 class ConferenciaController {
 
@@ -110,8 +110,8 @@ class ConferenciaController {
 	def enviarConferenciaXML(){
 		String flashMessage = 'The non existent conferences were successfully imported'
 		XMLService serv = new XMLService()
-		Node xmlFile = serv.parseReceivedFile(request)
-		if (!serv.Import(saveConferencias, returnWithMessage, xmlFile, flashMessage)) return
+        Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
+        serv.Import(saveConferencias, returnWithMessage, flashMessage, xmlFile)
 	}
 	
 	Closure saveConferencias = {
