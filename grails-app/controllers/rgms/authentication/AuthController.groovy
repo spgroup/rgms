@@ -194,13 +194,16 @@ class AuthController {
         def memberInstance = (params.email ? Member.findByEmail(params.email) : (params.username ? Member.findByUsername(params.username) : null))
         if (memberInstance) {
             flash.message = "An email is being sent to you with instructions on how to reset your password."
-            def resetRequest = new PasswordResetRequest(user:memberInstance,requestDate : new Date(),token:new BigInteger(130, new SecureRandom()).toString(32)).save(failOnError:true)
+            def email = memberInstance.email
             def mailSender = grailsApplication.config.grails.mail.username
+            def title = "[GRMS] Reset your password"
+            def resetRequest = new PasswordResetRequest(user:memberInstance,requestDate : new Date(),token:new BigInteger(130, new SecureRandom()).toString(32)).save(failOnError:true)
+            def content = "Hello ${memberInstance.name},\n\nYou have requested resetting your password. Please ignore this message if it's not you who have made the request.\n\nIn order to reset your password, please follow this link :\n\n ${createLink(absolute:true,controller:'auth',action:'resetPassword',id:resetRequest.token)}\n\nBest Regards".toString()
             sendMail {
-                to memberInstance.email
+                to email
                 from mailSender
-                subject "[GRMS] Reset your password"
-                body "Hello ${memberInstance.name},\n\nYou have requested resetting your password. Please ignore this message if it's not you who have made the request.\n\nIn order to reset your password, please follow this link :\n\n ${createLink(absolute:true,controller:'auth',action:'resetPassword',id:resetRequest.token)}\n\nBest Regards".toString()
+                subject title
+                body content
             }
         } else {
             flash.message = "No such user, please try again."
