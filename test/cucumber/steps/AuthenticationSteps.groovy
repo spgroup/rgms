@@ -59,7 +59,7 @@ Given(~'I am at the Member Listagem page') { ->
     page.select("Member")
     //to LoginPage
     //at LoginPage
-    //page.fillLoginDataAndSubmit("admin", "adminadmin")
+    //page.fillLoginData("admin", "adminadmin")
     //to PublicationsPage
     //at PublicationsPage
     //page.getLink("Member").click()
@@ -77,10 +77,10 @@ When (~'I submit the form') { ->
 }
 
 When(~'I try to login with an user that does not exist'){ ->
-    page.fillLoginDataAndSubmit('NonExistentUser','NonExistentUserPass')
+    page.fillLoginData('NonExistentUser','NonExistentUserPass')
 }
 When (~'I try to login with an existent user, though with wrong password') {->
-    page.fillLoginDataAndSubmit("admin","123")
+    page.fillLoginData("admin","123")
 }
 Then(~'A login failure message is displayed'){ ->
     assert ( page.readFlashMessage() != null )
@@ -209,7 +209,7 @@ When (~'The login procedure is successful') { ->
 
 
 When(~'I try loggin with "([^"]*)"'){ username ->
-    page.fillLoginDataAndSubmit(username, "senha")
+    page.fillLoginData(username, "senha")
 }
 
 Then(~'Inform the user that don`t have permission to loggin yet'){ ->

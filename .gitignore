@@ -419,3 +419,21 @@ target/test-reports/plain/TEST-functional-cucumber-Visit-out.txt
 target/test-reports/plain/TEST-functional-cucumber-Visit.txt
 
 *.swp
+
+target/test-reports/TEST-functional-cucumber-orientations.xml
+
+target/test-reports/html/11_orientations.html
+
+target/test-reports/html/12_record.html
+
+target/test-reports/html/13_research group.html
+
+target/test-reports/html/14_research line.html
+
+target/test-reports/html/15_technical report.html
+
+target/test-reports/plain/TEST-functional-cucumber-orientations-err.txt
+
+target/test-reports/plain/TEST-functional-cucumber-orientations-out.txt
+
+target/test-reports/plain/TEST-functional-cucumber-orientations.txt
