@@ -1,5 +1,6 @@
 package steps
 
+import rgms.authentication.AuthController
 import rgms.member.*
 import rgms.news.News
 import rgms.news.NewsController
@@ -7,6 +8,7 @@ import rgms.publication.*
 import rgms.visit.Visit
 import rgms.visit.VisitController
 import rgms.visit.Visitor
+import org.apache.shiro.SecurityUtils
 
 class TestDataAndOperations {
 
@@ -90,6 +92,9 @@ class TestDataAndOperations {
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            [name: "Invalid User", username: "userwithinvalidphone", email: "uwif@cin.ufpe.br",
+                    status: "Graduate Student", university: "UFPE", enabled: true, phone: "invalidphone"
             ]]
 
     static researchgroups = [
@@ -118,6 +123,32 @@ class TestDataAndOperations {
             article.title == title
         }
     }
+
+//#if ($visit)
+    static visitors = [
+            [name: "Pessoa"]
+    ]
+
+    /**
+     * @author carloscemb
+     */
+    static visits = [
+            [visitor: new Visitor(visitors[0]),
+                    dataInicio: (new Date("11 November 2000")),
+                    dataFim: (new Date("12 November 2000"))]
+    ]
+
+    /**
+     * @author carloscemb
+     */
+    static public def findVisitByVisitorAndInitialDateAndFinalDate(String name, String initialDate, String finalDate) {
+        visits.find { visit ->
+            visit.visitor.name == name &&
+                    visit.dataInicio.format("dd/MM/YYYY") == initialDate &&
+                    visit.dataFim.format("dd/MM/YYYY") == finalDate
+        }
+    }
+//#end
 
     static public def findFerramentaByTitle(String title) {
         ferramentas.find { ferramenta ->
@@ -253,6 +284,16 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    static public void createTese(String title, filename, school) {
+        def cont = new TeseController()
+        def date = new Date()
+        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
+                school: school, address: "Boa Viagem", file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
 
     static public void createDissertacaoWithotSchool(String title, filename) {
         def cont = new DissertacaoController()
@@ -603,6 +644,13 @@ class TestDataAndOperations {
         def cont = new PeriodicoController()
         def result = cont.list().periodicoInstanceList
         return result.contains(testarticle)
+    }
+
+    static public boolean containsMember(username, members) {
+        def testmember = Member.findByUsername(username)
+        def cont = new MemberController()
+        def result = cont.list().memberInstanceList
+        return result.contains(testmember)
     }
 
     static public Periodico editArticle(oldtitle, newtitle) {
