@@ -59,8 +59,7 @@ When(~'^I select the new technical report button$'){ ->
 }
 
 And(~'^I fill the technical report details with title "([^"]*)" file name "([^"]*)" and institution "([^"]*)"$'){String title, filename, institution ->
-    def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator
-    page.fillTechnicalReportDetails(path + filename, title, institution)
+    page.fillTechnicalReportDetails(TestDataAndOperations.getTestFilesPath(filename), title, institution)
 }
 
 And(~'^I select the save technical report button$'){ ->
@@ -76,8 +75,7 @@ Then(~'^The technical report "([^"]*)" details page is shown$') { String title -
 And(~'^the technical report "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     page.selectNewTechnicalReport()
     at TechnicalReportCreatePage
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator
-    page.fillTechnicalReportDetails(path + filename, title)
+    page.fillTechnicalReportDetails(TestDataAndOperations.getTestFilesPath(filename), title)
     page.selectCreateTechnicalReport()
     techReport = TechnicalReport.findByTitle(title)
     assert techReport != null
@@ -150,9 +148,8 @@ And(~'^I remain at the technical report edit page$'){ ->
 }
 
 And(~'^I change the technical report title to "([^"]*)" filename to "([^"]*)" and institution to "([^"]*)"$') {String t, fn, i ->
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator
     at TechnicalReportEditPage
-    page.edit(t, path + fn, i)
+    page.edit(t, TestDataAndOperations.getTestFilesPath(fn), i)
 }
 
 Given(~'^The system has an technical report entitled "([^"]*)" with file name "([^"]*)" and institution "([^"]*)"$'){ String title, filename , institute->

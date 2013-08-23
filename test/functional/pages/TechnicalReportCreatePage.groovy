@@ -1,5 +1,7 @@
 package pages
 
+import steps.TestDataAndOperations
+
 class TechnicalReportCreatePage extends FormPage {
     static url = "technicalReport/create"
 
@@ -21,8 +23,7 @@ class TechnicalReportCreatePage extends FormPage {
     }
 
     def fillTechnicalReportDetails() {
-        def path = new File(".").getAbsolutePath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + "Joee.pdf"
-        fillTechnicalReportDetails(path, "Joe-E")
+        fillTechnicalReportDetails(TestDataAndOperations.getTestFilesPath("Joee.pdf"), "Joe-E")
     }
 
     def fillTechnicalReportDetails(filename, title) {
