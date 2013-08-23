@@ -84,7 +84,7 @@ When(~'^I select the Novo Member option$') { ->
 
 Then(~'^I fill the Member details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)" and create a new one$') { String name, username, email, university ->
     at MemberCreatePage
-    page.fillMemberDetails(name, username, email, university)
+    page.fillMemberDetails(name, username, email, university, "")
     to MemberListPage
     at MemberListPage
 }

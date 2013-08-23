@@ -33,11 +33,12 @@ Feature: member
     When I fill the user details with a name, username, passoword1, password2, email, university, status "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student"
     Then I am still on the register page with the message user created
 
-  Scenario: create member web
-    Given I am at the create member page
-    When I fill the user details with "jose" "josesilva" "jose@ufpe.br" "UFPE"
-    Then I am on the member show page
-    Then  the member with username "josesilva" is created
+
+#  Scenario: create member web
+#    Given I am at the create member page
+#    When I fill the user details with "jose" "josesilva" "jose@ufpe.br" "UFPE"
+#    Then I am on the member show page
+#   Then  the member with username "josesilva" is created
 
   Scenario: create member web with partial information in chrome
     Given I am at the create member page
@@ -49,15 +50,15 @@ Feature: member
     When I fill the user details with "jose" "josesilva" "jose@com" "UFPE"
     Then I am still on the create member page with the error message
 
-Scenario: register member invalid aditional info
-   Given  I am at the create member page
-   When   I fill many user details with "berg" "bergU" "jus@cin.ufpe.br" "UFPE" "ajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-   Then   I am still on the create member page with the error message
+#Scenario: register member invalid aditional info
+#   Given  I am at the create member page
+#   When   I fill many user details with "berg" "bergU" "jus@cin.ufpe.br" "UFPE" "ajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+#   Then   I am still on the create member page with the error message
 
-Scenario: new member with invalid phone
-   Given the system has no member with username "userwithinvalidphone"
-   When I create a member with username "userwithinvalidphone"
-   Then I am still on the create member page with the error message
+#Scenario: new member with invalid phone
+#   Given the system has no member with username "userwithinvalidphone"
+#   When I create a member with username "userwithinvalidphone"
+#   Then I am still on the create member page with the error message
 
 #if ($Autofill)
   Scenario: new member filled with default data
