@@ -17,7 +17,7 @@ class TeseController {
     public def index() {
         redirect(action: "list", params: params)
     }
-	
+
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [teseInstanceList: Tese.list(params), teseInstanceTotal: Tese.count()]
@@ -41,7 +41,12 @@ class TeseController {
 
     def save() {
         def teseInstance = new Tese(params)
-		PublicationController pb = new PublicationController()
+        PublicationController pb = new PublicationController()
+        if (Tese.findByTitle(params.title)) {
+            flash.message = message(code: 'tese.duplicatetitle.failure', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
+            render(view: "create", model: [teseInstance: teseInstance])
+            return
+        }
         if (!pb.upload(teseInstance) || !teseInstance.save(flush: true)) {
             render(view: "create", model: [teseInstance: teseInstance])
             return
@@ -50,8 +55,8 @@ class TeseController {
         //def user = Member.findByUsername(SecurityUtils.subject?.principal)
         //pb.sendPostFacebook(user, teseInstance.toString())
         //#end
-		flash.message = message(code: 'default.created.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
-        redirect(action: "show", id: teseInstance.id)
+        flash.message = message(code: 'default.created.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
+        redirect(controller: "tese", action: "show", id: teseInstance.id)
     }
 
     def show() {
@@ -65,7 +70,7 @@ class TeseController {
     def update() {
         def teseInstance = Tese.get(params.id)
         if (!teseInstance) {
-            getMessage()
+            messageGenerator()
             return
         }
         if (params.version) {
@@ -83,22 +88,22 @@ class TeseController {
             render(view: "edit", model: [teseInstance: teseInstance])
             return
         }
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'tese.label', default: 'Tese'), teseInstance.id])
         redirect(action: "show", id: teseInstance.id)
     }
 
     def delete() {
         def teseInstance = Tese.get(params.id)
         if (!teseInstance) {
-			getMessage()
+            messageGenerator()
             return
         }
         try {
             teseInstance.delete(flush: true)
-			getMessage()
+            messageGenerator()
         }
         catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
             redirect(action: "show", id: params.id)
         }
     }
@@ -106,13 +111,13 @@ class TeseController {
     def ShowOrEdit(){   
         def teseInstance = Tese.get(params.id)
         if (!teseInstance) {
-            getMessage()
+            messageGenerator()
             return
         }
         [teseInstance: teseInstance]
     }
 
-    def getMessage()
+    def messageGenerator()
     {
         flash.message = message(code: 'default.not.found.message', args: [message(code: 'tese.label', default: 'Tese'), params.id])
         redirect(action: "list")
