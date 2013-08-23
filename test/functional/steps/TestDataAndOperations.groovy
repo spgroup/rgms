@@ -38,7 +38,6 @@ class TestDataAndOperations {
             [website: "http://www.tooldelete.com", description: "Ferramenta ToolDelete",
                     title: "ToolDelete",
                     publicationDate: (new Date("12 October 2012"))]
-
     ]
 
 
@@ -414,12 +413,8 @@ class TestDataAndOperations {
     }
 
     static public void createTechnicalReport(String title, filename) {
-        def cont = new TechnicalReportController()
-        cont.params << TestDataAndOperations.findTechnicalReportByTitle(title) << [file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        def params = TestDataAndOperations.findTechnicalReportByTitle(title)
+        prepareCreateSaveAndResetTechnicalReportController(params, filename)
     }
 
     static public void createMember(String username) {
@@ -847,12 +842,24 @@ class TestDataAndOperations {
         researchGroupController.params << [twitter: newTwitter] << [id: researchGroup.getId()]
         researchGroupController.update()
         researchGroupController.response.reset()
+        return researchGroup
     }
 
     static public void createTechnicalReportWithEmptyInstitution(String title, filename) {
-        def cont = new TechnicalReportController()
         def params = TestDataAndOperations.findTechnicalReportByTitle(title)
         params["institution"] = ""
+        prepareCreateSaveAndResetTechnicalReportController(params, filename)
+    }
+
+    static public boolean checkExistingNews(String description, String date, String group){
+        Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
+        def researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
+        def news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
+        return news != null
+    }
+
+    static private void prepareCreateSaveAndResetTechnicalReportController(params, filename) {
+        def cont = new TechnicalReportController()
         cont.params << params << [file: filename]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
@@ -860,6 +867,7 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-
-    //article
+    static public String getTestFilesPath(String filename){
+        new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    }
 }
