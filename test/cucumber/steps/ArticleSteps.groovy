@@ -8,8 +8,7 @@ import steps.TestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
-    //article = Periodico.findByTitle(title)
-    assert isNull(title)
+    assert periodicoExist(title)
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
@@ -28,17 +27,8 @@ When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*
 }
 
 Then(~'^the article "([^"]*)" is not stored by the system because it is invalid$') { String title ->
-    //article = Periodico.findByTitle(title)
-    assert isNull(title)
+    assert periodicoExist(title)
 }
-
-/*
-Given(~'^the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-    TestDataAndOperations.createArticle(title, filename)
-    article = Periodico.findByTitle(title)
-    assert article != null
-}
-*/
 
 Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
     articles = Periodico.findAllByTitle(title)
@@ -48,8 +38,7 @@ Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
 }
 
 When(~'^I select the new article option at the article page$') {->
-    at ArticlesPage
-    page.selectNewArticle()
+    selectNewArticleInArticlesPage()
 }
 
 Then(~'^I can fill the article details$') {->
@@ -57,17 +46,13 @@ Then(~'^I can fill the article details$') {->
     page.fillArticleDetails()
 }
 
-//AULA
-//------------------------------------------------------//----------------------------------------------------------//
-//ATIVIDADE 5
 
 /**
  * @author Guilherme
  */
 Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     TestDataAndOperations.createArticle(title, filename)
-    //article = Periodico.findByTitle(title)
-    assert !isNull(title)
+    assert !periodicoExist(title)
 }
 
 /**
@@ -76,14 +61,13 @@ Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') {
 
 Given(~'^I am at the articles page and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
 
-    Login(null)
+    Login()
     at PublicationsPage
     page.select("Periodico")
-    createArticle()
+    selectNewArticleInArticlesPage()
     page.fillArticleDetails(TestDataAndOperations.path() + filename, title)
     page.selectCreateArticle()
-    //article = Periodico.findByTitle(title)
-    assert !isNull(title)
+    assert !periodicoExist(title)
     to ArticlesPage
     at ArticlesPage
 }
@@ -92,11 +76,9 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
  * @author Guilherme
  */
 When(~'^I delete the article "([^"]*)"$') { String title ->
-    def testarticle = Periodico.findByTitle(title)
-    assert testarticle != null
+
     TestDataAndOperations.removeArticle(title)
-    def testDeleteArticle = Periodico.findByTitle(title)
-    assert testDeleteArticle == null
+
 }
 
 /**
@@ -131,7 +113,6 @@ When(~'^I select to view "([^"]*)" in resulting list$') { String title ->
 When(~'^I change the article title to "([^"]*)"$') { String newtitle ->
     page.select('a', 'edit')
     at ArticleEditPage
-    //aqui também existe uma duplicação (a linha abaixo é repetida em FerramentaSteps) mas não achamos necessário a remoção do mesmo
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
     page.edit(newtitle, path + "TCS-99.pdf")
 }
@@ -139,16 +120,14 @@ When(~'^I change the article title to "([^"]*)"$') { String newtitle ->
  * @author Guilherme
  */
 Then(~'^the article "([^"]*)" is properly updated by the system$') { String title ->
-    //article = Periodico.findByTitle(title)
-    assert isNull(title)
+    assert periodicoExist(title)
 }
 
 /**
  * @author Guilherme
  */
 Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
-    //article = Periodico.findByTitle(title)
-    assert isNull(title)
+    assert periodicoExist(title)
 }
 
 /**
@@ -183,7 +162,6 @@ When(~'I select the "([^"]*)" option in Article Show Page$') { String option ->
 
     at ArticleEditPage
     page.select(option)
-    //on ArticleEditPage
 
 }
 
@@ -200,7 +178,7 @@ Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName -
 
     page.submitForm()
 
-    Login(null)
+    Login()
 
     member = Member.findByUsername(userName)
     MemberEditionPage.url = "member/edit/" + member.getId()
@@ -212,7 +190,7 @@ Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName -
 
 Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
 
-    Login(null)
+    Login()
     at PublicationsPage
     page.select("Periodico")
     to ArticlesPage
@@ -223,7 +201,7 @@ Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userNa
 }
 
 When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$') { String articleName, String filename ->
-    createArticle()
+    selectNewArticleInArticlesPage()
     page.fillArticleDetails(TestDataAndOperations.path() + filename, articleName)
     page.selectCreateArticle()
 }
@@ -259,28 +237,25 @@ Then(~'^No facebook message is added for "([^"]*)"$') { String articleTitle ->
 }
 //#end
 
-//FUNCOES AUXILIARES
-def createArticle(){
+def selectNewArticleInArticlesPage(){
+
     at ArticlesPage
     page.selectNewArticle()
     at ArticleCreatePage
 
     }
 
-def isNull(String title){
+def periodicoExist(String title){
       return Periodico.findByTitle(title) == null
     }
 
-// o problema de duplicação que este método resolve não foi identificado pela ferramenta de detecção de clones
-def Login(String userName){
+def Login(){
+
     to LoginPage
     at LoginPage
-    if(userName == null){
+
         page.fillLoginData("admin", "adminadmin")
-       }
-    else{
-        page.fillLoginData(userName, "adminadmin")
-    }
+
 
     }
 

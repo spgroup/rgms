@@ -49,16 +49,16 @@ class OrientationController {
         _processOrientation()
     }
 
-    def getflashMessage(Long id){
+    def flashMessage(Long id, String action){
         flash.message = message(code: 'default.not.found.message', args: [message(code: 'orientation.label', default: 'Orientation'), id])
-        redirect(action: "list")
-        }
+        redirect(action: action, id: id)
+    }
 
     def _processOrientation()
     {
         def orientationInstance = Orientation.get(params.id)
         if (!orientationInstance) {
-            getflashMessage(null)
+            flashMessage(params.id, "list")
             return
         }
 
@@ -70,8 +70,8 @@ class OrientationController {
         def orientationInstance = Orientation.get(id)
 
         if (!orientationInstance) {
-            getflashMessage(id)
-            return null
+            flashMessage(id, "list")
+            return
         }
 
         return orientationInstance
@@ -106,8 +106,7 @@ class OrientationController {
                 return
             }
 
-            flash.message = message(code: 'default.updated.message', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
-            redirect(action: "show", id: orientationInstance.id)
+            flashMessage(orientationInstance.id, "show")
         }
 
     }
