@@ -247,8 +247,8 @@ Then(~'^A tweet is added to my twitter account regarding the new article "([^"]*
 }
 
 Then (~'The tweet is not posted about "([^"]*)"$'){ String article ->
-    assert !TwitterTool.consult(null)
-}
+    assert !TwitterTool.consult(articleTitle)
+     }
 
 
 Then(~'^No tweet should be post about "([^"]*)"$') { String articleTitle ->
