@@ -79,10 +79,11 @@ Feature: Visit
   Scenario: Add a new visit twitting it
     Given I am logged as "admin" and at the visits page
     When I try to create an visit  and I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
-    Then A twitter is added to my twitter account regarding the new visit "First Visit"
+    Then A twitter is added to my twitter account regarding the new visit "Primeira Visita"
+    
+  Scenario: Add a new visit with twitter, but don't tweet it
+   Given I am logged as "admin" and at the visits page
+   When I try to create an visit
+   Then The visit "Primeira Visita" is created but no tweet should be post
 
-  Scenario: Add a new visit with twitter, but don't twitte it
-    Given I am logged as "admin" and at the visits page
-    When I try to create an visit
-    Then No twitter should be post
 #end
