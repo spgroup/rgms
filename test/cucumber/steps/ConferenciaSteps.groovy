@@ -43,6 +43,10 @@ Then(~'^the conferencia "([^"]*)" is properly removed by the system$') { String 
 }
 
 Given(~'^I am at the publications$') {->
+    LogInToPublication()
+}
+
+def LogInToPublication(){
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -50,10 +54,7 @@ Given(~'^I am at the publications$') {->
 }
 
 Given(~'^I am at the conferencias page$') {->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
+    LogInToPublication()
     page.select("Conferencia")
     at ConferenciaPage
 }
@@ -106,7 +107,7 @@ Then(~'^I am back at the publications and conferencias menu$') {->
 
 When(~'^I try to remove the conferencia "([^"]*)"$') { String title ->
     assert Conferencia.findByTitle(title) == null
-    //TestDataAndOperations.removeConferencia(title)
+
 }
 
 

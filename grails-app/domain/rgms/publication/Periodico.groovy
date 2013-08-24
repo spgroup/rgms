@@ -16,11 +16,7 @@ class Periodico extends Publication {
 
 //#if($Bibtex)
     String generateBib() {
-        return "@article{"
-        +"author=\"" + BibtexAux.organizeAuthors(members) + "\",\n title=\"" + title + "\",\n journal=\""
-        +this.journal + "\",\n year=\"" + publicationDate.getAt(Calendar.YEAR) + "\",\n volume=\""
-        +this.volume + "\",\n month=\"" + publicationDate.getAt(Calendar.MONTH)
-        +"\",\n number=\"" + this.number + "\",\n pages=\"" + this.pages + "\"}"
+        return "@article{"+"author=\"" + BibtexAux.organizeAuthors(members) + "\",\n title=\"" + title + "\",\n journal=\""+this.journal + "\",\n year=\"" + publicationDate.getAt(Calendar.YEAR) + "\",\n volume=\""+this.volume + "\",\n month=\"" + publicationDate.getAt(Calendar.MONTH)+"\",\n number=\"" + this.number + "\",\n pages=\"" + this.pages + "\"}"
     }
 //#end
 

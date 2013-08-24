@@ -4,8 +4,7 @@ package rgms.publication
 import rgms.XMLService
 //#end
 import org.apache.shiro.SecurityUtils
-import org.springframework.dao.DataIntegrityViolationException
-import rgms.member.Member
+import org.springframework.web.multipart.MultipartHttpServletRequest
 
 class ConferenciaController {
 
@@ -34,6 +33,11 @@ class ConferenciaController {
         [conferenciaInstance: conferenciaInstance]
     }
 
+    def alertMessage(String typeMessage, Conferencia conferenciaInstance){
+        flash.message = message(code: 'default.'+ typeMessage +'.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
+        redirect(action: "show", id: conferenciaInstance.id)
+    }
+
     def save() {
         def conferenciaInstance = new Conferencia(params)
 		PublicationController pb = new PublicationController()
@@ -45,48 +49,50 @@ class ConferenciaController {
         //def user = Member.findByUsername(SecurityUtils.subject?.principal)
         //pb.sendPostFacebook(user, conferenciaInstance.toString())
         //#end
-		flash.message = message(code: 'default.created.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
-        redirect(action: "show", id: conferenciaInstance.id)
+        alertMessage('created',conferenciaInstance)
+		//flash.message = message(code: 'default.created.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
+        //redirect(action: "show", id: conferenciaInstance.id)
+    }
+
+    def returnConferenciaInstance(boolean onlyShow){
+        def conferenciaInstance = Conferencia.get(params.id)
+        boolean isReturned = aux.check(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
+        if(!isReturned && onlyShow){
+            [conferenciaInstance: conferenciaInstance]
+        }
+        else if(!isReturned && !onlyShow)
+        {
+            if (params.version) {
+                def version = params.version.toLong()
+                if (conferenciaInstance.version > version) {
+                    conferenciaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                            [message(code: 'conferencia.label', default: 'Conferencia')] as Object[],
+                            "Another user has updated this Conferencia while you were editing")
+                    render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
+                    return
+                }
+            }
+            conferenciaInstance.properties = params
+            if (!conferenciaInstance.save(flush: true)) {
+                render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
+                return
+            }
+            alertMessage('updated',conferenciaInstance)
+            //flash.message = message(code: 'default.updated.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
+            //redirect(action: "show", id: conferenciaInstance.id)
+        }
     }
 
     def show() {
-        def conferenciaInstance = Conferencia.get(params.id)
-		boolean isReturned = aux.check(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
-		if(!isReturned){
-			[conferenciaInstance: conferenciaInstance]
-		}
+        returnConferenciaInstance(true)
     }
 
     def edit() {
-        def conferenciaInstance = Conferencia.get(params.id)
-        boolean isReturned = aux.check(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
-		if(!isReturned){
-			[conferenciaInstance: conferenciaInstance]
-		}
+        returnConferenciaInstance(true)
     }
 
     def update() {
-        def conferenciaInstance = Conferencia.get(params.id)
-        boolean isReturned = aux.check(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
-		if(!isReturned) {
-			if (params.version) {
-				def version = params.version.toLong()
-				if (conferenciaInstance.version > version) {
-					conferenciaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-						[message(code: 'conferencia.label', default: 'Conferencia')] as Object[],
-						"Another user has updated this Conferencia while you were editing")
-					render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
-					return
-				}
-			}
-			conferenciaInstance.properties = params
-			if (!conferenciaInstance.save(flush: true)) {
-				render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
-				return
-			}
-			flash.message = message(code: 'default.updated.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
-			redirect(action: "show", id: conferenciaInstance.id)
-		}
+        returnConferenciaInstance(false)
     }
 
     def delete() {
@@ -104,8 +110,8 @@ class ConferenciaController {
 	def enviarConferenciaXML(){
 		String flashMessage = 'The non existent conferences were successfully imported'
 		XMLService serv = new XMLService()
-		Node xmlFile = serv.parseReceivedFile(request)
-		if (!serv.Import(saveConferencias, returnWithMessage, xmlFile, flashMessage)) return
+        Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
+        serv.Import(saveConferencias, returnWithMessage, flashMessage, xmlFile)
 	}
 	
 	Closure saveConferencias = {
