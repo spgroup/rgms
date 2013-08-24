@@ -10,8 +10,6 @@ class ResearchGroupController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def mailService
-
     def index() {
         redirect(action: "list", params: params)
     }
@@ -230,10 +228,13 @@ class ResearchGroupController {
             def member = Member.get(memberId)
             assert member != null
             if (member.getEmail()) {
-                mailService.sendMail {
-                    to member.getEmail()
-                    subject "Research Group change hierarchy"
-                    body "Hello " + member.name + ",\n\nThe Research Group is now child of the Research Group ${researchGroup.getChildOf().getName()}".toString()
+                def email = member.getEmail()
+                def title = "Research Group change hierarchy"
+                def content = "Hello " + member.name + ",\n\nThe Research Group is now child of the Research Group ${researchGroup.getChildOf().getName()}".toString()
+                sendMail {
+                    to email
+                    subject title
+                    body content
                 }
             }
         }

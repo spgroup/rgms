@@ -13,10 +13,10 @@ class Ferramenta extends Publication {
 
 //#if($Bibtex)
     String generateBib() {
-        return "@misc{"
-        + "author=\"" + BibtexAux.organizeAuthors(members) + "\",\n title=\"" + title + "\",\n website=\""
-        +this.website + "\",\n year=\"" + publicationDate.getAt(Calendar.YEAR) + "\",\n description=\""
-        +this.description + "\",\n month=\"" + publicationDate.getAt(Calendar.MONTH) + "\"}"
+        return "@misc{" + "author=\"" + BibtexAux.organizeAuthors(this.members) + "\",\n title=\"" + this.title +
+                "\",\n website=\"" + this.website + "\",\n year=\"" + this.publicationDate.getAt(Calendar.YEAR) +
+                "\",\n description=\"" + this.description + "\",\n month=\"" +
+                this.publicationDate.getAt(Calendar.MONTH) + "\"}"
     }
 //#end
 }
