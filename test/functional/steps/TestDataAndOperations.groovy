@@ -168,15 +168,9 @@ class TestDataAndOperations {
         }
     }
 
-    static public boolean recordIsAssociated(def status) {
-        def c = Member.createCriteria()
+    static public boolean recordIsAssociated(def status, def shallBe = true) {
         def recordId = Record.findByStatus_H(status).id
-        def members = c.listDistinct {
-            historics {
-                eq("id", recordId)
-            }
-        }
-        members.size() > 0
+        RecordController.recordHasMembers(recordId) == shallBe
     }
 
     static public def findBookChapterByTitle(String title) {

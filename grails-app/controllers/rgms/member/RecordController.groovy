@@ -36,7 +36,7 @@ class RecordController {
 		}
 		return false
 	}
-	
+
 	def update() {
 		def recordInstance = tryFindInstance()?.recordInstance
 		if (recordInstance) {
@@ -47,12 +47,12 @@ class RecordController {
 		   }
 		}
 	}
-	
+
 	def save() {
 		def recordInstance = new Record(params)
 		trySave(recordInstance,"create","created")
 	}
-	
+
 	def trySave(def recordInstance,def viewToRender, def messageCode)
 	{
 		if (!recordInstance.save(flush: true)) {
@@ -63,7 +63,7 @@ class RecordController {
 		flash.message = message(code: 'default.'+messageCode+'.message', args: [message(code: 'Record.label', default: 'Record'), recordInstance.id])
 		redirect(action: "show", id: recordInstance.id)
 	}
-	
+
 	def tryFindInstance()
 	{
 		def recordInstance = Record.get(params.id)
@@ -83,7 +83,7 @@ class RecordController {
 	def edit() {
 		tryFindInstance()
 	}
-	
+
 	def tryDelete(def recordInstance)
 	{
 		try {
@@ -104,19 +104,21 @@ class RecordController {
 			tryDelete(recordInstance)
 		}
 	}
-	
-	
-	static public def checkAssociations(def recordId)
-	{
+
+
+	static public def checkAssociations(def recordId) {
+		if(recordHasMembers(recordId)) {
+			throw new DataIntegrityViolationException("Este histórico não pode ser apagado, pois ele está associado a um membro")
+		}
+	}
+
+	static public def recordHasMembers(def recordId) {
 		def c = Member.createCriteria()
 		def members = c.listDistinct{
 			historics{
-				eq("id",recordId)
+				eq("id", recordId)
 			}
 		}
-		if(members.size() > 0){
-			throw new DataIntegrityViolationException("Este histórico não pode ser apagado, pois ele está associado a um membro")
-		}
-		
+		members.size() > 0
 	}
 }
