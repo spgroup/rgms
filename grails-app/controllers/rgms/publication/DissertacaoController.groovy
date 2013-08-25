@@ -71,16 +71,23 @@ class DissertacaoController {
         render(view: "create", model: [dissertacaoInstance: dissertacaoInstance])
     }
 
-    def show() {
-        def dissertacaoInstance = Dissertacao.get(params.id)
+    def getDissertacaoInstance(def id)
+    {
+        def dissertacaoInstance = Dissertacao.get(id)
 
         if (!dissertacaoInstance) {
-            flash.message = messageGenerator('default.not.found.message', params.id)
+            flash.message = messageGenerator('default.not.found.message', id)
             redirect(action: "list")
             return
         }
 
         [dissertacaoInstance: dissertacaoInstance]
+    }
+    def show() {
+        getDissertacaoInstance(params.id)
+    }
+    def edit (){
+        getDissertacaoInstance(params.id)
     }
 
     def update() {
