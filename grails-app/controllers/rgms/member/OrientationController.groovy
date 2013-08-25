@@ -26,6 +26,7 @@ class OrientationController {
 
     def save() {
         def orientationInstance = new Orientation(params)
+
         if(orientationInstance.orientador.name .equalsIgnoreCase(orientationInstance.orientando))
         {
             render(view: "create", model: [orientationInstance: orientationInstance])
@@ -37,8 +38,8 @@ class OrientationController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
-        redirect(action: "show", id: orientationInstance.id)
+        ShowFlashMessage(orientationInstance.id, "show", 'default.created.message')
+
     }
 
     def show = {
@@ -49,8 +50,8 @@ class OrientationController {
         _processOrientation()
     }
 
-    def flashMessage(Long id, String action){
-        flash.message = message(code: 'default.not.found.message', args: [message(code: 'orientation.label', default: 'Orientation'), id])
+    def ShowFlashMessage(Long id, String action, String code){
+        flash.message = message(code: code, args: [message(code: 'orientation.label', default: 'Orientation'), id])
         redirect(action: action, id: id)
     }
 
@@ -58,7 +59,7 @@ class OrientationController {
     {
         def orientationInstance = Orientation.get(params.id)
         if (!orientationInstance) {
-            flashMessage(params.id, "list")
+            ShowFlashMessage(null, "list",'default.not.found.message')
             return
         }
 
@@ -70,8 +71,8 @@ class OrientationController {
         def orientationInstance = Orientation.get(id)
 
         if (!orientationInstance) {
-            flashMessage(id, "list")
-            return
+            ShowFlashMessage(id, "list",'default.not.found.message')
+            return null
         }
 
         return orientationInstance
@@ -106,7 +107,7 @@ class OrientationController {
                 return
             }
 
-            flashMessage(orientationInstance.id, "show")
+            ShowFlashMessage(orientationInstance.id, "show",'default.updated.message')
         }
 
     }

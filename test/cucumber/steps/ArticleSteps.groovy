@@ -8,7 +8,7 @@ import steps.TestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
-    assert periodicoExist(title)
+    assert periodicoNoExist(title)
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
@@ -27,7 +27,7 @@ When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*
 }
 
 Then(~'^the article "([^"]*)" is not stored by the system because it is invalid$') { String title ->
-    assert periodicoExist(title)
+    assert periodicoNoExist(title)
 }
 
 Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
@@ -52,7 +52,7 @@ Then(~'^I can fill the article details$') {->
  */
 Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     TestDataAndOperations.createArticle(title, filename)
-    assert !periodicoExist(title)
+    assert !periodicoNoExist(title)
 }
 
 /**
@@ -67,7 +67,7 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
     selectNewArticleInArticlesPage()
     page.fillArticleDetails(TestDataAndOperations.path() + filename, title)
     page.selectCreateArticle()
-    assert !periodicoExist(title)
+    assert !periodicoNoExist(title)
     to ArticlesPage
     at ArticlesPage
 }
@@ -120,14 +120,14 @@ When(~'^I change the article title to "([^"]*)"$') { String newtitle ->
  * @author Guilherme
  */
 Then(~'^the article "([^"]*)" is properly updated by the system$') { String title ->
-    assert periodicoExist(title)
+    assert periodicoNoExist(title)
 }
 
 /**
  * @author Guilherme
  */
 Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
-    assert periodicoExist(title)
+    assert periodicoNoExist(title)
 }
 
 /**
@@ -245,7 +245,7 @@ def selectNewArticleInArticlesPage(){
 
     }
 
-def periodicoExist(String title){
+def periodicoNoExist(String title){
       return Periodico.findByTitle(title) == null
     }
 
