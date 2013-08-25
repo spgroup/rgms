@@ -37,6 +37,12 @@ def getDissertacaoInstance(def id)
 
         [dissertacaoInstance: dissertacaoInstance]
     }
+    def show() {
+        getDissertacaoInstance(params.id)
+    }
+    def edit (){
+        getDissertacaoInstance(params.id)
+    }
 
 def show() {
         showOrEdit("Dissertacao", params.id)
