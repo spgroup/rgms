@@ -10,7 +10,7 @@ class FerramentaController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
-        redirect(action: "list", params: params)
+        redirectToList()
     }
 
     def list() {
@@ -32,7 +32,7 @@ class FerramentaController {
         }
 
 		flash.message = messageGenerator('default.created.message',ferramentaInstance.id)
-        redirect(controller: "ferramenta", action: "show", id: ferramentaInstance.id)
+        redirectToShow(ferramentaInstance.id)
     }
 
     def show() {
@@ -70,7 +70,7 @@ class FerramentaController {
            }
 
            flash.message = messageGenerator('default.updated.message', ferramentaInstance.id)
-           redirect(action: "show", id: ferramentaInstance.id)
+           redirectToShow(ferramentaInstance.id)
         }
     }
 
@@ -79,11 +79,11 @@ class FerramentaController {
             try {
                 ferramentaInstance.delete(flush: true)
                 flash.message = messageGenerator ('default.deleted.message', params.id)
-                redirect(action: "list")
+                redirectToList()
             }
             catch (DataIntegrityViolationException e) {
                 flash.message = messageGenerator ('default.not.deleted.message'+' Erro: '+e.message, params.id)
-                redirect(action: "show", id: params.id)
+                redirectToShow(params.id)
             }
         }
     }
@@ -102,7 +102,7 @@ class FerramentaController {
 
     Closure returnWithMessage = {
         String msg ->
-            redirect(action: "list")
+            redirectToList()
             flash.message = message(code: msg)
     }
 
@@ -143,10 +143,18 @@ class FerramentaController {
         def ferramentaInstance = Ferramenta.get(params.id)
         if (!ferramentaInstance) {
 			flash.message = messageGenerator ('default.not.found.message', params.id)
-            redirect(action: "list")
+            redirectToList()
             return
         }
 
         c.call ferramentaInstance
+    }
+
+    private def redirectToShow(Long id){
+        redirect(controller: "ferramenta", action: "show", id: id)
+    }
+
+    private def redirectToList(){
+        redirect(action: "list", params: params)
     }
 }
