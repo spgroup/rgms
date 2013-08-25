@@ -872,11 +872,7 @@ class TestDataAndOperations {
         }
     }
 
-    static public void createOrientation(String tituloTese) {
-
-        def cont = new OrientationController()
-        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
-   }
+   
     static public void removeOrientation(String tituloTese) {
 
         def testOrientation = TestDataAndOperations.findOrientationByTitle(tituloTese)
@@ -920,16 +916,9 @@ class TestDataAndOperations {
     }
     //mapmf_tasj
 
-    //orientation
-    static orientations = [
-            [tipo: "Mestrado", orientando: "Tomaz", tituloTese: "The Book is on the table", anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
-    ]
+   
 
-    static public def findOrientationByTitle(String title) {
-        orientations.find { orientation ->
-            orientation.tituloTese == title
-        }
-    }
+   
 
     static public void createOrientation(String tituloTese) {
 
@@ -941,13 +930,7 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void removeOrientation(String tituloTese) {
-
-        def testOrientation = TestDataAndOperations.findOrientationByTitle(tituloTese)
-        def cont = new OrientationController()
-        cont.params << [id: testOrientation.id]
-        cont.delete()
-    }
+   
     //article
 
     static public def path(){
