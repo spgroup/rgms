@@ -23,14 +23,26 @@ import javax.servlet.http.HttpServletRequest
     def save() {
         saveThesisOrDissertation("Dissertacao", params)
     }
-    
-    def show() {
-        showOrEdit("Dissertacao", params.id)
+def getDissertacaoInstance(def id)
+    {
+        def dissertacaoInstance = Dissertacao.get(id)
+
+        if (!dissertacaoInstance) {
+            flash.message = messageGenerator('default.not.found.message', id)
+            redirect(action: "list")
+            return
+        }
+
+        [dissertacaoInstance: dissertacaoInstance]
     }
 
-    def edit() {
+def show() {
         showOrEdit("Dissertacao", params.id)
     }
+    
+def edit() {
+        showOrEdit("Dissertacao", params.id)
+}
 
     def update() {
         updateThesisOrDissertation("Dissertacao", params)
