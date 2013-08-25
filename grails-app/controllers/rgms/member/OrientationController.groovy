@@ -38,7 +38,7 @@ class OrientationController {
             return
         }
 
-        ShowFlashMessage(orientationInstance.id, "show", 'default.created.message')
+        showFlashMessage(orientationInstance.id, "show", 'default.created.message')
 
     }
 
@@ -50,7 +50,7 @@ class OrientationController {
         _processOrientation()
     }
 
-    def ShowFlashMessage(Long id, String action, String code){
+    def showFlashMessage(Long id, String action, String code){
         flash.message = message(code: code, args: [message(code: 'orientation.label', default: 'Orientation'), id])
         redirect(action: action, id: id)
     }
@@ -59,7 +59,7 @@ class OrientationController {
     {
         def orientationInstance = Orientation.get(params.id)
         if (!orientationInstance) {
-            ShowFlashMessage(null, "list",'default.not.found.message')
+            showFlashMessage(null, "list",'default.not.found.message')
             return
         }
 
@@ -71,7 +71,7 @@ class OrientationController {
         def orientationInstance = Orientation.get(id)
 
         if (!orientationInstance) {
-            ShowFlashMessage(id, "list",'default.not.found.message')
+            showFlashMessage(id, "list",'default.not.found.message')
             return null
         }
 
@@ -107,7 +107,7 @@ class OrientationController {
                 return
             }
 
-            ShowFlashMessage(orientationInstance.id, "show",'default.updated.message')
+            showFlashMessage(orientationInstance.id, "show",'default.updated.message')
         }
 
     }
@@ -118,13 +118,12 @@ class OrientationController {
         if(orientationInstance != null){
             try {
                 orientationInstance.delete(flush: true)
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'orientation.label', default: 'Orientation'), id])
-                redirect(action: "list")
+                showFlashMessage(id,"list",'default.deleted.message')
             }
 
             catch (DataIntegrityViolationException) {
-                flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'orientation.label', default: 'Orientation'), id])
-                redirect(action: "show", id: id)
+                showFlashMessage(id, "show", 'default.not.deleted.message')
+
             }
         }
     }
