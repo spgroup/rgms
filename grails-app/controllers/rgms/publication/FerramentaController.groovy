@@ -24,9 +24,8 @@ class FerramentaController {
 
     def save() {
         def ferramentaInstance = new Ferramenta(params)
-		//PublicationController pb = new PublicationController()
 
-        if (!PublicationController.newUpload(ferramentaInstance, flash, request) || !ferramentaInstance.save(flush: true)) {     // (!pb.upload(periodicoInstance)) {
+        if (!PublicationController.newUpload(ferramentaInstance, flash, request) || !ferramentaInstance.save(flush: true)) {
             // com a segunda opção, o sistema se perde e vai para publication controller no teste Add a new article twitting it
             render(controller: "ferramenta", view: "create", model: [ferramentaInstance: ferramentaInstance])
             return
@@ -53,9 +52,11 @@ class FerramentaController {
            if (params.version) {
                def version = params.version.toLong()
                if (ferramentaInstance.version > version) {
-                   ferramentaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                   [message(code: 'ferramenta.label', default: 'Ferramenta')] as Object[],
-                   "Another user has updated this Ferramenta while you were editing")
+                   ferramentaInstance.errors.rejectValue(
+                       "version", "default.optimistic.locking.failure",
+                       [message(code: 'ferramenta.label', default: 'Ferramenta')] as Object[],
+                       "Another user has updated this Ferramenta while you were editing")
+
                    render(view: "edit", model: [ferramentaInstance: ferramentaInstance])
                    return
                }
@@ -87,65 +88,52 @@ class FerramentaController {
         }
     }
 
-	def messageGenerator (String code, def id)
-	{
+	def messageGenerator (String code, def id){
 		return message(code: code, args: [message(code: 'ferramenta.label', default: 'Ferramenta'), id])
 	}
-//#if($upXMLFerramenta)
-    def uploadXMLFerramenta()
-    {
-        String flashMessage = 'The non existent dissertations were successfully imported'
 
-        XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request)
-        if (!serv.Import(saveTools, returnWithMessage, xmlFile, flashMessage))
+//#if($upXMLFerramenta)
+    def uploadXMLFerramenta(){
+        String flashMessage = 'The non existent tools were successfully imported'
+
+        if (!XMLService.Import(saveTools, returnWithMessage, flashMessage, request))
             return
     }
 
     Closure returnWithMessage = {
         String msg ->
-
             redirect(action: "list")
             flash.message = message(code: msg)
     }
 
     Closure saveTools = {
         Node xmlFile ->
-            Node producaoTecnica = (Node)xmlFile.children()[2]
-            Node dadosBasicos
-            Node detalhamentoDoSoftware
-            Node informacoesAdicionais
-
+            Node producaoTecnica = (Node) xmlFile.children()[2]
             Ferramenta newTool = new Ferramenta()
 
-            for (Node currentNode : producaoTecnica.children())
-            {
-                if (currentNode.name().equals("SOFTWARE"))
-                {
-                    for(Node currentNodeChild : currentNode.children())
-                    {
-                        if ((currentNodeChild.name()+"").equals(("INFORMACOES-ADICIONAIS")))
-                            informacoesAdicionais = currentNodeChild
-                    }
-                    dadosBasicos = (Node) currentNode.children()[0]
-                    detalhamentoDoSoftware = (Node) currentNode.children()[1]
+            for (Node currentNode : producaoTecnica.children()){
+                if (currentNode.name().equals("SOFTWARE")){
+                    Node dadosBasicos = (Node) currentNode.children()[0]
 
                     newTool.publicationDate = new Date()
-
                     String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO")
                     if (tryingToParse.isInteger())
                         newTool.publicationDate.set(year: tryingToParse.toInteger())
 
                     newTool.file = 'no File'
                     newTool.website = 'no Website'
-
                     newTool.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-SOFTWARE")
 
+                    Node informacoesAdicionais = XMLService.getNodeFromNode(currentNode, "INFORMACOES-ADICIONAIS")
                     String descricao =   XMLService.getAttributeValueFromNode(informacoesAdicionais, "DESCRICAO-INFORMACOES-ADICIONAIS")
 
-                    newTool.description = "País: "+XMLService.getAttributeValueFromNode(dadosBasicos, "PAIS") +", Ambiente: " + XMLService.getAttributeValueFromNode(detalhamentoDoSoftware, "AMBIENTE") + (descricao.equals("") ? "" : ", Informacoes adicionais: "+descricao)
+                    Node detalhamentoDoSoftware = (Node) currentNode.children()[1]
+                    newTool.description = "País: "+XMLService.getAttributeValueFromNode(dadosBasicos, "PAIS") +
+                        ", Ambiente: " + XMLService.getAttributeValueFromNode(detalhamentoDoSoftware, "AMBIENTE") +
+                        (descricao.equals("") ? "" : ", Informacoes adicionais: "+descricao)
                     newTool.save(flush: false)
                 }
+
                 newTool = new Ferramenta()
             }
     }

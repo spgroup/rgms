@@ -53,4 +53,11 @@ class XMLService {
     static String getAttributeValueFromNode(Node n, String attribute) {
         n.attribute attribute
     }
+
+    static Node getNodeFromNode(Node n, String nodeName){
+        for(Node currentNodeChild : n.children()){
+            if ((currentNodeChild.name()+"").equals((nodeName)))
+                return currentNodeChild
+        }
+    }
 }
