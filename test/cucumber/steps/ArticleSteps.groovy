@@ -8,8 +8,7 @@ import steps.TestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
-    article = Periodico.findByTitle(title)
-    assert article == null
+    assert periodicoNoExist(title)
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
@@ -28,14 +27,7 @@ When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*
 }
 
 Then(~'^the article "([^"]*)" is not stored by the system because it is invalid$') { String title ->
-    article = Periodico.findByTitle(title)
-    assert article == null
-}
-
-Given(~'^the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-    TestDataAndOperations.createArticle(title, filename)
-    article = Periodico.findByTitle(title)
-    assert article != null
+    assert periodicoNoExist(title)
 }
 
 Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
@@ -46,8 +38,7 @@ Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
 }
 
 When(~'^I select the new article option at the article page$') {->
-    at ArticlesPage
-    page.selectNewArticle()
+    selectNewArticleInArticlesPage()
 }
 
 Then(~'^I can fill the article details$') {->
@@ -55,9 +46,6 @@ Then(~'^I can fill the article details$') {->
     page.fillArticleDetails()
 }
 
-//AULA
-//------------------------------------------------------//----------------------------------------------------------//
-//ATIVIDADE 5
 
 /**
  * @author Guilherme
@@ -72,19 +60,14 @@ Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') {
  */
 
 Given(~'^I am at the articles page and the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
+
+    Login()
     at PublicationsPage
     page.select("Periodico")
-    at ArticlesPage
-    page.selectNewArticle()
-    at ArticleCreatePage
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    page.fillArticleDetails(path + filename, title)
+    selectNewArticleInArticlesPage()
+    page.fillArticleDetails(TestDataAndOperations.path() + filename, title)
     page.selectCreateArticle()
-    article = Periodico.findByTitle(title)
-    assert article != null
+    assert !periodicoNoExist(title)
     to ArticlesPage
     at ArticlesPage
 }
@@ -139,16 +122,14 @@ When(~'^I change the article title to "([^"]*)"$') { String newtitle ->
  * @author Guilherme
  */
 Then(~'^the article "([^"]*)" is properly updated by the system$') { String title ->
-    article = Periodico.findByTitle(title)
-    assert article == null
+    assert periodicoNoExist(title)
 }
 
 /**
  * @author Guilherme
  */
 Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
-    article = Periodico.findByTitle(title)
-    assert article == null
+    assert periodicoNoExist(title)
 }
 
 /**
@@ -184,7 +165,6 @@ When(~'I select the "([^"]*)" option in Article Show Page$') { String option ->
     at ArticleEditPage
     page.select(option)
     //on ArticleEditPage
-
 }
 
 Then(~'^I am at Article show page$') { ->
@@ -200,9 +180,7 @@ Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName -
 
     page.submitForm()
 
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
+    Login()
 
     member = Member.findByUsername(userName)
     MemberEditionPage.url = "member/edit/" + member.getId()
@@ -213,9 +191,8 @@ Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName -
 }
 
 Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData(userName, "adminadmin")
+
+    Login()
     at PublicationsPage
     page.select("Periodico")
     to ArticlesPage
@@ -226,11 +203,8 @@ Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userNa
 }
 
 When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$') { String articleName, String filename ->
-    at ArticlesPage
-    page.selectNewArticle()
-    at ArticleCreatePage
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    page.fillArticleDetails(path + filename, articleName)
+    selectNewArticleInArticlesPage()
+    page.fillArticleDetails(TestDataAndOperations.path() + filename, articleName)
     page.selectCreateArticle()
 }
 
@@ -290,4 +264,26 @@ When(~'^I share the article entitled "([^"]*)" on facebook$') { String title ->
 }
 
 //#end
+
+def selectNewArticleInArticlesPage(){
+
+    at ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+
+    }
+
+def periodicoNoExist(String title){
+      return Periodico.findByTitle(title) == null
+    }
+
+def Login(){
+
+    to LoginPage
+    at LoginPage
+
+        page.fillLoginData("admin", "adminadmin")
+
+
+    }
 
