@@ -72,5 +72,6 @@ grails.project.dependency.resolution = {
         build ":tomcat:$grailsVersion"
         test ":geb:$gebVersion"
         test ":cucumber:0.8.0"
+        test ":spock:0.7"
     }
 }
