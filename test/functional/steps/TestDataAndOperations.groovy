@@ -722,28 +722,10 @@ class TestDataAndOperations {
         return ResearchGroup.findByName(name)
     }
 
-    static public void createNews(String descriptionParam, Date dateParam, ResearchGroup groupParam) {
-        def cont = new NewsController()
-        cont.params << [description: descriptionParam, date: dateParam, researchGroup: groupParam]
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-
     static public void requestNewsFromTwitter(ResearchGroup group) {
         def cont = new ResearchGroupController()
         cont.params << [id: group.id]
         cont.updateNewsFromTwitter()
-        cont.response.reset()
-    }
-
-    static public void deleteNews(String description, Date date, ResearchGroup researchGroup) {
-        def cont = new NewsController()
-        def identificador = News.findByDescriptionAndDateAndResearchGroup(description, date, researchGroup).id
-        cont.params << [id: identificador]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.delete()
-        //cont.save()
         cont.response.reset()
     }
 
@@ -800,13 +782,6 @@ class TestDataAndOperations {
         researchGroupController.update()
         researchGroupController.response.reset()
         return researchGroup
-    }
-
-    static public boolean checkExistingNews(String description, String date, String group){
-        Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-        def researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
-        def news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
-        return news != null
     }
 
     static public String getTestFilesPath(String filename){
