@@ -93,8 +93,9 @@ class FerramentaController {
 	}
 
 //#if($upXMLFerramenta)
-    def uploadXMLFerramenta(){
-        String flashMessage = 'The non existent tools were successfully imported'
+    def uploadXMLFerramenta()
+    {
+        String flashMessage = 'The non existent dissertations were successfully imported'
 
         if (!XMLService.Import(saveTools, returnWithMessage, flashMessage, request))
             return
@@ -102,40 +103,50 @@ class FerramentaController {
 
     Closure returnWithMessage = {
         String msg ->
-            redirectToList()
+
+            redirect(action: "list")
             flash.message = message(code: msg)
     }
 
     Closure saveTools = {
         Node xmlFile ->
-            Node producaoTecnica = (Node) xmlFile.children()[2]
-            Ferramenta newTool = new Ferramenta()
+            Node producaoTecnica = (Node)xmlFile.children()[2]
 
             for (Node currentNode : producaoTecnica.children()){
                 if (currentNode.name().equals("SOFTWARE")){
-                    Node dadosBasicos = (Node) currentNode.children()[0]
-
-                    newTool.publicationDate = new Date()
-                    String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO")
-                    if (tryingToParse.isInteger())
-                        newTool.publicationDate.set(year: tryingToParse.toInteger())
-
-                    newTool.file = 'no File'
-                    newTool.website = 'no Website'
-                    newTool.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-SOFTWARE")
-
-                    Node informacoesAdicionais = XMLService.getNodeFromNode(currentNode, "INFORMACOES-ADICIONAIS")
-                    String descricao =   XMLService.getAttributeValueFromNode(informacoesAdicionais, "DESCRICAO-INFORMACOES-ADICIONAIS")
-
-                    Node detalhamentoDoSoftware = (Node) currentNode.children()[1]
-                    newTool.description = "País: "+XMLService.getAttributeValueFromNode(dadosBasicos, "PAIS") +
-                        ", Ambiente: " + XMLService.getAttributeValueFromNode(detalhamentoDoSoftware, "AMBIENTE") +
-                        (descricao.equals("") ? "" : ", Informacoes adicionais: "+descricao)
-                    newTool.save(flush: false)
+                    saveNewTool(currentNode)
                 }
-
-                newTool = new Ferramenta()
             }
+    }
+
+    private void saveNewTool(Node currentNode){
+        Node informacoesAdicionais
+
+        for(Node currentNodeChild : currentNode.children()){
+            if ((currentNodeChild.name()+"").equals(("INFORMACOES-ADICIONAIS")))
+                informacoesAdicionais = currentNodeChild
+        }
+
+        Node dadosBasicos = (Node) currentNode.children()[0]
+        Node detalhamentoDoSoftware = (Node) currentNode.children()[1]
+
+        Ferramenta newTool = new Ferramenta()
+
+        newTool.publicationDate = new Date()
+
+        String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO")
+        if (tryingToParse.isInteger())
+            newTool.publicationDate.set(year: tryingToParse.toInteger())
+
+        newTool.file = 'no File'
+        newTool.website = 'no Website'
+
+        newTool.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-SOFTWARE")
+
+        String descricao =   XMLService.getAttributeValueFromNode(informacoesAdicionais, "DESCRICAO-INFORMACOES-ADICIONAIS")
+
+        newTool.description = "País: "+XMLService.getAttributeValueFromNode(dadosBasicos, "PAIS") +", Ambiente: " + XMLService.getAttributeValueFromNode(detalhamentoDoSoftware, "AMBIENTE") + (descricao.equals("") ? "" : ", Informacoes adicionais: "+descricao)
+        newTool.save(flush: false)
     }
 //#end
 
