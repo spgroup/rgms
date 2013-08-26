@@ -158,11 +158,18 @@ class OrientationController {
         Orientation newOrientation = new Orientation()
         String name = (String) node.name()
 
+        fillNewOrientation(name, node, newOrientation)
+        saveOrientation(newOrientation)
+    }
+
+    private void fillNewOrientation(String name, Node node, Orientation newOrientation){
+
         if (name.toLowerCase().contains("mestrado")) {
             fillOrientationData(node, newOrientation, user, "Mestrado")
         } else if (name.toLowerCase().contains("doutorado")) {
             fillOrientationData(node, newOrientation, user, "Doutorado")
         } else {
+
             Node children = (Node) (node.children()[0])
             String natureza = (String) children.attribute("NATUREZA")
 
@@ -170,7 +177,7 @@ class OrientationController {
                 fillOrientationData(node, newOrientation, user, "Iniciação Científica")
             }
         }
-        saveOrientation(newOrientation)
+
     }
 
     //Only saves if the orientation does not already exist
