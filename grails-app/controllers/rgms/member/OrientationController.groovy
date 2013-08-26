@@ -83,17 +83,7 @@ class OrientationController {
         def orientationInstance = isOrientationInstance(id)
 
         if(orientationInstance != null){
-            if (version != null) {
-                if (orientationInstance.version > version) {
-
-                    orientationInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                    [message(code: 'orientation.label', default: 'Orientation')] as Object[],
-                    "Another user has updated this Orientation while you were editing")
-                    render(view: "edit", model: [orientationInstance: orientationInstance])
-                    return
-
-                }
-            }
+            checkOrientationVersion(orientationInstance, version)
 
             orientationInstance.properties = params
             if(orientationInstance.orientador.name .equalsIgnoreCase(orientationInstance.orientando)) {
@@ -110,6 +100,19 @@ class OrientationController {
             showFlashMessage(orientationInstance.id, "show",'default.updated.message')
         }
 
+    }
+
+    def checkOrientationVersion(Orientation orientationInstance, Long version){
+
+        if (version != null) {
+            if (orientationInstance.version > version) {
+                orientationInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'orientation.label', default: 'Orientation')] as Object[],
+                        "Another user has updated this Orientation while you were editing")
+                render(view: "edit", model: [orientationInstance: orientationInstance])
+                return
+            }
+        }
     }
 
     def delete(Long id) {
