@@ -84,13 +84,8 @@ class OrientationController {
 
         if(orientationInstance != null){
             checkOrientationVersion(orientationInstance, version)
-
             orientationInstance.properties = params
-            if(orientationInstance.orientador.name .equalsIgnoreCase(orientationInstance.orientando)) {
-                    render(view: "edit", model: [orientationInstance: orientationInstance])
-                    flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
-                    return
-            }
+            checkOrientationOrientando(orientationInstance)
 
             if (!orientationInstance.save(flush: true)) {
                 render(view: "edit", model: [orientationInstance: orientationInstance])
@@ -98,6 +93,15 @@ class OrientationController {
             }
 
             showFlashMessage(orientationInstance.id, "show",'default.updated.message')
+        }
+    }
+
+    def checkOrientationOrientando(Orientation orientationInstance){
+
+        if(orientationInstance.orientador.name.equalsIgnoreCase(orientationInstance.orientando)) {
+            render(view: "edit", model: [orientationInstance: orientationInstance])
+            flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
+            return
         }
 
     }
