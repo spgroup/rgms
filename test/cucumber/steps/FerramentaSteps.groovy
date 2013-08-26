@@ -9,16 +9,11 @@ import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
-Given(~'The system has a ferramenta entitled "([^"]*)"$') { String title ->
-    article = Ferramenta.findByTitle(title)
-    assert article != null
-}
 // new ferramenta without website
 Given(~'^the system has no ferramenta entitled "([^"]*)"$') { String title ->
     ferramenta = Ferramenta.findByTitle(title)
     assert ferramenta == null
 }
-
 When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" without its website$') { String title, String filename ->
     TestDataAndOperations.createFerramenta(title, filename)
 }
@@ -43,7 +38,7 @@ Then(~'^the ferramenta "([^"]*)" is not stored twice$') { String title ->
     // which is changed by the system during the file upload.
 }
 
-// edit ferramenta
+// edit existing ferramenta
 Given(~'^the system has a ferramenta entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
     TestDataAndOperations.createFerramenta(title, filename)
     ferramenta = Ferramenta.findByTitle(title)
@@ -58,31 +53,15 @@ Then(~'^the ferramenta "([^"]*)" is properly updated by the system$') { String t
     assert newFerramenta != null
 }
 
-When(~'^I select "([^"]*)" at the ferramenta page$') { String title ->
-    at FerramentaPage
-    page.selectFerramenta(title)
+// list ferramentas
+Then(~'^The system list "([^"]*)" and "([^"]*)" ferramentas$') { String title, otherTitle ->
+    ferramentas = Ferramenta.findAllByTitle(title)
+    assert ferramentas.size() == 1
+    ferramentas = Ferramenta.findAllByTitle(otherTitle)
+    assert ferramentas.size() == 1
 }
 
-
-Then(~'^I click on edit at the Ferramenta page$') {->
-    at FerramentaShowPage
-    page.editDissertation()
-}
-
-Then(~'^The ferramenta entitle "([^"]*)" is properly deleted of the system$') { String title ->
-    article = Ferramenta.findByTitle(title)
-    assert article == null
-}
-
-Then(~'^I can create a ferramenta filling the details$') {->
-    at FerramentaCreatePage
-    page.fillFerramentaDetails()
-}
-
-Then(~'^the ferramenta "([^"]*)" is properly stored by the system$') { String title ->
-    ferramenta = Ferramenta.findByTitle(title)
-    assert ferramenta != null
-}
+// upload dissertation with a file
 Given(~'^the system has some ferramenta stored$') {->
     inicialSize = Ferramenta.findAll().size()
 }
@@ -98,47 +77,61 @@ When(~'^I upload a new ferramenta "([^"]*)"$') { filename ->
 Then(~'the system has more ferramenta now$') {->
     finalSize = Ferramenta.findAll().size()
 }
-// new ferramenta web
 
+// remove existing ferramenta
+When(~'^I remove the ferramenta entitled "([^"]*)"$') { String arg1 ->
+    TestDataAndOperations.removeFerramenta(arg1)
+}
+
+// GUI testes
+
+When(~'^I select "([^"]*)" at the ferramenta page$') { String title ->
+    at FerramentaPage
+    page.selectFerramenta(title)
+}
+
+// new ferramenta web
 When(~'^I select the new ferramenta option at the ferramenta page$') {->
     at FerramentaPage
     page.selectNewFerramenta()
 }
-When(~'^I change the website to "([^"]*)"$') { String website ->
-    at FerramentaEditPage
-    page.editWebsite(website)
-}
-Then(~'^The edited ferramenta entitled "([^"]*)" is properly stored in the system with the new website "([^"]*)"$') { String title, website ->
-    ferramenta = Ferramenta.findAllByTitle(title)
-    assert ferramenta.website == website
-}
-
-And(~'^I select the create option at the ferramenta page$') {->
-    // Express the Regexp above with the code you wish you had
-
-}
-Then(~'^The ferramenta is not stored$') {->
-    // Express the Regexp above with the code you wish you had
-
-}
-
-Then(~'^I see my user listed as an author member of ferramenta by default$') {->
+Then(~'^I can create a ferramenta filling the details$') {->
     at FerramentaCreatePage
-    assert TestDataAndOperations.containsUser(page.selectedMembers())
+    page.createNewFerramenta("CCFinder")
 }
 
+// new ferramenta without any information
+And(~'^I click on Criar button$') {->
+    at FerramentaCreatePage
+    page.clickCreateFerramenta()
+}
+Then(~'^I am still on create new ferramenta page$') {->
+    at FerramentaCreatePage
+}
+And(~'^the ferramenta is not displayed in the ferramentas list page$') {->
+    to FerramentaPage
+    at FerramentaPage
+    page.checkAnyFerramentaAtList()
+}
+
+// upload dissertation without a file
 And(~'^I select the upload button at the ferramenta page$') {->
     // Express the Regexp above with the code you wish you had
-
 }
 Then(~'^I am still on ferramenta page$') {->
     at FerramentaPage
 }
 
+// new ferramenta filled with user data by default
+Then(~'^I see my user listed as an author member of ferramenta by default$') {->
+    at FerramentaCreatePage
+    assert TestDataAndOperations.containsUser(page.selectedMembers())
+}
+
 // edit ferramenta
 When(~'^I create a new ferramenta at ferramenta create page$') {->
     at FerramentaCreatePage
-    page.fillFerramentaDetails()
+    page.createNewFerramenta("CCFinder")
 }
 When(~'^I select the edit option at ferramenta show page$') {->
     at FerramentaShowPage
@@ -153,14 +146,7 @@ Then(~'^I can see the new title "([^"]*)" at ferramenta show page$') { String ne
     page.checkFerramentaTitle(newTitle)
 }
 
-// list ferramentas
-Then(~'^The system list "([^"]*)" and "([^"]*)" ferramentas$') { String title, otherTitle ->
-    ferramentas = Ferramenta.findAllByTitle(title)
-    assert ferramentas.size() == 1
-    ferramentas = Ferramenta.findAllByTitle(otherTitle)
-    assert ferramentas.size() == 1
-}
-
+// new ferramenta with Titulo exceding caracteres limits
 And(~'^I fill Titulo with more than (\\d+) caracteres$') { int arg1 ->
     at FerramentaCreatePage
     page.fillTitleWithMaxCaracteres()
@@ -168,19 +154,4 @@ And(~'^I fill Titulo with more than (\\d+) caracteres$') { int arg1 ->
 And(~'^fill the others fields with valid values without Titulo$') {->
     at FerramentaCreatePage
     page.fillFerramentaDetailsWithoutTitle("Tool without title")
-}
-When(~'^I remove the ferramenta entitled "([^"]*)"$') { String arg1 ->
-    TestDataAndOperations.removeFerramenta(arg1)
-}
-And(~'^I click on Criar button$') {->
-    at FerramentaCreatePage
-    page.createNewFerramentaWithoutInformation()
-}
-Then(~'^I am still on create new ferramenta page$') {->
-    at FerramentaCreatePage
-}
-And(~'^the ferramenta is not displayed in the ferramentas list page$') {->
-    to FerramentaPage
-    at FerramentaPage
-    page.checkAnyFerramentaAtList()
 }
