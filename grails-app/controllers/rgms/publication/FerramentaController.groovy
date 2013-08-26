@@ -103,9 +103,7 @@ class FerramentaController {
 
     Closure returnWithMessage = {
         String msg ->
-
-            redirect(action: "list")
-            flash.message = message(code: msg)
+            redirectToList()
     }
 
     Closure saveTools = {
@@ -120,15 +118,9 @@ class FerramentaController {
     }
 
     private void saveNewTool(Node currentNode){
-        Node informacoesAdicionais
-
-        for(Node currentNodeChild : currentNode.children()){
-            if ((currentNodeChild.name()+"").equals(("INFORMACOES-ADICIONAIS")))
-                informacoesAdicionais = currentNodeChild
-        }
-
         Node dadosBasicos = (Node) currentNode.children()[0]
         Node detalhamentoDoSoftware = (Node) currentNode.children()[1]
+        Node informacoesAdicionais = XMLService.getNodeFromNode(currentNode, "INFORMACOES-ADICIONAIS")
 
         Ferramenta newTool = new Ferramenta()
 
