@@ -5,6 +5,7 @@ import rgms.news.News
 import rgms.news.NewsController
 import rgms.news.TwitterConnection
 import twitter4j.Status
+import rgms.EmailService
 
 class ResearchGroupController {
 
@@ -229,13 +230,11 @@ class ResearchGroupController {
             assert member != null
             if (member.getEmail()) {
                 def email = member.getEmail()
+                def mailSender = grailsApplication.config.grails.mail.username
                 def title = "Research Group change hierarchy"
                 def content = "Hello " + member.name + ",\n\nThe Research Group is now child of the Research Group ${researchGroup.getChildOf().getName()}".toString()
-                sendMail {
-                    to email
-                    subject title
-                    body content
-                }
+                EmailService emailService = new EmailService()
+                emailService.sendEmail(email, mailSender, title, content)
             }
         }
     }

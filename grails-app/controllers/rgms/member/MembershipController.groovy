@@ -1,6 +1,7 @@
 package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
+import rgms.EmailService
 
 class MembershipController {
 
@@ -111,12 +112,8 @@ class MembershipController {
             def mailSender = grailsApplication.config.grails.mail.username
             def title = "[RGMS] New member in " + researchGroup.name + "!"
             def content = member.name + " joined " + researchGroup.name + " today. Please welcome him at: " + member.email
-            sendMail {
-                to email
-                from mailSender
-                subject title
-                body content
-            }
+            EmailService emailService = new EmailService();
+            emailService.sendEmail(email, mailSender, title, content)
         }
     }
 	//#end

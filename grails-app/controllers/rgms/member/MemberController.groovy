@@ -3,6 +3,7 @@ package rgms.member
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.XMLService
+import rgms.EmailService
 
 import java.security.SecureRandom
 
@@ -60,14 +61,9 @@ class MemberController {
         def mailSender = grailsApplication.config.grails.mail.username
         def title = "[GRMS] Your account was successfully created!"
         def content = "Hello ${ memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${ username} and password: ${ password}\n\n${ createLink(absolute: true, uri: '/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
-        sendMail {
-            to email
-            from mailSender
-            subject title
-//#literal()
-            body content
-//#end
-        }
+
+        EmailService emailService = new EmailService();
+        emailService.sendEmail(email, mailSender, title, content)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)

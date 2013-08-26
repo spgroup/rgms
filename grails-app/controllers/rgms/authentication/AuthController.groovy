@@ -10,6 +10,7 @@ import org.apache.shiro.crypto.hash.Sha256Hash
 
 import rgms.member.Member;
 import rgms.member.PasswordResetRequest;
+import rgms.EmailService
 
 import java.security.SecureRandom
 
@@ -193,12 +194,10 @@ class AuthController {
             def title = "[GRMS] Reset your password"
             def resetRequest = new PasswordResetRequest(user:memberInstance,requestDate : new Date(),token:new BigInteger(130, new SecureRandom()).toString(32)).save(failOnError:true)
             def content = "Hello ${memberInstance.name},\n\nYou have requested resetting your password. Please ignore this message if it's not you who have made the request.\n\nIn order to reset your password, please follow this link :\n\n ${createLink(absolute:true,controller:'auth',action:'resetPassword',id:resetRequest.token)}\n\nBest Regards".toString()
-            sendMail {
-                to email
-                from mailSender
-                subject title
-                body content
-            }
+
+            EmailService emailService = new EmailService()
+            emailService.sendEmail(email, mailSender, title, content)
+
         } else {
             flash.message = "No such user, please try again."
         }
@@ -272,12 +271,12 @@ class AuthController {
         if (emailAdmin != null && !emailAdmin.empty) {
            // print("Email Admin : " + emailAdmin)
 
-            sendMail {
-                to emailAdmin
-                from grailsApplication.config.grails.mail.username
-                subject "[GRMS] You received a request to authenticate an account."
-                body "Hello Administrator,\n\nYou received a request to authenticate an account.\n\nWho requested was ${name}. His/Her email address is ${emailAddress}\n\n${createLink(absolute: true, uri: '/member/list')}\n\nBest Regards,\nResearch Group Management System".toString()
-            }
+            def emailFrom = grailsApplication.config.grails.mail.username
+            def subject = "[GRMS] You received a request to authenticate an account."
+            def content = "Hello Administrator,\n\nYou received a request to authenticate an account.\n\nWho requested was ${name}. His/Her email address is ${emailAddress}\n\n${createLink(absolute: true, uri: '/member/list')}\n\nBest Regards,\nResearch Group Management System".toString()
+
+            EmailService emailService = new EmailService();
+            emailService.sendEmail(emailAdmin, emailFrom, subject, content)
         }
     }
 
