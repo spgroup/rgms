@@ -32,7 +32,7 @@ abstract class Publication {
 
     def discardMembers() {
         this.members.each {
-            it.discard()
+            it.removeFromPublications(this)
         }
     }
 

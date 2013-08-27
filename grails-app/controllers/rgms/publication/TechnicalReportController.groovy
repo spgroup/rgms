@@ -74,7 +74,7 @@ class TechnicalReportController {
 
     def update(Long id, Long version) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance) || !validVersionRenderEditIfItsNot(version, technicalReportInstance))
+        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance))
             return
 
         technicalReportInstance.properties = params
@@ -107,7 +107,7 @@ class TechnicalReportController {
         }
     }
 
-    private technicalReportInstanceRedirectIfItsNull(Long id, TechnicalReport technicalReportInstance) {
+    def technicalReportInstanceRedirectIfItsNull(Long id, TechnicalReport technicalReportInstance) {
         if (!technicalReportInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
             redirect(action: "list")
