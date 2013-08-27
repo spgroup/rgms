@@ -59,7 +59,7 @@ class DissertacaoController {
     }
 
     def handleSavingError(Dissertacao dissertacaoInstance, String message) {
-        dissertacaoInstance.discardMembers()
+        dissertacaoInstance.removeFromPublications()
         flash.message = message
         render(view: "create", model: [dissertacaoInstance: dissertacaoInstance])
     }

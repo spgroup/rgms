@@ -129,7 +129,7 @@ class PeriodicoController {
         }
 
         try {
-            periodicoInstance.discardMembers()
+            periodicoInstance.removeFromPublications()
             periodicoInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
             redirect(action: "list")
