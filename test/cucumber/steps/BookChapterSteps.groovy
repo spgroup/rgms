@@ -4,6 +4,7 @@ import rgms.member.Member
 import rgms.publication.BookChapter
 import rgms.publication.Periodico
 import steps.TestDataAndOperations
+import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 
@@ -68,7 +69,7 @@ And(~'^I still on the book chapter create page$'){->
 
 Then(~'^I see my user listed as a member of book chapter by default$') {->
     at BookChapterCreatePage
-    assert TestDataAndOperations.containsUser(page.selectedMembers())
+    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
 When(~'^I view the book chapter list$') {->
