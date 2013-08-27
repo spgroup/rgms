@@ -26,7 +26,7 @@ abstract class Publication {
 
     def discardMembers() {
         this.members.each {
-            it.discard()
+            it.removeFromPublications(this)
         }
     }
 
@@ -72,13 +72,13 @@ abstract class Publication {
         return result;
     }
 
-    public Set membersSelected() {
-//#if ($Autofill)
-        def loggedUsername = SecurityUtils.subject?.principal;
-        return members ? members : [Member.findByUsername(loggedUsername).id];
-//#else
-        return members;
-//#end
+    public addMember(Member e) {
+        if(!this.getMembers()){
+            this.setMembers(new LinkedHashSet<Member>())
+            this.getMembers().add(e)
+        } else if(!this.getMembers().contains(e)) {
+            this.getMembers().add(e)
+        }
     }
 
 //	public String retPrimeiroAutor(){

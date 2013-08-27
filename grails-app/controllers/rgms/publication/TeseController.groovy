@@ -26,14 +26,9 @@ class TeseController {
     def create() {
         Tese teseInstance = new Tese(params)
         //#if($publicationContext)
-        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext")
-        if(publcContextOn){
-            if(SecurityUtils.subject?.principal != null){
-                def user = PublicationController.addAuthor(teseInstance)
-                if(!user.university.isEmpty()){
-                    teseInstance.school = user.university
-                }
-            }
+        def user = PublicationController.addAuthor(teseInstance)
+        if (user && !user.university.isEmpty()){
+            teseInstance.school = user.university
         }
         //#end
         [teseInstance: teseInstance]
@@ -99,6 +94,7 @@ class TeseController {
             return
         }
         try {
+            teseInstance.discardMembers()
             teseInstance.delete(flush: true)
             messageGenerator()
         }

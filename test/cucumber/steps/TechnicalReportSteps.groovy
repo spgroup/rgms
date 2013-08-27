@@ -2,6 +2,7 @@ import pages.*
 import rgms.member.Member
 import rgms.publication.TechnicalReport
 import steps.TestDataAndOperations
+import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 
@@ -124,7 +125,7 @@ When(~'^I click on "New TechnicalReport" option at Technical Report list$') {->
 
 Then(~'^I see my user listed as an author member of technical report by default$') {->
     at TechnicalReportCreatePage
-    assert TestDataAndOperations.containsUser(page.selectedMembers())
+    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
 And (~'^I select the option to edit$'){->

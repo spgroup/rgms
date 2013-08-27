@@ -30,14 +30,9 @@ class TechnicalReportController {
     def create() {
         def technicalReportInstance = new TechnicalReport(params)
         //#if($publicationContext)
-        def publicationContextOn = grailsApplication.getConfig().getProperty("publicationContext");
-        if (publicationContextOn) {
-            if (SecurityUtils.subject?.principal != null) {
-                def user = PublicationController.addAuthor(technicalReportInstance)
-                if (!user.university.isEmpty()) {
-                    technicalReportInstance.institution = user.university
-                }
-            }
+        def user = PublicationController.addAuthor(technicalReportInstance)
+        if (user && !user.university.isEmpty()) {
+            technicalReportInstance.institution = user.university
         }
         //#end
         [technicalReportInstance: technicalReportInstance]
@@ -69,18 +64,21 @@ class TechnicalReportController {
 
     def show(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance)
+        checkTechnicalReportInstance(id, technicalReportInstance)
     }
 
     def edit(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance)
+        checkTechnicalReportInstance(id, technicalReportInstance)
     }
 
     def update(Long id, Long version) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance))
+        if (!technicalReportInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
+            redirect(action: "list")
             return
+        }
 
         if (version != null) {
             if (technicalReportInstance.version > version) {
@@ -105,8 +103,11 @@ class TechnicalReportController {
 
     def delete(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance))
+        if (!technicalReportInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
+            redirect(action: "list")
             return
+        }
 
         try {
             technicalReportInstance.members.each {
@@ -122,7 +123,7 @@ class TechnicalReportController {
         }
     }
 
-    def technicalReportInstanceRedirectIfItsNull(Long id, TechnicalReport technicalReportInstance) {
+    def checkTechnicalReportInstance(Long id, TechnicalReport technicalReportInstance) {
         if (!technicalReportInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
             redirect(action: "list")

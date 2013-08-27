@@ -19,7 +19,11 @@ class FerramentaController {
     }
 
     def create() {
-        [ferramentaInstance: new Ferramenta(params)]
+        def ferramentaInstance = new Ferramenta(params)
+        //#if($publicationContext)
+        PublicationController.addAuthor(ferramentaInstance)
+        //#end
+        [ferramentaInstance: ferramentaInstance]
     }
 
     def save() {
@@ -76,6 +80,7 @@ class FerramentaController {
     def delete() {
         redirectAndReturnIfNotInstance { ferramentaInstance ->
             try {
+                ferramentaInstance.discardMembers()
                 ferramentaInstance.delete(flush: true)
                 flash.message = messageGenerator ('default.deleted.message', params.id)
                 redirect(action: "list")

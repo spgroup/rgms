@@ -24,14 +24,9 @@ class DissertacaoController {
     def create() {
         Dissertacao dissertacaoInstance = new Dissertacao(params)
         //#if($publicationContext)
-        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
-        if(publcContextOn){
-            if(SecurityUtils.subject?.principal != null){
-                def user = PublicationController.addAuthor(dissertacaoInstance)
-                if(!user.university.isEmpty()){
-                    dissertacaoInstance.school = user.university
-                }
-            }
+        def user = PublicationController.addAuthor(dissertacaoInstance)
+        if(user && !user.university.isEmpty()) {
+            dissertacaoInstance.school = user.university
         }
         //#end
         [dissertacaoInstance: dissertacaoInstance]
@@ -131,6 +126,7 @@ class DissertacaoController {
         }
 
         try {
+            dissertacaoInstance.discardMembers()
             dissertacaoInstance.delete(flush: true)
             flash.message = messageGenerator('default.deleted.message', params.id)
             redirect(action: "list")
