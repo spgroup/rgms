@@ -5,6 +5,7 @@ import rgms.XMLService
 //#end
 import org.apache.shiro.SecurityUtils
 import org.springframework.web.multipart.MultipartHttpServletRequest
+import rgms.publication.Strings.ConferenciaStrings
 
 class ConferenciaController {
 
@@ -67,7 +68,7 @@ class ConferenciaController {
                 if (conferenciaInstance.version > version) {
                     conferenciaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                             [message(code: 'conferencia.label', default: 'Conferencia')] as Object[],
-                            "Another user has updated this Conferencia while you were editing")
+                            ConferenciaStrings.updateError)
                     render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
                     return
                 }
@@ -108,7 +109,7 @@ class ConferenciaController {
 	}
 	
 	def enviarConferenciaXML(){
-		String flashMessage = 'The non existent conferences were successfully imported'
+		String flashMessage = ConferenciaStrings.importedMsg
 		XMLService serv = new XMLService()
         Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
         serv.Import(saveConferencias, returnWithMessage, flashMessage, xmlFile)
