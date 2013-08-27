@@ -83,9 +83,9 @@ class OrientationController {
         def orientationInstance = isOrientationInstance(id)
 
         if(orientationInstance != null){
-            checkOrientationVersion(orientationInstance, version)
+            if(!checkOrientationVersion(orientationInstance, version)) {return }
             orientationInstance.properties = params
-            checkOrientationOrientando(orientationInstance)
+            if(!checkOrientationOrientando(orientationInstance)){return }
 
             if (!orientationInstance.save(flush: true)) {
                 render(view: "edit", model: [orientationInstance: orientationInstance])
@@ -101,9 +101,10 @@ class OrientationController {
         if(orientationInstance.orientador.name.equalsIgnoreCase(orientationInstance.orientando)) {
             render(view: "edit", model: [orientationInstance: orientationInstance])
             flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
-            return
+            return false
         }
 
+        return true
     }
 
     def checkOrientationVersion(Orientation orientationInstance, Long version){
@@ -114,9 +115,10 @@ class OrientationController {
                         [message(code: 'orientation.label', default: 'Orientation')] as Object[],
                         "Another user has updated this Orientation while you were editing")
                 render(view: "edit", model: [orientationInstance: orientationInstance])
-                return
+                return false
             }
         }
+        return true
     }
 
     def delete(Long id) {
