@@ -12,10 +12,9 @@ import rgms.member.Member
  */
 class BibtexExport {
 
-
     public String generateBibtexBookChapter (BookChapter bookChapter) {
 
-        return "@book{"+ "author=\"" + BibtexAux.organizeAuthors(bookChapter.members) + "\",\n title=\"" + bookChapter.title + "\",\n publisher=\""+ bookChapter.publisher + "\",\n year=\"" + bookChapter.getAt(Calendar.YEAR) + "\",\n chapter=\"" + bookChapter.chapter + "\"}"
+        return "@book{"+ "author=\"" + BibtexAux.organizeAuthors(bookChapter.members) + "\",\n title=\"" + bookChapter.title + "\",\n publisher=\""+ bookChapter.publisher + "\",\n year=\"" + bookChapter.publicationDate.getAt(Calendar.YEAR) + "\",\n chapter=\"" + bookChapter.chapter + "\"}"
     }
 
 
@@ -36,7 +35,7 @@ class BibtexExport {
         return "@misc{"+ "author=\"" + BibtexAux.organizeAuthors(ferramenta.members) + "\",\n title=\"" + ferramenta.title + "\",\n website=\""+ ferramenta.website + "\",\n year=\"" + ferramenta.publicationDate.getAt(Calendar.YEAR) + "\",\n description=\""+ ferramenta.description + "\",\n month=\"" + ferramenta.publicationDate.getAt(Calendar.MONTH) + "\"}"
     }
 
-    public String generateBibtexBookChapter (Periodico periodico) {
+    public String generateBibtexPeriodico (Periodico periodico) {
 
         return "@article{"+"author=\"" + BibtexAux.organizeAuthors(periodico.members) + "\",\n title=\"" + periodico.title + "\",\n journal=\""+ periodico.journal + "\",\n year=\"" + periodico.publicationDate.getAt(Calendar.YEAR) + "\",\n volume=\""+ periodico.volume + "\",\n month=\"" + periodico.publicationDate.getAt(Calendar.MONTH)+"\",\n number=\"" + periodico.number + "\",\n pages=\"" + periodico.pages + "\"}"
     }
@@ -46,7 +45,7 @@ class BibtexExport {
         return "@techreport{"+ "author=\"" + BibtexAux.organizeAuthors(technicalReport.members) + "\",\n title=\"" + technicalReport.title + "\",\n institution=\""+ technicalReport.institution + "\",\n year=\"" + technicalReport.publicationDate.getAt(Calendar.YEAR) + "\"}"
     }
 
-    public String generateBibtexBookChapterTese (Tese tese) {
+    public String generateBibtexTese (Tese tese) {
 
         return "@phdthesis{" + "author=\"" + BibtexAux.organizeAuthors(tese.members) + "\",\n title=\"" + tese.title + "\",\n school=\"" + tese.school + "\",\n year=\"" + tese.publicationDate.getAt(Calendar.YEAR) + "\",\n address=\"" +tese.address + "\"}"
     }
