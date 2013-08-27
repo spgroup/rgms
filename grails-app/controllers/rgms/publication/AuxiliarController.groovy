@@ -18,7 +18,7 @@ class AuxiliarController {
     boolean isReturned = check(id, publicationInstance, label, classe);
     if(!isReturned){
       try{
-        publicationInstance.discardMembers()
+        publicationInstance.removeFromPublications()
         publicationInstance.delete(flush: true)
         flash.message = message(code: 'default.deleted.message', args: [message(code: label, default: classe), id])
         redirect(action: "list")

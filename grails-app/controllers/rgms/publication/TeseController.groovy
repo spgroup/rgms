@@ -94,7 +94,7 @@ class TeseController {
             return
         }
         try {
-            teseInstance.discardMembers()
+            teseInstance.removeFromPublications()
             teseInstance.delete(flush: true)
             messageGenerator()
         }

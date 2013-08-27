@@ -24,9 +24,15 @@ abstract class Publication {
     abstract String generateBib()
     //#end
 
-    def discardMembers() {
+    def removeFromPublications() {
         this.members.each {
             it.removeFromPublications(this)
+        }
+    }
+
+    def discardMembers() {
+        this.members.each {
+            it.discard()
         }
     }
 

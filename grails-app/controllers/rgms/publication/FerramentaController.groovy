@@ -80,7 +80,7 @@ class FerramentaController {
     def delete() {
         redirectAndReturnIfNotInstance { ferramentaInstance ->
             try {
-                ferramentaInstance.discardMembers()
+                ferramentaInstance.removeFromPublications()
                 ferramentaInstance.delete(flush: true)
                 flash.message = messageGenerator ('default.deleted.message', params.id)
                 redirect(action: "list")
