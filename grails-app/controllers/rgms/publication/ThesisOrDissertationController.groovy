@@ -33,11 +33,7 @@ class ThesisOrDissertationController {
             }
         }
         //#end
-        if (thesisOrDissertation == "Tese") {
-            [teseInstance: instance]
-        } else if (thesisOrDissertation == "Dissertacao") {
-            [dissertacaoInstance: instance]
-        }
+        returnInstance(thesisOrDissertation, instance)
     }
 
     def saveThesisOrDissertation(String thesisOrDissertation, params) {
@@ -72,11 +68,7 @@ class ThesisOrDissertationController {
             messageGenerator(thesisOrDissertation, 'default.not.found.message', id)
             return
         }
-        if (thesisOrDissertation == "Tese") {
-            [teseInstance: instance]
-        } else if (thesisOrDissertation == "Dissertacao") {
-            [dissertacaoInstance: instance]
-        }
+        returnInstance(thesisOrDissertation, instance)
     }
 
     def updateThesisOrDissertation(String thesisOrDissertation, params) {
@@ -129,6 +121,14 @@ class ThesisOrDissertationController {
 
     def getClassByName(String thesisOrDissertation) {
         Thread.currentThread().contextClassLoader.loadClass("rgms.publication.${thesisOrDissertation}")
+    }
+
+    def returnInstance(String thesisOrDissertation, instance) {
+        if (thesisOrDissertation == "Tese") {
+            [teseInstance: instance]
+        } else if (thesisOrDissertation == "Dissertacao") {
+            [dissertacaoInstance: instance]
+        }
     }
 
     def messageGenerator(String thesisOrDissertation, String code, id) {
