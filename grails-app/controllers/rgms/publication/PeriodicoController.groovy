@@ -110,16 +110,7 @@ class PeriodicoController {
             return
         }
 
-        if (params.version) {
-            def version = params.version.toLong()
-            if (periodicoInstance.version > version) {
-                periodicoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'periodico.label', default: 'Periodico')] as Object[],
-                        "Another user has updated this Periodico while you were editing")
-                render(view: "edit", model: [periodicoInstance: periodicoInstance])
-                return
-            }
-        }
+        if(!checkPeriodicoVersion(periodicoInstance)){return }
 
         periodicoInstance.properties = params
 
@@ -131,6 +122,23 @@ class PeriodicoController {
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
         redirect(action: "show", id: periodicoInstance.id)
+    }
+
+    def checkPeriodicoVersion(Periodico periodicoInstance){
+
+        if (params.version) {
+            def version = params.version.toLong()
+            if (periodicoInstance.version > version) {
+                periodicoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'periodico.label', default: 'Periodico')] as Object[],
+                        "Another user has updated this Periodico while you were editing")
+                render(view: "edit", model: [periodicoInstance: periodicoInstance])
+                return  false
+            }
+        }
+
+        return true
+
     }
 
     def delete() {
