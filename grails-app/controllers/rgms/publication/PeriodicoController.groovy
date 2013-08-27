@@ -149,6 +149,11 @@ class PeriodicoController {
             return
         }
 
+        deletePeriodico(periodicoInstance)
+    }
+
+    def deletePeriodico (Periodico periodicoInstance){
+
         try {
             periodicoInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
@@ -158,6 +163,7 @@ class PeriodicoController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
             redirect(action: "show", id: params.id)
         }
+
     }
 
     private checkPeriodicoInstance(Map flash, Map params, Periodico periodicoInstance) {
