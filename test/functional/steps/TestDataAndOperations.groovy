@@ -719,11 +719,6 @@ class TestDataAndOperations {
         PublicationController.sendPostFacebook(member, title)
 }
 
-    static public boolean containsUser(members){
-        def userData = Member.findByUsername('admin').id.toString()
-        return members.contains(userData)
-}
-
     //mapmf_tasj
 
     //orientation
