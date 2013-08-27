@@ -5,6 +5,7 @@ import pages.DissertationShowPage
 import rgms.member.Member
 import rgms.publication.Dissertacao
 import steps.TestDataAndOperations
+import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 
@@ -144,7 +145,7 @@ When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filenam
 
 Then(~'^I see my user listed as an author member of dissertation by default$') {->
     at DissertationCreate
-    assert TestDataAndOperations.containsUser(page.selectedMembers())
+    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
 Then(~'^I see my school name as school of dissertation by default$') {->

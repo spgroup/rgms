@@ -32,16 +32,23 @@ class PublicationController {
     }
 //#end
 
-  //#if($publicationContext)
-    static Member addAuthor(Publication publication){
-        Member user = Member.findByUsername(SecurityUtils.subject.principal)
-        if(!publication.members){
-            publication.members = new LinkedHashSet<Member>()
+//#if($publicationContext)
+    def static Member addAuthor(Publication publication) {
+        Member user = null;
+        try {
+            if (SecurityUtils.subject?.principal != null) {
+                user = Member.findByUsername(SecurityUtils.subject.principal)
+                if (user) {
+                    publication.addMember(user)
+                }
+            }
+        } catch (org.apache.shiro.UnavailableSecurityManagerException e) {
+            return null
+        } finally {
+           return user
         }
-        publication.members.add(user);
-        return user
     }
-    //#end
+//#end
 
     def upload(Publication publicationInstance) {
 
