@@ -34,7 +34,7 @@ class ConferenciaController {
         [conferenciaInstance: conferenciaInstance]
     }
 
-    def alertMessage(String typeMessage, Conferencia conferenciaInstance){
+    private alertMessage(String typeMessage, Conferencia conferenciaInstance){
         flash.message = message(code: 'default.'+ typeMessage +'.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
         redirect(action: "show", id: conferenciaInstance.id)
     }
@@ -55,7 +55,7 @@ class ConferenciaController {
         //redirect(action: "show", id: conferenciaInstance.id)
     }
 
-    def returnConferenciaInstance(boolean onlyShow){
+    private returnConferenciaInstance(boolean onlyShow){
         def conferenciaInstance = Conferencia.get(params.id)
         boolean isReturned = aux.check(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
         if(!isReturned && onlyShow){
