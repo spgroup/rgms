@@ -65,9 +65,7 @@ class ResearchGroupController {
         //#end
 
         Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), researchGroupInstance.id])
-        redirect(action: "show", id: researchGroupInstance.id)
+        showMessageAndRedirectWithId('created', researchGroupInstance.id)
     }
 
     def show() {
@@ -154,8 +152,7 @@ class ResearchGroupController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), researchGroupInstance.id])
-        redirect(action: "show", id: researchGroupInstance.id)
+        showMessageAndRedirectWithId('updated', researchGroupInstance.id)
     }
 
     def delete() {
@@ -170,9 +167,13 @@ class ResearchGroupController {
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException ignore) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
-            redirect(action: "show", id: params.id)
+            showMessageAndRedirectWithId('not.deleted', params.id)
         }
+    }
+
+    def showMessageAndRedirectWithId(def operation, def researchGroupId) {
+        flash.message = message(code: 'default.' + operation + '.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), researchGroupId])
+        redirect(action: "show", id: researchGroupId)
     }
 
     void addOrRemoveGroupsOfSession() {
