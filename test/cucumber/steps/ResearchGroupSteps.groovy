@@ -2,10 +2,10 @@ import steps.TestDataAndOperationsResearchGroup
 import static cucumber.api.groovy.EN.*
 import pages.LoginPage
 import pages.PublicationsPage
-import pages.ResearchGroupCreatePage
-import pages.ResearchGroupPage
-import pages.ResearchGroupShowPage
-import pages.ResearchGroupEditarPage
+import pages.ResearchGroup.ResearchGroupCreatePage
+import pages.ResearchGroup.ResearchGroupPage
+import pages.ResearchGroup.ResearchGroupShowPage
+import pages.ResearchGroup.ResearchGroupEditarPage
 import rgms.member.ResearchGroup
 
 Given(~'^the system has no research group entitled "([^"]*)" stored in the system$') { String name ->
