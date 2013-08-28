@@ -11,13 +11,11 @@ Given(~'^the system has only one record with status "([^"]*)"$') { String status
 }
 
 Given(~'^the record with status "([^"]*)" is not associated to a member$') { String status ->
-	def associated = TestDataAndOperations.recordIsAssociated(status)
-	assert associated == false
+  assert TestDataAndOperations.recordIsAssociated(status, false)
 }
 
 Given(~'^the record with status "([^"]*)" is associated to a member$') { String status ->
-	def associated = TestDataAndOperations.recordIsAssociated(status)
-	assert associated == true
+  assert TestDataAndOperations.recordIsAssociated(status)
 }
 
 When(~'^I remove the record with status "([^"]*)"$') { String status ->
@@ -60,14 +58,10 @@ Then(~'^the record with status "([^"]*)" is properly stored and the system has t
 	assert records.size() == 2 && records.get(0).status_H == status && records.get(1).status_H == status
 }
 
-Given(~'^I am at record list and the system has only one record with status "([^"]*)"$') {String status->
+Given(~'^I am logged$') { ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-    to RecordPage
-	def records = Record.findAllByStatus_H(status)
-	assert records.size() == 1 && records.first() != null
 }
 
 When(~'^I click the record with status "([^"]*)" at the record list$') { String status ->
@@ -75,9 +69,9 @@ When(~'^I click the record with status "([^"]*)" at the record list$') { String 
     page.visualizeRecord(status)
 }
 
-Then(~'^I can visualize the record with status "([^"]*)"$') { String status ->
-    at RecordVisualizePage
-    page.checkRecordDetails(status)
+Then(~'^I am still at the visualize page of the record with status "([^"]*)"$') { String status ->
+  at RecordVisualizePage
+  page.checkRecordDetails(status)
 }
 
 When(~'^I click the edit button of the record$') {
@@ -91,15 +85,12 @@ When(~'^I set the status to "([^"]*)" and I click the save button$') { String st
     page.changeRecordDetails(status)
 }
 
-Then(~'^I am still at the edit page of the record with status "([^"]*)"$') { String status ->
+Then(~'^I am at the edit page of the record with status "([^"]*)"$') { String status ->
     at RecordEditPage
     assert page.statusIsEmpty()
 }
 
 Given(~'^I am at record list$') {->
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
 	at PublicationsPage
 	to RecordPage
 }
@@ -116,9 +107,6 @@ Then(~'^I can fill the record details$') {->
 
 Given(~'^I am at the visualize page of the record with status "([^"]*)"$') {
 	String status ->
-	to LoginPage
-	at LoginPage
-	page.fillLoginData("admin", "adminadmin")
 	at PublicationsPage
 	to RecordPage
 	page.visualizeRecord(status)
@@ -128,9 +116,4 @@ Given(~'^I am at the visualize page of the record with status "([^"]*)"$') {
 When(~'^I click to remove the record$') {->
 	at RecordVisualizePage
 	page.removeRecord()
-}
-
-Then(~'^I am still at the visualize page of the record with status "([^"]*)"$') { String status ->
-	at RecordVisualizePage
-	page.checkRecordDetails(status)
 }
