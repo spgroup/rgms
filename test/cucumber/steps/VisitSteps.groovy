@@ -192,13 +192,6 @@ Given(~'^I am logged as "([^"]*)" and at the Add Visit Page$') { String userName
 	to VisitPage
 }
 
-When (~'^I try to create a visit with Twitter details$'){->
-    at VisitPage
-    page.selectNewVisit()
-    at VisitCreatePage
-    page.fillVisitDetailsTwitter()
-}
-
 When(~'^I try to create an visit$') { ->
     at VisitPage
     page.selectNewVisit()
@@ -207,16 +200,16 @@ When(~'^I try to create an visit$') { ->
 
 }
 
-When(~'^I click Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+When(~'^I share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+    at VisitShowPage
+    page.clickOnTwitteIt(twitterLogin, twitterPw)
 
-	  at VisitShowPage
-	  page.clickOnTwitteIt(twitterLogin, twitterPw)
-	  at VisitShowPage
-	 }
+}
 
 
 Then(~'^A tweet is added to my twitter account regarding the new visit "([^"]*)"$') { String visit ->
-  assert TwitterTool.consult(visit)
+    page.addTwitter(visit)
+    assert TwitterTool.consult(visit)
  }
 
 Then(~'^The visit "([^"]*)" is created but no tweet should be post$') {String visit ->
