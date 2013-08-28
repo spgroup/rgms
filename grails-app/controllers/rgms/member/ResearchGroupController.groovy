@@ -36,7 +36,7 @@ class ResearchGroupController {
         }
 
         if(current != null) {
-            flash.message = "Há um ciclo relacionado à este research group!"
+            flash.message = message(code: 'researchGroup.hasCycle', args: [])
             redirect(action: "edit", id: params.id)
         	throw new RuntimeException("Cycle found")
         }
