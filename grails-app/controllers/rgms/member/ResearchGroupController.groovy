@@ -35,37 +35,37 @@ class ResearchGroupController {
             current = current.childOf
         }
 
-        if(current != null)
+        if(current != null) {
+            flash.message = "Há um ciclo relacionado à este research group!"
+            redirect(action: "edit", id: params.id)
         	throw new RuntimeException("Cycle found")
+        }
     }
     //#end
 
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
 
-        //#if($researchGroupHierarchy)
         try {
+            //#if($researchGroupHierarchy)
             validarChildOf(researchGroupInstance, researchGroupInstance.getChildOf())
+            //#end
         } catch(Exception e) {
-            flash.message = "Há um ciclo relacionado à este research group!"
-            redirect(action: "edit", id: params.id)
             return;
         }
-        //#end
 
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
-            return
-        }
+        } else {
+            //#if($researchGroupHierarchyNotify)
+            if (researchGroupInstance.getChildOf() != null) {
+                notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+            }
+            //#end
 
-        //#if($researchGroupHierarchyNotify)
-        if (researchGroupInstance.getChildOf() != null) {
-            notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+            Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
+            showMessageAndRedirectWithId('created', researchGroupInstance.id)
         }
-        //#end
-
-        Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
-        showMessageAndRedirectWithId('created', researchGroupInstance.id)
     }
 
     def show() {
@@ -118,40 +118,41 @@ class ResearchGroupController {
         if(params.childOf?.id != "null") {
             researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
         }
+        //#end
 
         try {
+            if (!verifyResearchGroupInstance(researchGroupInstance, params.id)) {
+                throw new RuntimeException()
+            }
+
+            if (params.version && !verifyVersion(researchGroupInstance, params.version.toLong())) {
+                throw new RuntimeException()
+            }
+
+            //#if($researchGroupHierarchy)
             validarChildOf(researchGroupInstance, researchGroupInstanceChildOf)
+            //#end
+
         } catch(Exception e) {
-            flash.message = "Há um ciclo relacionado à este research group!"
-            redirect(action: "edit", id: params.id)
             return;
         }
-        //#end
 
-        //#if($researchGroupHierarchyNotify)
-        if (isChildOfResearchGroupChanged(researchGroupInstance, researchGroupInstanceChildOf)) {
-            notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
-        }
-        //#end
-
-        if (!verifyResearchGroupInstance(researchGroupInstance, params.id)) {
-            return
-        }
-        Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
-        if (params.version) {
-            def version = params.version.toLong()
-            if (!verifyVersion(researchGroupInstance, version)) {
-                return
-            }
-        }
         researchGroupInstance.properties = params
 
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "edit", model: [researchGroupInstance: researchGroupInstance])
-            return
+        } else {
+            Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
+
+            //#if($researchGroupHierarchyNotify)
+            if (isChildOfResearchGroupChanged(researchGroupInstance, researchGroupInstanceChildOf)) {
+                notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+            }
+            //#end
+
+            showMessageAndRedirectWithId('updated', researchGroupInstance.id)
         }
 
-        showMessageAndRedirectWithId('updated', researchGroupInstance.id)
     }
 
     def delete() {
