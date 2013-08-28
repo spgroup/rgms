@@ -93,8 +93,7 @@ class ResearchGroupController {
 
     boolean verifyResearchGroupInstance(Object obj, Object id) {
         if (!obj) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
-            redirect(action: "list")
+            showMessageAndRedirect('not.found', "list")
             return false;
         }
         return true;
@@ -163,12 +162,16 @@ class ResearchGroupController {
         Membership.editMembersToResearchGroup([], researchGroupInstance)
         try {
             researchGroupInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
-            redirect(action: "list")
+            showMessageAndRedirect('deleted', "list")
         }
         catch (DataIntegrityViolationException ignore) {
             showMessageAndRedirectWithId('not.deleted', params.id)
         }
+    }
+
+    def showMessageAndRedirect(def operation, def redirection) {
+        flash.message = message(code: 'default.' + operation + '.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
+        redirect(action: redirection)
     }
 
     def showMessageAndRedirectWithId(def operation, def researchGroupId) {
