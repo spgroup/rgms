@@ -1,9 +1,9 @@
 import pages.*
 import rgms.member.Member
 import rgms.publication.Periodico
-import rgms.tool.FacebookTool
 import rgms.tool.TwitterTool
 import steps.TestDataAndOperations
+import steps.TestDataAndOperationsFacebook
 
 import static cucumber.api.groovy.EN.*
 
@@ -260,7 +260,7 @@ Given(~'^I am at the Add Article Page$') {  ->
 
 
 When(~'^I share the article entitled "([^"]*)" on facebook$') { String title ->
-    TestDataAndOperations.ShareArticleOnFacebook(title)
+    TestDataAndOperationsFacebook.ShareArticleOnFacebook(title)
 }
 
 //#end
