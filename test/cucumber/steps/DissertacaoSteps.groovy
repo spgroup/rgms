@@ -4,7 +4,7 @@ import pages.DissertationPage
 import pages.DissertationShowPage
 import rgms.member.Member
 import rgms.publication.Dissertacao
-import steps.TestDataAndOperations
+import steps.TestDataDissertacao
 import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
@@ -46,7 +46,7 @@ When(~'^I click on edit$') {->
 }
 
 When(~'^I delete "([^"]*)"$') { String title ->
-    TestDataAndOperations.removeDissertacao(title)
+    TestDataDissertacao.removeDissertacao(title)
 }
 
 Then(~'^the school name is "([^"]*)"$') { String name ->
@@ -64,14 +64,14 @@ Given(~'^the system has no dissertation entitled "([^"]*)"$') { String title ->
 }
 
 Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-    TestDataAndOperations.createDissertacao(title, filename, "UFPE")
+    TestDataDissertacao.createDissertacao(title, filename, "UFPE")
     article = Dissertacao.findByTitle(title)
     assert article != null
 }
 
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') { String title, filename, school ->
-    TestDataAndOperations.createDissertacao(title, filename, school)
+    TestDataDissertacao.createDissertacao(title, filename, school)
 }
 
 
@@ -87,15 +87,15 @@ Then(~'^the dissertation "([^"]*)" is not stored twice$') { String title ->
 }
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without school$') { String title, filename ->
-    TestDataAndOperations.createDissertacaoWithotSchool(title, filename);
+    TestDataDissertacao.createDissertacaoWithotSchool(title, filename);
 }
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without address$') { String title, filename ->
-    TestDataAndOperations.createDissertacaoWithoutAddress(title, filename);
+    TestDataDissertacao.createDissertacaoWithoutAddress(title, filename);
 }
 
 When(~'^I edit the dissertation title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
-    def updatedDissertation = TestDataAndOperations.editDissertatacao(oldtitle, newtitle)
+    def updatedDissertation = TestDataDissertacao.editDissertatacao(oldtitle, newtitle)
     assert updatedDissertation != null
 }
 
@@ -115,7 +115,7 @@ Then(~'^I\'m still on dissertation page$') {->
 When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
     String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
-    TestDataAndOperations.uploadDissertacao(path)
+    TestDataDissertacao.uploadDissertacao(path)
     finalSize = Dissertacao.findAll().size()
     assert inicialSize < finalSize
     //para funcionar é necessario que tenha um FilePath válido
@@ -136,7 +136,7 @@ Given(~'^the system has some dissertation stored$'){->
 When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
     String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
-    TestDataAndOperations.uploadDissertacao(path)
+    TestDataDissertacao.uploadDissertacao(path)
     finalSize = Dissertacao.findAll().size()
     assert inicialSize<finalSize
     //para funcionar é necessario que tenha um FilePath válido
