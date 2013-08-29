@@ -45,14 +45,13 @@ class ResearchGroupController {
 
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
-
+        //#if($researchGroupHierarchy)
         try {
-            //#if($researchGroupHierarchy)
             validarChildOf(researchGroupInstance, researchGroupInstance.getChildOf())
-            //#end
         } catch(Exception e) {
             return;
         }
+        //#end
 
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
