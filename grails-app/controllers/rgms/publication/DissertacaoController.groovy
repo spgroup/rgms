@@ -1,10 +1,12 @@
 package rgms.publication
 
+import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 import org.apache.shiro.SecurityUtils
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
+
+import javax.servlet.http.HttpServletRequest
 
 
 class DissertacaoController {
@@ -69,27 +71,23 @@ class DissertacaoController {
         render(view: "create", model: [dissertacaoInstance: dissertacaoInstance])
     }
 
-    def show() {
-        def dissertacaoInstance = Dissertacao.get(params.id)
+    def getDissertacaoInstance(def id)
+    {
+        def dissertacaoInstance = Dissertacao.get(id)
 
         if (!dissertacaoInstance) {
-            flash.message = messageGenerator('default.not.found.message', params.id)
+            flash.message = messageGenerator('default.not.found.message', id)
             redirect(action: "list")
             return
         }
 
         [dissertacaoInstance: dissertacaoInstance]
     }
-
-    def edit() {
-        def dissertacaoInstance = Dissertacao.get(params.id)
-        if (!dissertacaoInstance) {
-            flash.message = messageGenerator('default.not.found.message', params.id)
-            redirect(action: "list")
-            return
-        }
-
-        [dissertacaoInstance: dissertacaoInstance]
+    def show() {
+        getDissertacaoInstance(params.id)
+    }
+    def edit (){
+        getDissertacaoInstance(params.id)
     }
 
     def update() {
@@ -149,9 +147,8 @@ class DissertacaoController {
         String flashMessage = 'The non existent dissertations were successfully imported'
 
         XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request)
-        if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile))
-            return
+        Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
+        serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile as HttpServletRequest)
     }
 
     Closure returnWithMessage = {
