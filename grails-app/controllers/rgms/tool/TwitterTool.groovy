@@ -1,5 +1,6 @@
 package rgms.tool
 
+import rgms.messagesTwitter.MessagesTwitter
 import twitter4j.Status
 import twitter4j.Twitter
 import twitter4j.TwitterFactory
@@ -7,8 +8,8 @@ import twitter4j.auth.AccessToken
 
 public class TwitterTool{
 
-    final static String consumerKey = "ZHgJv54dR7ZkYuKLvBeFJA";
-    final static String consumerSecret = "9Qj0OVOSEbkVOdCl4X1XUnoHSA46lQuAF3zCd7Gdk";
+    final static String consumerKey = MessagesTwitter.consumerkey;
+    final static String consumerSecret = MessagesTwitter.consumersecret;
 
 	static twittersHistory = []
 
