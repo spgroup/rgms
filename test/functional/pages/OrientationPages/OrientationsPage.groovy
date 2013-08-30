@@ -1,6 +1,7 @@
-package pages
+package pages.OrientationPages
 
 import geb.Page
+import pages.GetPageTitle
 import rgms.member.Orientation
 
 class OrientationsPage extends Page {

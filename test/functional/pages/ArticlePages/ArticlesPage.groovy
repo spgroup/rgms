@@ -1,6 +1,7 @@
-package pages
+package pages.ArticlePages
 
 import geb.Page
+import pages.GetPageTitle
 import rgms.publication.Periodico
 
 class ArticlesPage extends Page {

@@ -1,6 +1,7 @@
-package pages
+package pages.OrientationPages
 
 import geb.Page
+import pages.GetPageTitle
 
 class OrientationEditPage extends Page {
     static url = "orientation/edit/1"

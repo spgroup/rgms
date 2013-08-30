@@ -1,12 +1,13 @@
-package pages
+package pages.ArticlePages
 
 import geb.Page
+import pages.GetPageTitle
 
 class ArticleShowPage extends Page {
     static url = "periodico/show/1"
 
 	static at = {
-		//title ==~ /Ver Periódico/
+		//title ==~ /Ver Periï¿½dico/
 		GetPageTitle gp = new GetPageTitle()
 		def currentPeriodico = gp.msg("default.periodico.label")
 		def currentTitle = gp.msg("default.show.label", [currentPeriodico])
