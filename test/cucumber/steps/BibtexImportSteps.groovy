@@ -21,6 +21,8 @@ Given(~'^I am on Import Bibtex File Menu$') {->
 }
 
 When(~'^I click "([^"]*)"$') { String arg1 ->
+    at BibtexImportPage
+    page.selectButton(arg1)
 }
 
 When(~'^selected a bibtex file and I click "([^"]*)"$') { String arg1 ->

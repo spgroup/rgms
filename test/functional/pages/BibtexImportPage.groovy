@@ -13,4 +13,8 @@ class BibtexImportPage extends Page {
     static at = {
         title ==~ /BibTexImport Listagem/
     }
+
+    def selectButton(String name) {
+        $('form').find('a', text: name).click()
+    }
 }
