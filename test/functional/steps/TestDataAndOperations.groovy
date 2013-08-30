@@ -158,15 +158,9 @@ class TestDataAndOperations {
         }
     }
 
-    static public boolean recordIsAssociated(def status) {
-        def c = Member.createCriteria()
+    static public boolean recordIsAssociated(def status, def shallBe = true) {
         def recordId = Record.findByStatus_H(status).id
-        def members = c.listDistinct {
-            historics {
-                eq("id", recordId)
-            }
-        }
-        members.size() > 0
+        RecordController.recordHasMembers(recordId) == shallBe
     }
 
     static public def findBookChapterByTitle(String title) {
@@ -244,17 +238,15 @@ class TestDataAndOperations {
 
     static public void createDissertacao(String title, filename, school) {
         def cont = new DissertacaoController()
-        def date = new Date()
-        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
-                school: school, address: "Boa Viagem", file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        createThesisOrDissertation(title, filename, school, cont)
     }
 
     static public void createTese(String title, filename, school) {
         def cont = new TeseController()
+        createThesisOrDissertation(title, filename, school, cont)
+    }
+
+    static private void createThesisOrDissertation(String title, filename, school, cont) {
         def date = new Date()
         cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
                 school: school, address: "Boa Viagem", file: filename]

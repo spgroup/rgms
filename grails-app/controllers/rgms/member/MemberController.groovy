@@ -26,8 +26,8 @@ class MemberController {
  * @author penc
  */
 //#if($contextualInformation)
-        member.setUniversity(params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity"));
-        member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity"));
+        member.setUniversity(params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity") as String);
+        member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity") as String);
 //#end
 
         [memberInstance: member]
@@ -75,25 +75,11 @@ class MemberController {
 
 
     def show = {
-        def memberInstance = Member.get(params.id)
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [memberInstance: memberInstance]
+        Get_MemberInstance()
     }
 
     def edit = {
-        def memberInstance = Member.get(params.id)
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [memberInstance: memberInstance]
+        Get_MemberInstance()
     }
 
     boolean check_version(String version, Member memberInstance) {
@@ -236,6 +222,17 @@ class MemberController {
         newMember.city = XMLService.getAttributeValueFromNode(enderecoProfissional, "CIDADE")
         newMember.country = XMLService.getAttributeValueFromNode(enderecoProfissional, "PAIS")
         newMember.email = XMLService.getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
+    }
+
+    def Get_MemberInstance(){
+        def memberInstance = Member.get(params.id)
+        if (!memberInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [memberInstance: memberInstance]
     }
 
     //#end

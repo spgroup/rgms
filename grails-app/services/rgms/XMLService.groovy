@@ -39,7 +39,7 @@ class XMLService {
         return !errorFound
     }
 
-    private static Node parseReceivedFile(MultipartHttpServletRequest request) {
+    public static Node parseReceivedFile(MultipartHttpServletRequest request) {
         MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
         CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
         File file = new File("xmlimported.xml");
