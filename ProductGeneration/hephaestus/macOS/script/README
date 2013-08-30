@@ -1,0 +1,27 @@
+Para gerar, testar e executar uma versão do RGMS com apenas algumas
+features, siga os seguintes passos:
+
+    - crie um arquivo conf.properties neste diretório de scripts
+      (veja o exemplo conf.properties.EXAMPLE; originPath deve indicar
+      o diretório raiz do seu projeto RGMS; newPath deve indicar um
+      diretório existente onde será colocado a versão simplificada
+      do RGMS, sem algumas features)
+
+    - na linha de comandos, neste diretório de scripts, execute
+      java -jar RGMS-preprocess.jar
+
+    - crie um arquivo, neste diretório de scripts, com as tags
+      correspondentes às features que você deseja incluir na versão
+      do RGMS que você deseja gerar (você pode copiar tags.properties
+      e remover algumas tags; vou assumir que o arquivo criado é chamado
+      suastags.properties)
+
+    - em seguida, no mesmo local, execute
+      java -jar velocitypreprocessor.jar suastags.properties newPath/grails-app/
+
+    - em seguida, no mesmo local, execute
+      java -jar velocitypreprocessor.jar suastags.properties newPath/test/
+
+    - agora pode criar, ou abrir, um projeto intellij em newPath/test/, dando
+      um grails clean seguido de Rebuild Project, para então testar ou rodar a
+      versão simplificada do RGMS
