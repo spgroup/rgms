@@ -45,6 +45,7 @@ class TestDataAndOperations {
 
     static researchLines = [
             [name: "IA Avancada", description: ""],
+            [name: "Redes Avancadas", description: "Redes de Computadores Avancadas"],
             [name: "Teoria da informacao - Complexidade no espaco", description: "P=NP"],
             [name: "Novo Padrao Arquitetural MVCE", description: "Nova arquitetura que promete revolucionar a web"],
             [name: "Modelo Cascata Renovado", description: "Altera��o do modelo original"]
@@ -559,13 +560,13 @@ class TestDataAndOperations {
         }
     }
 
-    static public def insertsResearchLine(String name) {
+    static public def insertsResearchLine(String name, description) {
         def inserted = ResearchLine.findByName(name)
         if (!inserted) {
-            def research = TestDataAndOperations.findResearchLineByName(name)
+            //def research = TestDataAndOperations.findResearchLineByName(name)
             ResearchLine rl = new ResearchLine()
-            rl.setName(research.name)
-            rl.setDescription(research.description)
+            rl.setName(name)
+            rl.setDescription(description)
             rl.save()
         }
     }
