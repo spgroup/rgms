@@ -27,8 +27,8 @@ class VisitShowPage extends Page {
         TwitterTool.addTwitterHistory(visita, null)
     }
 
-//#if( $Twitter )
-    def clickOnTwitteIt (String login, pw){
+//#if ($Twitter)
+    def clickOnTwitteIt(String login, pw) {
         $("#button_twitter").click()
         //$("#password").text = login
         //$("#username_or_email").text = pw

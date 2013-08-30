@@ -1,12 +1,7 @@
-import pages.PublicationsPage
-import pages.VisitEditPage
-import rgms.visit.Visit;
-import rgms.visit.Visitor
-import pages.LoginPage
-import pages.VisitPage
-import pages.VisitCreatePage
-import pages.VisitShowPage
+import pages.*
 import rgms.tool.TwitterTool
+import rgms.visit.Visit
+import rgms.visit.Visitor
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -182,7 +177,7 @@ Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and
     assert TestDataAndOperations.searchVisit(name, initialDate, finalDate) != null
 }
 
-//#if( $Twitter )
+//#if($Twitter)
 
 When(~'^I try to create an visit  and I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
     at VisitPage
@@ -193,7 +188,7 @@ When(~'^I try to create an visit  and I click on Share it in Twitter with "([^"]
     page.clickOnTwitteIt(twitterLogin, twitterPw)
 }
 
-When(~'^I try to create an visit$') { ->
+When(~'^I try to create an visit$') {->
     page.selectNewVisit()
     at VisitCreatePage
     page.fillVisitDetails()
@@ -204,7 +199,7 @@ Then(~'^A twitter is added to my twitter account regarding the new visit "([^"]*
     assert TwitterTool.consult(visita)
 }
 
-Then(~'^No twitter should be post$') { ->
+Then(~'^No twitter should be post$') {->
     assert !TwitterTool.consult(null)
 }
 
