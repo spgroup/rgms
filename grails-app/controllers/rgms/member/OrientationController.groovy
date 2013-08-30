@@ -113,7 +113,7 @@ class OrientationController {
             if (orientationInstance.version > version) {
                 orientationInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'orientation.label', default: 'Orientation')] as Object[],
-                        "Another user has updated this Orientation while you were editing")
+                        'default.orientation.checkVersion.message')
                 render(view: "edit", model: [orientationInstance: orientationInstance])
                 return false
             }
@@ -145,7 +145,7 @@ class OrientationController {
     }
 
     def uploadOrientationXML() {
-        String flashMessage = 'The non existent orientations were successfully imported'
+        String flashMessage = 'default.orientation.imported.message'
 
         if (!XMLService.Import(saveOrientations, returnWithMessage, flashMessage, request))
             return

@@ -131,7 +131,7 @@ class PeriodicoController {
             if (periodicoInstance.version > version) {
                 periodicoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'periodico.label', default: 'Periodico')] as Object[],
-                        "Another user has updated this Periodico while you were editing")
+                        'default.article.checkVersion.message')
                 render(view: "edit", model: [periodicoInstance: periodicoInstance])
                 return  false
             }
@@ -184,7 +184,7 @@ class PeriodicoController {
     }
 
     def uploadXMLPeriodico() {
-        String flashMessage = 'The non existent articles were successfully imported'
+        String flashMessage = 'default.article.imported.message'
 
         if (XMLService.Import(saveJournals, returnWithMessage, flashMessage, request))
             return
