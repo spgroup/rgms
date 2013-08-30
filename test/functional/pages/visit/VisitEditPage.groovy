@@ -1,17 +1,19 @@
-package pages
+package pages.visit
 
 import geb.Page
+import pages.GetPageTitle
 
 class VisitEditPage extends Page {
     static url = "visit/edit/1"
 
     static at = {
-        //title ==~ /Editar Visita/
+        title ==~ /Editar Visita/
+        /*
         GetPageTitle gp = new GetPageTitle()
         def currentVisit = gp.msg("default.visit.label")
         def currentTitle = gp.msg("default.edit.label", [currentVisit])
 
-        title ==~ currentTitle
+        title ==~ currentTitle*/
     }
 
     static content = {
