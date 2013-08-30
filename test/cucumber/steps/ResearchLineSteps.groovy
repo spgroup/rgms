@@ -9,8 +9,8 @@ import pages.ResearchLineEditPage
 
 import static cucumber.api.groovy.EN.*
 
-Given(~'^the system has a research line named "([^"]*)"$') { String name ->
-	TestDataAndOperations.insertsResearchLine(name)
+Given(~'^the system has a research line named "([^"]*)" with a description "([^"]*)"$') { String name, description ->
+	TestDataAndOperations.insertsResearchLine(name, description)
 	research_line = ResearchLine.findByName(name)
 	assert research_line != null
 }
@@ -25,12 +25,6 @@ Then(~'^the research line "([^"]*)" is properly removed by the system'){String n
 	assert research_line == null
 }
 
-
-Given(~'^the system has a research line "([^"]*)" with a description "([^"]*)"$') { String name, description ->
-
-	research_line = ResearchLine.findByName(name)
-	assert research_line != null && research_line.description == description
-}
 
 When(~'^I update the research line "([^"]*)" with a description "([^"]*)"$') { String name,description ->
 	TestDataAndOperations.updateResearchLine(name,description)

@@ -4,12 +4,12 @@ Feature: research line
   I want to add, remove and modify research lines I have done
  
 	Scenario: Delete research line
-	Given the system has a research line named "Novo Padrao Arquitetural MVCE"
+	Given the system has a research line named "Novo Padrao Arquitetural MVCE" with a description "Nova arquitetura que promete revolucionar a web"
 	When I remove the research line "Novo Padrao Arquitetural MVCE"
 	Then the research line "Novo Padrao Arquitetural MVCE" is properly removed by the system
 			
-	Scenario: Update research line 
-	Given the system has a research line "Teoria da informacao - Complexidade no espaco" with a description "P = NP"
+	Scenario: Update research line
+	Given the system has a research line named "Teoria da informacao - Complexidade no espaco" with a description "P = NP" 
 	When I update the research line "Teoria da informacao - Complexidade no espaco" with a description "P != NP"
 	Then the research line "Teoria da informacao - Complexidade no espaco" has the description updated to "P != NP"
 	

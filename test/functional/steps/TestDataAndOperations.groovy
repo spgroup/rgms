@@ -560,13 +560,13 @@ class TestDataAndOperations {
         }
     }
 
-    static public def insertsResearchLine(String name) {
+    static public def insertsResearchLine(String name, description) {
         def inserted = ResearchLine.findByName(name)
         if (!inserted) {
-            def research = TestDataAndOperations.findResearchLineByName(name)
+            //def research = TestDataAndOperations.findResearchLineByName(name)
             ResearchLine rl = new ResearchLine()
-            rl.setName(research.name)
-            rl.setDescription(research.description)
+            rl.setName(name)
+            rl.setDescription(description)
             rl.save()
         }
     }
