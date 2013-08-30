@@ -1,11 +1,23 @@
+import pages.LoginPage
+import pages.PublicationsPage
+import pages.BibtexImportPage
 import rgms.publication.*
 import steps.TestDataBibTexFile
 
 import static cucumber.api.groovy.EN.*
 import steps.TestDataAndOperations
 
+def LogInToPublication(){
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+}
 //You can implement missing steps with the snippets below:
 Given(~'^I am on Import Bibtex File Menu$') {->
+    LogInToPublication()
+    page.select("Import Bibtex File")
+    at BibtexImportPage
 }
 
 When(~'^I click "([^"]*)"$') { String arg1 ->
