@@ -95,7 +95,7 @@ When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without add
 }
 
 When(~'^I edit the dissertation title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
-    def updatedDissertation = TestDataDissertacao.editDissertatacao(oldtitle, newtitle)
+    def updatedDissertation = TestDataDissertacao.editDissertacao(oldtitle, newtitle)
     assert updatedDissertation != null
 }
 
