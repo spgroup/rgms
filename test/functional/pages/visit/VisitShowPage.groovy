@@ -8,12 +8,12 @@ class VisitShowPage extends Page {
     static url = "visit/show/1"
 
     static at = {
-        title ==~ /Ver Visita/
-       /* GetPageTitle gp = new GetPageTitle()
+        //title ==~ /Ver Visita/
+        GetPageTitle gp = new GetPageTitle()
         def currentVisit = gp.msg("default.visit.label")
         def currentTitle = gp.msg("default.show.label", [currentVisit])
 
-        title ==~ currentTitle  */
+        title ==~ currentTitle  
     }
 
     def deleteVisit() {
