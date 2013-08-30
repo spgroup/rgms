@@ -38,7 +38,7 @@ class TestDataDissertacao
         cont.response.reset()
     }
 
-    static public Dissertacao editDissertatacao(oldtitle, newtitle) {
+    static public Dissertacao editDissertacao(oldtitle, newtitle) {
         def article = Dissertacao.findByTitle(oldtitle)
         article.setTitle(newtitle)
         def cont = new DissertacaoController()
