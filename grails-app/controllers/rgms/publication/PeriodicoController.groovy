@@ -46,15 +46,9 @@ class PeriodicoController {
     def save() {
         //def pb = new PublicationController()
         def periodicoInstance = new Periodico(params)
-        if (Periodico.findByTitle(params.title)) {
-            handleSavingError(periodicoInstance, 'periodico.duplicatetitle.failure')
-            return
-        }
-        if (!PublicationController.newUpload(periodicoInstance, flash, request)) { // (!pb.upload(periodicoInstance)) {
-            // com a segunda opção, o sistema se perde e vai para publication controller no teste Add a new article twitting it
-            handleSavingError(periodicoInstance, 'periodico.filesaving.failure')
-            return
-        }
+
+        if(!isValidPeriodico(periodicoInstance)){return }
+
         if (!periodicoInstance.save(flush: true)) {
             handleSavingError(periodicoInstance, 'periodico.saving.failure')
             return
@@ -67,6 +61,22 @@ class PeriodicoController {
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
         redirect(action: "show", id: periodicoInstance.id)
+    }
+
+    def isValidPeriodico (Periodico periodicoInstance) {
+
+        if (Periodico.findByTitle(params.title)) {
+            handleSavingError(periodicoInstance, 'periodico.duplicatetitle.failure')
+            return false
+        }
+        if (!PublicationController.newUpload(periodicoInstance, flash, request)) { // (!pb.upload(periodicoInstance)) {
+            // com a segunda opção, o sistema se perde e vai para publication controller no teste Add a new article twitting it
+            handleSavingError(periodicoInstance, 'periodico.filesaving.failure')
+            return false
+        }
+
+        return true
+
     }
 
     def handleSavingError(Periodico periodicoInstance, String message) {
@@ -102,16 +112,7 @@ class PeriodicoController {
             return
         }
 
-        if (params.version) {
-            def version = params.version.toLong()
-            if (periodicoInstance.version > version) {
-                periodicoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'periodico.label', default: 'Periodico')] as Object[],
-                        "Another user has updated this Periodico while you were editing")
-                render(view: "edit", model: [periodicoInstance: periodicoInstance])
-                return
-            }
-        }
+        if(!checkPeriodicoVersion(periodicoInstance)){return }
 
         periodicoInstance.properties = params
 
@@ -125,6 +126,23 @@ class PeriodicoController {
         redirect(action: "show", id: periodicoInstance.id)
     }
 
+    def checkPeriodicoVersion(Periodico periodicoInstance){
+
+        if (params.version) {
+            def version = params.version.toLong()
+            if (periodicoInstance.version > version) {
+                periodicoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'periodico.label', default: 'Periodico')] as Object[],
+                        "Another user has updated this Periodico while you were editing")
+                render(view: "edit", model: [periodicoInstance: periodicoInstance])
+                return  false
+            }
+        }
+
+        return true
+
+    }
+
     def delete() {
         def periodicoInstance = Periodico.get(params.id)
         if (!periodicoInstance) {
@@ -132,6 +150,11 @@ class PeriodicoController {
             redirect(action: "list")
             return
         }
+
+        deletePeriodico(periodicoInstance)
+    }
+
+    def deletePeriodico (Periodico periodicoInstance){
 
         try {
             periodicoInstance.delete(flush: true)
@@ -142,6 +165,7 @@ class PeriodicoController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
             redirect(action: "show", id: params.id)
         }
+
     }
 
     private checkPeriodicoInstance(Map flash, Map params, Periodico periodicoInstance) {
