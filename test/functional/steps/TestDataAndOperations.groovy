@@ -75,17 +75,6 @@ class TestDataAndOperations {
             [status_H: "Graduate Student", start: (new Date()), end: null]
     ]
 
-    static reports = [
-            [title: 'Evaluating Natural Languages System',
-                    publicationDate: (new Date('13 November 2012')), institution: 'UFPE'],
-            [title: 'NFL Languages System',
-                    publicationDate: (new Date('27 October 2011')), institution: 'NFL'],
-            [title: 'Joe-E',
-                    publicationDate: (new Date('1 May 2013')), institution: 'TG'],
-            [title: 'RC77-1',
-                    publicationDate: (new Date('15 May 2013')), institution: 'MIT', file: "TCS-77.pdf"]
-    ]
-
     static members = [
             [name: "Rodolfo Ferraz", username: "usernametest", email: "rodolfofake@gmail.com",
                     status: "Graduate Student", university: "UFPE", enabled: true
@@ -197,13 +186,6 @@ class TestDataAndOperations {
         }
     }
 
-    static public def findTechnicalReportByTitle(String title) {
-        reports.find { report ->
-            report.title == title
-        }
-    }
-
-
     static public def findMembershipByResearchGroupName(String groupname) {
         memberships.find { membership ->
             membership.researchGroup.name == groupname
@@ -240,20 +222,6 @@ class TestDataAndOperations {
             compatible = true
             testBookChapter.each { key, data ->
                 compatible = compatible && (bookChapter."$key" == data)
-            }
-        }
-        return compatible
-    }
-
-    static public boolean technicalReportCompatibleTo(tech, title) {
-        def testtech = findTechnicalReportByTitle(title)
-        def compatible = false
-        if (testtech == null && tech == null) {
-            compatible = true
-        } else if (testtech != null && tech != null) {
-            compatible = true
-            testtech.each { key, data ->
-                compatible = compatible && (tech."$key" == data)
             }
         }
         return compatible
@@ -453,27 +421,12 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void createTechnicalReport(String title, filename) {
-        def params = TestDataAndOperations.findTechnicalReportByTitle(title)
-        prepareCreateSaveAndResetTechnicalReportController(params, filename)
-    }
-
     static public void createMember(String username) {
         def cont = new MemberController()
         cont.params << TestDataAndOperations.findByUsername(username)
         cont.create()
         cont.save()
         cont.response.reset()
-    }
-
-    static public TechnicalReport editTech(oldtitle, newtitle) {
-        def tech = TechnicalReport.findByTitle(oldtitle)
-        tech.setTitle(newtitle)
-        def cont = new TechnicalReportController()
-        cont.params << tech.properties
-        cont.update()
-        def updatedtech = TechnicalReport.findByTitle(newtitle)
-        return updatedtech
     }
 
     static public void createResearchGroup(String groupname) {
@@ -813,28 +766,10 @@ class TestDataAndOperations {
         return ResearchGroup.findByName(name)
     }
 
-    static public void createNews(String descriptionParam, Date dateParam, ResearchGroup groupParam) {
-        def cont = new NewsController()
-        cont.params << [description: descriptionParam, date: dateParam, researchGroup: groupParam]
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-
     static public void requestNewsFromTwitter(ResearchGroup group) {
         def cont = new ResearchGroupController()
         cont.params << [id: group.id]
         cont.updateNewsFromTwitter()
-        cont.response.reset()
-    }
-
-    static public void deleteNews(String description, Date date, ResearchGroup researchGroup) {
-        def cont = new NewsController()
-        def identificador = News.findByDescriptionAndDateAndResearchGroup(description, date, researchGroup).id
-        cont.params << [id: identificador]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.delete()
-        //cont.save()
         cont.response.reset()
     }
 
@@ -887,28 +822,6 @@ class TestDataAndOperations {
         researchGroupController.update()
         researchGroupController.response.reset()
         return researchGroup
-    }
-
-    static public void createTechnicalReportWithEmptyInstitution(String title, filename) {
-        def params = TestDataAndOperations.findTechnicalReportByTitle(title)
-        params["institution"] = ""
-        prepareCreateSaveAndResetTechnicalReportController(params, filename)
-    }
-
-    static public boolean checkExistingNews(String description, String date, String group){
-        Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-        def researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
-        def news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
-        return news != null
-    }
-
-    static private void prepareCreateSaveAndResetTechnicalReportController(params, filename) {
-        def cont = new TechnicalReportController()
-        cont.params << params << [file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
     }
 
     static public String getTestFilesPath(String filename){

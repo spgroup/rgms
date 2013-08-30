@@ -1,17 +1,18 @@
 import rgms.member.ResearchGroup
 import rgms.news.News
 import steps.TestDataAndOperations
+import steps.NewsTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
-    assert !TestDataAndOperations.checkExistingNews(description,date,group)
+    assert !NewsTestDataAndOperations.checkExistingNews(description,date,group)
 }
 
 When(~'^I create a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     def researchGroup = ResearchGroup.findByName(group)
-    TestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
+    NewsTestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
 }
 
 Then(~'^the news  with description  "([^"]*)", date "([^"]*)" and "([^"]*)" research group is properly stored by the system$') { String description, String date, String group ->
@@ -24,7 +25,7 @@ Then(~'^the news  with description  "([^"]*)", date "([^"]*)" and "([^"]*)" rese
 Given(~'^the system has a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
-    TestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
+    NewsTestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
     news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
     assert news != null
 }
@@ -32,11 +33,11 @@ Given(~'^the system has a news with description "([^"]*)" and date "([^"]*)" for
 When(~'^I delete the news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     def researchGroup = ResearchGroup.findByName(group)
-    TestDataAndOperations.deleteNews(description, dateAsDateObj, researchGroup)
+    NewsTestDataAndOperations.deleteNews(description, dateAsDateObj, researchGroup)
 }
 
 Then(~'^the news with "([^"]*)" and date "([^"]*)" doesnt exists to "([^"]*)" research group$') { String description, String date, String group ->
-    assert !TestDataAndOperations.checkExistingNews(description,date,group)
+    assert !NewsTestDataAndOperations.checkExistingNews(description,date,group)
 }
 
 Then(~'^the news  with "([^"]*)" and date "([^"]*)" is not registered to "([^"]*)" research group$') { String description, String date, String group ->
