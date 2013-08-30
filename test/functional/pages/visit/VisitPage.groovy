@@ -9,12 +9,12 @@ class VisitPage extends Page {
     static url = "visit/list"
 
     static at = {
-        title ==~ /Visita Listagem/
-        /*GetPageTitle gp = new GetPageTitle()
+        //title ==~ /Visita Listagem/
+        GetPageTitle gp = new GetPageTitle()
         def currentVisit = gp.msg("default.visit.label")
         def currentTitle = gp.msg("default.list.label", [currentVisit])
 
-        title ==~ currentTitle    */
+        title ==~ currentTitle    
     }
 
     static content = {
