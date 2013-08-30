@@ -175,11 +175,11 @@ class TestDataAndOperations {
         }
     }
 
-    static public def findResearchLineByName(String name) {
+   /* static public def findResearchLineByName(String name) {
         researchLines.find { researchLine ->
             researchLine.name == name
         }
-    }
+    }*/
 
     static public def findMembershipByResearchGroupName(String groupname) {
         memberships.find { membership ->
@@ -438,15 +438,15 @@ class TestDataAndOperations {
         Periodico.findAll()*.delete flush: true // Could also delete the created files.
     }
 
-    static public void deleteResearchLine(def id) {
+    /*static public void deleteResearchLine(def id) {
         def res = new ResearchLineController()
         res.params.id = id
         res.request.setContent(new byte[1000]) // Could also vary the request content.
         res.delete()
         res.response.reset()
-    }
+    } */
 
-    static public void updateResearchLine(String name, String description) {
+    /*static public void updateResearchLine(String name, String description) {
         def res = new ResearchLineController()
         def research_line = ResearchLine.findByName(name)
         res.params.id = research_line.id
@@ -455,9 +455,9 @@ class TestDataAndOperations {
         res.request.setContent(new byte[1000]) // Could also vary the request content.
         res.update()
         res.response.reset()
-    }
+    } */
 
-    static public void createResearchLine(String name) {
+ /*   static public void createResearchLine(String name) {
         def cont = new ResearchLineController()
         def research = TestDataAndOperations.findResearchLineByName(name)
         cont.params.name = research.name
@@ -466,7 +466,7 @@ class TestDataAndOperations {
         cont.create()
         cont.save()
         cont.response.reset()
-    }
+    } */
 
     static public void deleteRecord(def id) {
         def rec = new RecordController()
@@ -512,7 +512,11 @@ class TestDataAndOperations {
         }
     }
 
+<<<<<<< refs/remotes/upstream/master
     static public def insertsResearchLine(String name, description) {
+=======
+   /* static public def insertsResearchLine(String name) {
+>>>>>>> HEAD~5
         def inserted = ResearchLine.findByName(name)
         if (!inserted) {
             //def research = TestDataAndOperations.findResearchLineByName(name)
@@ -521,7 +525,7 @@ class TestDataAndOperations {
             rl.setDescription(description)
             rl.save()
         }
-    }
+    }*/
 
     static public void removeArticle(String title) {
         def testarticle = Periodico.findByTitle(title)

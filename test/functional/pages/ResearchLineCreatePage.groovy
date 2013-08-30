@@ -1,7 +1,7 @@
 package pages
 
 import geb.Page
-import steps.TestDataAndOperations
+import steps.TestDataAndOperationsResearchLine
 
 
 class ResearchLineCreatePage extends Page {
@@ -16,18 +16,19 @@ class ResearchLineCreatePage extends Page {
 
 	def fillResearchLineDetails() {
 		def name = "Modelo Cascata Renovado"
-		def description = TestDataAndOperations.findResearchLineByName(name).description
+		def description = TestDataAndOperationsResearchLine.findResearchLineByName(name).description
 		$("form").name = name
 		$("form").description = description 
 		assert $("form").name == name  
 		assert $("#description").attr('value') == description
+        $("input", name: "create").click()
 	}
 
 	def createsResearchLine(String name)
 	{
-		def research = TestDataAndOperations.findResearchLineByName(name)
+		def research = TestDataAndOperationsResearchLine.findResearchLineByName(name)
 		$("form").name = research.name
 		$("form").description = research.description
-		$("input.save").click()
-	}
+        $("input", name: "create").click()
+    }
 }
