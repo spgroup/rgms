@@ -177,7 +177,7 @@
                                     ', Number: ' + periodicoNumber + ', Pages: ' + periodicoPages,
                             message: 'Personal Message.'
                         });
-                $.get("http://localhost:8080/rgms/notifyFacebook/periodico/" + periodicoId + "/" + periodicoTitle);
+                jQuery.get("http://localhost:8080/rgms/notifyFacebook/periodico/" + periodicoId + "/" + periodicoTitle);
             });
         });
     </script>
@@ -195,7 +195,7 @@
     </a>
     <script>
         $('#button_twitter').live('click', function (e) {
-            $.get("http://localhost:8080/rgms/notifyTwitter/periodico/${periodicoInstance?.id}/${periodicoInstance?.title}");
+            jQuery.get("http://localhost:8080/rgms/notifyTwitter/periodico/${periodicoInstance?.id}/${periodicoInstance?.title}");
         });
     </script>
 <!-- Twitter end -->
@@ -206,8 +206,8 @@
             <g:link class="edit" action="edit" id="${periodicoInstance?.id}">
                 <g:message code="default.button.edit.label" default="Edit"/>
             </g:link>
-            <g:actionSubmit action="share" id="share" name="share" update="[success:'success',failure:'error']"
-                          on404="alert('not found');" value="Share on Facebook"></g:actionSubmit>
+            <g:actionSubmit action="share" id="share" name="share" update="[success: 'success', failure: 'error']"
+                            on404="alert('not found');" value="Share on Facebook"></g:actionSubmit>
             <g:actionSubmit class="delete" action="delete"
                             value="${message(code: 'default.button.delete.label', default: 'Delete')}"
                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
