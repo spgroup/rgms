@@ -10,15 +10,6 @@ import rgms.visit.Visitor
 
 class TestDataAndOperations {
 
-    static articles = [
-            [journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
-                    title: "A theory of software product line refinement",
-                    publicationDate: (new Date("12 October 2012"))],
-            [journal: "Science of Computer Programming", volume: 455, pages: "2-30",
-                    title: "Algebraic reasoning for object-oriented programming",
-                    publicationDate: (new Date("12 October 2012"))]
-    ]
-
     static ferramentas = [
             [description: "Ferramenta Target",
                     title: "Target",
@@ -95,11 +86,7 @@ class TestDataAndOperations {
                     dateLeft: (new Date(2012, 06, 01))]]
 
 
-    static public def findArticleByTitle(String title) {
-        articles.find { article ->
-            article.title == title
-        }
-    }
+
 
 //#if ($visit)
     static visitors = [
@@ -174,19 +161,6 @@ class TestDataAndOperations {
     }
 
 
-    static public boolean compatibleTo(article, title) {
-        def testarticle = findArticleByTitle(title)
-        def compatible = false
-        if (testarticle == null && article == null) {
-            compatible = true
-        } else if (testarticle != null && article != null) {
-            compatible = true
-            testarticle.each { key, data ->
-                compatible = compatible && (article."$key" == data)
-            }
-        }
-        return compatible
-    }
 
     static public boolean bookChapterCompatibleTo(bookChapter, title) {
         def testBookChapter = findBookChapterByTitle(title)
@@ -302,15 +276,7 @@ class TestDataAndOperations {
         return compatible
     }
 
-    static public void createArticle(String title, filename) {
-        def cont = new PeriodicoController()
-        def date = new Date()
-        cont.params << TestDataAndOperations.findArticleByTitle(title) << [file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
+
 
     static public void createFerramenta(String title, filename) {
         def cont = new FerramentaController()
@@ -447,9 +413,7 @@ class TestDataAndOperations {
     }
 
 
-    static void clearArticles() {
-        Periodico.findAll()*.delete flush: true // Could also delete the created files.
-    }
+
 
     static public void deleteResearchLine(def id) {
         def res = new ResearchLineController()
@@ -536,13 +500,7 @@ class TestDataAndOperations {
         }
     }
 
-    static public void removeArticle(String title) {
-        def testarticle = Periodico.findByTitle(title)
-        def cont = new PeriodicoController()
-        def date = new Date()
-        cont.params << [id: testarticle.id]
-        cont.delete()
-    }
+
 
     static public void removeBookChapter(String title) {
         def testBookChapter = BookChapter.findByTitle(title)
@@ -551,23 +509,9 @@ class TestDataAndOperations {
         cont.delete()
     }
 
-    static public boolean containsArticle(title, articles) {
-        def testarticle = Periodico.findByTitle(title)
-        def cont = new PeriodicoController()
-        def result = cont.list().periodicoInstanceList
-        return result.contains(testarticle)
-    }
 
-    static public Periodico editArticle(oldtitle, newtitle) {
-        def article = Periodico.findByTitle(oldtitle)
-        article.setTitle(newtitle)
-        def cont = new PeriodicoController()
-        cont.params << article.properties
-        cont.update()
 
-        def updatedarticle = Periodico.findByTitle(newtitle)
-        return updatedarticle
-    }
+
 
     static public Ferramenta editFerramenta(oldtitle, newtitle) {
         def ferramenta = Ferramenta.findByTitle(oldtitle)
@@ -664,37 +608,6 @@ class TestDataAndOperations {
         researchGroupController.response.reset()
     }
 
-    //mapmf_tasj
-
-    //orientation
-    static orientations = [
-            [tipo: "Mestrado", orientando: "Tomaz", tituloTese: "The Book is on the table", anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
-    ]
-
-    static public def findOrientationByTitle(String title) {
-        orientations.find { orientation ->
-            orientation.tituloTese == title
-        }
-    }
-
-    static public void createOrientation(String tituloTese) {
-
-        def cont = new OrientationController()
-        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-
-    static public void removeOrientation(String tituloTese) {
-
-        def testOrientation = TestDataAndOperations.findOrientationByTitle(tituloTese)
-        def cont = new OrientationController()
-        cont.params << [id: testOrientation.id]
-        cont.delete()
-    }
-    //article
 
     static public def path(){
         return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator

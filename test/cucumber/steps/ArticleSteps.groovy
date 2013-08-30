@@ -3,7 +3,7 @@ import rgms.member.Member
 import rgms.publication.Periodico
 import rgms.tool.FacebookTool
 import rgms.tool.TwitterTool
-import steps.TestDataAndOperations
+import steps.ArticleTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -12,17 +12,17 @@ Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-    TestDataAndOperations.createArticle(title, filename)
+    ArticleTestDataAndOperations.createArticle(title, filename)
 }
 
 Then(~'^the article "([^"]*)" is properly stored by the system$') { String title ->
     article = Periodico.findByTitle(title)
-    assert TestDataAndOperations.compatibleTo(article, title)
+    assert ArticleTestDataAndOperations.compatibleTo(article, title)
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*)" field blank$') { String title, String filename, String field ->
-    TestDataAndOperations.createArticle(title, filename)
-    def article = TestDataAndOperations.findArticleByTitle(title)
+    ArticleTestDataAndOperations.createArticle(title, filename)
+    def article = ArticleTestDataAndOperations.findArticleByTitle(title)
     assert article.{field} == null
 }
 
@@ -51,7 +51,7 @@ Then(~'^I can fill the article details$') {->
  * @author Guilherme
  */
 Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-    TestDataAndOperations.createArticle(title, filename)
+    ArticleTestDataAndOperations.createArticle(title, filename)
     assert !periodicoNoExist(title)
 }
 
@@ -65,7 +65,7 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
     at PublicationsPage
     page.select("Periodico")
     selectNewArticleInArticlesPage()
-    page.fillArticleDetails(TestDataAndOperations.path() + filename, title)
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + filename, title)
     page.selectCreateArticle()
     assert !periodicoNoExist(title)
     to ArticlesPage
@@ -77,7 +77,7 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
  */
 When(~'^I delete the article "([^"]*)"$') { String title ->
 
-    TestDataAndOperations.removeArticle(title)
+    ArticleTestDataAndOperations.removeArticle(title)
 
 }
 
@@ -85,7 +85,7 @@ When(~'^I delete the article "([^"]*)"$') { String title ->
  * @author Guilherme
  */
 When(~'^I edit the article title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
-    def updatedArticle = TestDataAndOperations.editArticle(oldtitle, newtitle)
+    def updatedArticle = ArticleTestDataAndOperations.editArticle(oldtitle, newtitle)
     assert updatedArticle != null
 }
 
@@ -135,7 +135,7 @@ Then(~'^the article "([^"]*)" is properly removed by the system$') { String titl
  */
 Then(~'my article list contains "([^"]*)"$') { String title ->
     articles = Periodico.findAll()
-    assert TestDataAndOperations.containsArticle(title, articles)
+    assert ArticleTestDataAndOperations.containsArticle(title, articles)
 }
 
 /**
@@ -202,7 +202,7 @@ Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userNa
 
 When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$') { String articleName, String filename ->
     selectNewArticleInArticlesPage()
-    page.fillArticleDetails(TestDataAndOperations.path() + filename, articleName)
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + filename, articleName)
     page.selectCreateArticle()
 }
 
