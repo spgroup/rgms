@@ -2,12 +2,17 @@ package pages.record;
 
 import geb.Page
 import rgms.member.Record
+import pages.GetPageTitle
 
 public class RecordVisualizePage extends Page {
     static url = "record/show"
 
     static at = {
-        title ==~ /Ver Record/
+        // title ==~ /Ver Record/
+        GetPageTitle gp = new GetPageTitle()
+        def recordLabel = gp.msg("default.record.label")
+        def showLabel = gp.msg("default.show.label", [recordLabel])
+        title ==~ showLabel
     }
 
     static content = {

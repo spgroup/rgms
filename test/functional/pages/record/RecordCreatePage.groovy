@@ -1,12 +1,17 @@
 package pages.record;
 
 import geb.Page
+import pages.GetPageTitle
 
 public class RecordCreatePage extends Page {
     static url = "record/create"
 
     static at = {
-        title ==~ /Criar Record/
+        // title ==~ /Criar Registro/
+        GetPageTitle gp = new GetPageTitle()
+        def recordLabel = gp.msg("record.label")
+        def createLabel = gp.msg("default.create.label", [recordLabel])
+        title ==~ createLabel
     }
 
     static content = {
