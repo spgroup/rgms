@@ -12,7 +12,7 @@ class DissertacaoController extends ThesisOrDissertationController {
     }
 
     def create() {
-        createThesisOrDissertation("Dissertacao", grailsApplication, params)
+        createThesisOrDissertation("Dissertacao", params)
     }
 
     def save() {

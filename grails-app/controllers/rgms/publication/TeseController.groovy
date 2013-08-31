@@ -10,7 +10,7 @@ class TeseController extends ThesisOrDissertationController {
     }
 
     def create() {
-        createThesisOrDissertation("Tese", grailsApplication, params)
+        createThesisOrDissertation("Tese", params)
     }
 
     def save() {
