@@ -1,7 +1,7 @@
 import steps.TestDataAndOperations
 import pages.LoginPage
-import pages.ThesisCreatePage
-import pages.ThesisShowPage
+import pages.thesis.ThesisCreatePage
+import pages.thesis.ThesisShowPage
 import rgms.publication.Tese
 
 import java.io.File
