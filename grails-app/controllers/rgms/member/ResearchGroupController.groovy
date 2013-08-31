@@ -35,39 +35,36 @@ class ResearchGroupController {
             current = current.childOf
         }
 
-        if(current != null)
+        if(current != null) {
+            flash.message = message(code: 'researchGroup.hasCycle', args: [])
+            redirect(action: "edit", id: params.id)
         	throw new RuntimeException("Cycle found")
+        }
     }
     //#end
 
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
-
         //#if($researchGroupHierarchy)
         try {
             validarChildOf(researchGroupInstance, researchGroupInstance.getChildOf())
         } catch(Exception e) {
-            flash.message = "Há um ciclo relacionado à este research group!"
-            redirect(action: "edit", id: params.id)
             return;
         }
         //#end
 
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "create", model: [researchGroupInstance: researchGroupInstance])
-            return
+        } else {
+            //#if($researchGroupHierarchyNotify)
+            if (researchGroupInstance.getChildOf() != null) {
+                notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+            }
+            //#end
+
+            Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
+            showMessageAndRedirectWithId('created', researchGroupInstance.id)
         }
-
-        //#if($researchGroupHierarchyNotify)
-        if (researchGroupInstance.getChildOf() != null) {
-            notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
-        }
-        //#end
-
-        Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), researchGroupInstance.id])
-        redirect(action: "show", id: researchGroupInstance.id)
     }
 
     def show() {
@@ -95,8 +92,7 @@ class ResearchGroupController {
 
     boolean verifyResearchGroupInstance(Object obj, Object id) {
         if (!obj) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
-            redirect(action: "list")
+            showMessageAndRedirect('not.found', "list")
             return false;
         }
         return true;
@@ -121,41 +117,41 @@ class ResearchGroupController {
         if(params.childOf?.id != "null") {
             researchGroupInstanceChildOf = ResearchGroup.get(params.childOf?.id)
         }
+        //#end
 
         try {
+            if (!verifyResearchGroupInstance(researchGroupInstance, params.id)) {
+                throw new RuntimeException()
+            }
+
+            if (params.version && !verifyVersion(researchGroupInstance, params.version.toLong())) {
+                throw new RuntimeException()
+            }
+
+            //#if($researchGroupHierarchy)
             validarChildOf(researchGroupInstance, researchGroupInstanceChildOf)
+            //#end
+
         } catch(Exception e) {
-            flash.message = "Há um ciclo relacionado à este research group!"
-            redirect(action: "edit", id: params.id)
             return;
         }
-        //#end
 
-        //#if($researchGroupHierarchyNotify)
-        if (isChildOfResearchGroupChanged(researchGroupInstance, researchGroupInstanceChildOf)) {
-            notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
-        }
-        //#end
-
-        if (!verifyResearchGroupInstance(researchGroupInstance, params.id)) {
-            return
-        }
-        Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
-        if (params.version) {
-            def version = params.version.toLong()
-            if (!verifyVersion(researchGroupInstance, version)) {
-                return
-            }
-        }
         researchGroupInstance.properties = params
 
         if (!researchGroupInstance.save(flush: true)) {
             render(view: "edit", model: [researchGroupInstance: researchGroupInstance])
-            return
+        } else {
+            Membership.editMembersToResearchGroup(params.members, researchGroupInstance)
+
+            //#if($researchGroupHierarchyNotify)
+            if (isChildOfResearchGroupChanged(researchGroupInstance, researchGroupInstanceChildOf)) {
+                notifyChangeChildOfResearchGroup(researchGroupInstance, params.members)
+            }
+            //#end
+
+            showMessageAndRedirectWithId('updated', researchGroupInstance.id)
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), researchGroupInstance.id])
-        redirect(action: "show", id: researchGroupInstance.id)
     }
 
     def delete() {
@@ -166,13 +162,21 @@ class ResearchGroupController {
         Membership.editMembersToResearchGroup([], researchGroupInstance)
         try {
             researchGroupInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
-            redirect(action: "list")
+            showMessageAndRedirect('deleted', "list")
         }
         catch (DataIntegrityViolationException ignore) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
-            redirect(action: "show", id: params.id)
+            showMessageAndRedirectWithId('not.deleted', params.id)
         }
+    }
+
+    def showMessageAndRedirect(def operation, def redirection) {
+        flash.message = message(code: 'default.' + operation + '.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), params.id])
+        redirect(action: redirection)
+    }
+
+    def showMessageAndRedirectWithId(def operation, def researchGroupId) {
+        flash.message = message(code: 'default.' + operation + '.message', args: [message(code: 'researchGroup.label', default: 'Research Group'), researchGroupId])
+        redirect(action: "show", id: researchGroupId)
     }
 
     void addOrRemoveGroupsOfSession() {

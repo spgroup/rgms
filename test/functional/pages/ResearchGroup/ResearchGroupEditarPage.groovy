@@ -1,4 +1,4 @@
-package pages
+package pages.ResearchGroup
 
 import geb.Page
 import org.openqa.selenium.WebDriver
