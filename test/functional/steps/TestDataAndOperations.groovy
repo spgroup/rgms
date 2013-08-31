@@ -353,39 +353,6 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void createResearchGroup(String name, description) {
-        def researchGroupController = new ResearchGroupController()
-        researchGroupController.params << [name: name] << [description: description]
-        researchGroupController.request.setContent(new byte[1000]) // Could also vary the request content.
-        researchGroupController.create()
-        researchGroupController.save()
-        researchGroupController.response.reset()
-    }
-
-    static public void editResearchGroup(def researchGroup, String newName, String newDescription) {
-        def researchGroupController = new ResearchGroupController()
-        researchGroupController.params << [name: newName] << [description: newDescription] << [id: researchGroup.getId()]
-        researchGroupController.request.setContent(new byte[1000]) // Could also vary the request content.
-        researchGroupController.edit()
-        researchGroupController.save()
-        researchGroupController.response.reset()
-    }
-
-    //#if($researchGroupHierarchy)
-    static public void editResearchGroupChildOf(ResearchGroup researchGroup, ResearchGroup researchGroupParent) {
-        def researchGroupController = new ResearchGroupController()
-        researchGroupController.params << [name: researchGroup.name]
-        researchGroupController.params << [description: researchGroup.description]
-        researchGroupController.params << [id: researchGroup.id]
-        researchGroupController.params << [childOf: researchGroupParent]
-        researchGroupController.request.setContent(new byte[1000]) // Could also vary the request content.
-
-        try {
-            researchGroupController.update()
-        } catch (Exception e) {}
-    }
-    //#end
-
     static public void createBookChapter(String title, filename) {
         def cont = new BookChapterController()
         def date = new Date()
@@ -396,13 +363,6 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void deleteResearchGroup(def researchGroup) {
-        def researchGroupController = new ResearchGroupController()
-        researchGroupController.params << [id: researchGroup.getId()]
-        researchGroupController.request.setContent(new byte[1000]) // Could also vary the request content.
-        researchGroupController.delete()
-        researchGroupController.response.reset()
-    }
 
 
     static public void createConferencia(String title, String filename) {
@@ -774,13 +734,6 @@ class TestDataAndOperations {
         researchGroupController.save()
         researchGroupController.response.reset()
     }
-
-    static public void ShareArticleOnFacebook(String title){
-        def member = new Member()
-        member.access_token =  "CAAJIlmRWCUwBAN0r1puBTUa4vDZAKxWWlR5gN4qtgZAosBDKGUOLBquyKuHYQ0zxICioiarTJ66mpdZC08U4rHJOrtvXJCB8hMBcLKlQaTdwYZCgMTJtbFnQfIBZAxi6hRIkfw2fCSyCS6DuFIrGRThI53ZCzBOLsZD"
-        member.facebook_id = "100006411132660"
-        PublicationController.sendPostFacebook(member, title)
-}
 
     static public boolean containsUser(members){
         def userData = Member.findByUsername('admin').id.toString()
