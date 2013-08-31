@@ -1,6 +1,7 @@
-package pages
+package pages.visit
 
 import geb.Page
+import pages.GetPageTitle
 
 class VisitEditPage extends Page {
     static url = "visit/edit/1"

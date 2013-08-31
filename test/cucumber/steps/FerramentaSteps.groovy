@@ -6,6 +6,7 @@ import pages.FerramentaShowPage
 import rgms.member.Member
 import rgms.publication.Ferramenta
 import steps.TestDataAndOperations
+import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 
@@ -124,7 +125,7 @@ Then(~'^The ferramenta is not stored$') {->
 
 Then(~'^I see my user listed as an author member of ferramenta by default$') {->
     at FerramentaCreatePage
-    assert TestDataAndOperations.containsUser(page.selectedMembers())
+    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
 And(~'^I select the upload button at the ferramenta page$') {->

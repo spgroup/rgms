@@ -3,9 +3,11 @@ import pages.technicalReport.TechnicalReportCreatePage
 import pages.technicalReport.TechnicalReportEditPage
 import pages.technicalReport.TechnicalReportPage
 import pages.technicalReport.TechnicalReportShowPage
+import rgms.member.Member
 import rgms.publication.TechnicalReport
 import steps.TestDataAndOperations
 import steps.TechnicalReportTestDataAndOperations
+import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 
@@ -128,7 +130,7 @@ When(~'^I click on "New TechnicalReport" option at Technical Report list$') {->
 
 Then(~'^I see my user listed as an author member of technical report by default$') {->
     at TechnicalReportCreatePage
-    assert TestDataAndOperations.containsUser(page.selectedMembers())
+    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
 And (~'^I select the option to edit$'){->
@@ -174,5 +176,4 @@ Then(~'^The technical report "([^"]*)" with filename "([^"]*)" and institution "
     tech = TechnicalReport.findByTitleAndFileAndInstitution(t, fn, i)
     assert tech != null
 }
-
 

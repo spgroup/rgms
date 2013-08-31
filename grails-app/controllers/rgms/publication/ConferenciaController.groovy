@@ -23,12 +23,7 @@ class ConferenciaController {
     def create() {
         def conferenciaInstance = new Conferencia(params)
         //#if($publicationContext)
-        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
-        if(publcContextOn){
-            if(SecurityUtils.subject?.principal != null){
-                PublicationController.addAuthor(conferenciaInstance)
-            }
-        }
+        PublicationController.addAuthor(conferenciaInstance)
         //#end
         [conferenciaInstance: conferenciaInstance]
     }

@@ -20,17 +20,12 @@ class ThesisOrDissertationController {
         }
     }
 
-    def createThesisOrDissertation(String thesisOrDissertation, grailsApplication, params) {
+    def createThesisOrDissertation(String thesisOrDissertation, params) {
         def instance = getClassByName(thesisOrDissertation).newInstance(params)
         //#if($publicationContext)
-        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext")
-        if(publcContextOn){
-            if(SecurityUtils.subject?.principal != null){
-                def user = PublicationController.addAuthor(instance)
-                if(!user.university.isEmpty()){
-                    instance.school = user.university
-                }
-            }
+        def user = PublicationController.addAuthor(instance)
+        if (user && !user.university.isEmpty()){
+            instance.school = user.university
         }
         //#end
         returnInstance(thesisOrDissertation, instance)
@@ -109,6 +104,7 @@ class ThesisOrDissertationController {
             return
         }
         try {
+            instance.removeFromPublications()
             instance.delete(flush: true)
             messageGenerator(thesisOrDissertation, 'default.deleted.message', instance.id)
             redirect(action: "list")

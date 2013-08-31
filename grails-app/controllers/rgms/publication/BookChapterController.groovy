@@ -26,12 +26,7 @@ class BookChapterController {
     def create() {
         def bookChapterInstance = new BookChapter(params)
         //#if($publicationContext)
-        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
-        if(publcContextOn){
-            if(SecurityUtils.subject?.principal != null){
-                PublicationController.addAuthor(bookChapterInstance)
-            }
-        }
+        PublicationController.addAuthor(bookChapterInstance)
         //#end
         [bookChapterInstance: bookChapterInstance]
     }
