@@ -1,4 +1,4 @@
-package pages;
+package pages.record;
 
 import geb.Page
 
@@ -17,7 +17,7 @@ public class RecordCreatePage extends Page {
 		$("form").start_day = "1"
 		$("form").start_month = "1"
 		$("form").start_year = "2012"
-		assert $("form").status_H == "MSc Student" 
+		assert $("form").status_H == "MSc Student"
 		assert $("form").start_day == "1" && $("form").start_month == "1" && $("form").start_year == "2012"
     }
 }

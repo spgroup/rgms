@@ -1,4 +1,4 @@
-package pages;
+package pages.record;
 
 import geb.Page
 
