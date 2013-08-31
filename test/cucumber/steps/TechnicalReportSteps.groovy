@@ -177,4 +177,3 @@ Then(~'^The technical report "([^"]*)" with filename "([^"]*)" and institution "
     assert tech != null
 }
 
-
