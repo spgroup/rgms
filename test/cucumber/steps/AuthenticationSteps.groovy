@@ -13,7 +13,7 @@ import pages.ArticlePages.ArticleCreatePage
 import pages.ArticlePages.ArticlesPage
 import pages.LoginPage
 
-import pages.MemberListPage
+import pages.member.MemberListPage
 import pages.PublicationsPage
 import pages.RootPage
 import pages.UnauthorizedPage

@@ -29,7 +29,7 @@ class MemberTestDataAndOperations {
     static public void createMember(String username, String phone) {
         def cont = new MemberController()
         if (phone.equals("")) {
-            cont.params << TestDataAndOperations.findByUsername(username)
+            cont.params << findByUsername(username)
         }else{
             cont.params << [username: username, phone: phone]
         }

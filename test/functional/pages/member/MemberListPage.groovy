@@ -7,11 +7,11 @@ class MemberListPage extends Page {
     static url = "member/list"
 
     static at = {
-      //  title ==~ /Member Listagem/
-                GetPageTitle gp = new GetPageTitle()
-                def memberLabel = gp.msg("member.label")
-                def listLabel = gp.msg("default.list.label", [memberLabel])
-                title ==~ listLabel
+        //  title ==~ /Member Listagem/
+        GetPageTitle gp = new GetPageTitle()
+        def memberLabel = gp.msg("member.label")
+        def listLabel = gp.msg("default.list.label", [memberLabel])
+        title ==~ listLabel
 
     }
 

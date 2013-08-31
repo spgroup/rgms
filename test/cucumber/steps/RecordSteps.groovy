@@ -1,28 +1,28 @@
 import rgms.member.Record
 import rgms.member.Member
-import steps.TestDataAndOperations
+import steps.RecordTestDataAndOperations
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.record.*
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has only one record with status "([^"]*)"$') { String status ->
-	TestDataAndOperations.insertsRecord(status)
+	RecordTestDataAndOperations.insertsRecord(status)
 	def records = Record.findAllByStatus_H(status)
 	assert records.size() == 1 && records.first() != null
 }
 
 Given(~'^the record with status "([^"]*)" is not associated to a member$') { String status ->
-  assert TestDataAndOperations.recordIsAssociated(status, false)
+  assert RecordTestDataAndOperations.recordIsAssociated(status, false)
 }
 
 Given(~'^the record with status "([^"]*)" is associated to a member$') { String status ->
-  assert TestDataAndOperations.recordIsAssociated(status)
+  assert RecordTestDataAndOperations.recordIsAssociated(status)
 }
 
 When(~'^I remove the record with status "([^"]*)"$') { String status ->
 	def id = Record.findByStatus_H(status).id
-	TestDataAndOperations.deleteRecord(id)
+	RecordTestDataAndOperations.deleteRecord(id)
 }
 
 Then(~'^the record with status "([^"]*)" is properly removed by the system$') { String status ->
@@ -42,8 +42,7 @@ Given(~'^the system has only one record with status "([^"]*)" and this record ha
 }
 
 When(~'^I update the record with status "([^"]*)" with an end date "([^"]*)"$') { String status, String end_str ->
-	TestDataAndOperations.updateRecord(status, end_str)
-
+	RecordTestDataAndOperations.updateRecord(status, end_str)
 }
 
 Then(~'^the record with status "([^"]*)" has end date "([^"]*)"$') { String status, String end_str ->
@@ -52,7 +51,7 @@ Then(~'^the record with status "([^"]*)" has end date "([^"]*)"$') { String stat
 }
 
 When(~'^I create the record with status "([^"]*)"$') { String status ->
-	TestDataAndOperations.createRecord(status)
+	RecordTestDataAndOperations.createRecord(status)
 }
 
 Then(~'^the record with status "([^"]*)" is properly stored and the system has two records with this status$') { String status ->

@@ -13,10 +13,6 @@ Given(~'^the system has no member with username "([^"]*)"$') { String username -
 }
 
 When(~'^I create a member with username "([^"]*)"$') { String username ->
-    MemberTestDataAndOperations.createMember(username)
-}
-
-When(~'^I create a member with username, phone "([^"]*)" "([^"]*)"$') { String username, phone ->
     MemberTestDataAndOperations.createMember(username, "")
 }
 

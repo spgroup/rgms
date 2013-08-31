@@ -8,9 +8,8 @@ class MemberEditionPage extends Page {
     static at = {
         //title ==~ /Editar Member/
 		GetPageTitle gp = new GetPageTitle()
-		//def currentPeriodico = gp.msg("default.member.label")
-		def currentPeriodico = "Member"
-		def currentTitle = gp.msg("default.edit.label", [currentPeriodico])
+        def memberLabel = gp.msg("member.label")
+		def currentTitle = gp.msg("default.edit.label", [memberLabel])
 		title ==~ currentTitle
     }
 

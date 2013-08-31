@@ -8,10 +8,10 @@ class MemberPage extends Page {
 
     static at = {
        // title ==~ /Ver Member/
-                GetPageTitle gp = new GetPageTitle()
-                def memberLabel = gp.msg("default.member.label")
-                def showLabel = gp.msg("default.show.label", [memberLabel])
-                title ==~ showLabel
+        GetPageTitle gp = new GetPageTitle()
+        def memberLabel = gp.msg("member.label")
+        def showLabel = gp.msg("default.show.label", [memberLabel])
+        title ==~ showLabel
     }
 
     static content = {
