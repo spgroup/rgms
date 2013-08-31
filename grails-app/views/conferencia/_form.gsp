@@ -59,7 +59,7 @@
     </label>
 
     <g:select name="members" from="${Member.list()}" size="10" multiple="true" optionKey="id"
-              value="${conferenciaInstance?.membersSelected()}"/>
+              value="${conferenciaInstance?.members}"/>
 
 </div>
 

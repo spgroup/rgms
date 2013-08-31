@@ -1,6 +1,7 @@
-package pages
+package pages.visit
 
 import geb.Page
+import pages.GetPageTitle
 import steps.TestDataAndOperationsVisit
 
 
@@ -13,7 +14,7 @@ class VisitPage extends Page {
         def currentVisit = gp.msg("default.visit.label")
         def currentTitle = gp.msg("default.list.label", [currentVisit])
 
-        title ==~ currentTitle
+        title ==~ currentTitle    
     }
 
     static content = {

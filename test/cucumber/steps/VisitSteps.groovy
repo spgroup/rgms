@@ -1,11 +1,11 @@
 import pages.PublicationsPage
-import pages.VisitEditPage
-import rgms.visit.Visit;
+import pages.visit.VisitEditPage
+import rgms.visit.Visit
 import rgms.visit.Visitor
 import pages.LoginPage
-import pages.VisitPage
-import pages.VisitCreatePage
-import pages.VisitShowPage
+import pages.visit.VisitPage
+import pages.visit.VisitCreatePage
+import pages.visit.VisitShowPage
 import rgms.tool.TwitterTool
 import steps.TestDataAndOperationsVisit
 

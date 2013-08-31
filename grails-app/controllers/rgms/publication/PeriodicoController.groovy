@@ -33,12 +33,7 @@ class PeriodicoController {
     def create() {
         def periodicoInstance = new Periodico(params)
         //#if($publicationContext)
-        def publcContextOn = grailsApplication.getConfig().getProperty("publicationContext");
-        if (publcContextOn) {
-            if (SecurityUtils.subject?.principal != null) {
-                PublicationController.addAuthor(periodicoInstance)
-            }
-        }
+        PublicationController.addAuthor(periodicoInstance)
         //#end
         [periodicoInstance: periodicoInstance]
     }
@@ -134,6 +129,7 @@ class PeriodicoController {
         }
 
         try {
+            periodicoInstance.removeFromPublications()
             periodicoInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
             redirect(action: "list")
