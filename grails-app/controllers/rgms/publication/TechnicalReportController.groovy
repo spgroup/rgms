@@ -64,31 +64,18 @@ class TechnicalReportController {
 
     def show(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        checkTechnicalReportInstance(id, technicalReportInstance)
+        technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance)
     }
 
     def edit(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        checkTechnicalReportInstance(id, technicalReportInstance)
+        technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance)
     }
 
     def update(Long id, Long version) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if (!technicalReportInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
-            redirect(action: "list")
+        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance) || !validVersionRenderEditIfItsNot(version, technicalReportInstance))
             return
-        }
-
-        if (version != null) {
-            if (technicalReportInstance.version > version) {
-                technicalReportInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'technicalReport.label', default: 'TechnicalReport')] as Object[],
-                        "Another user has updated this TechnicalReport while you were editing")
-                render(view: "edit", model: [technicalReportInstance: technicalReportInstance])
-                return
-            }
-        }
 
         technicalReportInstance.properties = params
 
@@ -103,11 +90,8 @@ class TechnicalReportController {
 
     def delete(Long id) {
         def technicalReportInstance = TechnicalReport.get(id)
-        if (!technicalReportInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
-            redirect(action: "list")
+        if(!technicalReportInstanceRedirectIfItsNull(id, technicalReportInstance))
             return
-        }
 
         try {
             technicalReportInstance.members.each {
@@ -123,7 +107,7 @@ class TechnicalReportController {
         }
     }
 
-    def checkTechnicalReportInstance(Long id, TechnicalReport technicalReportInstance) {
+    private technicalReportInstanceRedirectIfItsNull(Long id, TechnicalReport technicalReportInstance) {
         if (!technicalReportInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'technicalReport.label', default: 'TechnicalReport'), id])
             redirect(action: "list")
@@ -133,4 +117,16 @@ class TechnicalReportController {
         [technicalReportInstance: technicalReportInstance]
     }
 
+    private validVersionRenderEditIfItsNot(long version, TechnicalReport technicalReportInstance) {
+        if (version != null) {
+            if (technicalReportInstance.version > version) {
+                technicalReportInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'technicalReport.label', default: 'TechnicalReport')] as Object[],
+                        message(code: 'default.optimistic.locking.failure', args: [message(code: 'technicalReport.label', default: 'TechnicalReport')]))
+                render(view: "edit", model: [technicalReportInstance: technicalReportInstance])
+                return false
+            }
+        }
+        return true
+    }
 }
