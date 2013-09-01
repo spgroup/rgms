@@ -5,6 +5,7 @@ import rgms.news.News
 import rgms.news.NewsController
 import rgms.publication.*
 import org.apache.shiro.SecurityUtils
+import steps.ThesisOrDissertationTestDataAndOperations
 
 class TestDataAndOperations {
 
@@ -109,19 +110,9 @@ class TestDataAndOperations {
         return compatible
     }
 
-    static public void createTese(String title, filename, school) {
-        def cont = new TeseController()
-        createThesisOrDissertation(title, filename, school, cont)
-    }
-
-    static private void createThesisOrDissertation(String title, filename, school, cont) {
-        def date = new Date()
-        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
-                school: school, address: "Boa Viagem", file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+    static public void createDissertacao(String title, filename, school) {
+        def cont = new DissertacaoController()
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title, filename, school, cont)
     }
 
     static public void createMember(String username) {
