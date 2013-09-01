@@ -101,16 +101,6 @@ Given(~'^the system has a research line named as "([^"]*)"$') { String name ->
     assert research_line != null
 }
 
-/*Given(~'^I am at the visualize page of the research line "([^"]*)"$') { String name ->
-
-    at PublicationsPage
-    page.select("Linha de pesquisa")
-    at ResearchLinePage
-    page.visualizeResearchLine(name)
-    at ResearchLineVisualizePage
-    page.checkResearchLineDetails(name)
-}                 */
-
 When(~'^I click the edit button$') { ->
     at ResearchLineVisualizePage
     page.editResearchLine()
