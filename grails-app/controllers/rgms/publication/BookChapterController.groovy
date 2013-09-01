@@ -68,25 +68,31 @@ class BookChapterController {
 
     def update(Long id, Long version) {
         def bookChapterInstance = BookChapter.get(id)
-		boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
-		if(!isReturned){
-			if (version != null) {
-				if (bookChapterInstance.version > version) {
-					bookChapterInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-		            [message(code: 'bookChapter.label', default: 'BookChapter')] as Object[],
-		              "Another user has updated this BookChapter while you were editing")
-					render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
-					return
-		        }
-		    }
-		      bookChapterInstance.properties = params
-		      if (!bookChapterInstance.save(flush: true)) {
-		        render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
-		        return
-		      }
-		      flash.message = message(code: 'default.updated.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
-		      redirect(action: "show", id: bookChapterInstance.id)
-		}
+        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
+        if(!isReturned){
+            if (version != null && bookChapterInstance.version > version) {
+                outdatedVersionError((BookChapter) bookChapterInstance)
+            }else{
+                saveUpdate((BookChapter) bookChapterInstance)
+            }
+        }
+    }
+
+    def outdatedVersionError(BookChapter bookChapterInstance) {
+        bookChapterInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                [message(code: 'bookChapter.label', default: 'BookChapter')] as Object[],
+                "Another user has updated this BookChapter while you were editing")
+        render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
+    }
+
+    def saveUpdate(BookChapter bookChapterInstance){
+        bookChapterInstance.properties = params
+        if (!bookChapterInstance.save(flush: true)) {
+            render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
+        } else {
+            flash.message = message(code: 'default.updated.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
+            redirect(action: "show", id: bookChapterInstance.id)
+        }
     }
 
 	def delete(Long id) {
