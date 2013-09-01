@@ -7,10 +7,10 @@ class TwitterController {
 	static count = 0;
     def index() {
 		count++
-		println MessagesTwitter.controller + count
-		println MessagesTwitter.controller2 + params.name
+		println message (code: 'default.controller.message') + count
+		println message (code: 'default.controller2.message') + params.name
 		TwitterTool.addTwitterHistory(params.name, 1.toString())
 		//Member.list() as JSON
-		render(MessagesTwitter.sucess + count)
+		render(message(code:'default.sucess.message') + count)
 	}
 }

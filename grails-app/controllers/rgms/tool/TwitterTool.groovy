@@ -8,8 +8,9 @@ import twitter4j.auth.AccessToken
 
 public class TwitterTool{
 
-    final static String consumerKey = MessagesTwitter.consumerkey;
-    final static String consumerSecret = MessagesTwitter.consumersecret;
+    final static String consumerKey = "ZHgJv54dR7ZkYuKLvBeFJA";
+    final static String consumerSecret = "9Qj0OVOSEbkVOdCl4X1XUnoHSA46lQuAF3zCd7Gdk";
+
 
 	static twittersHistory = []
 
