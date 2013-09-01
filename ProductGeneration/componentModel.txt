@@ -166,6 +166,8 @@ messagessv => grailsapp/i18n/messagessv.properties;
 messagesth => grailsapp/i18n/messagesth.properties;
 messageszhCN => grailsapp/i18n/messageszhCN.properties;
 shiro => grailsapp/i18n/shiro.properties;
+messagesResearchLine => grailsapp/i18n/messagesResearchLine.properties;
+messagesTwitter => grailsapp/i18n/messagesTwitter.properties;
 
 TwitterTool => grailsapp/controllers/rgms/tool/TwitterTool.groovy;
 TwitterController => grailsapp/controllers/rgms/tool/TwitterController.groovy;
