@@ -76,9 +76,10 @@ class ThesisOrDissertationController {
         if (params.version) {
             def version = params.version.toLong()
             if (instance.version > version) {
+                def lower = thesisOrDissertation.toLowerCase()
                 instance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'tese.label', default: 'Tese')] as Object[],
-                          "Another user has updated this Tese while you were editing")
+                          [message(code: '${lower}.label', default: thesisOrDissertation)] as Object[],
+                          messageGenerator(thesisOrDissertation, "default.optimistic.locking.failure", params.id))
                 render(view: "edit", model: [instance: instance])
                 return
             }
