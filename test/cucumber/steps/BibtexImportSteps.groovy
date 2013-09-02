@@ -25,10 +25,10 @@ When(~'^I click "([^"]*)"$') { String arg1 ->
     page.selectButton(arg1)
 }
 
-When(~'^selected a bibtex file and I click "([^"]*)"$') { String arg1 ->
+When(~'^I select a bibtex file and I click "([^"]*)"$') { String arg1 ->
 }
 
-Then(~'^is created all corresponding publications$') {->
+Then(~'^all corresponding publications are created$') {->
     BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("test//cucumber//steps//sample.bibtex")
     assert bibtexFile.getPublications().size() == 3
 }
@@ -36,7 +36,7 @@ Then(~'^is created all corresponding publications$') {->
 Then(~'^all of then are stored$') {->
 }
 
-When(~'^selected a bibtex file unformatted and I click "([^"]*)"$') { String arg1 ->
+When(~'^I select a bibtex file unformatted and I click "([^"]*)"$') { String arg1 ->
 }
 
 //@Test(expected=RuntimeException.class)
@@ -45,9 +45,10 @@ Then(~'^the system output the message error "([^"]*)"$') { String arg1 ->
 }
 
 Then(~'^none publication is stored$') {->
+    assert Publication.getAll().size() == 0
 }
 
-When(~'^selected a bibtex file with one Dissertation and two Thesis and I click "([^"]*)"$') { String arg1 ->
+When(~'^I select a bibtex file with one Dissertation and two Thesis and I click "([^"]*)"$') { String arg1 ->
 }
 
 Then(~'^is created one Dissertation publication$') {->
