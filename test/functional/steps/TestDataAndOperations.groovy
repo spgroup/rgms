@@ -155,7 +155,6 @@ class TestDataAndOperations {
         return compatible
     }
 
-        createThesisOrDissertation(title, filename, school, cont)
     static public void createTese(String title, filename, school) {
         def cont = new TeseController()
         createThesisOrDissertation(title, filename, school, cont)

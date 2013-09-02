@@ -1,14 +1,10 @@
 package rgms.publication
 
 import org.springframework.web.multipart.MultipartHttpServletRequest
+import javax.servlet.http.HttpServletRequest
 import rgms.XMLService
 
 class DissertacaoController extends ThesisOrDissertationController {
-
-
-import javax.servlet.http.HttpServletRequest
-
-import javax.servlet.http.HttpServletRequest
 
 
    
@@ -26,9 +22,9 @@ import javax.servlet.http.HttpServletRequest
     def save() {
         saveThesisOrDissertation("Dissertacao", params)
     }
-def getDissertacaoInstance(def id)
-{
-        def dissertacaoInstance = Dissertacao.get(id)
+    def getDissertacaoInstance(def id)
+{        
+	def dissertacaoInstance = Dissertacao.get(id)
         if (!dissertacaoInstance) {
             flash.message = messageGenerator('default.not.found.message', id)
             redirect(action: "list")
@@ -37,23 +33,12 @@ def getDissertacaoInstance(def id)
 
         [dissertacaoInstance: dissertacaoInstance]
     }
-    def show() {
-        getDissertacaoInstance(params.id)
-    }
-    def edit (){
-        getDissertacaoInstance(params.id)
-    }
-    def show() {
-        getDissertacaoInstance(params.id)
-    def edit (){
-        getDissertacaoInstance(params.id)
-    }
 
-def show() {
+    def show() {
         showOrEdit("Dissertacao", params.id)
     }
     
-def edit() {
+    def edit() {
         showOrEdit("Dissertacao", params.id)
 }
 
