@@ -8,6 +8,8 @@ import rgms.XMLService
 class FerramentaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    FerramentaControllerAuxiliar aux = new FerramentaControllerAuxiliar()
+    AuxiliarController auxController = new AuxiliarController()
 
     def index() {
         redirectToList()
@@ -31,7 +33,7 @@ class FerramentaController {
             return
         }
 
-		flash.message = messageGenerator('default.created.message',ferramentaInstance.id)
+        flash.message = messageGenerator('default.created.message',ferramentaInstance.id)
         redirectToShow(ferramentaInstance.id)
     }
 
@@ -48,43 +50,27 @@ class FerramentaController {
     }
 
     def update() {
-       redirectAndReturnIfNotInstance { ferramentaInstance ->
-           if (params.version) {
-               def version = params.version.toLong()
-               if (ferramentaInstance.version > version) {
-                   ferramentaInstance.errors.rejectValue(
-                       "version", "default.optimistic.locking.failure",
-                       [message(code: 'ferramenta.label', default: 'Ferramenta')] as Object[],
-                       "Another user has updated this Ferramenta while you were editing")
+        redirectAndReturnIfNotInstance { ferramentaInstance ->
+            def editErro = false
+            if (params.version) {
+                editErro = aux.checkVersionFailed(params.version.toLong(), ferramentaInstance)
+            }
 
-                   render(view: "edit", model: [ferramentaInstance: ferramentaInstance])
-                   return
-               }
-           }
+            ferramentaInstance.properties = params
 
-           ferramentaInstance.properties = params
+            if (editErro || !ferramentaInstance.save(flush: true)) {
+                render(view: "edit", model: [ferramentaInstance: ferramentaInstance])
+                return
+            }
 
-           if (!ferramentaInstance.save(flush: true)) {
-               render(view: "edit", model: [ferramentaInstance: ferramentaInstance])
-               return
-           }
-
-           flash.message = messageGenerator('default.updated.message', ferramentaInstance.id)
-           redirectToShow(ferramentaInstance.id)
+            flash.message = messageGenerator('default.updated.message', ferramentaInstance.id)
+            redirectToShow(ferramentaInstance.id)
         }
     }
 
     def delete() {
         redirectAndReturnIfNotInstance { ferramentaInstance ->
-            try {
-                ferramentaInstance.delete(flush: true)
-                flash.message = messageGenerator ('default.deleted.message', params.id)
-                redirectToList()
-            }
-            catch (DataIntegrityViolationException e) {
-                flash.message = messageGenerator ('default.not.deleted.message'+' Erro: '+e.message, params.id)
-                redirectToShow(params.id)
-            }
+            auxController.delete(params.id, ferramentaInstance, 'ferramenta.label', 'Ferramenta')
         }
     }
 
