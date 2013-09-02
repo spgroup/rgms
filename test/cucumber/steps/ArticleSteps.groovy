@@ -1,3 +1,4 @@
+import pages.ArticlePages.*
 import pages.*
 import rgms.member.Member
 import rgms.publication.Periodico

@@ -1,3 +1,4 @@
+import pages.OrientationPages.*
 import pages.*
 import rgms.member.Orientation
 import rgms.publication.Periodico

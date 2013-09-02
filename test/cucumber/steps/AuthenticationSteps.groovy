@@ -9,8 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.remote.SessionId
-import pages.ArticleCreatePage
-import pages.ArticlesPage
+import pages.ArticlePages.ArticleCreatePage
+import pages.ArticlePages.ArticlesPage
 import pages.LoginPage
 
 import pages.MemberListPage
