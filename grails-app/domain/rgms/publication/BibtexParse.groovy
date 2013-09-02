@@ -32,8 +32,7 @@ class BibtexParse {
             date.year = entry.getField(BibTeXEntry.KEY_YEAR).toUserString().toInteger()
             publicationTemp.title = entry.getField(BibTeXEntry.KEY_TITLE).toUserString()
             publicationTemp.publicationDate = date
-            publicationTemp.members = entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString()
-            System.println("======"+publicationTemp.members)
+            publicationTemp.members = extractMembersFromBibtexEntry(entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString())
             if (entry.getType().equals(BibTeXEntry.TYPE_ARTICLE)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_BOOK)) {
@@ -83,6 +82,7 @@ class BibtexParse {
         entry.toLowerCase()
         String[] stringArray;
         stringArray = entry.split('and')
+        return stringArray
     }
     private static BibTeXDatabase parseBibTeX(File file) throws IOException, ParseException {
         Reader reader = new FileReader(file);
