@@ -19,13 +19,13 @@ class TestDataAndOperationsResearchLine {
             [name: "Modelo Cascata Renovado", description: "Altera��o do modelo original"]
     ]
 
-    static public def insertsResearchLine(String name) {
+    static public def insertsResearchLine(String name, description) {
         def inserted = ResearchLine.findByName(name)
         if (!inserted) {
-            def research = TestDataAndOperationsResearchLine.findResearchLineByName(name)
+           // def research = TestDataAndOperationsResearchLine.findResearchLineByName(name)
             ResearchLine rl = new ResearchLine()
-            rl.setName(research.name)
-            rl.setDescription(research.description)
+            rl.setName(name)
+            rl.setDescription(description)
             rl.save()
         }
 

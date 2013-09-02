@@ -483,9 +483,7 @@ class TestDataAndOperations {
         }
     }
 
-<<<<<<< refs/remotes/upstream/master
-    static public def insertsResearchLine(String name, description) {
-=======
+
    /* static public def insertsResearchLine(String name) {
 >>>>>>> HEAD~5
         def inserted = ResearchLine.findByName(name)
