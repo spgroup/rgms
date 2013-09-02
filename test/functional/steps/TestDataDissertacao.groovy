@@ -65,8 +65,4 @@ class TestDataDissertacao
         cont.delete()
     }
 
-    static public boolean containsUser(members){
-        def userData = Member.findByUsername('admin').id.toString()
-        return members.contains(userData)
-    }
 }
