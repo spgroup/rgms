@@ -1,5 +1,6 @@
-package pages
+package pages.ferramenta
 
+import pages.FormPage
 import geb.Page
 
 class FerramentaCreatePage extends FormPage {

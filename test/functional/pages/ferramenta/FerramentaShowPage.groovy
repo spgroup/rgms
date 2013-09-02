@@ -1,4 +1,4 @@
-package pages
+package pages.ferramenta
 
 import geb.Page
 import rgms.publication.Ferramenta

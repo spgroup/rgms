@@ -1,8 +1,5 @@
 import cucumber.runtime.PendingException
-import pages.FerramentaCreatePage
-import pages.FerramentaEditPage
-import pages.FerramentaPage
-import pages.FerramentaShowPage
+import pages.ferramenta.*
 import rgms.member.Member
 import rgms.publication.Ferramenta
 import steps.TestDataAndOperations
