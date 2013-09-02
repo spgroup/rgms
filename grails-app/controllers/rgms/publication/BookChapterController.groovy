@@ -63,25 +63,31 @@ class BookChapterController {
 
     def update(Long id, Long version) {
         def bookChapterInstance = BookChapter.get(id)
-		boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
-		if(!isReturned){
-			if (version != null) {
-				if (bookChapterInstance.version > version) {
-					bookChapterInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-		            [message(code: 'bookChapter.label', default: 'BookChapter')] as Object[],
-		              "Another user has updated this BookChapter while you were editing")
-					render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
-					return
-		        }
-		    }
-		      bookChapterInstance.properties = params
-		      if (!bookChapterInstance.save(flush: true)) {
-		        render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
-		        return
-		      }
-		      flash.message = message(code: 'default.updated.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
-		      redirect(action: "show", id: bookChapterInstance.id)
-		}
+        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
+        if(!isReturned){
+            if (version != null && bookChapterInstance.version > version) {
+                outdatedVersionError((BookChapter) bookChapterInstance)
+            }else{
+                saveUpdate((BookChapter) bookChapterInstance)
+            }
+        }
+    }
+
+    def outdatedVersionError(BookChapter bookChapterInstance) {
+        bookChapterInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                [message(code: 'bookChapter.label', default: 'BookChapter')] as Object[],
+                "Another user has updated this BookChapter while you were editing")
+        render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
+    }
+
+    def saveUpdate(BookChapter bookChapterInstance){
+        bookChapterInstance.properties = params
+        if (!bookChapterInstance.save(flush: true)) {
+            render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
+        } else {
+            flash.message = message(code: 'default.updated.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
+            redirect(action: "show", id: bookChapterInstance.id)
+        }
     }
 
 	def delete(Long id) {
@@ -106,41 +112,39 @@ class BookChapterController {
     }
 
     Closure saveBookChapters = {
-
         Node xmlFile ->
-
             Node bookChapters = (Node)((Node)((Node)xmlFile.children()[1]).children()[2]).children()[1]
             List<Object> bookChaptersChildren = bookChapters.children()
-
-            for (int i = 0; i < bookChaptersChildren.size(); ++i)
-            {
+            for (int i = 0; i < bookChaptersChildren.size(); ++i){
                 List<Object> bookChapter = ((Node)bookChaptersChildren[i]).children()
-
                 Node dadosBasicos = (Node) bookChapter[0]
                 Node detalhamentoCapitulo = (Node) bookChapter[1]
-
-                BookChapter newBookChapter = new BookChapter()
-                newBookChapter.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
-                newBookChapter.publisher = XMLService.getAttributeValueFromNode(detalhamentoCapitulo, "NOME-DA-EDITORA")
-
-                print(newBookChapter.title)
-
-                if (Publication.findByTitle(newBookChapter.title) == null)
-                {
-                    newBookChapter.publicationDate = new Date()
-
-                    String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO")
-                    if (tryingToParse.isInteger())
-                        newBookChapter.publicationDate.set(year: tryingToParse.toInteger())
-
-
-                    print(newBookChapter.publicationDate)
-                    newBookChapter.file = 'emptyfile' + i.toString()
-                    newBookChapter.chapter = 2
-                    newBookChapter.save(flush: false)
-                }
+                createNewBookChapter(dadosBasicos,detalhamentoCapitulo, i)
             }
+    }
 
+    def createNewBookChapter (Node dadosBasicos, Node detalhamentoCapitulo, int i){
+        BookChapter newBookChapter = new BookChapter()
+        newBookChapter.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
+        newBookChapter.publisher = XMLService.getAttributeValueFromNode(detalhamentoCapitulo, "NOME-DA-EDITORA")
+
+        print(newBookChapter.title)
+        if (Publication.findByTitle(newBookChapter.title) == null){
+            fillBookChapterInfo(newBookChapter, dadosBasicos, i)
+        }
+    }
+
+    def fillBookChapterInfo (BookChapter newBookChapter, Node dadosBasicos, int i){
+        newBookChapter.publicationDate = new Date()
+
+        String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO")
+        if (tryingToParse.isInteger())
+            newBookChapter.publicationDate.set(year: tryingToParse.toInteger())
+
+        print(newBookChapter.publicationDate)
+        newBookChapter.file = 'emptyfile' + i.toString()
+        newBookChapter.chapter = 2
+        newBookChapter.save(flush: false)
     }
     //#end
 }
