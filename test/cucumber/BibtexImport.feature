@@ -21,7 +21,7 @@ Feature: BibtexImport
   Scenario: bibtex file with several publication types
     Given I am on Import Bibtex File Menu
     When  I click "Choose file"
-    And selected a bibtex file with one Dissertacao and two Tese and I click "Import"
-    Then is created one Dissertacao publication
-    And is created two Tese publications
-    And one Dissertacao is stored and two Tese is stored
+    And selected a bibtex file with one Dissertation and two Thesis and I click "Import"
+    Then is created one Dissertation publication
+    And is created two Thesis publications
+    And one Dissertation is stored and two Thesis is stored
