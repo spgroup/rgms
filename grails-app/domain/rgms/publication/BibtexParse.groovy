@@ -20,14 +20,30 @@ class BibtexParse {
             //TODO settar todos os atributos de acordo com a classe a ser instanciada
             //Para pegar os valores do objeto 'entry' basta seguir o modelo da linha abaixo
             //String value = entry.getField(BibTeXEntry.KEY_TITLE).toUserString();
+            Publication publicationTemp = new Publication() {
+                @Override
+                String generateBib() {
+                    return null  //To change body of implemented methods use File | Settings | File Templates.
+                }
+            }
+            Date date = new Date()
+            date.year = entry.getField(BibTeXEntry.KEY_YEAR).toUserString().toInteger()
+            publicationTemp.title = entry.getField(BibTeXEntry.KEY_TITLE).toUserString()
+            publicationTemp.publicationDate = date
+            publicationTemp.members = entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString().toSet()
             if (entry.getType().equals(BibTeXEntry.TYPE_ARTICLE)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_BOOK)) {
-                publications.add(new BookChapter())
+                BookChapter bookchapter = new BookChapter()
+                bookchapter.chapter = entry.getField(BibTeXEntry.KEY_CHAPTER).toUserString().toInteger()
+                bookchapter.publisher = entry.getField(BibTeXEntry.KEY_PUBLISHER).toUserString()
+                bookchapter.title = publicationTemp.title
+                bookchapter.publicationDate = publicationTemp.publicationDate
+                bookchapter.members = publicationTemp.members
+                publications.add(bookchapter)
             } else if (entry.getType().equals(BibTeXEntry.TYPE_BOOKLET)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_CONFERENCE)) {
-                publications.add(new Conferencia())
             } else if (entry.getType().equals(BibTeXEntry.TYPE_INBOOK)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_INCOLLECTION)) {
