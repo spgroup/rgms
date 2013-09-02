@@ -1,16 +1,16 @@
-package pages
+package pages.ArticlePages
 
 import geb.Page
+import pages.GetPageTitle
 
-class OrientationShowPage extends Page {
-    static url = "orientation/show/1"
+class ArticleShowPage extends Page {
+    static url = "periodico/show/1"
 
     static at = {
-        //title ==~ /Ver orientation/
-
+        //title ==~ /Ver Peri�dico/
         GetPageTitle gp = new GetPageTitle()
-        def currentOrientation = gp.msg("default.orientation.label")
-        def currentTitle = gp.msg("default.show.label", [currentOrientation])
+        def currentPeriodico = gp.msg("default.periodico.label")
+        def currentTitle = gp.msg("default.show.label", [currentPeriodico])
 
         title ==~ currentTitle
     }
@@ -18,8 +18,12 @@ class OrientationShowPage extends Page {
     static content = {
     }
 
-    def select() {
-        $("form").find('a', class: 'edit').click()
+    def select(String e, v) {
+        if (v == 'delete') {
+            assert withConfirm(true) { $("form").find(e, class: v).click() }
+        } else {
+            $("form").find(e, class: v).click()
+        }
     }
 //#if ($Twitter)
     def clickOnTwitteIt(String login, pw) {
@@ -37,6 +41,10 @@ class OrientationShowPage extends Page {
         //$("#username_or_email").text = pw
         //$("input", type:"submit", class:"button selected submit", value:"Entrar e Tweetar").click()
         //<input type="submit" class="button selected submit" value="Entrar e Tweetar">
+    }
+
+    def clickOnShareOnFacebook() {
+        $("form").find(id: 'share').click()
     }
 //#end
 }

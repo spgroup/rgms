@@ -1,9 +1,10 @@
+import pages.OrientationPages.*
 import pages.*
 import rgms.member.Orientation
 import rgms.publication.Periodico
 import rgms.tool.FacebookTool
 import rgms.tool.TwitterTool
-import steps.TestDataAndOperations
+import steps.OrientationTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -16,27 +17,27 @@ Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTes
 
 When(~'^I create a orientation for the thesis "([^"]*)"$') { String tituloTese ->
     // Express the Regexp above with the code you wish you had
-    TestDataAndOperations.createOrientation(tituloTese)
+    OrientationTestDataAndOperations.createOrientation(tituloTese)
 }
 
 Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String tituloTese ->
     // Express the Regexp above with the code you wish you had
     orientation = Orientation.findByTituloTese(tituloTese)
-    assert TestDataAndOperations.compatibleTo(orientation, tituloTese)
+    assert OrientationTestDataAndOperations.OrientationCompatibleTo(orientation, tituloTese)
 }
 
 
 //delete
 Given(~'^the system has thesis entitled "([^"]*)" supervised for someone$') { String tituloTese ->
 
-    TestDataAndOperations.createOrientation(tituloTese)
-    orientation = TestDataAndOperations.findOrientationByTitle(tituloTese)
+    OrientationTestDataAndOperations.createOrientation(tituloTese)
+    orientation = OrientationTestDataAndOperations.findOrientationByTitle(tituloTese)
     assert orientation != null
 
 }
 
 When(~'^I delete the orientation for "([^"]*)"$') { String tituloTese ->
-    TestDataAndOperations.removeOrientation(tituloTese)
+    OrientationTestDataAndOperations.removeOrientation(tituloTese)
 }
 
 Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { String tituloTese ->

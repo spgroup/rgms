@@ -9,15 +9,6 @@ import org.apache.shiro.SecurityUtils
 
 class TestDataAndOperations {
 
-    static articles = [
-            [journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
-                    title: "A theory of software product line refinement",
-                    publicationDate: (new Date("12 October 2012"))],
-            [journal: "Science of Computer Programming", volume: 455, pages: "2-30",
-                    title: "Algebraic reasoning for object-oriented programming",
-                    publicationDate: (new Date("12 October 2012"))]
-    ]
-
     static ferramentas = [
             [description: "Ferramenta Target",
                     title: "Target",
@@ -105,11 +96,6 @@ class TestDataAndOperations {
                     dateLeft: (new Date(2012, 06, 01))]]
 
 
-    static public def findArticleByTitle(String title) {
-        articles.find { article ->
-            article.title == title
-        }
-    }
 
     static public def findFerramentaByTitle(String title) {
         ferramentas.find { ferramenta ->
@@ -165,19 +151,6 @@ class TestDataAndOperations {
     }
 
 
-    static public boolean compatibleTo(article, title) {
-        def testarticle = findArticleByTitle(title)
-        def compatible = false
-        if (testarticle == null && article == null) {
-            compatible = true
-        } else if (testarticle != null && article != null) {
-            compatible = true
-            testarticle.each { key, data ->
-                compatible = compatible && (article."$key" == data)
-            }
-        }
-        return compatible
-    }
 
     static public boolean bookChapterCompatibleTo(bookChapter, title) {
         def testBookChapter = findBookChapterByTitle(title)
@@ -304,15 +277,6 @@ class TestDataAndOperations {
         return compatible
     }
 
-    static public void createArticle(String title, filename) {
-        def cont = new PeriodicoController()
-        def date = new Date()
-        cont.params << TestDataAndOperations.findArticleByTitle(title) << [file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
 
     static public void createFerramenta(String title, filename) {
         def cont = new FerramentaController()
@@ -405,9 +369,6 @@ class TestDataAndOperations {
     }
 
 
-    static void clearArticles() {
-        Periodico.findAll()*.delete flush: true // Could also delete the created files.
-    }
 
     /*static public void deleteResearchLine(def id) {
         def res = new ResearchLineController()
@@ -496,13 +457,6 @@ class TestDataAndOperations {
         }
     }*/
 
-    static public void removeArticle(String title) {
-        def testarticle = Periodico.findByTitle(title)
-        def cont = new PeriodicoController()
-        def date = new Date()
-        cont.params << [id: testarticle.id]
-        cont.delete()
-    }
 
     static public void removeBookChapter(String title) {
         def testBookChapter = BookChapter.findByTitle(title)
@@ -518,13 +472,6 @@ class TestDataAndOperations {
         return result.contains(testarbook)
     }
 
-    static public boolean containsArticle(title, articles) {
-        def testarticle = Periodico.findByTitle(title)
-        def cont = new PeriodicoController()
-        def result = cont.list().periodicoInstanceList
-        return result.contains(testarticle)
-    }
-
     static public boolean containsMember(username, members) {
         def testmember = Member.findByUsername(username)
         def cont = new MemberController()
@@ -538,9 +485,8 @@ class TestDataAndOperations {
         def cont = new PeriodicoController()
         cont.params << article.properties
         cont.update()
-
-        def updatedarticle = Periodico.findByTitle(newtitle)
-        return updatedarticle
+		def updatedarticle = Periodico.findByTitle(newtitle)
+		return updatedarticle
     }
 
     static public Ferramenta editFerramenta(oldtitle, newtitle) {

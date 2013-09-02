@@ -1,6 +1,7 @@
-package pages
+package pages.ArticlePages
 
 import geb.Page
+import pages.GetPageTitle
 
 class ArticleEditPage extends Page {
     static url = "periodico/edit/1"
