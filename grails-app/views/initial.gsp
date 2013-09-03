@@ -156,7 +156,9 @@
         <!-- #if($ImportBibtex && $TesePublication) -->
         <li><g:link controller="BibtexFile" action="home">Import Bibtex File</g:link></li>
         <!-- #end -->
+        <!-- #if($Bibtex && $BibtexGenerateFile) -->
         <li><g:link controller="BibtexGenerateFile" action="home">Export Bibtex File</g:link></li>
+        <!-- #end -->
     </ol>
 </div>
 <!--  </div>-->
