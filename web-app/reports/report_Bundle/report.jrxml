@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="report" whenResourceMissingType="Key">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="report" whenResourceMissingType="Key" uuid="926cbc83-8780-4800-a903-22fef10cb7f3">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["../rgms/web-app/reports/report_Bundle/"]]></defaultValueExpression>
 	</parameter>
@@ -34,39 +34,39 @@
 	<title>
 		<band height="86" splitType="Stretch">
 			<image>
-				<reportElement x="29" y="0" width="84" height="85"/>
+				<reportElement uuid="907607e0-cb4b-4ef1-8d6d-a1b140dc44df" x="29" y="0" width="84" height="85"/>
 				<imageExpression><![CDATA["../rgms/web-app/images/bart.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="129" y="5" width="100" height="20"/>
+				<reportElement uuid="0c8ee8e6-f974-4075-b2a5-f2ef9a63b24b" x="129" y="5" width="148" height="20"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="129" y="25" width="100" height="20"/>
+				<reportElement uuid="f71e0954-1a17-46b8-b21e-92c2a1682d8c" x="129" y="25" width="148" height="20"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="129" y="45" width="100" height="20"/>
+				<reportElement uuid="b266481e-8369-4b1b-afc0-0abc2370589f" x="129" y="45" width="148" height="20"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{university}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="129" y="65" width="100" height="20"/>
+				<reportElement uuid="d3e71608-1d1b-41f5-ab09-605cc31b4178" x="129" y="65" width="148" height="20"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="277" y="9" width="173" height="27"/>
+				<reportElement uuid="58c433d8-cf97-4fbf-a973-9391de02df7c" x="277" y="9" width="173" height="27"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
@@ -80,21 +80,19 @@
 	<columnHeader>
 		<band height="102" splitType="Stretch">
 			<subreport>
-				<reportElement x="27" y="64" width="115" height="31"/>
+				<reportElement uuid="02c11d46-90d2-4be6-8100-9516668e13c5" x="27" y="64" width="115" height="31"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "memberPubs.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement x="27" y="33" width="171" height="30"/>
+				<reportElement uuid="280d70c1-5efa-4720-922e-716f3da999d8" x="27" y="33" width="171" height="30"/>
 				<textElement>
 					<font size="18"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{pubs}]]></textFieldExpression>
 			</textField>
-			
 		</band>
 	</columnHeader>
-	
 	<columnFooter>
 		<band height="98" splitType="Stretch"/>
 	</columnFooter>
