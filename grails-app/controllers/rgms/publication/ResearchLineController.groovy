@@ -2,6 +2,7 @@ package rgms.publication
 
 
 import rgms.member.Member
+import rgms.EmailService
 
 class ResearchLineController {
 
@@ -61,13 +62,8 @@ class ResearchLineController {
     }
     //#if($ResearchLineNotification)
     def sendEmail(def email, def title, def content) {
-        sendMail {
-            to email
-            from grailsApplication.config.grails.mail.username
-            subject title
-            body content
-
-        }
+        EmailService emailService = new EmailService();
+        emailService.sendEmail(email, grailsApplication.config.grails.mail.username, title, content)
     }
     //#end
     //#if($ResearchLineNotification)
