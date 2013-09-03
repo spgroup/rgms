@@ -12,8 +12,8 @@
 <div class="body">
     <br/>
     <g:form controller="BibtexFileController" method="post" action="upload" enctype="multipart/form-data">
-        <input type="file" name="file"/>
-        <input type="submit"/>
+        <input name="fileChooser" type="file" name="file"/>
+        <input name="submit" type="submit"/>
     </g:form>
 </div>
 </body>
