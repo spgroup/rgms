@@ -39,9 +39,10 @@ Then(~'^all corresponding publications are created$') {->
 }
 
 Then(~'^all of then are stored$') {->
+    assert Publication.getAll().size() > 0
 }
 
-When(~'^I select a bibtex file unformatted and I click "([^"]*)"$') { String arg1 -> 6
+When(~'^I select a bibtex file unformatted and I click "([^"]*)"$') { String arg1 ->
 }
 
 //@Test(expected=RuntimeException.class)
