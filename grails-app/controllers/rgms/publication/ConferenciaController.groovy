@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest
 class ConferenciaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-	AuxiliarController aux = new AuxiliarController()
+    AuxiliarController aux = new AuxiliarController()
 
     def index() {
         redirect(action: "list", params: params)
@@ -28,66 +28,63 @@ class ConferenciaController {
         [conferenciaInstance: conferenciaInstance]
     }
 
-    def alertMessage(String typeMessage, Conferencia conferenciaInstance){
+    private alertMessage(String typeMessage, Conferencia conferenciaInstance){
         flash.message = message(code: 'default.'+ typeMessage +'.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
         redirect(action: "show", id: conferenciaInstance.id)
     }
 
     def save() {
         def conferenciaInstance = new Conferencia(params)
-		PublicationController pb = new PublicationController()
+        PublicationController pb = new PublicationController()
         if (!pb.upload(conferenciaInstance) || !conferenciaInstance.save(flush: true)) {
             render(view: "create", model: [conferenciaInstance: conferenciaInstance])
             return
         }
-		//#if($facebook)
-        //def user = Member.findByUsername(SecurityUtils.subject?.principal)
-        //pb.sendPostFacebook(user, conferenciaInstance.toString())
-        //#end
         alertMessage('created',conferenciaInstance)
-		//flash.message = message(code: 'default.created.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
-        //redirect(action: "show", id: conferenciaInstance.id)
     }
 
-    def returnConferenciaInstance(boolean onlyShow){
+    private returnConferenciaInstance(){
         def conferenciaInstance = Conferencia.get(params.id)
         boolean isReturned = aux.check(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
-        if(!isReturned && onlyShow){
+        if(!isReturned){
             [conferenciaInstance: conferenciaInstance]
         }
-        else if(!isReturned && !onlyShow)
+
+    }
+
+    private returnConferenciaActualVersion()
+    {
+        def conferenciaInstance = Conferencia.get(params.id)
+        boolean isReturned = aux.check(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
+        if(!isReturned)
         {
             if (params.version) {
                 def version = params.version.toLong()
                 if (conferenciaInstance.version > version) {
                     conferenciaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                             [message(code: 'conferencia.label', default: 'Conferencia')] as Object[],
-                            "Another user has updated this Conferencia while you were editing")
+                            message(code: 'default.updateError.message'))
                     render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
-                    return
-                }
-            }
+                    return  }  }
             conferenciaInstance.properties = params
             if (!conferenciaInstance.save(flush: true)) {
                 render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
                 return
             }
             alertMessage('updated',conferenciaInstance)
-            //flash.message = message(code: 'default.updated.message', args: [message(code: 'conferencia.label', default: 'Conferencia'), conferenciaInstance.id])
-            //redirect(action: "show", id: conferenciaInstance.id)
         }
     }
 
     def show() {
-        returnConferenciaInstance(true)
+        returnConferenciaInstance()
     }
 
     def edit() {
-        returnConferenciaInstance(true)
+        returnConferenciaInstance()
     }
 
     def update() {
-        returnConferenciaInstance(false)
+        returnConferenciaActualVersion();
     }
 
     def delete() {
@@ -103,7 +100,7 @@ class ConferenciaController {
     }
 
     def enviarConferenciaXML(){
-        String flashMessage = ConferenciaStrings.importedMsg
+        String flashMessage = message(code: 'default.importedMsg.message')
 
         if (!XMLService.Import(saveConferencias, returnWithMessage, flashMessage, request))
             return

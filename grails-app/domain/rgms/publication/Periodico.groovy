@@ -14,11 +14,11 @@ class Periodico extends Publication {
         pages nullable: false, blank: false
     }
 
-//#if($Bibtex)
+    //#if($Bibtex)
     String generateBib() {
-        return "@article{"+"author=\"" + BibtexAux.organizeAuthors(members) + "\",\n title=\"" + title + "\",\n journal=\""+this.journal + "\",\n year=\"" + publicationDate.getAt(Calendar.YEAR) + "\",\n volume=\""+this.volume + "\",\n month=\"" + publicationDate.getAt(Calendar.MONTH)+"\",\n number=\"" + this.number + "\",\n pages=\"" + this.pages + "\"}"
+        return new BibtexExport().generateBibtexPeriodico(this)
     }
-//#end
+    //#end
 
     @Override
     public String toString() {

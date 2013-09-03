@@ -17,18 +17,6 @@ class TestDataAndOperations {
             [name: "Modelo Cascata Renovado", description: "Altera��o do modelo original"]
     ]
 
-    static conferencias = [
-            [title: "I International Conference on Software Engineering",
-                    publicationDate: (new Date("12 October 2012")),
-                    booktitle: "Software Engineering", pages: "20-120"],
-            [title: "IV Conference on Software Product Lines",
-                    publicationDate: (new Date("14 October 2012")),
-                    booktitle: "Practices and Patterns", pages: "150-200"],
-            [title: "V Conference on Software Product Lines",
-                    publicationDate: (new Date("16 October 2012")),
-                    booktitle: "Practices and Patterns", pages: "50-100"]
-    ]
-
     static records = [
             [status_H: "MSc Student", start: (new Date()), end: null],
             [status_H: "Graduate Student", start: (new Date()), end: null]
@@ -82,12 +70,6 @@ class TestDataAndOperations {
     static public boolean recordIsAssociated(def status, def shallBe = true) {
         def recordId = Record.findByStatus_H(status).id
         RecordController.recordHasMembers(recordId) == shallBe
-    }
-
-    static public def findConferenciaByTitle(String title) {
-        conferencias.find { conferencia ->
-            conferencia.title == title
-        }
     }
 
    /* static public def findResearchLineByName(String name) {
@@ -189,29 +171,6 @@ class TestDataAndOperations {
         def date = new Date()
         cont.params << [id: testDissertation.id]
         cont.delete()
-    }
-
-    static public boolean conferenciaCompatibleTo(conferencia, title) {
-        def testConferencia = findConferenciaByTitle(title)
-        def compatible = false
-        if (testConferencia == null && conferencia == null) {
-            compatible = true
-        } else if (testConferencia != null && conferencia != null) {
-            compatible = true
-            testConferencia.each { key, data ->
-                compatible = compatible && (conferencia."$key" == data)
-            }
-        }
-        return compatible
-    }
-
-    static public void createConferencia(String title, String filename) {
-        def cont = new ConferenciaController()
-        cont.params << TestDataAndOperations.findConferenciaByTitle(title) << [file: filename]
-        cont.request.setContent(new byte[1000])
-        cont.create()
-        cont.save()
-        cont.response.reset()
     }
 
     static public void createMember(String username) {
@@ -378,12 +337,6 @@ class TestDataAndOperations {
         cont.update()
 		def updatedarticle = Periodico.findByTitle(newtitle)
 		return updatedarticle
-    }
-
-    static public void removeConferencia(String title) {
-        def cont = new ConferenciaController()
-        def date = new Date()
-        Conferencia.findByTitle(title).delete(flush: true)
     }
 
     static public ResearchGroup createAndGetResearchGroupByName(String name) {

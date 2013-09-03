@@ -1,4 +1,6 @@
-package pages
+package pages.Conferencia
+
+import pages.FormPage
 
 class ConferenciaCreatePage extends FormPage {
     static url = "conferencia/create"
