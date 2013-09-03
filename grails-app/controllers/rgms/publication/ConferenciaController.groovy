@@ -103,7 +103,7 @@ class ConferenciaController {
     }
 
     def enviarConferenciaXML(){
-        String flashMessage = 'The non existent conferences were successfully imported'
+        String flashMessage = ConferenciaStrings.importedMsg
 
         if (!XMLService.Import(saveConferencias, returnWithMessage, flashMessage, request))
             return
