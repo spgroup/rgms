@@ -17,6 +17,14 @@ class TestDataAndOperations {
             [name: "Modelo Cascata Renovado", description: "Altera��o do modelo original"]
     ]
 
+    static members = [
+            [name: "Rodolfo Ferraz", username: "usernametest", email: "rodolfofake@gmail.com",
+                    status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
+                    status: "Graduate Student", university: "UFPE", enabled: true
+            ]]
+
     static records = [
             [status_H: "MSc Student", start: (new Date()), end: null],
             [status_H: "Graduate Student", start: (new Date()), end: null]
@@ -57,12 +65,6 @@ class TestDataAndOperations {
     static public def openBibTexFile(String path){
         BibtexFileController bibtexFileController = new BibtexFileController()
         BibtexFile bibtexFile = bibtexFileController.transform(new File(path))
-    }
-
-    static public def findByUsername(String username) {
-        members.find { member ->
-            member.username == username
-        }
     }
 
     static public def findRecordByStatus(def status) {
@@ -115,9 +117,43 @@ class TestDataAndOperations {
         ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title, filename, school, cont)
     }
 
-    static public void createMember(String username) {
-        def cont = new MemberController()
-        cont.params << TestDataAndOperations.findByUsername(username)
+    static public void uploadFerramenta(filepath) {
+        def cont = new FerramentaController()
+        def xml = new File((String) filepath);
+        def records = new XmlParser()
+        cont.saveTools(records.parse(xml));
+        cont.response.reset()
+    }
+
+    static public boolean conferenciaCompatibleTo(conferencia, title) {
+        def testConferencia = findConferenciaByTitle(title)
+        def compatible = false
+        if (testConferencia == null && conferencia == null) {
+            compatible = true
+        } else if (testConferencia != null && conferencia != null) {
+            compatible = true
+            testConferencia.each { key, data ->
+                compatible = compatible && (conferencia."$key" == data)
+            }
+        }
+        return compatible
+    }
+
+    static public void createArticle(String title, filename) {
+        def cont = new PeriodicoController()
+        def date = new Date()
+        cont.params << TestDataAndOperations.findArticleByTitle(title) << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
+    static public void createFerramenta(String title, filename) {
+        def cont = new FerramentaController()
+        def date = new Date()
+        cont.params << TestDataAndOperations.findFerramentaByTitle(title) << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
         cont.save()
         cont.response.reset()
@@ -162,19 +198,6 @@ class TestDataAndOperations {
         //cont.save()
         cont.response.reset()
     }
-
-
-    static public void deleteMember(String username) {
-        def cont = new MemberController()
-        def identificador = Member.findByUsername(username).id
-        cont.params << [id: identificador]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.delete()
-        //cont.save()
-        cont.response.reset()
-    }
-
-
 
     /*static public void deleteResearchLine(def id) {
         def res = new ResearchLineController()
