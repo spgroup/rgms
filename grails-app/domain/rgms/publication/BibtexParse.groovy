@@ -76,6 +76,13 @@ class BibtexParse {
                 publications.add(dissertacao)
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_MISC)) {
+                Ferramenta ferramenta = new Ferramenta()
+                ferramenta.website = entry.getField((BibTeXEntry.KEY_URL)).toUserString()
+                ferramenta.description = entry.getField(BibTeXEntry.KEY_NOTE).toUserString()
+                ferramenta.title = publicationTemp.title
+                ferramenta.publicationDate = publicationTemp.publicationDate
+                ferramenta.members = publicationTemp.members
+                publications.add(ferramenta)
 
             }
             //#if($ImportBibtex && $TesePublication)
