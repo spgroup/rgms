@@ -70,4 +70,9 @@ Then(~'^is created two Thesis publications$') {->
 }
 
 Then(~'^one Dissertation is stored and two Thesis is stored$') {->
+    dissertationSize = Dissertacao.findAll().size()
+    teseSize = Tese.findAll().size()
+
+    assert dissertationSize == 1
+    assert teseSize == 2
 }
