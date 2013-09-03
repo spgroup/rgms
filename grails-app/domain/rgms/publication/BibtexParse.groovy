@@ -34,6 +34,7 @@ class BibtexParse {
             publicationTemp.title = entry.getField(BibTeXEntry.KEY_TITLE).toUserString()
             publicationTemp.publicationDate = date
             publicationTemp.members = extractMembersFromBibtexEntry(entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString())
+            //#if($ImportBibtex && $Periodico)
             if (entry.getType().equals(BibTeXEntry.TYPE_ARTICLE)) {
                 Periodico periodico = new Periodico()
                 periodico.title = publicationTemp.title
@@ -45,7 +46,10 @@ class BibtexParse {
                 periodico.journal = entry.getField(BibTeXEntry.KEY_JOURNAL).toUserString()
                 publications.add(periodico)
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_BOOK)) {
+            }
+            //#end
+            //#if($ImportBibtex && $BookChapter)
+            else if (entry.getType().equals(BibTeXEntry.TYPE_BOOK)) {
                 BookChapter bookchapter = new BookChapter()
                 bookchapter.chapter = entry.getField(BibTeXEntry.KEY_CHAPTER).toUserString().toInteger()
                 bookchapter.publisher = entry.getField(BibTeXEntry.KEY_PUBLISHER).toUserString()
@@ -53,7 +57,9 @@ class BibtexParse {
                 bookchapter.publicationDate = publicationTemp.publicationDate
                 bookchapter.members = publicationTemp.members
                 publications.add(bookchapter)
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_BOOKLET)) {
+            }
+            //#end
+            else if (entry.getType().equals(BibTeXEntry.TYPE_BOOKLET)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_CONFERENCE)) {
 
@@ -63,7 +69,9 @@ class BibtexParse {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_INCOLLECTION)) {
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_INPROCEEDINGS)) {
+            }
+            //#if($ImportBibtex && $Conferencia)
+            else if (entry.getType().equals(BibTeXEntry.TYPE_INPROCEEDINGS)) {
                 Conferencia conferencia = new Conferencia()
                 conferencia.booktitle = entry.getField(BibTeXEntry.KEY_BOOKTITLE).toUserString()
                 conferencia.pages = entry.getField(BibTeXEntry.KEY_PAGES).toUserString().toInteger()
@@ -72,9 +80,13 @@ class BibtexParse {
                 conferencia.members = publicationTemp.members
                 publications.add(conferencia)
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_MANUAL)) {
+            }
+            //#end
+            else if (entry.getType().equals(BibTeXEntry.TYPE_MANUAL)) {
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_MASTERSTHESIS)) {
+            }
+            //#if($ImportBibtex && $Dissertation)
+            else if (entry.getType().equals(BibTeXEntry.TYPE_MASTERSTHESIS)) {
 
                 Dissertacao dissertacao = new Dissertacao()
                 dissertacao.school = entry.getField(BibTeXEntry.KEY_SCHOOL).toUserString()
@@ -84,7 +96,10 @@ class BibtexParse {
                 dissertacao.members = publicationTemp.members
                 publications.add(dissertacao)
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_MISC)) {
+            }
+            //#end
+            //#if($ImportBibtex && $Ferramenta)
+            else if (entry.getType().equals(BibTeXEntry.TYPE_MISC)) {
                 Ferramenta ferramenta = new Ferramenta()
                 ferramenta.website = entry.getField((BibTeXEntry.KEY_URL)).toUserString()
                 ferramenta.description = entry.getField(BibTeXEntry.KEY_NOTE).toUserString()
@@ -94,6 +109,7 @@ class BibtexParse {
                 publications.add(ferramenta)
 
             }
+                //#end
             //#if($ImportBibtex && $TesePublication)
             else if (entry.getType().equals(BibTeXEntry.TYPE_PHDTHESIS)) {
                 publications.add(new StrategyParseTese().execute(entry))
@@ -101,14 +117,18 @@ class BibtexParse {
             //#end
             else if (entry.getType().equals(BibTeXEntry.TYPE_PROCEEDINGS)) {
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_TECHREPORT)) {
+            }
+            //#if($ImportBibtex && $TechnicalReport)
+            else if (entry.getType().equals(BibTeXEntry.TYPE_TECHREPORT)) {
                 TechnicalReport technicalReport = new TechnicalReport()
                 technicalReport.members = publicationTemp.members
                 technicalReport.institution = entry.getField(BibTeXEntry.KEY_INSTITUTION).toUserString()
                 technicalReport.title = publicationTemp.title
                 technicalReport.publicationDate = publicationTemp.publicationDate
                 publications.add(technicalReport)
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_UNPUBLISHED)) {
+            }
+            //#end
+            else if (entry.getType().equals(BibTeXEntry.TYPE_UNPUBLISHED)) {
 
             }
 
