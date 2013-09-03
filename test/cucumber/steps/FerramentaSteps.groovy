@@ -2,6 +2,7 @@ import cucumber.runtime.PendingException
 import pages.ferramenta.*
 import rgms.member.Member
 import rgms.publication.Ferramenta
+import steps.FerramentaTestDataAndOperations
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -12,7 +13,7 @@ Given(~'^the system has no ferramenta entitled "([^"]*)"$') { String title ->
     assert ferramenta == null
 }
 When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" without its website$') { String title, String filename ->
-    TestDataAndOperations.createFerramenta(title, filename)
+    FerramentaTestDataAndOperations.createFerramenta(title, filename)
 }
 Then(~'^the ferramenta "([^"]*)" is not stored$') { String title ->
     def tool = Ferramenta.findByTitle(title)
@@ -21,12 +22,12 @@ Then(~'^the ferramenta "([^"]*)" is not stored$') { String title ->
 
 // duplicate ferramenta
 Given(~'^the ferramenta "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
-    TestDataAndOperations.createFerramenta(title, filename)
+    FerramentaTestDataAndOperations.createFerramenta(title, filename)
     ferramenta = Ferramenta.findByTitle(title)
     assert ferramenta != null
 }
 When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    TestDataAndOperations.createFerramenta(title, filename)
+    FerramentaTestDataAndOperations.createFerramenta(title, filename)
 }
 Then(~'^the ferramenta "([^"]*)" is not stored twice$') { String title ->
     ferramentas = Ferramenta.findAllByTitle(title)
@@ -37,12 +38,12 @@ Then(~'^the ferramenta "([^"]*)" is not stored twice$') { String title ->
 
 // edit existing ferramenta
 Given(~'^the system has a ferramenta entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    TestDataAndOperations.createFerramenta(title, filename)
+    FerramentaTestDataAndOperations.createFerramenta(title, filename)
     ferramenta = Ferramenta.findByTitle(title)
     assert ferramenta != null
 }
 When(~'^I edit the ferramenta title from "([^"]*)" to "([^"]*)"$') { String oldtitle, String newtitle ->
-    def updatedFerramenta = TestDataAndOperations.editFerramenta(oldtitle, newtitle)
+    def updatedFerramenta = FerramentaTestDataAndOperations.editFerramenta(oldtitle, newtitle)
     assert updatedFerramenta != null
 }
 Then(~'^the ferramenta "([^"]*)" is properly updated by the system$') { String title ->
@@ -65,7 +66,7 @@ Given(~'^the system has some ferramenta stored$') {->
 When(~'^I upload a new ferramenta "([^"]*)"$') { filename ->
     inicialSize = Ferramenta.findAll().size()
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    TestDataAndOperations.uploadFerramenta(path + filename)
+    FerramentaTestDataAndOperations.uploadFerramenta(path + filename)
     finalSize = Ferramenta.findAll().size()
     assert inicialSize < finalSize
     //para funcionar é necessario que tenha um FilePath válido
@@ -77,7 +78,7 @@ Then(~'the system has more ferramenta now$') {->
 
 // remove existing ferramenta
 When(~'^I remove the ferramenta entitled "([^"]*)"$') { String arg1 ->
-    TestDataAndOperations.removeFerramenta(arg1)
+    FerramentaTestDataAndOperations.removeFerramenta(arg1)
 }
 
 // GUI testes

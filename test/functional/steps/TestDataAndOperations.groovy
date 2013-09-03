@@ -21,28 +21,6 @@ class TestDataAndOperations {
                     publicationDate: (new Date("12 October 2012"))]
     ]
 
-    static ferramentas = [
-            [description: "Ferramenta Target",
-                    title: "Target",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.teste.com", description: "Ferramenta Emergo",
-                    title: "Emergo",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.ccfinder.com", description: "Ferramenta CCfinder",
-                    title: "CCFinder",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.tool.com", description: "Ferramenta Tool",
-                    title: "Tool",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.new.com", description: "Ferramenta New",
-                    title: "New",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.tooldelete.com", description: "Ferramenta ToolDelete",
-                    title: "ToolDelete",
-                    publicationDate: (new Date("12 October 2012"))]
-    ]
-
-
     static researchLines = [
             [name: "IA Avancada", description: ""],
             [name: "Teoria da informacao - Complexidade no espaco", description: "P=NP"],
@@ -138,12 +116,6 @@ class TestDataAndOperations {
         }
     }
 //#end
-
-    static public def findFerramentaByTitle(String title) {
-        ferramentas.find { ferramenta ->
-            ferramenta.title == title
-        }
-    }
 
     static public def findByUsername(String username) {
         members.find { member ->
