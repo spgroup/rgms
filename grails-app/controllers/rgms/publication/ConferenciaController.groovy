@@ -5,7 +5,6 @@ import rgms.XMLService
 //#end
 import org.apache.shiro.SecurityUtils
 import org.springframework.web.multipart.MultipartHttpServletRequest
-import rgms.publication.Strings.ConferenciaStrings
 
 class ConferenciaController {
 
@@ -69,7 +68,7 @@ class ConferenciaController {
                 if (conferenciaInstance.version > version) {
                     conferenciaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                             [message(code: 'conferencia.label', default: 'Conferencia')] as Object[],
-                            ConferenciaStrings.updateError)
+                            message(code: 'default.updateError.message'))
                     render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
                     return  }  }
             conferenciaInstance.properties = params
@@ -106,7 +105,7 @@ class ConferenciaController {
     }
 
     def enviarConferenciaXML(){
-        String flashMessage = ConferenciaStrings.importedMsg
+        String flashMessage = message(code: 'default.importedMsg.message')
         XMLService serv = new XMLService()
         Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
         serv.Import(saveConferencias, returnWithMessage, flashMessage, xmlFile)
