@@ -59,8 +59,8 @@ class MemberController {
 
         def email = memberInstance.email
         def mailSender = grailsApplication.config.grails.mail.username
-        def title = "[GRMS] Your account was successfully created!"
-        def content = "Hello ${ memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${ username} and password: ${ password}\n\n${ createLink(absolute: true, uri: '/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
+        def title = message(code: 'mail.title.create.account')
+        def content = message(code: 'mail.body.create.account', args: [memberInstance.name, username, password, createLink(absolute: true, uri: '/')])
 
         EmailService emailService = new EmailService();
         emailService.sendEmail(email, mailSender, title, content)

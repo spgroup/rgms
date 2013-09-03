@@ -9,7 +9,7 @@ class FerramentaControllerAuxiliar {
             ferramentaInstance.errors.rejectValue(
                 "version", "default.optimistic.locking.failure",
                 [message(code: 'ferramenta.label', default: 'Ferramenta')] as Object[],
-                'ferramenta.edit.conflict')
+                message(code: 'ferramenta.edit.conflict'))
                 return true
         }
         else{

@@ -231,8 +231,9 @@ class ResearchGroupController {
             if (member.getEmail()) {
                 def email = member.getEmail()
                 def mailSender = grailsApplication.config.grails.mail.username
-                def title = "Research Group change hierarchy"
-                def content = "Hello " + member.name + ",\n\nThe Research Group is now child of the Research Group ${researchGroup.getChildOf().getName()}".toString()
+                def title = message(code: 'mail.title.researchgroup.child')
+                def content = message(code: 'mail.body.researchgroup.child', args: [member.name, researchGroup.getChildOf().getName()])
+
                 EmailService emailService = new EmailService()
                 emailService.sendEmail(email, mailSender, title, content)
             }
