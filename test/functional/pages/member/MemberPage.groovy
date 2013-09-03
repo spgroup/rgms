@@ -1,12 +1,17 @@
-package pages
+package pages.member
 
 import geb.Page
+import pages.GetPageTitle
 
 class MemberPage extends Page {
     static url = "member/show"
 
     static at = {
-        title ==~ /Ver Member/
+       // title ==~ /Ver Member/
+                GetPageTitle gp = new GetPageTitle()
+                def memberLabel = gp.msg("default.member.label")
+                def showLabel = gp.msg("default.show.label", [memberLabel])
+                title ==~ showLabel
     }
 
     static content = {

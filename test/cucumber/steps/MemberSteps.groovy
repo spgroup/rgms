@@ -1,6 +1,6 @@
 import pages.LoginPage
-import pages.MemberCreatePage
-import pages.MemberViewPage
+import pages.member.MemberCreatePage
+import pages.member.MemberViewPage
 import pages.RegisterPage
 import rgms.member.Member
 import steps.MemberTestDataAndOperations
