@@ -31,6 +31,7 @@ class BibtexGenerateFileController {
     }
 
     def generateBibTex = {
+        //Member.get(params.id)
         String bibtex = ""
         int numero = (params.id).toInteger()
         for(publication in Publication.getAll())
@@ -40,11 +41,46 @@ class BibtexGenerateFileController {
                 if(member.getId() == numero)
                 {
                     bibtex = bibtex + publication.generateBib()  + "<br>"
+                    break
                 }
-                break
+
             }
         }
 
         render(bibtex)
+    }
+
+    def generateBibTexGroup  = {
+        String bibtex = ""
+        int numero = (params.id).toInteger()
+        for(group in ResearchGroup.getAll())
+        {
+            if(group.getId() == numero)
+            {
+                for(member in Membership.getAllMembers(group))
+                {
+                   bibtex = bibtex + teste(member.getId())
+                }
+            }
+        }
+
+        render(bibtex)
+    }
+
+    String teste(numero)
+    {
+        String bibtex = ""
+        for(publication in Publication.getAll())
+        {
+            for(member in publication.getMembers())
+            {
+                if(member.getId() == numero)
+                {
+                    bibtex = bibtex + publication.generateBib()  + "<br>"
+                    break
+                }
+            }
+        }
+        return bibtex
     }
 }

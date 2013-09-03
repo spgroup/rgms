@@ -77,7 +77,7 @@
 
                 <td>${ fieldValue(bean: researchGroupInstance, field: "description") } </td>
 
-                <td><g:link action="generateBibTexGroup" id="${researchGroupInstance.id}">Generate All BibTex</g:link></td>
+                <td><g:link action="generateBibTexGroup" id="${researchGroupInstance.id}">Generate All BibTex from Members</g:link></td>
             </tr>
         </g:each>
         </tbody>
