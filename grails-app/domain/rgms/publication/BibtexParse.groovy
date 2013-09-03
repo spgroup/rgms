@@ -33,6 +33,15 @@ class BibtexParse {
             publicationTemp.publicationDate = date
             publicationTemp.members = entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString().toSet()
             if (entry.getType().equals(BibTeXEntry.TYPE_ARTICLE)) {
+                Periodico periodico = new Periodico()
+                periodico.title = publicationTemp.title
+                periodico.publicationDate = publicationTemp.publicationDate
+                periodico.members = publicationTemp.members
+                periodico.volume = entry.getField(BibTeXEntry.KEY_VOLUME).toUserString().toInteger()
+                periodico.number = entry.getField(BibTeXEntry.KEY_NUMBER).toUserString().toInteger()
+                periodico.pages = entry.getField(BibTeXEntry.KEY_PAGES).toUserString().toInteger()
+                periodico.journal = entry.getField(BibTeXEntry.KEY_JOURNAL).toUserString()
+                publications.add(periodico)
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_BOOK)) {
                 BookChapter bookchapter = new BookChapter()
