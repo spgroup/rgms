@@ -9,7 +9,6 @@ Feature: BibtexImport
     When  I click "Choose file"
     And I select a bibtex file and I click "Import"
     Then all corresponding publications are created
-    And all of then are stored
 
   Scenario: bibtex file unformatted
     Given I am on Import Bibtex File Menu
@@ -24,4 +23,3 @@ Feature: BibtexImport
     And I select a bibtex file with one Dissertation and two Thesis and I click "Import"
     Then is created one Dissertation publication
     And is created two Thesis publications
-    And one Dissertation is stored and two Thesis is stored

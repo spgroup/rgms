@@ -38,10 +38,6 @@ Then(~'^all corresponding publications are created$') {->
     assert bibtexFile.getPublications().size() == 3
 }
 
-Then(~'^all of then are stored$') {->
-    assert Publication.getAll().size() > 0
-}
-
 When(~'^I select a bibtex file unformatted and I click "([^"]*)"$') { String arg1 ->
 }
 
@@ -69,10 +65,3 @@ Then(~'^is created two Thesis publications$') {->
     assert bibtexFile.getPublications(Tese.class).size() == 2
 }
 
-Then(~'^one Dissertation is stored and two Thesis is stored$') {->
-    dissertationSize = Dissertacao.findAll().size()
-    teseSize = Tese.findAll().size()
-
-    assert dissertationSize == 1
-    assert teseSize == 2
-}
