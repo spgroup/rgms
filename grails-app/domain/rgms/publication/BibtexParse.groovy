@@ -93,8 +93,12 @@ class BibtexParse {
             else if (entry.getType().equals(BibTeXEntry.TYPE_PROCEEDINGS)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_TECHREPORT)) {
-                publications.add(new TechnicalReport())
-
+                TechnicalReport technicalReport = new TechnicalReport()
+                technicalReport.members = publicationTemp.members
+                technicalReport.institution = entry.getField(BibTeXEntry.KEY_INSTITUTION).toUserString()
+                technicalReport.title = publicationTemp.title
+                technicalReport.publicationDate = publicationTemp.publicationDate
+                publications.add(technicalReport)
             } else if (entry.getType().equals(BibTeXEntry.TYPE_UNPUBLISHED)) {
 
             }
