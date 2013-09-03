@@ -30,6 +30,7 @@ class BibtexParse {
 
             Date date = new Date()
             date.year = entry.getField(BibTeXEntry.KEY_YEAR).toUserString().toInteger()
+           // date.month = entry.getField(BibTeXEntry.KEY_MONTH).toUserString().toInteger()
             publicationTemp.title = entry.getField(BibTeXEntry.KEY_TITLE).toUserString()
             publicationTemp.publicationDate = date
             publicationTemp.members = extractMembersFromBibtexEntry(entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString())
@@ -46,16 +47,34 @@ class BibtexParse {
             } else if (entry.getType().equals(BibTeXEntry.TYPE_BOOKLET)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_CONFERENCE)) {
+
+
+
             } else if (entry.getType().equals(BibTeXEntry.TYPE_INBOOK)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_INCOLLECTION)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_INPROCEEDINGS)) {
+                Conferencia conferencia = new Conferencia()
+                conferencia.booktitle = entry.getField(BibTeXEntry.KEY_BOOKTITLE).toUserString()
+                conferencia.pages = entry.getField(BibTeXEntry.KEY_PAGES).toUserString().toInteger()
+                conferencia.title = publicationTemp.title
+                conferencia.publicationDate = publicationTemp.publicationDate
+                conferencia.members = publicationTemp.members
+                publications.add(conferencia)
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_MANUAL)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_MASTERSTHESIS)) {
-                publications.add(new StrategyParseDissertacao().execute(entry))
+
+                Dissertacao dissertacao = new Dissertacao()
+                dissertacao.school = entry.getField(BibTeXEntry.KEY_SCHOOL).toUserString()
+                dissertacao.address = entry.getField(BibTeXEntry.KEY_ADDRESS).toUserString()
+                dissertacao.title = publicationTemp.title
+                dissertacao.publicationDate = publicationTemp.publicationDate
+                dissertacao.members = publicationTemp.members
+                publications.add(dissertacao)
+
             } else if (entry.getType().equals(BibTeXEntry.TYPE_MISC)) {
 
             }
@@ -68,6 +87,7 @@ class BibtexParse {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_TECHREPORT)) {
                 publications.add(new TechnicalReport())
+
             } else if (entry.getType().equals(BibTeXEntry.TYPE_UNPUBLISHED)) {
 
             }
