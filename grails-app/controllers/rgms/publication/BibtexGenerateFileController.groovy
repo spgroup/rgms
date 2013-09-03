@@ -29,4 +29,22 @@ class BibtexGenerateFileController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [researchGroupInstanceList: ResearchGroup.list(params), researchGroupInstanceTotal: ResearchGroup.count(),memberInstanceList: Member.list(params), memberInstanceTotal: Member.count() ]
     }
+
+    def generateBibTex = {
+        String bibtex = ""
+        int numero = (params.id).toInteger()
+        for(publication in Publication.getAll())
+        {
+            for(member in publication.getMembers())
+            {
+                if(member.getId() == numero)
+                {
+                    bibtex = bibtex + publication.generateBib()  + "<br>"
+                }
+                break
+            }
+        }
+
+        render(bibtex)
+    }
 }
