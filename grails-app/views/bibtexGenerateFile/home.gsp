@@ -22,19 +22,13 @@
             <thead>
             <tr>
 
-                <g:sortableColumn property="id" title="${message(code: 'member.id.label', default: 'Id')}" />
-
                 <g:sortableColumn property="name" title="${message(code: 'member.name.label', default: 'Name')}" />
 
                 <g:sortableColumn property="username" title="${message(code: 'member.username.label', default: 'Username')}" />
 
-                <g:sortableColumn property="enabled" title="${message(code: 'member.enabled.label', default: 'Enabled')}" />
-
                 <g:sortableColumn property="email" title="${message(code: 'member.email.label', default: 'Email')}" />
 
-                <th>${message(code: 'member.roles.label', default: 'Roles')}</th>
-
-                <th>${message(code: 'member.permissions.label', default: 'Permissions')}</th>
+                <th>Extra</th>
 
             </tr>
             </thead>
@@ -42,21 +36,13 @@
             <g:each in="${memberInstanceList}" status="i" var="memberInstance">
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
-                    <td><g:link action="show" id="${memberInstance.id}">${fieldValue(bean: memberInstance, field: "id")}</g:link></td>
-
                     <td>${fieldValue(bean: memberInstance, field: "name")}</td>
-
-                    <!--                            <td>{fieldValue(bean: memberInstance, field: "lastName")}</td>-->
 
                     <td>${fieldValue(bean: memberInstance, field: "username")}</td>
 
-                    <td>${fieldValue(bean: memberInstance, field: "enabled")}</td>
-
                     <td><a href="mailto:${fieldValue(bean: memberInstance, field: "email")}">${fieldValue(bean: memberInstance, field: "email")}</a></td>
 
-                    <td>${fieldValue(bean: memberInstance, field: "roles")}</td>
-
-                    <td>${fieldValue(bean: memberInstance, field: "permissions")}</td>
+                    <td><g:link action="generateBibTex" id="${memberInstance.id}">Generate All BibTex</g:link></td>
 
                 </tr>
             </g:each>
@@ -79,25 +65,19 @@
             <g:sortableColumn property="name" title="${ message(code: 'researchGroup.name.label', default: 'Name') }" />
 
             <g:sortableColumn property="description" title="${ message(code: 'researchGroup.description.label', default: 'Description') }" />
-            <!-- #end -->
-            <!-- #if($researchGroupHierarchy) -->
-            <th><g:message code="researchGroup.childOf.label" default="Child Of" /></th>
-            <!-- #end -->
-            <!-- #literal() -->
+
+            <th>Extra</th>
         </tr>
         </thead>
         <tbody>
         <g:each in="${ researchGroupInstanceList }" status="i" var="researchGroupInstance">
             <tr class="${ (i % 2) == 0 ? 'even' : 'odd' }">
 
-                <td><g:link action="show" id="${ researchGroupInstance.id }">${ fieldValue(bean: researchGroupInstance, field: "name") }</g:link></td>
+                <td>${fieldValue(bean: researchGroupInstance, field: "name")}</td>
 
                 <td>${ fieldValue(bean: researchGroupInstance, field: "description") } </td>
-                <!-- #end -->
-                <!-- #if($researchGroupHierarchy) -->
-                <td>${ fieldValue(bean: researchGroupInstance, field: "childOf") } </td>
-                <!-- #end -->
-                <!-- #literal() -->
+
+                <td><g:link action="generateBibTexGroup" id="${researchGroupInstance.id}">Generate All BibTex</g:link></td>
             </tr>
         </g:each>
         </tbody>
