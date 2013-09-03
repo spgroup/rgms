@@ -4,6 +4,7 @@ import org.jbibtex.*
 import rgms.publication.strategyBibtexParse.StrategyParseDissertacao
 import rgms.publication.strategyBibtexParse.StrategyParseTese
 
+
 /**
  *
  * @author Diogo Vin�cius
@@ -26,12 +27,13 @@ class BibtexParse {
                     return null  //To change body of implemented methods use File | Settings | File Templates.
                 }
             }
+
             Date date = new Date()
             date.year = entry.getField(BibTeXEntry.KEY_YEAR).toUserString().toInteger()
            // date.month = entry.getField(BibTeXEntry.KEY_MONTH).toUserString().toInteger()
             publicationTemp.title = entry.getField(BibTeXEntry.KEY_TITLE).toUserString()
             publicationTemp.publicationDate = date
-            publicationTemp.members = entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString().toSet()
+            publicationTemp.members = extractMembersFromBibtexEntry(entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString())
             if (entry.getType().equals(BibTeXEntry.TYPE_ARTICLE)) {
                 Periodico periodico = new Periodico()
                 periodico.title = publicationTemp.title
@@ -100,8 +102,12 @@ class BibtexParse {
             else if (entry.getType().equals(BibTeXEntry.TYPE_PROCEEDINGS)) {
 
             } else if (entry.getType().equals(BibTeXEntry.TYPE_TECHREPORT)) {
-                publications.add(new TechnicalReport())
-
+                TechnicalReport technicalReport = new TechnicalReport()
+                technicalReport.members = publicationTemp.members
+                technicalReport.institution = entry.getField(BibTeXEntry.KEY_INSTITUTION).toUserString()
+                technicalReport.title = publicationTemp.title
+                technicalReport.publicationDate = publicationTemp.publicationDate
+                publications.add(technicalReport)
             } else if (entry.getType().equals(BibTeXEntry.TYPE_UNPUBLISHED)) {
 
             }
@@ -112,6 +118,12 @@ class BibtexParse {
 
     }
 
+    private static extractMembersFromBibtexEntry (String entry){
+        entry.toLowerCase()
+        String[] stringArray;
+        stringArray = entry.split('and')
+        return stringArray
+    }
     private static BibTeXDatabase parseBibTeX(File file) throws IOException, ParseException {
         Reader reader = new FileReader(file);
 
