@@ -1,6 +1,4 @@
 package rgms.publication
-
-
 import rgms.member.Member
 
 class ResearchLineController {
@@ -19,6 +17,49 @@ class ResearchLineController {
     def create() {
         [researchLineInstance: new ResearchLine(params)]
     }
+
+    //#if($ResearchLineConsulta)
+    def listSearchMember ()
+    {
+        ArrayList<String> lista = new ArrayList<String>()
+        for(researchline in ResearchLine.getAll())
+            {
+                for(member in researchline.getMembers())
+                {
+                    if(member.getName() == params.member)
+                    {
+                        lista.add(researchline.getName())
+
+
+                    }
+                }
+               [researchLineInstanceList: lista]
+
+            }
+
+    }
+
+    def listSearchArticle()
+    {
+        ArrayList<String> lista = new ArrayList<String>()
+        for(researchline in ResearchLine.getAll())
+        {
+            for(publication in researchline.getPublications())
+            {
+                if(publication.getTitle() == params.artigo)
+                {
+                    lista.add(researchline.getName())
+
+
+                }
+            }
+            [researchLineInstanceList: lista]
+
+        }
+
+
+    }
+    //#end
 
     def save() {
         def researchLineInstance = new ResearchLine(params)
@@ -41,6 +82,7 @@ class ResearchLineController {
         }
         members
     }
+    //#end
     //#end
     def update() {
         def old_members = []
