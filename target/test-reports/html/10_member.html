@@ -1,0 +1,388 @@
+<!DOCTYPE html><html xmlns:lxslt="http://xml.apache.org/xslt" xmlns:stringutils="xalan://org.apache.tools.ant.util.StringUtils">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+                    Test - member</title>
+<link rel="shortcut icon" href="http://grails.org/images/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" title="Style" href="stylesheet.css">
+</head>
+<body>
+<div class="container container_8" id="report">
+<div class="grid_6">
+<a title="Home" href="index.html">
+<div class="grailslogo"></div>
+</a>
+<h1>member</h1>
+<h2>Package: </h2>
+</div>
+<div class="grid_2">
+<nav id="navigationlinks">
+<p>
+<a href="failed.html">
+                    Tests with failure and errors
+                </a>
+</p>
+<p>
+<a href="index.html">
+                    Package summary
+                </a>
+</p>
+<p>
+<a href="all.html">
+                    Show all tests
+                </a>
+</p>
+</nav>
+</div>
+<div class="clear"></div>
+<div class="testsuite success">
+<div class="header">
+<h2>member</h2>
+<h3>
+                        Executed
+                        10
+                        tests
+                    
+                        without a single error or failure!
+                    </h3>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new member with valid mail server">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new member with valid mail server</b>
+</p>
+<p class="summary">Executed in 6.025 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="list existing member">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">list existing member</b>
+</p>
+<p class="summary">Executed in 4.62 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="delete member">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">delete member</b>
+</p>
+<p class="summary">Executed in 4.674 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new member with existing username">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new member with existing username</b>
+</p>
+<p class="summary">Executed in 4.735 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="login with incorrect password">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">login with incorrect password</b>
+</p>
+<p class="summary">Executed in 1.002 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="user registration">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">user registration</b>
+</p>
+<p class="summary">Executed in 2.232 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="create member web with partial information in chrome">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">create member web with partial information in chrome</b>
+</p>
+<p class="summary">Executed in 4.961 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="register user with invalid data">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">register user with invalid data</b>
+</p>
+<p class="summary">Executed in 4.318 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new member filled with default data">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new member filled with default data</b>
+</p>
+<p class="summary">Executed in 1.476 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="user registration with default data">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">user registration with default data</b>
+</p>
+<p class="summary">Executed in 0.62 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="clearfix output footer">
+<div class="sysout">
+<h2>Standard output</h2>
+<pre class="stdout">@i9n
+Feature: member
+  As an administrator of the RGMS system
+  I want to add, remove and modify users in the system.
+
+--Output from new member with valid mail server--
+  Scenario: new member with valid mail server                                     # Member.feature:6
+    Given the system has no member with username "usernametest"                   # MemberSteps.groovy:10
+    When I create a member with username "usernametest"                           # MemberSteps.groovy:15
+    Then the member with username "usernametest" is properly stored by the system # MemberSteps.groovy:23
+
+--Output from list existing member--
+  Scenario: list existing member                             # Member.feature:11
+    Given the system has member with username "usernametest" # MemberSteps.groovy:65
+    When I view the member list                              # MemberSteps.groovy:142
+    Then my list members contains member "usernametest"      # MemberSteps.groovy:147
+
+--Output from delete member--
+  Scenario: delete member                                    # Member.feature:16
+    Given the system has member with username "usernametest" # MemberSteps.groovy:65
+    When I delete a member with username "usernametest"      # MemberSteps.groovy:71
+    Then the member with "usernametest" doesnt exist         # MemberSteps.groovy:75
+
+--Output from new member with existing username--
+  Scenario: new member with existing username                # Member.feature:21
+    Given the system has member with username "usernametest" # MemberSteps.groovy:65
+    When I create the member with username "usernametest"    # MemberSteps.groovy:86
+    Then the member "usernametest" is not registered         # MemberSteps.groovy:90
+
+--Output from login with incorrect password--
+  Scenario: login with incorrect password                                  # Member.feature:26
+    Given I am at the login page                                           # MemberSteps.groovy:34
+    When I fill username and password with "admin" and "incorrectpassword" # MemberSteps.groovy:41
+    Then I am still on the login page with an error message                # MemberSteps.groovy:45
+
+--Output from user registration--
+  Scenario: user registration                                                                                                                                                          # Member.feature:31
+    Given I am at the register page                                                                                                                                                    # MemberSteps.groovy:50
+    When I fill the user details with a name, username, passoword1, password2, email, university, status "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student" # MemberSteps.groovy:55
+    Then I am still on the register page with the message user created                                                                                                                 # MemberSteps.groovy:60
+
+--Output from create member web with partial information in chrome--
+  #  Scenario: create member web
+  #    Given I am at the create member page
+  #    When I fill the user details with "jose" "josesilva" "jose@ufpe.br" "UFPE"
+  #    Then I am on the member show page
+  #   Then  the member with username "josesilva" is created
+  Scenario: create member web with partial information in chrome                # Member.feature:43
+    Given I am at the create member page                                        # MemberSteps.groovy:97
+    When I fill some user details with "jose" "josesilva" "jose@ufpe.br" "UFPE" # MemberSteps.groovy:110
+    Then I am still on the create member page with the error message            # MemberSteps.groovy:128
+
+--Output from register user with invalid data--
+  Scenario: register user with invalid data                                # Member.feature:48
+    Given I am at the create member page                                   # MemberSteps.groovy:97
+    When I fill the user details with "jose" "josesilva" "jose@com" "UFPE" # MemberSteps.groovy:105
+    Then I am still on the create member page with the error message       # MemberSteps.groovy:128
+
+--Output from new member filled with default data--
+  #Scenario: register member invalid aditional info
+  #   Given  I am at the create member page
+  #   When   I fill many user details with "berg" "bergU" "jus@cin.ufpe.br" "UFPE" "ajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  #   Then   I am still on the create member page with the error message
+  #Scenario: new member with invalid phone
+  #   Given the system has no member with username "userwithinvalidphone"
+  #   When I create a member with username "userwithinvalidphone"
+  #   Then I am still on the create member page with the error message
+  #if ($Autofill)
+  Scenario: new member filled with default data   # Member.feature:64
+    Given I am at the create member page          # MemberSteps.groovy:97
+    Then I see default data filled on create form # MemberSteps.groovy:157
+
+--Output from user registration with default data--
+  Scenario: user registration with default data     # Member.feature:68
+    Given I am at the register page                 # MemberSteps.groovy:50
+    Then I see default data filled on register form # MemberSteps.groovy:164
+</pre>
+</div>
+<div class="syserr">
+<h2>System error</h2>
+<pre class="syserr">
+--Output from new member with valid mail server--
+--Output from list existing member--
+--Output from delete member--
+--Output from new member with existing username--
+--Output from login with incorrect password--
+--Output from user registration--
+--Output from create member web with partial information in chrome--
+--Output from register user with invalid data--
+--Output from new member filled with default data--
+--Output from user registration with default data--</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+<!--
+            Parses JUnit output and associates it with the corresponding test case
+        -->
+<script language="javascript">
+
+
+/**
+ * The JUnit report format is incredibly stuipd in the
+ * sense that it accumulates output from all test methods
+ * into a single xml node.
+ */
+(function() {
+
+    var outputElements = findOutputElements();
+    for (var i in outputElements) {
+        var outputElement = outputElements[i];
+        var textOutput = outputElement.element.firstChild.nodeValue;
+        var header = outputElement.getHeader();
+        appendTestMethodOutput(textOutput, header);
+    }
+
+    function findOutputElements() {
+        var outputElements = [];
+        var preElements = document.getElementsByTagName("pre");
+        for (var i in preElements) {
+            var preElement = preElements[i];
+            var className = preElement.className || "";
+            if (className.indexOf("stdout") >= 0) {
+                var outputElement = new OutputElement(preElement, "output");
+                outputElements.push(outputElement);
+            } else if (className.indexOf("syserr") >= 0) {
+                var outputElement = new OutputElement(preElement, "error");
+                outputElements.push(outputElement);
+            }
+        }
+
+        return outputElements;
+    }
+
+    function OutputElement(element, type) {
+        this.element = element;
+        this.type = type;
+
+        this.getHeader = function() {
+            if (type === "output") {
+                return "System output";
+            } else if ("error") {
+                return "System error";
+            }
+        }
+    }
+
+    function appendTestMethodOutput(text, header) {
+        var testOutput = new TestMethodOutput(header);
+
+        var lines = text.split(/\r\n|\r|\n/);
+        for (var i in lines) {
+            var line = lines[i];
+            var matches = line.match(/^--Output from (.*)--$/);
+            if (matches !== null && matches.length == 2) {
+                testOutput.flushToDom();
+                testOutput.testName = matches[1];
+            } else {
+                testOutput.addLine(line);
+            }
+        }
+
+        testOutput.flushToDom();
+    }
+
+    function TestMethodOutput(header) {
+        this.header = header;
+        this.testName = undefined;
+        this.buffer = "";
+
+        this.addLine = function(line) {
+            this.buffer += line + "\n";
+        }
+
+        this.flushToDom = function() {
+            if (this.testName !== undefined) {
+                var domNode = getTestcaseElementByName(this.testName);
+                if (domNode !== undefined && trimString(this.buffer).length > 0) {
+                    this.appendTo(domNode);
+                }
+
+                this.reset();
+            }
+        }
+
+        this.appendTo = function(domNode) {
+            var node = document.createElement("div");
+            node.innerHTML = '<p><b class="message">' + header + '</b></p>';
+
+            var preNode = document.createElement("pre");
+            preNode.appendChild(document.createTextNode(this.buffer));
+            node.appendChild(preNode);
+
+            var outputContainer = findElementByTagClassAndParent("div", "outputinfo", domNode);
+            outputContainer.appendChild(node);
+        }
+
+        this.reset = function() {
+            this.methodName = undefined;
+            this.buffer = "";
+        }
+    }
+
+    function getTestcaseElementByName(name) {
+        var divElements = document.getElementsByTagName("div");
+        var elementCount = divElements.length;
+        for (var i=0; i<elementCount; i++) {
+            var el = divElements[i];
+            if (el.getAttribute("data-name") === name) {
+                return el;
+            }
+        }
+    }
+
+    function findElementByTagClassAndParent(tagName, className, parentNode) {
+        var elements = parentNode.getElementsByTagName(tagName);
+        for (var i in elements) {
+            var element = elements[i];
+
+            // Not 100% correct, but good enough here
+            if (element.className !== undefined && element.className.indexOf(className) >= 0) {
+                return element;
+            }
+        }
+    }
+
+    function trimString(str) {
+        return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    }
+
+})();
+
+        </script>
+</body>
+</html>

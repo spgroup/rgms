@@ -1,0 +1,384 @@
+<!DOCTYPE html><html xmlns:lxslt="http://xml.apache.org/xslt" xmlns:stringutils="xalan://org.apache.tools.ant.util.StringUtils">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+                    Test - conferencia</title>
+<link rel="shortcut icon" href="http://grails.org/images/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" title="Style" href="stylesheet.css">
+</head>
+<body>
+<div class="container container_8" id="report">
+<div class="grid_6">
+<a title="Home" href="index.html">
+<div class="grailslogo"></div>
+</a>
+<h1>conferencia</h1>
+<h2>Package: </h2>
+</div>
+<div class="grid_2">
+<nav id="navigationlinks">
+<p>
+<a href="failed.html">
+                    Tests with failure and errors
+                </a>
+</p>
+<p>
+<a href="index.html">
+                    Package summary
+                </a>
+</p>
+<p>
+<a href="all.html">
+                    Show all tests
+                </a>
+</p>
+</nav>
+</div>
+<div class="clear"></div>
+<div class="testsuite success">
+<div class="header">
+<h2>conferencia</h2>
+<h3>
+                        Executed
+                        10
+                        tests
+                    
+                        without a single error or failure!
+                    </h3>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new conferencia">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new conferencia</b>
+</p>
+<p class="summary">Executed in 0.293 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="duplicate conferencia">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">duplicate conferencia</b>
+</p>
+<p class="summary">Executed in 0.138 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="remove conferencia">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">remove conferencia</b>
+</p>
+<p class="summary">Executed in 0.117 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new conferencia web">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new conferencia web</b>
+</p>
+<p class="summary">Executed in 8.017 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="list conferencia web">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">list conferencia web</b>
+</p>
+<p class="summary">Executed in 3.05 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new conferencia web has user data filled by default">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new conferencia web has user data filled by default</b>
+</p>
+<p class="summary">Executed in 2.121 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="back to main menu web">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">back to main menu web</b>
+</p>
+<p class="summary">Executed in 2.117 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="remove conferencia that does not exist">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">remove conferencia that does not exist</b>
+</p>
+<p class="summary">Executed in 0.096 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="remove and create the same conferencia">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">remove and create the same conferencia</b>
+</p>
+<p class="summary">Executed in 0.117 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="remove conferencia web">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">remove conferencia web</b>
+</p>
+<p class="summary">Executed in 2.347 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="clearfix output footer">
+<div class="sysout">
+<h2>Standard output</h2>
+<pre class="stdout">@i9n
+Feature: conferencia
+  As a member of a research group
+  I want to add, remove and modify conferencias I have published
+  so that I can generate web pages and reports containing these conferencias
+
+--Output from new conferencia--
+  Scenario: new conferencia                                                                           # Conferencia.feature:7
+    Given the system has no conferencia entitled "IV Conference on Software Product Lines"            # ConferenciaSteps.groovy:13
+    When I create the conferencia "IV Conference on Software Product Lines" with file name "SPLC.pdf" # ConferenciaSteps.groovy:18
+    Then the conferencia "IV Conference on Software Product Lines" is properly stored by the system   # ConferenciaSteps.groovy:22
+
+--Output from duplicate conferencia--
+  Scenario: duplicate conferencia                                                                                                   # Conferencia.feature:12
+    Given the conferencia "I International Conference on Software Engineering" is stored in the system with file name "IICSE-0.pdf" # ConferenciaSteps.groovy:27
+    When I create the conferencia "I International Conference on Software Engineering" with file name "IICSE-0.pdf"                 # ConferenciaSteps.groovy:18
+    Then the conferencia "I International Conference on Software Engineering" is not stored twice                                   # ConferenciaSteps.groovy:33
+
+--Output from remove conferencia--
+  Scenario: remove conferencia                                                                                           # Conferencia.feature:18
+    Given the conferencia "IV Conference on Software Product Lines" is stored in the system with file name "IICSE-1.pdf" # ConferenciaSteps.groovy:27
+    When I remove the conferencia "IV Conference on Software Product Lines"                                              # ConferenciaSteps.groovy:38
+    Then the conferencia "IV Conference on Software Product Lines" is properly removed by the system                     # ConferenciaSteps.groovy:42
+
+--Output from new conferencia web--
+  Scenario: new conferencia web                                     # Conferencia.feature:24
+    Given I am at the publications                                  # ConferenciaSteps.groovy:47
+    When I select the conferencia option at the publications menu   # ConferenciaSteps.groovy:64
+    And I select the new conferencia option at the conferencia page # ConferenciaSteps.groovy:68
+    Then I can fill the conferencia details                         # ConferenciaSteps.groovy:86
+
+--Output from list conferencia web--
+  Scenario: list conferencia web                                                          # Conferencia.feature:30
+    Given I am at the publications menu                                                   # CommonSteps.groovy:7
+    When I select the conferencia option at the publications menu                         # ConferenciaSteps.groovy:64
+    Then a list of conferencias stored by the system is displayed at the conferencia page # ConferenciaSteps.groovy:91
+
+--Output from new conferencia web has user data filled by default--
+  #if ($Autofill)
+  Scenario: new conferencia web has user data filled by default             # Conferencia.feature:37
+    Given I am at the publications                                          # ConferenciaSteps.groovy:47
+    When I select the conferencia option at the publications menu           # ConferenciaSteps.groovy:64
+    And I select the new conferencia option at the conferencia page         # ConferenciaSteps.groovy:68
+    Then I see my user listed as an author member of conferencia by default # ConferenciaSteps.groovy:101
+
+--Output from back to main menu web--
+  #end
+  Scenario: back to main menu web                                 # Conferencia.feature:46
+    Given I am at the publications                                # ConferenciaSteps.groovy:47
+    When I select the conferencia option at the publications menu # ConferenciaSteps.groovy:64
+    And I select the home option at the conferencia page          # ConferenciaSteps.groovy:73
+    Then I am back at the publications and conferencias menu      # ConferenciaSteps.groovy:106
+
+--Output from remove conferencia that does not exist--
+  Scenario: remove conferencia that does not exist                                         # Conferencia.feature:52
+    Given the system has no conferencia entitled "IV Conference on Software Product Lines" # ConferenciaSteps.groovy:13
+    When I try to remove the conferencia "IV Conference on Software Product Lines"         # ConferenciaSteps.groovy:110
+    Then nothing happens                                                                   # ConferenciaSteps.groovy:116
+
+--Output from remove and create the same conferencia--
+  Scenario: remove and create the same conferencia                                                                       # Conferencia.feature:57
+    Given the conferencia "V Conference on Software Product Lines" is stored in the system with file name "IICSE-10.pdf" # ConferenciaSteps.groovy:27
+    When I remove the conferencia "V Conference on Software Product Lines"                                               # ConferenciaSteps.groovy:38
+    And I create the conferencia "V Conference on Software Product Lines" with file name "IICSE-12.pdf"                  # ConferenciaSteps.groovy:18
+    Then the conferencia "V Conference on Software Product Lines" is properly stored by the system                       # ConferenciaSteps.groovy:22
+
+--Output from remove conferencia web--
+  Scenario: remove conferencia web                                                       # Conferencia.feature:63
+    Given I am at the publications menu                                                  # CommonSteps.groovy:7
+    When I select the conferencia option at the publications menu                        # ConferenciaSteps.groovy:64
+    And a list of conferencias stored by the system is displayed at the conferencia page # ConferenciaSteps.groovy:91
+    Then I can remove one conferencia                                                    # ConferenciaSteps.groovy:96
+</pre>
+</div>
+<div class="syserr">
+<h2>System error</h2>
+<pre class="syserr">
+--Output from new conferencia--
+--Output from duplicate conferencia--
+--Output from remove conferencia--
+--Output from new conferencia web--
+--Output from list conferencia web--
+--Output from new conferencia web has user data filled by default--
+--Output from back to main menu web--
+--Output from remove conferencia that does not exist--
+--Output from remove and create the same conferencia--
+--Output from remove conferencia web--</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+<!--
+            Parses JUnit output and associates it with the corresponding test case
+        -->
+<script language="javascript">
+
+
+/**
+ * The JUnit report format is incredibly stuipd in the
+ * sense that it accumulates output from all test methods
+ * into a single xml node.
+ */
+(function() {
+
+    var outputElements = findOutputElements();
+    for (var i in outputElements) {
+        var outputElement = outputElements[i];
+        var textOutput = outputElement.element.firstChild.nodeValue;
+        var header = outputElement.getHeader();
+        appendTestMethodOutput(textOutput, header);
+    }
+
+    function findOutputElements() {
+        var outputElements = [];
+        var preElements = document.getElementsByTagName("pre");
+        for (var i in preElements) {
+            var preElement = preElements[i];
+            var className = preElement.className || "";
+            if (className.indexOf("stdout") >= 0) {
+                var outputElement = new OutputElement(preElement, "output");
+                outputElements.push(outputElement);
+            } else if (className.indexOf("syserr") >= 0) {
+                var outputElement = new OutputElement(preElement, "error");
+                outputElements.push(outputElement);
+            }
+        }
+
+        return outputElements;
+    }
+
+    function OutputElement(element, type) {
+        this.element = element;
+        this.type = type;
+
+        this.getHeader = function() {
+            if (type === "output") {
+                return "System output";
+            } else if ("error") {
+                return "System error";
+            }
+        }
+    }
+
+    function appendTestMethodOutput(text, header) {
+        var testOutput = new TestMethodOutput(header);
+
+        var lines = text.split(/\r\n|\r|\n/);
+        for (var i in lines) {
+            var line = lines[i];
+            var matches = line.match(/^--Output from (.*)--$/);
+            if (matches !== null && matches.length == 2) {
+                testOutput.flushToDom();
+                testOutput.testName = matches[1];
+            } else {
+                testOutput.addLine(line);
+            }
+        }
+
+        testOutput.flushToDom();
+    }
+
+    function TestMethodOutput(header) {
+        this.header = header;
+        this.testName = undefined;
+        this.buffer = "";
+
+        this.addLine = function(line) {
+            this.buffer += line + "\n";
+        }
+
+        this.flushToDom = function() {
+            if (this.testName !== undefined) {
+                var domNode = getTestcaseElementByName(this.testName);
+                if (domNode !== undefined && trimString(this.buffer).length > 0) {
+                    this.appendTo(domNode);
+                }
+
+                this.reset();
+            }
+        }
+
+        this.appendTo = function(domNode) {
+            var node = document.createElement("div");
+            node.innerHTML = '<p><b class="message">' + header + '</b></p>';
+
+            var preNode = document.createElement("pre");
+            preNode.appendChild(document.createTextNode(this.buffer));
+            node.appendChild(preNode);
+
+            var outputContainer = findElementByTagClassAndParent("div", "outputinfo", domNode);
+            outputContainer.appendChild(node);
+        }
+
+        this.reset = function() {
+            this.methodName = undefined;
+            this.buffer = "";
+        }
+    }
+
+    function getTestcaseElementByName(name) {
+        var divElements = document.getElementsByTagName("div");
+        var elementCount = divElements.length;
+        for (var i=0; i<elementCount; i++) {
+            var el = divElements[i];
+            if (el.getAttribute("data-name") === name) {
+                return el;
+            }
+        }
+    }
+
+    function findElementByTagClassAndParent(tagName, className, parentNode) {
+        var elements = parentNode.getElementsByTagName(tagName);
+        for (var i in elements) {
+            var element = elements[i];
+
+            // Not 100% correct, but good enough here
+            if (element.className !== undefined && element.className.indexOf(className) >= 0) {
+                return element;
+            }
+        }
+    }
+
+    function trimString(str) {
+        return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    }
+
+})();
+
+        </script>
+</body>
+</html>
