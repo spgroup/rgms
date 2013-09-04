@@ -1,38 +1,22 @@
 package pages
 
-import geb.Page
-import rgms.publication.BookChapter
-
 class BibtexGenerateFilePage extends FormPage {
-    static url = "bookChapter/create"
+    static url = "bibtexGenerateFile/home"
 
     static at = {
-        title ==~ /Criar BookChapter/
-        publisher != null
+        title ==~ /Member Listagem/
     }
 
     static content = {
-        publisher {
-            $("input", id: "publisher")
+        booktitle {
+            $("input", id: "booktitle")
         }
         flashmessage {
             $("div", class: "message")
         }
     }
 
-    def fillBookChapterDetails(title, filename){
-        fillTitle(title)
-        $("form").publisher = "Person"
-        $("form").chapter = 1
-        $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    }
-
-    def clickSaveBookChapter(){
-        $("form").create().click()
-    }
-
-    def fillTitle(title) {
-        $("form").title = title
-        clickSaveBookChapter()
+    def showBibtex() {
+        $('a.Generate All BibTex').click()
     }
 }
