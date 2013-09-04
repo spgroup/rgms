@@ -32,7 +32,7 @@ Feature: conferencia
     When I select the conferencia option at the publications menu
     Then a list of conferencias stored by the system is displayed at the conferencia page
 
-#if ($Autofill)
+#if ($contextualInformation)
 
   Scenario: new conferencia web has user data filled by default
     Given I am at the publications

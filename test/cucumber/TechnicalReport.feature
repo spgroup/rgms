@@ -57,7 +57,7 @@ Feature: technical report
     Then   The technical report "Joe-E" is properly removed by the system
     And    The system goes to the technical reports page
 
-#if ($Autofill)
+#if ($contextualInformation)
 
   Scenario: new technical report web has user data already filled by default
     Given I am at the publications menu

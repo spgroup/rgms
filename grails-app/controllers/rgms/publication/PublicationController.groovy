@@ -32,7 +32,7 @@ class PublicationController {
     }
 //#end
 
-//#if($publicationContext)
+//#if($contextualInformation)
     def static Member addAuthor(Publication publication) {
         Member user = null;
         try {

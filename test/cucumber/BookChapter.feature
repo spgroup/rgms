@@ -34,7 +34,7 @@ Feature: BookChapter
     Then the book chapter "Next Generation Software Product Line Engineering" was stored by the system
     And it is shown in the book chapter list with title "Next Generation Software Product Line Engineering"
 
-#if ($Autofill)
+#if ($contextualInformation)
 
   Scenario: new book chapter filled with user data by default
     Given I am at the book chapter page

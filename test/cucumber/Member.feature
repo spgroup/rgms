@@ -60,7 +60,7 @@ Feature: member
 #   When I create a member with username "userwithinvalidphone"
 #   Then I am still on the create member page with the error message
 
-#if ($Autofill)
+#if ($contextualInformation)
   Scenario: new member filled with default data
     Given I am at the create member page
     Then I see default data filled on create form

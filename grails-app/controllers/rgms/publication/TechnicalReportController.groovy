@@ -29,7 +29,7 @@ class TechnicalReportController {
 
     def create() {
         def technicalReportInstance = new TechnicalReport(params)
-        //#if($publicationContext)
+        //#if($contextualInformation)
         def user = PublicationController.addAuthor(technicalReportInstance)
         if (user && !user.university.isEmpty()) {
             technicalReportInstance.institution = user.university

@@ -14,7 +14,7 @@ abstract class TeseOrDissertacao extends Publication {
     }
 
     public String schoolSelected() {
-//#if ($Autofill)
+//#if ($contextualInformation)
         def loggedUsername = SecurityUtils.subject?.principal;
         return school ? school : Member.findByUsername(loggedUsername).university;
 //#else

@@ -57,7 +57,7 @@ Feature: Ferramenta
         And I select the upload button at the ferramenta page
         Then I am still on ferramenta page
 
-    #if ($Autofill)
+    #if ($contextualInformation)
     Scenario: new ferramenta filled with user data by default
         Given I am at the publications menu
         When I select the "Ferramenta" option at the program menu

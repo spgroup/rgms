@@ -32,7 +32,7 @@ class PeriodicoController {
 
     def create() {
         def periodicoInstance = new Periodico(params)
-        //#if($publicationContext)
+        //#if($contextualInformation)
         PublicationController.addAuthor(periodicoInstance)
         //#end
         [periodicoInstance: periodicoInstance]

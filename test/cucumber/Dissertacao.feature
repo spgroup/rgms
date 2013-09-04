@@ -82,7 +82,7 @@ Feature: Dissertation Tests
     When I upload a new dissertation "curriculo2.xml" with title "New dissertation"
     Then the system has more dissertations now
     
-#if ($Autofill)
+#if ($contextualInformation)
 
   Scenario: create a new dissertation with user data already filled by default
     Given I am at the publications menu

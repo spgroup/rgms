@@ -22,7 +22,7 @@ class ConferenciaController {
 
     def create() {
         def conferenciaInstance = new Conferencia(params)
-        //#if($publicationContext)
+        //#if($contextualInformation)
         PublicationController.addAuthor(conferenciaInstance)
         //#end
         [conferenciaInstance: conferenciaInstance]
