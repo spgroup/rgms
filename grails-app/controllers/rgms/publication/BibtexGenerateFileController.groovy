@@ -31,7 +31,6 @@ class BibtexGenerateFileController {
     }
 
     def generateBibTex = {
-        //Member.get(params.id)
         String bibtex = ""
         int numero = (params.id).toInteger()
         for(publication in Publication.getAll())
