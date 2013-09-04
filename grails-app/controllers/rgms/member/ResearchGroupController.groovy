@@ -74,7 +74,7 @@ class ResearchGroupController {
             return
         }
         //def cm = Membership.getCurrentMemberships(researchGroupInstance)
-        [researchGroupInstance: researchGroupInstance, publicationsInstance: listPublicationByGroup(), currentMemberships: Membership.getCurrentMemberships(researchGroupInstance), currentNews: News.getCurrentNews(researchGroupInstance)]
+        [researchGroupInstance: researchGroupInstance, publicationsInstance: listPublicationByGroup(), currentMemberships: Membership.getCurrentMemberships(researchGroupInstance), currentNews: News.getCurrentNewsOrderByMostRecentDate(researchGroupInstance)]
     }
 
     def edit() {
@@ -255,13 +255,13 @@ class ResearchGroupController {
         def researchGroupInstance = ResearchGroup.get(params.id)
         TwitterConnection twConn = new TwitterConnection()
         List<Status> timeline = twConn.getTimeLine(researchGroupInstance.twitter)
+
         timeline.each {
             def newContr = new NewsController()
             newContr.params << [description: it.getText(), date: it.getCreatedAt(), researchGroup: researchGroupInstance]
             newContr.create()
-            newContr.save()
+            newContr.saveFromTwitter()
             newContr.response.reset()
-            //researchGroupInstance.addToNews(new News(description: it.getText(), date: it.getCreatedAt()))
         }
         researchGroupInstance.save()
         redirect(action: "show", id: researchGroupInstance.id)
