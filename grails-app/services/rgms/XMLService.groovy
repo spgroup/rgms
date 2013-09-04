@@ -115,7 +115,7 @@ class XMLService {
     public static void saveNewConferencia (List nodeConferencia){
         Node dadosBasicos = (Node) nodeConferencia[0]
         Node detalhamento = (Node) nodeConferencia[1]
-        String nomeEvento = XMLService.getAttributeValueFromNode(detalhamento, "NOME-DO-EVENTO")
+        String nomeEvento = getAttributeValueFromNode(detalhamento, "NOME-DO-EVENTO")
 
         if(nomeEvento.contains("onferenc")){
             Conferencia novaConferencia = new Conferencia()
@@ -123,15 +123,15 @@ class XMLService {
 
             if (Publication.findByTitle(novaConferencia.title) == null){
                 novaConferencia.publicationDate = new Date()
-                String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO-DO-TRABALHO")
+                String tryingToParse = getAttributeValueFromNode(dadosBasicos, "ANO-DO-TRABALHO")
 
                 if (tryingToParse.isInteger())
                     novaConferencia.publicationDate.set(year: tryingToParse.toInteger())
 
-                tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-TRABALHO")
+                tryingToParse = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-TRABALHO")
                 novaConferencia.booktitle = tryingToParse;
-                tryingToParse =  XMLService.getAttributeValueFromNode(detalhamento, "PAGINA-INICIAL")
-                String tryingToParse2 = XMLService.getAttributeValueFromNode(detalhamento, "PAGINA-FINAL")
+                tryingToParse =  getAttributeValueFromNode(detalhamento, "PAGINA-INICIAL")
+                String tryingToParse2 = getAttributeValueFromNode(detalhamento, "PAGINA-FINAL")
                 novaConferencia.pages = tryingToParse + " - " + tryingToParse2
                 novaConferencia.file = 'emptyfile'
                 novaConferencia.save(flush: false)
@@ -191,13 +191,13 @@ class XMLService {
         Node basicData = (Node)(node.children()[0])
         Node specificData = (Node)(node.children()[1])
         newOrientation.tipo = tipoOrientacao
-        newOrientation.tituloTese = XMLService.getAttributeValueFromNode(basicData, "TITULO")
-        String ano = XMLService.getAttributeValueFromNode(basicData, "ANO")
+        newOrientation.tituloTese = getAttributeValueFromNode(basicData, "TITULO")
+        String ano = getAttributeValueFromNode(basicData, "ANO")
         newOrientation.anoPublicacao = Integer.parseInt(ano)
-        newOrientation.curso = XMLService.getAttributeValueFromNode(specificData, "NOME-DO-CURSO")
-        newOrientation.instituicao = XMLService.getAttributeValueFromNode(specificData, "NOME-DA-INSTITUICAO")
+        newOrientation.curso = getAttributeValueFromNode(specificData, "NOME-DO-CURSO")
+        newOrientation.instituicao = getAttributeValueFromNode(specificData, "NOME-DA-INSTITUICAO")
         newOrientation.orientador = user
-        newOrientation.orientando = XMLService.getAttributeValueFromNode(specificData, "NOME-DO-ORIENTADO")
+        newOrientation.orientando = getAttributeValueFromNode(specificData, "NOME-DO-ORIENTADO")
     }
 
     public static void saveNewJournal(List artigosPublicadosChildren, int i) {
@@ -219,16 +219,16 @@ class XMLService {
     }
 
     private static void getJournalTitle(Node dadosBasicos, Periodico newJournal) {
-        newJournal.title = XMLService.getAttributeValueFromNode(dadosBasicos, "TITULO-DO-ARTIGO")
+        newJournal.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-ARTIGO")
     }
 
     private static void getPeriodicTitle(Node detalhamentoArtigo, Periodico newJournal) {
-        newJournal.journal = XMLService.getAttributeValueFromNode(detalhamentoArtigo, "TITULO-DO-PERIODICO-OU-REVISTA")
+        newJournal.journal = getAttributeValueFromNode(detalhamentoArtigo, "TITULO-DO-PERIODICO-OU-REVISTA")
     }
 
     private static void getJournalNumberOfPages(Node detalhamentoArtigo, Periodico newJournal) {
-        String tryingToParse = XMLService.getAttributeValueFromNode(detalhamentoArtigo, "PAGINA-FINAL")
-        String tryingToParse2 = XMLService.getAttributeValueFromNode(detalhamentoArtigo, "PAGINA-INICIAL")
+        String tryingToParse = getAttributeValueFromNode(detalhamentoArtigo, "PAGINA-FINAL")
+        String tryingToParse2 = getAttributeValueFromNode(detalhamentoArtigo, "PAGINA-INICIAL")
         if (tryingToParse.isInteger() && tryingToParse2.isInteger())
             newJournal.pages = tryingToParse.toInteger() - tryingToParse2.toInteger() + 1
         else
@@ -236,7 +236,7 @@ class XMLService {
     }
 
     private static void getJournalNumber(Node detalhamentoArtigo, Periodico newJournal) {
-        String tryingToParse = XMLService.getAttributeValueFromNode(detalhamentoArtigo, "FASCICULO")
+        String tryingToParse = getAttributeValueFromNode(detalhamentoArtigo, "FASCICULO")
         if (tryingToParse.isInteger())
             newJournal.number = tryingToParse.toInteger()
         else
@@ -244,7 +244,7 @@ class XMLService {
     }
 
     private static void getJournalVolume(Node detalhamentoArtigo, Periodico newJournal) {
-        String tryingToParse = XMLService.getAttributeValueFromNode(detalhamentoArtigo, "VOLUME")
+        String tryingToParse = getAttributeValueFromNode(detalhamentoArtigo, "VOLUME")
         if (tryingToParse.isInteger())
             newJournal.volume = tryingToParse.toInteger()
         else
@@ -253,7 +253,7 @@ class XMLService {
 
     private static void getJournalYear(Node dadosBasicos, Periodico newJournal) {
         newJournal.publicationDate = new Date()
-        String tryingToParse = XMLService.getAttributeValueFromNode(dadosBasicos, "ANO-DO-ARTIGO")
+        String tryingToParse = getAttributeValueFromNode(dadosBasicos, "ANO-DO-ARTIGO")
         if (tryingToParse.isInteger())
             newJournal.publicationDate.set(year: tryingToParse.toInteger() - 1900)
     }
