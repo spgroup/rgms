@@ -53,11 +53,13 @@
 					<font size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+				<!-- #if($Bibtex && $BibtexGenerateFile) -->
 				<anchorNameExpression><![CDATA[$F{id}]]></anchorNameExpression>
 				<hyperlinkReferenceExpression><![CDATA["/rgms/publication/generateBib/"+$F{id}.toString()]]></hyperlinkReferenceExpression>
 				<hyperlinkParameter name="id">
 					<hyperlinkParameterExpression><![CDATA[$F{id}]]></hyperlinkParameterExpression>
 				</hyperlinkParameter>
+				<!-- #end -->
 			</textField>
 		</band>
 	</detail>
