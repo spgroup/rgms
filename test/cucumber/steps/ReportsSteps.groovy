@@ -1,9 +1,12 @@
+import pages.Conferencia.ConferenciaCreatePage
+import pages.Conferencia.ConferenciaPage
 import pages.LoginPage
 import pages.MemberListPage
 import pages.MemberPage
 import pages.MemberCreatePage
 
 import pages.PublicationsPage
+import pages.Report.ReportHTMLPage
 import pages.ResearchGroupListPage
 import pages.ResearchGroupPage
 import pages.ResearchGroupShowPage
@@ -85,7 +88,6 @@ Given(~'^I am at the Publications page$') {->
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
-
 }
 
 When(~'^I select the Novo Member option$') { ->
@@ -171,6 +173,39 @@ And(~'^I can select the option Export to XML at the Research Group show$') {  ->
 
 And(~'^I can generate a XML report about Research Group "([^"]*)"$') { String researchGroupName ->
     page.compareXML(researchGroupName)
+}
+
+
+Then(~'^I can select the Member "([^"]*)" option$') { String memberId ->
+    to ReportHTMLPage, memberid: memberId
+    page.selectGenerateBibtex(memberId)
+}
+
+Then(~'^I can see the bibtex details$') {->
+}
+
+
+When(~'^I select the Conferencia option at the Publications menu$') {->
+    page.select("Conferencia")
+}
+
+When(~'^I select the new Conferencia option at the Conferencia page$') {->
+    at ConferenciaPage
+    page.selectNewConferencia()
+}
+
+When(~'^I am at the Publications$') {->
+    at PublicationsPage
+}
+
+When(~'^I select the home option at the Conferencia page$') {->
+    at ConferenciaCreatePage
+    page.selectHome()
+}
+
+When(~'^I can fill the Conferencia details$') {->
+    at ConferenciaCreatePage
+    page.fillConferenciaDetails()
 }
 
 //---------------------------------------------------------------------------------------------------

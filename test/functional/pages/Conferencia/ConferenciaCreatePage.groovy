@@ -23,12 +23,18 @@ class ConferenciaCreatePage extends FormPage {
         $("form").title = "A theory of Software Product Line Refinement"
         $("form").booktitle = "Theoretical Computer Science"
         $("form").pages = "20-100"
+        $("form").create().click()
         // Could parametrize, obtaining data from class TestConferenciaDataAndOperations
     }
 
     def fillTitle() {
         $("form").title = "A theory of Software Product Line Refinement"
         $("form").create().click()
+    }
+
+
+    def selectHome() {
+        $('a.home').click()
     }
 
 }
