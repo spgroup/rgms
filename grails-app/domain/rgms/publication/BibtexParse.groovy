@@ -15,8 +15,9 @@ class BibtexParse {
     public static List<Publication> generatePublications(File file) {
         List<Publication> publications = new ArrayList<Publication>()
         BibTeXDatabase bibtexDatabase = parseBibTeX(file)
+        if (bibtexDatabase != null)
+        {
         Collection<BibTeXEntry> entries = bibtexDatabase.getEntries().values();
-
         for (BibTeXEntry entry : entries) {
             //TODO settar todos os atributos de acordo com a classe a ser instanciada
             //Para pegar os valores do objeto 'entry' basta seguir o modelo da linha abaixo
@@ -133,6 +134,7 @@ class BibtexParse {
             }
 
         }
+        }
 
         return publications
 
@@ -168,7 +170,12 @@ class BibtexParse {
             };
 
             return parser.parse(reader);
-        } finally {
+        }
+        catch (org.jbibtex.ParseException exception)
+        {
+            System.println("Unformated Dissertation")
+        }
+        finally {
             reader.close();
         }
     }

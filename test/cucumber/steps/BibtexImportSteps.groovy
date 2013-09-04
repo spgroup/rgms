@@ -43,11 +43,12 @@ When(~'^I select a bibtex file unformatted and I click "([^"]*)"$') { String arg
 
 //@Test(expected=RuntimeException.class)
 Then(~'^the system output the message error "([^"]*)"$') { String arg1 ->
-    BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("sample.bibtex")
+    BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("sampleUnformated.bibtex")
 }
 
-Then(~'^none publication is stored$') {->
-    assert Publication.getAll().size() == 0
+Then(~'^none publication is stored with name "([^"]*)"$') {String title->
+    Publication publication = Publication.findByTitle(title)
+    assert publication == null
 }
 
 When(~'^I select a bibtex file with one Dissertation and two Thesis and I click "([^"]*)"$') { String arg1 ->
