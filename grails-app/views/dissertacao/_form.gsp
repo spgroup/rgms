@@ -41,7 +41,7 @@
         <g:message code="dissertacao.school.label" default="School"/>
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="school" required="" value="${dissertacaoInstance?.schoolSelected()}"/>
+    <g:textField name="school" required="" value="${dissertacaoInstance?.school}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'address', 'error')} required">
