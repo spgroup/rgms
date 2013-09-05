@@ -39,27 +39,32 @@ class XMLService {
         return !errorFound
     }
 
+    static void createPublications(Node xmlFile, Member user){
+        createFerramentas(xmlFile)
+        createBooksChapters(xmlFile)
+        createDissertations(xmlFile)
+        createConferencias(xmlFile)
+        createOrientations(xmlFile, user)
+        createJournals(xmlFile)
+    }
+
     static void createFerramentas(Node xmlFile){
         Node producaoTecnica = (Node) xmlFile.children()[2]
 
         for (Node currentNode : producaoTecnica.children()){
             if (currentNode.name().equals("SOFTWARE"))
-                saveNewTool(currentNode)
+                saveNewFerramenta(currentNode)
         }
     }
 
-    private static void saveNewTool(Node currentNode){
+    private static void saveNewFerramenta(Node currentNode){
         Node dadosBasicos = (Node) currentNode.children()[0]
         Node detalhamentoDoSoftware = (Node) currentNode.children()[1]
         Node informacoesAdicionais = getNodeFromNode(currentNode, "INFORMACOES-ADICIONAIS")
 
         Ferramenta newTool = new Ferramenta()
 
-        newTool.publicationDate = new Date()
-        String tryingToParse = getAttributeValueFromNode(dadosBasicos, "ANO")
-        if (tryingToParse.isInteger())
-            newTool.publicationDate.set(year: tryingToParse.toInteger())
-
+        fillPublicationDate(newTool, dadosBasicos, "ANO")
         newTool.file = 'no File'
         newTool.website = 'no Website'
         newTool.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-SOFTWARE")
@@ -92,12 +97,9 @@ class XMLService {
     }
 
     private static void fillBookChapterInfo (BookChapter newBookChapter, Node dadosBasicos, int i){
-        newBookChapter.publicationDate = new Date()
-        String tryingToParse = getAttributeValueFromNode(dadosBasicos, "ANO")
-        if (tryingToParse.isInteger())
-            newBookChapter.publicationDate.set(year: tryingToParse.toInteger())
-
+        fillPublicationDate(newBookChapter, dadosBasicos, "ANO")
         print(newBookChapter.publicationDate)
+
         newBookChapter.file = 'emptyfile' + i.toString()
         newBookChapter.chapter = 2
         newBookChapter.save(flush: false)
@@ -116,11 +118,7 @@ class XMLService {
         Dissertacao newDissertation = new Dissertacao()
         newDissertation.title = getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")
 
-        newDissertation.publicationDate = new Date()
-        String tryingToParse = getAttributeValueFromNode(xmlNode, "ANO-DE-OBTENCAO-DO-TITULO")
-        if (tryingToParse.isInteger())
-            newDissertation.publicationDate.set(year: tryingToParse.toInteger())
-
+        fillPublicationDate(newDissertation, xmlNode, "ANO-DE-OBTENCAO-DO-TITULO")
         newDissertation.school = getAttributeValueFromNode(xmlNode, "NOME-INSTITUICAO")
         newDissertation.file = 'no File'
         newDissertation.address = 'no Address'
@@ -146,12 +144,9 @@ class XMLService {
             novaConferencia.title = nomeEvento
 
             if (Publication.findByTitle(novaConferencia.title) == null){
-                novaConferencia.publicationDate = new Date()
-                String tryingToParse = getAttributeValueFromNode(dadosBasicos, "ANO-DO-TRABALHO")
-                if (tryingToParse.isInteger())
-                    novaConferencia.publicationDate.set(year: tryingToParse.toInteger())
+                fillPublicationDate(novaConferencia, dadosBasicos, "ANO-DO-TRABALHO")
 
-                tryingToParse = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-TRABALHO")
+                String tryingToParse = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-TRABALHO")
                 novaConferencia.booktitle = tryingToParse;
                 tryingToParse =  getAttributeValueFromNode(detalhamento, "PAGINA-INICIAL")
                 String tryingToParse2 = getAttributeValueFromNode(detalhamento, "PAGINA-FINAL")
@@ -244,6 +239,7 @@ class XMLService {
         getJournalTitle(dadosBasicos, newJournal)
 
         if (Publication.findByTitle(newJournal.title) == null) {
+            fillPublicationDate(newJournal, dadosBasicos, "ANO-DO-ARTIGO")
             getJournalYear(dadosBasicos, newJournal)
             getJournalVolume(detalhamentoArtigo, newJournal)
             getJournalNumber(detalhamentoArtigo, newJournal)
@@ -287,13 +283,6 @@ class XMLService {
             newJournal.volume = 1   //if not parsed successfully, least value possible
     }
 
-    private static void getJournalYear(Node dadosBasicos, Periodico newJournal) {
-        newJournal.publicationDate = new Date()
-        String tryingToParse = getAttributeValueFromNode(dadosBasicos, "ANO-DO-ARTIGO")
-        if (tryingToParse.isInteger())
-            newJournal.publicationDate.set(year: tryingToParse.toInteger() - 1900)
-    }
-
     static Node parseReceivedFile(MultipartHttpServletRequest request) {
         MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
         CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
@@ -314,5 +303,12 @@ class XMLService {
             if ((currentNodeChild.name()+"").equals((nodeName)))
                 return currentNodeChild
         }
+    }
+
+    static void fillPublicationDate(Publication publication, Node currentNode, String field){
+        publication.publicationDate = new Date()
+        String tryingToParse = getAttributeValueFromNode(currentNode, field)
+        if (tryingToParse.isInteger())
+            publication.publicationDate.set(year: tryingToParse.toInteger())
     }
 }

@@ -58,7 +58,7 @@ class XMLController {
 
         XMLService serv = new XMLService()
         Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
-        serv.Import(saveDissertations, returnDissertationWithMessage, flashMessage, "Dissertacao", xmlFile as HttpServletRequest)
+        serv.Import(saveDissertations, returnWithMessage, flashMessage, "Dissertacao", xmlFile as HttpServletRequest)
     }
 
     private Closure saveDissertations = {
@@ -69,7 +69,7 @@ class XMLController {
     def enviarConferenciaXML(){
         String flashMessage = message(code: 'default.importedMsg.message')
 
-        if (!XMLService.Import(saveConferencias, returnConferenciaWithMessage, flashMessage, "Conferencia", request))
+        if (!XMLService.Import(saveConferencias, returnWithMessage, flashMessage, "Conferencia", request))
             return
     }
 
@@ -81,7 +81,7 @@ class XMLController {
     def uploadOrientationXML() {
         String flashMessage = 'default.orientation.imported.message'
 
-        if (!XMLService.Import(saveOrientations, returnOrientationWithMessage, flashMessage, "Orientation", request))
+        if (!XMLService.Import(saveOrientations, returnWithMessage, flashMessage, "Orientation", request))
             return
     }
 
@@ -94,7 +94,7 @@ class XMLController {
     def uploadXMLPeriodico() {
         String flashMessage = 'default.article.imported.message'
 
-        if (!XMLService.Import(saveJournals, returnPeriodicoWithMessage, flashMessage, "Periodico", request))
+        if (!XMLService.Import(saveJournals, returnWithMessage, flashMessage, "Periodico", request))
             return
     }
 
