@@ -50,7 +50,7 @@ class TestDataDissertacao
     }
 
     static public void uploadDissertacao(filename) {
-        def cont = new DissertacaoController()
+        def cont = new XMLController()
         def xml = new File(filename);
         def records = new XmlParser()
         cont.saveDissertations(records.parse(xml));
