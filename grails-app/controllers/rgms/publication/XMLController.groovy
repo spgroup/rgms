@@ -16,17 +16,23 @@ import javax.servlet.http.HttpServletRequest
  */
 class XMLController {
 
+
+    private Closure returnWithMessage = {
+        String msg, String controller ->
+            redirectToList(controller)
+            flash.message = message(code: msg)
+    }
+
+    private def redirectToList(String controllerUsed){
+        redirect(controller: controllerUsed, action: "list", params: params)
+    }
+
     def uploadXMLFerramenta()
     {
         String flashMessage = 'The non existent dissertations were successfully imported'
-
-        if (!XMLService.Import(saveTools, returnToolWithMessage, flashMessage, request))
+        String controller = "Ferramenta"
+        if (!XMLService.Import(saveTools, returnWithMessage, flashMessage, controller, request))
             return
-    }
-
-    private Closure returnToolWithMessage = {
-        String msg ->
-            redirectToList("Ferramenta")
     }
 
     private Closure saveTools = {
@@ -40,21 +46,11 @@ class XMLController {
             }
     }
 
-    private def redirectToList(String controllerUsed){
-        redirect(controller: controllerUsed, action: "list", params: params)
-    }
-
-    private Closure returnBookChapterWithMessage = {
-        String msg ->
-            redirectToList("BookChapter")
-            flash.message = message(code: msg)
-    }
-
     def uploadXMLBookChapter()
     {
         String flashMessage = 'The non existent Book Chapters were successfully imported'
 
-        if (XMLService.Import(saveBookChapters, returnBookChapterWithMessage, flashMessage, request))
+        if (XMLService.Import(saveBookChapters, returnWithMessage, flashMessage, "BookChapter", request))
             return
     }
 
@@ -75,13 +71,7 @@ class XMLController {
 
         XMLService serv = new XMLService()
         Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
-        serv.Import(saveDissertations, returnDissertationWithMessage, flashMessage, xmlFile as HttpServletRequest)
-    }
-
-    private Closure returnDissertationWithMessage = {
-        String msg ->
-            redirectToList("Dissertacao")
-            flash.message = message(code: msg)
+        serv.Import(saveDissertations, returnDissertationWithMessage, flashMessage, "Dissertacao", xmlFile as HttpServletRequest)
     }
 
     private Closure saveDissertations = {
@@ -94,16 +84,10 @@ class XMLController {
             XMLService.createDissertation(doutorado)
     }
 
-    Closure returnConferenciaWithMessage = {
-        String msg ->
-            redirectToList("Conferencia")
-            flash.message = message(code: msg)
-    }
-
     def enviarConferenciaXML(){
         String flashMessage = message(code: 'default.importedMsg.message')
 
-        if (!XMLService.Import(saveConferencias, returnConferenciaWithMessage, flashMessage, request))
+        if (!XMLService.Import(saveConferencias, returnConferenciaWithMessage, flashMessage, "Conferencia", request))
             return
     }
 
@@ -117,16 +101,10 @@ class XMLController {
             }
     }
 
-    Closure returnOrientationWithMessage = {
-        String msg ->
-            redirectToList("Orientation")
-            flash.message = message(code: msg)
-    }
-
     def uploadOrientationXML() {
         String flashMessage = 'default.orientation.imported.message'
 
-        if (!XMLService.Import(saveOrientations, returnOrientationWithMessage, flashMessage, request))
+        if (!XMLService.Import(saveOrientations, returnOrientationWithMessage, flashMessage, "Orientation", request))
             return
     }
 
@@ -141,16 +119,10 @@ class XMLController {
                     XMLService.saveNewOrientation(completedOrientations, i, user)
     }
 
-    private Closure returnPeriodicoWithMessage = {
-        String msg ->
-            redirectToList("Periodico")
-            flash.message = message(code: msg)
-    }
-
     def uploadXMLPeriodico() {
         String flashMessage = 'default.article.imported.message'
 
-        if (!XMLService.Import(saveJournals, returnPeriodicoWithMessage, flashMessage, request))
+        if (!XMLService.Import(saveJournals, returnPeriodicoWithMessage, flashMessage, "Periodico", request))
             return
     }
 

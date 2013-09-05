@@ -18,7 +18,7 @@ class XMLService {
     /*
         saveEntity - closure que salva a classe de domínio que está usando a importação
      */
-    static boolean Import(Closure saveEntity, Closure returnWithMessage, String flashMessage,
+    static boolean Import(Closure saveEntity, Closure returnWithMessage, String flashMessage, String controller,
         javax.servlet.http.HttpServletRequest request)
     {
         boolean errorFound = false
@@ -43,7 +43,7 @@ class XMLService {
             errorFound = true
         }
 
-        returnWithMessage(flashMessage)
+        returnWithMessage(flashMessage, controller)
         return !errorFound
     }
 
