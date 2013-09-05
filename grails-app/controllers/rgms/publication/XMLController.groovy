@@ -5,8 +5,6 @@ import rgms.XMLService
 import rgms.member.Member
 import rgms.member.Orientation
 
-import javax.servlet.http.HttpServletRequest
-
 /**
  * Created with IntelliJ IDEA.
  * User: Cynthia
@@ -16,19 +14,22 @@ import javax.servlet.http.HttpServletRequest
  */
 class XMLController {
 
+    def home(){}
 
-    private Closure returnWithMessage = {
-        String msg, String controller ->
-            redirectToList(controller)
-            flash.message = message(code: msg)
+    def upload(){
+        String flashMessage = 'Publications imported!'
+        String controller = "Publication"
+        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request))
+            return
     }
 
-    private def redirectToList(String controllerUsed){
-        redirect(controller: controllerUsed, action: "list", params: params)
+    private Closure savePublication = {
+        Node xmlFile ->
+            Member user = Member.findByUsername(session.getAttribute("username").toString())
+            XMLService.createPublications(xmlFile, user)
     }
 
-    def uploadXMLFerramenta()
-    {
+    def uploadXMLFerramenta(){
         String flashMessage = 'The non existent dissertations were successfully imported'
 
         if (!XMLService.Import(saveTools, returnWithMessage, flashMessage, "Ferramenta", request))
@@ -40,8 +41,7 @@ class XMLController {
             XMLService.createFerramentas(xmlFile)
     }
 
-    def uploadXMLBookChapter()
-    {
+    def uploadXMLBookChapter(){
         String flashMessage = 'The non existent Book Chapters were successfully imported'
 
         if (XMLService.Import(saveBookChapters, returnWithMessage, flashMessage, "BookChapter", request))
@@ -53,12 +53,11 @@ class XMLController {
             XMLService.createBooksChapters(xmlFile)
     }
 
-    def uploadXMLDissertacao() {
+    def uploadXMLDissertacao(){
         String flashMessage = 'The non existent dissertations were successfully imported'
 
-        XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
-        serv.Import(saveDissertations, returnWithMessage, flashMessage, "Dissertacao", xmlFile as HttpServletRequest)
+        if (!XMLService.Import(saveDissertations, returnWithMessage, flashMessage, "Dissertacao", request))
+            return
     }
 
     private Closure saveDissertations = {
@@ -78,7 +77,7 @@ class XMLController {
             XMLService.createConferencias(xmlFile)
     }
 
-    def uploadOrientationXML() {
+    def uploadOrientationXML(){
         String flashMessage = 'default.orientation.imported.message'
 
         if (!XMLService.Import(saveOrientations, returnWithMessage, flashMessage, "Orientation", request))
@@ -88,11 +87,11 @@ class XMLController {
     private Closure saveOrientations = {
         Node xmlFile ->
             Member user = Member.findByUsername(session.getAttribute("username").toString())
+
             XMLService.createOrientations(xmlFile, user)
     }
 
-
-    def uploadXMLPeriodico() {
+    def uploadXMLPeriodico(){
         String flashMessage = 'default.article.imported.message'
 
         if (!XMLService.Import(saveJournals, returnWithMessage, flashMessage, "Periodico", request))
@@ -102,5 +101,18 @@ class XMLController {
     private Closure saveJournals = {
         Node xmlFile ->
             XMLService.createJournals(xmlFile)
+    }
+
+    private Closure returnWithMessage = {
+        String msg, String controller ->
+            redirectToList(controller)
+            flash.message = message(code: msg)
+    }
+
+    private def redirectToList(String controllerUsed){
+        if(controllerUsed == "Publication")
+            redirect (uri: '/')
+        else
+            redirect(controller: controllerUsed, action: "list", params: params)
     }
 }
