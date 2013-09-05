@@ -5,8 +5,6 @@ import rgms.XMLService
 import rgms.member.Member
 import rgms.member.Orientation
 
-import javax.servlet.http.HttpServletRequest
-
 /**
  * Created with IntelliJ IDEA.
  * User: Cynthia
@@ -16,6 +14,20 @@ import javax.servlet.http.HttpServletRequest
  */
 class XMLController {
 
+    def home(){}
+
+    def upload(){
+        String flashMessage = 'Publications imported!'
+        String controller = "Publication"
+        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request))
+            return
+    }
+
+    private Closure savePublication = {
+        Node xmlFile ->
+            Member user = Member.findByUsername(session.getAttribute("username").toString())
+            XMLService.createPublications(xmlFile, user)
+    }
 
     private Closure returnWithMessage = {
         String msg, String controller ->
@@ -24,7 +36,10 @@ class XMLController {
     }
 
     private def redirectToList(String controllerUsed){
-        redirect(controller: controllerUsed, action: "list", params: params)
+        if(controllerUsed == "Publication")
+            redirect (uri: '/')
+        else
+            redirect(controller: controllerUsed, action: "list", params: params)
     }
 
     def uploadXMLFerramenta()
@@ -56,9 +71,8 @@ class XMLController {
     def uploadXMLDissertacao() {
         String flashMessage = 'The non existent dissertations were successfully imported'
 
-        XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
-        serv.Import(saveDissertations, returnWithMessage, flashMessage, "Dissertacao", xmlFile as HttpServletRequest)
+        if (!XMLService.Import(saveDissertations, returnWithMessage, flashMessage, "Dissertacao", request))
+            return
     }
 
     private Closure saveDissertations = {
@@ -88,6 +102,7 @@ class XMLController {
     private Closure saveOrientations = {
         Node xmlFile ->
             Member user = Member.findByUsername(session.getAttribute("username").toString())
+
             XMLService.createOrientations(xmlFile, user)
     }
 

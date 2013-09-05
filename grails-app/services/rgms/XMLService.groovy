@@ -107,8 +107,8 @@ class XMLService {
 
     static void createDissertations(Node xmlFile){
         Node dadosGerais = (Node) xmlFile.children()[0]
-        Node mestrado = (Node) ((Node) dadosGerais.children()[3]).children()[1]
-        Node doutorado = (Node) ((Node) dadosGerais.children()[3]).children()[2]
+        Node mestrado = (Node) ((Node) dadosGerais.children()[1]).children()[1]
+        Node doutorado = (Node) ((Node) dadosGerais.children()[1]).children()[2]
 
         createDissertation(mestrado)
         createDissertation(doutorado)
@@ -240,7 +240,6 @@ class XMLService {
 
         if (Publication.findByTitle(newJournal.title) == null) {
             fillPublicationDate(newJournal, dadosBasicos, "ANO-DO-ARTIGO")
-            getJournalYear(dadosBasicos, newJournal)
             getJournalVolume(detalhamentoArtigo, newJournal)
             getJournalNumber(detalhamentoArtigo, newJournal)
             getJournalNumberOfPages(detalhamentoArtigo, newJournal)
