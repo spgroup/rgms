@@ -22,6 +22,9 @@ features, siga os seguintes passos:
     - em seguida, no mesmo local, execute
       java -jar velocitypreprocessor.jar suastags.properties newPath/test/
 
-    - agora pode criar, ou abrir, um projeto intellij em newPath/test/, dando
+    - por fim, no mesmo local, execute
+      java -jar velocitypreprocessor.jar suastags.properties newPath/web-app/reports
+
+    - agora pode criar, ou abrir, um projeto intellij em newPath/, dando
       um grails clean seguido de Rebuild Project, para então testar ou rodar a
       versão simplificada do RGMS
