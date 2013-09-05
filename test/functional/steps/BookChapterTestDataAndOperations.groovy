@@ -4,7 +4,9 @@ import rgms.member.Member
 import rgms.publication.BookChapter
 import rgms.publication.BookChapterController
 import rgms.publication.PublicationController
+//#if($XMLUpload)
 import rgms.publication.XMLController
+//#end
 
 /**
  * Created with IntelliJ IDEA.
