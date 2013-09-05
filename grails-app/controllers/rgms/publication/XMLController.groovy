@@ -29,21 +29,7 @@ class XMLController {
             XMLService.createPublications(xmlFile, user)
     }
 
-    private Closure returnWithMessage = {
-        String msg, String controller ->
-            redirectToList(controller)
-            flash.message = message(code: msg)
-    }
-
-    private def redirectToList(String controllerUsed){
-        if(controllerUsed == "Publication")
-            redirect (uri: '/')
-        else
-            redirect(controller: controllerUsed, action: "list", params: params)
-    }
-
-    def uploadXMLFerramenta()
-    {
+    def uploadXMLFerramenta(){
         String flashMessage = 'The non existent dissertations were successfully imported'
 
         if (!XMLService.Import(saveTools, returnWithMessage, flashMessage, "Ferramenta", request))
@@ -55,8 +41,7 @@ class XMLController {
             XMLService.createFerramentas(xmlFile)
     }
 
-    def uploadXMLBookChapter()
-    {
+    def uploadXMLBookChapter(){
         String flashMessage = 'The non existent Book Chapters were successfully imported'
 
         if (XMLService.Import(saveBookChapters, returnWithMessage, flashMessage, "BookChapter", request))
@@ -68,7 +53,7 @@ class XMLController {
             XMLService.createBooksChapters(xmlFile)
     }
 
-    def uploadXMLDissertacao() {
+    def uploadXMLDissertacao(){
         String flashMessage = 'The non existent dissertations were successfully imported'
 
         if (!XMLService.Import(saveDissertations, returnWithMessage, flashMessage, "Dissertacao", request))
@@ -92,7 +77,7 @@ class XMLController {
             XMLService.createConferencias(xmlFile)
     }
 
-    def uploadOrientationXML() {
+    def uploadOrientationXML(){
         String flashMessage = 'default.orientation.imported.message'
 
         if (!XMLService.Import(saveOrientations, returnWithMessage, flashMessage, "Orientation", request))
@@ -106,8 +91,7 @@ class XMLController {
             XMLService.createOrientations(xmlFile, user)
     }
 
-
-    def uploadXMLPeriodico() {
+    def uploadXMLPeriodico(){
         String flashMessage = 'default.article.imported.message'
 
         if (!XMLService.Import(saveJournals, returnWithMessage, flashMessage, "Periodico", request))
@@ -117,5 +101,18 @@ class XMLController {
     private Closure saveJournals = {
         Node xmlFile ->
             XMLService.createJournals(xmlFile)
+    }
+
+    private Closure returnWithMessage = {
+        String msg, String controller ->
+            redirectToList(controller)
+            flash.message = message(code: msg)
+    }
+
+    private def redirectToList(String controllerUsed){
+        if(controllerUsed == "Publication")
+            redirect (uri: '/')
+        else
+            redirect(controller: controllerUsed, action: "list", params: params)
     }
 }

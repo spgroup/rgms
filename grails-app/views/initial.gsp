@@ -155,6 +155,8 @@
         <!-- #end -->
         <!-- #if($ImportBibtex && $TesePublication) -->
         <li><g:link controller="BibtexFile" action="home">Import Bibtex File</g:link></li>
+        <!-- #end -->
+        <!-- #if($XMLUpload) -->
         <li><g:link controller="XML" action="home">Import XML File</g:link></li>
         <!-- #end -->
     </ol>
