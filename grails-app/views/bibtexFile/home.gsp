@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="rgms.publication.BibtexFileController" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <meta name="layout" content="main"/>
-    <title>Insert title here</title>
+    <g:set var="entityName" value="${ message(code: 'bibtexfile.label', default: 'BibTexImport')}" />
+    <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 
 <body>

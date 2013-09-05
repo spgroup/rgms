@@ -184,7 +184,7 @@ class PeriodicoController {
     def uploadXMLPeriodico() {
         String flashMessage = 'default.article.imported.message'
 
-        if (XMLService.Import(saveJournals, returnWithMessage, flashMessage, request))
+        if (!XMLService.Import(saveJournals, returnWithMessage, flashMessage, request))
             return
     }
 

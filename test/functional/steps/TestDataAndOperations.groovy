@@ -1,6 +1,5 @@
 package steps
 
-import rgms.authentication.AuthController
 import rgms.member.*
 import rgms.news.News
 import rgms.news.NewsController
@@ -9,46 +8,12 @@ import org.apache.shiro.SecurityUtils
 
 class TestDataAndOperations {
 
-    static ferramentas = [
-            [description: "Ferramenta Target",
-                    title: "Target",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.teste.com", description: "Ferramenta Emergo",
-                    title: "Emergo",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.ccfinder.com", description: "Ferramenta CCfinder",
-                    title: "CCFinder",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.tool.com", description: "Ferramenta Tool",
-                    title: "Tool",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.new.com", description: "Ferramenta New",
-                    title: "New",
-                    publicationDate: (new Date("12 October 2012"))],
-            [website: "http://www.tooldelete.com", description: "Ferramenta ToolDelete",
-                    title: "ToolDelete",
-                    publicationDate: (new Date("12 October 2012"))]
-    ]
-
-
     static researchLines = [
             [name: "IA Avancada", description: ""],
             [name: "Redes Avancadas", description: "Redes de Computadores Avancadas"],
             [name: "Teoria da informacao - Complexidade no espaco", description: "P=NP"],
             [name: "Novo Padrao Arquitetural MVCE", description: "Nova arquitetura que promete revolucionar a web"],
             [name: "Modelo Cascata Renovado", description: "Altera��o do modelo original"]
-    ]
-
-    static conferencias = [
-            [title: "I International Conference on Software Engineering",
-                    publicationDate: (new Date("12 October 2012")),
-                    booktitle: "Software Engineering", pages: "20-120"],
-            [title: "IV Conference on Software Product Lines",
-                    publicationDate: (new Date("14 October 2012")),
-                    booktitle: "Practices and Patterns", pages: "150-200"],
-            [title: "V Conference on Software Product Lines",
-                    publicationDate: (new Date("16 October 2012")),
-                    booktitle: "Practices and Patterns", pages: "50-100"]
     ]
 
     static records = [
@@ -88,11 +53,9 @@ class TestDataAndOperations {
                     dateLeft: (new Date(2012, 06, 01))]]
 
 
-
-    static public def findFerramentaByTitle(String title) {
-        ferramentas.find { ferramenta ->
-            ferramenta.title == title
-        }
+    static public def openBibTexFile(String path){
+        BibtexFileController bibtexFileController = new BibtexFileController()
+        BibtexFile bibtexFile = bibtexFileController.transform(new File(path))
     }
 
     static public def findByUsername(String username) {
@@ -110,12 +73,6 @@ class TestDataAndOperations {
     static public boolean recordIsAssociated(def status, def shallBe = true) {
         def recordId = Record.findByStatus_H(status).id
         RecordController.recordHasMembers(recordId) == shallBe
-    }
-
-    static public def findConferenciaByTitle(String title) {
-        conferencias.find { conferencia ->
-            conferencia.title == title
-        }
     }
 
    /* static public def findResearchLineByName(String name) {
@@ -152,11 +109,6 @@ class TestDataAndOperations {
         return compatible
     }
 
-    static public void createDissertacao(String title, filename, school) {
-        def cont = new DissertacaoController()
-        createThesisOrDissertation(title, filename, school, cont)
-    }
-
     static public void createTese(String title, filename, school) {
         def cont = new TeseController()
         createThesisOrDissertation(title, filename, school, cont)
@@ -167,97 +119,6 @@ class TestDataAndOperations {
         cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
                 school: school, address: "Boa Viagem", file: filename]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-
-    static public void createDissertacaoWithotSchool(String title, filename) {
-        def cont = new DissertacaoController()
-        def date = new Date()
-        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
-                address: "Boa Viagem", file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-    static public void createDissertacaoWithoutAddress(String title, filename) {
-        def cont = new DissertacaoController()
-        def date = new Date()
-        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),school: "UFPE", file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-
-    static public Dissertacao editDissertatacao(oldtitle, newtitle) {
-        def article = Dissertacao.findByTitle(oldtitle)
-        article.setTitle(newtitle)
-        def cont = new DissertacaoController()
-        cont.params << article.properties
-        cont.update()
-
-        def updatedarticle = Dissertacao.findByTitle(newtitle)
-        return updatedarticle
-    }
-
-    static public void uploadDissertacao(filename) {
-        def cont = new DissertacaoController()
-        def xml = new File(filename);
-        def records = new XmlParser()
-        cont.saveDissertations(records.parse(xml));
-        cont.response.reset()
-    }
-
-    static public void removeDissertacao(String title) {
-        def testDissertation = Dissertacao.findByTitle(title)
-        def cont = new DissertacaoController()
-        def date = new Date()
-        cont.params << [id: testDissertation.id]
-        cont.delete()
-    }
-
-    static public void uploadFerramenta(filepath) {
-        def cont = new FerramentaController()
-        def xml = new File((String) filepath);
-        def records = new XmlParser()
-        cont.saveTools(records.parse(xml));
-        cont.response.reset()
-    }
-
-    static public boolean conferenciaCompatibleTo(conferencia, title) {
-        def testConferencia = findConferenciaByTitle(title)
-        def compatible = false
-        if (testConferencia == null && conferencia == null) {
-            compatible = true
-        } else if (testConferencia != null && conferencia != null) {
-            compatible = true
-            testConferencia.each { key, data ->
-                compatible = compatible && (conferencia."$key" == data)
-            }
-        }
-        return compatible
-    }
-
-
-    static public void createFerramenta(String title, filename) {
-        def cont = new FerramentaController()
-        def date = new Date()
-        cont.params << TestDataAndOperations.findFerramentaByTitle(title) << [file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-
-
-
-    static public void createConferencia(String title, String filename) {
-        def cont = new ConferenciaController()
-        cont.params << TestDataAndOperations.findConferenciaByTitle(title) << [file: filename]
-        cont.request.setContent(new byte[1000])
         cont.create()
         cont.save()
         cont.response.reset()
@@ -429,34 +290,6 @@ class TestDataAndOperations {
 		return updatedarticle
     }
 
-    static public Ferramenta editFerramenta(oldtitle, newtitle) {
-        def ferramenta = Ferramenta.findByTitle(oldtitle)
-        ferramenta.setTitle(newtitle)
-        def cont = new FerramentaController()
-        cont.params << ferramenta.properties
-        cont.update()
-
-        def updatedferramenta = Ferramenta.findByTitle(newtitle)
-        return updatedferramenta
-    }
-
-    static public void removeFerramenta(String title){
-        def cont = new FerramentaController()
-        cont.params << [id: Ferramenta.findByTitle(title).id]
-        cont.delete()
-        cont.response.reset()
-    }
-
-    static public Ferramenta getFerramenta(title){
-        return Ferramenta.findByTitle(title)
-    }
-
-    static public void removeConferencia(String title) {
-        def cont = new ConferenciaController()
-        def date = new Date()
-        Conferencia.findByTitle(title).delete(flush: true)
-    }
-
     static public ResearchGroup createAndGetResearchGroupByName(String name) {
         return createAndGetResearchGroupByNameWithTwitter(name,null)
     }
@@ -501,7 +334,7 @@ class TestDataAndOperations {
         }
     }
 
-   
+
     static public void removeOrientation(String tituloTese) {
 
         def testOrientation = TestDataAndOperations.findOrientationByTitle(tituloTese)
@@ -523,9 +356,9 @@ class TestDataAndOperations {
     }
     //mapmf_tasj
 
-   
 
-   
+
+
 
     static public void createOrientation(String tituloTese) {
 
@@ -537,7 +370,7 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-   
+
     //article
 
     static public def path(){

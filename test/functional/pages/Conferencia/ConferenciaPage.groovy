@@ -1,4 +1,4 @@
-package pages
+package pages.Conferencia
 
 import geb.Page
 

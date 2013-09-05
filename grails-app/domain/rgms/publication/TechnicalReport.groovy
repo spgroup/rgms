@@ -10,10 +10,10 @@ class TechnicalReport extends Publication {
 
     //#if($Bibtex)
     String generateBib() {
-        return "@techreport{"+ "author=\"" + BibtexAux.organizeAuthors(members) + "\",\n title=\"" + title + "\",\n institution=\""+ this.institution + "\",\n year=\"" + publicationDate.getAt(Calendar.YEAR) + "\"}"
+        return new BibtexExport().generateBibtexTechnicalReport(this)
     }
     //#end
-	
+
     @Override
 	public String toString() {
 		// TODO Auto-generated method stub

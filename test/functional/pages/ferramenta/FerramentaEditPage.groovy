@@ -1,4 +1,4 @@
-package pages
+package pages.ferramenta
 
 import geb.Page
 
@@ -10,16 +10,19 @@ class FerramentaEditPage extends Page {
     }
 
     static content = {
-
     }
 
     def editWebsite(String website) {
         $("form").website = website
-        $("form").save().click()
+        save()
     }
 
     def editTitle(String title){
         $("form").title = title
+        save()
+    }
+
+    def save(){
         $("form").save().click()
     }
 }

@@ -1,8 +1,12 @@
 package rgms.publication
 
+import org.springframework.web.multipart.MultipartHttpServletRequest
+import javax.servlet.http.HttpServletRequest
 import rgms.XMLService
 
 class DissertacaoController extends ThesisOrDissertationController {
+
+
    
     def grailsApplication
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -18,14 +22,25 @@ class DissertacaoController extends ThesisOrDissertationController {
     def save() {
         saveThesisOrDissertation("Dissertacao", params)
     }
-    
+    def getDissertacaoInstance(def id)
+{        
+	def dissertacaoInstance = Dissertacao.get(id)
+        if (!dissertacaoInstance) {
+            flash.message = messageGenerator('default.not.found.message', id)
+            redirect(action: "list")
+            return
+        }
+
+        [dissertacaoInstance: dissertacaoInstance]
+    }
+
     def show() {
         showOrEdit("Dissertacao", params.id)
     }
-
+    
     def edit() {
         showOrEdit("Dissertacao", params.id)
-    }
+}
 
     def update() {
         updateThesisOrDissertation("Dissertacao", params)
@@ -39,9 +54,8 @@ class DissertacaoController extends ThesisOrDissertationController {
         String flashMessage = 'The non existent dissertations were successfully imported'
 
         XMLService serv = new XMLService()
-        Node xmlFile = serv.parseReceivedFile(request)
-        if (!serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile))
-            return
+        Node xmlFile = serv.parseReceivedFile(request as MultipartHttpServletRequest)
+        serv.Import(saveDissertations, returnWithMessage, flashMessage, xmlFile as HttpServletRequest)
     }
 
     Closure returnWithMessage = {
