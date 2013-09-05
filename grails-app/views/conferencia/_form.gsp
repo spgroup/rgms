@@ -1,5 +1,6 @@
 <%@ page import="rgms.member.Member" %>
 <%@ page import="rgms.publication.Conferencia" %>
+<%@ page import="rgms.publication.PublicationController" %>
 
 
 <div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'title', 'error')} required">
@@ -58,7 +59,7 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <g:select name="members" from="${Member.list()}" size="10" multiple="true" optionKey="id"
+    <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="true" optionKey="id"
               value="${conferenciaInstance?.members}"/>
 
 </div>

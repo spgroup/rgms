@@ -1,5 +1,6 @@
 <%@ page import="rgms.member.Member" %>
 <%@ page import="rgms.publication.Periodico" %>
+<%@ page import="rgms.publication.PublicationController" %>
 
 
 
@@ -75,7 +76,7 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
+    <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id"
               value="${periodicoInstance?.members}"/>
 
 </div>

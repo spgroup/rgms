@@ -34,18 +34,34 @@ class PublicationController {
 
 //#if($contextualInformation)
     def static Member addAuthor(Publication publication) {
+        Member user = getLoggedMember()
+        if (user) {
+            publication.addMember(user)
+        }
+        return user
+    }
+
+    def static Set membersOrderByUsually() {
+        Member user = getLoggedMember()
+        def members = new LinkedHashSet<Member>()
+        if (user) {
+            members.addAll(Member.listOrderByName().sort({ it -> return -(it == user ? (user.publications.size() + 1) : (user.publications.intersect(it.publications)).size()) }))
+        } else {
+            members.addAll(Member.listOrderByName())
+        }
+        return members
+    }
+
+    def static Member getLoggedMember() {
         Member user = null;
         try {
             if (SecurityUtils.subject?.principal != null) {
                 user = Member.findByUsername(SecurityUtils.subject.principal)
-                if (user) {
-                    publication.addMember(user)
-                }
             }
         } catch (org.apache.shiro.UnavailableSecurityManagerException e) {
             return null
         } finally {
-           return user
+            return user
         }
     }
 //#end
