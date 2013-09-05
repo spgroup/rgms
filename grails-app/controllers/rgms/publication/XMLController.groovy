@@ -37,13 +37,7 @@ class XMLController {
 
     private Closure saveTools = {
         Node xmlFile ->
-            Node producaoTecnica = (Node)xmlFile.children()[2]
-
-            for (Node currentNode : producaoTecnica.children()){
-                if (currentNode.name().equals("SOFTWARE")){
-                    XMLService.saveNewTool(currentNode)
-                }
-            }
+            XMLService.createFerramentas(xmlFile)
     }
 
     def uploadXMLBookChapter()
@@ -56,14 +50,7 @@ class XMLController {
 
     private Closure saveBookChapters = {
         Node xmlFile ->
-            Node bookChapters = (Node)((Node)((Node)xmlFile.children()[1]).children()[2]).children()[1]
-            List<Object> bookChaptersChildren = bookChapters.children()
-            for (int i = 0; i < bookChaptersChildren.size(); ++i){
-                List<Object> bookChapter = ((Node)bookChaptersChildren[i]).children()
-                Node dadosBasicos = (Node) bookChapter[0]
-                Node detalhamentoCapitulo = (Node) bookChapter[1]
-                XMLService.createNewBookChapter(dadosBasicos,detalhamentoCapitulo, i)
-            }
+            XMLService.createBooksChapters(xmlFile)
     }
 
     def uploadXMLDissertacao() {
@@ -76,12 +63,7 @@ class XMLController {
 
     private Closure saveDissertations = {
         Node xmlFile ->
-            Node dadosGerais = (Node) xmlFile.children()[0]
-            Node mestrado = (Node) ((Node) dadosGerais.children()[3]).children()[1]
-            Node doutorado = (Node) ((Node) dadosGerais.children()[3]).children()[2]
-
-            XMLService.createDissertation(mestrado)
-            XMLService.createDissertation(doutorado)
+            XMLService.createDissertations(xmlFile)
     }
 
     def enviarConferenciaXML(){
@@ -93,12 +75,7 @@ class XMLController {
 
     private Closure saveConferencias = {
         Node xmlFile ->
-            Node trabalhosEmEventos = (Node) ((Node)xmlFile.children()[1]).children()[0]
-
-            for (Node currentNode : trabalhosEmEventos.children()){
-                List<Object> nodeConferencia = currentNode.children()
-                XMLService.saveNewConferencia (nodeConferencia);
-            }
+            XMLService.createConferencias(xmlFile)
     }
 
     def uploadOrientationXML() {
@@ -110,13 +87,8 @@ class XMLController {
 
     private Closure saveOrientations = {
         Node xmlFile ->
-
-            List<Object> completedOrientations = findCompletedOrientations(xmlFile)
             Member user = Member.findByUsername(session.getAttribute("username").toString())
-
-            if (!XMLService.isNullOrEmpty(completedOrientations))
-                for (int i = 0; i < completedOrientations.size(); i++)
-                    XMLService.saveNewOrientation(completedOrientations, i, user)
+            XMLService.createOrientations(xmlFile, user)
     }
 
     def uploadXMLPeriodico() {
@@ -128,12 +100,6 @@ class XMLController {
 
     private Closure saveJournals = {
         Node xmlFile ->
-
-            Node artigosPublicados = (Node) ((Node) xmlFile.children()[1]).children()[1]
-            List<Object> artigosPublicadosChildren = artigosPublicados.children()
-
-            for (int i = 0; i < artigosPublicadosChildren.size(); ++i)
-                XMLService.saveNewJournal(artigosPublicadosChildren, i)
+            XMLService.createJournals(xmlFile)
     }
-
 }

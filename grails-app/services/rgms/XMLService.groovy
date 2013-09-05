@@ -39,7 +39,7 @@ class XMLService {
         return !errorFound
     }
 
-    static void saveFerramentas(Node xmlFile){
+    static void createFerramentas(Node xmlFile){
         Node producaoTecnica = (Node) xmlFile.children()[2]
 
         for (Node currentNode : producaoTecnica.children()){
@@ -162,9 +162,8 @@ class XMLService {
         }
     }
 
-    static void createOrientations(Node xmlFile){
+    static void createOrientations(Node xmlFile, Member user){
         List<Object> completedOrientations = findCompletedOrientations(xmlFile)
-        Member user = Member.findByUsername(session.getAttribute("username").toString())
 
         if (!XMLService.isNullOrEmpty(completedOrientations))
             for (int i = 0; i < completedOrientations.size(); i++)
