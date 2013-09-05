@@ -110,7 +110,7 @@ class BibtexParse {
                 publications.add(ferramenta)
 
             }
-                //#end
+            //#end
             //#if($ImportBibtex && $TesePublication)
             else if (entry.getType().equals(BibTeXEntry.TYPE_PHDTHESIS)) {
                 publications.add(new StrategyParseTese().execute(entry))
