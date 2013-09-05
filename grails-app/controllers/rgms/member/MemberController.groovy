@@ -2,7 +2,6 @@ package rgms.member
 
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.dao.DataIntegrityViolationException
-import rgms.XMLService
 import rgms.EmailService
 
 import java.security.SecureRandom
@@ -170,66 +169,4 @@ class MemberController {
         memberInstance.addToHistorics(hist)
         memberInstance.save()
     }
-    //#if($XMLImp && $Member)
-    def returnWithMessage(String msg, Member newMember) {
-        render(view: "create", model: [memberInstance: newMember])
-        flash.message = message(code: msg)
-    }
-
-    def uploadMemberXML() {
-        String flashMessage = 'XML data extracted. Complete the remaining fields'
-        boolean errorFound = false
-        Member newMember = new Member(params)
-
-        try {
-            XMLService serv = new XMLService()
-            Node xmlFile = serv.parseReceivedFile(request)
-            fillMemberInfo(xmlFile, newMember, serv)
-        }
-        catch (SAXParseException) { //Se o arquivo nÃ£o for XML ou nÃ£o passaram nenhum
-            flashMessage = 'default.xml.parserror.message'
-            errorFound = true
-        }
-        catch (NullPointerException) { //Se a estrutura do XML estÃ¡ errada (cast em NÃ³ nulo)
-
-            flashMessage = 'default.xml.structure.message'
-            errorFound = true
-        }
-        catch (Exception) {
-            flashMessage = 'default.xml.unknownerror.message'
-            errorFound = true
-        }
-
-        returnWithMessage(flashMessage, newMember)
-        if (errorFound) return
-    }
-
-    private static void fillMemberInfo(Node xmlFile, Member newMember) {
-        Node dadosGerais = (Node) xmlFile.children()[0]
-        List<Object> dadosGeraisChildren = dadosGerais.children()
-        Node endereco = (Node) dadosGeraisChildren[2]
-        Node enderecoProfissional = (Node) endereco.value()[0]
-
-        newMember.name = XMLService.getAttributeValueFromNode(dadosGerais, "NOME-COMPLETO")
-        newMember.university = XMLService.getAttributeValueFromNode(enderecoProfissional, "NOME-INSTITUICAO-EMPRESA")
-        newMember.phone = XMLService.getAttributeValueFromNode(enderecoProfissional, "DDD") +
-                XMLService.getAttributeValueFromNode(enderecoProfissional, "TELEFONE")
-        newMember.website = XMLService.getAttributeValueFromNode(enderecoProfissional, "HOME-PAGE")
-        newMember.city = XMLService.getAttributeValueFromNode(enderecoProfissional, "CIDADE")
-        newMember.country = XMLService.getAttributeValueFromNode(enderecoProfissional, "PAIS")
-        newMember.email = XMLService.getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
-    }
-
-    def Get_MemberInstance(){
-        def memberInstance = Member.get(params.id)
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [memberInstance: memberInstance]
-    }
-
-    //#end
 }

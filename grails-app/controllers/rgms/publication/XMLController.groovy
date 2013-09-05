@@ -103,6 +103,19 @@ class XMLController {
             XMLService.createJournals(xmlFile)
     }
 
+    def uploadMemberXML() {
+        String flashMessage = 'XML data extracted. Complete the remaining fields'
+
+        if (!XMLService.Import(saveMember, returnWithMessage, flashMessage, "Member", request))
+            return
+    }
+
+    private Closure saveMember = {
+        Node xmlFile ->
+            Member newMember = new Member(params)
+            XMLService.createMember(xmlFile, newMember)
+    }
+
     private Closure returnWithMessage = {
         String msg, String controller ->
             redirectToList(controller)

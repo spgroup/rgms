@@ -11,7 +11,8 @@ class XMLService {
     /*
         saveEntity - closure que salva a classe de domínio que está usando a importação
      */
-    static boolean Import(Closure saveEntity, Closure returnWithMessage, String flashMessage, String controller,
+    static boolean Import(Closure saveEntity, Closure returnWithMessage,
+        String flashMessage, String controller,
         javax.servlet.http.HttpServletRequest request)
     {
         boolean errorFound = false
@@ -36,6 +37,7 @@ class XMLService {
         }
 
         returnWithMessage(flashMessage, controller)
+
         return !errorFound
     }
 
@@ -280,6 +282,25 @@ class XMLService {
             newJournal.volume = tryingToParse.toInteger()
         else
             newJournal.volume = 1   //if not parsed successfully, least value possible
+    }
+
+    static void createMember(Node xmlFile, Member newMember) {
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        List<Object> dadosGeraisChildren = dadosGerais.children()
+
+        Node endereco = (Node) dadosGeraisChildren[2]
+        Node enderecoProfissional = (Node) endereco.value()[0]
+
+        newMember.name = getAttributeValueFromNode(dadosGerais, "NOME-COMPLETO")
+        newMember.university = getAttributeValueFromNode(enderecoProfissional, "NOME-INSTITUICAO-EMPRESA")
+        newMember.phone = getAttributeValueFromNode(enderecoProfissional, "DDD") +
+            getAttributeValueFromNode(enderecoProfissional, "TELEFONE")
+        newMember.website = getAttributeValueFromNode(enderecoProfissional, "HOME-PAGE")
+        newMember.city = getAttributeValueFromNode(enderecoProfissional, "CIDADE")
+        newMember.country = getAttributeValueFromNode(enderecoProfissional, "PAIS")
+        newMember.email = getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
+
+        newMember.save(flush: false)
     }
 
     static Node parseReceivedFile(MultipartHttpServletRequest request) {
