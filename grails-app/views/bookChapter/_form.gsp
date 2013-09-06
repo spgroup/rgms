@@ -57,8 +57,11 @@
         <g:message code="bookChapter.members.label" default="Members"/>
         <span class="required-indicator">*</span>
     </label>
-    <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id"
-              value="${bookChapterInstance?.members}"/>
+
+<!-- #if( $contextualInformation ) -->
+     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${bookChapterInstance?.members}"/>
+<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${bookChapterInstance?.members}"/> -->
+<!-- #end -->
 
 </div>
 

@@ -51,8 +51,10 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id"
-              value="${technicalReportInstance?.members}"/>
+<!-- #if( $contextualInformation ) -->
+     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${technicalReportInstance?.members}"/>
+<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${technicalReportInstance?.members}"/> -->
+<!-- #end -->
 
 </div>
 

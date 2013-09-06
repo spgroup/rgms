@@ -92,8 +92,10 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id"
-              value="${periodicoInstance?.members}"/>
+<!-- #if( $contextualInformation ) -->
+     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${periodicoInstance?.members}"/>
+<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${periodicoInstance?.members}"/> -->
+<!-- #end -->
 
 </div>
 </body>
