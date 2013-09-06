@@ -1,8 +1,8 @@
 package pages
 
-import geb.Page
 
-class ThesisCreatePage extends Page {
+
+class ThesisCreatePage extends FormPage {
 	static url = "tese/create"
 
 	static at = {
