@@ -1,9 +1,9 @@
 package pages.ArticlePages
 
-import geb.Page
+import pages.FormPage
 import pages.GetPageTitle
 
-class ArticleCreatePage extends Page {
+class ArticleCreatePage extends FormPage {
     static url = "periodico/create"
 
     static at = {
