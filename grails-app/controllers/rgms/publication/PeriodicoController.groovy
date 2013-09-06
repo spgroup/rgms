@@ -1,5 +1,7 @@
 package rgms.publication
 
+import grails.converters.JSON
+import org.apache.commons.collections.set.ListOrderedSet
 import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.GoogleScholarService
@@ -267,6 +269,17 @@ class PeriodicoController {
             PublicationController.sendPostFacebook(user, periodicoInstance.toString())
         System.out.println("3");
         redirect(action: "show", id: params.id)
+    }
+    //#end
+
+    //#if( $contextualInformation )
+    def ajaxJournalFinder = {
+        def periodicalsFound = Periodico.withCriteria {
+            ilike 'journal', params.term + '%'
+        }
+        Set journalsFound = new ListOrderedSet()
+        periodicalsFound?.each{journalsFound.add(it.journal)}
+        render (journalsFound as JSON)
     }
     //#end
 }
