@@ -1,7 +1,7 @@
-import steps.TestDataAndOperations
+import steps.ThesisTestDataAndOperations
 import pages.LoginPage
-import pages.ThesisCreatePage
-import pages.ThesisShowPage
+import pages.thesis.ThesisCreatePage
+import pages.thesis.ThesisShowPage
 import rgms.publication.Tese
 
 import java.io.File
@@ -16,14 +16,14 @@ Given(~'^The system has no thesis entitled "([^"]*)"$') {String title ->
 
 Given(~'^The thesis "([^"]*)" is stored in the system with file name "([^"]*)"$') { 
     String title, filename ->
-    TestDataAndOperations.createTese(title, filename, "UFPE")
+    ThesisTestDataAndOperations.createTese(title, filename, "UFPE")
     article = Tese.findByTitle(title)
     assert article != null
 }
 
 When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') {
     String title, filename, school ->
-    TestDataAndOperations.createTese(title, filename, school)
+    ThesisTestDataAndOperations.createTese(title, filename, school)
 }
 
 Then(~'^The thesis "([^"]*)" is not stored twice$') { String title ->

@@ -1,4 +1,5 @@
 import pages.*
+import pages.member.*
 import pages.technicalReport.TechnicalReportCreatePage
 import pages.technicalReport.TechnicalReportEditPage
 import pages.technicalReport.TechnicalReportPage

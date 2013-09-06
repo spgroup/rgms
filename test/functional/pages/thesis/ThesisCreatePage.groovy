@@ -1,6 +1,7 @@
-package pages
+package pages.thesis
 
 import geb.Page
+import pages.GetPageTitle
 
 class ThesisCreatePage extends Page {
 	static url = "tese/create"

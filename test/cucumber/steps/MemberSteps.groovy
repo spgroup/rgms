@@ -1,9 +1,9 @@
 import pages.LoginPage
-import pages.MemberCreatePage
-import pages.MemberViewPage
+import pages.member.MemberCreatePage
+import pages.member.MemberViewPage
 import pages.RegisterPage
 import rgms.member.Member
-import steps.TestDataAndOperations
+import steps.MemberTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -13,11 +13,11 @@ Given(~'^the system has no member with username "([^"]*)"$') { String username -
 }
 
 When(~'^I create a member with username "([^"]*)"$') { String username ->
-    TestDataAndOperations.createMember(username)
+    MemberTestDataAndOperations.createMember(username, "")
 }
 
 When(~'^I create a member with username, phone "([^"]*)" "([^"]*)"$') { String username, phone ->
-    TestDataAndOperations.createMember(username)
+    MemberTestDataAndOperations.createMember(username, phone)
 }
 
 Then(~'^the member with username "([^"]*)" is properly stored by the system$') { String username ->
@@ -63,13 +63,13 @@ Then(~'^I am still on the register page with the message user created$') {->
 
 
 Given(~'^the system has member with username "([^"]*)"$') { String username ->
-    TestDataAndOperations.createMember(username)
+    MemberTestDataAndOperations.createMember(username, "")
     member = Member.findByUsername(username);
     assert member != null
 }
 
 When(~'^I delete a member with username "([^"]*)"$') { String username ->
-    TestDataAndOperations.deleteMember(username)
+    MemberTestDataAndOperations.deleteMember(username)
 }
 
 Then(~'^the member with "([^"]*)" doesnt exist$') { String username ->
@@ -84,15 +84,13 @@ Then(~'^the member with "([^"]*)" doesnt exist$') { String username ->
 }*/
 
 When(~'^I create the member with username "([^"]*)"$') { String username ->
-    TestDataAndOperations.createMember(username)
+    MemberTestDataAndOperations.createMember(username, "")
 }
 
 Then(~'^the member "([^"]*)" is not registered$') { String username ->
     members = Member.findAllByUsername(username)
     assert members.size() == 1
 }
-
-
 
 Given(~'^I am at the create member page$') {->
     to LoginPage
@@ -105,7 +103,6 @@ Given(~'^I am at the create member page$') {->
 When(~'^I fill the user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
     page.fillMemberDetails(name, username, email, university, "")
 }
-
 
 When(~'^I fill some user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
     page.fillSomeMemberDetails(name, username, email, university)
@@ -146,7 +143,7 @@ When(~"^I view the member list\$") {->
 
 Then(~'my list members contains member "([^"]*)"$') { String username ->
     members = Member.findAll()
-    assert TestDataAndOperations.containsMember(username, members)
+    assert MemberTestDataAndOperations.containsMember(username)
 }
 
 Then(~'the member with username "([^"]*)" is created$') { String username ->

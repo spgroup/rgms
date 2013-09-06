@@ -1,4 +1,4 @@
-package pages
+package pages.member
 
 import geb.Page
 

@@ -1,7 +1,7 @@
 import pages.LoginPage
-import pages.MemberListPage
-import pages.MemberPage
-import pages.MemberCreatePage
+import pages.member.MemberListPage
+import pages.member.MemberPage
+import pages.member.MemberCreatePage
 
 import pages.PublicationsPage
 import pages.ResearchGroup.ResearchGroupListPage

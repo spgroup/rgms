@@ -5,6 +5,7 @@ import rgms.news.News
 import rgms.news.NewsController
 import rgms.publication.*
 import org.apache.shiro.SecurityUtils
+import steps.ThesisOrDissertationTestDataAndOperations
 
 class TestDataAndOperations {
 
@@ -14,11 +15,6 @@ class TestDataAndOperations {
             [name: "Teoria da informacao - Complexidade no espaco", description: "P=NP"],
             [name: "Novo Padrao Arquitetural MVCE", description: "Nova arquitetura que promete revolucionar a web"],
             [name: "Modelo Cascata Renovado", description: "Altera��o do modelo original"]
-    ]
-
-    static records = [
-            [status_H: "MSc Student", start: (new Date()), end: null],
-            [status_H: "Graduate Student", start: (new Date()), end: null]
     ]
 
     static members = [
@@ -58,23 +54,6 @@ class TestDataAndOperations {
         BibtexFile bibtexFile = bibtexFileController.transform(new File(path))
     }
 
-    static public def findByUsername(String username) {
-        members.find { member ->
-            member.username == username
-        }
-    }
-
-    static public def findRecordByStatus(def status) {
-        records.find { record ->
-            record.status_H == status
-        }
-    }
-
-    static public boolean recordIsAssociated(def status, def shallBe = true) {
-        def recordId = Record.findByStatus_H(status).id
-        RecordController.recordHasMembers(recordId) == shallBe
-    }
-
    /* static public def findResearchLineByName(String name) {
         researchLines.find { researchLine ->
             researchLine.name == name
@@ -109,24 +88,43 @@ class TestDataAndOperations {
         return compatible
     }
 
-    static public void createTese(String title, filename, school) {
-        def cont = new TeseController()
-        createThesisOrDissertation(title, filename, school, cont)
+    static public void uploadFerramenta(filepath) {
+        def cont = new FerramentaController()
+        def xml = new File((String) filepath);
+        def records = new XmlParser()
+        cont.saveTools(records.parse(xml));
+        cont.response.reset()
     }
 
-    static private void createThesisOrDissertation(String title, filename, school, cont) {
+    static public boolean conferenciaCompatibleTo(conferencia, title) {
+        def testConferencia = findConferenciaByTitle(title)
+        def compatible = false
+        if (testConferencia == null && conferencia == null) {
+            compatible = true
+        } else if (testConferencia != null && conferencia != null) {
+            compatible = true
+            testConferencia.each { key, data ->
+                compatible = compatible && (conferencia."$key" == data)
+            }
+        }
+        return compatible
+    }
+
+    static public void createArticle(String title, filename) {
+        def cont = new PeriodicoController()
         def date = new Date()
-        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
-                school: school, address: "Boa Viagem", file: filename]
+        cont.params << TestDataAndOperations.findArticleByTitle(title) << [file: filename]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
         cont.save()
         cont.response.reset()
     }
 
-    static public void createMember(String username) {
-        def cont = new MemberController()
-        cont.params << TestDataAndOperations.findByUsername(username)
+    static public void createFerramenta(String title, filename) {
+        def cont = new FerramentaController()
+        def date = new Date()
+        cont.params << TestDataAndOperations.findFerramentaByTitle(title) << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
         cont.save()
         cont.response.reset()
@@ -172,19 +170,6 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-
-    static public void deleteMember(String username) {
-        def cont = new MemberController()
-        def identificador = Member.findByUsername(username).id
-        cont.params << [id: identificador]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.delete()
-        //cont.save()
-        cont.response.reset()
-    }
-
-
-
     /*static public void deleteResearchLine(def id) {
         def res = new ResearchLineController()
         res.params.id = id
@@ -214,51 +199,6 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     } */
-
-    static public void deleteRecord(def id) {
-        def rec = new RecordController()
-        rec.params.id = id
-        rec.request.setContent(new byte[1000]) // Could also vary the request content.
-        rec.delete()
-        rec.response.reset()
-    }
-
-    static public void updateRecord(def status, String end) {
-        def record = Record.findByStatus_H(status)
-        def rec = new RecordController()
-        rec.params.id = record.id
-        rec.params.start = record.start
-        rec.params.status_H = record.status_H
-        rec.params.end = Date.parse("dd/mm/yyyy", end)
-        rec.request.setContent(new byte[1000]) // Could also vary the request content.
-        rec.update()
-        rec.response.reset()
-    }
-
-    static public def createRecord(def status) {
-        def cont = new RecordController()
-        def record = TestDataAndOperations.findRecordByStatus(status)
-        cont.params.status_H = record.status_H
-        cont.params.start = record.start
-        cont.params.end = record.end
-        cont.create()
-        cont.save()
-        cont.response.reset()
-
-    }
-
-    static public def insertsRecord(String status) {
-        def inserted = Record.findByStatus_H(status)
-        if (!inserted) {
-            def record = TestDataAndOperations.findRecordByStatus(status)
-            Record r = new Record()
-            r.setStatus_H(record.status_H)
-            r.setStart(r.start)
-            r.setEnd(r.end)
-            r.save()
-        }
-    }
-
 
    /* static public def insertsResearchLine(String name) {
 >>>>>>> HEAD~5

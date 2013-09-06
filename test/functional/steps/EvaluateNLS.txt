@@ -100,7 +100,7 @@ Grails Runtime Exception
 	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
 	at DissertacaoSteps$_run_closure16.doCall(DissertacaoSteps.groovy:91)
 	at ?.Then I'm still on dissertation page(Dissertacao.feature:49)
-java.io.FileNotFoundException: C:\testelattes.xml (O sistema não pode encontrar o arquivo especificado)
+java.io.FileNotFoundException: C:\testelattes.xml (O sistema nï¿½o pode encontrar o arquivo especificado)
 	at java.io.FileInputStream.<init>(FileInputStream.java:138)
 	at steps.TestDataAndOperations.uploadDissertacao(TestDataAndOperations.groovy:201)
 	at DissertacaoSteps$_run_closure18.doCall(DissertacaoSteps.groovy:98)
@@ -148,7 +148,7 @@ Grails Runtime Exception
 	at geb.binding.BindingUpdater$InvocationForwarding.doCall(BindingUpdater.groovy:72)
 	at FerramentaSteps$_run_closure17.doCall(FerramentaSteps.groovy:92)
 	at ?.Then I'm still on ferramenta page(Ferramenta.feature:32)
-java.io.FileNotFoundException: C:\testelattes.xml (O sistema não pode encontrar o arquivo especificado)
+java.io.FileNotFoundException: C:\testelattes.xml (O sistema nï¿½o pode encontrar o arquivo especificado)
 	at java.io.FileInputStream.<init>(FileInputStream.java:138)
 	at steps.TestDataAndOperations.uploadFerramenta(TestDataAndOperations.groovy:209)
 	at FerramentaSteps$_run_closure19.doCall(FerramentaSteps.groovy:99)
@@ -289,7 +289,7 @@ title ==~ /Ver Member/
 |     false
 Grails Runtime Exception
 
-	at pages.MemberViewPage$__clinit__closure1.doCall(MemberViewPage.groovy:9)
+	at pages.member.MemberViewPage$__clinit__closure1.doCall(MemberViewPage.groovy:9)
 	at geb.Page.verifyAt(Page.groovy:132)
 	at geb.Browser.doAt(Browser.groovy:335)
 	at geb.Browser.at(Browser.groovy:259)

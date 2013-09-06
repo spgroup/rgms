@@ -1,12 +1,17 @@
-package pages
+package pages.member
 
 import geb.Page
+import pages.GetPageTitle
 
 class MemberCreatePage extends Page {
     static url = "member/create"
 
     static at = {
-        title ==~ /Criar Member/
+     //   title ==~ /Criar Member/
+                GetPageTitle gp = new GetPageTitle()
+                def memberLabel = gp.msg("member.label")
+                def createLabel = gp.msg("default.create.label", [memberLabel])
+                title ==~ createLabel
     }
 
     static content = {
