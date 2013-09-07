@@ -60,6 +60,7 @@
             </li>
         </g:if>
 
+    <!-- #if( $reserchgroupobrigatorio ) -->
         <g:if test="${visitInstance?.researchGroup}">
             <li class="fieldcontain">
                 <span id="visitor-label" class="property-label"><g:message code="visit.visitor.label"
@@ -73,6 +74,7 @@
 
             </li>
         </g:if>
+    <!-- #end -->
 
     <!-- #if( $descricaovisita ) -->
         <g:if test="${visitInstance?.description}">
