@@ -32,5 +32,9 @@ class ThesisCreatePage extends FormPage {
         $("form").address = address
         $("input", id: "create").click()
     }
-	
+
+    def currentSchool() {
+        $("form").school
+    }
+
 }

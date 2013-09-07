@@ -1,4 +1,5 @@
 import pages.ThesisPage
+import rgms.member.Member
 import steps.TestDataAndOperations
 import pages.LoginPage
 import pages.ThesisCreatePage
@@ -69,7 +70,7 @@ Then(~'^I am still on the create thesis page with the error message$') {->
 /**
  * @author carloscemb
  */
-When(~'^I select the new thesis option at the article page$') {->
+When(~'^I select the new thesis option at the thesis page$') {->
     at ThesisPage
     page.selectNewThesis()
     at ThesisCreatePage
@@ -81,4 +82,10 @@ When(~'^I select the new thesis option at the article page$') {->
 Then(~'^I see my user listed as an author member of thesis by default$') {->
     at ThesisCreatePage
     assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+}
+
+Then(~'^I see my school name as school of thesis by default$') {->
+    at ThesisCreatePage
+    userData = Member.findByUsername('admin').university
+    assert page.currentSchool() == userData
 }

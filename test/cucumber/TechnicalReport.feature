@@ -64,5 +64,6 @@ Feature: technical report
     And I select the "Technical Report" option at the publications menu
     When I click on "New TechnicalReport" option at Technical Report list
     Then I see my user listed as an author member of technical report by default
+    And I see my school name as institution of technical report by default
 #end
 
