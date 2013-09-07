@@ -22,7 +22,7 @@ class FerramentaController {
 
     def create() {
         def ferramentaInstance = new Ferramenta(params)
-        //#if($publicationContext)
+        //#if($contextualInformation)
         PublicationController.addAuthor(ferramentaInstance)
         //#end
         [ferramentaInstance: ferramentaInstance]

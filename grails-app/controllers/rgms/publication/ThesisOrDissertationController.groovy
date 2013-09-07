@@ -22,7 +22,7 @@ class ThesisOrDissertationController {
 
     def createThesisOrDissertation(String thesisOrDissertation, params) {
         def instance = getClassByName(thesisOrDissertation).newInstance(params)
-        //#if($publicationContext)
+        //#if($contextualInformation)
         def user = PublicationController.addAuthor(instance)
         if (user && !user.university.isEmpty()){
             instance.school = user.university

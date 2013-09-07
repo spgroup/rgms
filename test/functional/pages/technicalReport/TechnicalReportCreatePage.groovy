@@ -43,4 +43,9 @@ class TechnicalReportCreatePage extends FormPage {
     def selectCreateTechnicalReport() {
         $("input", name: "create").click()
     }
+
+    def currentInstitution() {
+        $("form").institution
+    }
+
 }

@@ -35,11 +35,13 @@ Scenario: Try to access root page without being logged in
   When I access the Root Page
   Then I am redirected to the Login Page
 
+#if ($contextualInformation)
 Scenario: Field University filled with "Federal University of Pernambuco"
   Given I am at the Login Page
   When I click the "Create an account" link
   Then I am redirected to the User Register Page
   And The University field is filled with "Federal University of Pernambuco"
+#end
 
 Scenario: Unpermitted go to "Principal" Menu from Member Listagem
   Given I am at the Member Listagem page

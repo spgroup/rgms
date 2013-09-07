@@ -1,5 +1,6 @@
 <%@ page import="rgms.member.Member" %>
 <%@ page import="rgms.publication.Dissertacao" %>
+<%@ page import="rgms.publication.PublicationController" %>
 
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'title', 'error')} required">
@@ -41,7 +42,7 @@
         <g:message code="dissertacao.school.label" default="School"/>
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="school" required="" value="${dissertacaoInstance?.schoolSelected()}"/>
+    <g:textField name="school" required="" value="${dissertacaoInstance?.school}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: dissertacaoInstance, field: 'address', 'error')} required">
@@ -58,8 +59,10 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-              value="${dissertacaoInstance?.members}"/>
+<!-- #if( $contextualInformation ) -->
+     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${dissertacaoInstance?.members}"/>
+<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${dissertacaoInstance?.members}"/> -->
+<!-- #end -->
 
 </div>
 

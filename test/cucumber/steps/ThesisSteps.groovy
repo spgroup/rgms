@@ -1,8 +1,11 @@
+import pages.ThesisPage
+import rgms.member.Member
 import steps.TestDataAndOperations
 import pages.LoginPage
 import pages.ThesisCreatePage
 import pages.ThesisShowPage
 import rgms.publication.Tese
+import steps.TestDataAndOperationsPublication
 
 import java.io.File
 
@@ -62,4 +65,27 @@ Then(~'^I am on the thesis show page$') {->
 
 Then(~'^I am still on the create thesis page with the error message$') {->
     at ThesisCreatePage
+}
+
+/**
+ * @author carloscemb
+ */
+When(~'^I select the new thesis option at the thesis page$') {->
+    at ThesisPage
+    page.selectNewThesis()
+    at ThesisCreatePage
+}
+
+/**
+ * @author carloscemb
+ */
+Then(~'^I see my user listed as an author member of thesis by default$') {->
+    at ThesisCreatePage
+    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+}
+
+Then(~'^I see my school name as school of thesis by default$') {->
+    at ThesisCreatePage
+    userData = Member.findByUsername('admin').university
+    assert page.currentSchool() == userData
 }

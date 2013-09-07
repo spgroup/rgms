@@ -25,7 +25,7 @@ class BookChapterController {
 
     def create() {
         def bookChapterInstance = new BookChapter(params)
-        //#if($publicationContext)
+        //#if($contextualInformation)
         PublicationController.addAuthor(bookChapterInstance)
         //#end
         [bookChapterInstance: bookChapterInstance]

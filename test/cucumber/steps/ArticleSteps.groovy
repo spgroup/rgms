@@ -6,6 +6,7 @@ import rgms.tool.TwitterTool
 import steps.TestDataAndOperations
 import steps.TestDataAndOperationsFacebook
 import steps.ArticleTestDataAndOperations
+import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 
@@ -287,4 +288,12 @@ def Login(){
 
 
     }
+
+/**
+ * @author carloscemb
+ */
+Then(~'^I see my user listed as an author member of article by default$') {->
+    at ArticleCreatePage
+    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+}
 

@@ -1,8 +1,8 @@
 package pages
 
-import geb.Page
 
-class ThesisCreatePage extends Page {
+
+class ThesisCreatePage extends FormPage {
 	static url = "tese/create"
 
 	static at = {
@@ -32,5 +32,9 @@ class ThesisCreatePage extends Page {
         $("form").address = address
         $("input", id: "create").click()
     }
-	
+
+    def currentSchool() {
+        $("form").school
+    }
+
 }

@@ -107,3 +107,11 @@ Feature: journal article
     When    I select to view "A theory of software product line refinement 3" in resulting list
     And     I click on Share on Facebook
     Then    A facebook message was posted
+
+#if ($contextualInformation)
+  Scenario: Add a new article with user data already filled by default
+    Given I am at the publications menu
+    When I select the "Periodico" option at the publications menu
+    And I select the new article option at the article page
+    Then I see my user listed as an author member of article by default
+#end

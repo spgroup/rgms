@@ -1,8 +1,25 @@
 <%@ page import="rgms.member.Member" %>
 <%@ page import="rgms.publication.Periodico" %>
+<%@ page import="rgms.publication.PublicationController" %>
 
+<!doctype html>
 
+<html>
+<!-- #if( $contextualInformation ) -->
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/rgms/js/jquery-ui-1.8.18.custom.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $( "#journal" ).autocomplete({
+                source: '<g:createLink controller='periodico' action='ajaxJournalFinder'/>'
+            });
+        });
+    </script>
+</head>
+<!-- #end -->
 
+<body>
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'title', 'error')} required">
     <label for="title">
         <g:message code="periodico.title.label" default="Title"/>
@@ -42,7 +59,7 @@
         <g:message code="periodico.journal.label" default="Journal"/>
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="journal" required="" value="${periodicoInstance?.journal}"/>
+    <g:textField id="journal" name="journal" required="" value="${periodicoInstance?.journal}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'volume', 'error')} required">
@@ -75,7 +92,13 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-              value="${periodicoInstance?.members}"/>
+<!-- #if( $contextualInformation ) -->
+     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${periodicoInstance?.members}"/>
+<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${periodicoInstance?.members}"/> -->
+<!-- #end -->
 
 </div>
+</body>
+</html>
+
+

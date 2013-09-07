@@ -57,12 +57,13 @@ Feature: technical report
     Then   The technical report "Joe-E" is properly removed by the system
     And    The system goes to the technical reports page
 
-#if ($Autofill)
+#if ($contextualInformation)
 
   Scenario: new technical report web has user data already filled by default
     Given I am at the publications menu
     And I select the "Technical Report" option at the publications menu
     When I click on "New TechnicalReport" option at Technical Report list
     Then I see my user listed as an author member of technical report by default
+    And I see my school name as institution of technical report by default
 #end
 
