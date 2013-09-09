@@ -1,3 +1,7 @@
+import pages.PublicationsPage
+import pages.ResearchGroup.ResearchGroupCreatePage
+import pages.news.NewsCreatePage
+import pages.news.NewsPage
 import rgms.member.ResearchGroup
 import rgms.news.News
 import steps.TestDataAndOperations
@@ -116,4 +120,35 @@ And(~'^the research group "([^"]*)" news list is empty$'){ String groupName ->
     newsByResearchGroup = News.getCurrentNews(researchGroup)
     assert newsByResearchGroup != null
     assert newsByResearchGroup.size() == 0
+}
+
+
+Given(~'^the system has a news stored with description "([^"]*)"$') { String description ->
+    to NewsPage
+    page.selectCreateNews()
+
+    at NewsCreatePage
+    page.fillNewDetails(description)
+    page.clickOnCreate();
+
+    news = News.findByDescription(description)
+    assert news != null
+}
+
+Given(~'^the system has no stored news$') { ->
+    assert News.count() == 0
+}
+
+And (~'^I select the option Export to HTML at the News list page$'){ ->
+    at NewsPage
+    page.selectExportHTMLReport()
+}
+
+
+Then(~'^The system generate a HTML report with the news "([^"]*)" in it$'){ String news ->
+    assert page.reportContainsNews(news)
+}
+
+Then(~'^I can not select the option Export to HTML at the News list page$'){ ->
+    assert !page.canSelectExportHTMLReport()
 }
