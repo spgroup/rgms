@@ -8,6 +8,11 @@
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
+        <!-- #if($Report && $HTML) -->
+        <g:if test="${!newsInstanceList.empty}">
+            <br><g:jasperReport jasper="news" format="HTML" name="export"/>
+        </g:if>
+        <!-- #end -->
 		<a href="#list-news" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
