@@ -25,7 +25,8 @@
 
  <!-- #if($PDF) -->
 -<br>
--<g:jasperReport jasper="report" format="PDF" name="export">
+-<g:jasperReport jasper="researchGroup" format="PDF" name="export" controller="researchGroup"
+                 action="researchGroupToReport" >
     <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}"/>
 </g:jasperReport>
 <!--#end -->
