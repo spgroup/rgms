@@ -19,7 +19,7 @@ class NewsPage extends Page {
     def selectCreateNews() {
         $('a.create').click()
     }
-
+    //#if ($Report && $HTML)
     def selectExportHTMLReport() {
         $('a.jasperButton', title: "HTML").click()
     }
@@ -31,4 +31,5 @@ class NewsPage extends Page {
     def reportContainsNews(String desc) {
         $("p span", text: desc).size() == 1
     }
+    //#end
 }
