@@ -169,4 +169,15 @@ class MemberController {
         memberInstance.addToHistorics(hist)
         memberInstance.save()
     }
+
+    def Get_MemberInstance(){
+        def memberInstance = Member.get(params.id)
+        if (!memberInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [memberInstance: memberInstance]
+    }
 }
