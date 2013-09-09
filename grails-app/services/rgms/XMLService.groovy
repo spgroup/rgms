@@ -109,8 +109,10 @@ class XMLService {
 
     static void createDissertations(Node xmlFile){
         Node dadosGerais = (Node) xmlFile.children()[0]
-        Node mestrado = (Node) ((Node) dadosGerais.children()[1]).children()[1]
-        Node doutorado = (Node) ((Node) dadosGerais.children()[1]).children()[2]
+
+        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node mestrado = (Node) formacaoAcademica.children()[1]
+        Node doutorado = (Node) formacaoAcademica.children()[2]
 
         createDissertation(mestrado)
         createDissertation(doutorado)
