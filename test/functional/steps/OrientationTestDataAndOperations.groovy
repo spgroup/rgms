@@ -2,6 +2,7 @@ package steps
 
 import rgms.member.Member
 import rgms.member.OrientationController
+import rgms.publication.XMLController
 
 /**
  * Created with IntelliJ IDEA.
@@ -62,4 +63,11 @@ class OrientationTestDataAndOperations {
         return compatible
     }
 
+    static public void uploadOrientation(filepath) {
+        def cont = new XMLController()
+        def xml = new File((String) filepath);
+        def records = new XmlParser()
+        cont.saveOrientations(records.parse(xml));
+        cont.response.reset()
+    }
 }

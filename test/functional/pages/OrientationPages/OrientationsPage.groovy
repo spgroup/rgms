@@ -53,4 +53,14 @@ class OrientationsPage extends Page {
 		assert orientationColumns[2].text() == testorientation.orientando
 		assert orientationColumns[4].text() == testorientation.tituloTese
 	}
+
+    def checkIfOrientationListIsEmpty(){
+        def conferenciaColumns = getRow()[row].find('td')
+
+        assert conferenciaColumns.size() == 0
+    }
+
+    def uploadWithoutFile(){
+        $('input.save').click()
+    }
 }

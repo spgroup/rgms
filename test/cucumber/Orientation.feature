@@ -25,3 +25,18 @@ Feature: orientations
     And I change the orientation tituloTese to "Hexa"
     And I select the "Alterar" option
     Then I am on the orientation show page
+
+#if ($XMLUpload)
+    @ignore
+    Scenario: upload orientation with a file
+        Given the system has some orientations stored
+        When I upload a new orientation "testelattes.xml"
+        Then the system has more orientations now
+
+    Scenario: upload orientations with a file
+        Given I am at the publications menu
+        When I select the "Orientation" option at the program menu
+        And I select the upload button at the orientations page
+        Then I'm still on orientations page
+        And the orientations are not stored by the system
+#end

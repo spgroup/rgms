@@ -108,6 +108,32 @@ When(~'^I select the "([^"]*)" option$') { String option ->
     page.select(option)
 }
 
+Given(~'^the system has some orientations stored$') {->
+    inicialSize = Orientation.findAll().size()
+}
+When(~'^I upload a new orientation "([^"]*)"$') { filename ->
+    inicialSize = Orientation.findAll().size()
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    OrientationTestDataAndOperations.uploadOrientation(path + filename)
+    finalSize = Orientation.findAll().size()
+    assert inicialSize < finalSize
+}
+Then(~'the system has more orientations now$') {->
+    finalSize = Orientation.findAll().size()
+}
+
+And(~'^I select the upload button at the orientations page$') {->
+    at OrientationsPage
+    page.uploadWithoutFile()
+}
+Then(~'^I\'m still on orientations page$') {->
+    at OrientationsPage
+}
+And(~'^the orientations are not stored by the system$') {->
+    at OrientationsPage
+    page.checkIfOrientationListIsEmpty()
+}
+
 //FUNCOES AUXILIARES
 // o problema de duplicação que este método resolve não foi identificado pela ferramenta de detecção de clones
 def Login(){
