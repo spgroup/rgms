@@ -1,8 +1,11 @@
+import cucumber.runtime.PendingException
 import pages.ArticlePages.*
 import pages.*
 import rgms.member.Member
+import rgms.publication.BookChapter
 import rgms.publication.Periodico
 import rgms.tool.TwitterTool
+import steps.BookChapterTestDataAndOperations
 import steps.TestDataAndOperations
 import steps.TestDataAndOperationsFacebook
 import steps.ArticleTestDataAndOperations
@@ -181,6 +184,8 @@ Given(~'^I am logged as "([^"]*)"$') { String userName ->
     page.fillLoginData(userName, "adminadmin")
 }
 Given (~'^I am at the Article Page$'){->
+
+    Login()
     at PublicationsPage
     page.select("Periodico")
     to ArticlesPage
@@ -288,3 +293,50 @@ def Login(){
 
     }
 
+
+When(~'^I upload the articles of "([^"]*)"$') { String arg1 ->
+    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + arg1
+    initialSize = Periodico.findAll().size()
+    ArticleTestDataAndOperations.uploadArticle(path)
+    finalSize = Periodico.findAll().size()
+    assert initialSize < finalSize
+}
+Then(~'^the system has all the articles of the xml file$') {->
+    assert Periodico.findByTitle("A System For Translating Executable VDM Specifications Into Lazy ML") != null
+    assert Periodico.findByTitle("From VDM Specifications To Functional Prototypes") != null
+    assert Periodico.findByTitle("Basic laws of ROOL: an object-oriented language") != null
+    assert Periodico.findByTitle("Implementing distribution and persistence aspects with AspectJ") != null
+    assert Periodico.findByTitle("Developing adaptive J2ME applications using AspectJ") != null
+    assert Periodico.findByTitle("Algebraic reasoning for object-oriented programming") != null
+    assert Periodico.findByTitle("Refactoring Alloy Specifications") != null
+    assert Periodico.findByTitle("Systematic development of concurrent object-oriented programs") != null
+    assert Periodico.findByTitle("Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes") != null
+    assert Periodico.findByTitle("AspectH: Uma ExtensÃ£o Orientada a Aspectos de Haskell") != null
+    assert Periodico.findByTitle("An Abstract Equivalence Notion for Object Models") != null
+    assert Periodico.findByTitle("Distribution and Persistence as Aspects") != null
+    assert Periodico.findByTitle("A Static Semantics for Alloy and its Impact in Refactorings") != null
+    assert Periodico.findByTitle("Extracting and Evolving Code in Product Lines with Aspect-Oriented Programming") != null
+    assert Periodico.findByTitle("A Framework for Establishing Formal Conformance between Object Models and Object-Oriented Programs") != null
+    assert Periodico.findByTitle("Refactorings for introducing Alloy idioms (aceito para publicaÃ§Ã£o)") != null
+    assert Periodico.findByTitle("Algebraic Laws for Feature Models") != null
+    assert Periodico.findByTitle("Estimating manual test execution effort and capacity based on execution points") != null
+    assert Periodico.findByTitle("Automatically Checking Feature Model Refactorings") != null
+    assert Periodico.findByTitle("An Approach to Invariant-based Program Refactoring") != null
+    assert Periodico.findByTitle("Modularity analysis of use case implementations") != null
+    assert Periodico.findByTitle("A Theory of Software Product Line Refinement") != null
+    assert Periodico.findByTitle("The Crosscutting Impact of the AOSD Brazilian Research Community (accepted)") != null
+}
+And(~'^I select the upload button at the article page$') {->
+    at ArticlesPage
+    page.uploadWithoutFile()
+}
+Then(~'^I\'m still on article page$') {->
+    at ArticlesPage
+}
+And(~'^the articles are not stored by the system$') {->
+    at ArticlesPage
+    page.checkIfArticlesListIsEmpty()
+}
+Given(~'^the system has no articles$') {->
+    assert Periodico.findAll().size() == 0
+}
