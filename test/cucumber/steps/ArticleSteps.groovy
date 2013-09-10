@@ -337,6 +337,6 @@ And(~'^the articles are not stored by the system$') {->
     at ArticlesPage
     page.checkIfArticlesListIsEmpty()
 }
-Given(~'^the system has no articles$') {->
-    assert Periodico.findAll().size() == 0
+Given(~'^the system has some articles stored$') {->
+    initialSize = Periodico.findAll().size()
 }

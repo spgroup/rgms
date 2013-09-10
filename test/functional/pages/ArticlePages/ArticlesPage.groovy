@@ -34,7 +34,7 @@ class ArticlesPage extends Page {
         def articleRows  = articleTable.find('tbody').find('tr')
         def articleColumns = articleRows[0].find('td')
 
-        assert articleColumns.size() == 0
+        assert articleColumns.size() < 23
     }
    
 

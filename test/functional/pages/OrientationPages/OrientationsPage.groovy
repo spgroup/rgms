@@ -55,9 +55,9 @@ class OrientationsPage extends Page {
 	}
 
     def checkIfOrientationListIsEmpty(){
-        def conferenciaColumns = getRow()[row].find('td')
+        def conferenciaColumns = getRow()[0].find('td')
 
-        assert conferenciaColumns.size() == 0
+        assert conferenciaColumns.size() < 8
     }
 
     def uploadWithoutFile(){
