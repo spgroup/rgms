@@ -272,10 +272,15 @@ class ResearchGroupController {
         System.out.println(" <<< " + 123 + " !")
         System.out.println(params)
         def research_group_id = params.get("research_group_id")
-        System.out.println("    >> " + research_group_id)
 
-        def researchGroup = ResearchGroup.findById(research_group_id)
+        def researchGroup = ResearchGroup.findById(research_group_id, [fetch: [memberships: "join"]])
         System.out.println("    >> " + researchGroup)
+        for(Membership m : researchGroup.memberships) {
+            System.out.println("     >  >> " + m.member)
+
+        }
+        System.out.println("...")
+        System.out.println("...")
 
         // Set params that will be passed to Jasper
         params.SUBREPORT_DIR = "${servletContext.getRealPath('/reports/report_Bundle')}/"
