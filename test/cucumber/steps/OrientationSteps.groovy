@@ -6,6 +6,10 @@ import rgms.tool.FacebookTool
 import rgms.tool.TwitterTool
 import steps.OrientationTestDataAndOperations
 
+import org.apache.shiro.util.ThreadContext
+import org.apache.shiro.subject.Subject
+import org.apache.shiro.SecurityUtils
+
 import static cucumber.api.groovy.EN.*
 
 // create
@@ -109,7 +113,18 @@ When(~'^I select the "([^"]*)" option$') { String option ->
 }
 
 Given(~'^the system has some orientations stored$') {->
-    inicialSize = Orientation.findAll().size()
+    // save old metaclass
+    def registry = GroovySystem.metaClassRegistry
+    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
+    registry.removeMetaClass(SecurityUtils)
+
+    // Mock login
+    def subject = [getPrincipal: {"admin"},
+        isAuthenticated: {true}
+    ]as Subject
+    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+        [getSubject: {subject} as SecurityManager])
+    SecurityUtils.metaClass.static.getSubject = {subject}
 }
 When(~'^I upload a new orientation "([^"]*)"$') { filename ->
     inicialSize = Orientation.findAll().size()
@@ -119,7 +134,8 @@ When(~'^I upload a new orientation "([^"]*)"$') { filename ->
     assert inicialSize < finalSize
 }
 Then(~'the system has more orientations now$') {->
-    finalSize = Orientation.findAll().size()
+    // restore metaclass
+    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
 }
 
 And(~'^I select the upload button at the orientations page$') {->
