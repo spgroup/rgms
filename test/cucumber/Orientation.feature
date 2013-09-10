@@ -27,7 +27,6 @@ Feature: orientations
     Then I am on the orientation show page
 
 #if ($XMLUpload)
-    @ignore
     Scenario: upload orientation with a file
         Given the system has some orientations stored
         When I upload a new orientation "testelattes.xml"

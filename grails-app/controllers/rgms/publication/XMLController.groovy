@@ -1,5 +1,6 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 import rgms.member.Member
@@ -86,7 +87,8 @@ class XMLController {
 
     private Closure saveOrientations = {
         Node xmlFile ->
-            Member user = Member.findByUsername(session.getAttribute("username").toString())
+            Member user = Member.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
+            print(user)
 
             XMLService.createOrientations(xmlFile, user)
     }

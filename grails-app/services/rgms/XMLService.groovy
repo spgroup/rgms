@@ -204,7 +204,7 @@ class XMLService {
     }
 
     private static boolean isNullOrEmpty(List<Object> completedOrientations) {
-        completedOrientations == null || completedOrientations.size() > 0
+        completedOrientations == null || completedOrientations.size() == 0
     }
 
     private static List<Object> findCompletedOrientations(Node xmlFile) {
