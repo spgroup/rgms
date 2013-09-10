@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="researchGroup" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Key" uuid="888b03ae-8019-440d-8fe8-1994d181fed8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../rgms/web-app/reports/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="member.name" class="java.lang.String">
+		<fieldDescription><![CDATA[member.name]]></fieldDescription>
+	</field>
+	<field name="member.username" class="java.lang.String">
+		<fieldDescription><![CDATA[member.username]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="80">
+			<textField>
+				<reportElement uuid="e8bed391-0ba5-4674-a387-4b47d97a911c" x="42" y="32" width="208" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{member.name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d8d7b3b9-500b-40c6-a3ef-1daa06facd67" x="5" y="5" width="107" height="22"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Member]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="07cef3fd-74f1-4eae-8691-c8504c4af37c" x="42" y="52" width="476" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{member.username}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="81"/>
+	</detail>
+</jasperReport>
