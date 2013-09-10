@@ -48,7 +48,7 @@ class TechnicalReportController {
             handleSavingError(technicalReportInstance, 'technicalReport.saving.failure')
             return
         }
-        //#if($facebook)
+        //#if($Facebook)
         //def user = Member.findByUsername(SecurityUtils.subject?.principal)
         //PublicationController.sendPostFacebook(user, technicalReportInstance.toString())
         //#end

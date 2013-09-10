@@ -49,7 +49,7 @@ class ThesisOrDissertationController {
             render(view: "create", model: [instance: instance])
             return
         }
-        //#if($facebook)
+        //#if($Facebook)
         //def user = Member.findByUsername(SecurityUtils.subject?.principal)
         //pb.sendPostFacebook(user, teseInstance.toString())
         //#end
