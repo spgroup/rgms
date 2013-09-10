@@ -113,6 +113,11 @@ When(~'^I select the "([^"]*)" option$') { String option ->
 }
 
 Given(~'^the system has some orientations stored$') {->
+    // save old metaclass
+    def registry = GroovySystem.metaClassRegistry
+    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
+    registry.removeMetaClass(SecurityUtils)
+
     // Mock login
     def subject = [getPrincipal: {"admin"},
         isAuthenticated: {true}
@@ -129,10 +134,8 @@ When(~'^I upload a new orientation "([^"]*)"$') { filename ->
     assert inicialSize < finalSize
 }
 Then(~'the system has more orientations now$') {->
-    // clear mock
-    def registry = GroovySystem.metaClassRegistry
-    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
-    registry.removeMetaClass(SecurityUtils)
+    // restore metaclass
+    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
 }
 
 And(~'^I select the upload button at the orientations page$') {->
