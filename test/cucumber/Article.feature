@@ -109,7 +109,7 @@ Feature: journal article
     Then    A facebook message was posted
 
   Scenario: upload article with a file
-    Given the system has no articles
+    Given the system has some articles stored
     When I upload the articles of "curriculo.xml"
     Then the system has all the articles of the xml file
 
