@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="researchGroup" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Key" uuid="888b03ae-8019-440d-8fe8-1994d181fed8">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="researchGroupMembersPubs" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Key" uuid="888b03ae-8019-440d-8fe8-1994d181fed8">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -14,6 +14,9 @@
 	</field>
 	<field name="member.username" class="java.lang.String">
 		<fieldDescription><![CDATA[member.username]]></fieldDescription>
+	</field>
+	<field name="member.publications" class="java.util.Collection">
+		<fieldDescription><![CDATA[member.publications]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -42,6 +45,19 @@
 				<textFieldExpression><![CDATA[$F{member.username}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="81"/>
+		<band height="81">
+			<subreport>
+				<reportElement uuid="b67aa5d5-8433-4464-beb4-9fb6dde550e3" x="52" y="37" width="115" height="31"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource( $F{member.publications} )]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "researchGroupPublications.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="48925646-e5b7-4b27-bd7a-1961ddd9978d" x="10" y="10" width="173" height="27"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Publications]]></text>
+			</staticText>
+		</band>
 	</detail>
 </jasperReport>
