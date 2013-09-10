@@ -70,21 +70,27 @@ Then(~'^I\'m still on XML import page$') {->
     at XMLImportPage
 }
 And(~'^the publications are not stored by the system$') {->
+    to ArticlesPage
     at ArticlesPage
     page.checkIfArticlesListIsEmpty()
 
+    to BookChapterPage
     at BookChapterPage
     page.checkIfBookChapterListIsEmpty()
 
+    to ConferenciaPage
     at ConferenciaPage
     page.checkIfConferenciaListIsEmpty()
 
+    to DissertationPage
     at DissertationPage
     page.checkIfDissertationListIsEmpty()
 
+    to FerramentaPage
     at FerramentaPage
     page.checkIfFerramentaListIsEmpty()
 
+    to OrientationsPage
     at OrientationsPage
     page.checkIfOrientationListIsEmpty()
 }
