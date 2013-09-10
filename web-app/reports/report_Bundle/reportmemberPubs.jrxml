@@ -8,6 +8,14 @@
 	</queryString>
 	<field name="publication_date" class="java.sql.Timestamp"/>
 	<field name="title" class="java.lang.String"/>
+
+	<!--  #if($reportAtividade8) -->
+	<field name="file" class="java.lang.String"/>
+	<group name="file">
+        		<groupExpression><![CDATA[$F{file}]]></groupExpression>
+    </group>
+    <!-- #end -->
+
 	<group name="publication_date">
 		<groupExpression><![CDATA[$F{publication_date}]]></groupExpression>
 	</group>
@@ -35,14 +43,16 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{publication_date}]]></textFieldExpression>
 			</textField>
+			<!--  #if($reportAtividade8) -->
 			<textField hyperlinkType="Reference">
 				<reportElement x="44" y="0" width="160" height="20" forecolor="#0000CC"/>
 				<textElement>
-					<font size="15"/>
+					<font size="15" isBold = "true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
-				<hyperlinkReferenceExpression><![CDATA[$F{title}]]></hyperlinkReferenceExpression>
+				<hyperlinkReferenceExpression><![CDATA["/rgms/"+$F{file}.toString()]]></hyperlinkReferenceExpression>
 			</textField>
+			<!-- #end -->
 		</band>
 	</detail>
 	<columnFooter>

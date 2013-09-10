@@ -40,7 +40,7 @@
 			<textField>
 				<reportElement x="129" y="5" width="100" height="20"/>
 				<textElement>
-					<font size="15"/>
+					<font size="15" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
@@ -65,13 +65,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="277" y="9" width="173" height="27"/>
-				<textElement>
-					<font size="18"/>
-				</textElement>
-				<text><![CDATA[PÁGINA PESSOAL]]></text>
-			</staticText>
+
 		</band>
 	</title>
 	<pageHeader>
@@ -87,7 +81,7 @@
 			<textField>
 				<reportElement x="27" y="33" width="171" height="30"/>
 				<textElement>
-					<font size="18"/>
+					<font size="15" isBold = "true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{pubs}]]></textFieldExpression>
 			</textField>
