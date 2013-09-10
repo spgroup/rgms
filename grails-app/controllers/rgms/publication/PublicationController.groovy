@@ -123,7 +123,7 @@ class PublicationController {
 	*      - Para um usuario novo, no momento do registro basta logar com o FB
 	*      - Para um usuario ja existente, edit esse usuario e adicione o a conta do FB ao usuario.
 	*/
-	//#if($facebook)
+	//#if($Facebook)
 	def static sendPostFacebook(Member user, String title){
         def url = "https://graph.facebook.com/me/feed?access_token=" + user?.access_token 
         System.out.println(title);

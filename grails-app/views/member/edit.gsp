@@ -158,7 +158,7 @@
                                     <g:checkBox name="enabled" value="${memberInstance?.enabled}" />
                                 </td>
                             </tr>
-                            <!--#if($facebook) -->
+                            <!--#if($Facebook) -->
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label>Atualizar Access Token: </label>

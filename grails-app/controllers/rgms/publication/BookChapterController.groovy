@@ -38,7 +38,7 @@ class BookChapterController {
             render(view: "create", model: [bookChapterInstance: bookChapterInstance])
             return
         }
-        //#if($facebook)
+        //#if($Facebook)
        // def user = Member.findByUsername(SecurityUtils.subject.principal)
        // pb.sendPostFacebook(user, bookChapterInstance.toString())
         //#end

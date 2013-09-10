@@ -51,7 +51,7 @@ class PeriodicoController {
             return
         }
 
-        //#if($facebook)
+        //#if($Facebook)
         // def user = Member.findByUsername(SecurityUtils.subject?.principal)
         //PublicationController.sendPostFacebook(user, periodicoInstance.toString())
         //#end

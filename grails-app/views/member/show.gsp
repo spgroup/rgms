@@ -143,7 +143,7 @@
 
 
         </tr>
-        <!-- #if($facebook) -->
+        <!-- #if($Facebook) -->
         <tr class="prop">
           <td valign="top" class="name"><g:message code="member.facebook_id.label" default="Facebook ID" /></td>
 
