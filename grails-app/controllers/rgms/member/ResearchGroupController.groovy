@@ -4,6 +4,7 @@ import org.springframework.dao.DataIntegrityViolationException
 import rgms.news.News
 import rgms.news.NewsController
 import rgms.news.TwitterConnection
+import rgms.publication.BookChapter
 import twitter4j.Status
 import rgms.EmailService
 
@@ -269,18 +270,13 @@ class ResearchGroupController {
 
 
     def researchGroupToReport() {
-        System.out.println(" <<< " + 123 + " !")
-        System.out.println(params)
         def research_group_id = params.get("research_group_id")
-
         def researchGroup = ResearchGroup.findById(research_group_id, [fetch: [memberships: "join"]])
-        System.out.println("    >> " + researchGroup)
-        for(Membership m : researchGroup.memberships) {
-            System.out.println("     >  >> " + m.member)
 
+        def publications = []
+        for(Membership m : researchGroup.memberships) {
+            publications += m.member.publications
         }
-        System.out.println("...")
-        System.out.println("...")
 
         // Set params that will be passed to Jasper
         params.SUBREPORT_DIR = "${servletContext.getRealPath('/reports/report_Bundle')}/"
