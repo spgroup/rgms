@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="news" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Key" isIgnorePagination="true" uuid="449f5822-0f65-4578-b6b3-64f4c9b57e6b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString>
+		<![CDATA[SELECT * FROM news ORDER BY date DESC;]]>
+	</queryString>
+	<field name="date" class="java.util.Date"/>
+	<field name="description" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="91" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ec418c1e-b4a1-4b27-9839-96369ae6144c" style="Title" x="108" y="13" width="263" height="33"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[News]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8628bf2f-9ed8-48b4-8846-10579521567b" style="SubTitle" x="123" y="46" width="174" height="22"/>
+				<textElement/>
+				<text><![CDATA[All news in RGMS]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="8f29341a-c05f-42cf-b149-459c05f58b8f" x="15" y="4" width="64" height="64"/>
+				<imageExpression><![CDATA["../rgms/web-app/images/icon.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="607fcf26-8aca-43ef-a209-6025aae111d6" style="Column header" x="358" y="48" width="197" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<line>
+				<reportElement uuid="e18600e7-6011-485a-a4df-1882d8aaa53b" positionType="FixRelativeToBottom" x="0" y="-7" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="12" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="123" splitType="Stretch">
+			<line>
+				<reportElement uuid="ef6d1da9-d0ee-4fb9-a994-4916ff209014" positionType="FixRelativeToBottom" x="0" y="111" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="2a0f6d4f-3f92-4d57-9d0d-5161d7943f9d" x="53" y="34" width="460" height="67"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d35df917-9620-4d51-aa46-62878ad9828a" x="35" y="8" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

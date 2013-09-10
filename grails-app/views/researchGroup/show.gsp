@@ -34,9 +34,6 @@
     <g:message code="default.button.update.twitter.label" default="xxx"/>
 </g:link>
 
-<g:link class="edit" action="updateNewsFromTwitter" id="${researchGroupInstance?.id}">
-    <g:message code="default.button.update.twitter.label" default="xxx"/>
-</g:link>
 
 <a href="#show-researchGroup" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
                                                                     default="Skip to content&hellip;"/></a>
