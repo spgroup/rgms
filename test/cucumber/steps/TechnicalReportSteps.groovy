@@ -134,6 +134,12 @@ Then(~'^I see my user listed as an author member of technical report by default$
     assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
+Then(~'^I see my school name as institution of technical report by default$') {->
+    at TechnicalReportCreatePage
+    userData = Member.findByUsername('admin').university
+    assert page.currentInstitution() == userData
+}
+
 And (~'^I select the option to edit$'){->
     at TechnicalReportShowPage
     page.select('a', 'edit')

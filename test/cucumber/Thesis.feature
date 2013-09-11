@@ -23,3 +23,12 @@ Feature: Thesis Tests
     Given I am at the create thesis page
     When  I fill some thesis details with "Tese002", "10", "8", "1998", "UFPE" and "Recife"
     Then  I am still on the create thesis page with the error message
+
+#if ($contextualInformation)
+  Scenario: Add a new thesis with user data already filled by default
+    Given I am at the publications menu
+    When I select the "Tese" option at the publications menu
+    And I select the new thesis option at the thesis page
+    Then I see my user listed as an author member of thesis by default
+    And I see my school name as school of thesis by default
+#end

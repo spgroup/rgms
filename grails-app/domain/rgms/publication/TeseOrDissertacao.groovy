@@ -13,12 +13,4 @@ abstract class TeseOrDissertacao extends Publication {
         address nullable: false, blank: false
     }
 
-    public String schoolSelected() {
-//#if ($Autofill)
-        def loggedUsername = SecurityUtils.subject?.principal;
-        return school ? school : Member.findByUsername(loggedUsername).university;
-//#else
-        return school;
-//#end
-    }
 }

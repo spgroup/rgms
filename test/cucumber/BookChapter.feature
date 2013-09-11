@@ -30,11 +30,11 @@ Feature: BookChapter
     Given I am at the book chapter page
     And the system has no book chapter entitled "Next Generation Software Product Line Engineering"
     When I go to NewBookChapter page
-    And I use the webpage to create the book chapter "Next Generation Software Product Line Engineering" with file name "NGSPL-0.pdf"
+    And I use the webpage to create the book chapter "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book chapter "Next Generation Software Product Line Engineering" was stored by the system
     And it is shown in the book chapter list with title "Next Generation Software Product Line Engineering"
 
-#if ($Autofill)
+#if ($contextualInformation)
 
   Scenario: new book chapter filled with user data by default
     Given I am at the book chapter page

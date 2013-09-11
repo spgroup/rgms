@@ -24,8 +24,9 @@ class VisitCreatePage extends Page {
 
     def fillVisitDetails() {
         $("form").nameVisitor = "Visitor"
+        //#if( $descricaovisita )
         $("form").description = "First Visit"
-
+        //#end
         clickOnCreate()
     }
 }
