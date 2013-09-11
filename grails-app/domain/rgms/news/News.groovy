@@ -22,4 +22,8 @@ class News {
         return list
     }
 
+    static List getCurrentNewsOrderByMostRecentDate(researchGroup){
+        return getCurrentNews(researchGroup).sort{a , b -> b.date <=> a.date}
+    }
+
 }

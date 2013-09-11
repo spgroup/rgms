@@ -4,7 +4,7 @@ import geb.Page
 import rgms.publication.PeriodicoController
 
 class PublicationsPage extends Page {
-    static url = "auth/signIn"
+    static url = ""
 	
 
 	static at = {

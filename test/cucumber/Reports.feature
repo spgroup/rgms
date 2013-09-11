@@ -1,6 +1,6 @@
 @i10n
 Feature: Reports
-  I want to generate PDF, HTML or XML report files of Members and Research Groups
+  I want to generate PDF, HTML or XML report files of Members, Research Groups and News
 
   Scenario: export existent member report to html
     Given I am at the Member list page
@@ -33,7 +33,7 @@ Feature: Reports
 
 
   Scenario: export report to html of recently created research group
-    Given i am at publication menu
+    Given I am at the publications menu
     When i select the "Research Group" option at publications menu
     And i select the new research group option at research group list page
     Then i can fill the research group details with name "RGroup" and create a new one
@@ -79,4 +79,18 @@ Feature: Reports
     And I can select the option Export to PDF at the Member show
     Then I can generate a PDF report about Member "3"
 
+#if ($news && $HTML)
+  Scenario: export report link not enabled when there are no news stored in the system
+    Given I am at the publications menu
+    And the system has no stored news
+    When I select the "News" option at the publications menu
+    Then I can not select the option Export to HTML at the News list page
 
+  Scenario: export report to HTML containing any stored news
+    Given the system has a Research Group named "News Group" stored in the system
+    And the system has a news stored with description "The first news"
+    And I am at the initial RGMS page
+    When I select the "News" option at the publications menu
+    And I select the option Export to HTML at the News list page
+    Then The system generate a HTML report with the news "The first news" in it
+#end

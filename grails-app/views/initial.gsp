@@ -137,6 +137,9 @@
     <ol>
         <li><g:link controller="Member" action="list">Member</g:link></li>
         <li><g:link controller="ResearchGroup" action="list">Research Group</g:link></li>
+        <!-- #if($news) -->
+        <li><g:link controller="News" action="list">News</g:link></li>
+        <!-- #end -->
         <li><g:link controller="BookChapter" action="list">Book Chapter</g:link></li>
         <li><g:link controller="Conferencia" action="list">Conferencia</g:link></li>
         <li><g:link controller="Dissertacao" action="list">Dissertacao</g:link></li>
