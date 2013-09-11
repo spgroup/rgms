@@ -125,6 +125,8 @@ Given(~'^the system has some orientations stored$') {->
     ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
         [getSubject: {subject} as SecurityManager])
     SecurityUtils.metaClass.static.getSubject = {subject}
+
+    initialSize = Orientation.findAll().size()
 }
 When(~'^I upload a new orientation "([^"]*)"$') { filename ->
     inicialSize = Orientation.findAll().size()
@@ -136,6 +138,7 @@ When(~'^I upload a new orientation "([^"]*)"$') { filename ->
 Then(~'the system has more orientations now$') {->
     // restore metaclass
     GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
+    finalSize = Orientation.findAll().size()
 }
 
 And(~'^I select the upload button at the orientations page$') {->

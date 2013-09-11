@@ -26,7 +26,7 @@ class XMLController {
 
     private Closure savePublication = {
         Node xmlFile ->
-            Member user = Member.findByUsername(session.getAttribute("username").toString())
+            Member user = getCurrentUser()
             XMLService.createPublications(xmlFile, user)
     }
 
@@ -87,8 +87,7 @@ class XMLController {
 
     private Closure saveOrientations = {
         Node xmlFile ->
-            Member user = Member.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
-            print(user)
+            Member user = getCurrentUser()
 
             XMLService.createOrientations(xmlFile, user)
     }
@@ -129,5 +128,9 @@ class XMLController {
             redirect (uri: '/')
         else
             redirect(controller: controllerUsed, action: "list", params: params)
+    }
+
+    private def getCurrentUser(){
+        return Member.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
     }
 }
