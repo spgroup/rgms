@@ -83,7 +83,8 @@ Feature: journal article
     And I am at the Article Page
     When I try to create an article named as "Empirical Studies in Product Line 2" with filename "TCS.pdf"
     Then No tweet should be post about "Empirical Studies in Product Line 2"
-	
+
+#if($Facebook)
   Scenario: Add a new article and post it in the facebook
     Given I am logged as "admin"
     And   I am at the Add Article Page
@@ -107,3 +108,4 @@ Feature: journal article
     When    I select to view "A theory of software product line refinement 3" in resulting list
     And     I click on Share on Facebook
     Then    A facebook message was posted
+#end
