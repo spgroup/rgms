@@ -4,7 +4,6 @@ import org.springframework.dao.DataIntegrityViolationException
 import rgms.news.News
 import rgms.news.NewsController
 import rgms.news.TwitterConnection
-import rgms.publication.BookChapter
 import twitter4j.Status
 import rgms.EmailService
 
