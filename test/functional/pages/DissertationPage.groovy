@@ -29,6 +29,6 @@ class DissertationPage extends Page {
         def dissertationRows  = dissertationTable.find('tbody').find('tr')
         def dissertationColumns = dissertationRows[0].find('td')
 
-        assert dissertationColumns.size() == 0
+        assert dissertationColumns.size() < 6
     }
 }
