@@ -107,3 +107,14 @@ Feature: journal article
     When    I select to view "A theory of software product line refinement 3" in resulting list
     And     I click on Share on Facebook
     Then    A facebook message was posted
+
+  Scenario: upload article with a file
+    Given the system has some articles stored
+    When I upload the articles of "curriculo.xml"
+    Then the system has all the articles of the xml file
+
+  Scenario: upload articles without a file
+    Given I am at the Article Page
+    And I select the upload button at the article page
+    Then I'm still on article page
+    And the articles are not stored by the system

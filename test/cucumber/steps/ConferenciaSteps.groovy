@@ -1,3 +1,4 @@
+import cucumber.runtime.PendingException
 import pages.Conferencia.ConferenciaCreatePage
 import pages.Conferencia.ConferenciaPage
 import pages.LoginPage
@@ -109,10 +110,40 @@ Then(~'^I am back at the publications and conferencias menu$') {->
 
 When(~'^I try to remove the conferencia "([^"]*)"$') { String title ->
     assert Conferencia.findByTitle(title) == null
+}
+
+Then(~'^nothing happens$') {->
 
 }
 
+Given(~'^the system has some conferencias stored$') {->
+    initialSize = Conferencia.findAll().size()
+}
+When(~'^I upload the conferencias of "([^"]*)"$') { filename ->
+    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    initialSize = Conferencia.findAll().size()
+    ConferenciaTestDataAndOperations.uploadConferencias(path)
+    finalSize = Conferencia.findAll().size()
+    assert initialSize < finalSize
+}
+Then(~'^the system has all the conferencias of the xml file$') {->
+    assert Conferencia.findByTitle("Latin American Conference On Computing (CLEI 1992)") != null
+    assert Conferencia.findByTitle("Engineering Distributed Objects Workshop, 21st ACM International Conference on Software Engineering (ICSE 1999)") != null
+    assert Conferencia.findByTitle("6th International Conference on Software Reuse (ICSR 2000)") != null
 
-Then(~'^nothing happens$') {->
+}
+When(~'^I select the conferencia option at the program menu$') {option ->
+    page.select(option)
+}
+And(~'^I select the upload button at the conferencia page$') {->
+    at ConferenciaPage
+    page.uploadWithoutFile()
+}
+Then(~'^I\'m still on conferencia page$') {->
+    at ConferenciaPage
+}
+And(~'^the conferencias are not stored by the system$') {->
+    at ConferenciaPage
+    page.checkIfConferenciaListIsEmpty()
 
 }

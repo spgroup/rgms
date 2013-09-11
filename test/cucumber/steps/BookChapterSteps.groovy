@@ -123,7 +123,7 @@ Given(~'^the system has some book chapters stored$') {->
 }
 When(~'^I upload the book chapters of "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = BookChapter.findAll().size()
+    initialSize = BookChapter.findAll().size()
     BookChapterTestDataAndOperations.uploadBookChapter(path)
     finalSize = BookChapter.findAll().size()
     assert initialSize < finalSize

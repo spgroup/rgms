@@ -2,6 +2,9 @@ package steps
 
 import rgms.publication.Ferramenta
 import rgms.publication.FerramentaController
+//#if($XMLUpload)
+import rgms.publication.XMLController
+//#end
 
 class FerramentaTestDataAndOperations {
     static ferramentas = [
@@ -60,7 +63,7 @@ class FerramentaTestDataAndOperations {
     }
 
     static public void uploadFerramenta(filepath) {
-        def cont = new FerramentaController()
+        def cont = new XMLController()
         def xml = new File((String) filepath);
         def records = new XmlParser()
         cont.saveTools(records.parse(xml));

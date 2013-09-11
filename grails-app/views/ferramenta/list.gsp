@@ -12,7 +12,7 @@
 <!--//#if($upXMLFerramenta)-->
         <div class="xml" role="xmlUpload">
             <ul>
-                <g:form action="uploadXMLFerramenta" method="post" enctype="multipart/form-data">
+                <g:form controller="XML" action="uploadXMLFerramenta" method="post" enctype="multipart/form-data">
                     <label for="file">Import XML:</label>
                     <input type="file" name="file" id="file"/>
                     <input class="save" type="submit" value="Upload"/>

@@ -22,4 +22,13 @@ class DissertationPage extends Page {
     def uploadWithoutFile(){
         $('input.save').click()
     }
+
+    def checkIfDissertationListIsEmpty(){
+        def listDiv = $('div', id: 'list-dissertacao')
+        def dissertationTable = (listDiv.find('table'))[0]
+        def dissertationRows  = dissertationTable.find('tbody').find('tr')
+        def dissertationColumns = dissertationRows[0].find('td')
+
+        assert dissertationColumns.size() == 0
+    }
 }
