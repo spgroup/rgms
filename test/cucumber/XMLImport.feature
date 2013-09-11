@@ -4,6 +4,7 @@ Feature: XMLImport
   I want to import a xml file
   So that the system register the corresponding publications
 
+  @ignore
   Scenario: upload publications with a file
     Given the system has some publications stored
     When I upload the publications of "curriculo_publications.xml"
