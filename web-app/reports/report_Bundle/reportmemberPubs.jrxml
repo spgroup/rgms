@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="publications" language="groovy" pageWidth="19440" pageHeight="19440" columnWidth="19440" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="publications" language="groovy" pageWidth="19440" pageHeight="19440" columnWidth="19440" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f0cd098b-db79-4794-b4b9-c75af49d91b8">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="460"/>
 	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
 		<![CDATA[Select * from publication;]]>
 	</queryString>
 	<field name="publication_date" class="java.sql.Timestamp"/>
 	<field name="title" class="java.lang.String"/>
+	<field name="id" class="java.lang.String"/>
 	<group name="publication_date">
 		<groupExpression><![CDATA[$F{publication_date}]]></groupExpression>
 	</group>
 	<group name="title">
 		<groupExpression><![CDATA[$F{title}]]></groupExpression>
+	</group>
+	<group name="id">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
@@ -27,21 +31,35 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="33" splitType="Stretch">
 			<textField>
-				<reportElement x="3" y="0" width="41" height="20" forecolor="#666666"/>
+				<reportElement uuid="0bdf25f8-8000-4df2-addc-0e442b6a7045" x="3" y="0" width="160" height="20" forecolor="#666666"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{publication_date}]]></textFieldExpression>
 			</textField>
 			<textField hyperlinkType="Reference">
-				<reportElement x="44" y="0" width="160" height="20" forecolor="#0000CC"/>
+				<reportElement uuid="4c71145a-9d69-4c0a-9545-197de7c5f183" x="163" y="0" width="200" height="20" forecolor="#0000CC"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 				<hyperlinkReferenceExpression><![CDATA[$F{title}]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField hyperlinkType="Reference">
+				<reportElement uuid="46584fa7-eac7-4bef-b75b-49be7e066c76" x="363" y="0" width="160" height="20" forecolor="#0000CC"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+				<!-- #if($Bibtex && $BibtexGenerateFile) -->
+				<anchorNameExpression><![CDATA[$F{id}]]></anchorNameExpression>
+				<hyperlinkReferenceExpression><![CDATA["/rgms/publication/generateBib/"+$F{id}.toString()]]></hyperlinkReferenceExpression>
+				<hyperlinkParameter name="id">
+					<hyperlinkParameterExpression><![CDATA[$F{id}]]></hyperlinkParameterExpression>
+				</hyperlinkParameter>
+				<!-- #end -->
 			</textField>
 		</band>
 	</detail>

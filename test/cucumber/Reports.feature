@@ -2,12 +2,6 @@
 Feature: Reports
   I want to generate PDF, HTML or XML report files of Members and Research Groups
 
-  Scenario: export existent member report to pdf
-    Given I am at the Member list page
-    When I select the "1" option at the Member list
-    And I can select the option Export to PDF at the Member show
-    Then I can generate a PDF report about Member "1"
-
   Scenario: export existent member report to html
     Given I am at the Member list page
     When I select the "1" option at the Member list
@@ -55,5 +49,34 @@ Feature: Reports
     And I select the "RGroup" option at the Research Group list
     And I can select the option Export to XML at the Research Group show
     And I can generate a XML report about Research Group "RGroup"
+
+  Scenario: export existent member report to html and access bibtex from him
+    Given I am at the Member list page
+    When I select the "1" option at the Member list
+    And I can select the option Export to HTML at the Member show
+    And I can generate a HTML report about Member "1"
+    Then I can select the Member "1" option
+    And I can see the bibtex details
+
+  Scenario: export recently created member report to html and access bibtex from him
+    Given I am at the Publications page
+    When I select the Conferencia option at the Publications menu
+    And I select the new Conferencia option at the Conferencia page
+    And I can fill the Conferencia details
+    And I select the home option at the Conferencia page
+    And I am at the Publications
+    And I select the Novo Member option
+    And I fill the Member details with "Eduardo" "eduardo" "jear@cin.ufpe.br" "UFPE" and create a new one
+    And I select the "3" option at the Member list
+    And I can select the option Export to HTML at the Member show
+    And I can generate a HTML report about Member "3"
+    Then I can select the Member "3" option
+    And I can see the bibtex details
+
+  Scenario: export existent member report to pdf
+    Given I am at the Member list page
+    When I select the "3" option at the Member list
+    And I can select the option Export to PDF at the Member show
+    Then I can generate a PDF report about Member "3"
 
 
