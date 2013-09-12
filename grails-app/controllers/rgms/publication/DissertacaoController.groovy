@@ -1,5 +1,6 @@
 package rgms.publication
 
+//if($Dissertation)
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 import org.apache.shiro.SecurityUtils
@@ -187,3 +188,4 @@ class DissertacaoController {
     }
 //#end
 }
+//#end
