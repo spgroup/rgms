@@ -1,5 +1,5 @@
 package rgms.publication
-
+//#if($ImportBibtex)
 import rgms.member.Member
 
 /**
@@ -31,3 +31,4 @@ class BibtexFile {
     }
 
 }
+//#end
