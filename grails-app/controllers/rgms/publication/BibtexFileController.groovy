@@ -1,5 +1,5 @@
 package rgms.publication
-
+//#if($ImportBibtex)
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
@@ -49,3 +49,4 @@ class BibtexFileController {
     }
 
 }
+//#end
