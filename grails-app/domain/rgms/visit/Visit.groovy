@@ -17,9 +17,13 @@ class Visit {
     //#end
 
     static constraints = {
-        initialDate(nullable:false,blank:false)
-        researchGroup(nullable:true,blank:true)
-        description(nullable:true,blank:true)
+        initialDate(nullable: false, blank: false)
+        //#if( $reserchgroupobrigatorio )
+        researchGroup(nullable: true, blank: true)
+        //#end
+        //#if( $descricaovisita )
+        description(nullable: true, blank: true)
+        //#end
         finalDate(validator: { val, obj ->
             (val?.compareTo(obj.initialDate) >= 0)
         })

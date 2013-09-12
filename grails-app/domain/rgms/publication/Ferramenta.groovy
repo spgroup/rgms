@@ -11,12 +11,9 @@ class Ferramenta extends Publication {
         description nullable: false, blank: false
     }
 
-//#if($Bibtex)
+    //#if($Bibtex)
     String generateBib() {
-        return "@misc{" + "author=\"" + BibtexAux.organizeAuthors(this.members) + "\",\n title=\"" + this.title +
-                "\",\n website=\"" + this.website + "\",\n year=\"" + this.publicationDate.getAt(Calendar.YEAR) +
-                "\",\n description=\"" + this.description + "\",\n month=\"" +
-                this.publicationDate.getAt(Calendar.MONTH) + "\"}"
+        return new BibtexExport().generateBibtexFerramenta(this)
     }
-//#end
+    //#end
 }

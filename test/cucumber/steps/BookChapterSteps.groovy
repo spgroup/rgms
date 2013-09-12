@@ -4,6 +4,8 @@ import rgms.member.Member
 import rgms.publication.BookChapter
 import rgms.publication.Periodico
 import steps.TestDataAndOperations
+import steps.TestDataAndOperationsPublication
+import steps.BookChapterTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -12,16 +14,16 @@ Given(~'^the system has no book chapter entitled "([^"]*)"$') { String title ->
 }
 
 When(~'^I create the book chapter "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-    TestDataAndOperations.createBookChapter(title, filename)
+    BookChapterTestDataAndOperations.createBookChapter(title, filename)
 }
 
 Then(~'^the book chapter "([^"]*)" is properly stored by the system$') { String title ->
     bookChapter = BookChapter.findByTitle(title)
-    assert TestDataAndOperations.bookChapterCompatibleTo(bookChapter, title)
+    assert BookChapterTestDataAndOperations.bookChapterCompatibleTo(bookChapter, title)
 }
 
 Given(~'^the book chapter "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
-    TestDataAndOperations.createBookChapter(title, filename)
+    BookChapterTestDataAndOperations.createBookChapter(title, filename)
     bookChapter = BookChapter.findByTitle(title)
     assert bookChapter != null
 }
@@ -32,7 +34,7 @@ Then(~'^the book chapter "([^"]*)" is not stored twice$') { String title ->
 }
 
 When(~'^I remove the book chapter "([^"]*)"$') { String title ->
-    TestDataAndOperations.removeBookChapter(title)
+    BookChapterTestDataAndOperations.removeBookChapter(title)
 }
 
 Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String title ->
@@ -68,7 +70,7 @@ And(~'^I still on the book chapter create page$'){->
 
 Then(~'^I see my user listed as a member of book chapter by default$') {->
     at BookChapterCreatePage
-    assert TestDataAndOperations.containsUser(page.selectedMembers())
+    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
 When(~'^I view the book chapter list$') {->
@@ -78,7 +80,7 @@ When(~'^I view the book chapter list$') {->
 Then(~'my book chapter list contains "([^"]*)"$') { String title ->
     at BookChapterPage
     bookChapterList = BookChapter.findAll()
-    assert TestDataAndOperations.containsBookChapter(title, bookChapterList)
+    assert BookChapterTestDataAndOperations.containsBookChapter(title, bookChapterList)
 }
 And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$'){ String title, filename ->
     page.selectNewBookChapter()
@@ -122,7 +124,7 @@ Given(~'^the system has some book chapters stored$') {->
 When(~'^I upload the book chapters of "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = BookChapter.findAll().size()
-    TestDataAndOperations.uploadBookChapter(path)
+    BookChapterTestDataAndOperations.uploadBookChapter(path)
     finalSize = BookChapter.findAll().size()
     assert initialSize < finalSize
 }

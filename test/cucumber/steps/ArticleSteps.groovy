@@ -1,9 +1,11 @@
+import pages.ArticlePages.*
 import pages.*
 import rgms.member.Member
 import rgms.publication.Periodico
-import rgms.tool.FacebookTool
 import rgms.tool.TwitterTool
 import steps.TestDataAndOperations
+import steps.TestDataAndOperationsFacebook
+import steps.ArticleTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -12,17 +14,17 @@ Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-    TestDataAndOperations.createArticle(title, filename)
+    ArticleTestDataAndOperations.createArticle(title, filename)
 }
 
 Then(~'^the article "([^"]*)" is properly stored by the system$') { String title ->
     article = Periodico.findByTitle(title)
-    assert TestDataAndOperations.compatibleTo(article, title)
+    assert ArticleTestDataAndOperations.compatibleTo(article, title)
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*)" field blank$') { String title, String filename, String field ->
-    TestDataAndOperations.createArticle(title, filename)
-    def article = TestDataAndOperations.findArticleByTitle(title)
+    ArticleTestDataAndOperations.createArticle(title, filename)
+    def article = ArticleTestDataAndOperations.findArticleByTitle(title)
     assert article.{field} == null
 }
 
@@ -51,7 +53,7 @@ Then(~'^I can fill the article details$') {->
  * @author Guilherme
  */
 Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    TestDataAndOperations.createArticle(title, filename)
+    ArticleTestDataAndOperations.createArticle(title, filename)
     assert Periodico.findByTitle(title) != null
 }
 
@@ -65,7 +67,7 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
     at PublicationsPage
     page.select("Periodico")
     selectNewArticleInArticlesPage()
-    page.fillArticleDetails(TestDataAndOperations.path() + filename, title)
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + filename, title)
     page.selectCreateArticle()
     assert !periodicoNoExist(title)
     to ArticlesPage
@@ -78,7 +80,7 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
 When(~'^I delete the article "([^"]*)"$') { String title ->
     def testarticle = Periodico.findByTitle(title)
     assert testarticle != null
-    TestDataAndOperations.removeArticle(title)
+    ArticleTestDataAndOperations.removeArticle(title)
     def testDeleteArticle = Periodico.findByTitle(title)
     assert testDeleteArticle == null
 }
@@ -87,7 +89,7 @@ When(~'^I delete the article "([^"]*)"$') { String title ->
  * @author Guilherme
  */
 When(~'^I edit the article title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
-    def updatedArticle = TestDataAndOperations.editArticle(oldtitle, newtitle)
+    def updatedArticle = ArticleTestDataAndOperations.editArticle(oldtitle, newtitle)
     assert updatedArticle != null
 }
 
@@ -137,7 +139,7 @@ Then(~'^the article "([^"]*)" is properly removed by the system$') { String titl
  */
 Then(~'my article list contains "([^"]*)"$') { String title ->
     articles = Periodico.findAll()
-    assert TestDataAndOperations.containsArticle(title, articles)
+    assert ArticleTestDataAndOperations.containsArticle(title, articles)
 }
 
 /**
@@ -173,23 +175,20 @@ Then(~'^I am at Article show page$') { ->
 
 
 //#if( $Twitter )
-Given(~'^There is a user "([^"]*)" with a twitter account$') { String userName ->
-    to UserRegisterPage
-    at UserRegisterPage
-    page.fillFormData(userName)
-
-    page.submitForm()
-
-    Login()
-
-    member = Member.findByUsername(userName)
-    MemberEditionPage.url = "member/edit/" + member.getId()
-
-    to MemberEditionPage
-    at MemberEditionPage
-    page.editEnableUser(userName)
+Given(~'^I am logged as "([^"]*)"$') { String userName ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData(userName, "adminadmin")
 }
-
+Given (~'^I am at the Article Page$'){->
+    at PublicationsPage
+    page.select("Periodico")
+    to ArticlesPage
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
+    println path
+    def f = new File(path)
+    println "exist Path?" + f.exists()
+}
 Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
 
     Login()
@@ -200,20 +199,14 @@ Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userNa
     println path
     def f = new File(path)
     println "exist Path?" + f.exists()
+    //Mantive esse Given para testes do facebook.
+    // As duplicacoes de Twitter so dizem respeito a esse teste que pode ser removido. Renato Ferreira.
 }
 
 When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$') { String articleName, String filename ->
     selectNewArticleInArticlesPage()
-    page.fillArticleDetails(TestDataAndOperations.path() + filename, articleName)
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + filename, articleName)
     page.selectCreateArticle()
-}
-
-Then(~'^A twitter is added to my twitter account regarding the new article "([^"]*)"$') { String articleTitle ->
-    assert TwitterTool.consult(articleTitle)
-}
-
-Then(~'^No twitte should be post about "([^"]*)"$') { String articleTitle ->
-    assert !TwitterTool.consult(articleTitle)
 }
 
 When(~'^I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
@@ -221,6 +214,20 @@ When(~'^I click on Share it in Twitter with "([^"]*)" and "([^"]*)"$') { String 
     page.clickOnTwitteIt(twitterLogin, twitterPw)
     at ArticleShowPage
 }
+
+Then(~'^A tweet is added to my twitter account regarding the new article "([^"]*)"$') { String articleTitle ->
+    assert TwitterTool.consult(articleTitle)
+}
+
+Then (~'No tweet should be post about "([^"]*)"$'){ String article ->
+    assert !TwitterTool.consult(null)
+}
+
+
+Then(~'^No twitte should be post about "([^"]*)"$') { String articleTitle ->
+    assert !TwitterTool.consult(articleTitle)
+}
+
 //#end
 
 //#if( $Facebook )
@@ -242,12 +249,6 @@ Then(~'^No facebook message was posted$') { ->
     assert true
 }
 
-Given(~'^I am logged as "([^"]*)"$') { String userName ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData(userName, "adminadmin")
-}
-
 Given(~'^I am at the Add Article Page$') {  ->
     at PublicationsPage
     page.select("Periodico")
@@ -260,7 +261,7 @@ Given(~'^I am at the Add Article Page$') {  ->
 
 
 When(~'^I share the article entitled "([^"]*)" on facebook$') { String title ->
-    TestDataAndOperations.ShareArticleOnFacebook(title)
+    TestDataAndOperationsFacebook.ShareArticleOnFacebook(title)
 }
 
 //#end

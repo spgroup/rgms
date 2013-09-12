@@ -24,6 +24,12 @@ abstract class Publication {
     abstract String generateBib()
     //#end
 
+    def removeFromPublications() {
+        this.members.each {
+            it.removeFromPublications(this)
+        }
+    }
+
     def discardMembers() {
         this.members.each {
             it.discard()
@@ -72,13 +78,13 @@ abstract class Publication {
         return result;
     }
 
-    public Set membersSelected() {
-//#if ($Autofill)
-        def loggedUsername = SecurityUtils.subject?.principal;
-        return members ? members : [Member.findByUsername(loggedUsername).id];
-//#else
-        return members;
-//#end
+    public addMember(Member e) {
+        if(!this.getMembers()){
+            this.setMembers(new LinkedHashSet<Member>())
+            this.getMembers().add(e)
+        } else if(!this.getMembers().contains(e)) {
+            this.getMembers().add(e)
+        }
     }
 
 //	public String retPrimeiroAutor(){

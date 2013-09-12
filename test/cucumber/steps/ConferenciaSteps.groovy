@@ -1,10 +1,12 @@
-import pages.ConferenciaCreatePage
-import pages.ConferenciaPage
+import pages.Conferencia.ConferenciaCreatePage
+import pages.Conferencia.ConferenciaPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.member.Member
 import rgms.publication.Conferencia
 import steps.TestDataAndOperations
+import steps.TestDataAndOperationsPublication
+import steps.ConferenciaTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -14,16 +16,16 @@ Given(~'^the system has no conferencia entitled "([^"]*)"$') { String title ->
 }
 
 When(~'^I create the conferencia "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    TestDataAndOperations.createConferencia(title, filename)
+    ConferenciaTestDataAndOperations.createConferencia(title, filename)
 }
 
 Then(~'^the conferencia "([^"]*)" is properly stored by the system$') { String title ->
     conferencia = Conferencia.findByTitle(title)
-    assert TestDataAndOperations.conferenciaCompatibleTo(conferencia, title)
+    assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conferencia, title)
 }
 
 Given(~'^the conferencia "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
-    TestDataAndOperations.createConferencia(title, filename)
+    ConferenciaTestDataAndOperations.createConferencia(title, filename)
     conferencia = Conferencia.findByTitle(title)
     assert conferencia != null
 }
@@ -34,7 +36,7 @@ Then(~'^the conferencia "([^"]*)" is not stored twice$') { String title ->
 }
 
 When(~'^I remove the conferencia "([^"]*)"$') { String title ->
-    TestDataAndOperations.removeConferencia(title)
+    ConferenciaTestDataAndOperations.removeConferencia(title)
 }
 
 Then(~'^the conferencia "([^"]*)" is properly removed by the system$') { String title ->
@@ -98,7 +100,7 @@ Then(~'^I can remove one conferencia$') {->
 
 Then(~'^I see my user listed as an author member of conferencia by default$') {->
     at ConferenciaCreatePage
-    assert TestDataAndOperations.containsUser(page.selectedMembers())
+    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
 Then(~'^I am back at the publications and conferencias menu$') {->

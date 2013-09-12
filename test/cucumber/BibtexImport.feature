@@ -15,7 +15,7 @@ Feature: BibtexImport
     When  I click "Choose file"
     And I select a bibtex file unformatted and I click "Import"
     Then the system output the message error "bibtex file unformatted"
-    And none publication is stored
+    And none publication is stored with name "Unformated Dissertation"
 
   Scenario: bibtex file with several publication types
     Given I am on Import Bibtex File Menu

@@ -4,9 +4,8 @@ import pages.MemberPage
 import pages.MemberCreatePage
 
 import pages.PublicationsPage
-import pages.ResearchGroupListPage
-import pages.ResearchGroupPage
-import pages.ResearchGroupShowPage
+import pages.ResearchGroup.ResearchGroupListPage
+import pages.ResearchGroup.ResearchGroupShowPage
 
 import static cucumber.api.groovy.EN.*
 

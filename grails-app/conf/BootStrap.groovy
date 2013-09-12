@@ -28,7 +28,6 @@ class BootStrap {
             adminRole.save()
 
             //#if($History)
-            //feature record
             def hist = new Record(start: new Date(), status_H: "MSc Student")
             hist.save()
             admin.addToHistorics(hist)

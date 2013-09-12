@@ -1,7 +1,8 @@
 package rgms.publication
 
+
 import rgms.member.Member
-import org.apache.shiro.SecurityUtils
+import rgms.EmailService
 
 class ResearchLineController {
 
@@ -61,34 +62,31 @@ class ResearchLineController {
     }
     //#if($ResearchLineNotification)
     def sendEmail(def email, def title, def content) {
-        sendMail {
-            to email
-            from grailsApplication.config.grails.mail.username
-            subject title
-            body content
-
-        }
+        EmailService emailService = new EmailService();
+        emailService.sendEmail(email, grailsApplication.config.grails.mail.username, title, content)
     }
     //#end
     //#if($ResearchLineNotification)
+
     def sendNotifications(def researchLineInstance, def oldMembers) {
         def receivedMembers = (researchLineInstance?.members) ?: ([] as Set)
         def similarMembers = receivedMembers.intersect(oldMembers)
         def newMembers = receivedMembers.findAll { member -> !similarMembers.contains(member) }
         def membersWhoLeft = oldMembers.findAll { member -> !similarMembers.contains(member) }
         def researchLineName = researchLineInstance.name
-        def contentJoined = "The following members joined the research line " + researchLineName + ":\n"
-        def contentLeft = "The following member left the research line " + researchLineName + ":\n"
-        def title = "You are not a member of the Research Line " + researchLineName + " anymore"
+        def contentJoined =  message(code: 'default.joinedmessage.message') + researchLineName + ":\n"
+        def contentLeft = message(code: 'default.leftmessage.message') + researchLineName + ":\n"
+        def title =message(code: 'default.notmember.message') + researchLineName + message(code: 'default.anymore.message')
+
         for (m in membersWhoLeft) {
-            def content = "Hello ${ m.name},\n\nYou are not participating of the research line " + researchLineName + " anymore.\n\nBest Regards,\n Admin".toString()
+            def content = message(code: 'default.hello.message', args: m.name) + researchLineName + message(code: 'default.anymore.message') + message (code: 'default.bestregard.message').toString()
             sendEmail(m.email, title, content)
             contentLeft += "* " + m.name + "\n"
         }
 
-        title = "You are now a member of the Research Line " + researchLineName
+        title = message(code: 'default.newmember.message') + researchLineName
         for (m in newMembers) {
-            def content = "Hello ${ m.name},\n\nYou are now participating of the research line " + researchLineName + ".\n\nBest Regards,\n Admin".toString()
+            def content =  message(code: 'default.hello2.message', args: m.name) + researchLineName +  message (code: 'default.bestregard.message').toString()
             sendEmail(m.email, title, content)
             contentJoined += "* " + m.name + "\n "
         }
@@ -98,7 +96,7 @@ class ResearchLineController {
     //#end
     //#if($ResearchLineNotification)
     def sendReports(def newMembers, def membersWhoLeft, def similarMembers, def researchLineName, def contentJoined, def contentLeft) {
-        def title = "Report of change of members in Research Line " + researchLineName
+        def title = message(code: 'default.change.message') + researchLineName
         def membersJoined = newMembers.size() > 0
         def membersLeft = membersWhoLeft.size() > 0
 
@@ -112,7 +110,7 @@ class ResearchLineController {
                 content += contentLeft + "\n"
             }
             if (membersJoined || membersLeft) {
-                content += "\nBest Regards,\n Admin"
+                    content += message(code: 'default.bestregard.message')
                 sendEmail(m.email, title, content)
             }
         }
@@ -137,7 +135,7 @@ class ResearchLineController {
             if (researchLineInstance.version > version) {
                 researchLineInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'researchLine.label', default: 'ResearchLine')] as Object[],
-                        "Another user has updated this ResearchLine while you were editing")
+                        message(code: 'default.warningwhileedting.message'))
                 render(view: "edit", model: [researchLineInstance: researchLineInstance])
                 return false
             }

@@ -30,10 +30,10 @@
         <g:if test="${visitInstance?.initialDate}">
             <li class="fieldcontain">
                 <span id="initialDate-label" class="property-label"><g:message code="visit.initialDate.label"
-                                                                              default="Initial Date"/></span>
+                                                                               default="Initial Date"/></span>
 
                 <span class="property-value" aria-labelledby="initialDate-label"><g:formatDate format="dd-MM-yyyy"
-                                                                                              date="${visitInstance?.initialDate}"/></span>
+                                                                                               date="${visitInstance?.initialDate}"/></span>
 
             </li>
         </g:if>
@@ -41,7 +41,7 @@
         <g:if test="${visitInstance?.finalDate}">
             <li class="fieldcontain">
                 <span id="finalDate-label" class="property-label"><g:message code="visit.finalDate.label"
-                                                                           default="Final Date"/></span>
+                                                                             default="Final Date"/></span>
 
                 <span class="property-value" aria-labelledby="dataFim-label"><g:formatDate format="dd-MM-yyyy"
                                                                                            date="${visitInstance?.finalDate}"/></span>
@@ -54,7 +54,8 @@
                 <span id="visitor-label" class="property-label"><g:message code="visit.visitor.label"
                                                                            default="Visitor"/></span>
 
-                <span class="property-value" aria-labelledby="visitor-label" id="${visitInstance?.visitor?.id}">${visitInstance?.visitor?.encodeAsHTML()}</span>
+                <span class="property-value" aria-labelledby="visitor-label"
+                      id="${visitInstance?.visitor?.id}">${visitInstance?.visitor?.encodeAsHTML()}</span>
 
             </li>
         </g:if>
@@ -77,7 +78,7 @@
         <g:if test="${visitInstance?.description}">
             <li class="fieldcontain">
                 <span id="description-label" class="property-label"><g:message code="visit.description.label"
-                                                                             default="Description"/></span>
+                                                                               default="Description"/></span>
 
                 <span class="property-value" aria-labelledby="visitor-label">
                     ${visitInstance?.description}
@@ -102,7 +103,7 @@
     </a>
     <script>
         $('#button_twitter').live('click', function (e) {
-            $.get("http://localhost:8080/rgms/notifyTwitter/visit/${visitInstance?.visitor}");
+            jQuery.get("http://localhost:8080/rgms/notifyTwitter/visit/${visitInstance?.visitor}");
         });
     </script>
 <!-- Twitter end -->

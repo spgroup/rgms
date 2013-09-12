@@ -3,6 +3,7 @@ package rgms.member
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.XMLService
+import rgms.EmailService
 
 import java.security.SecureRandom
 
@@ -26,8 +27,8 @@ class MemberController {
  * @author penc
  */
 //#if($contextualInformation)
-        member.setUniversity(params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity"));
-        member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity"));
+        member.setUniversity(params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity") as String);
+        member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity") as String);
 //#end
 
         [memberInstance: member]
@@ -58,16 +59,11 @@ class MemberController {
 
         def email = memberInstance.email
         def mailSender = grailsApplication.config.grails.mail.username
-        def title = "[GRMS] Your account was successfully created!"
-        def content = "Hello ${ memberInstance.name},\n\nYour account was successfully created!\n\nHere is your username: ${ username} and password: ${ password}\n\n${ createLink(absolute: true, uri: '/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
-        sendMail {
-            to email
-            from mailSender
-            subject title
-//#literal()
-            body content
-//#end
-        }
+        def title = message(code: 'mail.title.create.account')
+        def content = message(code: 'mail.body.create.account', args: [memberInstance.name, username, password, createLink(absolute: true, uri: '/')])
+
+        EmailService emailService = new EmailService();
+        emailService.sendEmail(email, mailSender, title, content)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
@@ -75,25 +71,11 @@ class MemberController {
 
 
     def show = {
-        def memberInstance = Member.get(params.id)
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [memberInstance: memberInstance]
+        Get_MemberInstance()
     }
 
     def edit = {
-        def memberInstance = Member.get(params.id)
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [memberInstance: memberInstance]
+        Get_MemberInstance()
     }
 
     boolean check_version(String version, Member memberInstance) {
@@ -236,6 +218,17 @@ class MemberController {
         newMember.city = XMLService.getAttributeValueFromNode(enderecoProfissional, "CIDADE")
         newMember.country = XMLService.getAttributeValueFromNode(enderecoProfissional, "PAIS")
         newMember.email = XMLService.getAttributeValueFromNode(enderecoProfissional, "E-MAIL")
+    }
+
+    def Get_MemberInstance(){
+        def memberInstance = Member.get(params.id)
+        if (!memberInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [memberInstance: memberInstance]
     }
 
     //#end
