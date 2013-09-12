@@ -1,6 +1,6 @@
 package rgms.publication
 
-
+//#if($Dissertation)
 class Dissertacao extends TeseOrDissertacao {
 
 //#if($Bibtex)
@@ -9,3 +9,4 @@ class Dissertacao extends TeseOrDissertacao {
     }
 //#end
 }
+//#end
