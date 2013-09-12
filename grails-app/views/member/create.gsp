@@ -18,7 +18,7 @@
         <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]"/></g:link></li>
     </ul>
 <!-- #if($XMLImp && $Member) -->
-    <g:form url="[action: 'uploadMemberXML']" method="post" enctype="multipart/form-data">
+    <g:form controller="XML" method="post" action="uploadMemberXML" enctype="multipart/form-data">
         <label for="file">Import XML:</label>
         <input type="file" name="file" id="file"/>
         <input class="save" type="submit" value="Upload"/>

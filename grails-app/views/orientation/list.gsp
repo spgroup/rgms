@@ -14,7 +14,7 @@
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
                 <!-- #if($XMLImp) -->
-                <g:form url="[action:'uploadOrientationXML']" method="post" enctype="multipart/form-data">
+                <g:form controller="XML" action="uploadOrientationXML" method="post" enctype="multipart/form-data">
                     <label for="file">Import orientations (XML):</label>
                     <input type="file" name="file" id="file"/>
                     <input class="save" type="submit" value="Upload"/>

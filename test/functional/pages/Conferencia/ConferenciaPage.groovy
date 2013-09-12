@@ -29,4 +29,13 @@ class ConferenciaPage extends Page{
     def removeConferencia() {
         $('a.delete').click()
     }
+
+    def checkIfConferenciaListIsEmpty(){
+        def listDiv = $('div', id: 'list-conferencia')
+        def conferenciaTable = (listDiv.find('table'))[0]
+        def conferenciaRows  = conferenciaTable.find('tbody').find('tr')
+        def conferenciaColumns = conferenciaRows[0].find('td')
+
+        assert conferenciaColumns.size() == 0
+    }
 }

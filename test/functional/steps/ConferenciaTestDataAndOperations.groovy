@@ -2,6 +2,7 @@ package steps
 
 import rgms.publication.Conferencia
 import rgms.publication.ConferenciaController
+import rgms.publication.XMLController
 
 /**
  * Created with IntelliJ IDEA.
@@ -58,6 +59,14 @@ class ConferenciaTestDataAndOperations {
         conferencias.find { conferencia ->
             conferencia.title == title
         }
+    }
+
+    static public void uploadConferencias(filename) {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.saveConferencias(records.parse(xml));
+        cont.response.reset()
     }
 
 }

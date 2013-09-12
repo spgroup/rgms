@@ -4,6 +4,9 @@ import rgms.member.Member
 import rgms.publication.BookChapter
 import rgms.publication.BookChapterController
 import rgms.publication.PublicationController
+//#if($XMLUpload)
+import rgms.publication.XMLController
+//#end
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,7 +45,7 @@ class BookChapterTestDataAndOperations {
     }
 
     static public void uploadBookChapter(filename) {
-        def cont = new BookChapterController()
+        def cont = new XMLController()
         def xml = new File(filename);
         def records = new XmlParser()
         cont.saveBookChapters(records.parse(xml));

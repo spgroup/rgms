@@ -20,10 +20,22 @@ class ArticlesPage extends Page {
 	static content = {
 	}
 
+    def uploadWithoutFile(){
+        $('input.save').click()
+    }
 
 	def selectNewArticle() {
 		$('a.create').click()
 	}
+
+    def checkIfArticlesListIsEmpty(){
+        def listDiv = $('div', id: 'list-periodico')
+        def articleTable = (listDiv.find('table'))[0]
+        def articleRows  = articleTable.find('tbody').find('tr')
+        def articleColumns = articleRows[0].find('td')
+
+        assert articleColumns.size() < 23
+    }
    
 
 	/**

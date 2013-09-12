@@ -19,7 +19,7 @@
 		<div class="xml" role="xmlUpload">
 			<ul>
 			<br>
-                <g:form action="enviarConferenciaXML" method="post" enctype="multipart/form-data">
+                <g:form controller="XML" action="enviarConferenciaXML" method="post" enctype="multipart/form-data">
                     <label for="file">&nbsp;&nbsp;&nbsp;&nbsp;Importar XML:</label>
                     <input type="file" name="file" id="file"/>
                     <input class="save" type="submit" value="Enviar"/>

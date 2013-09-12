@@ -6,6 +6,10 @@ import rgms.tool.FacebookTool
 import rgms.tool.TwitterTool
 import steps.OrientationTestDataAndOperations
 
+import org.apache.shiro.util.ThreadContext
+import org.apache.shiro.subject.Subject
+import org.apache.shiro.SecurityUtils
+
 import static cucumber.api.groovy.EN.*
 
 // create
@@ -106,6 +110,47 @@ When(~'^I change the orientation tituloTese to "([^"]*)"$') { String newtitle ->
 When(~'^I select the "([^"]*)" option$') { String option ->
     at OrientationEditPage
     page.select(option)
+}
+
+Given(~'^the system has some orientations stored$') {->
+    // save old metaclass
+    def registry = GroovySystem.metaClassRegistry
+    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
+    registry.removeMetaClass(SecurityUtils)
+
+    // Mock login
+    def subject = [getPrincipal: {"admin"},
+        isAuthenticated: {true}
+    ]as Subject
+    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+        [getSubject: {subject} as SecurityManager])
+    SecurityUtils.metaClass.static.getSubject = {subject}
+
+    initialSize = Orientation.findAll().size()
+}
+When(~'^I upload a new orientation "([^"]*)"$') { filename ->
+    inicialSize = Orientation.findAll().size()
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    OrientationTestDataAndOperations.uploadOrientation(path + filename)
+    finalSize = Orientation.findAll().size()
+    assert inicialSize < finalSize
+}
+Then(~'the system has more orientations now$') {->
+    // restore metaclass
+    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
+    finalSize = Orientation.findAll().size()
+}
+
+And(~'^I select the upload button at the orientations page$') {->
+    at OrientationsPage
+    page.uploadWithoutFile()
+}
+Then(~'^I\'m still on orientations page$') {->
+    at OrientationsPage
+}
+And(~'^the orientations are not stored by the system$') {->
+    at OrientationsPage
+    page.checkIfOrientationListIsEmpty()
 }
 
 //FUNCOES AUXILIARES

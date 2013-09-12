@@ -2,6 +2,7 @@ package steps
 
 import rgms.publication.Periodico
 import rgms.publication.PeriodicoController
+import rgms.publication.XMLController
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,6 +26,14 @@ class ArticleTestDataAndOperations {
         articles.find { article ->
             article.title == title
         }
+    }
+
+    static public void uploadArticle(filename) {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.saveJournals(records.parse(xml))
+        cont.response.reset()
     }
 
     static public boolean compatibleTo(article, title) {

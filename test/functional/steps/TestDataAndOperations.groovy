@@ -316,4 +316,12 @@ class TestDataAndOperations {
     static public def path(){
         return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
       }
+
+    static public void uploadPublications(filename) {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.savePublication(records.parse(xml));
+        cont.response.reset()
+    }
 }

@@ -65,3 +65,15 @@ Feature: conferencia
     When I select the conferencia option at the publications menu
     And a list of conferencias stored by the system is displayed at the conferencia page
     Then I can remove one conferencia
+
+  Scenario: upload conferencia with a file
+    Given the system has some conferencias stored
+    When I upload the conferencias of "curriculo_conferencias.xml"
+    Then the system has all the conferencias of the xml file
+
+  Scenario: upload conferencias without a file
+    Given I am at the publications menu
+    When I select the "Conferencia" option at the program menu
+    And I select the upload button at the conferencia page
+    Then I'm still on conferencia page
+    And the conferencias are not stored by the system
