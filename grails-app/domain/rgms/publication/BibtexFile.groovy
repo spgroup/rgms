@@ -1,5 +1,5 @@
 package rgms.publication
-//#if($ImportBibtex)
+//#if($ImportBibtex && $Bibtex)
 import rgms.member.Member
 
 /**

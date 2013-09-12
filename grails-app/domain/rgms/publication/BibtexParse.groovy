@@ -1,5 +1,5 @@
 package rgms.publication
-//#if($ImportBibtex)
+//#if($ImportBibtex && $Bibtex)
 import org.jbibtex.*
 import rgms.publication.strategyBibtexParse.StrategyParseDissertacao
 import rgms.publication.strategyBibtexParse.StrategyParseTese
