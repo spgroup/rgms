@@ -1,5 +1,6 @@
 package steps
 
+import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.MemberController
 
@@ -47,9 +48,9 @@ class MemberTestDataAndOperations {
         cont.response.reset()
     }
     static public boolean containsMember(username) {
-        def member = Member.findByUsername(username)
+        def member = User.findByUsername(username)
         def cont = new MemberController()
-        def result = cont.list().memberInstanceList
+        def result = cont.list().userMemberInstanceList
         return result.contains(member)
     }
 }

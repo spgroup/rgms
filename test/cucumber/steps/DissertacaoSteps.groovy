@@ -2,6 +2,7 @@ import pages.DissertationCreate
 import pages.DissertationEditPage
 import pages.DissertationPage
 import pages.DissertationShowPage
+import rgms.authentication.User
 import rgms.member.Member
 import rgms.publication.Dissertacao
 import steps.TestDataDissertacao
@@ -150,7 +151,7 @@ Then(~'^I see my user listed as an author member of dissertation by default$') {
 
 Then(~'^I see my school name as school of dissertation by default$') {->
     at DissertationCreate
-    userData = Member.findByUsername('admin').university
+    userData = User.findByUsername('admin')?.author?.university
     assert page.currentSchool() == userData
 }
 

@@ -1,7 +1,9 @@
 package steps
 
 import org.apache.shiro.crypto.hash.Sha256Hash
+import rgms.authentication.User
 import rgms.member.Member
+import twitter4j.auth.BasicAuthorization
 
 class TestDataAuthentication{
     static users = [
@@ -20,10 +22,11 @@ class TestDataAuthentication{
     }
 
     static public def generateUnregisteredUser(){
-        Member user = null;
+        User user = null;
+        Member author = null;
         while( user == null ||
                 !user.validate() ||
-                Member.findByUsername(user.username) != null){
+                User.findByUsername(user.username) != null){
             println "user: " + user
             println "validate: " + user?.validate()
             println "errors: " + user?.errors
@@ -36,11 +39,13 @@ class TestDataAuthentication{
             String status = "Graduate Student";
 			//String facebook_id = "12312fdsfsd".toString();
 			String access_token = "134gdsf";
-            user = new Member(name: nome, username: username, passwordHash: new Sha256Hash(password).toHex(),
-                        email: email, university: university, status: status, enabled: false, access_token: access_token, facebook_id: "teste")
+            author = new Member(name: nome, email: email, university: university, status: status,  access_token: access_token, facebook_id: "teste")
+            user = new User( username: username, passwordHash: new Sha256Hash(password).toHex(), enabled: false, author: author)
         }
         def userMapping = user.properties as LinkedHashMap
+        userMapping << author.properties as LinkedHashMap
         userMapping << [password: "12345"]
+        println userMapping
         users << userMapping;
         return userMapping
     }

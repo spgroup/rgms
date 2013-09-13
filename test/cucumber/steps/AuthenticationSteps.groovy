@@ -18,6 +18,7 @@ import pages.PublicationsPage
 import pages.RootPage
 import pages.UnauthorizedPage
 import pages.UserRegisterPage
+import rgms.authentication.User
 import rgms.publication.Periodico
 import rgms.member.Member
 import rgms.member.MemberController
@@ -96,13 +97,16 @@ Then(~'A message indicating the user was successfully registered is displayed'){
 
 
 Given (~'The user of "([^"]*)" username is not yet enabled') { username ->
-    Member usuarioNaoHabilitado = Member.findByUsername("naoHabilitado")
+    User usuarioNaoHabilitado = User.findByUsername("naoHabilitado")
     if (!usuarioNaoHabilitado){
-        usuarioNaoHabilitado = new Member(name:"Usuario Nao Habilitado",username: 'naoHabilitado', passwordHash: new Sha256Hash("senha").toHex(),
-                email:"naohabilitado@cin.ufpe.br", status:"Graduate Student", enabled:false, university:"UFPE")
+        usuarioNaoHabilitado = new User(username: 'naoHabilitado', passwordHash: new Sha256Hash("senha").toHex(), enabled:false)
+            def author = new Member(name:"Usuario Nao Habilitado", email:"naohabilitado@cin.ufpe.br", status:"Graduate Student", university:"UFPE")
+        author.save()
+        usuarioNaoHabilitado.author = author;
         usuarioNaoHabilitado.save()
+
     }
-    def user = Member.findByUsername(username)
+    def user = User.findByUsername(username)
     assert( !user?.enabled )
 }
 

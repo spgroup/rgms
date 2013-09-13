@@ -2,13 +2,15 @@ import pages.LoginPage
 import pages.member.MemberCreatePage
 import pages.member.MemberViewPage
 import pages.RegisterPage
+import rgms.authentication.User
 import rgms.member.Member
 import steps.MemberTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no member with username "([^"]*)"$') { String username ->
-    member = Member.findByUsername(username);
+    user = User.findByUsername(username);
+    member = user?.author
     assert member == null
 }
 
@@ -21,13 +23,15 @@ When(~'^I create a member with username, phone "([^"]*)" "([^"]*)"$') { String u
 }
 
 Then(~'^the member with username "([^"]*)" is properly stored by the system$') { String username ->
-    member = Member.findByUsername(username)
+    user = User.findByUsername(username);
+    member = user?.author
     //assert TestDataAndOperations.memberCompatibleTo(member, username)
     assert member != null
 }
 
 Then(~'^the system has no member with a username "([^"]*)"$') { String username ->
-    member = Member.findByUsername(username);
+    user = User.findByUsername(username);
+    member = user?.author
     assert member == null
 }
 
@@ -64,7 +68,8 @@ Then(~'^I am still on the register page with the message user created$') {->
 
 Given(~'^the system has member with username "([^"]*)"$') { String username ->
     MemberTestDataAndOperations.createMember(username, "")
-    member = Member.findByUsername(username);
+    user = User.findByUsername(username);
+    member = user?.author
     assert member != null
 }
 
@@ -73,13 +78,15 @@ When(~'^I delete a member with username "([^"]*)"$') { String username ->
 }
 
 Then(~'^the member with "([^"]*)" doesnt exist$') { String username ->
-    member = Member.findByUsername(username)
+    user = User.findByUsername(username);
+    member = user?.author
     assert member == null
 }
 
 /*Given(~'^the system has member with username "([^"]*)"$') { String username ->
     TestDataAndOperations.createMember(username)
-    member = Member.findByUsername(username);
+    user = User.findByUsername(username);
+    member = user?.author
     assert member != null
 }*/
 
@@ -88,8 +95,8 @@ When(~'^I create the member with username "([^"]*)"$') { String username ->
 }
 
 Then(~'^the member "([^"]*)" is not registered$') { String username ->
-    members = Member.findAllByUsername(username)
-    assert members.size() == 1
+    users = User.findAllByUsername(username);
+    assert users.size() == 1
 }
 
 Given(~'^I am at the create member page$') {->
@@ -147,7 +154,8 @@ Then(~'my list members contains member "([^"]*)"$') { String username ->
 }
 
 Then(~'the member with username "([^"]*)" is created$') { String username ->
-    member = Member.findByUsername(username)
+    user = User.findByUsername(username)
+    member = user?.author
     assert member != null
 }
 

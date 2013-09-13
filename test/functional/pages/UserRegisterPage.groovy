@@ -1,8 +1,10 @@
 package pages
 
 import geb.Page
+import rgms.authentication.User
 import rgms.member.Member
-
+import steps.MemberTestDataAndOperations
+import steps.TestDataAndOperations
 import steps.TestDataAuthentication
 
 class UserRegisterPage extends Page {
@@ -41,12 +43,12 @@ class UserRegisterPage extends Page {
 		//facebook_id.value("teste");
 		//access_token.value(user.access_token);
         submitForm();
-        Member.findByUsername(user.username)
+        User.findByUsername(user.username)
     }
 
 	def fillFormData(String userName){
 		println("userName="+userName)
-		def userData = TestDataAndOperations.findByUsername(userName)
+		def userData = MemberTestDataAndOperations.findByUsername(userName)
 		$("form").university = userData.university
 		$("form").name = userData.name
 		$("form").username = userName
