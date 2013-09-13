@@ -1,5 +1,6 @@
 import org.apache.shiro.crypto.hash.Sha256Hash
 import rgms.authentication.Role
+import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Record
 
@@ -16,15 +17,16 @@ class BootStrap {
             adminRole.save()
         }
 
-        def admin = Member.findByUsername('admin')
+        def admin = User.findByUsername('admin')
 
         if (!admin) {
 
-            admin = new Member(name: "Administrador do sistema", username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),
-                    email: "admin@cin.ufpe.br", status: "MSc Student", enabled: true, university: "UFPE", facebook_id: "100006411132660", access_token: "CAAJIlmRWCUwBAAJWKPF6fRRwSxxaVruqamqGLGhWXGsyi0nJeZAcKjpNxZAkZBfDoNgjkc1LH9HpUXhdcCSeq8FcgVxZBGz5xgC1tZA23TwNGbgl1tEQmIZCtERXMRLlpTwiBuvKQCtcMZB5dn6pFqpwdatB2yW1tIZD")
+            def user = new User(username: 'admin', passwordHash: new Sha256Hash("adminadmin").toHex(),enabled: true)
+            admin = new Member(name: "Administrador do sistema",email: "admin@cin.ufpe.br", status: "MSc Student",
+                    university: "UFPE", facebook_id: "100006411132660", access_token: "CAAJIlmRWCUwBAAJWKPF6fRRwSxxaVruqamqGLGhWXGsyi0nJeZAcKjpNxZAkZBfDoNgjkc1LH9HpUXhdcCSeq8FcgVxZBGz5xgC1tZA23TwNGbgl1tEQmIZCtERXMRLlpTwiBuvKQCtcMZB5dn6pFqpwdatB2yW1tIZD")
 
 
-            adminRole.addToUsers(admin)
+            adminRole.addToUsers(user)
             adminRole.save()
 
             //#if($History)
@@ -34,6 +36,11 @@ class BootStrap {
             //#end
 
             admin.save()
+            admin.errors.each{
+                // println it
+            }
+            user.author = admin;
+            user.save();
 
             //print("Instancia de Admin = "+Member.findByUsername('admin').toString())
 
