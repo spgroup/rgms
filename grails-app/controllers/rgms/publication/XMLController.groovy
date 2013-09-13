@@ -3,6 +3,7 @@ package rgms.publication
 import org.apache.shiro.SecurityUtils
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
+import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Orientation
 
@@ -131,6 +132,7 @@ class XMLController {
     }
 
     private def getCurrentUser(){
-        return Member.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
+        User user = User.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
+        return user?.author
     }
 }

@@ -14,6 +14,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.NameValuePair;
 import org.apache.http.protocol.HTTP;
+import rgms.authentication.User
 
 import java.util.List;
 
@@ -53,15 +54,16 @@ class PublicationController {
     }
 
     def static Member getLoggedMember() {
-        Member user = null;
+        Member author = null
         try {
             if (SecurityUtils.subject?.principal != null) {
-                user = Member.findByUsername(SecurityUtils.subject.principal)
+                User user = User.findByUsername(SecurityUtils.subject.principal)
+                author = user.getAuthor()
             }
         } catch (org.apache.shiro.UnavailableSecurityManagerException e) {
             return null
         } finally {
-            return user
+            return author
         }
     }
 //#end

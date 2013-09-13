@@ -1,4 +1,6 @@
 package rgms.publication
+
+import rgms.authentication.User
 import rgms.member.Member
 import rgms.EmailService
 
@@ -208,9 +210,10 @@ class ResearchLineController {
             //#if($ResearchLineNotification)
             sendNotifications(researchLineInstance, oldMembers)
             //#end
-	//#if($facebook)
-        //def user = Member.findByUsername(SecurityUtils.subject?.principal)
-        //PublicationController.sendPostFacebook(user, researchLineInstance.toString())
+	    //#if($facebook)
+        //def user = User.findByUsername(SecurityUtils.subject?.principal)
+        //Member author = user?.author
+        //PublicationController.sendPostFacebook(author, researchLineInstance.toString())
         //#end
             flash.message = message(code: 'default.' + action + '.message', args: [message(code: 'researchLine.label', default: 'ResearchLine'), researchLineInstance.id])
             redirect(action: "show", id: researchLineInstance.id)

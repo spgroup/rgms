@@ -5,9 +5,7 @@ import org.apache.commons.collections.set.ListOrderedSet
 import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.GoogleScholarService
-import rgms.XMLService
-import rgms.member.*
-import rgms.publication.*
+import rgms.authentication.User
 
 class PeriodicoController {
 
@@ -52,8 +50,9 @@ class PeriodicoController {
         }
 
         //#if($facebook)
-        // def user = Member.findByUsername(SecurityUtils.subject?.principal)
-        //PublicationController.sendPostFacebook(user, periodicoInstance.toString())
+        // def user = User.findByUsername(SecurityUtils.subject?.principal)
+        // Member author = user?.author
+        // PublicationController.sendPostFacebook(author, periodicoInstance.toString())
         //#end
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'periodico.label', default: 'Periodico'), periodicoInstance.id])
@@ -179,10 +178,11 @@ class PeriodicoController {
     def share(){
         def periodicoInstance = Periodico.get(params.id)
         System.out.println("1");
-        def user = Member.findByUsername(SecurityUtils.subject?.principal)
+        def user = User.findByUsername(SecurityUtils.subject?.principal)
+        def member = user.author
         System.out.println("2");
-        if(user.getFacebook_id()!= null && user.getFacebook_id().compareTo("") != 0)
-            PublicationController.sendPostFacebook(user, periodicoInstance.toString())
+        if(member.getFacebook_id()!= null && member.getFacebook_id().compareTo("") != 0)
+            PublicationController.sendPostFacebook(member, periodicoInstance.toString())
         System.out.println("3");
         redirect(action: "show", id: params.id)
     }
