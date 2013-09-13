@@ -1,4 +1,3 @@
-
 <%@ page import="rgms.member.ResearchGroup" %>
 <html>
 <head>
@@ -24,7 +23,7 @@
 
                 <g:sortableColumn property="name" title="${message(code: 'member.name.label', default: 'Name')}" />
 
-                <g:sortableColumn property="username" title="${message(code: 'member.username.label', default: 'Username')}" />
+                <g:sortableColumn property="username" title="${message(code: 'user.username.label', default: 'Username')}" />
 
                 <g:sortableColumn property="email" title="${message(code: 'member.email.label', default: 'Email')}" />
 
@@ -33,16 +32,16 @@
             </tr>
             </thead>
             <tbody>
-            <g:each in="${memberInstanceList}" status="i" var="memberInstance">
+            <g:each in="${userMemberInstance}" status="i" var="userMember">
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
-                    <td>${fieldValue(bean: memberInstance, field: "name")}</td>
+                    <td>${fieldValue(bean: userMember.member, field: "name")}</td>
 
-                    <td>${fieldValue(bean: memberInstance, field: "username")}</td>
+                    <td>${fieldValue(bean: userMember.user, field: "username")}</td>
 
-                    <td><a href="mailto:${fieldValue(bean: memberInstance, field: "email")}">${fieldValue(bean: memberInstance, field: "email")}</a></td>
+                    <td><a href="mailto:${fieldValue(bean: userMember.member, field: "email")}">${fieldValue(bean: userMember.member, field: "email")}</a></td>
 
-                    <td><g:link action="generateBibTex" id="${memberInstance.id}">Generate All BibTex</g:link></td>
+                    <td><g:link action="generateBibTex" id="${userMember.member.id}">Generate All BibTex</g:link></td>
 
                 </tr>
             </g:each>
