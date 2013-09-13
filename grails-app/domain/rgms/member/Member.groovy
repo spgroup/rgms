@@ -1,14 +1,11 @@
 package rgms.member
 
-import rgms.authentication.Role;
-import rgms.publication.Publication;
-import rgms.publication.ResearchLine;
+import rgms.publication.Publication
+import rgms.publication.ResearchLine
 
 class Member {
     
     String name
-    String username
-    String passwordHash
     String email
     String additionalInfo
     String status
@@ -18,12 +15,11 @@ class Member {
     String city
     String country
     Boolean active
-    Boolean enabled
     String access_token
     String facebook_id
     
    //static hasMany = [roles: Role, permissions: String, #if($History) historics: Record,#end memberships : Membership, publications: Publication]
-   static hasMany = [roles: Role, permissions: String, historics: Record, memberships : Membership, publications: Publication, researchLines: ResearchLine]
+   static hasMany = [historics: Record, memberships : Membership, publications: Publication, researchLines: ResearchLine]
    static belongsTo = ResearchLine
     
     Date dateCreated
@@ -34,11 +30,9 @@ class Member {
     def beforeUpdate = {
         lastUpdated = new Date()
     }
-    boolean passwordChangeRequiredOnNextLogon
     
     static constraints = {
         name(nullable: false, blank: false)
-        username(unique:true,nullable: false, blank: false,size: 5..20)
         email(unique:true,email: true, nullable: false)
         additionalInfo(nullable:true)
         status(nullable: false, inList: ["Graduate Student", "MSc Student", "PhD Student", "Professor", "Researcher"])
@@ -48,14 +42,12 @@ class Member {
     	city(nullable: true)
     	country(nullable: true)
     	active(nullable: true)
-        enabled(blank: false)
         access_token(nullable: true)
         facebook_id(nullable: true)
     }
 
     static mapping = {
         cache true
-        cache roles : true
         cache permissions : true
         
         //#if($History)
