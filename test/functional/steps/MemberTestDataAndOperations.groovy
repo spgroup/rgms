@@ -40,7 +40,7 @@ class MemberTestDataAndOperations {
     }
     static public void deleteMember(String username) {
         def cont = new MemberController()
-        def identificador = Member.findByUsername(username).id
+        def identificador = User.findByUsername(username)?.author?.id
         cont.params << [id: identificador]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.delete()
@@ -48,10 +48,13 @@ class MemberTestDataAndOperations {
         cont.response.reset()
     }
     static public boolean containsMember(username) {
-        def member = User.findByUsername(username)
         def cont = new MemberController()
         def result = cont.list().userMemberInstanceList
-        return result.contains(member)
+        for(i in result){
+            if(i.user.username == username && i.member != null)
+                return true;
+        }
+        return false;
     }
 }
 
