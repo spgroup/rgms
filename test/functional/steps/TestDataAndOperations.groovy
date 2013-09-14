@@ -1,5 +1,6 @@
 package steps
 
+import rgms.authentication.User
 import rgms.member.*
 import rgms.news.News
 import rgms.news.NewsController
@@ -161,7 +162,7 @@ class TestDataAndOperations {
     static public void deleteMembership(String username, String rgroup, String date1, String date2) {
         java.text.DateFormat df = new java.text.SimpleDateFormat("dd-MM-yyyy");
         def cont = new MembershipController()
-        def identificador = Membership.findByMemberAndResearchGroupAndDateJoinedAndDateLeft(Member.findByUsername(username),
+        def identificador = Membership.findByMemberAndResearchGroupAndDateJoinedAndDateLeft(User.findByUsername(username)?.author,
                 ResearchGroup.findByName(rgroup), df.parse(date1), df.parse(date2)).id
         cont.params << [id: identificador]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
@@ -214,7 +215,7 @@ class TestDataAndOperations {
 
 
     static public boolean containsMember(username, members) {
-        def testmember = Member.findByUsername(username)
+        def testmember = User.findByUsername(username)?.author
         def cont = new MemberController()
         def result = cont.list().memberInstanceList
         return result.contains(testmember)

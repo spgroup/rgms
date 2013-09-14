@@ -5,11 +5,11 @@ import org.apache.shiro.authc.AuthenticationException
 import org.apache.shiro.authc.UsernamePasswordToken
 import org.apache.shiro.web.util.SavedRequest
 import org.apache.shiro.web.util.WebUtils
+import rgms.member.Member
+
 import java.security.SecureRandom
 import org.apache.shiro.crypto.hash.Sha256Hash
-
-import rgms.member.Member;
-import rgms.member.PasswordResetRequest;
+import org.apache.shiro.web.util.WebUtils
 import rgms.EmailService
 
 import java.security.SecureRandom
@@ -29,50 +29,50 @@ class AuthController {
     }
 
     def signIn = {
-        
+
 //        def subject = SecurityUtils.getSubject();
-        Member member = Member.findByUsername(params.username)
-        if(member == null) {
+        User user = User.findByUsername(params.username);
+        if(user == null) {
             flash.message = message(code: "login.failed")
             redirect(uri: "/auth/login")
             return
         }
-     //   print("ENTROU no signIn\nEnabled == "+member.enabled)
+        Member member = user.author;
+        //   print("ENTROU no signIn\nEnabled == "+member.enabled)
 
 
-        
         def authToken = new UsernamePasswordToken(params.username, params.password as String)
 
         // Support for "remember me"
         if (params.rememberMe) {
             authToken.rememberMe = true
         }
-        
+
         // If a controller redirected to this page, redirect back
         // to it. Otherwise redirect to the root URI.
         def targetUri = params.targetUri ?: "/"
-        
+
         // Handle requests saved by Shiro filters.
         def savedRequest = WebUtils.getSavedRequest(request)
         if (savedRequest) {    // print("deu saved request: " + savedRequest.toString())
             targetUri = savedRequest.requestURI - request.contextPath
             if (savedRequest.queryString) targetUri = targetUri + '?' + savedRequest.queryString
         }
-        
+
         try{
             // Perform the actual login. An AuthenticationException
             // will be thrown if the username is unrecognised or the
             // password is incorrect.
             SecurityUtils.subject.login(authToken)
-            if(!member.enabled){
+            if(!user.enabled){
                 render "Please wait the administrator to unlock your access to system.\n\nThanks."
                 return
             }
             //("ENTROU NO TRY")
-            
-           // print(member)
+
+            // print(member)
             log.info "Redirecting to '${targetUri}'."
-            if (member.passwordChangeRequiredOnNextLogon) {
+            if (user.passwordChangeRequiredOnNextLogon) {
                 redirect(action: newPassword)
             } else {
                 render(view: "/initial")
@@ -128,10 +128,10 @@ class AuthController {
     def doResetPassword = {
         if (checkPasswordWithConfirmation(params.password1,params.password2))
             redirect(action:'resetPassword',id:params.token)
-         else {
+        else {
             def resetRequest = (params.token ? PasswordResetRequest.findByToken(params.token) : null)
             def connectedUser = SecurityUtils.subject?.principal
-            def user = resetRequest?.user ?: (connectedUser ? Member.findByUsername(connectedUser) : null)
+            def user = resetRequest?.user ?: (connectedUser ? User.findByUsername(connectedUser) : null)
             if (user) {
                 user.passwordHash = new Sha256Hash(params.password1).toHex()
                 user.passwordChangeRequiredOnNextLogon = false
@@ -156,7 +156,7 @@ class AuthController {
         if (params.password1!=params.password2) {
             putErrorAndRedirect("Please enter same passwords.","error",'updatePassword')
         } else {
-            def user = Member.findByUsername(SecurityUtils.subject?.principal)
+            def user = User.findByUsername(SecurityUtils.subject?.principal)
             if (user) {
                 if (user.passwordHash == new Sha256Hash(params.oldpassword).toHex()){
                     user.passwordHash = new Sha256Hash(params.password1).toHex()
@@ -186,7 +186,15 @@ class AuthController {
         }
     }
     def sendPasswordResetRequest = {
-        def memberInstance = (params.email ? Member.findByEmail(params.email) : (params.username ? Member.findByUsername(params.username) : null))
+        def user = (params.username ? Member.findByUsername(params.username) : null);
+        def memberInstance = null;
+        if (user){
+            memberInstance = user.author;
+        }else{
+            memberInstance = (params.email ? Member.findByEmail(params.email) : null);
+            user = User.findByAuthor(memberInstance);
+        }
+
         if (memberInstance) {
             flash.message = "An email is being sent to you with instructions on how to reset your password."
             def email = memberInstance.email
@@ -203,52 +211,59 @@ class AuthController {
         }
         redirect(uri:'/')
     }
-    
+
 //    def doRegister = {
 //        return [name: params.name, username: params.username, passwordtargetUri: params.targetUri ]
 //    }
-    
+
     def register = {
 
 //#if($contextualInformation)
         /**
          * @author penc
          */
-         params.university   = params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity");
+        params.university   = params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity");
 //#end
 
         //("ENTROU no register")
 
         if ( checkPasswordWithConfirmation(params.password1 , params.password2))
-            return [memberInstance: new Member(params)]
+            return [memberInstance: new Member(params), userInstance: new User(params)]
 
-        def memberInstance = new Member(params)
-        
         if (!grailsApplication.config.grails.mail.username) {
             throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default' : 'Mail plugin not configured'))
         }
-        
+
         if(params.username == null){
-          //  print("params NULL")
-            return [memberInstance: memberInstance]
+            //  print("params NULL")
+            return [memberInstance: new Member(params), userInstance: new User(params)]
         }
 
         def enabled = false
-        
+
         def pwdHash = new Sha256Hash(params.password1).toHex()
-		
-        memberInstance = new Member(username:params.username,name:params.name, status:params.status, passwordHash: pwdHash, email:params.email, passwordChangeRequiredOnNextLogon:false, enabled:enabled, university:params.university, facebook_id:params.facebook_id, access_token:params.access_token)
-        
-		def name = memberInstance?.name
+        def userInstance = new User(username:params.username, passwordHash: pwdHash, passwordChangeRequiredOnNextLogon:false, enabled:enabled)
+        def memberInstance = new Member(name:params.name, status:params.status, email:params.email, university:params.university, facebook_id:params.facebook_id, access_token:params.access_token)
+
+        def name = memberInstance?.name
         def emailAddress = memberInstance?.email
-        
+
         if (!memberInstance.save(flush: true)) {
-            //flash.message = "Error creating user"
             render(view: "register", model: [memberInstance: memberInstance])
             memberInstance.errors.each{
-              //  println it
+                  println it
             }
             return
+        }else{
+            userInstance.author = memberInstance;
+            if (!userInstance.save(flush: true)){
+                //flash.message = "Error creating user"
+                render(view: "register", model: [memberInstance: memberInstance])
+                userInstance.errors.each{
+                      println it
+                }
+                return
+            }
         }
 
 //        sendMail {
@@ -257,7 +272,7 @@ class AuthController {
 //            subject "[GRMS] Your account was successfully created!"
 //            body "Hello ${memberInstance.firstName} ${memberInstance.lastName},\n\nYour account was successfully created!\n\nHere is your username: ${username} and password: ${password}\n\n${createLink(absolute:true,uri:'/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
 //        }
-        
+
 //        flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
 //        redirect(action: "index", id: memberInstance.id)
 
@@ -269,7 +284,7 @@ class AuthController {
         def Admin = Member.findAllByName("Administrator")
         def emailAdmin = Admin?.email
         if (emailAdmin != null && !emailAdmin.empty) {
-           // print("Email Admin : " + emailAdmin)
+            // print("Email Admin : " + emailAdmin)
 
             def emailFrom = grailsApplication.config.grails.mail.username
             def subject = message(code: 'mail.title.authenticate')

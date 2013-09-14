@@ -4,8 +4,7 @@ import org.apache.shiro.authc.AccountException
 import org.apache.shiro.authc.IncorrectCredentialsException
 import org.apache.shiro.authc.SimpleAccount
 import org.apache.shiro.authc.UnknownAccountException
-
-import rgms.member.Member
+import rgms.authentication.User
 
 class ShiroDbRealm {
 	static authTokenClass = org.apache.shiro.authc.UsernamePasswordToken
@@ -25,7 +24,7 @@ class ShiroDbRealm {
 		// Get the user with the given username. If the user is not
 		// found, then they don't have an account and we throw an
 		// exception.
-		def user = Member.findByUsername(username)
+		def user = User.findByUsername(username)
 		if (!user) {
 			throw new UnknownAccountException("No account found for user [${username}]")
 		}
@@ -44,7 +43,7 @@ class ShiroDbRealm {
 	}
 
 	def hasRole(principal, roleName) {
-		def roles = Member.withCriteria {
+		def roles = User.withCriteria {
 			roles { eq("name", roleName) }
 			eq("username", principal)
 		}
@@ -53,7 +52,7 @@ class ShiroDbRealm {
 	}
 
 	def hasAllRoles(principal, roles) {
-		def r = Member.withCriteria {
+		def r = User.withCriteria {
 			roles { 'in'("name", roles) }
 			eq("username", principal)
 		}
@@ -67,8 +66,8 @@ class ShiroDbRealm {
 		//
 		// First find all the permissions that the user has that match
 		// the required permission's type and project code.
-		def member = Member.findByUsername(principal)
-		def permissions = member.permissions
+		def user = User.findByUsername(principal)
+		def permissions = user.permissions
 
 		// Try each of the permissions found and see whether any of
 		// them confer the required permission.
@@ -96,7 +95,7 @@ class ShiroDbRealm {
 		// If not, does he gain it through a role?
 		//
 		// Get the permissions from the roles that the user does have.
-		def results = Member.executeQuery("select distinct p from Member as user join user.roles as role join role.permissions as p where user.username = '$principal'")
+		def results = User.executeQuery("select distinct p from User as user join user.roles as role join role.permissions as p where user.username = '$principal'")
 
 		// There may be some duplicate entries in the results, but
 		// at this stage it is not worth trying to remove them. Now,

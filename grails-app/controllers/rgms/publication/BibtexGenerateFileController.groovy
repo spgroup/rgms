@@ -1,5 +1,6 @@
 package rgms.publication
 
+import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Membership
 import rgms.member.ResearchGroup
@@ -27,7 +28,16 @@ class BibtexGenerateFileController {
 
     def home = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [researchGroupInstanceList: ResearchGroup.list(params), researchGroupInstanceTotal: ResearchGroup.count(),memberInstanceList: Member.list(params), memberInstanceTotal: Member.count() ]
+        def userMemberList = []
+        def members = Member.list(params)
+        for(i in members){
+            def user = User.findByAuthor(i)
+            if(user)
+                userMemberList.add([user: user, member:i])
+            else
+                userMemberList.add([member:i])
+        }
+        [researchGroupInstanceList: ResearchGroup.list(params), researchGroupInstanceTotal: ResearchGroup.count(), userMemberInstance: userMemberList, userMemberInstanceTotal: userMemberList.size() ]
     }
 
     def generateBibTex = {

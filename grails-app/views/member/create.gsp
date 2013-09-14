@@ -1,4 +1,5 @@
 <%@ page import="rgms.member.Member" %>
+<%@ page import="rgms.authentication.User" %>
 <!doctype html>
 <html>
 <head>
@@ -18,7 +19,7 @@
         <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]"/></g:link></li>
     </ul>
 <!-- #if($XMLImp && $Member) -->
-    <g:form controller="XML" method="post" action="uploadMemberXML" enctype="multipart/form-data">
+    <g:form url="[action: 'uploadMemberXML']" method="post" enctype="multipart/form-data">
         <label for="file">Import XML:</label>
         <input type="file" name="file" id="file"/>
         <input class="save" type="submit" value="Upload"/>
@@ -31,9 +32,9 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    <g:hasErrors bean="${memberInstance}">
+    <g:hasErrors bean="${userMemberInstanceList.memberInstance}">
         <ul class="errors" role="alert">
-            <g:eachError bean="${memberInstance}" var="error">
+            <g:eachError bean="${userMemberInstanceList.memberInstance}" var="error">
                 <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
                         error="${error}"/></li>
             </g:eachError>

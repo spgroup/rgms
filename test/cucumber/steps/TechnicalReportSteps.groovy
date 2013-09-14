@@ -4,6 +4,7 @@ import pages.technicalReport.TechnicalReportCreatePage
 import pages.technicalReport.TechnicalReportEditPage
 import pages.technicalReport.TechnicalReportPage
 import pages.technicalReport.TechnicalReportShowPage
+import rgms.authentication.User
 import rgms.member.Member
 import rgms.publication.TechnicalReport
 import steps.TestDataAndOperations
@@ -136,7 +137,7 @@ Then(~'^I see my user listed as an author member of technical report by default$
 
 Then(~'^I see my school name as institution of technical report by default$') {->
     at TechnicalReportCreatePage
-    userData = Member.findByUsername('admin').university
+    userData = User.findByUsername('admin')?.author?.university
     assert page.currentInstitution() == userData
 }
 

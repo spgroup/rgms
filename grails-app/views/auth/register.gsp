@@ -121,7 +121,7 @@ margin-top: 0;
             </tr>
             <tr>
               <td style="text-align: right; font-size: 14px;">Username: </td>
-              <td><input type="text" name="username" required="true" value="${memberInstance?.username}" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
+              <td><input type="text" name="username" required="true" value="${userInstance?.username}" style="font-size: 12px; font-weight: bold; border: solid 1px #d0d0d0; height: 23px; width: 250px;"/></td>
             </tr>
             <tr>
               <td style="text-align: right; font-size: 14px;">Password: </td>

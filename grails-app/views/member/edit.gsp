@@ -1,4 +1,5 @@
 <%@ page import="rgms.member.Member" %>
+<%@ page import="rgms.authentication.User" %>
 <!doctype html>
 
 
@@ -21,14 +22,14 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <g:hasErrors bean="${memberInstance}">
+            <g:hasErrors bean="${userMemberInstanceList.memberInstance}">
             <div class="errors">
-                <g:renderErrors bean="${memberInstance}" as="list" />
+                <g:renderErrors bean="${userMemberInstanceList.memberInstance}" as="list" />
             </div>
             </g:hasErrors>
             <g:form method="post" >
-                <g:hiddenField name="id" value="${memberInstance?.id}" />
-                <g:hiddenField name="version" value="${memberInstance?.version}" />
+                <g:hiddenField name="id" value="${userMemberInstanceList.memberInstance?.id}" />
+                <g:hiddenField name="version" value="${userMemberInstanceList.memberInstance?.version}" />
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -37,8 +38,8 @@
                                 <td valign="top" class="name">
                                     <label for="name"><g:message code="member.name.label" default="Name" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'name', 'errors')}">
-                                    <g:textField name="name" value="${memberInstance?.name}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'name', 'errors')}">
+                                    <g:textField name="name" value="${userMemberInstanceList.memberInstance?.name}" />
                                 </td>
                             </tr>
                         
@@ -46,8 +47,8 @@
                                 <td valign="top" class="name">
                                     <label for="username"><g:message code="member.username.label" default="Username" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'username', 'errors')}">
-                                    <g:textField name="username" maxlength="20" value="${memberInstance?.username}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.userInstance, field: 'username', 'errors')}">
+                                    <g:textField name="username" maxlength="20" value="${userMemberInstanceList.userInstance?.username}" />
                                 </td>
                             </tr>
                         
@@ -55,8 +56,8 @@
                                 <td valign="top" class="name">
                                     <label for="email"><g:message code="member.email.label" default="Email" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${memberInstance?.email}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'email', 'errors')}">
+                                    <g:textField name="email" value="${userMemberInstanceList.memberInstance?.email}" />
                                 </td>
                             </tr>
                         
@@ -64,8 +65,8 @@
                                 <td valign="top" class="name">
                                     <label for="roles"><g:message code="member.roles.label" default="Roles" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'roles', 'errors')}">
-                                    <shiroui:roleSelect name="roles" size="10" value="${memberInstance?.roles}"/>
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.userInstance, field: 'roles', 'errors')}">
+                                    <shiroui:roleSelect name="roles" size="10" value="${userMemberInstanceList.userInstance?.roles}"/>
                                 </td>
                             </tr>
                         
@@ -73,8 +74,8 @@
                                 <td valign="top" class="name">
                                     <label for="permissions"><g:message code="member.permissions.label" default="Permissions" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'permissions', 'errors')}">
-                                    <shiroui:permissionSelect name="permissions" size="10" value="${memberInstance?.permissions}"/>
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.userInstance, field: 'permissions', 'errors')}">
+                                    <shiroui:permissionSelect name="permissions" size="10" value="${userMemberInstanceList.userInstance?.permissions}"/>
                                 </td>
                             </tr>
                         
@@ -82,8 +83,8 @@
                                 <td valign="top" class="name">
                                     <label for="university"><g:message code="member.university.label" default="University" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'university', 'errors')}">
-                                    <g:textField name="university" value="${memberInstance?.university}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'university', 'errors')}">
+                                    <g:textField name="university" value="${userMemberInstanceList.memberInstance?.university}" />
                                 </td>
                             </tr>
                             
@@ -91,8 +92,8 @@
                                 <td valign="top" class="name">
                                     <label for="phone"><g:message code="member.phone.label" default="Phone" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'phone', 'errors')}">
-                                    <g:textField name="phone" value="${memberInstance?.phone}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'phone', 'errors')}">
+                                    <g:textField name="phone" value="${userMemberInstanceList.memberInstance?.phone}" />
                                 </td>
                             </tr>
                             
@@ -100,8 +101,8 @@
                                 <td valign="top" class="name">
                                     <label for="website"><g:message code="member.website.label" default="Website" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'website', 'errors')}">
-                                    <g:textField name="website" value="${memberInstance?.website}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'website', 'errors')}">
+                                    <g:textField name="website" value="${userMemberInstanceList.memberInstance?.website}" />
                                 </td>
                             </tr>
                             
@@ -109,8 +110,8 @@
                                 <td valign="top" class="name">
                                     <label for="city"><g:message code="member.city.label" default="City" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'city', 'errors')}">
-                                    <g:textField name="city" value="${memberInstance?.city}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'city', 'errors')}">
+                                    <g:textField name="city" value="${userMemberInstanceList.memberInstance?.city}" />
                                 </td>
                             </tr>
                             
@@ -118,8 +119,8 @@
                                 <td valign="top" class="name">
                                     <label for="country"><g:message code="member.country.label" default="Country" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'country', 'errors')}">
-                                    <g:textField name="country" value="${memberInstance?.country}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'country', 'errors')}">
+                                    <g:textField name="country" value="${userMemberInstanceList.memberInstance?.country}" />
                                 </td>
                             </tr>
                             
@@ -127,8 +128,8 @@
                                 <td valign="top" class="name">
                                     <label for="active"><g:message code="member.active.label" default="Active" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'active', 'errors')}">
-                                    <g:checkBox name="active" value="${memberInstance?.active}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'active', 'errors')}">
+                                    <g:checkBox name="active" value="${userMemberInstanceList.memberInstance?.active}" />
                                 </td>
                             </tr>
                             
@@ -136,8 +137,8 @@
                                 <td valign="top" class="name">
                                     <label for="additionalInfo"><g:message code="member.additionalInfo.label" default="Additional Info" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'additionalInfo', 'errors')}">
-                                    <g:textArea name="additionalInfo" value="${memberInstance?.additionalInfo}"/>
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'additionalInfo', 'errors')}">
+                                    <g:textArea name="additionalInfo" value="${userMemberInstanceList.memberInstance?.additionalInfo}"/>
                                 </td>
                             </tr>
                             
@@ -145,8 +146,8 @@
                                 <td valign="top" class="name">
                                     <label for="status"><g:message code="member.status.label" default="Status" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'status', 'errors')}">
-                                    <g:select name="status" from="${["Graduate Student", "MSc Student", "PhD Student", "Professor", "Researcher"]}" value="${memberInstance?.status}" noSelection="['':'-Choose your status-']"/>
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'status', 'errors')}">
+                                    <g:select name="status" from="${["Graduate Student", "MSc Student", "PhD Student", "Professor", "Researcher"]}" value="${userMemberInstanceList.memberInstance?.status}" noSelection="['':'-Choose your status-']"/>
                                 </td>
                             </tr>
                             
@@ -154,8 +155,8 @@
                                 <td valign="top" class="name">
                                     <label for="enabled"><g:message code="member.enabled.label" default="Enabled" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'enabled', 'errors')}">
-                                    <g:checkBox name="enabled" value="${memberInstance?.enabled}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.userInstance, field: 'enabled', 'errors')}">
+                                    <g:checkBox name="enabled" value="${userMemberInstanceList.userInstance?.enabled}" />
                                 </td>
                             </tr>
                             <!--#if($facebook) -->
@@ -171,16 +172,16 @@
                                 <td valign="top" class="name">
                                     <label for="facebook_id"><g:message code="member.facebook_id.label" default="Facebook ID" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'facebook_id', 'errors')}">
-                                    <g:textField name="facebook_id" value="${memberInstance?.facebook_id}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'facebook_id', 'errors')}">
+                                    <g:textField name="facebook_id" value="${userMemberInstanceList.memberInstance?.facebook_id}" />
                                 </td>
                             </tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="access_token"><g:message code="member.access_token.label" default="Access Token" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: memberInstance, field: 'access_token', 'errors')}">
-                                    <g:textField id="access_token" name="access_token" value="${memberInstance?.access_token}" />
+                                <td valign="top" class="value ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'access_token', 'errors')}">
+                                    <g:textField id="access_token" name="access_token" value="${userMemberInstanceList.memberInstance?.access_token}" />
                                 </td>
                             </tr>
                             <!-- #end -->

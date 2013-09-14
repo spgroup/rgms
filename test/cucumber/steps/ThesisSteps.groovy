@@ -1,3 +1,4 @@
+import rgms.authentication.User
 import steps.ThesisTestDataAndOperations
 import pages.LoginPage
 import pages.thesis.ThesisCreatePage
@@ -86,6 +87,6 @@ Then(~'^I see my user listed as an author member of thesis by default$') {->
 
 Then(~'^I see my school name as school of thesis by default$') {->
     at ThesisCreatePage
-    userData = Member.findByUsername('admin').university
+    userData = User.findByUsername('admin')?.author?.university
     assert page.currentSchool() == userData
 }

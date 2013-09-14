@@ -6,6 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException
 import rgms.XMLService
 //#end
 import org.xml.sax.SAXParseException
+import rgms.authentication.User
 import rgms.member.Member
 
 
@@ -39,8 +40,9 @@ class BookChapterController {
             return
         }
         //#if($facebook)
-       // def user = Member.findByUsername(SecurityUtils.subject.principal)
-       // pb.sendPostFacebook(user, bookChapterInstance.toString())
+        //def user = User.findByUsername(SecurityUtils.subject.principal)
+        //Member author = user?.author
+        //pb.sendPostFacebook(author, bookChapterInstance.toString())
         //#end
         flash.message = message(code: 'default.created.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
         redirect(action: "show", id: bookChapterInstance.id)

@@ -60,8 +60,8 @@
     </label>
 
 <!-- #if( $contextualInformation ) -->
-     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${ferramentaInstance?.members}"/>
-<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${ferramentaInstance?.members}"/> -->
+     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${ferramentaInstance?.members.id}"/>
+<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${ferramentaInstance?.members.id}"/> -->
 <!-- #end -->
 
 </div>

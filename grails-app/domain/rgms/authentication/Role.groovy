@@ -1,6 +1,5 @@
 package rgms.authentication
 
-import rgms.member.Member;
 
 class Role {
     String name
@@ -14,8 +13,8 @@ class Role {
         lastUpdated = new Date()
     }
 
-    static hasMany = [ users: Member, permissions: String ]
-    static belongsTo = Member
+    static hasMany = [ users: User, permissions: String ]
+    static belongsTo = User
 
     static constraints = {
         name(nullable: false, blank: false, unique: true)

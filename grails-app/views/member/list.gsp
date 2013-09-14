@@ -39,24 +39,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <g:each in="${memberInstanceList}" status="i" var="memberInstance">
+                    <g:each in="${userMemberInstanceList}" status="i" var="userMemberInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${memberInstance.id}">${fieldValue(bean: memberInstance, field: "id")}</g:link></td>
+                            <td><g:link action="show" id="${userMemberInstance.member.id}">${fieldValue(bean: userMemberInstance.member, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: memberInstance, field: "name")}</td>
+                            <td>${fieldValue(bean: userMemberInstance.member, field: "name")}</td>
 
 <!--                            <td>{fieldValue(bean: memberInstance, field: "lastName")}</td>-->
                         
-                            <td>${fieldValue(bean: memberInstance, field: "username")}</td>
+                            <td>${fieldValue(bean: userMemberInstance.user, field: "username")}</td>
                             
-                            <td>${fieldValue(bean: memberInstance, field: "enabled")}</td>
+                            <td>${fieldValue(bean: userMemberInstance?.user, field: "enabled")}</td>
 							
-                            <td><a href="mailto:${fieldValue(bean: memberInstance, field: "email")}">${fieldValue(bean: memberInstance, field: "email")}</a></td>
+                            <td><a href="mailto:${fieldValue(bean: userMemberInstance.member, field: "email")}">${fieldValue(bean: userMemberInstance.member, field: "email")}</a></td>
                         
-							<td>${fieldValue(bean: memberInstance, field: "roles")}</td>
+							<td>${fieldValue(bean: userMemberInstance?.user, field: "roles")}</td>
 							
-							<td>${fieldValue(bean: memberInstance, field: "permissions")}</td>
+							<td>${fieldValue(bean: userMemberInstance?.user, field: "permissions")}</td>
                         
                         </tr>
                     </g:each>

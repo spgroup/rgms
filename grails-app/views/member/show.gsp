@@ -10,19 +10,19 @@
 
 <!--  #if($XML) -->
 <br><g:jasperReport jasper="report" format="XML" name="export"></br>
-    <input type="hidden" name="member_id" value="${memberInstance?.id}"/>
+    <input type="hidden" name="member_id" value="${userMemberInstanceList.memberInstance?.id}"/>
 </g:jasperReport>
 <!-- #end -->
 
 <!-- #if($HTML) -->
 <br><g:jasperReport jasper="report" format="HTML" name="export"></br>
-    <input type="hidden" name="member_id" value="${memberInstance?.id}"/>
+    <input type="hidden" name="member_id" value="${userMemberInstanceList.memberInstance?.id}"/>
 </g:jasperReport>
 <!-- #end -->
 
 <!-- #if($PDF) -->
 <br><g:jasperReport jasper="report" format="PDF" name="export"></br>
-    <input type="hidden" name="member_id" value="${memberInstance?.id}"/>
+    <input type="hidden" name="member_id" value="${userMemberInstanceList.memberInstance?.id}"/>
 </g:jasperReport>
 <!-- #end -->
 
@@ -48,21 +48,21 @@
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="member.name.label" default="Name"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "name")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "name")}</td>
 
             </tr>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="member.username.label" default="Username"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "username")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList?.userInstance, field: "username")}</td>
 
             </tr>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="member.email.label" default="Email"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "email")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "email")}</td>
 
             </tr>
 
@@ -71,7 +71,7 @@
                 <td valign="top" class="name"><g:message code="member.permissions.label" default="Permissions"/></td>
 
                 <td valign="top" class="value">
-                    <g:each in="${memberInstance.permissions}" var="permission">
+                    <g:each in="${userMemberInstanceList?.userInstance.permissions}" var="permission">
                         <ul><li>${permission?.encodeAsHTML()}</li></ul>
                     </g:each>
                 </td>
@@ -83,7 +83,7 @@
 
                 <td valign="top" style="text-align: left;" class="value">
                     <ul>
-                        <g:each in="${memberInstance.roles}" var="r">
+                        <g:each in="${userMemberInstanceList?.userInstance.roles}" var="r">
                             <li><g:link controller="shiroRole" action="show"
                                         id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
                         </g:each>
@@ -96,21 +96,21 @@
                 <td valign="top" class="name"><g:message code="member.additionalInfo.label"
                                                          default="Additional Info"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "additionalInfo")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "additionalInfo")}</td>
 
             </tr>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="member.university.label" default="University"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "university")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "university")}</td>
 
             </tr>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="member.phone.label" default="Phone"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "phone")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "phone")}</td>
 
             </tr>
 
@@ -118,28 +118,28 @@
                 <td valign="top" class="name"><g:message code="member.additionalInfo.label"
                                                          default="Additional Info"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "additionalInfo")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "additionalInfo")}</td>
 
             </tr>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="member.website.label" default="Website"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "website")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "website")}</td>
 
             </tr>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="member.city.label" default="City"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "city")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "city")}</td>
 
             </tr>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="member.country.label" default="Country"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "country")}</td>
+                <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "country")}</td>
 
 
         </tr>
@@ -147,14 +147,14 @@
         <tr class="prop">
           <td valign="top" class="name"><g:message code="member.facebook_id.label" default="Facebook ID" /></td>
 
-        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "facebook_id")}</td>
+        <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "facebook_id")}</td>
 
         </tr>
 
         <tr class="prop">
           <td valign="top" class="name"><g:message code="member.access_token.label" default="Access Token" /></td>
 
-        <td valign="top" class="value">${fieldValue(bean: memberInstance, field: "access_token")}</td>
+        <td valign="top" class="value">${fieldValue(bean: userMemberInstanceList.memberInstance, field: "access_token")}</td>
 
         </tr>
         <!-- #end -->
@@ -162,8 +162,8 @@
 <tr class="prop">
                 <td valign="top" class="name"><g:message code="member.active.label" default="Active"/></td>
   <td valign="top" style="text-align: left;" class="value">
-                    <g:if test="${memberInstance?.active}">
-                        <li><g:formatBoolean boolean="${memberInstance?.active}"/></li>
+                    <g:if test="${userMemberInstanceList.memberInstance?.active}">
+                        <li><g:formatBoolean boolean="${userMemberInstanceList.memberInstance?.active}"/></li>
                     </g:if>
                 </td>
 
@@ -173,8 +173,8 @@
                 <td valign="top" class="name"><g:message code="member.enabled.label" default="Enabled"/></td>
 
                 <td valign="top" style="text-align: left;" class="value">
-                    <g:if test="${memberInstance?.enabled}">
-                        <li><g:formatBoolean boolean="${memberInstance?.enabled}"/></li>
+                    <g:if test="${userMemberInstanceList?.userInstance?.enabled}">
+                        <li><g:formatBoolean boolean="${userMemberInstanceList?.userInstance?.enabled}"/></li>
                     </g:if>
                 </td>
 
@@ -185,7 +185,7 @@
     </div>
     <div class="buttons">
         <g:form>
-            <g:hiddenField name="id" value="${memberInstance?.id}"/>
+            <g:hiddenField name="id" value="${userMemberInstanceList.memberInstance?.id}"/>
             <span class="button"><g:actionSubmit class="edit" action="edit"
                                                  value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
             <span class="button"><g:actionSubmit class="delete" action="delete"

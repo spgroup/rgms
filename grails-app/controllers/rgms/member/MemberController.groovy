@@ -3,6 +3,7 @@ package rgms.member
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.EmailService
+import rgms.authentication.User
 
 import java.security.SecureRandom
 
@@ -16,12 +17,23 @@ class MemberController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [memberInstanceList: Member.list(params), memberInstanceTotal: Member.count()]
+        def userMemberList = []
+        def members = Member.list(params)
+        for(i in members){
+           def user = User.findByAuthor(i)
+           if(user)
+               userMemberList.add([user: user, member:i])
+           else
+               userMemberList.add([member:i])
+        }
+
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
 
     def create = {
         def member = new Member(params)
-
+        def user   = new User(params)
+        user.author = member
 /**
  * @author penc
  */
@@ -30,7 +42,7 @@ class MemberController {
         member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity") as String);
 //#end
 
-        [memberInstance: member]
+        [userMemberInstanceList: [memberInstance:  member, userInstance: user]]
     }
 
     def save = {
@@ -41,25 +53,36 @@ class MemberController {
 //#end
 
         def memberInstance = new Member(params)
-        def username = memberInstance?.username
+        def userInstance   = new User(params)
+
         def password = ""
 
-        if (!memberInstance.passwordHash) {
+        if (!userInstance.passwordHash) {
 
             password = new BigInteger(130, new SecureRandom()).toString(32)
-            memberInstance.passwordHash = new Sha256Hash(password).toHex()
+            userInstance.passwordHash = new Sha256Hash(password).toHex()
         }
-        memberInstance.passwordChangeRequiredOnNextLogon = true
+        userInstance.passwordChangeRequiredOnNextLogon = true
 
         if (!memberInstance.save(flush: true)) {
-            render(view: "create", model: [memberInstance: memberInstance])
+            render(view: "create", model: [userMemberInstanceList: [memberInstance:  memberInstance, userInstance: userInstance]] )
+            return
+        }
+
+        userInstance.author = memberInstance;
+        if (!userInstance.save(flush: true)){
+            userInstance.errors.each{
+                println it
+            }
+            memberInstance.delete(flush: true)
+            render(view: "create", model: [userMemberInstanceList: [memberInstance:  memberInstance, userInstance: userInstance]])
             return
         }
 
         def email = memberInstance.email
         def mailSender = grailsApplication.config.grails.mail.username
         def title = message(code: 'mail.title.create.account')
-        def content = message(code: 'mail.body.create.account', args: [memberInstance.name, username, password, createLink(absolute: true, uri: '/')])
+        def content = message(code: 'mail.body.create.account', args: [memberInstance.name, params.username, password, createLink(absolute: true, uri: '/')])
 
         EmailService emailService = new EmailService();
         emailService.sendEmail(email, mailSender, title, content)
@@ -111,10 +134,19 @@ class MemberController {
         def status0 = memberInstance.status //pega o status anterior do usuario
 //#end
 
+        def userInstance = User.findByAuthor(memberInstance)
+
         memberInstance.properties = params //atualiza todos os parametros
 
+        userInstance.properties = params
+
         if (!memberInstance.save(flush: true)) {
-            render(view: "edit", model: [memberInstance: memberInstance])
+            render(view: "edit", model: [userMemberInstanceList: [memberInstance:  memberInstance, userInstance: userInstance]])
+            return
+        }
+
+        if (!userInstance.save(flush: true)) {
+            render(view: "edit", model: [userMemberInstanceList: [memberInstance:  memberInstance, userInstance: userInstance]])
             return
         }
 
@@ -144,13 +176,21 @@ class MemberController {
 
     def delete = {
         def memberInstance = Member.get(params.id)
+        def userInstance = User.findByAuthor(memberInstance)
         if (!memberInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
             redirect(action: "list")
             return
         }
 
+        if (!userInstance){
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
+            redirect(action: "list")
+            return
+        }
+
         try {
+            userInstance.delete(flush: true)
             memberInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'member.label', default: 'Member'), params.id])
             redirect(action: "list")
@@ -177,7 +217,7 @@ class MemberController {
             redirect(action: "list")
             return
         }
-
-        [memberInstance: memberInstance]
+        def user = User.findByAuthor(memberInstance)
+        [userMemberInstanceList: [memberInstance:memberInstance, userInstance: user]]
     }
 }

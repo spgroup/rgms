@@ -26,15 +26,7 @@
                         
                             <g:sortableColumn property="name" title="${message(code: 'member.name.label', default: 'Name')}" />
                         
-                            <g:sortableColumn property="username" title="${message(code: 'member.username.label', default: 'Username')}" />
-                            
-                            <g:sortableColumn property="enabled" title="${message(code: 'member.enabled.label', default: 'Enabled')}" />
-                        
                             <g:sortableColumn property="email" title="${message(code: 'member.email.label', default: 'Email')}" />
-                        
-                            <th>${message(code: 'member.roles.label', default: 'Roles')}</th>
-                        
-                            <th>${message(code: 'member.permissions.label', default: 'Permissions')}</th>
                         
                         </tr>
                     </thead>
@@ -47,16 +39,8 @@
                             <td>${fieldValue(bean: memberInstance, field: "name")}</td>
 
 <!--                            <td>{fieldValue(bean: memberInstance, field: "lastName")}</td>-->
-                        
-                            <td>${fieldValue(bean: memberInstance, field: "username")}</td>
-                            
-                            <td>${fieldValue(bean: memberInstance, field: "enabled")}</td>
-							
+
                             <td><a href="mailto:${fieldValue(bean: memberInstance, field: "email")}">${fieldValue(bean: memberInstance, field: "email")}</a></td>
-                        
-							<td>${fieldValue(bean: memberInstance, field: "roles")}</td>
-							
-							<td>${fieldValue(bean: memberInstance, field: "permissions")}</td>
                         
                         </tr>
                     </g:each>

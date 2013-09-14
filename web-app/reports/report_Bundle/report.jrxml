@@ -8,7 +8,7 @@
 	</parameter>
 	<parameter name="member_id" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM member where member.id=$P{member_id};]]>
+		<![CDATA[SELECT * FROM member INNER JOIN user ON member.id=user.author_id where member.id=$P{member_id};]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="version" class="java.lang.Long"/>
