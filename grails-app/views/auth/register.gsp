@@ -141,7 +141,7 @@ margin-top: 0;
             </tr>
             <tr>
             </tr>  
-            <!--#if($facebook)-->
+            <!--#if($Facebook)-->
             <tr>
               <td ></td>
               <td style="font-size: 14px;">Entre com o Facebook:

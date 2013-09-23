@@ -22,6 +22,7 @@ Feature: Reports
     And I can select the option Export to PDF at the Member show
     Then I can generate a PDF report about Member "2"
 
+#if($PDF)
   Scenario: export report to pdf of recently created research group
     Given i am at publication menu
     When i select the "Research Group" option at publications menu
@@ -30,8 +31,9 @@ Feature: Reports
     And I select the "RGroup" option at the Research Group list
     And I can select the option Export to PDF at the Research Group show
     And I can generate a PDF report about Research Group "RGroup"
+#end
 
-
+#if($HTML)
   Scenario: export report to html of recently created research group
     Given I am at the publications menu
     When i select the "Research Group" option at publications menu
@@ -40,7 +42,9 @@ Feature: Reports
     And I select the "RGroup" option at the Research Group list
     And I can select the option Export to HTML at the Research Group show
     And I can generate a HTML report about Research Group "RGroup"
+#end
 
+#if($XML)
   Scenario: export report to xml of recently created research group
     Given i am at publication menu
     When i select the "Research Group" option at publications menu
@@ -49,6 +53,7 @@ Feature: Reports
     And I select the "RGroup" option at the Research Group list
     And I can select the option Export to XML at the Research Group show
     And I can generate a XML report about Research Group "RGroup"
+#end
 
   Scenario: export existent member report to html and access bibtex from him
     Given I am at the Member list page

@@ -11,22 +11,22 @@
 <body>
 -<!-- #if($XML) -->
 -  <br>
--  <g:jasperReport jasper="report" format="XML" name="export">
+-<g:jasperReport jasper="researchGroup.jasper" format="XML" name="export" controller="researchGroup" action="researchGroupToReport">
     <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
 </g:jasperReport>
 <!-- #end -->
 
 -<!-- #if($HTML)  -->
 -  <br>
--  <g:jasperReport jasper="report" format="HTML" name="export">
+-<g:jasperReport jasper="researchGroup.jasper" format="HTML" name="export" controller="researchGroup" action="researchGroupToReport">
     <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
 </g:jasperReport>
 <!--#end -->
 
  <!-- #if($PDF) -->
 -<br>
--<g:jasperReport jasper="report" format="PDF" name="export">
-    <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}"/>
+-<g:jasperReport jasper="researchGroup.jasper" format="PDF" name="export" controller="researchGroup" action="researchGroupToReport">
+    <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
 </g:jasperReport>
 <!--#end -->
 

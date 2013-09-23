@@ -266,4 +266,22 @@ class ResearchGroupController {
         researchGroupInstance.save()
         redirect(action: "show", id: researchGroupInstance.id)
     }
+
+
+    def researchGroupToReport() {
+        def research_group_id = params.get("research_group_id")
+        def researchGroup = ResearchGroup.findById(research_group_id, [fetch: [memberships: "join"]])
+
+        def publications = []
+        for(Membership m : researchGroup.memberships) {
+            publications += m.member.publications
+        }
+
+        // Set params that will be passed to Jasper
+        params.SUBREPORT_DIR = "${servletContext.getRealPath('/reports/report_Bundle')}/"
+        params.IMAGE_DIR = "${servletContext.getRealPath('/images')}/"
+
+        chain(controller: 'jasper', action: 'index', model: [data: [researchGroup]], params: params)
+    }
+
 }

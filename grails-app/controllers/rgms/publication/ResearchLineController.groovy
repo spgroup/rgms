@@ -208,7 +208,7 @@ class ResearchLineController {
             //#if($ResearchLineNotification)
             sendNotifications(researchLineInstance, oldMembers)
             //#end
-	//#if($facebook)
+	//#if($Facebook)
         //def user = Member.findByUsername(SecurityUtils.subject?.principal)
         //PublicationController.sendPostFacebook(user, researchLineInstance.toString())
         //#end

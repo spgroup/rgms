@@ -70,7 +70,7 @@ Feature: research group
     Then i can change the research group name to "rgms" and save it
 
 
-
+#if($researchGroupHierarchy)
   Scenario: edit childof of research group
     Given the system has a research group entitled "group" with childof none
     When I modify the childof of research group entitled "group" to itself
@@ -86,6 +86,6 @@ Feature: research group
     And   i change the field childof to research group called "rg"
     And   i click on update button
     Then  the childof of research group "rg" is none
-
+#end
 
 
