@@ -117,6 +117,7 @@ Feature: journal article
     And I select the new article option at the article page
     Then I see my user listed as an author member of article by default
 #end
+
   Scenario: upload article with a file
     Given the system has some articles stored
     When I upload the articles of "curriculo.xml"
