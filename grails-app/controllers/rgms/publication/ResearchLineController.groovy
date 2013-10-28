@@ -86,7 +86,7 @@ class ResearchLineController {
         members
     }
     //#end
-    //#end
+
     def update() {
         def old_members = []
         //#if($ResearchLineNotification)
