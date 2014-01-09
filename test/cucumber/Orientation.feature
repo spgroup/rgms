@@ -19,6 +19,18 @@ Feature: orientations
     When I fill the orientation title with "The Book is on the table"
     Then I am on the orientation show page
 
+  Scenario: new orientation with registered member orientated
+    Given the system has no orientations entitled "The Book is on the table 2"
+    When I create a orientation for the thesis "The Book is on the table 2"
+    And the "Rubens Lopes" has been registered member
+    Then the orientation "The Book is on the table 2" with registered member "Rubens Lopes" is properly stored by the system
+
+
+  Scenario: duplicate orientation
+    Given the orientation entitled "The Book is on the table 2" is stored in the system with orientated  name "Rubens Lopes"
+    When I create the orientated  entitled "The Book is on the table 2" with orientated  name "Rubens Lopes"
+    Then the orientated  "Next Generation Software Product Line Engineering" is not stored twice
+
   Scenario: edit existing orientation web
     Given I am at the orientation page and the orientation "The Book is on the table" is stored in the system
     When I select to view orientation "The Book is on the table" in resulting list
