@@ -1,0 +1,429 @@
+<!DOCTYPE html><html xmlns:lxslt="http://xml.apache.org/xslt" xmlns:stringutils="xalan://org.apache.tools.ant.util.StringUtils">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+                    Test - news</title>
+<link rel="shortcut icon" href="http://grails.org/images/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" title="Style" href="stylesheet.css">
+</head>
+<body>
+<div class="container container_8" id="report">
+<div class="grid_6">
+<a title="Home" href="index.html">
+<div class="grailslogo"></div>
+</a>
+<h1>news</h1>
+<h2>Package: </h2>
+</div>
+<div class="grid_2">
+<nav id="navigationlinks">
+<p>
+<a href="failed.html">
+                    Tests with failure and errors
+                </a>
+</p>
+<p>
+<a href="index.html">
+                    Package summary
+                </a>
+</p>
+<p>
+<a href="all.html">
+                    Show all tests
+                </a>
+</p>
+</nav>
+</div>
+<div class="clear"></div>
+<div class="testsuite failure">
+<div class="header">
+<h2>news</h2>
+<h3>
+                        Executed
+                        10
+                        tests
+                    
+                        with
+                        one failure
+                        .
+                    </h3>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new news">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new news</b>
+</p>
+<p class="summary">Executed in 0.16 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="delete news">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">delete news</b>
+</p>
+<p class="summary">Executed in 0.107 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new news with existing matching news">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new news with existing matching news</b>
+</p>
+<p class="summary">Executed in 0.1 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="integrate Twitter account">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">integrate Twitter account</b>
+</p>
+<p class="summary">Executed in 0.077 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="update news from twitter account">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">update news from twitter account</b>
+</p>
+<p class="summary">Executed in 0.565 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="consecutive update without duplicate news">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">consecutive update without duplicate news</b>
+</p>
+<p class="summary">Executed in 0.626 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new news web">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new news web</b>
+</p>
+<p class="summary">Executed in 2.862 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="new invalid news (Description blank)">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">new invalid news (Description blank)</b>
+</p>
+<p class="summary">Executed in 0.068 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix success grid_8 alpha omega" data-name="edit existing news">
+<div class="grid_3 alpha">
+<p>
+<span class="icon success"></span><b class="testname message success">edit existing news</b>
+</p>
+<p class="summary">Executed in 0.083 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo"></div>
+<div class="clear"></div>
+</div>
+<div class="testcase clearfix failure grid_8 alpha omega" data-name="remove existing news web">
+<div class="grid_3 alpha">
+<p>
+<span class="icon failure"></span><b class="testname message failure">remove existing news web</b>
+</p>
+<p class="summary">Executed in 1.86 seconds.</p>
+</div>
+<div class="grid_5 omega outputinfo">
+<div class="details">
+<p>
+<b class="message">no browser confirm() was raised</b>
+</p>
+<pre>java.lang.AssertionError: no browser confirm() was raised
+	at geb.js.AlertAndConfirmSupport.withConfirm(AlertAndConfirmSupport.groovy:183)
+	at geb.js.AlertAndConfirmSupport.withConfirm(AlertAndConfirmSupport.groovy:177)
+	at pages.news.NewsShowPage.select(NewsShowPage.groovy:31)
+	at NewsSteps$_run_closure29.doCall(NewsSteps.groovy:213)
+	at ✽.And I select the option to remove in news show page(News.feature:66)
+</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="clearfix output footer">
+<div class="sysout">
+<h2>Standard output</h2>
+<pre class="stdout">@i9n
+Feature: news
+  As research group member in RMGS system
+  I want to publish, remove and modify news about our researches, schedule and any other thing.
+  Jointly this I want too integrate an twitter account to publish news into RGMS system.
+
+--Output from new news--
+  Scenario: new news                                                                                                              # News.feature:7
+    Given the system has no news with description "noticia1teste" and date "07-04-2012" for "SPG" research group                  # NewsSteps.groovy:14
+    When I create a news with description "noticia1teste" and date "07-04-2012" for "SPG" research group                          # NewsSteps.groovy:18
+    Then the news  with description  "noticia1teste", date "07-04-2012" and "SPG" research group is properly stored by the system # NewsSteps.groovy:24
+
+--Output from delete news--
+  Scenario: delete news                                                                                        # News.feature:13
+    Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group # NewsSteps.groovy:31
+    When I delete the news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group      # NewsSteps.groovy:39
+    Then the news with "noticiaTeste" and date "07-04-2012" doesnt exists to "SPG" research group              # NewsSteps.groovy:45
+
+--Output from new news with existing matching news--
+  Scenario: new news with existing matching news                                                               # News.feature:19
+    Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group # NewsSteps.groovy:31
+    When I create a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group        # NewsSteps.groovy:18
+    Then the news  with "noticiaTeste" and date "07-04-2012" is not registered to "SPG" research group         # NewsSteps.groovy:49
+
+--Output from integrate Twitter account--
+  Scenario: integrate Twitter account                                              # News.feature:25
+    Given the research group "SPG" in the system has no Twitter account associated # NewsSteps.groovy:56
+    When I associate the account "@HumanBrainProj" to "SPG" group                  # NewsSteps.groovy:63
+    Then "SPG" research group has a twitter account "@HumanBrainProj" registered   # NewsSteps.groovy:74
+
+--Output from update news from twitter account--
+  #Then the news can be retrieved by a Twitter post with "@testetwitteracount"
+  Scenario: update news from twitter account                                                        # News.feature:31
+    Given the research group "SPG" in the system has a Twitter account "@HumanBrainProj" associated # NewsSteps.groovy:79
+    And the research group "SPG" news list is empty                                                 # NewsSteps.groovy:120
+    When I request to update the news from Twitter to research group "SPG"                          # NewsSteps.groovy:86
+    Then news of "SPG" research group has been updated                                              # NewsSteps.groovy:91
+
+--Output from consecutive update without duplicate news--
+  Scenario: consecutive update without duplicate news                                               # News.feature:37
+    Given the research group "SPG" in the system has a Twitter account "@HumanBrainProj" associated # NewsSteps.groovy:79
+    And twitter account associated with "SPG" research group has been updated once                  # NewsSteps.groovy:100
+    When I request to update the news from Twitter to research group "SPG"                          # NewsSteps.groovy:86
+    Then there is no duplicated news in Twitter account associated with research group "SPG"        # NewsSteps.groovy:108
+
+--Output from new news web--
+  Scenario: new news web                                     # News.feature:44
+    Given I am at the publications menu                      # CommonSteps.groovy:8
+    When I select the "News" option at the publications menu # CommonSteps.groovy:19
+    And I select the novo noticias option at the news page   # NewsSteps.groovy:159
+    Then I can fill the news details                         # NewsSteps.groovy:171
+
+--Output from new invalid news (Description blank)--
+  Scenario: new invalid news (Description blank)                                                                                    # News.feature:51
+    Given the system has no news with description "" and date "17-12-2013" for "SPG" research group                                 # NewsSteps.groovy:14
+    When I create a news with description "" and date "17-12-2013" for "SPG" research group                                         # NewsSteps.groovy:18
+    Then the news with description "", date "17-12-2013" and "SPG" research group is not stored by the system because it is invalid # NewsSteps.groovy:176
+
+--Output from edit existing news--
+  Scenario: edit existing news                                                                                           # News.feature:57
+    Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group           # NewsSteps.groovy:31
+    When I edit the news with description "noticiaTeste" to "newDescription", date "07-04-2012" and "SPG" research group # NewsSteps.groovy:183
+    Then the news "newDescription", date "07-04-2012" and "SPG" research group is properly updated by the system         # NewsSteps.groovy:189
+
+--Output from remove existing news web--
+  Scenario: remove existing news web                                           # News.feature:62
+    Given I am at the publications menu                                        # CommonSteps.groovy:8
+    When I select the news page and the new "Noticia1" is stored in the system # NewsSteps.groovy:194
+    And I select to view new "Noticia1" in resulting list                      # NewsSteps.groovy:206
+    And I select the option to remove in news show page                        # NewsSteps.groovy:211
+      java.lang.AssertionError: no browser confirm() was raised
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+      	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:54)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
+      	at geb.js.AlertAndConfirmSupport.withConfirm(AlertAndConfirmSupport.groovy:183)
+      	at geb.js.AlertAndConfirmSupport$withConfirm$0.callCurrent(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at geb.js.AlertAndConfirmSupport$withConfirm$0.callCurrent(Unknown Source)
+      	at geb.js.AlertAndConfirmSupport.withConfirm(AlertAndConfirmSupport.groovy:177)
+      	at geb.js.AlertAndConfirmSupport$withConfirm.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at geb.js.AlertAndConfirmSupport$withConfirm.call(Unknown Source)
+      	at geb.Page.withConfirm(Page.groovy)
+      	at geb.Page$withConfirm.callCurrent(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:145)
+      	at pages.news.NewsShowPage.select(NewsShowPage.groovy:31)
+      	at pages.news.NewsShowPage$select.call(Unknown Source)
+      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:120)
+      	at NewsSteps$_run_closure29.doCall(NewsSteps.groovy:213)
+      	at ✽.And I select the option to remove in news show page(News.feature:66)
+
+    Then the new "Noticia1" is properly removed by the system                  # NewsSteps.groovy:216
+</pre>
+</div>
+<div class="syserr">
+<h2>System error</h2>
+<pre class="syserr">
+--Output from new news--
+--Output from delete news--
+--Output from new news with existing matching news--
+--Output from integrate Twitter account--
+--Output from update news from twitter account--
+--Output from consecutive update without duplicate news--
+--Output from new news web--
+--Output from new invalid news (Description blank)--
+--Output from edit existing news--
+--Output from remove existing news web--</pre>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+<!--
+            Parses JUnit output and associates it with the corresponding test case
+        -->
+<script language="javascript">
+
+
+/**
+ * The JUnit report format is incredibly stuipd in the
+ * sense that it accumulates output from all test methods
+ * into a single xml node.
+ */
+(function() {
+
+    var outputElements = findOutputElements();
+    for (var i in outputElements) {
+        var outputElement = outputElements[i];
+        var textOutput = outputElement.element.firstChild.nodeValue;
+        var header = outputElement.getHeader();
+        appendTestMethodOutput(textOutput, header);
+    }
+
+    function findOutputElements() {
+        var outputElements = [];
+        var preElements = document.getElementsByTagName("pre");
+        for (var i in preElements) {
+            var preElement = preElements[i];
+            var className = preElement.className || "";
+            if (className.indexOf("stdout") >= 0) {
+                var outputElement = new OutputElement(preElement, "output");
+                outputElements.push(outputElement);
+            } else if (className.indexOf("syserr") >= 0) {
+                var outputElement = new OutputElement(preElement, "error");
+                outputElements.push(outputElement);
+            }
+        }
+
+        return outputElements;
+    }
+
+    function OutputElement(element, type) {
+        this.element = element;
+        this.type = type;
+
+        this.getHeader = function() {
+            if (type === "output") {
+                return "System output";
+            } else if ("error") {
+                return "System error";
+            }
+        }
+    }
+
+    function appendTestMethodOutput(text, header) {
+        var testOutput = new TestMethodOutput(header);
+
+        var lines = text.split(/\r\n|\r|\n/);
+        for (var i in lines) {
+            var line = lines[i];
+            var matches = line.match(/^--Output from (.*)--$/);
+            if (matches !== null && matches.length == 2) {
+                testOutput.flushToDom();
+                testOutput.testName = matches[1];
+            } else {
+                testOutput.addLine(line);
+            }
+        }
+
+        testOutput.flushToDom();
+    }
+
+    function TestMethodOutput(header) {
+        this.header = header;
+        this.testName = undefined;
+        this.buffer = "";
+
+        this.addLine = function(line) {
+            this.buffer += line + "\n";
+        }
+
+        this.flushToDom = function() {
+            if (this.testName !== undefined) {
+                var domNode = getTestcaseElementByName(this.testName);
+                if (domNode !== undefined && trimString(this.buffer).length > 0) {
+                    this.appendTo(domNode);
+                }
+
+                this.reset();
+            }
+        }
+
+        this.appendTo = function(domNode) {
+            var node = document.createElement("div");
+            node.innerHTML = '<p><b class="message">' + header + '</b></p>';
+
+            var preNode = document.createElement("pre");
+            preNode.appendChild(document.createTextNode(this.buffer));
+            node.appendChild(preNode);
+
+            var outputContainer = findElementByTagClassAndParent("div", "outputinfo", domNode);
+            outputContainer.appendChild(node);
+        }
+
+        this.reset = function() {
+            this.methodName = undefined;
+            this.buffer = "";
+        }
+    }
+
+    function getTestcaseElementByName(name) {
+        var divElements = document.getElementsByTagName("div");
+        var elementCount = divElements.length;
+        for (var i=0; i<elementCount; i++) {
+            var el = divElements[i];
+            if (el.getAttribute("data-name") === name) {
+                return el;
+            }
+        }
+    }
+
+    function findElementByTagClassAndParent(tagName, className, parentNode) {
+        var elements = parentNode.getElementsByTagName(tagName);
+        for (var i in elements) {
+            var element = elements[i];
+
+            // Not 100% correct, but good enough here
+            if (element.className !== undefined && element.className.indexOf(className) >= 0) {
+                return element;
+            }
+        }
+    }
+
+    function trimString(str) {
+        return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    }
+
+})();
+
+        </script>
+</body>
+</html>

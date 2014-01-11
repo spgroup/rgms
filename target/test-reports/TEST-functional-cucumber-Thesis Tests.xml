@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="Dyego" name="Thesis Tests" tests="5" time="24.864" timestamp="2014-01-10T21:18:06">
+  <properties />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new thesis duplicated" time="0.156" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new thesis" time="0.059" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="create thesis web" time="12.185" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="create thesis web with partial information" time="10.214" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="Add a new thesis with user data already filled by default" time="2.191" />
+  <system-out><![CDATA[@i9n
+Feature: Thesis Tests
+  As a member of a research group
+  I want to add, remove and modify theses I have added
+
+--Output from new thesis duplicated--
+  Scenario: new thesis duplicated                                                                         # Thesis.feature:6
+    Given The thesis "Thesis duplicated" is stored in the system with file name "Thesisduplicated.txt"    # ThesisSteps.groovy:21
+    When I create the thesis "Thesis duplicated" with file name "Thesisduplicated2.txt" and school "UFPE" # ThesisSteps.groovy:28
+    Then The thesis "Thesis duplicated" is not stored twice                                               # ThesisSteps.groovy:33
+
+--Output from new thesis--
+  Scenario: new thesis                                                                     # Thesis.feature:11
+    Given The system has no thesis entitled "New thesis"                                   # ThesisSteps.groovy:16
+    When I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE" # ThesisSteps.groovy:28
+    Then The thesis "New thesis" is properly stored by the system                          # ThesisSteps.groovy:38
+
+--Output from create thesis web--
+  Scenario: create thesis web                                                                          # Thesis.feature:16
+    Given I am at the create thesis page                                                               # ThesisSteps.groovy:43
+    When I fill the thesis details with "Software Engineering", "10", "8", "1998", "UFPE" and "Recife" # ThesisSteps.groovy:51
+    Then I am on the thesis show page                                                                  # ThesisSteps.groovy:63
+    And The thesis "Software Engineering" is properly stored by the system                             # ThesisSteps.groovy:38
+
+--Output from create thesis web with partial information--
+  Scenario: create thesis web with partial information                                     # Thesis.feature:22
+    Given I am at the create thesis page                                                   # ThesisSteps.groovy:43
+    When I fill some thesis details with "Tese002", "10", "8", "1998", "UFPE" and "Recife" # ThesisSteps.groovy:58
+    Then I am still on the create thesis page with the error message                       # ThesisSteps.groovy:67
+
+--Output from Add a new thesis with user data already filled by default--
+  #if ($contextualInformation)
+  Scenario: Add a new thesis with user data already filled by default  # Thesis.feature:28
+    Given I am at the publications menu                                # CommonSteps.groovy:8
+    When I select the "Tese" option at the publications menu           # CommonSteps.groovy:19
+    And I select the new thesis option at the thesis page              # ThesisSteps.groovy:74
+    Then I see my user listed as an author member of thesis by default # ThesisSteps.groovy:83
+    And I see my school name as school of thesis by default            # ThesisSteps.groovy:88
+]]></system-out>
+  <system-err><![CDATA[
+--Output from new thesis duplicated--
+--Output from new thesis--
+--Output from create thesis web--
+--Output from create thesis web with partial information--
+--Output from Add a new thesis with user data already filled by default--]]></system-err>
+</testsuite>

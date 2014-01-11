@@ -1,0 +1,6 @@
+
+--Output from new thesis duplicated--
+--Output from new thesis--
+--Output from create thesis web--
+--Output from create thesis web with partial information--
+--Output from Add a new thesis with user data already filled by default--

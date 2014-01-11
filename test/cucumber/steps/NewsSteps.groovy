@@ -1,3 +1,4 @@
+import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGroup.ResearchGroupCreatePage
 import pages.news.NewsCreatePage
@@ -6,6 +7,7 @@ import rgms.member.ResearchGroup
 import rgms.news.News
 import steps.TestDataAndOperations
 import steps.NewsTestDataAndOperations
+import pages.news.NewsShowPage
 
 import static cucumber.api.groovy.EN.*
 
@@ -152,3 +154,65 @@ Then(~'^I can not select the option Export to HTML at the News list page$'){ ->
     assert !page.canSelectExportHTMLReport()
 }
 //#end
+
+
+When(~'^I select the novo noticias option at the news page$') {->
+    selectNovoNoticiasInNewsPage()
+}
+
+def selectNovoNoticiasInNewsPage(){
+
+    at NewsPage
+    page.selectCreateNews()
+    at NewsCreatePage
+
+}
+
+Then(~'^I can fill the news details$') {->
+    at NewsCreatePage
+    page.fillNewsDetails()
+}
+
+Then(~'^the news with description "([^"]*)", date "([^"]*)" and "([^"]*)" research group is not stored by the system because it is invalid$') { String description, String date, String group ->
+    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
+    def researchGroup = ResearchGroup.findByName(group)
+    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
+    assert news == null
+}
+
+When(~'^I edit the news with description "([^"]*)" to "([^"]*)", date "([^"]*)" and "([^"]*)" research group$') { String description, String newDescr, String date, String group ->
+    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
+    def researchGroup = ResearchGroup.findByName(group)
+    NewsTestDataAndOperations.editNewsDescription(description, newDescr, dateAsDateObj, researchGroup)
+}
+
+Then(~'^the news "([^"]*)", date "([^"]*)" and "([^"]*)" research group is properly updated by the system$') { String description, String date, String group ->
+    assert NewsTestDataAndOperations.checkExistingNews(description,date,group)
+}
+
+
+Given(~'^I select the news page and the new "([^"]*)" is stored in the system$') { String description ->
+    page.select("News")
+    selectNovoNoticiasInNewsPage()
+
+    at NewsCreatePage
+    page.fillNewDetails(description)
+    page.clickOnCreate();
+
+    to NewsPage
+    at NewsPage
+}
+
+When(~'^I select to view new "([^"]*)" in resulting list$') { String title ->
+    page.selectViewNew(title)
+    to NewsShowPage
+}
+
+When(~'I select the option to remove in news show page$') {->
+    to NewsShowPage
+    page.select('input', 'delete')
+}
+
+Then(~'^the new "([^"]*)" is properly removed by the system$') { String title ->
+    assert !NewsTestDataAndOperations.checkExistingNews(description,date,group)
+}

@@ -30,4 +30,13 @@ class NewsTestDataAndOperations {
         def news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
         return news != null
     }
+
+    static public void editNewsDescription(String description, String newDescription, Date date, ResearchGroup researchGroup) {
+        def cont = new NewsController()
+        def news = News.findByDescriptionAndDateAndResearchGroup(description, date, researchGroup)
+        news.setDescription(newDescription)
+        cont.params << news.properties
+        cont.update()
+        cont.response.reset()
+    }
 }
