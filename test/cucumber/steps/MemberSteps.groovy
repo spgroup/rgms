@@ -99,6 +99,8 @@ Then(~'^the member "([^"]*)" is not registered$') { String username ->
     assert users.size() == 1
 }
 
+
+
 Given(~'^I am at the create member page$') {->
     to LoginPage
     at LoginPage
@@ -170,4 +172,14 @@ Then(~'^I see default data filled on register form$'){ ->
     at RegisterPage
     defaultUniversity   = "Federal University of Pernambuco"
     assert page.compareMemberUniversity(defaultUniversity)
+}
+
+Given(~'^the system has member with email "([^"]*)"$') { String email ->
+    // Express the Regexp above with the code you wish you had
+
+}
+
+When(~'^I create the member "([^"]*)" with email "([^"]*)"$') { String arg1, String arg2 ->
+    // Express the Regexp above with the code you wish you had
+
 }
