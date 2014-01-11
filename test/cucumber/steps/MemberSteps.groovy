@@ -175,11 +175,11 @@ Then(~'^I see default data filled on register form$'){ ->
 }
 
 Given(~'^the system has member with email "([^"]*)"$') { String email ->
-    // Express the Regexp above with the code you wish you had
-
+    def name = "userTest"
+    MemberTestDataAndOperations.createMemberWithEmail(name,email)
 }
 
-When(~'^I create the member "([^"]*)" with email "([^"]*)"$') { String arg1, String arg2 ->
-    // Express the Regexp above with the code you wish you had
-
+When(~'^I create the member "([^"]*)" with email "([^"]*)"$') { String username, String email ->
+    MemberTestDataAndOperations.createMemberWithEmail(username,email)
 }
+
