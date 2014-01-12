@@ -1,5 +1,5 @@
 Testsuite: all bibtex
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 1,657 sec
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 2,2 sec
 ------------- Standard Output ---------------
 @i9n
 Feature: all bibtex
@@ -17,4 +17,4 @@ Feature: all bibtex
 
 --Output from show all bibtex--------------- ---------------- ---------------
 
-Testcase: show all bibtex took 1,598 sec
+Testcase: show all bibtex took 2,148 sec
