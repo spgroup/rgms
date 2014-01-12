@@ -41,10 +41,12 @@ class MemberTestDataAndOperations {
 
     static public void editEmail(String username, String email){
         def cont = new MemberController()
-        cont.params << [username: username, email: email]
-        cont.create()
-        cont.save()
+        def id = User.findByUsername(username)?.author?.id
+        cont.params << [id: id, email: email]
+        cont.update()
+        //cont.save()
         cont.response.reset()
+
     }
 
     static public void createMemberWithEmail(String username, String email){

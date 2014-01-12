@@ -175,11 +175,17 @@ Then(~'^I see default data filled on register form$'){ ->
 }
 
 Given(~'^the system has member with email "([^"]*)"$') { String email ->
-    def name = "userTest"
+    String name = "usernametest"
     MemberTestDataAndOperations.createMemberWithEmail(name,email)
+    member = Member.findByEmail(email)
+    assert member.name == name
+
 }
 
 When(~'^I create the member "([^"]*)" with email "([^"]*)"$') { String username, String email ->
     MemberTestDataAndOperations.createMemberWithEmail(username,email)
+    member = Member.findByEmail(email)
+    assert member.name == username
+
 }
 
