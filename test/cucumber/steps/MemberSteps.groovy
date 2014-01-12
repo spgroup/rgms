@@ -61,8 +61,8 @@ When(~'^I fill the user details with a name, username, passoword1, password2, em
     page.fillUserDetails(name, username, password1, password2, email, university, status)
 }
 
-Then(~'^I am still on the register page with the message user created$') {->
-    at RegisterPage
+Then(~'^I am on the login page with the message user created$') {->
+    at LoginPage
 }
 
 

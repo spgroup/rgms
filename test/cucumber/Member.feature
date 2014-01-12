@@ -37,7 +37,7 @@ Feature: member
   Scenario: user registration
     Given I am at the register page
     When I fill the user details with a name, username, passoword1, password2, email, university, status "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student"
-    Then I am still on the register page with the message user created
+    Then I am on the login page with the message user created
 
 
 #  Scenario: create member web
