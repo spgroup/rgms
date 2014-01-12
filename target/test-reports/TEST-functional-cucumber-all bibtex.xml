@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="Dyego" name="all bibtex" tests="1" time="1.657" timestamp="2014-01-10T21:14:53">
+<testsuite errors="0" failures="0" hostname="Dyego" name="all bibtex" tests="1" time="1.708" timestamp="2014-01-12T20:01:25">
   <properties />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="show all bibtex" time="1.598" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="show all bibtex" time="1.648" />
   <system-out><![CDATA[@i9n
 Feature: all bibtex
   As a member

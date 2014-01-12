@@ -1,5 +1,5 @@
 Testsuite: XMLImport
-Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 2,453 sec
+Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 2,406 sec
 ------------- Standard Output ---------------
 @i9n
 Feature: XMLImport
@@ -19,4 +19,4 @@ Feature: XMLImport
 
 --Output from upload publications without a file--------------- ---------------- ---------------
 
-Testcase: upload publications without a file took 2,394 sec
+Testcase: upload publications without a file took 2,354 sec

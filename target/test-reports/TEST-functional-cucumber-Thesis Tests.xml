@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="Dyego" name="Thesis Tests" tests="5" time="24.864" timestamp="2014-01-10T21:18:06">
+<testsuite errors="0" failures="0" hostname="Dyego" name="Thesis Tests" tests="5" time="24.78" timestamp="2014-01-12T20:04:39">
   <properties />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new thesis duplicated" time="0.156" />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new thesis" time="0.059" />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="create thesis web" time="12.185" />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="create thesis web with partial information" time="10.214" />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="Add a new thesis with user data already filled by default" time="2.191" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new thesis duplicated" time="0.153" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="new thesis" time="0.058" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="create thesis web" time="12.2" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="create thesis web with partial information" time="10.087" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="Add a new thesis with user data already filled by default" time="2.225" />
   <system-out><![CDATA[@i9n
 Feature: Thesis Tests
   As a member of a research group

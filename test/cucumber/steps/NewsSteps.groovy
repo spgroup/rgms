@@ -210,9 +210,9 @@ When(~'^I select to view new "([^"]*)" in resulting list$') { String title ->
 
 When(~'I select the option to remove in news show page$') {->
     to NewsShowPage
-    page.select('input', 'delete')
+    page.select('input', 'remove')
 }
 
-Then(~'^the new "([^"]*)" is properly removed by the system$') { String title ->
-    assert !NewsTestDataAndOperations.checkExistingNews(description,date,group)
+Then(~'^the new "([^"]*)" is properly removed by the system$') { String description ->
+    assert !NewsTestDataAndOperations.checkExistingNewsByDescription(description)
 }

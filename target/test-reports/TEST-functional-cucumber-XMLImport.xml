@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="Dyego" name="XMLImport" tests="1" time="2.453" timestamp="2014-01-10T21:18:47">
+<testsuite errors="0" failures="0" hostname="Dyego" name="XMLImport" tests="1" time="2.406" timestamp="2014-01-12T20:05:20">
   <properties />
-  <testcase classname="grails.plugin.cucumber.CucumberTest" name="upload publications without a file" time="2.394" />
+  <testcase classname="grails.plugin.cucumber.CucumberTest" name="upload publications without a file" time="2.354" />
   <system-out><![CDATA[@i9n
 Feature: XMLImport
   As a member of a research group
