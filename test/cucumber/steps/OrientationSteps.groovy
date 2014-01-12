@@ -1,3 +1,4 @@
+import cucumber.runtime.PendingException
 import pages.OrientationPages.*
 import pages.*
 import rgms.member.Orientation
@@ -159,4 +160,9 @@ def Login(){
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
+}
+
+Then(~'^I am on the orientation show page with the error message$') { ->
+    at OrientationShowPage
+    assert page.readFlashMessage() != null
 }

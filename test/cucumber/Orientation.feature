@@ -26,6 +26,12 @@ Feature: orientations
     And I select the "Alterar" option
     Then I am on the orientation show page
 
+  Scenario: create duplicated orientation
+    Given I am at the create orientation page
+    And the system has thesis entitled "The Book is on the table" supervised for someone
+    When I fill the orientation title with "The Book is on the table"
+    Then I am on the orientation show page with the error message
+
 #if ($XMLUpload)
     Scenario: upload orientation with a file
         Given the system has some orientations stored
@@ -39,3 +45,4 @@ Feature: orientations
         Then I'm still on orientations page
         And the orientations are not stored by the system
 #end
+
