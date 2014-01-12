@@ -61,9 +61,6 @@ When(~'^I fill the user details with a name, username, passoword1, password2, em
     page.fillUserDetails(name, username, password1, password2, email, university, status)
 }
 
-Then(~'^I am on the login page with the message user created$') {->
-    at LoginPage
-}
 
 
 Given(~'^the system has member with username "([^"]*)"$') { String username ->
