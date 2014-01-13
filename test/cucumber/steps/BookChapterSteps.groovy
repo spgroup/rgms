@@ -137,6 +137,7 @@ Then(~'^the system has all the book chapters of the xml file$') {->
     assert BookChapter.findByTitle("An Introduction to Software Product Line Refactoring") != null
 }
 
+
 And(~'^I select the upload button at the book chapter page$') {->
     at BookChapterPage
     page.uploadWithoutFile()
@@ -148,6 +149,25 @@ And(~'^the book chapters are not stored by the system$') {->
     at BookChapterPage
     page.checkIfBookChapterListIsEmpty()
 }
+
+And(~'^the system has a book chapter entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+    book = BookChapter.findByPublisher(title)
+    if(book == null){
+        BookChapterTestDataAndOperations.createBookChapter(title, filename)
+        to BookChapterCreatePage
+    }
+}
+
+Then(~'^the book chapter "([^"]*)" was not stored twice$') { String entitled ->
+    bookChapter = BookChapter.findAllByPublisher(entitled)
+    assert bookChapter.size() < 2
+}
+
+And(~'^it is shown an message error$'){ ->
+    at BookChapterSavePage
+    assert page.readFlashMessage() != null
+}
+
 
 def createAndCheckBookOnBrowser(String title, String filename){
     page.fillBookChapterDetails(title, filename)

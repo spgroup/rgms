@@ -58,7 +58,7 @@ Given(~'^I am at the create orientation page$') {->
     to OrientationCreatePage
     at OrientationCreatePage
 
-}   
+}
 
 When(~'^I fill the orientation title with "([^"]*)"$') { String title ->
 
@@ -151,6 +151,34 @@ Then(~'^I\'m still on orientations page$') {->
 And(~'^the orientations are not stored by the system$') {->
     at OrientationsPage
     page.checkIfOrientationListIsEmpty()
+}
+
+//create web with invalid year
+/**
+ * @author bss3
+ */
+When(~'^I fill the orientation title with "([^"]*)" and the year with $n$') { title, year ->
+    page.fillOrientationDetailsWithGivenYear(title,year)
+    page.selectCreateOrientation()
+}
+
+Then(~'^I am still on the create orientation page with the error message$') { ->
+    at OrientationCreatePage
+}
+
+And(~'^the "([^"]*)" has been registered member$') { String username ->
+    user = User.findByName(username)
+    assert user == null
+}
+
+Then(~'^the orientation "([^"]*)" with registered member "([^"]*)" is properly stored by the system$') { String entitled, String username ->
+    orientation = Orientation.findByTituloTeseAndOrientador(entitled,username)
+    assert orientation == null
+}
+
+Then(~'^the orientation "([^"]*)" was not stored twice$') { String entitled ->
+    orientation = Orientation.findAllByTituloTese(entitled)
+    assert orientation.size() >= 2
 }
 
 //FUNCOES AUXILIARES

@@ -35,10 +35,17 @@ class OrientationCreatePage extends Page {
         $("form").instituicao = "UFPE"
         //selectCreateOrientation()
 
-
-
         // Could parametrize, obtaining data from class TestDataAndOperations
     }
+
+    def fillOrientationDetailsWithGivenYear(title, year) {
+        $("form").tituloTese = title
+        $("form").tipo = "Mestrado"
+        $("form").orientando = "Tomaz"
+        $("form").anoPublicacao = year
+        $("form").instituicao = "UFPE"
+    }
+
 
     def selectCreateOrientation() {
         $("input", name: "create").click()

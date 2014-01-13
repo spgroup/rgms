@@ -15,7 +15,7 @@ class Orientation {
         orientando(nullable: false)
         orientador(nullable: false)
         tituloTese(nullable: false, blank: false)
-        anoPublicacao(nullable: false)
+        anoPublicacao(nullable: false, min: 0)
         instituicao(nullable: false, blank: false)
     }
 

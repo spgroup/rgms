@@ -13,6 +13,7 @@ Feature: Thesis Tests
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
     Then  The thesis "New thesis" is properly stored by the system
 
+  #6
   Scenario: remove existing thesis
     Given   the system has thesis entitled "New thesis"
     When    I delete the thesis "New thesis"
@@ -29,6 +30,12 @@ Feature: Thesis Tests
     When  I fill some thesis details with "Tese002", "10", "8", "1998", "UFPE" and "Recife"
     Then  I am still on the create thesis page with the error message
 
+   #7
+  Scenario: remove existing thesis web
+    Given I am at the thesis page and the orientation "Software Enginnering" is stored in the system
+    When I select to view orientation "Software Enginnering" in resulting list
+    And I select the "Remover" option
+    Then I am on the orientation show page
 
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default
