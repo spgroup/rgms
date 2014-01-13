@@ -30,12 +30,15 @@ Feature: Thesis Tests
     When  I fill some thesis details with "Tese002", "10", "8", "1998", "UFPE" and "Recife"
     Then  I am still on the create thesis page with the error message
 
+<<<<<<< HEAD
    #7
   Scenario: remove existing thesis web
     Given I am at the thesis page and the thesis "Software Enginnering2" is stored in the system
     When I select to view thesis "Software Enginnering2" in resulting list
     And I select the remover option at the thesis show page
     Then the thesis "Software Enginnering2" is removed from the system
+=======
+>>>>>>> Adicionando nos cenarios de teste e modificando os existentes
 
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default
