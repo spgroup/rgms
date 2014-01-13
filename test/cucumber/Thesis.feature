@@ -13,6 +13,11 @@ Feature: Thesis Tests
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
     Then  The thesis "New thesis" is properly stored by the system
 
+  Scenario: remove existing thesis
+    Given   the system has thesis entitled "New thesis"
+    When    I delete the thesis "New thesis"
+    Then    the thesis "New thesis" is properly removed by the system
+
   Scenario: create thesis web
     Given I am at the create thesis page
     When  I fill the thesis details with "Software Engineering", "10", "8", "1998", "UFPE" and "Recife"
@@ -23,6 +28,7 @@ Feature: Thesis Tests
     Given I am at the create thesis page
     When  I fill some thesis details with "Tese002", "10", "8", "1998", "UFPE" and "Recife"
     Then  I am still on the create thesis page with the error message
+
 
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default
