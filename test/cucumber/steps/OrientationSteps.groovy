@@ -64,7 +64,7 @@ Given(~'^I am at the create orientation page$') { ->
     at OrientationCreatePage
 }
 
-When(~'^I fill the orientation title with "([^"]*)"$') { String title ->
+When(~'^I fill the orientation title with "([^"]*)"$') { title ->
 
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
