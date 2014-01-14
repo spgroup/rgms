@@ -41,6 +41,16 @@ class OrientationTestDataAndOperations {
         cont.response.reset()
     }
 
+    static public void createOrientation(String tituloTese, Member member) {
+
+        def cont = new OrientationController()
+        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
     static public void removeOrientation(String tituloTese) {
 
         def testOrientation = OrientationTestDataAndOperations.findOrientationByTitle(tituloTese)

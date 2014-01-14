@@ -22,9 +22,9 @@ Feature: orientations
   #1
   Scenario: new orientation with registered member orientated
     Given the system has no orientations entitled "The Book is on the table 2"
-    When I create a orientation for the thesis "The Book is on the table 2"
-    And the "Rubens Lopes" has been registered member
-    Then the orientation "The Book is on the table 2" with registered member "Rubens Lopes" is properly stored by the system
+    And the "Rubens Lopes" has been an registered member
+    When I create a orientation for the thesis "The Book is on the table 2" with registered member "Rubens Lopes"
+    Then the orientation "The Book is on the table 2" is properly stored by the system
 
   #2
   Scenario: duplicate orientation
@@ -55,10 +55,10 @@ Feature: orientations
     Then I am still on the change orientation page with the error message
 
   Scenario: remove orientation web
-    Given I am at the orientation page and the orientation "The Book is on the table" is stored in the system
-    When I select to view orientation "The Book is on the table" in resulting list
+    Given I am at the orientation page and the orientation "Hexa" is stored in the system
+    When I select to view orientation "Hexa" in resulting list
     And I select the "Remover" option
-    Then I am on the orientation show page
+    Then The orientation "Hexa" is properly removed by the system
 
 #if ($XMLUpload)
   Scenario: upload orientation with a file

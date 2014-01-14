@@ -21,15 +21,23 @@ class OrientationEditPage extends Page {
     }
 
     static content = {
+        flashmessage {
+            $("div", class: "message")
+        }
     }
 
 
 	def edit(String novovalor){
 
         $("form").tituloTese = novovalor
-        $("form").save().click()
+        //$("form").save().click()
 
     }
+
+    def editYear(String newYear){
+        $("form").anoPublicacao = Integer.parseInt(newYear)
+    }
+
 	
 	def select(String s) {
 		$("form").find("input", value: s).click()
