@@ -19,6 +19,9 @@ class OrientationTestDataAndOperations {
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
+                    status: "Graduate Student", university: "UFPE", enabled: true
             ]]
 
     static orientations = [
@@ -41,7 +44,7 @@ class OrientationTestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void createOrientation(String tituloTese, Member member) {
+    static public void createOrientationWithMenber(String tituloTese, Member member) {
 
         def cont = new OrientationController()
         cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]

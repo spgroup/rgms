@@ -19,6 +19,9 @@ class MemberTestDataAndOperations {
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
+                    status: "Graduate Student", university: "UFPE", enabled: true
             ]]
 
     static public def findByUsername(String username) {

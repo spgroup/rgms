@@ -26,7 +26,7 @@ Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTes
     assert orientation == null
 }
 
-When(~'^I create a orientation for the thesis "([^"]*)"$') { String tituloTese ->
+When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
     // Express the Regexp above with the code you wish you had
     OrientationTestDataAndOperations.createOrientation(tituloTese)
 }
@@ -39,10 +39,11 @@ Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String t
 
 
 //delete
-Given(~'^the system has thesis entitled "([^"]*)" supervised for someone$') { String tituloTese ->
+Given(~'^the system has an orientation entitled "([^"]*)" supervised for someone$') { String tituloTese ->
 
+    OrientationTestDataAndOperations.createOrientation(tituloTese)
     orientation = OrientationTestDataAndOperations.findOrientationByTitle(tituloTese)
-    if(orientation == null) OrientationTestDataAndOperations.createOrientation(tituloTese)
+    assert orientation != null
 }
 
 When(~'^I delete the orientation for "([^"]*)"$') { String tituloTese ->
@@ -85,7 +86,7 @@ Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in
     page.selectNewOrientation()
 
     at OrientationCreatePage
-    page.fillOrientationDetails()
+    page.fillOrientationDetails(title)
     page.selectCreateOrientation()
     orientation = Orientation.findByTituloTese(title)
     assert orientation != null
@@ -113,12 +114,9 @@ When(~'^I change the orientation tituloTese to "([^"]*)"$') { String newtitle ->
 }
 
 When(~'^I select the "([^"]*)" option$') { String option ->
+
     at OrientationEditPage
     page.select(option)
-    Browser.withConfirm(true)
-    assert Browser.withConfirm (true) { $("input", name: "showConfirm").click() } == "Do you like Geb?"
-    //'Tem certeza?'
-    //AlertAndConfirmSupport.withAlert {}
 }
 
 Given(~'^the system has some orientations stored$') {->
@@ -183,23 +181,20 @@ Then(~'^I am still on the create orientation page with the error message$') { ->
 /**
  * @author rlfs
  */
-And(~'^the "([^"]*)" has been an registered member$') { String username ->
-    MemberTestDataAndOperations.createMember(username,"+558199999999")
-    user = User.findByUsername(username)
-    member = user?.author
+Given(~'^the "([^"]*)" has been an registered member$') { String username ->
+    member = MemberTestDataAndOperations.findByUsername(username)
     assert member != null
 }
 
 When(~'I create a orientation for the thesis "([^"]*)" with registered member "([^"]*)"$') { entitled, username ->
-    user = User.findByUsername(username)
-    OrientationTestDataAndOperations.createOrientation(entitled,user?.author)
-    assert orientation == null
+    member = MemberTestDataAndOperations.findByUsername(username)
+    OrientationTestDataAndOperations.createOrientation(entitled,member)
 }
 
 //#2
-Then(~'^the orientation "([^"]*)" was not stored twice$') { entitled ->
+Then(~'^the orientation for the thesis "([^"]*)" was not stored twice$') { entitled ->
     orientation = Orientation.findAllByTituloTese(entitled)
-    assert orientation.size() >= 2
+    assert orientation.size() < 2
 }
 
 //#5

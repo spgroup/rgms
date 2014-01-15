@@ -19,7 +19,6 @@ class OrientationCreatePage extends Page {
     }
 
     def fillOrientationDetails() {
-        //def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
         fillOrientationDetails("The Book is on the table")
     }
 
