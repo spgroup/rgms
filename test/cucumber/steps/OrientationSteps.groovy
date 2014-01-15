@@ -221,7 +221,7 @@ When(~'I create a orientation for the thesis "([^"]*)" with registered member "(
 
 Then(~'^the orientation "([^"]*)" was not stored twice$') { entitled ->
     orientation = Orientation.findAllByTituloTese(entitled)
-    assert orientation.size() >= 2
+    assert orientation.size() < 2
 }
 
 //#2
