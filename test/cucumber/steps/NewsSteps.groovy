@@ -16,9 +16,11 @@ Given(~'^the system has no news with description "([^"]*)" and date "([^"]*)" fo
 }
 
 When(~'^I create a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
-    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-    def researchGroup = ResearchGroup.findByName(group)
-    NewsTestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
+    if(NewsTestDataAndOperations.checkValidDate(date)) {
+        Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
+        def researchGroup = ResearchGroup.findByName(group)
+        NewsTestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
+    }
 }
 
 Then(~'^the news  with description  "([^"]*)", date "([^"]*)" and "([^"]*)" research group is properly stored by the system$') { String description, String date, String group ->
