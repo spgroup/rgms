@@ -40,7 +40,6 @@ Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String t
 
 //delete
 Given(~'^the system has an orientation entitled "([^"]*)" supervised for someone$') { String tituloTese ->
-
     OrientationTestDataAndOperations.createOrientation(tituloTese)
     orientation = OrientationTestDataAndOperations.findOrientationByTitle(tituloTese)
     assert orientation != null
@@ -175,20 +174,21 @@ When(~'^I fill the orientation title with "([^"]*)" and the year with (-?\\d+)$'
 
 Then(~'^I am still on the create orientation page with the error message$') { ->
     at OrientationCreatePage
+    assert page.readFlashMessage() != null
 }
 
 //new orientation with registered member orientated
 /**
  * @author rlfs
  */
-Given(~'^the "([^"]*)" has been an registered member$') { String username ->
+Given(~'^Exists a member with username "([^"]*)" that has been an registered member$') { String username ->
     member = MemberTestDataAndOperations.findByUsername(username)
     assert member != null
 }
 
 When(~'I create a orientation for the thesis "([^"]*)" with registered member "([^"]*)"$') { entitled, username ->
     member = MemberTestDataAndOperations.findByUsername(username)
-    OrientationTestDataAndOperations.createOrientation(entitled,member)
+    OrientationTestDataAndOperations.createOrientationWithMenber(entitled,member)
 }
 
 //#2

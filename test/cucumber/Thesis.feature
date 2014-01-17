@@ -32,10 +32,10 @@ Feature: Thesis Tests
 
    #7
   Scenario: remove existing thesis web
-    Given I am at the thesis page and the orientation "Software Enginnering" is stored in the system
-    When I select to view orientation "Software Enginnering" in resulting list
-    And I select the "Remover" option
-    Then I am on the orientation show page
+    Given I am at the thesis page and the thesis "Software Enginnering" is stored in the system
+    When I select to view thesis "Software Enginnering" in resulting list
+    And I select the "Remover" option on Thesis Show Page
+    Then the system show that the thesis has been removed
 
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default

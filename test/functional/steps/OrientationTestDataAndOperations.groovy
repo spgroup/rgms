@@ -44,10 +44,10 @@ class OrientationTestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void createOrientationWithMenber(String tituloTese, Member member) {
+    static public void createOrientationWithMenber(String tituloTese, member) {
 
         def cont = new OrientationController()
-        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
+        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: new Member(member)]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
         cont.save()

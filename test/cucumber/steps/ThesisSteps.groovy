@@ -1,3 +1,5 @@
+import pages.PublicationsPage
+import pages.thesis.ThesisEditPage
 import rgms.authentication.User
 import steps.ThesisTestDataAndOperations
 import pages.LoginPage
@@ -67,7 +69,6 @@ Then(~'^I am on the thesis show page$') {->
 Then(~'^I am still on the create thesis page with the error message$') {->
     at ThesisCreatePage
 }
-
 /**
  * @author carloscemb
  */
@@ -89,4 +90,42 @@ Then(~'^I see my school name as school of thesis by default$') {->
     at ThesisCreatePage
     userData = User.findByUsername('admin')?.author?.university
     assert page.currentSchool() == userData
+}
+/**
+ * @author bss3 e rlfs
+ */
+
+//#7
+Given(~'^I am at the thesis page and the thesis "([^"]*)" is stored in the system$') { title ->
+
+    Login()
+
+    at PublicationsPage
+    page.select("Tese")
+
+    to ThesisPage
+    at ThesisPage
+}
+
+When(~'^I select to view thesis "([^"]*)" in resulting list$') { title ->
+    at ThesisPage
+    page.selectViewThesis(title)
+}
+
+When(~'^I select the "([^"]*)" option on Thesis Show Page$')  { option ->
+    at ThesisShowPage
+    page.select(option)
+
+}
+
+Then(~'^the system show that the thesis has been removed$') { title ->
+    at ThesisPage
+    assert page.readFlashMessage() != null
+}
+
+//FUNÇÔES AUXILIARES
+def Login(){
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
 }

@@ -29,15 +29,15 @@ Feature: orientations
   #1
   Scenario: new orientation with registered member orientated
     Given the system has no orientations entitled "The Book is on the table 2"
-    And the "Rubens Lopes" has been an registered member
-    When I create a orientation for the thesis "The Book is on the table 2" with registered member "Rubens Lopes"
+    And Exists a member with username "rlfs" that has been an registered member
+    When I create a orientation for the thesis "The Book is on the table 2" with registered member "rlfs"
     Then the orientation "The Book is on the table 2" is properly stored by the system
 
   #2
   Scenario: duplicate orientation
-    Given the system has an orientation entitled "Topicos de software" supervised for someone
-    When I create a new orientation entitled "Topicos de software"
-    Then the orientation for the thesis "Topicos de software" was not stored twice
+    Given the system has an orientation entitled "The Book is on the table" supervised for someone
+    When I create a new orientation entitled "The Book is on the table"
+    Then the orientation for the thesis "The Book is on the table" was not stored twice
 
   #3
   Scenario: create orientation web with invalid year

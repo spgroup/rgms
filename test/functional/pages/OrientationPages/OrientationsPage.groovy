@@ -18,8 +18,11 @@ class OrientationsPage extends Page {
 		title ==~ currentTitle
 	}
 
-	static content = {
-	}
+    static content = {
+        flashmessage {
+            $("div", class: "message")
+        }
+    }
 
 
 	def selectNewOrientation() {

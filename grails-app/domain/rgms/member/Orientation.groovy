@@ -14,7 +14,7 @@ class Orientation {
         tipo(nullable: false, blank: false, inList: ["Mestrado","Doutorado","Iniciação Científica"])
         orientando(nullable: false)
         orientador(nullable: false)
-        tituloTese(nullable: false, blank: false)
+        tituloTese(nullable: false, blank: false, unique: true)
         anoPublicacao(nullable: false, min: 0)
         instituicao(nullable: false, blank: false)
     }
