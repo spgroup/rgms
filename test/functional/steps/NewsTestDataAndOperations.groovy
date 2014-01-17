@@ -44,4 +44,35 @@ class NewsTestDataAndOperations {
         cont.update()
         cont.response.reset()
     }
+
+    static public boolean checkValidDate(String date) {
+
+        boolean retorno
+
+        String diaStr = "" + date.charAt(0) + date.charAt(1)
+        String mesStr = "" + date.charAt(3) + date.charAt(4)
+        int dia = Integer.valueOf(diaStr)
+        int mes = Integer.valueOf(mesStr)
+
+        if( (dia > 28) && (mes == 2) ) {         // fevereiro
+            retorno = false
+        }
+        else if ( (dia > 30) && (mes == 4) ) {   // abril
+            retorno = false
+        }
+        else if ( (dia > 30) && (mes == 6) ) {   // junho
+            retorno = false
+        }
+        else if ( (dia > 30) && (mes == 7) ) {   // setembro
+            retorno = false
+        }
+        else if ( (dia > 30) && (mes == 11) ) {   // novembro
+            retorno = false
+        }
+        else {
+            retorno = true
+        }
+
+        return retorno
+    }
 }
