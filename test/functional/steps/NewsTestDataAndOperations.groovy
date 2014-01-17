@@ -31,6 +31,11 @@ class NewsTestDataAndOperations {
         return news != null
     }
 
+    static public boolean checkExistingNewsByDescription(String description) {
+        def news = News.findByDescription(description)
+        return news != null
+    }
+
     static public void editNewsDescription(String description, String newDescription, Date date, ResearchGroup researchGroup) {
         def cont = new NewsController()
         def news = News.findByDescriptionAndDateAndResearchGroup(description, date, researchGroup)

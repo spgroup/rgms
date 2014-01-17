@@ -35,7 +35,7 @@
 </nav>
 </div>
 <div class="clear"></div>
-<div class="testsuite failure">
+<div class="testsuite success">
 <div class="header">
 <h2>news</h2>
 <h3>
@@ -43,9 +43,7 @@
                         10
                         tests
                     
-                        with
-                        one failure
-                        .
+                        without a single error or failure!
                     </h3>
 </div>
 <div class="testcase clearfix success grid_8 alpha omega" data-name="new news">
@@ -63,7 +61,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">delete news</b>
 </p>
-<p class="summary">Executed in 0.107 seconds.</p>
+<p class="summary">Executed in 0.097 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -73,7 +71,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">new news with existing matching news</b>
 </p>
-<p class="summary">Executed in 0.1 seconds.</p>
+<p class="summary">Executed in 0.095 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -83,7 +81,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">integrate Twitter account</b>
 </p>
-<p class="summary">Executed in 0.077 seconds.</p>
+<p class="summary">Executed in 0.086 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -93,7 +91,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">update news from twitter account</b>
 </p>
-<p class="summary">Executed in 0.565 seconds.</p>
+<p class="summary">Executed in 0.771 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -103,7 +101,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">consecutive update without duplicate news</b>
 </p>
-<p class="summary">Executed in 0.626 seconds.</p>
+<p class="summary">Executed in 0.718 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -113,7 +111,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">new news web</b>
 </p>
-<p class="summary">Executed in 2.862 seconds.</p>
+<p class="summary">Executed in 2.83 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -123,7 +121,7 @@
 <p>
 <span class="icon success"></span><b class="testname message success">new invalid news (Description blank)</b>
 </p>
-<p class="summary">Executed in 0.068 seconds.</p>
+<p class="summary">Executed in 0.07 seconds.</p>
 </div>
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
@@ -138,27 +136,14 @@
 <div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
 </div>
-<div class="testcase clearfix failure grid_8 alpha omega" data-name="remove existing news web">
+<div class="testcase clearfix success grid_8 alpha omega" data-name="remove existing news web">
 <div class="grid_3 alpha">
 <p>
-<span class="icon failure"></span><b class="testname message failure">remove existing news web</b>
+<span class="icon success"></span><b class="testname message success">remove existing news web</b>
 </p>
-<p class="summary">Executed in 1.86 seconds.</p>
+<p class="summary">Executed in 1.822 seconds.</p>
 </div>
-<div class="grid_5 omega outputinfo">
-<div class="details">
-<p>
-<b class="message">no browser confirm() was raised</b>
-</p>
-<pre>java.lang.AssertionError: no browser confirm() was raised
-	at geb.js.AlertAndConfirmSupport.withConfirm(AlertAndConfirmSupport.groovy:183)
-	at geb.js.AlertAndConfirmSupport.withConfirm(AlertAndConfirmSupport.groovy:177)
-	at pages.news.NewsShowPage.select(NewsShowPage.groovy:31)
-	at NewsSteps$_run_closure29.doCall(NewsSteps.groovy:213)
-	at ✽.And I select the option to remove in news show page(News.feature:66)
-</pre>
-</div>
-</div>
+<div class="grid_5 omega outputinfo"></div>
 <div class="clear"></div>
 </div>
 <div class="clearfix output footer">
@@ -234,37 +219,6 @@ Feature: news
     When I select the news page and the new "Noticia1" is stored in the system # NewsSteps.groovy:194
     And I select to view new "Noticia1" in resulting list                      # NewsSteps.groovy:206
     And I select the option to remove in news show page                        # NewsSteps.groovy:211
-      java.lang.AssertionError: no browser confirm() was raised
-      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
-      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-      	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
-      	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-      	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:54)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
-      	at geb.js.AlertAndConfirmSupport.withConfirm(AlertAndConfirmSupport.groovy:183)
-      	at geb.js.AlertAndConfirmSupport$withConfirm$0.callCurrent(Unknown Source)
-      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
-      	at geb.js.AlertAndConfirmSupport$withConfirm$0.callCurrent(Unknown Source)
-      	at geb.js.AlertAndConfirmSupport.withConfirm(AlertAndConfirmSupport.groovy:177)
-      	at geb.js.AlertAndConfirmSupport$withConfirm.call(Unknown Source)
-      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
-      	at geb.js.AlertAndConfirmSupport$withConfirm.call(Unknown Source)
-      	at geb.Page.withConfirm(Page.groovy)
-      	at geb.Page$withConfirm.callCurrent(Unknown Source)
-      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:46)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:133)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:145)
-      	at pages.news.NewsShowPage.select(NewsShowPage.groovy:31)
-      	at pages.news.NewsShowPage$select.call(Unknown Source)
-      	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:42)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
-      	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:120)
-      	at NewsSteps$_run_closure29.doCall(NewsSteps.groovy:213)
-      	at ✽.And I select the option to remove in news show page(News.feature:66)
-
     Then the new "Noticia1" is properly removed by the system                  # NewsSteps.groovy:216
 </pre>
 </div>

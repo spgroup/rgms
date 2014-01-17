@@ -1,5 +1,5 @@
 Testsuite: Thesis Tests
-Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 24,864 sec
+Tests run: 5, Failures: 0, Errors: 0, Time elapsed: 24,78 sec
 ------------- Standard Output ---------------
 @i9n
 Feature: Thesis Tests
@@ -48,8 +48,8 @@ Feature: Thesis Tests
 --Output from create thesis web with partial information--
 --Output from Add a new thesis with user data already filled by default--------------- ---------------- ---------------
 
-Testcase: new thesis duplicated took 0,156 sec
-Testcase: new thesis took 0,059 sec
-Testcase: create thesis web took 12,185 sec
-Testcase: create thesis web with partial information took 10,214 sec
-Testcase: Add a new thesis with user data already filled by default took 2,191 sec
+Testcase: new thesis duplicated took 0,153 sec
+Testcase: new thesis took 0,058 sec
+Testcase: create thesis web took 12,2 sec
+Testcase: create thesis web with partial information took 10,087 sec
+Testcase: Add a new thesis with user data already filled by default took 2,225 sec

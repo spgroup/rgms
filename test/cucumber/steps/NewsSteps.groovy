@@ -213,6 +213,6 @@ And(~'I select the option to remove in news show page$') {->
     page.select('input', 'remove')
 }
 
-Then(~'^the new "([^"]*)" is properly removed by the system$') { String description, Date date, ResearchGroup researchGroup ->
-    assert !NewsTestDataAndOperations.deleteNews(description, date, researchGroup)
+Then(~'^the new "([^"]*)" is properly removed by the system$') { String description ->
+    assert !NewsTestDataAndOperations.checkExistingNewsByDescription(description)
 }
