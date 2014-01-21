@@ -47,7 +47,6 @@ class MemberTestDataAndOperations {
         cont.params << [id: identificador]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.delete()
-        //cont.save()
         cont.response.reset()
     }
     static public boolean containsMember(username) {

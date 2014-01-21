@@ -10,6 +10,7 @@ class Orientation {
     String instituicao
     String curso
 
+
     static constraints = {
         tipo(nullable: false, blank: false, inList: ["Mestrado","Doutorado","Iniciação Científica"])
         orientando(nullable: false)
@@ -17,6 +18,7 @@ class Orientation {
         tituloTese(nullable: false, blank: false, unique: true)
         anoPublicacao(nullable: false, min: 0)
         instituicao(nullable: false, blank: false)
+        curso(nullable: true)
     }
 
     boolean Equals(Orientation other)

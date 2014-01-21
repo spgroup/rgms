@@ -9,6 +9,7 @@ class OrientationsPage extends Page {
 
 
 	static at = {
+
 		//title ==~ /Orientation Listagem/
 
         GetPageTitle gp = new GetPageTitle()
@@ -24,29 +25,28 @@ class OrientationsPage extends Page {
         }
     }
 
-
 	def selectNewOrientation() {
-		$('a.create').click()
+		$('a', class:'create').click()
 	}
-
-
-
-
-    def getRow(){
-
-        def listDiv = $('div', id: 'list-orientation')
-        def orientationTable = (listDiv.find('table'))[0]
-        def orientationRow  = orientationTable.find('tbody').find('tr')
-
-        return orientationRow
-    }
 
     def selectViewOrientation(title) {
-        getRow()
-        def showLink = getRow().find('td').find([text:title])
-        showLink.click()
-	}
 
+        def id = Orientation.findByTituloTese(title).id
+        $("a", text: id.toString()).click()
+
+        /*def listDiv = $('div', id: 'list-orientation')
+        def orientationTable = (listDiv.find('table'))[0]
+        def orientationRow  = (orientationTable.find('tbody'))[0].find('tr')
+        System.out.println("------------------------------------")
+        System.out.println(orientationRow.toString())
+        System.out.println("------------------------------------")
+        def showLink = orientationRow.find('td').find([text:title])
+        showLink.click()*/
+
+        /*def showLink = (getRow().find([text:title]))[0].find('td')
+        System.out.println("testando "+showLink)
+        showLink[0].click()*/
+	}
 
     def checkOrientationAtList(title,row){
         def orientationColumns = getRow()[row].find('td')

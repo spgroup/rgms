@@ -41,12 +41,12 @@ Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String
     checkIfExists(title)
 }
 
-When(~'^I select the Novo BookChapter option at the book chapter page$') {->
+When(~'^I select the Novo BookChapter option at the book chapter page$') { ->
     at BookChapterPage
     page.selectNewBookChapter()
 }
 
-Given(~'^I am at the book chapter page$') {->
+Given(~'^I am at the book chapter page$') { ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -60,20 +60,20 @@ And(~'^I fill only the title field with the value "([^"]*)"$') { String title ->
     page.fillTitle(title)
 }
 
-Then(~'^A failure message is displayed$') {->
-    assert ( page.readFlashMessage() != null )
+Then(~'^A failure message is displayed$') { ->
+    assert (page.readFlashMessage() != null)
 
 }
-And(~'^I still on the book chapter create page$'){->
+And(~'^I still on the book chapter create page$') { ->
     at BookChapterCreatePage
 }
 
-Then(~'^I see my user listed as a member of book chapter by default$') {->
+Then(~'^I see my user listed as a member of book chapter by default$') { ->
     at BookChapterCreatePage
     assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
-When(~'^I view the book chapter list$') {->
+When(~'^I view the book chapter list$') { ->
     to BookChapterPage
 }
 
@@ -82,7 +82,7 @@ Then(~'my book chapter list contains "([^"]*)"$') { String title ->
     bookChapterList = BookChapter.findAll()
     assert BookChapterTestDataAndOperations.containsBookChapter(title, bookChapterList)
 }
-And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$'){ String title, filename ->
+And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$') { String title, filename ->
     page.selectNewBookChapter()
     to BookChapterCreatePage
     at BookChapterCreatePage
@@ -95,30 +95,30 @@ Then(~'My resulting book chapter list contains "([^"]*)"$') { String title ->
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
 }
-When(~'^I go to NewBookChapter page$'){->
+When(~'^I go to NewBookChapter page$') { ->
     to BookChapterPage
     at BookChapterPage
     page.selectNewBookChapter()
     at BookChapterCreatePage
 }
-And(~'^I use the webpage to create the book chapter "([^"]*)" with file name "([^"]*)"$'){ String title, filename ->
+And(~'^I use the webpage to create the book chapter "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     at BookChapterCreatePage
     createAndCheckBookOnBrowser(title, filename)
     to BookChapterPage
     at BookChapterPage
 }
-Then(~'^the book chapter "([^"]*)" was stored by the system$'){String title ->
+Then(~'^the book chapter "([^"]*)" was stored by the system$') { String title ->
     book = BookChapter.findByTitle(title)
     assert book != null
     to BookChapterPage
     at BookChapterPage
 }
-And(~'^it is shown in the book chapter list with title "([^"]*)"$'){ String title ->
+And(~'^it is shown in the book chapter list with title "([^"]*)"$') { String title ->
     to BookChapterPage
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
 }
-Given(~'^the system has some book chapters stored$') {->
+Given(~'^the system has some book chapters stored$') { ->
     initialSize = BookChapter.findAll().size()
 }
 When(~'^I upload the book chapters of "([^"]*)"$') { filename ->
@@ -128,7 +128,7 @@ When(~'^I upload the book chapters of "([^"]*)"$') { filename ->
     finalSize = BookChapter.findAll().size()
     assert initialSize < finalSize
 }
-Then(~'^the system has all the book chapters of the xml file$') {->
+Then(~'^the system has all the book chapters of the xml file$') { ->
     assert BookChapter.findByTitle("Refinement of Concurrent Object Oriented Programs") != null
     assert BookChapter.findByTitle("A RUP-Based Software Process Supporting Progressive Implementation") != null
     assert BookChapter.findByTitle("Transformation Laws for Sequential Object-Oriented Programming") != null
@@ -138,21 +138,21 @@ Then(~'^the system has all the book chapters of the xml file$') {->
 }
 
 
-And(~'^I select the upload button at the book chapter page$') {->
+And(~'^I select the upload button at the book chapter page$') { ->
     at BookChapterPage
     page.uploadWithoutFile()
 }
-Then(~'^I\'m still on book chapter page$') {->
+Then(~'^I\'m still on book chapter page$') { ->
     at BookChapterPage
 }
-And(~'^the book chapters are not stored by the system$') {->
+And(~'^the book chapters are not stored by the system$') { ->
     at BookChapterPage
     page.checkIfBookChapterListIsEmpty()
 }
 
 And(~'^the system has a book chapter entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
     book = BookChapter.findByPublisher(title)
-    if(book == null){
+    if (book == null) {
         BookChapterTestDataAndOperations.createBookChapter(title, filename)
         to BookChapterCreatePage
     }
@@ -163,20 +163,20 @@ Then(~'^the book chapter "([^"]*)" was not stored twice$') { String entitled ->
     assert bookChapter.size() < 2
 }
 
-And(~'^it is shown an message error$'){ ->
+And(~'^it is shown an message error$') { ->
     at BookChapterSavePage
     assert page.readFlashMessage() != null
 }
 
 
-def createAndCheckBookOnBrowser(String title, String filename){
+def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookChapterDetails(title, filename)
     page.clickSaveBookChapter()
     book = BookChapter.findByTitle(title)
     assert book != null
 }
 
-def checkIfExists(String title){
+def checkIfExists(String title) {
     bookChapter = BookChapter.findByTitle(title)
     assert bookChapter == null
 }

@@ -37,7 +37,7 @@ class ThesisPage extends Page {
     }
 
     def selectViewThesis(title) {
-        getRow()
+        //getRow()
         def showLink = getRow().find('td').find([text:title])
         showLink.click()
     }

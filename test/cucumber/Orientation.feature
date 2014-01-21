@@ -5,9 +5,9 @@ Feature: orientations
   so that I can generate web pages and reports containing these orientations
 
   Scenario: new orientation
-    Given the system has no orientations entitled "The Book of Software"
-    When I create a new orientation entitled "The Book of Software"
-    Then the orientation "The Book of Software" is properly stored by the system
+    Given the system has no orientations entitled "The Book is on the table"
+    When I create a new orientation entitled "The Book is on the table"
+    Then the orientation "The Book is on the table" is properly stored by the system
 
   Scenario: remove existing orientation
     Given   the system has an orientation entitled "The Book is on the table" supervised for someone
@@ -17,21 +17,21 @@ Feature: orientations
   Scenario: create orientation web
     Given I am at the create orientation page
     When I fill the orientation title with "The Book of Web Software"
-    Then I am on the orientation show page
+    Then the orientation "The Book of Web Software" is properly stored by the system
 
   Scenario: edit existing orientation web
     Given I am at the orientation page and the orientation "The Book of Software Engineering" is stored in the system
     When I select to view orientation "The Book of Software Engineering" in resulting list
     And I change the orientation tituloTese to "Hexa"
-    And I select the "Alterar" option
-    Then I am on the orientation show page
+    And I select the alterar option at orientation edit page
+    Then I am on the orientation show page with edition completed
 
   #1
-  Scenario: new orientation with registered member orientated
-    Given the system has no orientations entitled "The Book is on the table 2"
-    And Exists a member with username "rlfs" that has been an registered member
-    When I create a orientation for the thesis "The Book is on the table 2" with registered member "rlfs"
-    Then the orientation "The Book is on the table 2" is properly stored by the system
+  #Scenario: new orientation with registered member orientated
+  #  Given the system has no orientations entitled "The Book is on the table 2"
+   # And Exists a member "Rubens Lopes" with username "rlfs" that has been an registered member
+    #When I create a orientation for the thesis "The Book is on the table 2" with registered member "rlfs"
+    #Then the orientation "The Book is on the table 2" is properly stored by the system
 
   #2
   Scenario: duplicate orientation
@@ -51,7 +51,7 @@ Feature: orientations
     When I select to view orientation "The Book is on the table" in resulting list
     And I change the orientation tituloTese to "Hexa"
     And I change the orientation anoPublicacao to -1
-    And I select the "Alterar" option
+    And I select the alterar option at orientation edit page
     Then I am still on the change orientation page with the error message
 
 #if ($XMLUpload)
@@ -68,8 +68,9 @@ Feature: orientations
     And the orientations are not stored by the system
 #end
 
+  #9 extra
   Scenario: remove orientation web
-    Given I am at the orientation page and the orientation "Hexa" is stored in the system
-    When I select to view orientation "Hexa" in resulting list
-    And I select the "Remover" option
-    Then The orientation "Hexa" is properly removed by the system
+    Given I am at the orientation page and the orientation "Hexa2" is stored in the system
+    When I select to view "Hexa2" in the list of orientations
+    And I select the option remove at Orientation Show Page
+    Then The orientation "Hexa2" is properly removed by the system

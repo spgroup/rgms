@@ -32,11 +32,9 @@ When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
 }
 
 Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String tituloTese ->
-    // Express the Regexp above with the code you wish you had
     orientation = Orientation.findByTituloTese(tituloTese)
-    assert OrientationTestDataAndOperations.OrientationCompatibleTo(orientation, tituloTese)
+    assert orientation != null
 }
-
 
 //delete
 Given(~'^the system has an orientation entitled "([^"]*)" supervised for someone$') { String tituloTese ->
@@ -56,44 +54,55 @@ Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { Str
 }
 
 //create web
-Given(~'^I am at the create orientation page$') {->
+Given(~'^I am at the create orientation page$') { ->
 
     Login()
 
-    to OrientationCreatePage
-    at OrientationCreatePage
+    to PublicationsPage
+    at PublicationsPage
+    page.select("Orientation")
 
+    at OrientationsPage
+    page.selectNewOrientation()
+
+    at OrientationCreatePage
 }
 
 When(~'^I fill the orientation title with "([^"]*)"$') { title ->
 
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
-}
 
-Then(~'^I am on the orientation show page$') { ->
     at OrientationShowPage
+    page.showList()
+
+    at OrientationsPage
+
 }
 
 //edit web
 Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in the system$') { String title ->
 
     Login()
+
+    to PublicationsPage
     at PublicationsPage
     page.select("Orientation")
+
     at OrientationsPage
     page.selectNewOrientation()
 
     at OrientationCreatePage
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
-    orientation = Orientation.findByTituloTese(title)
-    assert orientation != null
 
-    to OrientationsPage
+    at OrientationShowPage
+    page.showList()
+
     at OrientationsPage
 
-
+    orientation = Orientation.findByTituloTese(title)
+    assert orientation != null
 }
 
 When(~'^I select to view orientation "([^"]*)" in resulting list$') { String oldtitle ->
@@ -101,36 +110,38 @@ When(~'^I select to view orientation "([^"]*)" in resulting list$') { String old
     at OrientationsPage
     page.selectViewOrientation(oldtitle)
 
-    to OrientationShowPage
     at OrientationShowPage
-    page.select()
+    page.edit()
+    at OrientationEditPage
 }
 
 When(~'^I change the orientation tituloTese to "([^"]*)"$') { String newtitle ->
-
-    at OrientationEditPage
-    page.edit(newtitle)
+    page.editTituloTese(newtitle)
 }
 
-When(~'^I select the "([^"]*)" option$') { String option ->
-
-    at OrientationEditPage
-    page.select(option)
+When(~'^I select the alterar option at orientation edit page$') { ->
+    page.confirmEdit()
 }
 
-Given(~'^the system has some orientations stored$') {->
+Then(~'^I am on the orientation show page with edition completed$'){ ->
+    at OrientationShowPage
+    assert page.readFlashMessage() != null
+}
+
+
+Given(~'^the system has some orientations stored$') { ->
     // save old metaclass
     def registry = GroovySystem.metaClassRegistry
     this.oldMetaClass = registry.getMetaClass(SecurityUtils)
     registry.removeMetaClass(SecurityUtils)
 
     // Mock login
-    def subject = [getPrincipal: {"admin"},
-        isAuthenticated: {true}
-    ]as Subject
+    def subject = [getPrincipal: { "admin" },
+            isAuthenticated: { true }
+    ] as Subject
     ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-        [getSubject: {subject} as SecurityManager])
-    SecurityUtils.metaClass.static.getSubject = {subject}
+            [getSubject: { subject } as SecurityManager])
+    SecurityUtils.metaClass.static.getSubject = { subject }
 
     initialSize = Orientation.findAll().size()
 }
@@ -143,22 +154,22 @@ When(~'^I upload a new orientation "([^"]*)"$') { filename ->
     assert inicialSize < finalSize
 }
 
-Then(~'the system has more orientations now$') {->
+Then(~'the system has more orientations now$') { ->
     // restore metaclass
     GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
     finalSize = Orientation.findAll().size()
 }
 
-And(~'^I select the upload button at the orientations page$') {->
+And(~'^I select the upload button at the orientations page$') { ->
     at OrientationsPage
     page.uploadWithoutFile()
 }
 
-Then(~'^I\'m still on orientations page$') {->
+Then(~'^I\'m still on orientations page$') { ->
     at OrientationsPage
 }
 
-And(~'^the orientations are not stored by the system$') {->
+And(~'^the orientations are not stored by the system$') { ->
     at OrientationsPage
     page.checkIfOrientationListIsEmpty()
 }
@@ -168,7 +179,7 @@ And(~'^the orientations are not stored by the system$') {->
  * @author bss3
  */
 When(~'^I fill the orientation title with "([^"]*)" and the year with (-?\\d+)$') { title, year ->
-    page.fillOrientationDetailsWithGivenYear(title,year)
+    page.fillOrientationDetailsWithGivenYear(title, year)
     page.selectCreateOrientation()
 }
 
@@ -181,14 +192,17 @@ Then(~'^I am still on the create orientation page with the error message$') { ->
 /**
  * @author rlfs
  */
-Given(~'^Exists a member with username "([^"]*)" that has been an registered member$') { String username ->
-    member = MemberTestDataAndOperations.findByUsername(username)
-    assert member != null
+Given(~'^Exists a member "([^"]*)" with username "([^"]*)" that has been an registered member$') { String name, String username ->
+
+    MemberTestDataAndOperations.createMember(username,"")
+    member = Member.findByName(name)
+    user = User.findByUsernameAndAuthor(username,member)
+    assert user != null
 }
 
 When(~'I create a orientation for the thesis "([^"]*)" with registered member "([^"]*)"$') { entitled, username ->
     member = MemberTestDataAndOperations.findByUsername(username)
-    OrientationTestDataAndOperations.createOrientationWithMenber(entitled,member)
+    OrientationTestDataAndOperations.createOrientationWithMenber(entitled, member)
 }
 
 //#2
@@ -198,30 +212,39 @@ Then(~'^the orientation for the thesis "([^"]*)" was not stored twice$') { entit
 }
 
 //#5
-And(~'^I change the orientation anoPublicacao to (-?\\d+)$'){ anoPublicacao ->
+And(~'^I change the orientation anoPublicacao to (-?\\d+)$') { anoPublicacao ->
     at OrientationEditPage
     page.editYear(anoPublicacao)
 }
 
-Then(~'^I am still on the change orientation page with the error message$'){ ->
+Then(~'^I am still on the change orientation page with the error message$') { ->
     at OrientationEditPage
     assert page.readFlashMessage() != null
 }
 
-Then(~'^The orientation "([^"]*)" is properly removed by the system$') { title->
-    at OrientationsPage
-    assert orientationNoExist(title)
+Then(~'^The orientation "([^"]*)" is properly removed by the system$') { title ->
+    assert Orientation.findByTituloTese(title) == null
 }
 
+//Remover Orientation Web
+When(~'^I select to view "([^"]*)" in the list of orientations$') { title ->
+    at OrientationsPage
+    page.selectViewOrientation(title)
+
+    at OrientationShowPage
+}
+
+When(~'^I select the option remove at Orientation Show Page$') { ->
+    at OrientationShowPage
+    page.delete()
+
+}
 
 //FUNCOES AUXILIARES
 
-def orientationNoExist(String title){
-    return Orientation.findByTituloTese(title) == null
-}
 
 // o problema de duplicação que este método resolve não foi identificado pela ferramenta de detecção de clones
-def Login(){
+def Login() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
