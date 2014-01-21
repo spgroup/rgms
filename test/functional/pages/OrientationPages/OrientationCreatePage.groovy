@@ -42,13 +42,13 @@ class OrientationCreatePage extends Page {
     }
 
     def fillOrientationDetailsWithGivenYear(title, year) {
-        $("form").tituloTese = title
         $("form").tipo = "Mestrado"
         $("form").orientando = "Tomaz"
+        $("form").tituloTese = title
         $("form").anoPublicacao = year
         $("form").instituicao = "UFPE"
+        $("form").curso = "Ciencia da Computacao"
     }
-
 
     def selectCreateOrientation() {
         //$("input", name: "create").click()
