@@ -52,16 +52,7 @@ Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { Str
 //create web
 Given(~'^I am at the create orientation page$') { ->
 
-    Login()
-
-    to PublicationsPage
-    at PublicationsPage
-    page.select("Orientation")
-
-    at OrientationsPage
-    page.selectNewOrientation()
-
-    at OrientationCreatePage
+    createOrientation()
 }
 
 When(~'^I fill the orientation title with "([^"]*)"$') { title ->
@@ -266,4 +257,22 @@ def Login() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
+}
+
+private void atPage(page) {
+    at $page
+    assert page.readFlashMessage() != null
+}
+
+private void createOrientation() {
+    Login()
+
+    to PublicationsPage
+    at PublicationsPage
+    page.select("Orientation")
+
+    at OrientationsPage
+    page.selectNewOrientation()
+
+    at OrientationCreatePage
 }
