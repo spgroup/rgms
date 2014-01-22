@@ -47,6 +47,13 @@ class BookChapterController {
         }
     }
 
+    def checkBook(Long id){
+        def bookChapterInstance = BookChapter.get(id)
+        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
+        return isReturned
+    }
+
+
     def show(Long id) {
         accessBookChapter(id)
     }

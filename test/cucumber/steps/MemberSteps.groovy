@@ -143,9 +143,9 @@ Then(~'^I am still on the create member page with the error message$') { ->
 
 }
 
-When(~'^I fill many user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university, additionalInfo ->
-    page.fillMemberDetails(name, username, email, university, additionalInfo)
-}
+//When(~'^I fill many user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university, additionalInfo ->
+//    page.fillMemberDetails(name, username, email, university, additionalInfo)
+//}
 
 When(~'^I fill user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
     page.fillSomeMemberDetails(name, username, email, university)
