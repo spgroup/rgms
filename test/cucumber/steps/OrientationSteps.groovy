@@ -56,16 +56,7 @@ Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { Str
 //create web
 Given(~'^I am at the create orientation page$') { ->
 
-    Login()
-
-    to PublicationsPage
-    at PublicationsPage
-    page.select("Orientation")
-
-    at OrientationsPage
-    page.selectNewOrientation()
-
-    at OrientationCreatePage
+    createOrientation()
 }
 
 When(~'^I fill the orientation title with "([^"]*)"$') { title ->
@@ -83,16 +74,7 @@ When(~'^I fill the orientation title with "([^"]*)"$') { title ->
 //edit web
 Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in the system$') { String title ->
 
-    Login()
-
-    to PublicationsPage
-    at PublicationsPage
-    page.select("Orientation")
-
-    at OrientationsPage
-    page.selectNewOrientation()
-
-    at OrientationCreatePage
+    createOrientation()
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
 
@@ -124,8 +106,7 @@ When(~'^I select the alterar option at orientation edit page$') { ->
 }
 
 Then(~'^I am on the orientation show page with edition completed$'){ ->
-    at OrientationShowPage
-    assert page.readFlashMessage() != null
+    atPage(OrientationShowPage)
 }
 
 
@@ -184,8 +165,7 @@ When(~'^I fill the orientation title with "([^"]*)" and the year with (-?\\d+)$'
 }
 
 Then(~'^I am still on the create orientation page with the error message$') { ->
-    at OrientationCreatePage
-    assert page.readFlashMessage() != null
+    atPage(OrientationCreatePage)
 }
 
 //new orientation with registered member orientated
@@ -218,8 +198,7 @@ And(~'^I change the orientation anoPublicacao to (-?\\d+)$') { anoPublicacao ->
 }
 
 Then(~'^I am still on the change orientation page with the error message$') { ->
-    at OrientationEditPage
-    assert page.readFlashMessage() != null
+    atPage(OrientationEditPagePage)
 }
 
 Then(~'^The orientation "([^"]*)" is properly removed by the system$') { title ->
@@ -248,4 +227,22 @@ def Login() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
+}
+
+private void atPage(page) {
+    at $page
+    assert page.readFlashMessage() != null
+}
+
+private void createOrientation() {
+    Login()
+
+    to PublicationsPage
+    at PublicationsPage
+    page.select("Orientation")
+
+    at OrientationsPage
+    page.selectNewOrientation()
+
+    at OrientationCreatePage
 }

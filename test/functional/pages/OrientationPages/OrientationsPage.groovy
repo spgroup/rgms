@@ -49,7 +49,7 @@ class OrientationsPage extends Page {
 	}
 
     def checkOrientationAtList(title,row){
-        def orientationColumns = getRow()[row].find('td')
+        def orientationColumns = getTdOnRow(row)
 
         def testorientation = Orientation.findByTituloTese(title)
 		assert orientationColumns[1].text() == testorientation.tipo
@@ -57,8 +57,12 @@ class OrientationsPage extends Page {
 		assert orientationColumns[4].text() == testorientation.tituloTese
 	}
 
+    private Object getTdOnRow(row) {
+        getRow()[row].find('td')
+    }
+
     def checkIfOrientationListIsEmpty(){
-        def conferenciaColumns = getRow()[0].find('td')
+        def conferenciaColumns = getTdOnRow(0)
 
         assert conferenciaColumns.size() < 8
     }
