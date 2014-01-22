@@ -49,18 +49,17 @@ class BookChapterController {
     }
     def accessBookChapter(Long id) {
 
-        boolean isReturned = checkBook(id)
+        BookChapter bookChapterInstance = checkBook(id)
         if(!isReturned){
             [bookChapterInstance: bookChapterInstance]
         }
     }
 
-    def checkBook(Long id){
+    private BookChapter checkBook(long id) {
         def bookChapterInstance = BookChapter.get(id)
-        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
-        return isReturned
+        boolean isReturned1 = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
+        bookChapterInstance
     }
-
 
     def show(Long id) {
         accessBookChapter(id)
@@ -72,7 +71,8 @@ class BookChapterController {
 
     def update(Long id, Long version) {
 
-        boolean isReturned = checkBook(id)
+        def bookChapterInstance = BookChapter.get(id)
+        boolean isReturned1 = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
         if(!isReturned){
             if (version != null && bookChapterInstance.version > version) {
                 outdatedVersionError((BookChapter) bookChapterInstance)
