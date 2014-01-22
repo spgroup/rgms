@@ -7,7 +7,6 @@ class OrientationEditPage extends Page {
     static url = "orientation/edit/1"
 
     static at = {
-
         //title ==~ /Editar Orientation/
 
         GetPageTitle gp = new GetPageTitle()
@@ -15,9 +14,6 @@ class OrientationEditPage extends Page {
         def currentTitle = gp.msg("default.edit.label", [currentOrientation])
 
         title ==~ currentTitle
-
-
-
     }
 
     static content = {
@@ -26,12 +22,8 @@ class OrientationEditPage extends Page {
         }
     }
 
-
-	def edit(String novovalor){
-
+	def editTituloTese(String novovalor){
         $("form").tituloTese = novovalor
-        //$("form").save().click()
-
     }
 
     def editYear(String newYear){
@@ -42,4 +34,14 @@ class OrientationEditPage extends Page {
 	def select(String s) {
 		$("form").find("input", value: s).click()
 	}
+
+    def confirmEdit(){
+        $('input', class:'save').click()
+    }
+
+
+    def delete(){
+        assert withConfirm(true) { $("form").find('input', class: 'delete').click() }
+    }
+
 }

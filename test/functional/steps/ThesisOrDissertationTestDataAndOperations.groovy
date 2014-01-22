@@ -1,5 +1,10 @@
 package steps
 
+import rgms.publication.Dissertacao
+import rgms.publication.Publication
+import rgms.publication.Tese
+import rgms.publication.TeseController
+
 class ThesisOrDissertationTestDataAndOperations {
 
     static protected void createThesisOrDissertation(String title, filename, school, cont) {
@@ -12,4 +17,15 @@ class ThesisOrDissertationTestDataAndOperations {
         cont.response.reset()
     }
 
+    static protected void deleteThesisOrDissertation(String title, cont) {
+        def test
+        if (cont instanceof TeseController) {
+            test = Tese.findByTitle(title)
+        } else {
+            test = Dissertacao.findByTitle(title)
+        }
+        cont.params << [id: test.id]
+        cont.delete()
+
+    }
 }

@@ -1,6 +1,7 @@
 package steps
 
 import rgms.member.Member
+import rgms.member.Orientation
 import rgms.member.OrientationController
 import rgms.publication.XMLController
 
@@ -19,6 +20,9 @@ class OrientationTestDataAndOperations {
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
+                    status: "Graduate Student", university: "UFPE", enabled: true
             ]]
 
     static orientations = [
@@ -34,16 +38,10 @@ class OrientationTestDataAndOperations {
     static public void createOrientation(String tituloTese) {
 
         def cont = new OrientationController()
-        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-
-    static public void createOrientation(String tituloTese, Member member) {
-
-        def cont = new OrientationController()
+        def memberCreater = new Member(members[0])
+        memberCreater.create()
+        memberCreater.save()
+        def member = Member.findByName(memberCreater.name)
         cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
@@ -51,9 +49,18 @@ class OrientationTestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void removeOrientation(String tituloTese) {
+    static public void createOrientationWithMenber(String tituloTese, member) {
 
-        def testOrientation = OrientationTestDataAndOperations.findOrientationByTitle(tituloTese)
+        def cont = new OrientationController()
+        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: new Member(member)]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
+    static public void removeOrientation(String tituloTese) {
+        def testOrientation = Orientation.findByTituloTese(tituloTese)
         def cont = new OrientationController()
         cont.params << [id: testOrientation.id]
         cont.delete()
