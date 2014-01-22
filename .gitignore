@@ -424,6 +424,8 @@ target/test-reports/plain/TEST-functional-cucumber-Visit.txt
 
 .idea/*
 
+target/test-reports/*
+
 target/test-reports/TEST-functional-cucumber-orientations.xml
 
 target/test-reports/html/11_orientations.html
