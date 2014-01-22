@@ -27,18 +27,25 @@ class OrientationController {
     def save() {
         def orientationInstance = new Orientation(params)
 
-        if(orientationInstance.orientador.name .equalsIgnoreCase(orientationInstance.orientando))
-        {
-            render(view: "create", model: [orientationInstance: orientationInstance])
-            flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
-            return
+        if(!compracaoOrientationComRender(orientationInstance, "create")) {
+            return false
         }
         if (!orientationInstance.save(flush: true)) {
             render(view: "create", model: [orientationInstance: orientationInstance])
-            return
+            return false
         }
 
         showFlashMessage(orientationInstance.id, "show", 'default.created.message')
+
+    }
+
+    def compracaoOrientationComRender(orientationInstance, tipoRender) {
+        if(orientationInstance.orientador.name.equalsIgnoreCase(orientationInstance.orientando)) {
+            render(view: tipoRender, model: [orientationInstance: orientationInstance])
+            flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
+            return false
+        }
+        return true
 
     }
 
@@ -98,12 +105,9 @@ class OrientationController {
 
     def checkOrientationOrientando(Orientation orientationInstance){
 
-        if(orientationInstance.orientador.name.equalsIgnoreCase(orientationInstance.orientando)) {
-            render(view: "edit", model: [orientationInstance: orientationInstance])
-            flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
+        if(!compracaoOrientationComRender(orientationInstance, "edit")) {
             return false
         }
-
         return true
     }
 
