@@ -40,22 +40,22 @@ class BibtexGenerateFileController {
     }
 
     def generateBibTex = {
-        String bibtex = ""
         int numero = (params.id).toInteger()
-        for(publication in Publication.getAll())
-        {
-            for(member in publication.getMembers())
-            {
-                if(member.getId() == numero)
-                {
-                    bibtex = bibtex + publication.generateBib()  + "<br>"
+        render(membroPublicacoes(numero))
+    }
+
+    private String membroPublicacoes(int numero) {
+        String bibtex = ""
+        for (publication in Publication.getAll()) {
+            for (member in publication.getMembers()) {
+                if (member.getId() == numero) {
+                    bibtex = bibtex + publication.generateBib() + "<br>"
                     break
                 }
 
             }
         }
-
-        render(bibtex)
+        return bibtex
     }
 
     def generateBibTexGroup  = {
@@ -77,18 +77,6 @@ class BibtexGenerateFileController {
 
     String teste(numero)
     {
-        String bibtex = ""
-        for(publication in Publication.getAll())
-        {
-            for(member in publication.getMembers())
-            {
-                if(member.getId() == numero)
-                {
-                    bibtex = bibtex + publication.generateBib()  + "<br>"
-                    break
-                }
-            }
-        }
-        return bibtex
+        return membroPublicacoes(numero)
     }
 }

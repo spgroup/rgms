@@ -298,8 +298,8 @@ class TestDataAndOperations {
 
 
 
-
-    static public void createOrientation(String tituloTese) {
+// Está sendo usado a funçao do arquivo OrientatationTestDataAndOperations
+  /*  static public void createOrientation(String tituloTese) {
 
         def cont = new OrientationController()
         cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
@@ -308,7 +308,7 @@ class TestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
-
+*/
 
     //article
 

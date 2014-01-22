@@ -81,6 +81,10 @@ class PublicationController {
             return false
         }
 
+        return lerPreencherBuffer(f)
+    }
+
+    private boolean lerPreencherBuffer(File f) {
         InputStream inputStream = request.getInputStream()
         OutputStream outputStream = new FileOutputStream(f)
         byte[] buffer = new byte[1024 * 10] //buffer de 10MB
@@ -106,18 +110,7 @@ class PublicationController {
             flash.message = 'File already exists. Please try to use a different file name.'
             return false
         }
-        InputStream inputStream = request.getInputStream()
-        OutputStream outputStream = new FileOutputStream(f)
-        byte[] buffer = new byte[1024 * 10] //buffer de 10MB
-        int length
-
-        while ((length = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, length)
-        }
-        outputStream.close()
-        inputStream.close()
-
-        return true
+        return lerPreencherBuffer(f)
     }
 
 	/**
