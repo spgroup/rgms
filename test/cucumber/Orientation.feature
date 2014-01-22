@@ -24,7 +24,7 @@ Feature: orientations
     Given the system has no orientations entitled "The Book is on the table 2"
     And the "Rubens Lopes" has been an registered member
     When I create a orientation for the thesis "The Book is on the table 2" with registered member "Rubens Lopes"
-    Then the orientation "The Book is on the table 2" is properly stored by the system
+    Then the orientation "The Book is on the table 2" with orientated member "Rubens Lopes" is properly stored by the system
 
   #2
   Scenario: duplicate orientation

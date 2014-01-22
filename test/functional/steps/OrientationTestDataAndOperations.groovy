@@ -8,7 +8,7 @@ import rgms.publication.XMLController
  * Created with IntelliJ IDEA.
  * User: tasj
  * Date: 30/08/13
- * Time: 15:31
+ * Time: 15:3
  * To change this template use File | Settings | File Templates.
  */
 class OrientationTestDataAndOperations {

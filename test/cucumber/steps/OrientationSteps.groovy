@@ -189,11 +189,22 @@ And(~'^the "([^"]*)" has been an registered member$') { String username ->
     member = user?.author
     assert member != null
 }
+//#1
 
-When(~'I create a orientation for the thesis "([^"]*)" with registered member "([^"]*)"$') { entitled, username ->
+When(~'^I create a orientation for the thesis "([^"]*)" with registered member "([^"]*)"$') { String entitled, String username ->
     user = User.findByUsername(username)
     OrientationTestDataAndOperations.createOrientation(entitled,user?.author)
+}
+
+Then(~'^the orientation "([^"]*)" with orientated member "([^"]*)" is properly stored by the system') { String entitled, String username ->
+    user = User.findByUsername(username)
+    orientation = Orientation.findByTituloTeseAndOrientador(entitled,user)
     assert orientation == null
+}
+
+Then(~'^the orientation "([^"]*)" was not stored twice$') { entitled ->
+    orientation = Orientation.findAllByTituloTese(entitled)
+    assert orientation.size() >= 2
 }
 
 //#2
