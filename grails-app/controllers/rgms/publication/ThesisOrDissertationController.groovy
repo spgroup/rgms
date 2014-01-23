@@ -1,7 +1,6 @@
 package rgms.publication
 
 import org.apache.shiro.SecurityUtils
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
 

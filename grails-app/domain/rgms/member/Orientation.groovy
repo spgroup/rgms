@@ -21,13 +21,18 @@ class Orientation {
         curso(nullable: true)
     }
 
-    boolean Equals(Orientation other)
+    boolean equals(Orientation other)
     {
         return (other != null && this.anoPublicacao == other.anoPublicacao
         && this.orientador == other.orientador
         && this.orientando == other.orientando
         && this.tipo == other.tipo
         && this.tituloTese == other.tituloTese)
+    }
+
+    String toString()
+    {
+        return "Titulo = " + this.tituloTese + "; Orientador = " + this.orientador + "; Orientando: " + this.orientando
     }
 }
 //#end
