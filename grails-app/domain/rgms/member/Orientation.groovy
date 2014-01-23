@@ -28,5 +28,10 @@ class Orientation {
                 && this.tipo == other.tipo
                 && this.tituloTese == other.tituloTese)
     }
+
+    String toString()
+    {
+        return "Titulo = " + this.tituloTese + "; Orientador = " + this.orientador + "; Orientando: " + this.orientando
+    }
 }
 //#end
