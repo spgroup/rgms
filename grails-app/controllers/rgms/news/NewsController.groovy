@@ -36,7 +36,7 @@ class NewsController {
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'news.label', default: 'News'), params.id])
             redirect(action: "list")
         }
-        catch (DataIntegrityViolationException e) {
+        catch (DataIntegrityViolationException ignored) {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'news.label', default: 'News'), params.id])
             redirect(action: "show", id: params.id)
         }
@@ -44,7 +44,7 @@ class NewsController {
 
     def save = {
         if (!grailsApplication.config.grails.mail.username) {
-            throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured'))
+            throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured') as Throwable)
         }
 
         def newsInstance = new News(params)
@@ -81,7 +81,6 @@ class NewsController {
 
         if (!newsInstance.save(flush: true)) {
             render(view: "create", model: [newsInstance: newsInstance])
-            return
         }
     }
 

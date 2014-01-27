@@ -170,9 +170,9 @@ def selectNovoNoticiasInNewsPage(){
 
 }
 
-Then(~'^I can fill the news details$') {->
+Then(~'^I can fill the news details$') { ->
     at NewsCreatePage
-    page.fillNewsDetails()
+    page.fillNewDetails("essa eh a descricao")
 }
 
 Then(~'^the news with description "([^"]*)", date "([^"]*)" and "([^"]*)" research group is not stored by the system because it is invalid$') { String description, String date, String group ->

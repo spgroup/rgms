@@ -41,7 +41,7 @@ class NewsTestDataAndOperations {
         def news = News.findByDescriptionAndDateAndResearchGroup(description, date, researchGroup)
         news.setDescription(newDescription)
         cont.params << news.properties
-        cont.update()
+        cont.update(news.id)
         cont.response.reset()
     }
 
@@ -66,12 +66,7 @@ class NewsTestDataAndOperations {
         else if ( (dia > 30) && (mes == 7) ) {   // setembro
             retorno = false
         }
-        else if ( (dia > 30) && (mes == 11) ) {   // novembro
-            retorno = false
-        }
-        else {
-            retorno = true
-        }
+        else retorno = !((dia > 30) && (mes == 11))
 
         return retorno
     }
