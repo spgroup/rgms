@@ -96,7 +96,7 @@ Then(~'My resulting book chapter list contains "([^"]*)"$') { String title ->
     page.checkBookChapterAtList(title, 0)
 }
 When(~'^I go to NewBookChapter page$') { ->
-    to BookChapterPage
+//    to BookChapterPage
     at BookChapterPage
     page.selectNewBookChapter()
     at BookChapterCreatePage
@@ -151,10 +151,9 @@ And(~'^the book chapters are not stored by the system$') { ->
 }
 
 And(~'^the system has a book chapter entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    book = BookChapter.findByPublisher(title)
+    book = BookChapter.findByTitle(title)
     if (book == null) {
         BookChapterTestDataAndOperations.createBookChapter(title, filename)
-        to BookChapterCreatePage
     }
 }
 
@@ -163,9 +162,11 @@ Then(~'^the book chapter "([^"]*)" was not stored twice$') { String entitled ->
     assert bookChapter.size() < 2
 }
 
-And(~'^it is shown an message error$') { ->
-    at BookChapterSavePage
-    assert page.readFlashMessage() != null
+And(~'^the system shows an error message$') { ->
+    at BookChapterPage
+    //assert page.readFlashMessage()
+    //Thread.sleep(100000)
+    assert page.hasErrorUploadFile()
 }
 
 

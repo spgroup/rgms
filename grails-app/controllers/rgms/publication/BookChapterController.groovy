@@ -96,4 +96,6 @@ class BookChapterController {
 		def bookChapterInstance = BookChapter.get(id)
 		aux.delete(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
 	}
+
+
 }

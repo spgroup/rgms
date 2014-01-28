@@ -50,4 +50,9 @@ class BookChapterPage extends Page {
 
         assert bookChapterColumns.size() == 0
     }
+
+    def hasErrorUploadFile(){
+        GetPageTitle gp = new GetPageTitle()
+        return gp.msg('file.already.exist.message') == $("div", class: "message",role:"status").text()
+    }
 }

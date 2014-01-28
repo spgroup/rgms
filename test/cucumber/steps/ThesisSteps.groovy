@@ -22,9 +22,9 @@ Given(~'^The system has no thesis entitled "([^"]*)"$') { String title ->
 
 Given(~'^The thesis "([^"]*)" is stored in the system with file name "([^"]*)"$') {
     String title, filename ->
-        ThesisTestDataAndOperations.createTese(title, filename, "UFPE")
-        article = Tese.findByTitle(title)
-        assert article != null
+    ThesisTestDataAndOperations.createTese(title, filename, "UFPE")
+    article = Tese.findByTitle(title)
+    assert article != null
 }
 
 When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') {
@@ -129,13 +129,13 @@ When(~'^I select to view thesis "([^"]*)" in resulting list$') { title ->
 
 }
 
-When(~'^I select the remover option on Thesis Show Page$') { ->
+When(~'^I select the remover option at the thesis show page$') { ->
     at ThesisShowPage
     page.delete()
     //passo para remover o alert
 }
 
-Then(~'^the thesis "([^"]*)" has been removed from the system$') { title ->
+Then(~'^the thesis "([^"]*)" is removed from the system$') { title ->
     at ThesisPage
     thesisDoNotExists(title)
 }

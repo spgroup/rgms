@@ -40,8 +40,8 @@ Feature: BookChapter
     And the system has a book chapter entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     When I go to NewBookChapter page
     And I use the webpage to create the book chapter "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
-    Then the book chapter "Next Generation Software Product Line Engineering" was not stored twice
-    And it is shown an message error
+    Then the book chapter "Next Generation Software Product Line Engineering" is not stored twice
+    And the system shows an error message
 
 #if ($contextualInformation)
 

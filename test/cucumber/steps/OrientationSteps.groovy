@@ -1,15 +1,8 @@
-import geb.Browser
-import geb.js.AlertAndConfirmSupport
-import org.openqa.selenium.Alert
-import org.openqa.selenium.browserlaunchers.BrowserLauncher
 import pages.OrientationPages.*
 import pages.*
 import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Orientation
-import rgms.publication.Periodico
-import rgms.tool.FacebookTool
-import rgms.tool.TwitterTool
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
 
@@ -31,24 +24,24 @@ When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
     OrientationTestDataAndOperations.createOrientation(tituloTese)
 }
 
-Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String tituloTese ->
-    orientation = Orientation.findByTituloTese(tituloTese)
+Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String title ->
+    orientation = Orientation.findByTituloTese(title)
     assert orientation != null
 }
 
 //delete
-Given(~'^the system has an orientation entitled "([^"]*)" supervised for someone$') { String tituloTese ->
-    OrientationTestDataAndOperations.createOrientation(tituloTese)
-    orientation = OrientationTestDataAndOperations.findOrientationByTitle(tituloTese)
+Given(~'^the system has an orientation entitled "([^"]*)" supervised by someone$') { String title ->
+    OrientationTestDataAndOperations.createOrientation(title)
+    orientation = OrientationTestDataAndOperations.findOrientationByTitle(title)
     assert orientation != null
 }
 
-When(~'^I delete the orientation for "([^"]*)"$') { String tituloTese ->
-    OrientationTestDataAndOperations.removeOrientation(tituloTese)
+When(~'^I delete the orientation for "([^"]*)"$') { String title ->
+    OrientationTestDataAndOperations.removeOrientation(title)
 }
 
-Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { String tituloTese ->
-    orientation = Orientation.findByTituloTese(tituloTese)
+Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { String title ->
+    orientation = Orientation.findByTituloTese(title)
     assert orientation == null
 
 }
@@ -68,20 +61,26 @@ Given(~'^I am at the create orientation page$') { ->
     at OrientationCreatePage
 }
 
-When(~'^I fill the orientation title with "([^"]*)"$') { title ->
+When(~'^I fill the orientation title with "([^"]*)"$') { String title ->
 
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
 
     at OrientationShowPage
-    page.showList()
 
-    at OrientationsPage
 
 }
 
+And(~'^I select the list orientation option$'){ ->
+    at OrientationShowPage
+    page.showList()
+
+    at OrientationsPage
+}
+
+
 //edit web
-Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in the system$') { String title ->
+Given(~'^I am at the orientation page$') { ->
 
     Login()
 
@@ -90,6 +89,9 @@ Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in
     page.select("Orientation")
 
     at OrientationsPage
+}
+
+And (~'^the orientation "([^"]*)" is stored in the system$'){ String title ->
     page.selectNewOrientation()
 
     at OrientationCreatePage
@@ -105,6 +107,7 @@ Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in
     assert orientation != null
 }
 
+
 When(~'^I select to view orientation "([^"]*)" in resulting list$') { String oldtitle ->
 
     at OrientationsPage
@@ -115,17 +118,18 @@ When(~'^I select to view orientation "([^"]*)" in resulting list$') { String old
     at OrientationEditPage
 }
 
-When(~'^I change the orientation tituloTese to "([^"]*)"$') { String newtitle ->
+When(~'^I change the orientation title to "([^"]*)"$') { String newtitle ->
     page.editTituloTese(newtitle)
 }
 
-When(~'^I select the alterar option at orientation edit page$') { ->
+When(~'^I select the change option at the orientation edit page$') { ->
     page.confirmEdit()
 }
 
-Then(~'^I am on the orientation show page with edition completed$'){ ->
+Then(~'^the edited orientation "([^"]*)" is properly stored by the system$'){ String title ->
     at OrientationShowPage
-    assert page.readFlashMessage() != null
+    orientation = Orientation.findByTituloTese(title)
+    assert orientation != null
 }
 
 
@@ -183,7 +187,7 @@ When(~'^I fill the orientation title with "([^"]*)" and the year with (-?\\d+)$'
     page.selectCreateOrientation()
 }
 
-Then(~'^I am still on the create orientation page with the error message$') { ->
+Then(~'^I am still on the create orientation page with an error message$') { ->
     at OrientationCreatePage
     assert page.readFlashMessage() != null
 }
@@ -219,18 +223,18 @@ Then(~'^the orientation "([^"]*)" was not stored twice$') { entitled ->
 }
 
 //#2
-Then(~'^the orientation for the thesis "([^"]*)" was not stored twice$') { entitled ->
+Then(~'^the orientation for the thesis "([^"]*)" is not stored twice$') { entitled ->
     orientation = Orientation.findAllByTituloTese(entitled)
     assert orientation.size() < 2
 }
 
 //#5
-And(~'^I change the orientation anoPublicacao to (-?\\d+)$') { anoPublicacao ->
+And(~'^I fill the orientation field yearPublication with (-?\\d+)$') { anoPublicacao ->
     at OrientationEditPage
     page.editYear(anoPublicacao)
 }
 
-Then(~'^I am still on the change orientation page with the error message$') { ->
+Then(~'^I am still on the change orientation page with an error message$') { ->
     at OrientationEditPage
     assert page.readFlashMessage() != null
 }
@@ -247,7 +251,7 @@ When(~'^I select to view "([^"]*)" in the list of orientations$') { title ->
     at OrientationShowPage
 }
 
-When(~'^I select the option remove at Orientation Show Page$') { ->
+When(~'^I select the option remove at the orientation show page$') { ->
     at OrientationShowPage
     page.delete()
 

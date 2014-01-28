@@ -34,8 +34,8 @@ Feature: Thesis Tests
   Scenario: remove existing thesis web
     Given I am at the thesis page and the thesis "Software Enginnering2" is stored in the system
     When I select to view thesis "Software Enginnering2" in resulting list
-    And I select the remover option on Thesis Show Page
-    Then the thesis "Software Enginnering2" has been removed from the system
+    And I select the remover option at the thesis show page
+    Then the thesis "Software Enginnering2" is removed from the system
 
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default
