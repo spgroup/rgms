@@ -32,4 +32,10 @@ class NewsPage extends Page {
         $("p span", text: desc).size() == 1
     }
     //#end
+
+    def selectViewNew(title) {
+        getRow()
+        def showLink = getRow().find('td').find([text:title])
+        showLink.click()
+    }
 }
