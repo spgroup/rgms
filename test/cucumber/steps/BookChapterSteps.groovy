@@ -94,6 +94,7 @@ Then(~'My resulting book chapter list contains "([^"]*)"$') { String title ->
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
 }
+
 When(~'^I go to new book chapter page$') { ->
 //    to BookChapterPage
     at BookChapterPage

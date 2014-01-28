@@ -20,18 +20,6 @@ Feature: orientations
     And I select the list orientation option
     Then the orientation "The Book of Web Software" is properly stored by the system
 
-  Scenario: new orientation with registered member orientated
-    Given the system has no orientations entitled "The Book is on the table 2"
-    When I create a orientation for the thesis "The Book is on the table 2"
-    And the "Rubens Lopes" has been registered member
-    Then the orientation "The Book is on the table 2" with registered member "Rubens Lopes" is properly stored by the system
-
-
-  Scenario: duplicate orientation
-    Given the orientation entitled "The Book is on the table 2" is stored in the system with orientated  name "Rubens Lopes"
-    When I create the orientated  entitled "The Book is on the table 2" with orientated  name "Rubens Lopes"
-    Then the orientated  "Next Generation Software Product Line Engineering" is not stored twice
-
   Scenario: edit existing orientation web
     Given I am at the orientation page
     And the orientation "The Book of Software Engineering" is stored in the system
@@ -67,6 +55,7 @@ Feature: orientations
     And the orientation "The Book is on the table" is stored in the system
     When I select to view orientation "The Book is on the table" in resulting list
     And I change the orientation title to "Hexa"
+<<<<<<< HEAD
     And I fill the orientation publication year with -1
     And I select the change option at the orientation edit page
     Then I am still on the change orientation page with an error message
@@ -79,6 +68,20 @@ Feature: orientations
     And I select the option remove at the orientation show page
     Then The orientation "Hexa2" is properly removed by the system
 
+=======
+    And I fill the orientation field yearPublication with -1
+    And I select the change option at the orientation edit page
+    Then I am still on the change orientation page with an error message
+
+  #9 extra
+  Scenario: remove orientation web
+    Given I am at the orientation page
+    And the orientation "Hexa2" is stored in the system
+    When I select to view "Hexa2" in the list of orientations
+    And I select the option remove at the orientation show page
+    Then The orientation "Hexa2" is properly removed by the system
+
+>>>>>>> Correções de inglês nos textos dos cenários, implementação de sugestões nos testes de BookChapter, remoção de e-mail das configurações, correções de identação e correção do bug no teste de BookChapter
   #if ($XMLUpload)
   Scenario: upload orientation with a file
     Given the system has some orientations stored
@@ -91,4 +94,8 @@ Feature: orientations
     And I select the upload button at the orientations page
     Then I'm still on orientations page
     And the orientations are not stored by the system
+<<<<<<< HEAD
   #end
+=======
+  #end
+>>>>>>> Correções de inglês nos textos dos cenários, implementação de sugestões nos testes de BookChapter, remoção de e-mail das configurações, correções de identação e correção do bug no teste de BookChapter

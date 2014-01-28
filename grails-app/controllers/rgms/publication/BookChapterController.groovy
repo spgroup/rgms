@@ -89,5 +89,4 @@ class BookChapterController {
         aux.delete(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
     }
 
-
 }

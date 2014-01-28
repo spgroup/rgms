@@ -18,9 +18,9 @@ Given(~'^The system has no thesis entitled "([^"]*)"$') { String title ->
 
 Given(~'^The thesis "([^"]*)" is stored in the system with file name "([^"]*)"$') {
     String title, filename ->
-        ThesisTestDataAndOperations.createTese(title, filename, "UFPE")
-        article = Tese.findByTitle(title)
-        assert article != null
+    ThesisTestDataAndOperations.createTese(title, filename, "UFPE")
+    article = Tese.findByTitle(title)
+    assert article != null
 }
 
 When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') {
