@@ -54,11 +54,16 @@ Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { Str
 //create web
 Given(~'^I am at the create orientation page$') { ->
 
-    createOrientation()
+    goToOrientationCreatePage()
 }
 
 When(~'^I fill the orientation title with "([^"]*)"$') { title ->
 
+    fillOrientationWithTitleAndCreateThen(title)
+
+}
+
+private void fillOrientationWithTitleAndCreateThen(title) {
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
 
@@ -250,7 +255,7 @@ def Login() {
     page.fillLoginData("admin", "adminadmin")
 }
 
-private void createOrientation() {
+private void goToOrientationCreatePage() {
     Login()
 
     to PublicationsPage
