@@ -12,6 +12,7 @@ import rgms.tool.FacebookTool
 import rgms.tool.TwitterTool
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
+import pages.LoginPage
 import geb.Page
 
 import org.apache.shiro.util.ThreadContext
@@ -113,19 +114,7 @@ Then(~'^I am on the orientation show page with edition completed$'){ ->
 
 
 Given(~'^the system has some orientations stored$') { ->
-    // save old metaclass
-    def registry = GroovySystem.metaClassRegistry
-    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
-    registry.removeMetaClass(SecurityUtils)
-
-    // Mock login
-    def subject = [getPrincipal: { "admin" },
-            isAuthenticated: { true }
-    ] as Subject
-    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-            [getSubject: { subject } as SecurityManager])
-    SecurityUtils.metaClass.static.getSubject = { subject }
-
+    LoginPage.login()
     initialSize = Orientation.findAll().size()
 }
 

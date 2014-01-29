@@ -1,6 +1,9 @@
 package pages
 
 import geb.Page
+import org.apache.shiro.SecurityUtils
+import org.apache.shiro.subject.Subject
+import org.apache.shiro.util.ThreadContext
 
 class LoginPage extends Page {
     def titleName = /${(new GetPageTitle()).getMessageServerLocale("user.login.title")}/
@@ -30,6 +33,21 @@ class LoginPage extends Page {
     def fillLoginData(String l, String p) {
         fillLoginDataOnly(l,p)
         $("form").signIn().click()
+    }
+
+    def login(){
+        // save old metaclass
+        def registry = GroovySystem.metaClassRegistry
+        this.oldMetaClass = registry.getMetaClass(SecurityUtils)
+        registry.removeMetaClass(SecurityUtils)
+
+        // Mock login
+        def subject = [getPrincipal: { "admin" },
+                isAuthenticated: { true }
+        ] as Subject
+        ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+                [getSubject: { subject } as SecurityManager])
+        SecurityUtils.metaClass.static.getSubject = { subject }
     }
 
 
