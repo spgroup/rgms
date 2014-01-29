@@ -92,9 +92,14 @@ And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$')
 }
 
 Then(~'My resulting book chapter list contains "([^"]*)"$') { String title ->
+    checkIfBookIsOnListAtBookChapterPage(title)
+}
+
+private void checkIfBookIsOnListAtBookChapterPage(String title) {
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
 }
+
 When(~'^I go to NewBookChapter page$') { ->
     to BookChapterPage
     at BookChapterPage
