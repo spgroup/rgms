@@ -12,6 +12,7 @@ import rgms.tool.FacebookTool
 import rgms.tool.TwitterTool
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
+import geb.Page
 
 import org.apache.shiro.util.ThreadContext
 import org.apache.shiro.subject.Subject
@@ -106,7 +107,8 @@ When(~'^I select the alterar option at orientation edit page$') { ->
 }
 
 Then(~'^I am on the orientation show page with edition completed$'){ ->
-    atPage(OrientationShowPage)
+    at OrientationShowPage
+    assert page.readFlashMessage() != null
 }
 
 
@@ -165,7 +167,8 @@ When(~'^I fill the orientation title with "([^"]*)" and the year with (-?\\d+)$'
 }
 
 Then(~'^I am still on the create orientation page with the error message$') { ->
-    atPage(OrientationCreatePage)
+    at OrientationCreatePage
+    assert page.readFlashMessage() != null
 }
 
 //new orientation with registered member orientated
@@ -198,7 +201,8 @@ And(~'^I change the orientation anoPublicacao to (-?\\d+)$') { anoPublicacao ->
 }
 
 Then(~'^I am still on the change orientation page with the error message$') { ->
-    atPage(OrientationEditPagePage)
+    at OrientationEditPage
+    assert page.readFlashMessage() != null
 }
 
 Then(~'^The orientation "([^"]*)" is properly removed by the system$') { title ->
@@ -227,11 +231,6 @@ def Login() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
-}
-
-private void atPage(page) {
-    at $page
-    assert page.readFlashMessage() != null
 }
 
 private void createOrientation() {
