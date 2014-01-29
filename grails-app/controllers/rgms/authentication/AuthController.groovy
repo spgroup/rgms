@@ -276,7 +276,7 @@ class AuthController {
 //        flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
 //        redirect(action: "index", id: memberInstance.id)
 
-        flash.message = "Usuário cadastrado com sucesso";
+        flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), memberInstance.name])
         redirect(uri: "/auth/login")
     }
 
