@@ -129,7 +129,8 @@ Then(~'^the edited orientation "([^"]*)" is properly stored by the system$') { S
 
 
 Given(~'^the system has some orientations stored$') { ->
-    LoginPage.login()
+    def loginPage = new LoginPage()
+    loginPage.login(this)
     initialSize = Orientation.findAll().size()
 }
 

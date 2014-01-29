@@ -16,7 +16,8 @@ import org.apache.shiro.subject.Subject
 import org.apache.shiro.SecurityUtils
 
 Given(~'^the system has some publications stored$') {->
-    LoginPage.login()
+    def loginPage = new LoginPage()
+    loginPage.login(this)
     initialSize = Publication.findAll().size()
 }
 When(~'^I upload the publications of "([^"]*)"$') { filename ->
