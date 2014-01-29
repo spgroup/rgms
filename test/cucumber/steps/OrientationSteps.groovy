@@ -7,6 +7,8 @@ import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
 import pages.LoginPage
 import org.apache.shiro.SecurityUtils
+import org.apache.shiro.subject.Subject
+import org.apache.shiro.util.ThreadContext
 
 import static cucumber.api.groovy.EN.*
 
@@ -203,8 +205,15 @@ When(~'^I select the option remove at Orientation Show Page$') { ->
 //FUNCOES AUXILIARES
 
 def loginController(){
-    def loginPage = new LoginPage()
-    loginPage.login(this)
+    def registry = GroovySystem.metaClassRegistry
+    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
+    registry.removeMetaClass(SecurityUtils)
+    def subject = [getPrincipal: { "admin" },
+            isAuthenticated: { true }
+    ]as Subject
+    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+            [getSubject: { subject } as SecurityManager])
+    SecurityUtils.metaClass.static.getSubject = { subject }
 }
 
 def logoutController() {

@@ -15,9 +15,18 @@ import org.apache.shiro.util.ThreadContext
 import org.apache.shiro.subject.Subject
 import org.apache.shiro.SecurityUtils
 
-Given(~'^the system has some publications stored$') {->
-    def loginPage = new LoginPage()
-    loginPage.login(this)
+Given(~'^the system has some publications stored$') { ->
+
+    def registry = GroovySystem.metaClassRegistry
+    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
+    registry.removeMetaClass(SecurityUtils)
+    def subject = [getPrincipal: { "admin" },
+            isAuthenticated: { true }
+    ] as Subject
+    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+            [getSubject: { subject } as SecurityManager])
+    SecurityUtils.metaClass.static.getSubject = { subject }
+
     initialSize = Publication.findAll().size()
 }
 When(~'^I upload the publications of "([^"]*)"$') { filename ->
