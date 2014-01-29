@@ -2,30 +2,30 @@ import pages.ArticlePages.ArticlesPage
 import pages.BookChapterPage
 import pages.Conferencia.ConferenciaPage
 import pages.DissertationPage
+import pages.LoginPage
 import pages.OrientationPages.OrientationsPage
 import pages.XMLImportPage
 import pages.ferramenta.FerramentaPage
 import rgms.publication.*
 import static cucumber.api.groovy.EN.*
 import steps.TestDataAndOperations
+import CommonSteps
 
 import org.apache.shiro.util.ThreadContext
 import org.apache.shiro.subject.Subject
 import org.apache.shiro.SecurityUtils
 
-Given(~'^the system has some publications stored$') {->
-    // save old metaclass
+Given(~'^the system has some publications stored$') { ->
+
     def registry = GroovySystem.metaClassRegistry
     this.oldMetaClass = registry.getMetaClass(SecurityUtils)
     registry.removeMetaClass(SecurityUtils)
-
-    // Mock login
-    def subject = [getPrincipal: {"admin"},
-        isAuthenticated: {true}
-    ]as Subject
+    def subject = [getPrincipal: { "admin" },
+            isAuthenticated: { true }
+    ] as Subject
     ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-        [getSubject: {subject} as SecurityManager])
-    SecurityUtils.metaClass.static.getSubject = {subject}
+            [getSubject: { subject } as SecurityManager])
+    SecurityUtils.metaClass.static.getSubject = { subject }
 
     initialSize = Publication.findAll().size()
 }

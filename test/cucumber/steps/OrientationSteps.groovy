@@ -1,29 +1,20 @@
-import geb.Browser
-import geb.js.AlertAndConfirmSupport
-import org.openqa.selenium.Alert
-import org.openqa.selenium.browserlaunchers.BrowserLauncher
 import pages.OrientationPages.*
 import pages.*
 import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Orientation
-import rgms.publication.Periodico
-import rgms.tool.FacebookTool
-import rgms.tool.TwitterTool
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
-
-import org.apache.shiro.util.ThreadContext
-import org.apache.shiro.subject.Subject
+import pages.LoginPage
 import org.apache.shiro.SecurityUtils
+import org.apache.shiro.subject.Subject
+import org.apache.shiro.util.ThreadContext
 
 import static cucumber.api.groovy.EN.*
 
 // create
 Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTese ->
-    // Express the Regexp above with the code you wish you had
-    orientation = Orientation.findByTituloTese(tituloTese)
-    assert orientation == null
+    checkIfOrientationDoNotExists(tituloTese)
 }
 
 When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
@@ -48,19 +39,28 @@ When(~'^I delete the orientation for "([^"]*)"$') { String tituloTese ->
 }
 
 Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { String tituloTese ->
+    checkIfOrientationDoNotExists(tituloTese)
+
+}
+
+private void checkIfOrientationDoNotExists(String tituloTese) {
     orientation = Orientation.findByTituloTese(tituloTese)
     assert orientation == null
-
 }
 
 //create web
 Given(~'^I am at the create orientation page$') { ->
 
-    createOrientation()
+    goToOrientationCreatePage()
 }
 
 When(~'^I fill the orientation title with "([^"]*)"$') { title ->
 
+    fillOrientationWithTitleAndCreateThen(title)
+
+}
+
+private void fillOrientationWithTitleAndCreateThen(title) {
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
 
@@ -68,20 +68,13 @@ When(~'^I fill the orientation title with "([^"]*)"$') { title ->
     page.showList()
 
     at OrientationsPage
-
 }
 
 //edit web
 Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in the system$') { String title ->
 
-    createOrientation()
-    page.fillOrientationDetails(title)
-    page.selectCreateOrientation()
-
-    at OrientationShowPage
-    page.showList()
-
-    at OrientationsPage
+    goToOrientationCreatePage()
+    fillOrientationWithTitleAndCreateThen(title)
 
     orientation = Orientation.findByTituloTese(title)
     assert orientation != null
@@ -106,24 +99,13 @@ When(~'^I select the alterar option at orientation edit page$') { ->
 }
 
 Then(~'^I am on the orientation show page with edition completed$'){ ->
-    atPage(OrientationShowPage)
+    at OrientationShowPage
+    assert page.readFlashMessage() != null
 }
 
 
 Given(~'^the system has some orientations stored$') { ->
-    // save old metaclass
-    def registry = GroovySystem.metaClassRegistry
-    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
-    registry.removeMetaClass(SecurityUtils)
-
-    // Mock login
-    def subject = [getPrincipal: { "admin" },
-            isAuthenticated: { true }
-    ] as Subject
-    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-            [getSubject: { subject } as SecurityManager])
-    SecurityUtils.metaClass.static.getSubject = { subject }
-
+    loginController()
     initialSize = Orientation.findAll().size()
 }
 
@@ -136,8 +118,7 @@ When(~'^I upload a new orientation "([^"]*)"$') { filename ->
 }
 
 Then(~'the system has more orientations now$') { ->
-    // restore metaclass
-    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
+    logoutController()
     finalSize = Orientation.findAll().size()
 }
 
@@ -165,7 +146,8 @@ When(~'^I fill the orientation title with "([^"]*)" and the year with (-?\\d+)$'
 }
 
 Then(~'^I am still on the create orientation page with the error message$') { ->
-    atPage(OrientationCreatePage)
+    at OrientationCreatePage
+    assert page.readFlashMessage() != null
 }
 
 //new orientation with registered member orientated
@@ -198,7 +180,8 @@ And(~'^I change the orientation anoPublicacao to (-?\\d+)$') { anoPublicacao ->
 }
 
 Then(~'^I am still on the change orientation page with the error message$') { ->
-    atPage(OrientationEditPagePage)
+    at OrientationEditPage
+    assert page.readFlashMessage() != null
 }
 
 Then(~'^The orientation "([^"]*)" is properly removed by the system$') { title ->
@@ -221,21 +204,31 @@ When(~'^I select the option remove at Orientation Show Page$') { ->
 
 //FUNCOES AUXILIARES
 
+def loginController(){
+    def registry = GroovySystem.metaClassRegistry
+    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
+    registry.removeMetaClass(SecurityUtils)
+    def subject = [getPrincipal: { "admin" },
+            isAuthenticated: { true }
+    ]as Subject
+    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+            [getSubject: { subject } as SecurityManager])
+    SecurityUtils.metaClass.static.getSubject = { subject }
+}
 
-// o problema de duplicação que este método resolve não foi identificado pela ferramenta de detecção de clones
-def Login() {
+def logoutController() {
+    // restore metaclass
+    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
+}
+
+def loginWeb() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
 }
 
-private void atPage(page) {
-    at $page
-    assert page.readFlashMessage() != null
-}
-
-private void createOrientation() {
-    Login()
+private void goToOrientationCreatePage() {
+    loginWeb()
 
     to PublicationsPage
     at PublicationsPage

@@ -8,13 +8,7 @@ class TestDataDissertacao
 
     static public void createDissertacao(String title, filename, school) {
         def cont = new DissertacaoController()
-        def date = new Date()
-        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
-                school: school, address: "Boa Viagem", file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title,filename,school,cont)
     }
 
 
