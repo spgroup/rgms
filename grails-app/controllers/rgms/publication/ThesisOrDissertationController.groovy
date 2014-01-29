@@ -13,16 +13,19 @@ class ThesisOrDissertationController {
     def listThesisOrDissertation(String thesisOrDissertation, params) {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         if (thesisOrDissertation == "Tese") {
+            //noinspection GroovyAssignabilityCheck
             [teseInstanceList: Tese.list(params), teseInstanceTotal: Tese.count()]
         } else if (thesisOrDissertation == "Dissertacao") {
+            //noinspection GroovyAssignabilityCheck
             [dissertacaoInstanceList: Dissertacao.list(params), dissertacaoInstanceTotal: Dissertacao.count()]
         }
     }
 
     def createThesisOrDissertation(String thesisOrDissertation, params) {
+        //noinspection GroovyAssignabilityCheck
         def instance = getClassByName(thesisOrDissertation).newInstance(params)
         //#if($contextualInformation)
-        def user = PublicationController.addAuthor(instance)
+        def user = PublicationController.addAuthor(instance as Publication)
         if (user && !user.university.isEmpty()){
             instance.school = user.university
         }
@@ -31,12 +34,15 @@ class ThesisOrDissertationController {
     }
 
     def saveThesisOrDissertation(String thesisOrDissertation, params) {
+        //noinspection GroovyAssignabilityCheck
         def instance = getClassByName(thesisOrDissertation).newInstance(params)
         PublicationController pb = new PublicationController()
         def duplicated
         if (thesisOrDissertation == "Tese") {
+            //noinspection GroovyAssignabilityCheck
             duplicated = Tese.findByTitle(params.title)
         } else if (thesisOrDissertation == "Dissertacao") {
+            //noinspection GroovyAssignabilityCheck
             duplicated = Dissertacao.findByTitle(params.title)
         }
         if (duplicated) {
@@ -44,7 +50,7 @@ class ThesisOrDissertationController {
             render(view: "create", model: [instance: instance])
             return
         }
-        if (!pb.upload(instance) || !instance.save(flush: true)) {
+        if (!pb.upload(instance as Publication) || !instance.save(flush: true)) {
             render(view: "create", model: [instance: instance])
             return
         }
@@ -71,7 +77,9 @@ class ThesisOrDissertationController {
         if (params.version) {
             def version = params.version.toLong()
             if (instance.version > version) {
+                //noinspection GroovyUnusedAssignment
                 def lower = thesisOrDissertation.toLowerCase()
+                //noinspection InvalidI18nProperty
                 instance.errors.rejectValue("version", "default.optimistic.locking.failure",
                           [message(code: '${lower}.label', default: thesisOrDissertation)] as Object[],
                           messageGenerator(thesisOrDissertation, "default.optimistic.locking.failure", params.id))
@@ -101,7 +109,7 @@ class ThesisOrDissertationController {
             messageGenerator(thesisOrDissertation, 'default.deleted.message', instance.id)
             redirect(action: "list")
         }
-        catch (DataIntegrityViolationException e) {
+        catch (DataIntegrityViolationException ignored) {
             messageGenerator(thesisOrDissertation, 'default.not.deleted.message', instance.id)
             redirect(action: "show", id: params.id)
         }
@@ -112,7 +120,6 @@ class ThesisOrDissertationController {
         if (!instance) {
             messageGenerator(thesisOrDissertation, 'default.not.found.message', params.id)
             redirect(action: "list")
-            return
         }
         return instance
     }
