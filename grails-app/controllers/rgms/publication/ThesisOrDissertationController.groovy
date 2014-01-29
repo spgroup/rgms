@@ -67,12 +67,8 @@ class ThesisOrDissertationController {
     }
 
     def updateThesisOrDissertation(String thesisOrDissertation, params) {
-        def instance = getClassByName(thesisOrDissertation).get(params.id)
-        if (!instance) {
-            messageGenerator(thesisOrDissertation, 'default.not.found.message', params.id)
-            redirect(action: "list")
-            return
-        }
+        def instance = getThesisOrDissertationControllerInstance(thesisOrDissertation,params)
+        if(instance == null) return
         if (params.version) {
             def version = params.version.toLong()
             if (instance.version > version) {
@@ -98,12 +94,8 @@ class ThesisOrDissertationController {
     }
 
     def deleteThesisOrDissertation(String thesisOrDissertation, params) {
-        def instance = getClassByName(thesisOrDissertation).get(params.id)
-        if (!instance) {
-            messageGenerator(thesisOrDissertation, 'default.not.found.message', params.id)
-            redirect(action: "list")
-            return
-        }
+       def instance = getThesisOrDissertationControllerInstance(thesisOrDissertation, params)
+       if(instance == null) return
         try {
             instance.removeFromPublications()
             instance.delete(flush: true)
@@ -114,6 +106,16 @@ class ThesisOrDissertationController {
             messageGenerator(thesisOrDissertation, 'default.not.deleted.message', instance.id)
             redirect(action: "show", id: params.id)
         }
+    }
+
+    def getThesisOrDissertationControllerInstance(String thesisOrDissertation, params) {
+        def instance = getClassByName(thesisOrDissertation).get(params.id)
+        if (!instance) {
+            messageGenerator(thesisOrDissertation, 'default.not.found.message', params.id)
+            redirect(action: "list")
+            return
+        }
+        return instance
     }
 
     def getClassByName(String thesisOrDissertation) {
