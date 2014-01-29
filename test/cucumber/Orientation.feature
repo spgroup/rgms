@@ -28,7 +28,7 @@ Feature: orientations
 
   Scenario: create duplicated orientation
     Given I am at the create orientation page
-    And the system has thesis entitled "The Book is on the table" supervised for someone
+    And the system has thesis entitled "The Book is on the table" supervised by someone
     When I fill the orientation title with "The Book is on the table"
     Then I am on the orientation show page with the error message
 

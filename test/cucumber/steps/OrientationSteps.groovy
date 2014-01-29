@@ -33,7 +33,7 @@ Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String t
 
 
 //delete
-Given(~'^the system has thesis entitled "([^"]*)" supervised for someone$') { String tituloTese ->
+Given(~'^the system has thesis entitled "([^"]*)" supervised by someone$') { String tituloTese ->
 
     OrientationTestDataAndOperations.createOrientation(tituloTese)
     orientation = OrientationTestDataAndOperations.findOrientationByTitle(tituloTese)
