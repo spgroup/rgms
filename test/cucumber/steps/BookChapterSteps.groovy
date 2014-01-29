@@ -1,9 +1,5 @@
 import pages.*
-import cucumber.runtime.PendingException
-import rgms.member.Member
 import rgms.publication.BookChapter
-import rgms.publication.Periodico
-import steps.TestDataAndOperations
 import steps.TestDataAndOperationsPublication
 import steps.BookChapterTestDataAndOperations
 
@@ -80,7 +76,7 @@ When(~'^I view the book chapter list$') { ->
 Then(~'my book chapter list contains "([^"]*)"$') { String title ->
     at BookChapterPage
     bookChapterList = BookChapter.findAll()
-    assert BookChapterTestDataAndOperations.containsBookChapter(title, bookChapterList)
+    assert BookChapterTestDataAndOperations.containsBookChapter(title)
 }
 And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$') { String title, filename ->
     page.selectNewBookChapter()
