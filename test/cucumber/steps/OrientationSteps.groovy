@@ -103,8 +103,7 @@ Then(~'^I am on the orientation show page with edition completed$'){ ->
 
 
 Given(~'^the system has some orientations stored$') { ->
-    def loginPage = new LoginPage()
-    loginPage.login(this)
+    loginController()
     initialSize = Orientation.findAll().size()
 }
 
@@ -204,16 +203,19 @@ When(~'^I select the option remove at Orientation Show Page$') { ->
 
 //FUNCOES AUXILIARES
 
+def loginController(){
+    def loginPage = new LoginPage()
+    loginPage.login(this)
+}
 
-// o problema de duplicação que este método resolve não foi identificado pela ferramenta de detecção de clones
-def Login() {
+def loginWeb() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
 }
 
 private void goToOrientationCreatePage() {
-    Login()
+    loginWeb()
 
     to PublicationsPage
     at PublicationsPage
