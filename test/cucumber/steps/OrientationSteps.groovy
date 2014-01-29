@@ -12,6 +12,7 @@ import rgms.member.Member
 import rgms.member.Orientation
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
+import pages.LoginPage
 import geb.Page
 
 import static cucumber.api.groovy.EN.*
@@ -128,19 +129,7 @@ Then(~'^the edited orientation "([^"]*)" is properly stored by the system$') { S
 
 
 Given(~'^the system has some orientations stored$') { ->
-    // save old metaclass
-    def registry = GroovySystem.metaClassRegistry
-    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
-    registry.removeMetaClass(SecurityUtils)
-
-    // Mock login
-    def subject = [getPrincipal: { "admin" },
-            isAuthenticated: { true }
-    ] as Subject
-    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-            [getSubject: { subject } as SecurityManager])
-    SecurityUtils.metaClass.static.getSubject = { subject }
-
+    LoginPage.login()
     initialSize = Orientation.findAll().size()
 }
 
