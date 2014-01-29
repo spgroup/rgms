@@ -1,22 +1,11 @@
-import geb.Browser
-import geb.js.AlertAndConfirmSupport
-import org.openqa.selenium.Alert
-import org.openqa.selenium.browserlaunchers.BrowserLauncher
 import pages.OrientationPages.*
 import pages.*
 import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Orientation
-import rgms.publication.Periodico
-import rgms.tool.FacebookTool
-import rgms.tool.TwitterTool
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
 import pages.LoginPage
-import geb.Page
-
-import org.apache.shiro.util.ThreadContext
-import org.apache.shiro.subject.Subject
 import org.apache.shiro.SecurityUtils
 
 import static cucumber.api.groovy.EN.*
@@ -58,11 +47,16 @@ Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { Str
 //create web
 Given(~'^I am at the create orientation page$') { ->
 
-    createOrientation()
+    goToOrientationCreatePage()
 }
 
 When(~'^I fill the orientation title with "([^"]*)"$') { title ->
 
+    fillOrientationWithTitleAndCreateThen(title)
+
+}
+
+private void fillOrientationWithTitleAndCreateThen(title) {
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
 
@@ -70,20 +64,13 @@ When(~'^I fill the orientation title with "([^"]*)"$') { title ->
     page.showList()
 
     at OrientationsPage
-
 }
 
 //edit web
 Given(~'^I am at the orientation page and the orientation "([^"]*)" is stored in the system$') { String title ->
 
-    createOrientation()
-    page.fillOrientationDetails(title)
-    page.selectCreateOrientation()
-
-    at OrientationShowPage
-    page.showList()
-
-    at OrientationsPage
+    goToOrientationCreatePage()
+    fillOrientationWithTitleAndCreateThen(title)
 
     orientation = Orientation.findByTituloTese(title)
     assert orientation != null
@@ -223,7 +210,7 @@ def Login() {
     page.fillLoginData("admin", "adminadmin")
 }
 
-private void createOrientation() {
+private void goToOrientationCreatePage() {
     Login()
 
     to PublicationsPage
