@@ -12,6 +12,7 @@ import rgms.member.Member
 import rgms.member.Orientation
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
+import geb.Page
 
 import static cucumber.api.groovy.EN.*
 
@@ -257,11 +258,6 @@ def Login() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
-}
-
-private void atPage(page) {
-    at $page
-    assert page.readFlashMessage() != null
 }
 
 private void createOrientation() {
