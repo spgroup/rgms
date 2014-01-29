@@ -30,7 +30,7 @@ class BookChapterTestDataAndOperations {
         }
     }
 
-    static public boolean bookChapterCompatibleTo(bookChapter, title) {
+    static public boolean bookChapterCompatibleTo(bookChapter, String title) {
         def testBookChapter = findBookChapterByTitle(title)
         def compatible = false
         if (testBookChapter == null && bookChapter == null) {
@@ -44,7 +44,7 @@ class BookChapterTestDataAndOperations {
         return compatible
     }
 
-    static public void uploadBookChapter(filename) {
+    static public void uploadBookChapter(String filename) {
         def cont = new XMLController()
         def xml = new File(filename);
         def records = new XmlParser()
@@ -54,8 +54,7 @@ class BookChapterTestDataAndOperations {
 
     static public void createBookChapter(String title, String filename) {
         def cont = new BookChapterController()
-        def date = new Date()
-        cont.params << BookChapterTestDataAndOperations.findBookChapterByTitle(title) << [file: filename]
+        cont.params << findBookChapterByTitle(title) << [file: filename]
         cont.request.setContent(new byte[1000])
         cont.create()
         cont.save()
@@ -66,12 +65,13 @@ class BookChapterTestDataAndOperations {
         def testBookChapter = BookChapter.findByTitle(title)
         def cont = new BookChapterController()
         cont.params << [id: testBookChapter.id]
-        cont.delete()
+        cont.delete(testBookChapter.id)
     }
 
-    static public boolean containsBookChapter(title, bookList) {
+    static public boolean containsBookChapter(String title) {
         def testarbook = BookChapter.findByTitle(title)
         def cont = new BookChapterController()
+        //noinspection GroovyAssignabilityCheck
         def result = cont.list().bookChapterInstanceList
         return result.contains(testarbook)
     }
