@@ -29,7 +29,7 @@ class OrientationsPage extends Page {
         $('a', class: 'create').click()
     }
 
-    def selectViewOrientation(title) {
+    def selectViewOrientation(String title) {
 
         def id = Orientation.findByTituloTese(title).id
         $("a", text: id.toString()).click()

@@ -38,6 +38,7 @@ class OrientationController {
     def comparacaoOrientationComRender(orientationInstance, tipoRender) {
         if(orientationInstance.orientador.name.equalsIgnoreCase(orientationInstance.orientando)) {
             render(view: tipoRender, model: [orientationInstance: orientationInstance])
+            //noinspection InvalidI18nProperty
             flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
             return false
         }
@@ -54,12 +55,14 @@ class OrientationController {
     }
 
     def showFlashMessage(Long id, String action, String code){
+        //noinspection InvalidI18nProperty
         flash.message = message(code: code, args: [message(code: 'orientation.label', default: 'Orientation'), id])
         redirect(action: action, id: id)
     }
 
     def _processOrientation()
     {
+        //noinspection GroovyAssignabilityCheck
         def orientationInstance = Orientation.get(params.id)
         if (!orientationInstance) {
             showFlashMessage(null, "list",'default.not.found.message')
@@ -111,6 +114,7 @@ class OrientationController {
 
         if (version != null) {
             if (orientationInstance.version > version) {
+                //noinspection InvalidI18nProperty
                 orientationInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'orientation.label', default: 'Orientation')] as Object[],
                         'default.orientation.checkVersion.message')
@@ -125,6 +129,7 @@ class OrientationController {
         def orientationInstance = isOrientationInstance(id)
 
         if(orientationInstance != null){
+            //noinspection GroovyUnusedCatchParameter
             try {
                 orientationInstance.delete(flush: true)
                 showFlashMessage(id,"list",'default.deleted.message')
