@@ -131,8 +131,7 @@ Then(~'^the edited orientation "([^"]*)" is properly stored by the system$') { S
 
 
 Given(~'^the system has some orientations stored$') { ->
-    def loginPage = new LoginPage()
-    loginPage.login(this)
+    loginController()
     initialSize = Orientation.findAll().size()
 }
 
@@ -253,7 +252,7 @@ def Login() {
 }
 
 private void goToOrientationCreatePage() {
-    Login()
+    loginWeb()
 
     to PublicationsPage
     at PublicationsPage
