@@ -12,7 +12,7 @@ import static cucumber.api.groovy.EN.*
 
 // create
 Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTese ->
-    checkIfValidationDoNotExists(tituloTese)
+    checkIfOrientationDoNotExists(tituloTese)
 }
 
 When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
@@ -37,11 +37,11 @@ When(~'^I delete the orientation for "([^"]*)"$') { String tituloTese ->
 }
 
 Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { String tituloTese ->
-    checkIfValidationDoNotExists(tituloTese)
+    checkIfOrientationDoNotExists(tituloTese)
 
 }
 
-private void checkIfValidationDoNotExists(String tituloTese) {
+private void checkIfOrientationDoNotExists(String tituloTese) {
     orientation = Orientation.findByTituloTese(tituloTese)
     assert orientation == null
 }
@@ -116,8 +116,7 @@ When(~'^I upload a new orientation "([^"]*)"$') { filename ->
 }
 
 Then(~'the system has more orientations now$') { ->
-    // restore metaclass
-    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
+    logoutController()
     finalSize = Orientation.findAll().size()
 }
 
@@ -206,6 +205,11 @@ When(~'^I select the option remove at Orientation Show Page$') { ->
 def loginController(){
     def loginPage = new LoginPage()
     loginPage.login(this)
+}
+
+def logoutController() {
+    // restore metaclass
+    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
 }
 
 def loginWeb() {
