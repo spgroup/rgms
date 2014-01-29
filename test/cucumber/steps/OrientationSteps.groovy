@@ -19,9 +19,7 @@ import static cucumber.api.groovy.EN.*
 
 // create
 Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTese ->
-    // Express the Regexp above with the code you wish you had
-    orientation = Orientation.findByTituloTese(tituloTese)
-    assert orientation == null
+    checkIfValidationDoNotExists(tituloTese)
 }
 
 When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
@@ -48,7 +46,6 @@ When(~'^I delete the orientation for "([^"]*)"$') { String title ->
 Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { String title ->
     orientation = Orientation.findByTituloTese(title)
     assert orientation == null
-
 }
 
 //create web
