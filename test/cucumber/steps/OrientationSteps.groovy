@@ -114,7 +114,8 @@ Then(~'^I am on the orientation show page with edition completed$'){ ->
 
 
 Given(~'^the system has some orientations stored$') { ->
-    LoginPage.login()
+    def loginPage = new LoginPage()
+    loginPage.login(this)
     initialSize = Orientation.findAll().size()
 }
 

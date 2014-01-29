@@ -35,10 +35,10 @@ class LoginPage extends Page {
         $("form").signIn().click()
     }
 
-    def login(){
+    public void login(step){
         // save old metaclass
         def registry = GroovySystem.metaClassRegistry
-        this.oldMetaClass = registry.getMetaClass(SecurityUtils)
+        step.oldMetaClass = registry.getMetaClass(SecurityUtils)
         registry.removeMetaClass(SecurityUtils)
 
         // Mock login
