@@ -35,20 +35,4 @@ class LoginPage extends Page {
         $("form").signIn().click()
     }
 
-    public void login(step){
-        // save old metaclass
-        def registry = GroovySystem.metaClassRegistry
-        step.oldMetaClass = registry.getMetaClass(SecurityUtils)
-        registry.removeMetaClass(SecurityUtils)
-
-        // Mock login
-        def subject = [getPrincipal: { "admin" },
-                isAuthenticated: { true }
-        ] as Subject
-        ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-                [getSubject: { subject } as SecurityManager])
-        SecurityUtils.metaClass.static.getSubject = { subject }
-    }
-
-
 }
