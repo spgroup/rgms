@@ -10,7 +10,7 @@ Feature: orientations
     Then the orientation "The Book is on the table 2" is properly stored by the system
 
   Scenario: remove existing orientation
-    Given   the system has thesis entitled "The Book is on the table" supervised for someone
+    Given   the system has thesis entitled "The Book is on the table" supervised by someone
     When    I delete the orientation for "The Book is on the table"
     Then    the orientation for "The Book is on the table" is properly removed by the system
 
