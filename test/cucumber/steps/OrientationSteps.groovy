@@ -229,7 +229,7 @@ Then(~'^the orientation for the thesis "([^"]*)" is not stored twice$') { entitl
 }
 
 //#5
-And(~'^I fill the orientation field yearPublication with (-?\\d+)$') { anoPublicacao ->
+And(~'^I fill the orientation publication year with (-?\\d+)$') { anoPublicacao ->
     at OrientationEditPage
     page.editYear(anoPublicacao)
 }

@@ -28,7 +28,7 @@ Feature: orientations
     And I select the change option at the orientation edit page
     Then the edited orientation "Hexa" is properly stored by the system
 
-  #1
+  #1 This scenario test are not working well, please check they implementation before undo the comment
 
   #Scenario: new orientation with registered member orientated
   #  Given the system has no orientations entitled "The Book is on the table 2"
@@ -55,7 +55,7 @@ Feature: orientations
     And the orientation "The Book is on the table" is stored in the system
     When I select to view orientation "The Book is on the table" in resulting list
     And I change the orientation title to "Hexa"
-    And I fill the orientation field yearPublication with -1
+    And I fill the orientation publication year with -1
     And I select the change option at the orientation edit page
     Then I am still on the change orientation page with an error message
 

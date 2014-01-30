@@ -41,7 +41,7 @@ Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String
     checkIfExists(title)
 }
 
-When(~'^I select the Novo BookChapter option at the book chapter page$') { ->
+When(~'^I select the new book chapter option at the book chapter page$') { ->
     at BookChapterPage
     page.selectNewBookChapter()
 }
@@ -95,7 +95,7 @@ Then(~'My resulting book chapter list contains "([^"]*)"$') { String title ->
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
 }
-When(~'^I go to NewBookChapter page$') { ->
+When(~'^I go to new book chapter page$') { ->
 //    to BookChapterPage
     at BookChapterPage
     page.selectNewBookChapter()

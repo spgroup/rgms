@@ -21,7 +21,7 @@ Feature: BookChapter
 
   Scenario: register book chapter with invalid data
     Given I am at the book chapter page
-    And I select the Novo BookChapter option at the book chapter page
+    And I select the new book chapter option at the book chapter page
     And I fill only the title field with the value "Next Generation Software Product Line Engineering"
     Then A failure message is displayed
     And I still on the book chapter create page
@@ -29,7 +29,7 @@ Feature: BookChapter
   Scenario: new book chapter web
     Given I am at the book chapter page
     And the system has no book chapter entitled "Next Generation Software Product Line Engineering"
-    When I go to NewBookChapter page
+    When I go to new book chapter page
     And I use the webpage to create the book chapter "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book chapter "Next Generation Software Product Line Engineering" was stored by the system
     And it is shown in the book chapter list with title "Next Generation Software Product Line Engineering"
@@ -38,7 +38,7 @@ Feature: BookChapter
   Scenario: new duplicate book chapter web
     Given I am at the book chapter page
     And the system has a book chapter entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
-    When I go to NewBookChapter page
+    When I go to new book chapter page
     And I use the webpage to create the book chapter "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book chapter "Next Generation Software Product Line Engineering" is not stored twice
     And the system shows an error message
@@ -47,7 +47,7 @@ Feature: BookChapter
 
   Scenario: new book chapter filled with user data by default
     Given I am at the book chapter page
-    And I select the Novo BookChapter option at the book chapter page
+    And I select the new book chapter option at the book chapter page
     Then I see my user listed as a member of book chapter by default
 #end
 
