@@ -174,10 +174,10 @@ Then(~'^I can not select the option Export to HTML at the News list page$'){ ->
 
 
 When(~'^I select the novo noticias option at the news page$') {->
-    selectNovoNoticiasInNewsPage()
+    selectNewNewsInNewsPage()
 }
 
-def selectNovoNoticiasInNewsPage(){
+def selectNewNewsInNewsPage(){
 
     at NewsPage
     page.selectCreateNews()
@@ -208,7 +208,7 @@ Then(~'^the news "([^"]*)", date "([^"]*)" and "([^"]*)" research group is prope
 
 Given(~'^I select the news page and the new "([^"]*)" is stored in the system$') { String description ->
     page.select("News")
-    selectNovoNoticiasInNewsPage()
+    selectNewNewsInNewsPage()
 
     at NewsCreatePage
     page.fillNewDetails(description)
