@@ -206,7 +206,7 @@ Then(~'^the news "([^"]*)", date "([^"]*)" and "([^"]*)" research group is prope
 }
 
 
-Given(~'^I select the news page and the new "([^"]*)" is stored in the system$') { String description ->
+Given(~'^I select the news page and the news "([^"]*)" is stored in the system$') { String description ->
     page.select("News")
     selectNewNewsInNewsPage()
 
@@ -218,7 +218,7 @@ Given(~'^I select the news page and the new "([^"]*)" is stored in the system$')
     at NewsPage
 }
 
-When(~'^I select to view new "([^"]*)" in resulting list$') { String title ->
+When(~'^I select to view the news "([^"]*)" in resulting list$') { String title ->
     page.selectViewNew(title)
     to NewsShowPage
 }
@@ -229,6 +229,6 @@ And(~'I select the option to remove in news show page$') {->
     page.remove()
 }
 
-Then(~'^the new "([^"]*)" is properly removed by the system$') { String description ->
+Then(~'^the news "([^"]*)" is properly removed by the system$') { String description ->
     assert !NewsTestDataAndOperations.checkExistingNewsByDescription(description)
 }

@@ -61,10 +61,10 @@ Feature: news
 
   Scenario: remove existing news web
     Given I am at the publications menu
-    When I select the news page and the new "Noticia1" is stored in the system
-    And I select to view new "Noticia1" in resulting list
+    When I select the news page and the news "Noticia1" is stored in the system
+    And I select to view the news "Noticia1" in resulting list
     And I select the option to remove in news show page
-    Then the new "Noticia1" is properly removed by the system
+    Then the news "Noticia1" is properly removed by the system
 
   Scenario: new invalid news (invalid date)
     Given the system has no news with description "teste" and date "31-02-2013" for "SPG" research group
