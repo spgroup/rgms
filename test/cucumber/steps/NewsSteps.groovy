@@ -1,6 +1,7 @@
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGroup.ResearchGroupCreatePage
+import pages.ResearchGroup.ResearchGroupPage
 import pages.news.NewsCreatePage
 import pages.news.NewsPage
 import rgms.member.ResearchGroup
@@ -8,6 +9,7 @@ import rgms.news.News
 import steps.TestDataAndOperations
 import steps.NewsTestDataAndOperations
 import pages.news.NewsShowPage
+import steps.TestDataAndOperationsResearchGroup
 
 import static cucumber.api.groovy.EN.*
 
@@ -188,6 +190,8 @@ def selectNewNewsInNewsPage(){
 Then(~'^I can fill the news details$') { ->
     at NewsCreatePage
     page.fillNewDetails("essa eh a descricao")
+    page.clickOnCreate()
+    assert NewsTestDataAndOperations.checkExistingNewsByDescription("essa eh a descricao")
 }
 
 Then(~'^the news with description "([^"]*)", date "([^"]*)" and "([^"]*)" research group is not stored by the system because it is invalid$') { String description, String date, String group ->
@@ -210,25 +214,41 @@ Given(~'^I select the news page and the news "([^"]*)" is stored in the system$'
     page.select("News")
     selectNewNewsInNewsPage()
 
-    at NewsCreatePage
+    //at NewsCreatePage
     page.fillNewDetails(description)
-    page.clickOnCreate();
+    page.clickOnCreate()
+    assert NewsTestDataAndOperations.checkExistingNewsByDescription(description)
 
-    to NewsPage
-    at NewsPage
+    //to NewsPage
+    //at NewsPage
 }
 
 When(~'^I select to view the news "([^"]*)" in resulting list$') { String title ->
     page.selectViewNew(title)
-    to NewsShowPage
+    at NewsShowPage
 }
 
 And(~'I select the option to remove in news show page$') {->
-    to NewsShowPage
+    at NewsShowPage
 //    page.select('input', 'remove')
     page.remove()
 }
 
 Then(~'^the news "([^"]*)" is properly removed by the system$') { String description ->
     assert !NewsTestDataAndOperations.checkExistingNewsByDescription(description)
+}
+
+// eh necessario a criacao de um research group para poder criar uma new
+And(~'^I create a research group because its necessary$') {->
+    at PublicationsPage
+    page.select("Research Group")
+    at ResearchGroupPage
+    page.selectNewResearchGroup()
+    at ResearchGroupCreatePage
+    page.fillResearchGroupDetails("grupo")
+    page.clickOnCreate();
+    researchGroup = ResearchGroup.findByName("grupo")
+    assert researchGroup != null
+    to PublicationsPage
+    at PublicationsPage
 }
