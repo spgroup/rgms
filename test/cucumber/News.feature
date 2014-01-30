@@ -68,5 +68,5 @@ Feature: news
 
   Scenario: new invalid news (invalid date)
     Given the system has no news with description "teste" and date "31-02-2013" for "SPG" research group
-    When I create a news with description "teste" and date "31-02-2013" for "SPG" research group
+    When I try to create a news with description "teste" and date "31-02-2013" for "SPG" research group
     Then the news with description "teste", date "31-02-2013" and "SPG" research group is not stored by the system because it is invalid
