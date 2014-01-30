@@ -3,6 +3,7 @@ package pages.OrientationPages
 import geb.Page
 import pages.GetPageTitle
 import rgms.member.Orientation
+import pages.Util.CommonPages
 
 class OrientationsPage extends Page {
     static url = "orientation/list"
@@ -39,9 +40,10 @@ class OrientationsPage extends Page {
     }
 
     def selectViewOrientation(title) {
-        getRow()
-        def showLink = getRow().find('td').find([text:title])
-        showLink.click()
+//        getRow()
+//        def showLink = getRow().find('td').find([text:title])
+//        showLink.click()
+        CommonPages.selectView(this, title)
 	}
 
 

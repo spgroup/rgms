@@ -23,19 +23,32 @@ When(~'^I create a news with description "([^"]*)" and date "([^"]*)" for "([^"]
     }
 }
 
-Then(~'^the news  with description  "([^"]*)", date "([^"]*)" and "([^"]*)" research group is properly stored by the system$') { String description, String date, String group ->
+def findNewsByDescriptionDateAndGroup(String description, String date, String group) {
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     def researchGroup = ResearchGroup.findByName(group)
     news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
+    return news
+}
+
+Then(~'^the news  with description  "([^"]*)", date "([^"]*)" and "([^"]*)" research group is properly stored by the system$') { String description, String date, String group ->
+    news = findNewsByDescriptionDateAndGroup(description, date, group)
     assert news != null
 }
 
 Given(~'^the system has a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
-    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-    researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
+    Date dateAsDateObj
+    //noinspection GroovyAssignabilityCheck,GrReassignedInClosureLocalVar
+    (dateAsDateObj, researchGroup) = createAndGetResearchGroup(date, group)
+    //noinspection GroovyAssignabilityCheck
     NewsTestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
     news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
     assert news != null
+}
+
+private List createAndGetResearchGroup(String date, String group) {
+    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
+    researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
+    [dateAsDateObj, researchGroup]
 }
 
 When(~'^I delete the news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
@@ -49,8 +62,10 @@ Then(~'^the news with "([^"]*)" and date "([^"]*)" doesnt exists to "([^"]*)" re
 }
 
 Then(~'^the news  with "([^"]*)" and date "([^"]*)" is not registered to "([^"]*)" research group$') { String description, String date, String group ->
-    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-    researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group);
+    Date dateAsDateObj
+    //noinspection GroovyAssignabilityCheck,GrReassignedInClosureLocalVar
+    (dateAsDateObj, researchGroup) = createAndGetResearchGroup(date, group)
+    //noinspection GroovyAssignabilityCheck
     newsList = News.findAllByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup);
     assert newsList.size() == 1
 }
@@ -90,12 +105,15 @@ When(~'^I request to update the news from Twitter to research group "([^"]*)"$')
     TestDataAndOperations.requestNewsFromTwitter(researchGroup)
 }
 
-Then(~'^news of "([^"]*)" research group has been updated$') { String groupName ->
+def selectNewsByResearchGroup(String groupName) {
     researchGroup = ResearchGroup.findByName(groupName)
     newsByResearchGroup = News.getCurrentNews(researchGroup)
-    //assert researchGroup.getNews() != null
-    //assert researchGroup.news.size() > 0
     assert newsByResearchGroup != null
+    return newsByResearchGroup
+}
+
+Then(~'^news of "([^"]*)" research group has been updated$') { String groupName ->
+    newsByResearchGroup = selectNewsByResearchGroup(groupName)
     assert newsByResearchGroup.size() > 0
 }
 
@@ -108,10 +126,9 @@ And(~'^twitter account associated with "([^"]*)" research group has been updated
 }
 
 Then(~'^there is no duplicated news in Twitter account associated with research group "([^"]*)"$'){String groupName ->
-    researchGroup = ResearchGroup.findByName(groupName)
-    newsByResearchGroup = News.getCurrentNews(researchGroup)
-    assert newsByResearchGroup != null
+    newsByResearchGroup = selectNewsByResearchGroup(groupName)
     while  (newsByResearchGroup.size() > 0){
+        //noinspection GrReassignedInClosureLocalVar
         news = newsByResearchGroup.pop()
         newsByResearchGroup.each {
            assert (it.date != news.date) || (it.description != news.description)
@@ -120,9 +137,7 @@ Then(~'^there is no duplicated news in Twitter account associated with research 
 }
 
 And(~'^the research group "([^"]*)" news list is empty$'){ String groupName ->
-    researchGroup = ResearchGroup.findByName(groupName)
-    newsByResearchGroup = News.getCurrentNews(researchGroup)
-    assert newsByResearchGroup != null
+    newsByResearchGroup = selectNewsByResearchGroup(groupName)
     assert newsByResearchGroup.size() == 0
 }
 
@@ -176,9 +191,7 @@ Then(~'^I can fill the news details$') { ->
 }
 
 Then(~'^the news with description "([^"]*)", date "([^"]*)" and "([^"]*)" research group is not stored by the system because it is invalid$') { String description, String date, String group ->
-    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-    def researchGroup = ResearchGroup.findByName(group)
-    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
+    news = findNewsByDescriptionDateAndGroup(description, date, group)
     assert news == null
 }
 
@@ -212,7 +225,8 @@ When(~'^I select to view new "([^"]*)" in resulting list$') { String title ->
 
 And(~'I select the option to remove in news show page$') {->
     to NewsShowPage
-    page.select('input', 'remove')
+//    page.select('input', 'remove')
+    page.remove()
 }
 
 Then(~'^the new "([^"]*)" is properly removed by the system$') { String description ->
