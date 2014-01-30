@@ -26,11 +26,7 @@ class NewsShowPage extends Page {
     static content = {
     }
 
-    def select(String e, v) {
-        if (v == 'delete') {
-            assert withConfirm(true) { $("form").find(e, class: v).click() }
-        } else {
-            $("form").find(e, class: v).click()
-        }
+    def remove() {
+        $("form").find("input", class: "remove").click()
     }
 }
