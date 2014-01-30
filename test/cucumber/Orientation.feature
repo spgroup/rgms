@@ -81,6 +81,7 @@ remoção de e-mail das configurações, correções de identação e correção
     Then The orientation "Hexa2" is properly removed by the system
 
 remoção de e-mail das configurações, correções de identação e correção do bug no teste de BookChapter
+
   #if ($XMLUpload)
   Scenario: upload orientation with a file
     Given the system has some orientations stored
