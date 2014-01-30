@@ -43,6 +43,7 @@ Feature: news
 
   Scenario: new news web
     Given I am at the publications menu
+    And I create a research group because its necessary
     When I select the "News" option at the publications menu
     And I select the novo noticias option at the news page
     Then I can fill the news details
@@ -62,7 +63,6 @@ Feature: news
   Scenario: remove existing news web
     Given I am at the publications menu
     When I select the news page and the news "Noticia1" is stored in the system
-    And I select to view the news "Noticia1" in resulting list
     And I select the option to remove in news show page
     Then the news "Noticia1" is properly removed by the system
 
