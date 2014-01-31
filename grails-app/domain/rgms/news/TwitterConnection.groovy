@@ -1,10 +1,6 @@
 package rgms.news
 
-import twitter4j.Paging;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
+import twitter4j.*
 
 class TwitterConnection {
 	private static Paging pageConfig = new Paging(1, 10);
@@ -24,10 +20,13 @@ class TwitterConnection {
 		List<Status> statusList = null;
 		try {
 			statusList = twitter.getUserTimeline(user, pageConfig);
-		} catch (TwitterException te) {
+            //TODO ajeitar para funcionar com a nova exigência do twitter: https://dev.twitter.com/docs/security/using-ssl
+            //TODO usar nova versão do plugin twitter4j
+        } catch (TwitterException te) {
 			te.printStackTrace();
 			System.out.println("Failed to get timeline: " + te.getMessage());
-		}
+            //TODO deveria dar mensagem de erro decente via GUI
+        }
 		return statusList;
 	}
 }

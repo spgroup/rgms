@@ -13,12 +13,12 @@ Feature: Reports
     When I select the "1" option at the Member list
     And I can select the option Export to XML at the Member show
     Then I can generate a XML report about Member "1"
-	
-   Scenario: export recently created member report to pdf
+
+  Scenario: export recently created member report to pdf
     Given i am at publication menu
-	When I select the Novo Member option
-	Then I fill the Member details with "John Smith" "JohnSmith" "JohnSmith@gmail.cin.ufpe.br" "UFPE" and create a new one
-	Then I select the "2" option at the Member list
+    When I select the Novo Member option
+    Then I fill the Member details with "John Smith" "JohnSmith" "JohnSmith@gmail.cin.ufpe.br" "UFPE" and create a new one
+    Then I select the "2" option at the Member list
     And I can select the option Export to PDF at the Member show
     Then I can generate a PDF report about Member "2"
 
@@ -66,7 +66,7 @@ Feature: Reports
     And I select the home option at the Conferencia page
     And I am at the Publications
     And I select the Novo Member option
-    And I fill the Member details with "Eduardo" "eduardo" "jear@cin.ufpe.br" "UFPE" and create a new one
+    And I fill the Member details with "Eduardo" "eduardo" "j_ear@cin.ufpe.br" "UFPE" and create a new one
     And I select the "3" option at the Member list
     And I can select the option Export to HTML at the Member show
     And I can generate a HTML report about Member "3"
