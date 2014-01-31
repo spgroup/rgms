@@ -33,7 +33,11 @@ class NewsTestDataAndOperations {
 
     static public boolean checkExistingNewsByDescription(String description) {
         def news = News.findByDescription(description)
-        return news != null
+        if ((news?.date != null) && (news?.id != 0) && (news?.researchGroup != null)) {
+            return true
+        } else {
+            return false
+        }
     }
 
     static public void editNewsDescription(String description, String newDescription, Date date, ResearchGroup researchGroup) {
