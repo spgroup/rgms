@@ -20,7 +20,7 @@ Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTes
     assert orientation == null
 }
 
-When(~'^I create a orientation for the thesis "([^"]*)"$') { String tituloTese ->
+When(~'^I create an orientation for the thesis "([^"]*)"$') { String tituloTese ->
     // Express the Regexp above with the code you wish you had
     OrientationTestDataAndOperations.createOrientation(tituloTese)
 }
@@ -164,5 +164,6 @@ def Login(){
 
 Then(~'^I am on the orientation show page with the error message$') { ->
     at OrientationShowPage
+    //assert  (new GetPageTitle()).msg("orientation.tituloTese.unique") == page.readFlashMessage()
     assert page.readFlashMessage() != null
 }

@@ -6,7 +6,7 @@ Feature: orientations
 
   Scenario: new orientation
     Given the system has no orientations entitled "The Book is on the table 2"
-    When I create a orientation for the thesis "The Book is on the table 2"
+    When I create an orientation for the thesis "The Book is on the table 2"
     Then the orientation "The Book is on the table 2" is properly stored by the system
 
   Scenario: remove existing orientation
