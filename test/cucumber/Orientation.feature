@@ -39,3 +39,4 @@ Feature: orientations
         Then I'm still on orientations page
         And the orientations are not stored by the system
 #end
+
