@@ -19,6 +19,9 @@ class MemberTestDataAndOperations {
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
+                    status: "Graduate Student", university: "UFPE", enabled: true
             ]]
 
     static public def findByUsername(String username) {
@@ -44,7 +47,6 @@ class MemberTestDataAndOperations {
         cont.params << [id: identificador]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.delete()
-        //cont.save()
         cont.response.reset()
     }
     static public boolean containsMember(username) {

@@ -15,7 +15,7 @@ grails {
         port = 465
         //TODO: Before running, make sure that your email login and password appear below
         //TODO: Before committing, make sure that the strings "LOGIN" and "PASSWORD" appear in place of your login and password
-        username = "LOGIN"
+        username = "USERNAME"
         password = "PASSWORD"
         props = ["mail.smtp.auth": "true",
                 "mail.smtp.socketFactory.port": "465",

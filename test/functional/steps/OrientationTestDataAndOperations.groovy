@@ -1,6 +1,7 @@
 package steps
 
 import rgms.member.Member
+import rgms.member.Orientation
 import rgms.member.OrientationController
 import rgms.publication.XMLController
 
@@ -8,7 +9,7 @@ import rgms.publication.XMLController
  * Created with IntelliJ IDEA.
  * User: tasj
  * Date: 30/08/13
- * Time: 15:31
+ * Time: 15:3
  * To change this template use File | Settings | File Templates.
  */
 class OrientationTestDataAndOperations {
@@ -18,6 +19,9 @@ class OrientationTestDataAndOperations {
                     status: "Graduate Student", university: "UFPE", enabled: true
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
+                    status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
             ]]
 
@@ -34,7 +38,21 @@ class OrientationTestDataAndOperations {
     static public void createOrientation(String tituloTese) {
 
         def cont = new OrientationController()
-        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
+        def memberCreater = new Member(members[0])
+        memberCreater.create()
+        memberCreater.save()
+        def member = Member.findByName(memberCreater.name)
+        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
+    static public void createOrientationWithMenber(String tituloTese, member) {
+
+        def cont = new OrientationController()
+        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: new Member(member)]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
         cont.save()
@@ -42,8 +60,7 @@ class OrientationTestDataAndOperations {
     }
 
     static public void removeOrientation(String tituloTese) {
-
-        def testOrientation = OrientationTestDataAndOperations.findOrientationByTitle(tituloTese)
+        def testOrientation = Orientation.findByTituloTese(tituloTese)
         def cont = new OrientationController()
         cont.params << [id: testOrientation.id]
         cont.delete()

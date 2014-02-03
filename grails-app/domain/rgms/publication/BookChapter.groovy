@@ -7,7 +7,7 @@ class BookChapter extends Publication {
 	int chapter
 	
     static constraints = {
-		publisher nullable: false, blank: false
+		publisher nullable: false, blank: false, unique: ['title','file','chapter']
 		chapter nullable: false, blank: false, min: 1
     }
 

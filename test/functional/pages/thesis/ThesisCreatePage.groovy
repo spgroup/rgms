@@ -38,4 +38,7 @@ class ThesisCreatePage extends FormPage {
         $("form").school
     }
 
+    def selectCreateThesis() {
+        $("input", name: "create", class: "save").click()
+    }
 }
