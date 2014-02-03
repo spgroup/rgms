@@ -38,6 +38,23 @@ class MemberTestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+
+    static public void editEmail(String username, String email){
+        def cont = new MemberController()
+        def id = User.findByUsername(username)?.author?.id
+        cont.params << [id: id, email: email]
+        cont.update()
+        //cont.save()
+        cont.response.reset()
+
+    }
+
+    static public void createMemberWithEmail(String username, String email){
+        createMember(username,"")
+        editEmail(username,email)
+    }
+
+
     static public void deleteMember(String username) {
         def cont = new MemberController()
         def identificador = User.findByUsername(username)?.author?.id

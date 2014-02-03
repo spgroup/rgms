@@ -17,6 +17,7 @@ class OrientationShowPage extends Page {
     }
 
     static content = {
+        readFlashMessage(){ $("div .message").text() }
     }
 
     def select() {

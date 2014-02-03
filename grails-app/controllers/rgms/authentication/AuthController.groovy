@@ -276,8 +276,8 @@ class AuthController {
 //        flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
 //        redirect(action: "index", id: memberInstance.id)
 
-        flash.message = "User successfully created";
-        render(view: "register")
+        flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), memberInstance.name])
+        redirect(uri: "/auth/login")
     }
 
     private sendRegistrationMailToAdmin(name) {

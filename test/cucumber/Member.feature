@@ -23,6 +23,12 @@ Feature: member
     When I create the member with username "usernametest"
     Then the member "usernametest" is not registered
 
+  Scenario: new member with existing email
+    Given the system has member with email "memberEmail@ufpe.br"
+    When I create the member "usernametest" with email "memberEmail@ufpe.br"
+    Then the member "usernametest" is not registered
+    And I am still on the create member page with the error message
+
   Scenario: login with incorrect password
     Given I am at the login page
     When I fill username and password with "admin" and "incorrectpassword"
@@ -31,7 +37,8 @@ Feature: member
   Scenario: user registration
     Given I am at the register page
     When I fill the user details with a name, username, passoword1, password2, email, university, status "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student"
-    Then I am still on the register page with the message user created
+    Then I am redirected to the Login Page
+    And A message indicating the user was successfully registered is displayed
 
 
 #  Scenario: create member web
@@ -49,6 +56,7 @@ Feature: member
     Given I am at the create member page
     When I fill the user details with "jose" "josesilva" "jose@com" "UFPE"
     Then I am still on the create member page with the error message
+
 
 #Scenario: register member invalid aditional info
 #   Given  I am at the create member page

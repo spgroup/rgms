@@ -17,8 +17,8 @@ Scenario: Login with user's wrong password fail message
 Scenario:New user register success message
   Given I am at the User Register Page
   When I register a user with success
-  And I am redirected to the User Register Page
-  Then A message indicating the user was successfully registered is displayed
+  Then I am redirected to the Login Page
+  And A message indicating the user was successfully registered is displayed
 
 Scenario: New user register with invalid email fail message
   Given I am at the Login Page

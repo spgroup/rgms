@@ -61,9 +61,6 @@ When(~'^I fill the user details with a name, username, passoword1, password2, em
     page.fillUserDetails(name, username, password1, password2, email, university, status)
 }
 
-Then(~'^I am still on the register page with the message user created$') {->
-    at RegisterPage
-}
 
 
 Given(~'^the system has member with username "([^"]*)"$') { String username ->
@@ -98,6 +95,8 @@ Then(~'^the member "([^"]*)" is not registered$') { String username ->
     users = User.findAllByUsername(username);
     assert users.size() == 1
 }
+
+
 
 Given(~'^I am at the create member page$') {->
     to LoginPage
@@ -171,3 +170,19 @@ Then(~'^I see default data filled on register form$'){ ->
     defaultUniversity   = "Federal University of Pernambuco"
     assert page.compareMemberUniversity(defaultUniversity)
 }
+
+Given(~'^the system has member with email "([^"]*)"$') { String email ->
+    String name = "usernametest"
+    MemberTestDataAndOperations.createMemberWithEmail(name,email)
+    member = Member.findByEmail(email)
+    assert member.name == name
+
+}
+
+When(~'^I create the member "([^"]*)" with email "([^"]*)"$') { String username, String email ->
+    MemberTestDataAndOperations.createMemberWithEmail(username,email)
+    member = Member.findByEmail(email)
+    assert member.name == username
+
+}
+

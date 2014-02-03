@@ -1,3 +1,4 @@
+import cucumber.runtime.PendingException
 import pages.OrientationPages.*
 import pages.*
 import rgms.member.Orientation
@@ -19,7 +20,7 @@ Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTes
     assert orientation == null
 }
 
-When(~'^I create a orientation for the thesis "([^"]*)"$') { String tituloTese ->
+When(~'^I create an orientation for the thesis "([^"]*)"$') { String tituloTese ->
     // Express the Regexp above with the code you wish you had
     OrientationTestDataAndOperations.createOrientation(tituloTese)
 }
@@ -32,7 +33,7 @@ Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String t
 
 
 //delete
-Given(~'^the system has thesis entitled "([^"]*)" supervised for someone$') { String tituloTese ->
+Given(~'^the system has thesis entitled "([^"]*)" supervised by someone$') { String tituloTese ->
 
     OrientationTestDataAndOperations.createOrientation(tituloTese)
     orientation = OrientationTestDataAndOperations.findOrientationByTitle(tituloTese)
@@ -159,4 +160,10 @@ def Login(){
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
+}
+
+Then(~'^I am on the orientation show page with the error message$') { ->
+    at OrientationShowPage
+    //assert  (new GetPageTitle()).msg("orientation.tituloTese.unique") == page.readFlashMessage()
+    assert page.readFlashMessage() != null
 }
