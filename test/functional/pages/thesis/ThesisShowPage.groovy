@@ -11,10 +11,17 @@ class ThesisShowPage extends Page {
         def currentTese = gp.msg("default.tese.label")
         def currentTitle = gp.msg("default.show.label", [currentTese])
         title ==~ currentTitle
-	}
-	
-    static content = {
+    }
 
+    static content = {
+    }
+
+    def select() {
+        $("form").find('a', class: 'edit').click()
+    }
+
+    def delete() {
+        assert withConfirm(true) { $("form").find('input', class: 'delete').click() }
     }
 
 }

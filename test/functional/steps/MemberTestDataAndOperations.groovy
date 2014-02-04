@@ -20,6 +20,9 @@ class MemberTestDataAndOperations {
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
+                    status: "Graduate Student", university: "UFPE", enabled: true
             ]]
 
     static public def findByUsername(String username) {
@@ -40,7 +43,7 @@ class MemberTestDataAndOperations {
         def cont = new MemberController()
         if (phone.equals("")) {
             cont.params << findByUsername(username)
-        }else{
+        } else {
             cont.params << [username: username, phone: phone]
         }
         cont.create()
@@ -63,15 +66,14 @@ class MemberTestDataAndOperations {
         cont.params << [id: identificador]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.delete()
-        //cont.save()
         cont.response.reset()
     }
 
     static public boolean containsMember(username) {
         def cont = new MemberController()
         def result = cont.list().userMemberInstanceList
-        for(i in result){
-            if(i.user.username == username && i.member != null)
+        for (i in result) {
+            if (i.user.username == username && i.member != null)
                 return true;
         }
         return false;

@@ -8,6 +8,7 @@ class OrientationCreatePage extends Page {
     static url = "orientation/create"
 
     static at = {
+
         //title ==~ /Criar Orientation/
 
         GetPageTitle gp = new GetPageTitle()
@@ -15,33 +16,34 @@ class OrientationCreatePage extends Page {
         def currentTitle = gp.msg("default.create.label", [currentOrientation])
 
         title ==~ currentTitle
-        tituloTese != null
+        //tituloTese != null
     }
 
     def fillOrientationDetails() {
-        //def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
         fillOrientationDetails("The Book is on the table")
     }
 
     def fillOrientationDetails(title) {
-
-        //def orientador = TestDataAndOperations.members[0]
-
-        $("form").tituloTese = title
         $("form").tipo = "Mestrado"
         $("form").orientando = "Tomaz"
-        //$("form").orientador = orientador
+        $("form").tituloTese = title
         $("form").anoPublicacao = 2013
         $("form").instituicao = "UFPE"
-        //selectCreateOrientation()
+        $("form").curso = "Ciencia da Computacao"
+    }
 
-
-
-        // Could parametrize, obtaining data from class TestDataAndOperations
+    def fillOrientationDetailsWithGivenYear(title, year) {
+        $("form").tipo = "Mestrado"
+        $("form").orientando = "Tomaz"
+        $("form").tituloTese = title
+        $("form").anoPublicacao = year
+        $("form").instituicao = "UFPE"
+        $("form").curso = "Ciencia da Computacao"
     }
 
     def selectCreateOrientation() {
-        $("input", name: "create").click()
-
+        //$("input", name: "create").click()
+        $("input", name: "create", class: "save").click()
     }
+
 }

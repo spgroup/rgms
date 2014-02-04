@@ -4,11 +4,11 @@ package rgms.publication
 class BookChapter extends Publication {
 
     String publisher
-	int chapter
-	
+    int chapter
+
     static constraints = {
-		publisher nullable: false, blank: false
-		chapter nullable: false, blank: false, min: 1
+        publisher nullable: false, blank: false, unique: ['title', 'file', 'chapter']
+        chapter nullable: false, blank: false, min: 1
     }
 
     //#if($Bibtex)

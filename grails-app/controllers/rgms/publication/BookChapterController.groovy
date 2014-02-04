@@ -1,19 +1,10 @@
 package rgms.publication
-
-import org.apache.shiro.SecurityUtils
-import org.springframework.dao.DataIntegrityViolationException
 //#if($XMLUpload && $BookChapter)
-import rgms.XMLService
 //#end
-import org.xml.sax.SAXParseException
-import rgms.authentication.User
-import rgms.member.Member
-
-
 class BookChapterController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-	AuxiliarController aux = new AuxiliarController()
+    AuxiliarController aux = new AuxiliarController()
 
     def index() {
         redirect(action: "list", params: params)
@@ -34,7 +25,7 @@ class BookChapterController {
 
     def save() {
         def bookChapterInstance = new BookChapter(params)
-		PublicationController pb = new PublicationController()
+        PublicationController pb = new PublicationController()
         if (!pb.upload(bookChapterInstance) || !bookChapterInstance.save(flush: true)) {
             render(view: "create", model: [bookChapterInstance: bookChapterInstance])
             return
@@ -47,10 +38,11 @@ class BookChapterController {
         flash.message = message(code: 'default.created.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
         redirect(action: "show", id: bookChapterInstance.id)
     }
+
     def accessBookChapter(Long id) {
         def bookChapterInstance = BookChapter.get(id)
         boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
-        if(!isReturned){
+        if (!isReturned) {
             [bookChapterInstance: bookChapterInstance]
         }
     }
@@ -66,10 +58,10 @@ class BookChapterController {
     def update(Long id, Long version) {
         def bookChapterInstance = BookChapter.get(id)
         boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
-        if(!isReturned){
+        if (!isReturned) {
             if (version != null && bookChapterInstance.version > version) {
                 outdatedVersionError((BookChapter) bookChapterInstance)
-            }else{
+            } else {
                 saveUpdate((BookChapter) bookChapterInstance)
             }
         }
@@ -82,7 +74,7 @@ class BookChapterController {
         render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
     }
 
-    def saveUpdate(BookChapter bookChapterInstance){
+    def saveUpdate(BookChapter bookChapterInstance) {
         bookChapterInstance.properties = params
         if (!bookChapterInstance.save(flush: true)) {
             render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
@@ -92,8 +84,10 @@ class BookChapterController {
         }
     }
 
-	def delete(Long id) {
-		def bookChapterInstance = BookChapter.get(id)
-		aux.delete(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
-	}
+    def delete(Long id) {
+        def bookChapterInstance = BookChapter.get(id)
+        aux.delete(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
+    }
+
+
 }

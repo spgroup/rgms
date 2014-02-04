@@ -35,7 +35,7 @@ Then(~'^the system has no member with a username "([^"]*)"$') { String username 
     assert member == null
 }
 
-Given(~'^I am at the login page$') {->
+Given(~'^I am at the login page$') { ->
     to LoginPage
     at LoginPage
     //assert (page.flashmessage?.size() == 0)
@@ -46,12 +46,12 @@ When(~'^I fill username and password with "([^"]*)" and "([^"]*)"$') { String lo
     page.fillLoginData(login, password)
 }
 
-Then(~'^I am still on the login page with an error message$') {->
+Then(~'^I am still on the login page with an error message$') { ->
     at LoginPage
     assert page.readFlashMessage() != null
 }
 
-Given(~'^I am at the register page$') {->
+Given(~'^I am at the register page$') { ->
     to RegisterPage
     at RegisterPage
 }
@@ -61,6 +61,9 @@ When(~'^I fill the user details with a name, username, passoword1, password2, em
     page.fillUserDetails(name, username, password1, password2, email, university, status)
 }
 
+Then(~'^I am still on the register page with the message user created$') { ->
+    at RegisterPage
+}
 
 
 Given(~'^the system has member with username "([^"]*)"$') { String username ->
@@ -103,7 +106,7 @@ Then(~'^the member named "([^"]*)" is not registered$') { String name ->
 }
 
 
-Given(~'^I am at the create member page$') {->
+Given(~'^I am at the create member page$') { ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -119,7 +122,7 @@ When(~'^I fill some user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$')
     page.fillSomeMemberDetails(name, username, email, university)
 }
 
-Then(~'^I am on the member show page$') {->
+Then(~'^I am on the member show page$') { ->
     at MemberViewPage
 }
 
@@ -134,7 +137,7 @@ Then(~'^I am on the member show page$') {->
 }*/
 
 //TODO verificação teria que ser específica, bem menos parcial do que a abaixo
-Then(~'^I am still on the create member page with the error message$') {->
+Then(~'^I am still on the create member page with the error message$') { ->
     at MemberCreatePage
     //assert mensagem != null
 
@@ -148,7 +151,7 @@ When(~'^I fill user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { St
     page.fillSomeMemberDetails(name, username, email, university)
 }
 
-When(~"^I view the member list\$") {->
+When(~"^I view the member list\$") { ->
     members = Member.findAll()
     assert members != null
 }
@@ -164,22 +167,22 @@ Then(~'the member with username "([^"]*)" is created$') { String username ->
     assert member != null
 }
 
-Then(~'^I see default data filled on create form$'){ ->
+Then(~'^I see default data filled on create form$') { ->
     at MemberCreatePage
-    defaultUniversity   = "Federal University of Pernambuco"
-    defaultCity         = "Recife"
+    defaultUniversity = "Federal University of Pernambuco"
+    defaultCity = "Recife"
     assert page.compareMemberUniversity(defaultUniversity) && page.compareMemberCity(defaultCity)
 }
 
-Then(~'^I see default data filled on register form$'){ ->
+Then(~'^I see default data filled on register form$') { ->
     at RegisterPage
-    defaultUniversity   = "Federal University of Pernambuco"
+    defaultUniversity = "Federal University of Pernambuco"
     assert page.compareMemberUniversity(defaultUniversity)
 }
 
 Given(~'^the system has member with email "([^"]*)"$') { String email ->
     String name = "Rodolfo"
-    MemberTestDataAndOperations.createMemberWithEmail(name,email)
+    MemberTestDataAndOperations.createMemberWithEmail(name, email)
     member = Member.findByEmail(email)
     assert member.name == name
 }
@@ -189,4 +192,3 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     //member = Member.findByEmail(email)
     //assert member.name == name
 }
-

@@ -4,9 +4,10 @@ import geb.Page
 import pages.GetPageTitle
 
 class OrientationShowPage extends Page {
-    static url = "orientation/show/1"
+    static url = "orientation/show"
 
     static at = {
+
         //title ==~ /Ver orientation/
 
         GetPageTitle gp = new GetPageTitle()
@@ -17,12 +18,27 @@ class OrientationShowPage extends Page {
     }
 
     static content = {
-        readFlashMessage(){ $("div .message").text() }
+        flashmessage {
+            $("div", class: "message")
+        }
     }
 
     def select() {
         $("form").find('a', class: 'edit').click()
     }
+
+    def edit() {
+        $('a', class: 'edit').click()
+    }
+
+    def delete() {
+        assert withConfirm(true) { $("form").find('input', class: 'delete').click() }
+    }
+
+    def showList() {
+        $('a', class: 'list').click()
+    }
+
 //#if ($Twitter)
     def clickOnTwitteIt(String login, pw) {
         $("#button_twitter").click()
