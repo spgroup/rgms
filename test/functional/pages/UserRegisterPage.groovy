@@ -2,9 +2,7 @@ package pages
 
 import geb.Page
 import rgms.authentication.User
-import rgms.member.Member
 import steps.MemberTestDataAndOperations
-import steps.TestDataAndOperations
 import steps.TestDataAuthentication
 
 class UserRegisterPage extends Page {
@@ -23,7 +21,7 @@ class UserRegisterPage extends Page {
         password2 {$("form input", name: "password2")}
         email {$("form input", name: "email")}
         status {$("form select", name: "status")}
-        registerButton {$("form input", value: "Register")}
+        registerButton { $("form input", value: "register") }
         readFlashMessage(){ $("div .message").text() }
         readErrorsMessage(){ $("div .errors").text()}
     }

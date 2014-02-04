@@ -178,7 +178,9 @@ margin-top: 0;
           </tr>
           <tr>
             <td></td>
-            <td><span><input type="submit" value="Register" style="font-size: 12px; font-weight: bold; border: solid 1px #316166; background: #339933;	padding: 4px 10px 4px 10px; color: #FFFFFF; border-radius: 6px;box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);" /></span></td> <!--#1c94cd-->
+              <td><span><g:submitButton name="register" class="save" value="register"
+                                        style="font-size: 12px; font-weight: bold; border: solid 1px #316166; background: #339933;	padding: 4px 10px 4px 10px; color: #FFFFFF; border-radius: 6px;box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);"/>
+              </span>
           </tr>
           </tbody>
         </table>

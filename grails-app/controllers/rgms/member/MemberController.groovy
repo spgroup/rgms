@@ -19,12 +19,12 @@ class MemberController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def userMemberList = []
         def members = Member.list(params)
-        for(i in members){
-           def user = User.findByAuthor(i)
-           if(user)
-               userMemberList.add([user: user, member:i])
-           else
-               userMemberList.add([member:i])
+        for (i in members) {
+            def user = User.findByAuthor(i)
+            if (user)
+                userMemberList.add([user: user, member: i])
+            else
+                userMemberList.add([member: i])
         }
 
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
@@ -32,7 +32,7 @@ class MemberController {
 
     def create = {
         def member = new Member(params)
-        def user   = new User(params)
+        def user = new User(params)
         user.author = member
 /**
  * @author penc
@@ -42,7 +42,7 @@ class MemberController {
         member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity") as String);
 //#end
 
-        [userMemberInstanceList: [memberInstance:  member, userInstance: user]]
+        [userMemberInstanceList: [memberInstance: member, userInstance: user]]
     }
 
     def save = {
@@ -53,7 +53,7 @@ class MemberController {
 //#end
 
         def memberInstance = new Member(params)
-        def userInstance   = new User(params)
+        def userInstance = new User(params)
 
         def password = ""
 
@@ -65,17 +65,17 @@ class MemberController {
         userInstance.passwordChangeRequiredOnNextLogon = true
 
         if (!memberInstance.save(flush: true)) {
-            render(view: "create", model: [userMemberInstanceList: [memberInstance:  memberInstance, userInstance: userInstance]] )
+            render(view: "create", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
             return
         }
 
         userInstance.author = memberInstance;
-        if (!userInstance.save(flush: true)){
-            userInstance.errors.each{
+        if (!userInstance.save(flush: true)) {
+            userInstance.errors.each {
                 println it
             }
             memberInstance.delete(flush: true)
-            render(view: "create", model: [userMemberInstanceList: [memberInstance:  memberInstance, userInstance: userInstance]])
+            render(view: "create", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
             return
         }
 
@@ -114,7 +114,7 @@ class MemberController {
         return true
     }
 
-    private Member getMember(String id) {
+    private Member getMember(id) {
         def memberInstance = Member.get(id)
         if (!memberInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), id])
@@ -141,12 +141,12 @@ class MemberController {
         userInstance.properties = params
 
         if (!memberInstance.save(flush: true)) {
-            render(view: "edit", model: [userMemberInstanceList: [memberInstance:  memberInstance, userInstance: userInstance]])
+            render(view: "edit", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
             return
         }
 
         if (!userInstance.save(flush: true)) {
-            render(view: "edit", model: [userMemberInstanceList: [memberInstance:  memberInstance, userInstance: userInstance]])
+            render(view: "edit", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
             return
         }
 
@@ -183,7 +183,7 @@ class MemberController {
             return
         }
 
-        if (!userInstance){
+        if (!userInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
             redirect(action: "list")
             return
@@ -210,7 +210,7 @@ class MemberController {
         memberInstance.save()
     }
 
-    def Get_MemberInstance(){
+    def Get_MemberInstance() {
         def memberInstance = Member.get(params.id)
         if (!memberInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
@@ -218,6 +218,6 @@ class MemberController {
             return
         }
         def user = User.findByAuthor(memberInstance)
-        [userMemberInstanceList: [memberInstance:memberInstance, userInstance: user]]
+        [userMemberInstanceList: [memberInstance: memberInstance, userInstance: user]]
     }
 }

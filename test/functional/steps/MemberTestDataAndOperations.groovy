@@ -1,7 +1,6 @@
 package steps
 
 import rgms.authentication.User
-import rgms.member.Member
 import rgms.member.MemberController
 
 /**
@@ -13,8 +12,10 @@ import rgms.member.MemberController
  */
 
 class MemberTestDataAndOperations {
+
+    //TODO member não tem username!
     static members = [
-            [name: "Rodolfo Ferraz", username: "usernametest", email: "rodolfofake@gmail.com",
+            [name: "Rodolfo", username: "usernametest", email: "rodolfofake@gmail.com",
                     status: "Graduate Student", university: "UFPE", enabled: true
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
@@ -24,6 +25,14 @@ class MemberTestDataAndOperations {
     static public def findByUsername(String username) {
         members.find { member ->
             member.username == username
+        }
+    }
+
+    //TODO evitar duplicação, depois de resolver toda a confusão conceitual entre user vs member,
+    // inclusive na feature Member talvez não seja necessário ter mais o método acima
+    static public def findByName(String name) {
+        members.find { member ->
+            member.name == name
         }
     }
 
@@ -39,21 +48,14 @@ class MemberTestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void editEmail(String username, String email){
+    //TODO evitar duplicação, depois de resolver toda a confusão conceitual entre user vs member
+    static public void createMemberWithEmail(String name, String email) {
         def cont = new MemberController()
-        def id = User.findByUsername(username)?.author?.id
-        cont.params << [id: id, email: email]
-        cont.update()
-        //cont.save()
+        cont.params << findByName(name) << [email: email]
+        cont.create()
+        cont.save()
         cont.response.reset()
-
     }
-
-    static public void createMemberWithEmail(String username, String email){
-        createMember(username,"")
-        editEmail(username,email)
-    }
-
 
     static public void deleteMember(String username) {
         def cont = new MemberController()
@@ -64,6 +66,7 @@ class MemberTestDataAndOperations {
         //cont.save()
         cont.response.reset()
     }
+
     static public boolean containsMember(username) {
         def cont = new MemberController()
         def result = cont.list().userMemberInstanceList
@@ -74,4 +77,3 @@ class MemberTestDataAndOperations {
         return false;
     }
 }
-

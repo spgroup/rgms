@@ -15,8 +15,8 @@ grails {
         port = 465
         //TODO: Before running, make sure that your email login and password appear below
         //TODO: Before committing, make sure that the strings "LOGIN" and "PASSWORD" appear in place of your login and password
-        username = "LOGIN"
-        password = "PASSWORD"
+        username = "rgmsbr"
+        password = "rgms2014.br"
         props = ["mail.smtp.auth": "true",
                 "mail.smtp.socketFactory.port": "465",
                 "mail.smtp.socketFactory.class": "javax.net.ssl.SSLSocketFactory",
@@ -76,8 +76,8 @@ grails.hibernate.cache.queries = true
  * @author penc
  */
 //#if($contextualInformation)
-defaultUniversity   = "Federal University of Pernambuco";
-defaultCity         = "Recife";
+defaultUniversity = "Federal University of Pernambuco";
+defaultCity = "Recife";
 //#end
 
 // set per-environment serverURL stem for creating absolute links
@@ -120,4 +120,4 @@ log4j = {
 }
 
 
-grails.config.locations = ["classpath:facebook.properties" ,"file: ../rgms/grails-app/conf/facebook.properties"]
+grails.config.locations = ["classpath:facebook.properties", "file: ../rgms/grails-app/conf/facebook.properties"]

@@ -25,9 +25,8 @@ Feature: member
 
   Scenario: new member with existing email
     Given the system has member with email "memberEmail@ufpe.br"
-    When I create the member "usernametest" with email "memberEmail@ufpe.br"
-    Then the member "usernametest" is not registered
-    And I am still on the create member page with the error message
+    When I try to create the member "Rebeca Souza" with email "memberEmail@ufpe.br"
+    Then the member named "Rebeca Souza" is not registered
 
   Scenario: login with incorrect password
     Given I am at the login page
