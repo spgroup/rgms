@@ -33,7 +33,11 @@ class NewsTestDataAndOperations {
 
     static public boolean checkExistingNewsByDescription(String description) {
         def news = News.findByDescription(description)
-        return news != null
+        if ((news?.date != null) && (news?.id != 0) && (news?.researchGroup != null)) {
+            return true
+        } else {
+            return false
+        }
     }
 
     static public void editNewsDescription(String description, String newDescription, Date date, ResearchGroup researchGroup) {
@@ -47,7 +51,7 @@ class NewsTestDataAndOperations {
 
     static public boolean checkValidDate(String date) {
 
-        boolean retorno
+        boolean retorno = true
 
         String diaStr = "" + date.charAt(0) + date.charAt(1)
         String mesStr = "" + date.charAt(3) + date.charAt(4)
@@ -57,16 +61,9 @@ class NewsTestDataAndOperations {
         if( (dia > 28) && (mes == 2) ) {         // fevereiro
             retorno = false
         }
-        else if ( (dia > 30) && (mes == 4) ) {   // abril
+        else if ( (dia > 30) && ( (mes == 4) || (mes == 6) || (mes == 7) || (mes == 11) ) ) {   // abril
             retorno = false
         }
-        else if ( (dia > 30) && (mes == 6) ) {   // junho
-            retorno = false
-        }
-        else if ( (dia > 30) && (mes == 7) ) {   // setembro
-            retorno = false
-        }
-        else retorno = !((dia > 30) && (mes == 11))
 
         return retorno
     }
