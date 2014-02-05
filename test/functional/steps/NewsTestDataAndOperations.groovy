@@ -30,4 +30,44 @@ class NewsTestDataAndOperations {
         def news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
         return news != null
     }
+
+    static public boolean checkExistingNewsByDescription(String description) {
+        def news = News.findByDescription(description)
+        return news != null
+    }
+
+    static public void editNewsDescription(String description, String newDescription, Date date, ResearchGroup researchGroup) {
+        def cont = new NewsController()
+        def news = News.findByDescriptionAndDateAndResearchGroup(description, date, researchGroup)
+        news.setDescription(newDescription)
+        cont.params << news.properties
+        cont.update(news.id)
+        cont.response.reset()
+    }
+
+    static public boolean checkValidDate(String date) {
+
+        boolean retorno
+
+        String diaStr = "" + date.charAt(0) + date.charAt(1)
+        String mesStr = "" + date.charAt(3) + date.charAt(4)
+        int dia = Integer.valueOf(diaStr)
+        int mes = Integer.valueOf(mesStr)
+
+        if( (dia > 28) && (mes == 2) ) {         // fevereiro
+            retorno = false
+        }
+        else if ( (dia > 30) && (mes == 4) ) {   // abril
+            retorno = false
+        }
+        else if ( (dia > 30) && (mes == 6) ) {   // junho
+            retorno = false
+        }
+        else if ( (dia > 30) && (mes == 7) ) {   // setembro
+            retorno = false
+        }
+        else retorno = !((dia > 30) && (mes == 11))
+
+        return retorno
+    }
 }
