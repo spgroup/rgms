@@ -3,6 +3,7 @@ package steps
 import rgms.member.Member
 import rgms.member.Orientation
 import rgms.member.OrientationController
+import steps.MemberTestDataAndOperations
 import rgms.publication.XMLController
 
 /**
@@ -14,16 +15,7 @@ import rgms.publication.XMLController
  */
 class OrientationTestDataAndOperations {
 
-    static members = [
-            [name: "Rodolfo Ferraz", username: "usernametest", email: "rodolfofake@gmail.com",
-                    status: "Graduate Student", university: "UFPE", enabled: true
-            ],
-            [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
-                    status: "Graduate Student", university: "UFPE", enabled: true
-            ],
-            [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
-                    status: "Graduate Student", university: "UFPE", enabled: true
-            ]]
+    static members = MemberTestDataAndOperations.members
 
     static orientations = [
             [tipo: "Mestrado", orientando: "Tomaz", tituloTese: "The Book is on the table", anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
@@ -42,6 +34,10 @@ class OrientationTestDataAndOperations {
         memberCreater.create()
         memberCreater.save()
         def member = Member.findByName(memberCreater.name)
+        createOrientationAux(cont, tituloTese, member)
+    }
+
+    private static void createOrientationAux(OrientationController cont, String tituloTese, Member member) {
         cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
@@ -52,11 +48,7 @@ class OrientationTestDataAndOperations {
     static public void createOrientationWithMenber(String tituloTese, member) {
 
         def cont = new OrientationController()
-        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: new Member(member)]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        createOrientationAux(cont, tituloTese, new Member(member))
     }
 
     static public void removeOrientation(String tituloTese) {

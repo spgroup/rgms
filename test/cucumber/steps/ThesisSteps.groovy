@@ -1,4 +1,7 @@
-import org.codehaus.groovy.grails.web.context.ServletContextHolder
+import pages.PublicationsPage
+import pages.thesis.ThesisEditPage
+import rgms.authentication.User
+import steps.ThesisTestDataAndOperations
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.ThesisPage
@@ -10,6 +13,7 @@ import steps.TestDataAndOperationsPublication
 import steps.ThesisTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
+import org.codehaus.groovy.grails.web.context.ServletContextHolder
 
 Given(~'^The system has no thesis entitled "([^"]*)"$') { String title ->
     article = Tese.findByTitle(title)
@@ -18,9 +22,9 @@ Given(~'^The system has no thesis entitled "([^"]*)"$') { String title ->
 
 Given(~'^The thesis "([^"]*)" is stored in the system with file name "([^"]*)"$') {
     String title, filename ->
-    ThesisTestDataAndOperations.createTese(title, filename, "UFPE")
-    article = Tese.findByTitle(title)
-    assert article != null
+        ThesisTestDataAndOperations.createTese(title, filename, "UFPE")
+        article = Tese.findByTitle(title)
+        assert article != null
 }
 
 When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') {

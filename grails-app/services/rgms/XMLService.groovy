@@ -2,7 +2,6 @@ package rgms
 
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
-import javax.*
 import rgms.member.*
 import rgms.publication.*
 
@@ -195,7 +194,7 @@ class XMLService {
 
     //Only saves if the orientation does not already exist
     private static void saveOrientation(Orientation newOrientation) {
-        if (Orientation.findAll().find { it -> newOrientation.Equals(it) } == null)
+        if (Orientation.findAll().find { it -> newOrientation.equals(it) } == null)
             newOrientation.save(flush: false)
     }
 

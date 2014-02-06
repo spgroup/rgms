@@ -29,7 +29,7 @@ class OrientationsPage extends Page {
         $('a', class: 'create').click()
     }
 
-    def selectViewOrientation(title) {
+    def selectViewOrientation(String title) {
 
         def id = Orientation.findByTituloTese(title).id
         $("a", text: id.toString()).click()
@@ -48,18 +48,25 @@ class OrientationsPage extends Page {
         showLink[0].click()*/
     }
 
-    def checkOrientationAtList(title, row) {
-        def orientationColumns = getRow()[row].find('td')
+    def checkOrientationAtList(String title, row) {
+        def orientationColumns = getTdOnRow(row)
 
         def testorientation = Orientation.findByTituloTese(title)
+        //noinspection GroovyAssignabilityCheck
         assert orientationColumns[1].text() == testorientation.tipo
+        //noinspection GroovyAssignabilityCheck
         assert orientationColumns[2].text() == testorientation.orientando
+        //noinspection GroovyAssignabilityCheck
         assert orientationColumns[4].text() == testorientation.tituloTese
     }
 
-    def checkIfOrientationListIsEmpty() {
-        def conferenciaColumns = getRow()[0].find('td')
+    private Object getTdOnRow(row) {
+        //noinspection GroovyAssignabilityCheck
+        getRow()[row].find('td')
+    }
 
+    def checkIfOrientationListIsEmpty() {
+        def conferenciaColumns = getTdOnRow(0)
         assert conferenciaColumns.size() < 8
     }
 
