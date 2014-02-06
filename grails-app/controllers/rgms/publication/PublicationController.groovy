@@ -13,6 +13,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.protocol.HTTP;
 import rgms.authentication.User
 
+
+
 class PublicationController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -64,20 +66,6 @@ class PublicationController {
 
     def upload(Publication publicationInstance) {
 
-        auxUpload(publicationInstance, flash, request, message(code: 'file.already.exist.message', default: 'File already exists. Please try to use a different file name.'))
-
-    }
-
-
-
-    def static newUpload(Publication publicationInstance, flash, request) {
-
-        auxUpload(publicationInstance, flash, request, 'File already exists. Please try to use a different file name.')
-
-    }
-
-    def static auxUpload(Publication publicationInstance, flash, request, message) {
-
         def originalName = publicationInstance.file
         def filePath = "web-app/uploads/${originalName}"
         publicationInstance.file = filePath
@@ -85,7 +73,33 @@ class PublicationController {
         def f = new File(filePath)
 
         if (f.exists()) {
-            flash.message = message
+            flash.message = message(code: 'file.already.exist.message', default: 'File already exists. Please try to use a different file name.')
+            return false
+        }
+
+        InputStream inputStream = request.getInputStream()
+        OutputStream outputStream = new FileOutputStream(f)
+        byte[] buffer = new byte[1024 * 10] //buffer de 10MB
+        int length
+
+        while ((length = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, length)
+        }
+        outputStream.close()
+        inputStream.close()
+
+        return true
+    }
+
+    def static newUpload(Publication publicationInstance, flash, request) {
+
+        def originalName = publicationInstance.file
+        def filePath = "web-app/uploads/${originalName}"
+        publicationInstance.file = filePath
+
+        def f = new File(filePath)
+        if (f.exists()) {
+            flash.message = 'File already exists. Please try to use a different file name.'
             return false
         }
         InputStream inputStream = request.getInputStream()
@@ -100,7 +114,6 @@ class PublicationController {
         inputStream.close()
 
         return true
-
     }
 
 	/**
