@@ -50,12 +50,6 @@ class TestDataAndOperations {
         BibtexFile bibtexFile = bibtexFileController.transform(new File(path))
     }
 
-   /* static public def findResearchLineByName(String name) {
-        researchLines.find { researchLine ->
-            researchLine.name == name
-        }
-    }*/
-
     static public def findMembershipByResearchGroupName(String groupname) {
         memberships.find { membership ->
             membership.researchGroup.name == groupname
@@ -152,64 +146,12 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-    /*static public void deleteResearchLine(def id) {
-        def res = new ResearchLineController()
-        res.params.id = id
-        res.request.setContent(new byte[1000]) // Could also vary the request content.
-        res.delete()
-        res.response.reset()
-    } */
-
-    /*static public void updateResearchLine(String name, String description) {
-        def res = new ResearchLineController()
-        def research_line = ResearchLine.findByName(name)
-        res.params.id = research_line.id
-        res.params.name = research_line.name
-        res.params.description = description
-        res.request.setContent(new byte[1000]) // Could also vary the request content.
-        res.update()
-        res.response.reset()
-    } */
-
- /*   static public void createResearchLine(String name) {
-        def cont = new ResearchLineController()
-        def research = TestDataAndOperations.findResearchLineByName(name)
-        cont.params.name = research.name
-        cont.params.description = research.description
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    } */
-
-   /* static public def insertsResearchLine(String name) {
->>>>>>> HEAD~5
-        def inserted = ResearchLine.findByName(name)
-        if (!inserted) {
-            //def research = TestDataAndOperations.findResearchLineByName(name)
-            ResearchLine rl = new ResearchLine()
-            rl.setName(name)
-            rl.setDescription(description)
-            rl.save()
-        }
-    }*/
-
 
     static public boolean containsMember(username, members) {
         def testmember = User.findByUsername(username)?.author
         def cont = new MemberController()
         def result = cont.list().memberInstanceList
         return result.contains(testmember)
-    }
-
-    static public Periodico editArticle(oldtitle, newtitle) {
-        def article = Periodico.findByTitle(oldtitle)
-        article.setTitle(newtitle)
-        def cont = new PeriodicoController()
-        cont.params << article.properties
-        cont.update()
-		def updatedarticle = Periodico.findByTitle(newtitle)
-		return updatedarticle
     }
 
     static public ResearchGroup createAndGetResearchGroupByName(String name) {
