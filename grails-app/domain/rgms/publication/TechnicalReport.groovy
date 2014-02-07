@@ -17,7 +17,7 @@ class TechnicalReport extends Publication {
     @Override
 	public String toString() {
 
-		return "Institution: " + institution + super.toString();
+		return "Institution: " + institution + " | Publication: " + super.toString();
 	}
 	
 	@Override

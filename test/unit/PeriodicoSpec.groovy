@@ -17,7 +17,7 @@ class PeriodicoSpec extends Specification{
         def periodico2 = new Periodico(journal:journal, volume:vol, number:num, pages:pag )
 
         then:
-        !periodico1.equals(periodico2)
+        !periodico1.equals(periodico2) && periodico1.number != periodico2.number && periodico1.volume == periodico2.volume
 
         where:
         journal = "UFPE Journal"
