@@ -4,11 +4,6 @@ import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Membership
 import rgms.member.ResearchGroup
-import rgms.news.News
-
-import static java.lang.Math.*
-import static java.lang.Math.min as min
-
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,22 +36,22 @@ class BibtexGenerateFileController {
     }
 
     def generateBibTex = {
-        String bibtex = ""
         int numero = (params.id).toInteger()
-        for(publication in Publication.getAll())
-        {
-            for(member in publication.getMembers())
-            {
-                if(member.getId() == numero)
-                {
-                    bibtex = bibtex + publication.generateBib()  + "<br>"
+        render(memberPublications(numero))
+    }
+
+    private String memberPublications(int numero) {
+        String bibtex = ""
+        for (publication in Publication.getAll()) {
+            for (member in publication.getMembers()) {
+                if (member.getId() == numero) {
+                    bibtex = bibtex + publication.generateBib() + "<br>"
                     break
                 }
 
             }
         }
-
-        render(bibtex)
+        return bibtex
     }
 
     def generateBibTexGroup  = {
@@ -68,7 +63,7 @@ class BibtexGenerateFileController {
             {
                 for(member in Membership.getAllMembers(group))
                 {
-                   bibtex = bibtex + teste(member.getId())
+                   bibtex = bibtex + memberPublications(member.getId())
                 }
             }
         }
@@ -76,20 +71,4 @@ class BibtexGenerateFileController {
         render(bibtex)
     }
 
-    String teste(numero)
-    {
-        String bibtex = ""
-        for(publication in Publication.getAll())
-        {
-            for(member in publication.getMembers())
-            {
-                if(member.getId() == numero)
-                {
-                    bibtex = bibtex + publication.generateBib()  + "<br>"
-                    break
-                }
-            }
-        }
-        return bibtex
-    }
 }

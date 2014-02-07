@@ -1,7 +1,3 @@
-import org.apache.shiro.SecurityUtils
-import org.apache.shiro.subject.Subject
-import org.apache.shiro.util.ThreadContext
-import pages.LoginPage
 import pages.OrientationPages.OrientationCreatePage
 import pages.OrientationPages.OrientationEditPage
 import pages.OrientationPages.OrientationShowPage
@@ -12,14 +8,17 @@ import rgms.member.Member
 import rgms.member.Orientation
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
+import pages.LoginPage
+import org.apache.shiro.SecurityUtils
+import org.apache.shiro.subject.Subject
+import org.apache.shiro.util.ThreadContext
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
 // create
 Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTese ->
-    // Express the Regexp above with the code you wish you had
-    orientation = Orientation.findByTituloTese(tituloTese)
-    assert orientation == null
+    checkIfOrientationDoesNotExists(tituloTese)
 }
 
 When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
@@ -28,8 +27,7 @@ When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
 }
 
 Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String title ->
-    orientation = Orientation.findByTituloTese(title)
-    assert orientation != null
+    checkIfOrientationExists(title)
 }
 
 //delete
@@ -44,71 +42,49 @@ When(~'^I delete the orientation for "([^"]*)"$') { String title ->
 }
 
 Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { String title ->
+    checkIfOrientationDoesNotExists(title)
+}
+
+private void checkIfOrientationDoesNotExists(String title) {
     orientation = Orientation.findByTituloTese(title)
     assert orientation == null
+}
 
+private void checkIfOrientationExists(String title){
+    orientation = Orientation.findByTituloTese(title)
+    assert orientation != null   
 }
 
 //create web
 Given(~'^I am at the create orientation page$') { ->
-
-    Login()
-
-    to PublicationsPage
-    at PublicationsPage
-    page.select("Orientation")
-
-    at OrientationsPage
-    page.selectNewOrientation()
-
-    at OrientationCreatePage
+    goToOrientationCreatePage()
 }
 
-When(~'^I fill the orientation title with "([^"]*)"$') { String title ->
+When(~'^I fill the orientation title with "([^"]*)"$') { title ->
+    fillOrientationWithTitleAndCreateThen(title)
+}
 
+private void fillOrientationWithTitleAndCreateThen(title) {
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
 
-    at OrientationShowPage
-
-
-}
-
-And(~'^I select the list orientation option$') { ->
     at OrientationShowPage
     page.showList()
 
     at OrientationsPage
 }
+
 
 //edit web
 Given(~'^I am at the orientation page$') { ->
-
-    Login()
-
-    to PublicationsPage
-    at PublicationsPage
-    page.select("Orientation")
-
-    at OrientationsPage
+    goToOrientationCreatePage()
 }
+
 
 And(~'^the orientation "([^"]*)" is stored in the system$') { String title ->
-    page.selectNewOrientation()
-
-    at OrientationCreatePage
-    page.fillOrientationDetails(title)
-    page.selectCreateOrientation()
-
-    at OrientationShowPage
-    page.showList()
-
-    at OrientationsPage
-
-    orientation = Orientation.findByTituloTese(title)
-    assert orientation != null
+    fillOrientationWithTitleAndCreateThen(title)
+    checkIfOrientationExists(title)
 }
-
 
 When(~'^I select to view orientation "([^"]*)" in resulting list$') { String oldtitle ->
 
@@ -130,25 +106,16 @@ When(~'^I select the change option at the orientation edit page$') { ->
 
 Then(~'^the edited orientation "([^"]*)" is properly stored by the system$') { String title ->
     at OrientationShowPage
-    orientation = Orientation.findByTituloTese(title)
-    assert orientation != null
+    checkIfOrientationExists(title)
 }
 
+Then(~'^I am on the orientation show page with edition completed$'){ ->
+    at OrientationShowPage
+    assert page.readFlashMessage() != null
+}
 
 Given(~'^the system has some orientations stored$') { ->
-    // save old metaclass
-    def registry = GroovySystem.metaClassRegistry
-    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
-    registry.removeMetaClass(SecurityUtils)
-
-    // Mock login
-    def subject = [getPrincipal: { "admin" },
-            isAuthenticated: { true }
-    ] as Subject
-    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-            [getSubject: { subject } as SecurityManager])
-    SecurityUtils.metaClass.static.getSubject = { subject }
-
+    TestDataAndOperations.loginController(this)
     initialSize = Orientation.findAll().size()
 }
 
@@ -161,8 +128,7 @@ When(~'^I upload a new orientation "([^"]*)"$') { filename ->
 }
 
 Then(~'the system has more orientations now$') { ->
-    // restore metaclass
-    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
+    TestDataAndOperations.logoutController(this)
     finalSize = Orientation.findAll().size()
 }
 
@@ -216,12 +182,6 @@ Then(~'^the orientation "([^"]*)" with orientated member "([^"]*)" is properly s
 When(~'I create a orientation for the thesis "([^"]*)" with registered member "([^"]*)"$') { entitled, username ->
     member = MemberTestDataAndOperations.findByUsername(username)
     OrientationTestDataAndOperations.createOrientationWithMenber(entitled, member)
-
-}
-
-Then(~'^the orientation "([^"]*)" was not stored twice$') { entitled ->
-    orientation = Orientation.findAllByTituloTese(entitled)
-    assert orientation.size() >= 2
 }
 
 //#2
@@ -261,9 +221,17 @@ When(~'^I select the option remove at the orientation show page$') { ->
 
 //FUNCOES AUXILIARES
 
-// o problema de duplicação que este método resolve não foi identificado pela ferramenta de detecção de clones
-def Login() {
+private void goToOrientationCreatePage() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
+
+    to PublicationsPage
+    at PublicationsPage
+    page.select("Orientation")
+
+    at OrientationsPage
+    page.selectNewOrientation()
+
+    at OrientationCreatePage
 }

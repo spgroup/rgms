@@ -1,5 +1,8 @@
 package steps
 
+import org.apache.shiro.subject.Subject
+import org.apache.shiro.util.ThreadContext
+import org.codehaus.groovy.tools.GroovyClass
 import rgms.authentication.User
 import rgms.member.*
 import rgms.news.News
@@ -297,21 +300,6 @@ class TestDataAndOperations {
     }
     //mapmf_tasj
 
-
-
-
-
-    static public void createOrientation(String tituloTese) {
-
-        def cont = new OrientationController()
-        cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    }
-
-
     //article
 
     static public def path(){
@@ -324,5 +312,21 @@ class TestDataAndOperations {
         def records = new XmlParser()
         cont.savePublication(records.parse(xml));
         cont.response.reset()
+    }
+
+    static public void loginController(cla){
+        def registry = GroovySystem.metaClassRegistry
+        cla.oldMetaClass = registry.getMetaClass(SecurityUtils)
+        registry.removeMetaClass(SecurityUtils)
+        def subject = [getPrincipal: { "admin" },
+                isAuthenticated: { true }
+        ]as Subject
+        ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+                [getSubject: { subject } as SecurityManager])
+        SecurityUtils.metaClass.static.getSubject = { subject }
+    }
+
+    static public void logoutController(cla){
+        GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, cla.oldMetaClass)
     }
 }

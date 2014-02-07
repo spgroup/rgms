@@ -24,10 +24,11 @@ class BookChapterPage extends Page {
         $('a.create').click()
     }
 
-    def checkBookChapterAtList(title, row) {
+    def checkBookChapterAtList(String title, row) {
         def listDiv = $('div', id: 'list-bookChapter')
         def bookTable = (listDiv.find('table'))[0]
         def bookRows = bookTable.find('tbody').find('tr')
+        //noinspection GroovyAssignabilityCheck
         def bookColumns = bookRows[row].find('td')
 
         def testarbook = BookChapter.findByTitle(title)

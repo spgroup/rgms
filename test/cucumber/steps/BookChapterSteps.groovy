@@ -2,6 +2,7 @@ import pages.BookChapterCreatePage
 import pages.BookChapterPage
 import pages.LoginPage
 import pages.PublicationsPage
+import pages.*
 import rgms.publication.BookChapter
 import steps.BookChapterTestDataAndOperations
 import steps.TestDataAndOperationsPublication
@@ -79,7 +80,7 @@ When(~'^I view the book chapter list$') { ->
 Then(~'my book chapter list contains "([^"]*)"$') { String title ->
     at BookChapterPage
     bookChapterList = BookChapter.findAll()
-    assert BookChapterTestDataAndOperations.containsBookChapter(title, bookChapterList)
+    assert BookChapterTestDataAndOperations.containsBookChapter(title)
 }
 And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$') { String title, filename ->
     page.selectNewBookChapter()
@@ -91,12 +92,16 @@ And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$')
 }
 
 Then(~'My resulting book chapter list contains "([^"]*)"$') { String title ->
+    checkIfBookIsOnListAtBookChapterPage(title)
+}
+
+private void checkIfBookIsOnListAtBookChapterPage(String title) {
     at BookChapterPage
     page.checkBookChapterAtList(title, 0)
 }
+
 When(~'^I go to new book chapter page$') { ->
-//    to BookChapterPage
-    at BookChapterPage
+    to BookChapterPage
     page.selectNewBookChapter()
     at BookChapterCreatePage
 }
@@ -153,6 +158,7 @@ And(~'^the system has a book chapter entitled "([^"]*)" with file name "([^"]*)"
     book = BookChapter.findByTitle(title)
     if (book == null) {
         BookChapterTestDataAndOperations.createBookChapter(title, filename)
+        to BookChapterCreatePage
     }
 }
 
@@ -163,8 +169,6 @@ Then(~'^the book chapter "([^"]*)" was not stored twice$') { String entitled ->
 
 And(~'^the system shows an error message$') { ->
     at BookChapterPage
-    //assert page.readFlashMessage()
-    //Thread.sleep(100000)
     assert page.hasErrorUploadFile()
 }
 

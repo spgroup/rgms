@@ -50,7 +50,7 @@ class XMLController {
             return
     }
 
-    private Closure saveBookChapters = {
+    public Closure saveBookChapters = {
         Node xmlFile ->
             XMLService.createBooksChapters(xmlFile)
     }

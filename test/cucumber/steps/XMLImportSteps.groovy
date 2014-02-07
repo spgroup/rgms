@@ -2,30 +2,22 @@ import pages.ArticlePages.ArticlesPage
 import pages.BookChapterPage
 import pages.Conferencia.ConferenciaPage
 import pages.DissertationPage
+import pages.LoginPage
 import pages.OrientationPages.OrientationsPage
 import pages.XMLImportPage
 import pages.ferramenta.FerramentaPage
 import rgms.publication.*
 import static cucumber.api.groovy.EN.*
 import steps.TestDataAndOperations
+import CommonSteps
 
 import org.apache.shiro.util.ThreadContext
 import org.apache.shiro.subject.Subject
 import org.apache.shiro.SecurityUtils
 
-Given(~'^the system has some publications stored$') {->
-    // save old metaclass
-    def registry = GroovySystem.metaClassRegistry
-    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
-    registry.removeMetaClass(SecurityUtils)
+Given(~'^the system has some publications stored$') { ->
 
-    // Mock login
-    def subject = [getPrincipal: {"admin"},
-        isAuthenticated: {true}
-    ]as Subject
-    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-        [getSubject: {subject} as SecurityManager])
-    SecurityUtils.metaClass.static.getSubject = {subject}
+    TestDataAndOperations.loginController(this)
 
     initialSize = Publication.findAll().size()
 }
@@ -36,8 +28,8 @@ When(~'^I upload the publications of "([^"]*)"$') { filename ->
     finalSize = Publication.findAll().size()
     assert initialSize < finalSize
 }
-Then(~'^the system has all the publications of the xml file$') {->
-    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
+Then(~'^the system has all the publications of the xml file$') { ->
+    TestDataAndOperations.logoutController(this)
 
     //Book Chapters
     assert Publication.findByTitle("Refinement of Concurrent Object Oriented Programs") != null

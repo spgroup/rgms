@@ -32,5 +32,4 @@ class LoginPage extends Page {
         $("form").signIn().click()
     }
 
-
 }

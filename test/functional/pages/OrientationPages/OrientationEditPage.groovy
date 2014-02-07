@@ -43,5 +43,4 @@ class OrientationEditPage extends Page {
     def delete() {
         assert withConfirm(true) { $("form").find('input', class: 'delete').click() }
     }
-
 }

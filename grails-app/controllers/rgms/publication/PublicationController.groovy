@@ -1,10 +1,7 @@
 package rgms.publication
 
 import org.apache.shiro.SecurityUtils
-import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
-import rgms.publication.Publication;
-
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.HttpClient;
@@ -15,9 +12,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.NameValuePair;
 import org.apache.http.protocol.HTTP;
 import rgms.authentication.User
-
-import java.util.List;
-
 
 class PublicationController {
 

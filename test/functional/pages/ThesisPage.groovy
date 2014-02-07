@@ -32,7 +32,6 @@ class ThesisPage extends Page {
         def listDiv = $('div', id: 'list-tese')
         def thesisTable = (listDiv.find('table'))[0]
         def thesisRow = thesisTable.find('tbody').find('tr')
-
         return thesisRow
     }
 

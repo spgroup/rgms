@@ -1,12 +1,7 @@
-import cucumber.runtime.PendingException
 import pages.ArticlePages.*
 import pages.*
-import rgms.member.Member
-import rgms.publication.BookChapter
 import rgms.publication.Periodico
 import rgms.tool.TwitterTool
-import steps.BookChapterTestDataAndOperations
-import steps.TestDataAndOperations
 import steps.TestDataAndOperationsFacebook
 import steps.ArticleTestDataAndOperations
 import steps.TestDataAndOperationsPublication
@@ -186,27 +181,7 @@ Given(~'^I am logged as "([^"]*)"$') { String userName ->
 }
 Given (~'^I am at the Article Page$'){->
 
-    Login()
-    at PublicationsPage
-    page.select("Periodico")
-    to ArticlesPage
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
-    println path
-    def f = new File(path)
-    println "exist Path?" + f.exists()
-}
-Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
-
-    Login()
-    at PublicationsPage
-    page.select("Periodico")
-    to ArticlesPage
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
-    println path
-    def f = new File(path)
-    println "exist Path?" + f.exists()
-    //Mantive esse Given para testes do facebook.
-    // As duplicacoes de Twitter so dizem respeito a esse teste que pode ser removido. Renato Ferreira.
+    addPage()
 }
 
 When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$') { String articleName, String filename ->
@@ -348,4 +323,16 @@ And(~'^the articles are not stored by the system$') {->
 }
 Given(~'^the system has some articles stored$') {->
     initialSize = Periodico.findAll().size()
+}
+
+//Funcoes Auxiliares
+def addPage(){
+    Login()
+    at PublicationsPage
+    page.select("Periodico")
+    to ArticlesPage
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
+    println path
+    def f = new File(path)
+    println "exist Path?" + f.exists()
 }

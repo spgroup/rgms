@@ -17,7 +17,6 @@ Feature: orientations
   Scenario: create orientation web
     Given I am at the create orientation page
     When I fill the orientation title with "The Book of Web Software"
-    And I select the list orientation option
     Then the orientation "The Book of Web Software" is properly stored by the system
 
   Scenario: edit existing orientation web
@@ -29,7 +28,6 @@ Feature: orientations
     Then the edited orientation "Hexa" is properly stored by the system
 
   #1 This scenario test are not working well, please check they implementation before undo the comment
-
   #Scenario: new orientation with registered member orientated
   #  Given the system has no orientations entitled "The Book is on the table 2"
    # And Exists a member "Rubens Lopes" with username "rlfs" that has been an registered member
