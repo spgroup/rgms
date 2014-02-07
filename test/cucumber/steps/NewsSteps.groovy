@@ -218,17 +218,16 @@ Then(~'^the news "([^"]*)", date "([^"]*)" and "([^"]*)" research group is prope
 }
 
 
-Given(~'^I select the news page and the news "([^"]*)" is stored in the system$') { String description ->
+Given(~'^I select the news page$') { ->
     page.select("News")
+}
+
+And(~'^the news "([^"]*)" is stored in the system$') { String description ->
     selectNewNewsInNewsPage()
 
-    //at NewsCreatePage
     page.fillNewDetails(description)
     page.clickOnCreate()
     assert NewsTestDataAndOperations.checkExistingNewsByDescription(description)
-
-    //to NewsPage
-    //at NewsPage
 }
 
 When(~'^I select to view the news "([^"]*)" in resulting list$') { String title ->

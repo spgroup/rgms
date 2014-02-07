@@ -62,7 +62,8 @@ Feature: news
 
   Scenario: remove existing news web
     Given I am at the publications menu
-    When I select the news page and the news "Noticia1" is stored in the system
+    When I select the news page
+    And the news "Noticia1" is stored in the system
     And I select the option to remove in news show page
     Then the news "Noticia1" is properly removed by the system
 
