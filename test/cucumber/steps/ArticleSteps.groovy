@@ -183,12 +183,6 @@ Given (~'^I am at the Article Page$'){->
 
     addPage()
 }
-Given(~'^I am logged as "([^"]*)" and at the Add Article Page$') { String userName ->
-
-    addPage()
-    //Mantive esse Given para testes do facebook.
-    // As duplicacoes de Twitter so dizem respeito a esse teste que pode ser removido. Renato Ferreira.
-}
 
 When(~'^I try to create an article named as "([^"]*)" with filename "([^"]*)"$') { String articleName, String filename ->
     selectNewArticleInArticlesPage()

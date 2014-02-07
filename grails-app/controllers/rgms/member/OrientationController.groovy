@@ -21,7 +21,7 @@ class OrientationController {
     def save() {
         def orientationInstance = new Orientation(params)
 
-        if(!comparacaoOrientationComRender(orientationInstance, "create")) {
+        if(!compareOrientationWithRender(orientationInstance, "create")) {
             return false
         }
         if (!orientationInstance.save(flush: true)) {
@@ -33,7 +33,7 @@ class OrientationController {
 
     }
 
-    def comparacaoOrientationComRender(orientationInstance, tipoRender) {
+    def compareOrientationWithRender(orientationInstance, tipoRender) {
         if(orientationInstance.orientador.name.equalsIgnoreCase(orientationInstance.orientando)) {
             render(view: tipoRender, model: [orientationInstance: orientationInstance])
             //noinspection InvalidI18nProperty
@@ -102,7 +102,7 @@ class OrientationController {
 
     def checkOrientationOrientando(Orientation orientationInstance){
 
-        if(!comparacaoOrientationComRender(orientationInstance, "edit")) {
+        if(!compareOrientationWithRender(orientationInstance, "edit")) {
             return false
         }
         return true

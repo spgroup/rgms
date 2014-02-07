@@ -1,7 +1,3 @@
-import pages.PublicationsPage
-import pages.thesis.ThesisEditPage
-import rgms.authentication.User
-import steps.ThesisTestDataAndOperations
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.ThesisPage

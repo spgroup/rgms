@@ -1,7 +1,3 @@
-import org.apache.shiro.SecurityUtils
-import org.apache.shiro.subject.Subject
-import org.apache.shiro.util.ThreadContext
-import pages.LoginPage
 import pages.OrientationPages.OrientationCreatePage
 import pages.OrientationPages.OrientationEditPage
 import pages.OrientationPages.OrientationShowPage
@@ -16,12 +12,13 @@ import pages.LoginPage
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.subject.Subject
 import org.apache.shiro.util.ThreadContext
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
 // create
 Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTese ->
-    checkIfOrientationDoNotExists(tituloTese)
+    checkIfOrientationDoesNotExists(tituloTese)
 }
 
 When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
@@ -45,10 +42,10 @@ When(~'^I delete the orientation for "([^"]*)"$') { String title ->
 }
 
 Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { String title ->
-    checkIfOrientationDoNotExists(title)
+    checkIfOrientationDoesNotExists(title)
 }
 
-private void checkIfOrientationDoNotExists(String title) {
+private void checkIfOrientationDoesNotExists(String title) {
     orientation = Orientation.findByTituloTese(title)
     assert orientation == null
 }
@@ -118,7 +115,7 @@ Then(~'^I am on the orientation show page with edition completed$'){ ->
 }
 
 Given(~'^the system has some orientations stored$') { ->
-    loginController()
+    TestDataAndOperations.loginController(this)
     initialSize = Orientation.findAll().size()
 }
 
@@ -131,7 +128,7 @@ When(~'^I upload a new orientation "([^"]*)"$') { filename ->
 }
 
 Then(~'the system has more orientations now$') { ->
-    logoutController()
+    TestDataAndOperations.logoutController(this)
     finalSize = Orientation.findAll().size()
 }
 
@@ -224,31 +221,10 @@ When(~'^I select the option remove at the orientation show page$') { ->
 
 //FUNCOES AUXILIARES
 
-def loginController(){
-    def registry = GroovySystem.metaClassRegistry
-    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
-    registry.removeMetaClass(SecurityUtils)
-    def subject = [getPrincipal: { "admin" },
-            isAuthenticated: { true }
-    ]as Subject
-    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-            [getSubject: { subject } as SecurityManager])
-    SecurityUtils.metaClass.static.getSubject = { subject }
-}
-
-def logoutController() {
-    // restore metaclass
-    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
-}
-
-def loginWeb() {
+private void goToOrientationCreatePage() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
-}
-
-private void goToOrientationCreatePage() {
-    loginWeb()
 
     to PublicationsPage
     at PublicationsPage

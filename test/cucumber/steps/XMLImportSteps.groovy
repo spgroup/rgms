@@ -17,15 +17,7 @@ import org.apache.shiro.SecurityUtils
 
 Given(~'^the system has some publications stored$') { ->
 
-    def registry = GroovySystem.metaClassRegistry
-    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
-    registry.removeMetaClass(SecurityUtils)
-    def subject = [getPrincipal: { "admin" },
-            isAuthenticated: { true }
-    ] as Subject
-    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
-            [getSubject: { subject } as SecurityManager])
-    SecurityUtils.metaClass.static.getSubject = { subject }
+    TestDataAndOperations.loginController(this)
 
     initialSize = Publication.findAll().size()
 }
@@ -36,8 +28,8 @@ When(~'^I upload the publications of "([^"]*)"$') { filename ->
     finalSize = Publication.findAll().size()
     assert initialSize < finalSize
 }
-Then(~'^the system has all the publications of the xml file$') {->
-    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
+Then(~'^the system has all the publications of the xml file$') { ->
+    TestDataAndOperations.logoutController(this)
 
     //Book Chapters
     assert Publication.findByTitle("Refinement of Concurrent Object Oriented Programs") != null

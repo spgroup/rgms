@@ -168,8 +168,8 @@ Then(~'^the book chapter "([^"]*)" was not stored twice$') { String entitled ->
 }
 
 And(~'^the system shows an error message$') { ->
-    at BookChapterSavePage
-    assert page.readFlashMessage() != null
+    at BookChapterPage
+    assert page.hasErrorUploadFile()
 }
 
 
