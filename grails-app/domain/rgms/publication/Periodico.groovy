@@ -23,7 +23,7 @@ class Periodico extends Publication {
     @Override
     public String toString() {
 
-        return "Journal: " +   journal + " | Volume" + volume + " | Number" + number
+        return "Journal: " +  journal + " | Volume: " + volume + " | Number: " + number
     }
 
     @Override
