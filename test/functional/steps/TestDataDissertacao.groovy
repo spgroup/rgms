@@ -7,8 +7,7 @@ class TestDataDissertacao
 {
 
     static public void createDissertacao(String title, filename, school) {
-        def cont = new DissertacaoController()
-        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title,filename,school,cont)
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title,filename,school,new DissertacaoController())
     }
 
 
@@ -52,11 +51,8 @@ class TestDataDissertacao
     }
 
     static public void removeDissertacao(String title) {
-        def testDissertation = Dissertacao.findByTitle(title)
-        def cont = new DissertacaoController()
-        def date = new Date()
-        cont.params << [id: testDissertation.id]
-        cont.delete()
+        ThesisOrDissertationTestDataAndOperations.deleteThesisOrDissertation(title, new DissertacaoController(),Dissertacao.findByTitle(title))
+
     }
 
 }

@@ -1,17 +1,16 @@
 package steps
 
+import rgms.publication.Tese
 import rgms.publication.TeseController
 
 class ThesisTestDataAndOperations {
 
     static public void createTese(String title, filename, school) {
-        def cont = new TeseController()
-        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title, filename, school, cont)
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title, filename, school, new TeseController())
     }
 
     static public void deleteTeseByTitle(String title) {
-        def cont = new TeseController()
-        ThesisOrDissertationTestDataAndOperations.deleteThesisOrDissertation(title, cont)
+        ThesisOrDissertationTestDataAndOperations.deleteThesisOrDissertation(title, new TeseController(),Tese.findByTitle(title))
     }
 
 }
