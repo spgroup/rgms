@@ -2,7 +2,6 @@ package pages.thesis
 
 import geb.Page
 import pages.GetPageTitle
-import rgms.publication.Tese
 
 class ThesisShowPage extends Page {
     static url = "tese/show"

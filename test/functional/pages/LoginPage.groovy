@@ -1,9 +1,6 @@
 package pages
 
 import geb.Page
-import org.apache.shiro.SecurityUtils
-import org.apache.shiro.subject.Subject
-import org.apache.shiro.util.ThreadContext
 
 class LoginPage extends Page {
     def titleName = /${(new GetPageTitle()).getMessageServerLocale("user.login.title")}/

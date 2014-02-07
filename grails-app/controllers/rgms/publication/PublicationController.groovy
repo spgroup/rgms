@@ -1,10 +1,7 @@
 package rgms.publication
 
 import org.apache.shiro.SecurityUtils
-import org.springframework.dao.DataIntegrityViolationException
 import rgms.member.Member
-import rgms.publication.Publication;
-
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.HttpClient;
@@ -15,9 +12,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.NameValuePair;
 import org.apache.http.protocol.HTTP;
 import rgms.authentication.User
-
-import java.util.List;
-
 
 class PublicationController {
 
@@ -81,10 +75,6 @@ class PublicationController {
             return false
         }
 
-        return lerPreencherBuffer(f)
-    }
-
-    private boolean lerPreencherBuffer(File f) {
         InputStream inputStream = request.getInputStream()
         OutputStream outputStream = new FileOutputStream(f)
         byte[] buffer = new byte[1024 * 10] //buffer de 10MB
@@ -110,7 +100,18 @@ class PublicationController {
             flash.message = 'File already exists. Please try to use a different file name.'
             return false
         }
-        return lerPreencherBuffer(f)
+        InputStream inputStream = request.getInputStream()
+        OutputStream outputStream = new FileOutputStream(f)
+        byte[] buffer = new byte[1024 * 10] //buffer de 10MB
+        int length
+
+        while ((length = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, length)
+        }
+        outputStream.close()
+        inputStream.close()
+
+        return true
     }
 
 	/**

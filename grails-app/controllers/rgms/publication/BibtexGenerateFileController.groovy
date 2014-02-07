@@ -41,10 +41,10 @@ class BibtexGenerateFileController {
 
     def generateBibTex = {
         int numero = (params.id).toInteger()
-        render(membroPublicacoes(numero))
+        render(memberPublications(numero))
     }
 
-    private String membroPublicacoes(int numero) {
+    private String memberPublications(int numero) {
         String bibtex = ""
         for (publication in Publication.getAll()) {
             for (member in publication.getMembers()) {
@@ -67,7 +67,7 @@ class BibtexGenerateFileController {
             {
                 for(member in Membership.getAllMembers(group))
                 {
-                   bibtex = bibtex + teste(member.getId())
+                   bibtex = bibtex + memberPublications(member.getId())
                 }
             }
         }
@@ -75,8 +75,4 @@ class BibtexGenerateFileController {
         render(bibtex)
     }
 
-    String teste(numero)
-    {
-        return membroPublicacoes(numero)
-    }
 }
