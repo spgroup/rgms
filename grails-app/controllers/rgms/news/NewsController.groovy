@@ -39,21 +39,15 @@ class NewsController {
         //noinspection GroovyAssignabilityCheck
         def newsInstance = News.get(params.id)
         if (!newsInstance) {
-//            flash.message = message(code: 'default.not.found.message', args: [message(code: 'news.label', default: 'News'), params.id])
-//            redirect(action: "list")
             flashMessage('default.not.found.message', params.id, 'list')
             return
         }
 
         try {
             newsInstance.delete(flush: true)
-//            flash.message = message(code: 'default.deleted.message', args: [message(code: 'news.label', default: 'News'), params.id])
-//            redirect(action: "list")
             flashMessage('default.deleted.message', params.id, 'list')
         }
         catch (DataIntegrityViolationException ignored) {
-//            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'news.label', default: 'News'), params.id])
-//            redirect(action: "show", id: params.id)
             flashMessage('default.not.deleted.message', params.id, 'show')
         }
     }
@@ -64,29 +58,12 @@ class NewsController {
         }
 
         def newsInstance = new News(params)
-        //def newsDB = News.findByDescriptionAndDateAndResearchGroup(newsInstance.description, newsInstance.date, newsInstance.researchGroup);
-        //if (newsDB) {
-            //flash.message = message(code: 'news.not.created.unicity.rule.message', args: [message(code: 'news.label', default: 'News'), params.id])
-            //redirect(action: "show", id: params.id)
-            //return
-        //}
-        //verificar unicidade aqui
-        //flash.message
 
         if(checkExisting(newsInstance)) {
-            //flash.message = message(code: 'news.not.created.unicity.rule.message', args: [message(code: 'news.label', default: 'News'), params.id])
             flashMessage('news.not.created.unicity.rule.message', params.id, '')
             redirect(action: "list", id: params.id)
             return
         }
-
-//        if (!newsInstance.save(flush: true)) {
-//            render(view: "create", model: [newsInstance: newsInstance])
-//            return
-//        }
-//
-//        flash.message = message(code: 'default.created.message',args: [message(code: 'news.label', default: 'News'),newsInstance.id])
-//        redirect(action: "show", id: newsInstance.id)
 
         createOrEditNews(newsInstance, "create")
     }
@@ -98,10 +75,8 @@ class NewsController {
         }
 
         if(action.equals("create")){
-//            flash.message = message(code: 'default.created.message',args: [message(code: 'news.label', default: 'News'),newsInstance.id])
             flashMessage('default.created.message', newsInstance.id, '')
         } else {
-//            flash.message = message(code: 'default.updated.message',args: [message(code: 'news.label', default: 'News'),newsInstance.id])
             flashMessage('default.updated.message', newsInstance.id, '')
         }
 
@@ -127,14 +102,6 @@ class NewsController {
         }
 
         newsInstance.properties = params
-
-//        if(!newsInstance.save(flush:true)){
-//           render(view: "edit", model: [newsInstance: newsInstance])
-//           return
-//        }
-//
-//        flash.message = message(code: 'default.updated.message',args: [message(code: 'news.label', default: 'News'),newsInstance.id])
-//        redirect(action: "show", id: newsInstance.id)
 
         createOrEditNews(newsInstance, "edit")
     }
