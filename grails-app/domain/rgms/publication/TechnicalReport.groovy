@@ -16,14 +16,14 @@ class TechnicalReport extends Publication {
 
     @Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+
+		return "Institution: " + institution + super.toString();
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+	public boolean equals(TechnicalReport other) {
+
+		return institution == other.institution && super.equals(other);
 	}
 	
 	@Override
