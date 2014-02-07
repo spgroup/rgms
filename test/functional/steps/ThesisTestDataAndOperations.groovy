@@ -10,7 +10,7 @@ class ThesisTestDataAndOperations {
     }
 
     static public void deleteTeseByTitle(String title) {
-        ThesisOrDissertationTestDataAndOperations.deleteThesisOrDissertation(title, new TeseController(),Tese.findByTitle(title))
+        ThesisOrDissertationTestDataAndOperations.deleteThesisOrDissertation(new TeseController(),Tese.findByTitle(title))
     }
 
 }
