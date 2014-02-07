@@ -3,7 +3,7 @@ import rgms.publication.Periodico
 import spock.lang.Specification
 
 /**
- * Created by Joao on 2/7/14.
+ * Created by JoaoGFarias on 2/7/14.
  */
 @TestFor(Periodico)
 class PeriodicoSpec extends Specification{

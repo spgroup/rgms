@@ -3,7 +3,7 @@ import rgms.publication.TechnicalReport
 import spock.lang.Specification
 
 /**
- * Created by Joao on 2/7/14.
+ * Created by JoaoGFarias on 2/7/14.
  */
 
 @TestFor(TechnicalReport)
