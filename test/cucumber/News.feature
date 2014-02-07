@@ -43,7 +43,7 @@ Feature: news
 
   Scenario: new news web
     Given I am at the publications menu
-    And I create a research group because its necessary
+    And I create a research group because it is necessary
     When I select the "News" option at the publications menu
     And I select the novo noticias option at the news page
     Then I can fill the news details

@@ -247,7 +247,7 @@ Then(~'^the news "([^"]*)" is properly removed by the system$') { String descrip
 }
 
 // eh necessario a criacao de um research group para poder criar uma new
-And(~'^I create a research group because its necessary$') {->
+And(~'^I create a research group because it is necessary$') {->
     at PublicationsPage
     page.select("Research Group")
     at ResearchGroupPage
