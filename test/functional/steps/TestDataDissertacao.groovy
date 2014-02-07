@@ -1,6 +1,5 @@
 package steps
 
-import rgms.member.Member
 import rgms.publication.*
 
 class TestDataDissertacao
