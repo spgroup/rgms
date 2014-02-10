@@ -107,7 +107,7 @@ When(~'^I request to update the news from Twitter to research group "([^"]*)"$')
     TestDataAndOperations.requestNewsFromTwitter(researchGroup)
 }
 
-def selectNewsByResearchGroup(String groupName) {
+def ifExistsSelectNewsByResearchGroup(String groupName) {
     researchGroup = ResearchGroup.findByName(groupName)
     newsByResearchGroup = News.getCurrentNews(researchGroup)
     assert newsByResearchGroup != null
@@ -115,7 +115,7 @@ def selectNewsByResearchGroup(String groupName) {
 }
 
 Then(~'^news of "([^"]*)" research group has been updated$') { String groupName ->
-    newsByResearchGroup = selectNewsByResearchGroup(groupName)
+    newsByResearchGroup = ifExistsSelectNewsByResearchGroup(groupName)
     assert newsByResearchGroup.size() > 0
 }
 
@@ -128,7 +128,7 @@ And(~'^twitter account associated with "([^"]*)" research group has been updated
 }
 
 Then(~'^there is no duplicated news in Twitter account associated with research group "([^"]*)"$'){String groupName ->
-    newsByResearchGroup = selectNewsByResearchGroup(groupName)
+    newsByResearchGroup = ifExistsSelectNewsByResearchGroup(groupName)
     while  (newsByResearchGroup.size() > 0){
         //noinspection GrReassignedInClosureLocalVar
         news = newsByResearchGroup.pop()
@@ -139,7 +139,7 @@ Then(~'^there is no duplicated news in Twitter account associated with research 
 }
 
 And(~'^the research group "([^"]*)" news list is empty$'){ String groupName ->
-    newsByResearchGroup = selectNewsByResearchGroup(groupName)
+    newsByResearchGroup = ifExistsSelectNewsByResearchGroup(groupName)
     assert newsByResearchGroup.size() == 0
 }
 
