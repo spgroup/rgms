@@ -66,6 +66,8 @@ class NewsController {
         }
 
         createOrEditNews(newsInstance, "create")
+
+        return
     }
 
     def createOrEditNews(News newsInstance, String action) {
@@ -81,6 +83,8 @@ class NewsController {
         }
 
         redirect(action: "show", id: newsInstance.id)
+
+        return
     }
 
     def saveFromTwitter(){
@@ -104,6 +108,8 @@ class NewsController {
         newsInstance.properties = params
 
         createOrEditNews(newsInstance, "edit")
+
+        return
     }
 
     private def newsInstanceRedirectIfItsNull(Long id, News newsInstance){
