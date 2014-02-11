@@ -2,7 +2,7 @@ package steps
 
 class ThesisOrDissertationTestDataAndOperations {
 
-    static protected void createThesisOrDissertation(String title, filename, school, cont) {
+    static protected void createThesisOrDissertation(cont,String title, filename, school) {
         def data = [title: title, publicationDate: new Date(2013, 03, 02),
                 school: school, address: "Boa Viagem", file: filename]
         createThesisOrDissertation(cont,data)

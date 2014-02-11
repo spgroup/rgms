@@ -6,7 +6,7 @@ import rgms.publication.TeseController
 class ThesisTestDataAndOperations {
 
     static public void createTese(String title, filename, school) {
-        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title, filename, school, new TeseController())
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation( new TeseController(), title, filename, school)
     }
 
     static public void deleteTeseByTitle(String title) {

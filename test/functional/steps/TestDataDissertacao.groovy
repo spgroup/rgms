@@ -6,7 +6,7 @@ class TestDataDissertacao
 {
 
     static public void createDissertacao(String title, filename, school) {
-        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title,filename,school,new DissertacaoController())
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(new DissertacaoController(),title,filename,school)
     }
 
 
