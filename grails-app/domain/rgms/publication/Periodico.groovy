@@ -29,7 +29,7 @@ class Periodico extends Publication {
     @Override
     public boolean equals(Periodico other) {
 
-        return volume == other.volume && number == other.number && journal == other.journal && pages == other.pages
+        return volume == other?.volume && number == other?.number && journal == other?.journal && pages == other?.pages
     }
 
     @Override

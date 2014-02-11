@@ -23,7 +23,7 @@ class TechnicalReport extends Publication {
 	@Override
 	public boolean equals(TechnicalReport other) {
 
-		return institution == other.institution && super.equals(other);
+		return institution == other?.institution && super.equals(other);
 	}
 	
 	@Override
