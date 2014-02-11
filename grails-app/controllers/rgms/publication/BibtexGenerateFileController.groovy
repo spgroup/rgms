@@ -4,7 +4,6 @@ import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Membership
 import rgms.member.ResearchGroup
-import rgms.news.News
 
 import static java.lang.Math.*
 import static java.lang.Math.min as min

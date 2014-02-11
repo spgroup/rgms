@@ -2,8 +2,6 @@ package steps
 
 import rgms.authentication.User
 import rgms.member.*
-import rgms.news.News
-import rgms.news.NewsController
 import rgms.publication.*
 import org.apache.shiro.SecurityUtils
 import steps.ThesisOrDissertationTestDataAndOperations
