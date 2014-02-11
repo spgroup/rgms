@@ -1,4 +1,3 @@
-import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGroup.ResearchGroupCreatePage
 import pages.ResearchGroup.ResearchGroupPage
@@ -9,7 +8,6 @@ import rgms.news.News
 import steps.TestDataAndOperations
 import steps.NewsTestDataAndOperations
 import pages.news.NewsShowPage
-import steps.TestDataAndOperationsResearchGroup
 
 import static cucumber.api.groovy.EN.*
 
@@ -81,10 +79,6 @@ Given(~'^the research group "([^"]*)" in the system has no Twitter account assoc
 
 When(~'^I associate the account "([^"]*)" to "([^"]*)" group$') { String twitter, String groupName ->
     researchGroup = ResearchGroup.findByName(groupName)
-    //assert researchGroup != null
-    //researchGroup.twitter = twitter
-    //researchGroup.save()
-    //TestDataAndOperations.editResearchGroupTwitter(researchGroup, twitter)
     TestDataAndOperations.editResearchGroupTwitterAcount(researchGroup, twitter)
 
     assert researchGroup.getTwitter() == twitter
@@ -180,11 +174,9 @@ When(~'^I select the novo noticias option at the news page$') {->
 }
 
 def selectNewNewsInNewsPage(){
-
     at NewsPage
     page.selectCreateNews()
     at NewsCreatePage
-
 }
 
 Then(~'^I can fill the news details$') { ->
@@ -237,7 +229,6 @@ When(~'^I select to view the news "([^"]*)" in resulting list$') { String title 
 
 And(~'I select the option to remove in news show page$') {->
     at NewsShowPage
-//    page.select('input', 'remove')
     page.remove()
 }
 

@@ -15,7 +15,6 @@ class NewsShowPage extends Page {
     static url = "news/show/1"
 
     static at = {
-        //title ==~ /Ver Nóticias/
         GetPageTitle gp = new GetPageTitle()
         def currentNews = gp.msg("default.news.label")
         def currentTitle = gp.msg("default.show.label", [currentNews])

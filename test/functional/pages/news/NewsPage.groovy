@@ -3,7 +3,6 @@ package pages.news
 import geb.Page
 import pages.GetPageTitle
 import pages.Util.CommonPages
-import rgms.news.News
 
 class NewsPage extends Page {
     static url = "news/list"
@@ -36,10 +35,6 @@ class NewsPage extends Page {
     //#end
 
     def selectViewNew(title) {
-//        getRow()
-//        def showLink = getRow().find('td').find([text:title])
-//        showLink.click()
         CommonPages.selectView(this, title);
-
     }
 }
