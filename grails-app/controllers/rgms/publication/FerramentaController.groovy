@@ -30,8 +30,9 @@ class FerramentaController {
 
     def save() {
         def ferramentaInstance = new Ferramenta(params)
-
-        if (!PublicationController.newUpload(ferramentaInstance, flash, request) || !ferramentaInstance.save(flush: true)) {
+        def alreadyExistingFileMessage = message(code: 'file.already.exist.message', default: 'File already exists. Please try to use a different file name.')
+        if (!PublicationController.newUpload(ferramentaInstance, flash, request,alreadyExistingFileMessage)
+            || !ferramentaInstance.save(flush: true)) {
             // com a segunda opção, o sistema se perde e vai para publication controller no teste Add a new article twitting it
             render(controller: "ferramenta", view: "create", model: [ferramentaInstance: ferramentaInstance])
             return
