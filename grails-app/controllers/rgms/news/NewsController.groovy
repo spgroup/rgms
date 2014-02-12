@@ -23,22 +23,32 @@ class NewsController {
         [newsInstance: news]
     }
 
+    def flashMessage(String code, paramsID, String action) {
+        flash.message = message(code: code, args: [message(code: 'news.label', default: 'News'), paramsID])
+
+        if(!action.equals('')){
+            if(action.equals("show")) {
+                redirect(action: "show", id: params.id)
+            } else {
+                redirect(action: action)
+            }
+        }
+    }
+
     def delete = {
+        //noinspection GroovyAssignabilityCheck
         def newsInstance = News.get(params.id)
         if (!newsInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'news.label', default: 'News'), params.id])
-            redirect(action: "list")
+            flashMessage('default.not.found.message', params.id, 'list')
             return
         }
 
         try {
             newsInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'news.label', default: 'News'), params.id])
-            redirect(action: "list")
+            flashMessage('default.deleted.message', params.id, 'list')
         }
         catch (DataIntegrityViolationException ignored) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'news.label', default: 'News'), params.id])
-            redirect(action: "show", id: params.id)
+            flashMessage('default.not.deleted.message', params.id, 'show')
         }
     }
 
@@ -48,28 +58,33 @@ class NewsController {
         }
 
         def newsInstance = new News(params)
-        //def newsDB = News.findByDescriptionAndDateAndResearchGroup(newsInstance.description, newsInstance.date, newsInstance.researchGroup);
-        //if (newsDB) {
-            //flash.message = message(code: 'news.not.created.unicity.rule.message', args: [message(code: 'news.label', default: 'News'), params.id])
-            //redirect(action: "show", id: params.id)
-            //return
-        //}
-        //verificar unicidade aqui
-        //flash.message
 
         if(checkExisting(newsInstance)) {
-            flash.message = message(code: 'news.not.created.unicity.rule.message', args: [message(code: 'news.label', default: 'News'), params.id])
+            flashMessage('news.not.created.unicity.rule.message', params.id, '')
             redirect(action: "list", id: params.id)
             return
         }
 
+        createOrEditNews(newsInstance, "create")
+
+        return
+    }
+
+    def createOrEditNews(News newsInstance, String action) {
         if (!newsInstance.save(flush: true)) {
-            render(view: "create", model: [newsInstance: newsInstance])
+            render(view: action, model: [newsInstance: newsInstance])
             return
         }
 
-        flash.message = message(code: 'default.created.message',args: [message(code: 'news.label', default: 'News'),newsInstance.id])
+        if(action.equals("create")){
+            flashMessage('default.created.message', newsInstance.id, '')
+        } else {
+            flashMessage('default.updated.message', newsInstance.id, '')
+        }
+
         redirect(action: "show", id: newsInstance.id)
+
+        return
     }
 
     def saveFromTwitter(){
@@ -84,11 +99,6 @@ class NewsController {
         }
     }
 
-    def edit(Long id) {
-        def newsInstance = News.get(id)
-        newsInstanceRedirectIfItsNull(id, newsInstance)
-    }
-
     def update(Long id){
         def newsInstance = News.get(id)
         if(!newsInstanceRedirectIfItsNull(id,newsInstance)){
@@ -97,13 +107,9 @@ class NewsController {
 
         newsInstance.properties = params
 
-        if(!newsInstance.save(flush:true)){
-           render(view: "edit", model: [newsInstance: newsInstance])
-           return
-        }
+        createOrEditNews(newsInstance, "edit")
 
-        flash.message = message(code: 'default.updated.message',args: [message(code: 'news.label', default: 'News'),newsInstance.id])
-        redirect(action: "show", id: newsInstance.id)
+        return
     }
 
     private def newsInstanceRedirectIfItsNull(Long id, News newsInstance){
@@ -115,7 +121,7 @@ class NewsController {
         [newsInstance: newsInstance]
     }
 
-    private boolean checkExisting(News newsInstance){
+    private static boolean checkExisting(News newsInstance){
         def newsDB = News.findByDescriptionAndDateAndResearchGroup(newsInstance.description, newsInstance.date, newsInstance.researchGroup);
         if (newsDB) {
             return true

@@ -1,6 +1,7 @@
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGroup.ResearchGroupCreatePage
+import pages.ResearchGroup.ResearchGroupPage
 import pages.news.NewsCreatePage
 import pages.news.NewsPage
 import rgms.member.ResearchGroup
@@ -8,6 +9,7 @@ import rgms.news.News
 import steps.TestDataAndOperations
 import steps.NewsTestDataAndOperations
 import pages.news.NewsShowPage
+import steps.TestDataAndOperationsResearchGroup
 
 import static cucumber.api.groovy.EN.*
 
@@ -23,19 +25,32 @@ When(~'^I create a news with description "([^"]*)" and date "([^"]*)" for "([^"]
     }
 }
 
-Then(~'^the news  with description  "([^"]*)", date "([^"]*)" and "([^"]*)" research group is properly stored by the system$') { String description, String date, String group ->
+def findNewsByDescriptionDateAndGroup(String description, String date, String group) {
     Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
     def researchGroup = ResearchGroup.findByName(group)
     news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
+    return news
+}
+
+Then(~'^the news  with description  "([^"]*)", date "([^"]*)" and "([^"]*)" research group is properly stored by the system$') { String description, String date, String group ->
+    news = findNewsByDescriptionDateAndGroup(description, date, group)
     assert news != null
 }
 
 Given(~'^the system has a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
-    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-    researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
+    Date dateAsDateObj
+    //noinspection GroovyAssignabilityCheck,GrReassignedInClosureLocalVar
+    (dateAsDateObj, researchGroup) = createAndGetResearchGroup(date, group)
+    //noinspection GroovyAssignabilityCheck
     NewsTestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
     news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
     assert news != null
+}
+
+private List createAndGetResearchGroup(String date, String group) {
+    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
+    researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group)
+    [dateAsDateObj, researchGroup]
 }
 
 When(~'^I delete the news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
@@ -49,8 +64,10 @@ Then(~'^the news with "([^"]*)" and date "([^"]*)" doesnt exists to "([^"]*)" re
 }
 
 Then(~'^the news  with "([^"]*)" and date "([^"]*)" is not registered to "([^"]*)" research group$') { String description, String date, String group ->
-    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-    researchGroup = TestDataAndOperations.createAndGetResearchGroupByName(group);
+    Date dateAsDateObj
+    //noinspection GroovyAssignabilityCheck,GrReassignedInClosureLocalVar
+    (dateAsDateObj, researchGroup) = createAndGetResearchGroup(date, group)
+    //noinspection GroovyAssignabilityCheck
     newsList = News.findAllByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup);
     assert newsList.size() == 1
 }
@@ -90,12 +107,15 @@ When(~'^I request to update the news from Twitter to research group "([^"]*)"$')
     TestDataAndOperations.requestNewsFromTwitter(researchGroup)
 }
 
-Then(~'^news of "([^"]*)" research group has been updated$') { String groupName ->
+def ifExistsSelectNewsByResearchGroup(String groupName) {
     researchGroup = ResearchGroup.findByName(groupName)
     newsByResearchGroup = News.getCurrentNews(researchGroup)
-    //assert researchGroup.getNews() != null
-    //assert researchGroup.news.size() > 0
     assert newsByResearchGroup != null
+    return newsByResearchGroup
+}
+
+Then(~'^news of "([^"]*)" research group has been updated$') { String groupName ->
+    newsByResearchGroup = ifExistsSelectNewsByResearchGroup(groupName)
     assert newsByResearchGroup.size() > 0
 }
 
@@ -108,10 +128,9 @@ And(~'^twitter account associated with "([^"]*)" research group has been updated
 }
 
 Then(~'^there is no duplicated news in Twitter account associated with research group "([^"]*)"$'){String groupName ->
-    researchGroup = ResearchGroup.findByName(groupName)
-    newsByResearchGroup = News.getCurrentNews(researchGroup)
-    assert newsByResearchGroup != null
+    newsByResearchGroup = ifExistsSelectNewsByResearchGroup(groupName)
     while  (newsByResearchGroup.size() > 0){
+        //noinspection GrReassignedInClosureLocalVar
         news = newsByResearchGroup.pop()
         newsByResearchGroup.each {
            assert (it.date != news.date) || (it.description != news.description)
@@ -120,9 +139,7 @@ Then(~'^there is no duplicated news in Twitter account associated with research 
 }
 
 And(~'^the research group "([^"]*)" news list is empty$'){ String groupName ->
-    researchGroup = ResearchGroup.findByName(groupName)
-    newsByResearchGroup = News.getCurrentNews(researchGroup)
-    assert newsByResearchGroup != null
+    newsByResearchGroup = ifExistsSelectNewsByResearchGroup(groupName)
     assert newsByResearchGroup.size() == 0
 }
 
@@ -159,10 +176,10 @@ Then(~'^I can not select the option Export to HTML at the News list page$'){ ->
 
 
 When(~'^I select the novo noticias option at the news page$') {->
-    selectNovoNoticiasInNewsPage()
+    selectNewNewsInNewsPage()
 }
 
-def selectNovoNoticiasInNewsPage(){
+def selectNewNewsInNewsPage(){
 
     at NewsPage
     page.selectCreateNews()
@@ -173,12 +190,20 @@ def selectNovoNoticiasInNewsPage(){
 Then(~'^I can fill the news details$') { ->
     at NewsCreatePage
     page.fillNewDetails("essa eh a descricao")
+    page.clickOnCreate()
+    assert NewsTestDataAndOperations.checkExistingNewsByDescription("essa eh a descricao")
+}
+
+When(~'^I try to create a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
+    if(NewsTestDataAndOperations.checkValidDate(date)) {
+        Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
+        def researchGroup = ResearchGroup.findByName(group)
+        NewsTestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
+    }
 }
 
 Then(~'^the news with description "([^"]*)", date "([^"]*)" and "([^"]*)" research group is not stored by the system because it is invalid$') { String description, String date, String group ->
-    Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-    def researchGroup = ResearchGroup.findByName(group)
-    news = News.findByDescriptionAndDateAndResearchGroup(description, dateAsDateObj, researchGroup)
+    news = findNewsByDescriptionDateAndGroup(description, date, group)
     assert news == null
 }
 
@@ -193,28 +218,44 @@ Then(~'^the news "([^"]*)", date "([^"]*)" and "([^"]*)" research group is prope
 }
 
 
-Given(~'^I select the news page and the new "([^"]*)" is stored in the system$') { String description ->
+Given(~'^I select the news page$') { ->
     page.select("News")
-    selectNovoNoticiasInNewsPage()
-
-    at NewsCreatePage
-    page.fillNewDetails(description)
-    page.clickOnCreate();
-
-    to NewsPage
-    at NewsPage
 }
 
-When(~'^I select to view new "([^"]*)" in resulting list$') { String title ->
+And(~'^the news "([^"]*)" is stored in the system$') { String description ->
+    selectNewNewsInNewsPage()
+
+    page.fillNewDetails(description)
+    page.clickOnCreate()
+    assert NewsTestDataAndOperations.checkExistingNewsByDescription(description)
+}
+
+When(~'^I select to view the news "([^"]*)" in resulting list$') { String title ->
     page.selectViewNew(title)
-    to NewsShowPage
+    at NewsShowPage
 }
 
 And(~'I select the option to remove in news show page$') {->
-    to NewsShowPage
-    page.select('input', 'remove')
+    at NewsShowPage
+//    page.select('input', 'remove')
+    page.remove()
 }
 
-Then(~'^the new "([^"]*)" is properly removed by the system$') { String description ->
+Then(~'^the news "([^"]*)" is properly removed by the system$') { String description ->
     assert !NewsTestDataAndOperations.checkExistingNewsByDescription(description)
+}
+
+// eh necessario a criacao de um research group para poder criar uma new
+And(~'^I create a research group because it is necessary$') {->
+    at PublicationsPage
+    page.select("Research Group")
+    at ResearchGroupPage
+    page.selectNewResearchGroup()
+    at ResearchGroupCreatePage
+    page.fillResearchGroupDetails("grupo")
+    page.clickOnCreate();
+    researchGroup = ResearchGroup.findByName("grupo")
+    assert researchGroup != null
+    to PublicationsPage
+    at PublicationsPage
 }
