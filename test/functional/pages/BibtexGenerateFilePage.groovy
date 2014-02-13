@@ -4,7 +4,7 @@ class BibtexGenerateFilePage extends FormPage {
     static url = "bibtexGenerateFile/home"
 
     static at = {
-        title ==~ /Member Listagem/
+        title ==~ /BibTexImport Listagem/
     }
 
     static content = {
