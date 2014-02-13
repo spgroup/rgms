@@ -61,15 +61,9 @@ class BibtexParse {
     }
 
     @SuppressWarnings("GroovyUnusedAssignment")
-    private static BibTeXDatabase parseBibTeX(File file) throws IOException, ParseException {
+    private static BibTeXDatabase parseBibTeX(File file) throws IOException, ParseException, NullPointerException {
 
-        Reader reader
-
-        try{
-            reader = new FileReader(file);
-        }catch(NullPointerException e){
-            return []
-        }
+        Reader reader = new FileReader(file);
 
         try {
             BibTeXParser parser = new BibTeXParser() {
