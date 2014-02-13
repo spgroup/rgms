@@ -10,7 +10,7 @@ class TestDataDissertacao
     }
 
 
-    static public void createDissertacaoWithotSchool(String title, filename) {
+    static public void createDissertacaoWithoutSchool(String title, filename) {
         def data = [title: title, publicationDate: new Date(2013, 03, 02),
                 address: "Boa Viagem", file: filename]
         ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(new DissertacaoController(),data)
