@@ -22,10 +22,10 @@ class Orientation {
     }
 
     boolean equals(Orientation other) {
-        boolean compatible = true
-        this.each { key, data ->
-            compatible = compatible && (other."$key" == data)
-        }
+        def compatible = true
+        other.properties.each {key, value  ->
+                compatible = compatible && (this."$key" == value)
+            }
         return compatible
     }
 
