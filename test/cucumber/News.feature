@@ -43,6 +43,7 @@ Feature: news
 
   Scenario: new news web
     Given I am at the publications menu
+    And I create a research group because it is necessary
     When I select the "News" option at the publications menu
     And I select the novo noticias option at the news page
     Then I can fill the news details
@@ -61,12 +62,12 @@ Feature: news
 
   Scenario: remove existing news web
     Given I am at the publications menu
-    When I select the news page and the new "Noticia1" is stored in the system
-    And I select to view new "Noticia1" in resulting list
+    When I select the news page
+    And the news "Noticia1" is stored in the system
     And I select the option to remove in news show page
-    Then the new "Noticia1" is properly removed by the system
+    Then the news "Noticia1" is properly removed by the system
 
   Scenario: new invalid news (invalid date)
     Given the system has no news with description "teste" and date "31-02-2013" for "SPG" research group
-    When I create a news with description "teste" and date "31-02-2013" for "SPG" research group
+    When I try to create a news with description "teste" and date "31-02-2013" for "SPG" research group
     Then the news with description "teste", date "31-02-2013" and "SPG" research group is not stored by the system because it is invalid
