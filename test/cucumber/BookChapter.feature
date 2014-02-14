@@ -68,7 +68,7 @@ Feature: BookChapter
 
   Scenario: upload book chapters without a file
     Given I am at the publications menu
-    When I select the "Book Chapter" option at the program menu
+    When I select the Book Chapter option at the program menu
     And I select the upload button at the book chapter page
     Then I'm still on book chapter page
     And the book chapters are not stored by the system

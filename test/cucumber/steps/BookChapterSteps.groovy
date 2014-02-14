@@ -172,6 +172,10 @@ And(~'^the system shows an error message$') { ->
     assert page.hasErrorUploadFile()
 }
 
+When(~'I select the Book Chapter option at the program menu'){ ->
+    page.select("Book Chapter")
+}
+
 
 def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookChapterDetails(title, filename)
