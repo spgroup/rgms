@@ -22,11 +22,11 @@ class DissertacaoController extends ThesisOrDissertationController {
     def save() {
         saveThesisOrDissertation("Dissertacao", params)
     }
-    def getDissertacaoInstance(def id){
-        //noinspection GroovyAssignabilityCheck
-        def dissertacaoInstance = Dissertacao.get(id)
+    def getDissertacaoInstance(def id)
+{        
+    def dissertacaoInstance = Dissertacao.get(id)
         if (!dissertacaoInstance) {
-            flash.message = messageGenerator('','default.not.found.message', id)
+            flash.message = messageGenerator('default.not.found.message', id)
             redirect(action: "list")
             return
         }

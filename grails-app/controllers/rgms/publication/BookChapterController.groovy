@@ -35,7 +35,6 @@ class BookChapterController {
         //Member author = user?.author
         //pb.sendPostFacebook(author, bookChapterInstance.toString())
         //#end
-        //noinspection InvalidI18nProperty
         flash.message = message(code: 'default.created.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
         redirect(action: "show", id: bookChapterInstance.id)
     }
@@ -46,13 +45,6 @@ class BookChapterController {
         if (!isReturned) {
             [bookChapterInstance: bookChapterInstance]
         }
-    }
-
-    private BookChapter checkBook(long id) {
-        def bookChapterInstance = BookChapter.get(id)
-        //noinspection GroovyUnusedAssignment,GroovyUnusedAssignment
-        boolean isReturned1 = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
-        bookChapterInstance
     }
 
     def show(Long id) {
@@ -76,7 +68,6 @@ class BookChapterController {
     }
 
     def outdatedVersionError(BookChapter bookChapterInstance) {
-        //noinspection InvalidI18nProperty
         bookChapterInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                 [message(code: 'bookChapter.label', default: 'BookChapter')] as Object[],
                 "Another user has updated this BookChapter while you were editing")
@@ -88,7 +79,6 @@ class BookChapterController {
         if (!bookChapterInstance.save(flush: true)) {
             render(view: "edit", model: [bookChapterInstance: bookChapterInstance])
         } else {
-            //noinspection InvalidI18nProperty
             flash.message = message(code: 'default.updated.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
             redirect(action: "show", id: bookChapterInstance.id)
         }
@@ -98,5 +88,6 @@ class BookChapterController {
         def bookChapterInstance = BookChapter.get(id)
         aux.delete(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
     }
+
 
 }

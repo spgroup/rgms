@@ -4,6 +4,7 @@ import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Membership
 import rgms.member.ResearchGroup
+import rgms.news.News
 
 import static java.lang.Math.*
 import static java.lang.Math.min as min
@@ -40,22 +41,22 @@ class BibtexGenerateFileController {
     }
 
     def generateBibTex = {
-        int numero = (params.id).toInteger()
-        render(memberPublications(numero))
-    }
-
-    private String memberPublications(int numero) {
         String bibtex = ""
-        for (publication in Publication.getAll()) {
-            for (member in publication.getMembers()) {
-                if (member.getId() == numero) {
-                    bibtex = bibtex + publication.generateBib() + "<br>"
+        int numero = (params.id).toInteger()
+        for(publication in Publication.getAll())
+        {
+            for(member in publication.getMembers())
+            {
+                if(member.getId() == numero)
+                {
+                    bibtex = bibtex + publication.generateBib()  + "<br>"
                     break
                 }
 
             }
         }
-        return bibtex
+
+        render(bibtex)
     }
 
     def generateBibTexGroup  = {
@@ -67,7 +68,7 @@ class BibtexGenerateFileController {
             {
                 for(member in Membership.getAllMembers(group))
                 {
-                   bibtex = bibtex + memberPublications(member.getId())
+                   bibtex = bibtex + teste(member.getId())
                 }
             }
         }
@@ -75,4 +76,20 @@ class BibtexGenerateFileController {
         render(bibtex)
     }
 
+    String teste(numero)
+    {
+        String bibtex = ""
+        for(publication in Publication.getAll())
+        {
+            for(member in publication.getMembers())
+            {
+                if(member.getId() == numero)
+                {
+                    bibtex = bibtex + publication.generateBib()  + "<br>"
+                    break
+                }
+            }
+        }
+        return bibtex
+    }
 }

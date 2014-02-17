@@ -35,7 +35,7 @@ class OrientationController {
         }
         if (!orientationInstance.save(flush: true)) {
             render(view: "create", model: [orientationInstance: orientationInstance])
-            return 
+            return
         }
 
         showFlashMessage(orientationInstance.id, "show", 'default.created.message')
