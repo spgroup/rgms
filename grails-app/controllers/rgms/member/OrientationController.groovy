@@ -2,6 +2,10 @@
 package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.web.multipart.MultipartHttpServletRequest
+import org.springframework.web.multipart.commons.CommonsMultipartFile
+import rgms.XMLService
+import rgms.authentication.User
 
 class OrientationController {
 
@@ -23,26 +27,18 @@ class OrientationController {
     def save() {
         def orientationInstance = new Orientation(params)
 
-        if(!compareOrientationWithRender(orientationInstance, "create")) {
-            return false
+        if(orientationInstance.orientador.name .equalsIgnoreCase(orientationInstance.orientando))
+        {
+            render(view: "create", model: [orientationInstance: orientationInstance])
+            flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
+            return
         }
         if (!orientationInstance.save(flush: true)) {
             render(view: "create", model: [orientationInstance: orientationInstance])
-            return false
+            return 
         }
 
         showFlashMessage(orientationInstance.id, "show", 'default.created.message')
-
-    }
-
-    def compareOrientationWithRender(orientationInstance, tipoRender) {
-        if(orientationInstance.orientador.name.equalsIgnoreCase(orientationInstance.orientando)) {
-            render(view: tipoRender, model: [orientationInstance: orientationInstance])
-            //noinspection InvalidI18nProperty
-            flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
-            return false
-        }
-        return true
 
     }
 
@@ -55,14 +51,12 @@ class OrientationController {
     }
 
     def showFlashMessage(Long id, String action, String code){
-        //noinspection InvalidI18nProperty
         flash.message = message(code: code, args: [message(code: 'orientation.label', default: 'Orientation'), id])
         redirect(action: action, id: id)
     }
 
     def _processOrientation()
     {
-        //noinspection GroovyAssignabilityCheck
         def orientationInstance = Orientation.get(params.id)
         if (!orientationInstance) {
             showFlashMessage(null, "list",'default.not.found.message')
@@ -104,9 +98,12 @@ class OrientationController {
 
     def checkOrientationOrientando(Orientation orientationInstance){
 
-        if(!compareOrientationWithRender(orientationInstance, "edit")) {
+        if(orientationInstance.orientador.name.equalsIgnoreCase(orientationInstance.orientando)) {
+            render(view: "edit", model: [orientationInstance: orientationInstance])
+            flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
             return false
         }
+
         return true
     }
 
@@ -114,7 +111,6 @@ class OrientationController {
 
         if (version != null) {
             if (orientationInstance.version > version) {
-                //noinspection InvalidI18nProperty
                 orientationInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'orientation.label', default: 'Orientation')] as Object[],
                         'default.orientation.checkVersion.message')
@@ -129,7 +125,6 @@ class OrientationController {
         def orientationInstance = isOrientationInstance(id)
 
         if(orientationInstance != null){
-            //noinspection GroovyUnusedCatchParameter
             try {
                 orientationInstance.delete(flush: true)
                 showFlashMessage(id,"list",'default.deleted.message')
