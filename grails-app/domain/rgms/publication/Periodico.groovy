@@ -22,14 +22,14 @@ class Periodico extends Publication {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        return super.toString();
+
+        return "Journal: " +  journal + " | Volume: " + volume + " | Number: " + number
     }
 
     @Override
-    public boolean equals(Object obj) {
-        // TODO Auto-generated method stub
-        return super.equals(obj);
+    public boolean equals(Periodico other) {
+
+        return volume == other?.volume && number == other?.number && journal == other?.journal && pages == other?.pages
     }
 
     @Override

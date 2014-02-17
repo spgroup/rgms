@@ -60,12 +60,13 @@ class PeriodicoController {
     }
 
     def isValidPeriodico (Periodico periodicoInstance) {
+        def alreadyExistingFileMessage = message(code: 'file.already.exist.message', default: 'File already exists. Please try to use a different file name.')
 
         if (Periodico.findByTitle(params.title)) {
             handleSavingError(periodicoInstance, 'periodico.duplicatetitle.failure')
             return false
         }
-        if (!PublicationController.newUpload(periodicoInstance, flash, request)) { // (!pb.upload(periodicoInstance)) {
+        if (!PublicationController.newUpload(periodicoInstance, flash, request, alreadyExistingFileMessage)) { // (!pb.upload(periodicoInstance)) {
             // com a segunda opção, o sistema se perde e vai para publication controller no teste Add a new article twitting it
             handleSavingError(periodicoInstance, 'periodico.filesaving.failure')
             return false

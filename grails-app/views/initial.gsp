@@ -160,7 +160,7 @@
         <li><g:link controller="BibtexFile" action="home">Import Bibtex File</g:link></li>
         <!-- #end -->
         <!-- #if($Bibtex && $BibtexGenerateFile) -->
-        <li><g:link controller="BibtexGenerateFile" action="home">Export Bibtex File</g:link></li>
+        <li><g:link controller="BibtexFile" action="home">Export Bibtex File</g:link></li>
 		<!-- #end -->
         <!-- #if($XMLUpload) -->
         <li><g:link controller="XML" action="home">Import XML File</g:link></li>

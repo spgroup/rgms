@@ -88,7 +88,7 @@ Then(~'^the dissertation "([^"]*)" is not stored twice$') { String title ->
 }
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without school$') { String title, filename ->
-    TestDataDissertacao.createDissertacaoWithotSchool(title, filename);
+    TestDataDissertacao.createDissertacaoWithoutSchool(title, filename);
 }
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without address$') { String title, filename ->

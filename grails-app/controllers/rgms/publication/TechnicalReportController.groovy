@@ -40,7 +40,9 @@ class TechnicalReportController {
 
     def save() {
         def technicalReportInstance = new TechnicalReport(params)
-        if (!PublicationController.newUpload(technicalReportInstance, flash, request)) {
+        def alreadyExistingFileMessage = message(code: 'file.already.exist.message', default: 'File already exists. Please try to use a different file name.')
+
+        if (!PublicationController.newUpload(technicalReportInstance, flash, request,alreadyExistingFileMessage)) {
             handleSavingError(technicalReportInstance, 'technicalReport.filesaving.failure')
             return
         }

@@ -1,27 +1,22 @@
 package steps
 
-import rgms.publication.Dissertacao
-import rgms.publication.Tese
-import rgms.publication.TeseController
-
 class ThesisOrDissertationTestDataAndOperations {
 
-    static protected void createThesisOrDissertation(String title, filename, school, cont) {
-        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
+    static protected void createThesisOrDissertation(cont,String title, filename, school) {
+        def data = [title: title, publicationDate: new Date(2013, 03, 02),
                 school: school, address: "Boa Viagem", file: filename]
+        createThesisOrDissertation(cont,data)
+    }
+
+    static protected void createThesisOrDissertation(cont,data) {
+        cont.params << data
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
         cont.save()
         cont.response.reset()
     }
 
-    static protected void deleteThesisOrDissertation(String title, cont) {
-        def test
-        if (cont instanceof TeseController) {
-            test = Tese.findByTitle(title)
-        } else {
-            test = Dissertacao.findByTitle(title)
-        }
+    static protected void deleteThesisOrDissertation(cont,test) {
         cont.params << [id: test.id]
         cont.delete()
 

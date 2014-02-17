@@ -1,35 +1,23 @@
 package steps
 
-import rgms.member.Member
 import rgms.publication.*
 
 class TestDataDissertacao
 {
 
     static public void createDissertacao(String title, filename, school) {
-        def cont = new DissertacaoController()
-        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title,filename,school,cont)
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(new DissertacaoController(),title,filename,school)
     }
 
 
-    static public void createDissertacaoWithotSchool(String title, filename) {
-        def cont = new DissertacaoController()
-        def date = new Date()
-        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
+    static public void createDissertacaoWithoutSchool(String title, filename) {
+        def data = [title: title, publicationDate: new Date(2013, 03, 02),
                 address: "Boa Viagem", file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(new DissertacaoController(),data)
     }
     static public void createDissertacaoWithoutAddress(String title, filename) {
-        def cont = new DissertacaoController()
-        def date = new Date()
-        cont.params << [title: title, publicationDate: new Date(2013, 03, 02),school: "UFPE", file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        def data = [title: title, publicationDate: new Date(2013, 03, 02),school: "UFPE", file: filename]
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(new DissertacaoController(),data)
     }
 
     static public Dissertacao editDissertacao(oldtitle, newtitle) {
@@ -52,11 +40,8 @@ class TestDataDissertacao
     }
 
     static public void removeDissertacao(String title) {
-        def testDissertation = Dissertacao.findByTitle(title)
-        def cont = new DissertacaoController()
-        def date = new Date()
-        cont.params << [id: testDissertation.id]
-        cont.delete()
+        ThesisOrDissertationTestDataAndOperations.deleteThesisOrDissertation(new DissertacaoController(),Dissertacao.findByTitle(title))
+
     }
 
 }

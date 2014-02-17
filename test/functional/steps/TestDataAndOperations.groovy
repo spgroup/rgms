@@ -13,14 +13,6 @@ import steps.ThesisOrDissertationTestDataAndOperations
 
 class TestDataAndOperations {
 
-    static researchLines = [
-            [name: "IA Avancada", description: ""],
-            [name: "Redes Avancadas", description: "Redes de Computadores Avancadas"],
-            [name: "Teoria da informacao - Complexidade no espaco", description: "P=NP"],
-            [name: "Novo Padrao Arquitetural MVCE", description: "Nova arquitetura que promete revolucionar a web"],
-            [name: "Modelo Cascata Renovado", description: "Altera��o do modelo original"]
-    ]
-
     static members = [
             [name: "Rodolfo Ferraz", username: "usernametest", email: "rodolfofake@gmail.com",
                     status: "Graduate Student", university: "UFPE", enabled: true
@@ -58,12 +50,6 @@ class TestDataAndOperations {
         BibtexFile bibtexFile = bibtexFileController.transform(new File(path))
     }
 
-   /* static public def findResearchLineByName(String name) {
-        researchLines.find { researchLine ->
-            researchLine.name == name
-        }
-    }*/
-
     static public def findMembershipByResearchGroupName(String groupname) {
         memberships.find { membership ->
             membership.researchGroup.name == groupname
@@ -98,20 +84,6 @@ class TestDataAndOperations {
         def records = new XmlParser()
         cont.saveTools(records.parse(xml));
         cont.response.reset()
-    }
-
-    static public boolean conferenciaCompatibleTo(conferencia, title) {
-        def testConferencia = findConferenciaByTitle(title)
-        def compatible = false
-        if (testConferencia == null && conferencia == null) {
-            compatible = true
-        } else if (testConferencia != null && conferencia != null) {
-            compatible = true
-            testConferencia.each { key, data ->
-                compatible = compatible && (conferencia."$key" == data)
-            }
-        }
-        return compatible
     }
 
     static public void createArticle(String title, filename) {
@@ -174,64 +146,12 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-    /*static public void deleteResearchLine(def id) {
-        def res = new ResearchLineController()
-        res.params.id = id
-        res.request.setContent(new byte[1000]) // Could also vary the request content.
-        res.delete()
-        res.response.reset()
-    } */
-
-    /*static public void updateResearchLine(String name, String description) {
-        def res = new ResearchLineController()
-        def research_line = ResearchLine.findByName(name)
-        res.params.id = research_line.id
-        res.params.name = research_line.name
-        res.params.description = description
-        res.request.setContent(new byte[1000]) // Could also vary the request content.
-        res.update()
-        res.response.reset()
-    } */
-
- /*   static public void createResearchLine(String name) {
-        def cont = new ResearchLineController()
-        def research = TestDataAndOperations.findResearchLineByName(name)
-        cont.params.name = research.name
-        cont.params.description = research.description
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
-    } */
-
-   /* static public def insertsResearchLine(String name) {
->>>>>>> HEAD~5
-        def inserted = ResearchLine.findByName(name)
-        if (!inserted) {
-            //def research = TestDataAndOperations.findResearchLineByName(name)
-            ResearchLine rl = new ResearchLine()
-            rl.setName(name)
-            rl.setDescription(description)
-            rl.save()
-        }
-    }*/
-
 
     static public boolean containsMember(username, members) {
         def testmember = User.findByUsername(username)?.author
         def cont = new MemberController()
         def result = cont.list().memberInstanceList
         return result.contains(testmember)
-    }
-
-    static public Periodico editArticle(oldtitle, newtitle) {
-        def article = Periodico.findByTitle(oldtitle)
-        article.setTitle(newtitle)
-        def cont = new PeriodicoController()
-        cont.params << article.properties
-        cont.update()
-		def updatedarticle = Periodico.findByTitle(newtitle)
-		return updatedarticle
     }
 
     static public ResearchGroup createAndGetResearchGroupByName(String name) {
@@ -266,26 +186,6 @@ class TestDataAndOperations {
     }
 
     //mapmf_tasj
-
-    //orientation
-    static orientations = [
-            [tipo: "Mestrado", orientando: "Tomaz", tituloTese: "The Book is on the table", anoPublicacao: 2013, instituicao: "UFPE", orientador: (new Member(members[0]))]
-    ]
-
-    static public def findOrientationByTitle(String title) {
-        orientations.find { orientation ->
-            orientation.tituloTese == title
-        }
-    }
-
-
-    static public void removeOrientation(String tituloTese) {
-
-        def testOrientation = TestDataAndOperations.findOrientationByTitle(tituloTese)
-        def cont = new OrientationController()
-        cont.params << [id: testOrientation.id]
-        cont.delete()
-    }
 
  static public ResearchGroup editResearchGroupTwitterAcount(researchGroup, String newTwitter){
         def researchGroupController = new ResearchGroupController()
