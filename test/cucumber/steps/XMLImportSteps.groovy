@@ -17,7 +17,7 @@ Given(~'^the system has some publications stored$') {->
     // save old metaclass
     def registry = GroovySystem.metaClassRegistry
     this.oldMetaClass = registry.getMetaClass(SecurityUtils)
-    registry.removeMetaClass(SecurityUtils) 
+    registry.removeMetaClass(SecurityUtils)
 
     // Mock login
     def subject = [getPrincipal: {"admin"},
