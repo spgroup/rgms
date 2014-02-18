@@ -23,8 +23,8 @@ class DissertacaoController extends ThesisOrDissertationController {
         saveThesisOrDissertation("Dissertacao", params)
     }
     def getDissertacaoInstance(def id)
-{        
-        def dissertacaoInstance = Dissertacao.get(id)
+  {        
+  def dissertacaoInstance = Dissertacao.get(id)
         if (!dissertacaoInstance) {
             flash.message = messageGenerator('default.not.found.message', id)
             redirect(action: "list")
