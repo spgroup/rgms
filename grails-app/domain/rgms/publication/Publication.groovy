@@ -1,5 +1,6 @@
 package rgms.publication
 
+import org.apache.shiro.SecurityUtils
 import rgms.member.Member
 
 abstract class Publication {
@@ -23,7 +24,6 @@ abstract class Publication {
     abstract String generateBib()
     //#end
 
-    // código morto? não, usado pelo delete do controlador! não funcionando?! já que Member não tem o método removeFrom...
     def removeFromPublications() {
         this.members.each {
             it.removeFromPublications(this)
@@ -51,7 +51,7 @@ abstract class Publication {
     static Set getPublicationsByMembership(membership) {
         def publications = membership?.member.publications
         def query = !membership.dateLeft ?
-                { it.publicationDate?.compareTo(membership.dateJoined) > 0 } :
+            { it.publicationDate?.compareTo(membership.dateJoined) > 0 } :
                 {
                     it.publicationDate?.compareTo(membership.dateJoined) > 0 &&
                             it.publicationDate?.compareTo(membership.dateLeft) < 0
@@ -79,10 +79,10 @@ abstract class Publication {
     }
 
     public addMember(Member e) {
-        if (!this.getMembers()) {
+        if(!this.getMembers()){
             this.setMembers(new LinkedHashSet<Member>())
             this.getMembers().add(e)
-        } else if (!this.getMembers().contains(e)) {
+        } else if(!this.getMembers().contains(e)) {
             this.getMembers().add(e)
         }
     }
