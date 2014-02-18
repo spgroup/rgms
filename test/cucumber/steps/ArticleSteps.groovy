@@ -185,7 +185,7 @@ Given(~'^I am logged as "([^"]*)"$') { String userName ->
     page.fillLoginData(userName, "adminadmin")
 }
 Given (~'^I am at the Article Page$'){->
-    
+
     Login()
     at PublicationsPage
     page.select("Periodico")

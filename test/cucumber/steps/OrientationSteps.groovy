@@ -1,3 +1,7 @@
+import org.apache.shiro.SecurityUtils
+import org.apache.shiro.subject.Subject
+import org.apache.shiro.util.ThreadContext
+import pages.LoginPage
 import pages.OrientationPages.OrientationCreatePage
 import pages.OrientationPages.OrientationEditPage
 import pages.OrientationPages.OrientationShowPage
@@ -8,14 +12,14 @@ import rgms.member.Member
 import rgms.member.Orientation
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
-import pages.LoginPage
-import geb.Page
 
 import static cucumber.api.groovy.EN.*
 
 // create
 Given(~'^the system has no orientations entitled "([^"]*)"$') { String tituloTese ->
-    checkIfOrientationDoesNotExists(tituloTese)
+    // Express the Regexp above with the code you wish you had
+    orientation = Orientation.findByTituloTese(tituloTese)
+    assert orientation == null
 }
 
 When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
@@ -42,21 +46,26 @@ When(~'^I delete the orientation for "([^"]*)"$') { String title ->
 Then(~'^the orientation for "([^"]*)" is properly removed by the system$') { String title ->
     orientation = Orientation.findByTituloTese(title)
     assert orientation == null
+
 }
 
 //create web
 Given(~'^I am at the create orientation page$') { ->
 
-    goToOrientationCreatePage()
+    Login()
+
+    to PublicationsPage
+    at PublicationsPage
+    page.select("Orientation")
+
+    at OrientationsPage
+    page.selectNewOrientation()
+
+    at OrientationCreatePage
 }
 
-When(~'^I fill the orientation title with "([^"]*)"$') { title ->
+When(~'^I fill the orientation title with "([^"]*)"$') { String title ->
 
-    fillOrientationWithTitleAndCreateThen(title)
-
-}
-
-private void fillOrientationWithTitleAndCreateThen(title) {
     page.fillOrientationDetails(title)
     page.selectCreateOrientation()
 
@@ -71,7 +80,6 @@ And(~'^I select the list orientation option$') { ->
 
     at OrientationsPage
 }
-
 
 //edit web
 Given(~'^I am at the orientation page$') { ->
@@ -128,7 +136,19 @@ Then(~'^the edited orientation "([^"]*)" is properly stored by the system$') { S
 
 
 Given(~'^the system has some orientations stored$') { ->
-    TestDataAndOperations.loginController(this)
+    // save old metaclass
+    def registry = GroovySystem.metaClassRegistry
+    this.oldMetaClass = registry.getMetaClass(SecurityUtils)
+    registry.removeMetaClass(SecurityUtils)
+
+    // Mock login
+    def subject = [getPrincipal: { "admin" },
+            isAuthenticated: { true }
+    ] as Subject
+    ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+            [getSubject: { subject } as SecurityManager])
+    SecurityUtils.metaClass.static.getSubject = { subject }
+
     initialSize = Orientation.findAll().size()
 }
 
@@ -141,7 +161,8 @@ When(~'^I upload a new orientation "([^"]*)"$') { filename ->
 }
 
 Then(~'the system has more orientations now$') { ->
-    TestDataAndOperations.logoutController(this)
+    // restore metaclass
+    GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, this.oldMetaClass)
     finalSize = Orientation.findAll().size()
 }
 
@@ -200,7 +221,7 @@ When(~'I create a orientation for the thesis "([^"]*)" with registered member "(
 
 Then(~'^the orientation "([^"]*)" was not stored twice$') { entitled ->
     orientation = Orientation.findAllByTituloTese(entitled)
-    assert orientation.size() < 2
+    assert orientation.size() >= 2
 }
 
 //#2
@@ -245,13 +266,4 @@ def Login() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
-
-    to PublicationsPage
-    at PublicationsPage
-    page.select("Orientation")
-
-    at OrientationsPage
-    page.selectNewOrientation()
-
-    at OrientationCreatePage
 }

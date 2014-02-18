@@ -24,14 +24,10 @@ class OrientationCreatePage extends Page {
     }
 
     def fillOrientationDetails(title) {
-        fillOrientationDetailsWithGivenYear(title, 2013)
-    }
-
-    def fillOrientationDetailsWithGivenYear(title, year) {
         $("form").tipo = "Mestrado"
         $("form").orientando = "Tomaz"
         $("form").tituloTese = title
-        $("form").anoPublicacao = year
+        $("form").anoPublicacao = 2013
         $("form").instituicao = "UFPE"
         $("form").curso = "Ciencia da Computacao"
     }

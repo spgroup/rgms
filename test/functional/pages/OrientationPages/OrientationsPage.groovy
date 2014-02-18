@@ -3,6 +3,7 @@ package pages.OrientationPages
 import geb.Page
 import pages.GetPageTitle
 import rgms.member.Orientation
+import pages.Util.CommonPages
 
 class OrientationsPage extends Page {
     static url = "orientation/list"
@@ -29,7 +30,7 @@ class OrientationsPage extends Page {
         $('a', class: 'create').click()
     }
 
-    def selectViewOrientation(String title) {
+    def selectViewOrientation(title) {
 
         def id = Orientation.findByTituloTese(title).id
         $("a", text: id.toString()).click()
