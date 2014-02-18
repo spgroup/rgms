@@ -92,17 +92,6 @@ When(~'^I create a research group with name "([^"]*)" and with no description$')
     TestDataAndOperationsResearchGroup.createResearchGroup(name, "")
 }
 
-Given(~'^i am at publication menu$') {
-	->
-	// Express the Regexp above with the code you wish you had
-	Login("admin", "adminadmin")
-}
-
-When(~'^i select the "([^"]*)" option at publications menu$') { String option ->
-	at PublicationsPage
-	page.select(option)
-}
-
 When(~'^i select the new research group option at research group list page$') {
 	->
 	at ResearchGroupPage

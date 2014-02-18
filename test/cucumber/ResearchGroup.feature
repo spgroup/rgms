@@ -50,7 +50,7 @@ Feature: research group
  
     Scenario: new research group and show via web browser
     Given I am at the publications menu
-    When i select the "Research Group" option at publications menu
+    When I select the "Research Group" option at the publications menu
     And i select the new research group option at research group list page
     Then i can fill the research group details with name "modcs" and create a new one
     
