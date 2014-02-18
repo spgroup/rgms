@@ -3,16 +3,12 @@ import pages.DissertationEditPage
 import pages.DissertationPage
 import pages.DissertationShowPage
 import rgms.authentication.User
-import rgms.member.Member
 import rgms.publication.Dissertacao
 import steps.TestDataDissertacao
 import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 
-When(~'^I select the "([^"]*)" option at the program menu$') { String option ->
-    page.select(option)
-}
 
 When(~'^I select the new dissertation option at the dissertation page$') {->
     at DissertationPage
