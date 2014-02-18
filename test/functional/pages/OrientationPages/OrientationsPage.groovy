@@ -3,7 +3,6 @@ package pages.OrientationPages
 import geb.Page
 import pages.GetPageTitle
 import rgms.member.Orientation
-import pages.Util.CommonPages
 
 class OrientationsPage extends Page {
     static url = "orientation/list"

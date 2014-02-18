@@ -8,6 +8,7 @@ import rgms.member.ResearchGroup
 import rgms.news.News
 import steps.NewsTestDataAndOperations
 import pages.news.NewsShowPage
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 

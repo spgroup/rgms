@@ -2,7 +2,6 @@ package pages.news
 
 import geb.Page
 import pages.GetPageTitle
-import pages.Util.CommonPages
 
 class NewsPage extends Page {
     static url = "news/list"
@@ -35,6 +34,8 @@ class NewsPage extends Page {
     //#end
 
     def selectViewNew(title) {
-        CommonPages.selectView(this, title);
+        page.getRow()
+        def showLink = page.getRow().find('td').find([text:title])
+        showLink.click()
     }
 }
