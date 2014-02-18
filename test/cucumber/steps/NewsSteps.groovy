@@ -154,17 +154,7 @@ Given(~'^the system has a news stored with description "([^"]*)"$') { String des
 }
 
 Given(~'^the system has no stored news$') { ->
-    // assert News.count() == 0
-    // código original do passo; falhando quando cenário de News, como new news web,
-    // é executado antes! cucumber não resetando o contexto?!
-    // parâmetro para execução do teste que mostra a falha: News.feature:44:49 Reports.feature:83:87
-
-    // News.findAll().each { n -> assert n.description == ""}
-    // esse código mostra que a notícia existente é realmente a criada no
-    // cenário new news web!
-
-    // código novo, para garantir que a remoção é feita
-    News.findAll().each { n -> n.delete(flush: true) }
+    News.withTransaction { status -> News.findAll().each { n -> n.delete() } }
     assert News.count() == 0
 }
 
