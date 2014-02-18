@@ -20,19 +20,6 @@ Feature: orientations
     And I select the list orientation option
     Then the orientation "The Book of Web Software" is properly stored by the system
 
-  Scenario: new orientation with registered member orientated
-    Given the system has no orientations entitled "The Book is on the table 2"
-    And Exists a member with username "rlfs" that has been an registered member
-    When I create a orientation for the thesis "The Book is on the table 2" with registered member "rlfs"
-    Then the orientation "The Book is on the table 2" is properly stored by the system
-
-
-  Scenario: duplicate orientation
-    Given the orientation entitled "The Book is on the table 2" is stored in the system with orientated  name "Rubens Lopes"
-    When I create the orientated  entitled "The Book is on the table 2" with orientated  name "Rubens Lopes"
-    Then the orientated  "Next Generation Software Product Line Engineering" is not stored twice
-
-remoção de e-mail das configurações, correções de identação e correção do bug no teste de BookChapter
   Scenario: edit existing orientation web
     Given I am at the orientation page
     And the orientation "The Book of Software Engineering" is stored in the system
@@ -79,8 +66,6 @@ remoção de e-mail das configurações, correções de identação e correção
     When I select to view "Hexa2" in the list of orientations
     And I select the option remove at the orientation show page
     Then The orientation "Hexa2" is properly removed by the system
-
-remoção de e-mail das configurações, correções de identação e correção do bug no teste de BookChapter
 
   #if ($XMLUpload)
   Scenario: upload orientation with a file

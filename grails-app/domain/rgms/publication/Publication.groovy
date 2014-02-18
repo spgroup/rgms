@@ -52,10 +52,10 @@ abstract class Publication {
         def publications = membership?.member.publications
         def query = !membership.dateLeft ?
             { it.publicationDate?.compareTo(membership.dateJoined) > 0 } :
-                {
-                    it.publicationDate?.compareTo(membership.dateJoined) > 0 &&
-                            it.publicationDate?.compareTo(membership.dateLeft) < 0
-                }
+            {
+                it.publicationDate?.compareTo(membership.dateJoined) > 0 &&
+                        it.publicationDate?.compareTo(membership.dateLeft) < 0
+            }
         def p = publications?.findAll(query)
         return p
     }
