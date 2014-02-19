@@ -40,34 +40,34 @@ Feature: research group
 
     Scenario:edit research group
     Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
-    When i modify the research group entitled "modcs" to "modcs 123" and its description to "modcs research group 1234"
+    When I modify the research group entitled "modcs" to "modcs 123" and its description to "modcs research group 1234"
     Then the edited research group "modcs 123" with description "modcs research group 1234" is properly stored in the system
     
 	Scenario:delete research group
     Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
-    When i delete the research group entitled "modcs"
+    When I delete the research group entitled "modcs"
     Then the research group "modcs" is properly deleted of the system
  
     Scenario: new research group and show via web browser
     Given I am at the publications menu
     When I select the "Research Group" option at the publications menu
-    And i select the new research group option at research group list page
-    Then i can fill the research group details with name "modcs" and create a new one
+    And I select the new research group option at research group list page
+    Then I can fill the research group details with name "modcs" and create a new one
     
     Scenario: show research group via web browser
     Given I am at the publications menu
     And the system has a Research Group named "grupo" stored in the system
-    And i am at Research Group list menu
-    And i select a research group called "grupo"
+    And I am at Research Group list menu
+    And I select a research group called "grupo"
     Then the system will show the details of this research group
     
     Scenario: edit research group via web browser
     Given I am at the publications menu
     And the system has a Research Group named "PESQUISA" stored in the system
-    And i am at Research Group list menu
-    When i select a research group called "PESQUISA"
-    And i select the edit option
-    Then i can change the research group name to "rgms" and save it
+    And I am at Research Group list menu
+    When I select a research group called "PESQUISA"
+    And I select the edit option
+    Then I can change the research group name to "rgms" and save it
 
 
 
@@ -79,12 +79,12 @@ Feature: research group
 
   Scenario: edit childof of research group web
     Given I am at the publications menu
-    And   i created a research group entitled "rg" with childof none
-    And   i am at Research Group list menu
-    When  i select a research group called "rg"
-    And   i select the edit option
-    And   i change the field childof to research group called "rg"
-    And   i click on update button
+    And   I created a research group entitled "rg" with childof none
+    And   I am at Research Group list menu
+    When  I select a research group called "rg"
+    And   I select the edit option
+    And   I change the field childof to research group called "rg"
+    And   I click on update button
     Then  the childof of research group "rg" is none
 
 

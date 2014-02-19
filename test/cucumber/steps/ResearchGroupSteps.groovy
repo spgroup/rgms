@@ -57,7 +57,7 @@ Then(~'^the research group with name "([^"]*)" is not stored in the system becau
 	assert researchGroup == null
 }
 
-When(~'^i modify the research group entitled "([^"]*)" to "([^"]*)" and its description to "([^"]*)"$') { String oldName, String newName, String newDescription ->
+When(~'^I modify the research group entitled "([^"]*)" to "([^"]*)" and its description to "([^"]*)"$') { String oldName, String newName, String newDescription ->
 	researchGroup = ResearchGroup.findByName(oldName)
     TestDataAndOperationsResearchGroup.editResearchGroup(researchGroup, newName, newDescription)
 }
@@ -68,7 +68,7 @@ Then(~'^the edited research group "([^"]*)" with description "([^"]*)" is proper
 	assert researchGroup.getDescription() == description
 }
 
-When(~'^i delete the research group entitled "([^"]*)"$') { String name ->
+When(~'^I delete the research group entitled "([^"]*)"$') { String name ->
 	researchGroup = ResearchGroup.findByName(name)
     TestDataAndOperationsResearchGroup.deleteResearchGroup(researchGroup)
 }
@@ -92,13 +92,13 @@ When(~'^I create a research group with name "([^"]*)" and with no description$')
     TestDataAndOperationsResearchGroup.createResearchGroup(name, "")
 }
 
-When(~'^i select the new research group option at research group list page$') {
+When(~'^I select the new research group option at research group list page$') {
 	->
 	at ResearchGroupPage
 	page.selectNewResearchGroup()
 }
 
-Then(~'^i can fill the research group details with name "([^"]*)" and create a new one$') {  String name
+Then(~'^I can fill the research group details with name "([^"]*)" and create a new one$') {  String name
 	->
 	at ResearchGroupCreatePage
 	page.fillResearchGroupDetails(name)
@@ -123,11 +123,11 @@ Given(~'^the system has a Research Group named "([^"]*)" stored in the system$')
 	assert researchGroup != null
 }
 
-Given(~'^i am at Research Group list menu$') { ->
+Given(~'^I am at Research Group list menu$') { ->
 	to ResearchGroupPage
 }
 
-When(~'^i select a research group called "([^"]*)"$') { String arg1 ->
+When(~'^I select a research group called "([^"]*)"$') { String arg1 ->
     at ResearchGroupPage
 	page.showResearchGroup(arg1)
 }
@@ -136,12 +136,12 @@ Then(~'^the system will show the details of this research group$') { ->
 	at ResearchGroupShowPage
 }
 
-When(~'^i select the edit option$') {->
+When(~'^I select the edit option$') {->
 	at ResearchGroupShowPage
 	page.selectEditResearchGroup()
 }
 
-Then(~'^i can change the research group name to "([^"]*)" and save it$') { String name->
+Then(~'^I can change the research group name to "([^"]*)" and save it$') { String name->
     at ResearchGroupEditarPage
 	page.changeResearchGroupDetails(name)
 	page.selectAlterarResearchGroup()
@@ -192,14 +192,7 @@ Then(~'^the childof of research group "([^"]*)" is none$') { String name ->
 }
 
 
-Given(~'^i am logged as "([^"]*)"$') { String userName ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData(userName, "adminadmin")
-}
-
-
-Given(~'^i created a research group entitled "([^"]*)" with childof none$') { String name ->
+Given(~'^I created a research group entitled "([^"]*)" with childof none$') { String name ->
     at PublicationsPage
     page.select("Research Group")
 
@@ -213,13 +206,13 @@ Given(~'^i created a research group entitled "([^"]*)" with childof none$') { St
 }
 
 
-When(~'^i change the field childof to research group called "([^"]*)"$') { String name ->
+When(~'^I change the field childof to research group called "([^"]*)"$') { String name ->
     at ResearchGroupEditarPage
     researchGroup = ResearchGroup.findByName(name)
     page.changeChildOfTo(researchGroup.getId())
 }
 
-When(~'^i click on update button$') { ->
+When(~'^I click on update button$') { ->
     at ResearchGroupEditarPage
     page.selectAlterarResearchGroup()
 }

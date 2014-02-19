@@ -25,8 +25,8 @@ Feature: Reports
   Scenario: export report to pdf of recently created research group
     Given I am at the publications menu
     When I select the "Research Group" option at the publications menu
-    And i select the new research group option at research group list page
-    Then i can fill the research group details with name "RGroup" and create a new one
+    And I select the new research group option at research group list page
+    Then I can fill the research group details with name "RGroup" and create a new one
     And I select the "RGroup" option at the Research Group list
     And I can select the option Export to PDF at the Research Group show
     And I can generate a PDF report about Research Group "RGroup"
@@ -35,8 +35,8 @@ Feature: Reports
   Scenario: export report to html of recently created research group
     Given I am at the publications menu
     When I select the "Research Group" option at the publications menu
-    And i select the new research group option at research group list page
-    Then i can fill the research group details with name "RGroup" and create a new one
+    And I select the new research group option at research group list page
+    Then I can fill the research group details with name "RGroup" and create a new one
     And I select the "RGroup" option at the Research Group list
     And I can select the option Export to HTML at the Research Group show
     And I can generate a HTML report about Research Group "RGroup"
@@ -44,8 +44,8 @@ Feature: Reports
   Scenario: export report to xml of recently created research group
     Given I am at the publications menu
     When I select the "Research Group" option at the publications menu
-    And i select the new research group option at research group list page
-    Then i can fill the research group details with name "RGroup" and create a new one
+    And I select the new research group option at research group list page
+    Then I can fill the research group details with name "RGroup" and create a new one
     And I select the "RGroup" option at the Research Group list
     And I can select the option Export to XML at the Research Group show
     And I can generate a XML report about Research Group "RGroup"
