@@ -24,7 +24,7 @@ class TechnicalReport extends Publication {
 
         //Para a interação assim que um valor diferente é encontrado
         for(elem in other?.properties){
-            def thisValue = this?."$elem.key"
+            def thisValue = this."$elem.key"
             def otherValue = elem.value
 
             if (!thisValue.equals(otherValue)) return false
