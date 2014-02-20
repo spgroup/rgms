@@ -26,7 +26,9 @@ class Periodico extends Publication {
     }
 
     @Override
-    public boolean equals(Periodico other) {
+    public boolean equals(Object other) {
+
+        if(!other || other.getClass() != this.getClass())return false
 
         //Para a interação assim que um valor diferente é encontrado
         for(elem in other?.properties){
