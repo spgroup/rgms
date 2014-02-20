@@ -124,16 +124,16 @@ class PeriodicoController {
 
     def checkPeriodicoVersion(Periodico periodicoInstance){
 
-        def version = params.version?.toLong()
-
-        if (periodicoInstance.version > version) {
-            periodicoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                    [message(code: 'periodico.label', default: 'Periodico')] as Object[],
-                    'default.article.checkVersion.message')
+        if (params.version) {
+            def version = params.version.toLong()
+            if (periodicoInstance.version > version) {
+                periodicoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                [message(code: 'periodico.label', default: 'Periodico')] as Object[],
+                'default.article.checkVersion.message')
             render(view: "edit", model: [periodicoInstance: periodicoInstance])
             return  false
+            }
         }
-
 
         return true
 
