@@ -17,6 +17,10 @@ And(~'^I am at the initial RGMS page$'){->
 }
 
 When(~'^I select the "([^"]*)" option at the publications menu$') { String option ->
+    at PublicationsPage
     page.select(option)
 }
 
+When(~'^I select the "([^"]*)" option at the program menu$') { String option ->
+    page.select(option)
+}

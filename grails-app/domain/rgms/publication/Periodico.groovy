@@ -22,14 +22,23 @@ class Periodico extends Publication {
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        return super.toString();
+        return "Journal: " +  journal + " | Volume: " + volume + " | Number: " + number
     }
 
     @Override
-    public boolean equals(Object obj) {
-        // TODO Auto-generated method stub
-        return super.equals(obj);
+    public boolean equals(Object other) {
+
+        if(!other || other.getClass() != this.getClass())return false
+
+        //Para a interação assim que um valor diferente é encontrado
+        for(elem in other?.properties){
+            def thisValue = this."$elem.key"
+            def otherValue = elem.value
+
+            if (!(thisValue.equals(otherValue))) return false
+        }
+
+        return true
     }
 
     @Override
