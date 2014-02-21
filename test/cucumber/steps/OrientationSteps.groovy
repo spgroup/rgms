@@ -89,7 +89,7 @@ And(~'^the orientation "([^"]*)" is stored in the system$') { String title ->
 When(~'^I select to view orientation "([^"]*)" in resulting list$') { String oldtitle ->
 
     at OrientationsPage
-    page.selectViewOrientation(oldtitle)
+    page.selectViewOrientation(OrientationTestDataAndOperations.getOrientationIdAsString(oldtitle))
 
     at OrientationShowPage
     page.edit()
@@ -208,7 +208,7 @@ Then(~'^The orientation "([^"]*)" is properly removed by the system$') { title -
 //Remover Orientation Web
 When(~'^I select to view "([^"]*)" in the list of orientations$') { title ->
     at OrientationsPage
-    page.selectViewOrientation(title)
+    page.selectViewOrientation(OrientationTestDataAndOperations.getOrientationIdAsString(title))
 
     at OrientationShowPage
 }

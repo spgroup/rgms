@@ -22,11 +22,11 @@ class Orientation {
     }
 
     boolean equals(Orientation other) {
-        return (other != null && this.anoPublicacao == other.anoPublicacao
-                && this.orientador == other.orientador
-                && this.orientando == other.orientando
-                && this.tipo == other.tipo
-                && this.tituloTese == other.tituloTese)
+        def compatible = (other != null)
+        other?.properties.each {key, value  ->
+            compatible = compatible && (this."$key" == value)
+        }
+        return compatible
     }
 
     String toString() {
