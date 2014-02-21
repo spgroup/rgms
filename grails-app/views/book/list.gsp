@@ -46,7 +46,7 @@
 					
 						<th><g:message code="book.researchLine.label" default="Research Line" /></th>
 					
-						<g:sortableColumn property="autores" title="${message(code: 'book.autores.label', default: 'Autores')}" />
+						<g:sortableColumn property="autores" title="${message(code: 'book.authors.label', default: 'Autores')}" />
 					
 						<g:sortableColumn property="publisher" title="${message(code: 'book.publisher.label', default: 'Publisher')}" />
 					
@@ -64,7 +64,7 @@
 					
 						<td>${fieldValue(bean: bookInstance, field: "researchLine")}</td>
 					
-						<td>${fieldValue(bean: bookInstance, field: "autores")}</td>
+						<td>${fieldValue(bean: bookInstance, field: "authors")}</td>
 					
 						<td>${fieldValue(bean: bookInstance, field: "publisher")}</td>
 					

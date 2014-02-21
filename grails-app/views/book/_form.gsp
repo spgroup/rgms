@@ -36,7 +36,7 @@
 	<g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id" value="${bookInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'autores', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'authors', 'error')} ">
 	<label for="autores">
 		<g:message code="book.autores.label" default="Autores" />
 		

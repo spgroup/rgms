@@ -84,7 +84,7 @@ class XMLService {
             Node dadosBasicos = (Node) book[0]
             Node detalhamentoLivro = (Node) book[1]
 
-            //puxando autores
+            //puxando authors
             String authors = ""
 
             for (int j = 2; j < book.size() - 2; ++j){
@@ -97,7 +97,7 @@ class XMLService {
 
     private static void createNewBook (Node dadosBasicos, Node detalhamentoLivro, int i, String authors) {
         Book newBook = new Book()
-        newBook.autores = authors
+        newBook.authors = authors
         newBook.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-LIVRO")
         newBook.publisher = getAttributeValueFromNode(detalhamentoLivro, "NOME-DA-EDITORA")
 

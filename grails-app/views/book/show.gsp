@@ -59,11 +59,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${bookInstance?.autores}">
+				<g:if test="${bookInstance?.authors}">
 				<li class="fieldcontain">
 					<span id="autores-label" class="property-label"><g:message code="book.autores.label" default="Autores" /></span>
 					
-						<span class="property-value" aria-labelledby="autores-label"><g:fieldValue bean="${bookInstance}" field="autores"/></span>
+						<span class="property-value" aria-labelledby="autores-label"><g:fieldValue bean="${bookInstance}" field="authors"/></span>
 					
 				</li>
 				</g:if>
