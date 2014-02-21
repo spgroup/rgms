@@ -128,10 +128,10 @@ class PeriodicoController {
             def version = params.version.toLong()
             if (periodicoInstance.version > version) {
                 periodicoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                        [message(code: 'periodico.label', default: 'Periodico')] as Object[],
-                        'default.article.checkVersion.message')
-                render(view: "edit", model: [periodicoInstance: periodicoInstance])
-                return  false
+                [message(code: 'periodico.label', default: 'Periodico')] as Object[],
+                'default.article.checkVersion.message')
+            render(view: "edit", model: [periodicoInstance: periodicoInstance])
+            return  false
             }
         }
 
@@ -164,26 +164,12 @@ class PeriodicoController {
         }
 
     }
-
-    private checkPeriodicoInstance(Map flash, Map params, Periodico periodicoInstance) {
-        if (!periodicoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [periodicoInstance: periodicoInstance]
-    }
     //#if( $Facebook )
     def share(){
         def periodicoInstance = Periodico.get(params.id)
-        System.out.println("1");
-        def user = User.findByUsername(SecurityUtils.subject?.principal)
-        def member = user.author
-        System.out.println("2");
-        if(member.getFacebook_id()!= null && member.getFacebook_id().compareTo("") != 0)
+        def member = User.findByUsername(SecurityUtils.subject?.principal).author
+        if(!member.getFacebook_id()?.equals(""))
             PublicationController.sendPostFacebook(member, periodicoInstance.toString())
-        System.out.println("3");
         redirect(action: "show", id: params.id)
     }
     //#end

@@ -1,6 +1,4 @@
-import cucumber.runtime.PendingException
 import pages.ferramenta.*
-import rgms.member.Member
 import rgms.publication.Ferramenta
 import steps.FerramentaTestDataAndOperations
 import steps.TestDataAndOperationsPublication

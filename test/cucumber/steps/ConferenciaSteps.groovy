@@ -132,9 +132,7 @@ Then(~'^the system has all the conferencias of the xml file$') {->
     assert Conferencia.findByTitle("6th International Conference on Software Reuse (ICSR 2000)") != null
 
 }
-When(~'^I select the conferencia option at the program menu$') {option ->
-    page.select(option)
-}
+
 And(~'^I select the upload button at the conferencia page$') {->
     at ConferenciaPage
     page.uploadWithoutFile()
