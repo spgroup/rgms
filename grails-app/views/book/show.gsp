@@ -59,6 +59,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${bookInstance?.autores}">
+				<li class="fieldcontain">
+					<span id="autores-label" class="property-label"><g:message code="book.autores.label" default="Autores" /></span>
+					
+						<span class="property-value" aria-labelledby="autores-label"><g:fieldValue bean="${bookInstance}" field="autores"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${bookInstance?.publisher}">
 				<li class="fieldcontain">
 					<span id="publisher-label" class="property-label"><g:message code="book.publisher.label" default="Publisher" /></span>

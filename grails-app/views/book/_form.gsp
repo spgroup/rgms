@@ -24,8 +24,8 @@
 		<g:message code="book.file.label" default="File" />
 		
 	</label>
-        <g:field type="file" name="file" id="file" required=""
-                 value="${fieldValue(bean: bookInstance, field: 'file')}"/>
+    <g:field type="file" name="file" id="file" required=""
+             value="${fieldValue(bean: bookInstance, field: 'file')}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'researchLine', 'error')} ">
@@ -34,6 +34,14 @@
 		
 	</label>
 	<g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id" value="${bookInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'autores', 'error')} ">
+	<label for="autores">
+		<g:message code="book.autores.label" default="Autores" />
+		
+	</label>
+	<g:textField name="autores" value="${bookInstance?.autores}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'publisher', 'error')} required">
