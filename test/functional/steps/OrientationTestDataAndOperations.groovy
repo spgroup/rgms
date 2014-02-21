@@ -72,6 +72,11 @@ class OrientationTestDataAndOperations {
         return compatible
     }
 
+    static public String getOrientationIdAsString(String title){
+        return (Orientation.findByTituloTese(title).id).toString()
+    }
+
+
     static public void uploadOrientation(filepath) {
         def cont = new XMLController()
         def xml = new File((String) filepath);
