@@ -43,6 +43,18 @@ class XMLController {
             XMLService.createFerramentas(xmlFile)
     }
 
+    def uploadXMLBook(){
+        String flashMessage = 'The non existent Book were successfully imported'
+
+        if (XMLService.Import(saveBook, returnWithMessage, flashMessage, "Book", request))
+            return
+        }
+
+    private Closure saveBook = {
+        Node xmlFile ->
+            XMLService.createBooks(xmlFile)
+    }
+
     def uploadXMLBookChapter(){
         String flashMessage = 'The non existent Book Chapters were successfully imported'
 
