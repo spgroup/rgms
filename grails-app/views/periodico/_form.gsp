@@ -54,6 +54,14 @@
               value="${periodicoInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'authors', 'error')} ">
+    <label for="authors">
+        <g:message code="periodico.authors.label" default="Authors" />
+
+    </label>
+    <g:textField name="authors" value="${periodicoInstance?.authors}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'journal', 'error')} required">
     <label for="journal">
         <g:message code="periodico.journal.label" default="Journal"/>

@@ -277,12 +277,20 @@ class XMLService {
         Periodico newJournal = new Periodico()
         getJournalTitle(dadosBasicos, newJournal)
 
+        //puxando authors
+        String authors = ""
+
+        for (int j = 2; j < firstArticle.size() - 4; ++j){
+            authors += getAttributeValueFromNode(firstArticle[j], "NOME-COMPLETO-DO-AUTOR") + "; "
+        }
+
         if (Publication.findByTitle(newJournal.title) == null) {
             fillPublicationDate(newJournal, dadosBasicos, "ANO-DO-ARTIGO")
             getJournalVolume(detalhamentoArtigo, newJournal)
             getJournalNumber(detalhamentoArtigo, newJournal)
             getJournalNumberOfPages(detalhamentoArtigo, newJournal)
             getPeriodicTitle(detalhamentoArtigo, newJournal)
+            newJournal.authors = authors
             newJournal.file = 'emptyfile' + i.toString() //files are not available on lattes
             newJournal.save(flush: false)
         }

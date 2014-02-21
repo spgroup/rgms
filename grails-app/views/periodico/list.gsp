@@ -36,8 +36,8 @@
 						<g:sortableColumn property="file" title="${message(code: 'periodico.file.label', default: 'File')}" />
 					
 						<th><g:message code="periodico.researchLine.label" default="Research Line" /></th>
-					
-						
+
+                        <g:sortableColumn property="autores" title="${message(code: 'periodico.authors.label', default: 'Autores')}" />
 					
 						<g:sortableColumn property="journal" title="${message(code: 'periodico.journal.label', default: 'Journal')}" />
 					
@@ -54,8 +54,8 @@
 						<td>${fieldValue(bean: periodicoInstance, field: "file")}</td>
 					
 						<td>${fieldValue(bean: periodicoInstance, field: "researchLine")}</td>
-					
-						
+
+                        <td>${fieldValue(bean: periodicoInstance, field: "authors")}</td>
 					
 						<td>${fieldValue(bean: periodicoInstance, field: "journal")}</td>
 					

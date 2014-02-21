@@ -37,11 +37,11 @@
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'authors', 'error')} ">
-	<label for="autores">
-		<g:message code="book.autores.label" default="Autores" />
+	<label for="authors">
+		<g:message code="book.authors.label" default="Authors" />
 		
 	</label>
-	<g:textField name="autores" value="${bookInstance?.autores}"/>
+	<g:textField name="authors" value="${bookInstance?.authors}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: bookInstance, field: 'publisher', 'error')} required">
