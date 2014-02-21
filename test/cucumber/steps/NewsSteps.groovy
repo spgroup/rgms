@@ -191,11 +191,6 @@ Then(~'^I can fill the news details$') { ->
     page.fillNewDetails("essa eh a descricao")
     page.clickOnCreate()
     assert NewsTestDataAndOperations.checkExistingNewsByDescription("essa eh a descricao")
-
-    // eh necessario deletar a news criada para posteriormente efetuar o teste de Reports
-    at NewsShowPage
-    page.remove()
-
 }
 
 When(~'^I try to create a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
