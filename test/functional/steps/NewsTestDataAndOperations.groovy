@@ -54,10 +54,10 @@ class NewsTestDataAndOperations {
         int dia = Integer.valueOf(diaStr)
         int mes = Integer.valueOf(mesStr)
 
-        if( (dia > 28) && (mes == 2) ) {         // fevereiro
+        if( (dia > 28) && (mes == 2) ) {
             retorno = false
         }
-        else if ( (dia > 30) && ( (mes == 4) || (mes == 6) || (mes == 7) || (mes == 11) ) ) {   // abril
+        else if ( (dia > 30) && ( (mes == 4) || (mes == 6) || (mes == 7) || (mes == 11) ) ) {
             retorno = false
         }
 
