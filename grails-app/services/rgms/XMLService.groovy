@@ -119,12 +119,21 @@ class XMLService {
             List<Object> bookChapter = ((Node) bookChaptersChildren[i]).children()
             Node dadosBasicos = (Node) bookChapter[0]
             Node detalhamentoCapitulo = (Node) bookChapter[1]
-            createNewBookChapter(dadosBasicos,detalhamentoCapitulo, i)
+
+            //puxando authors
+            String authors = ""
+
+            for (int j = 2; j < bookChapter.size() - 4; ++j){
+                authors += getAttributeValueFromNode(bookChapter[j], "NOME-COMPLETO-DO-AUTOR") + "; "
+            }
+
+            createNewBookChapter(dadosBasicos,detalhamentoCapitulo, i, authors)
         }
     }
 
-    private static void createNewBookChapter (Node dadosBasicos, Node detalhamentoCapitulo, int i){
+    private static void createNewBookChapter (Node dadosBasicos, Node detalhamentoCapitulo, int i, String authors){
         BookChapter newBookChapter = new BookChapter()
+        newBookChapter.authors = authors
         newBookChapter.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
         newBookChapter.publisher = getAttributeValueFromNode(detalhamentoCapitulo, "NOME-DA-EDITORA")
 

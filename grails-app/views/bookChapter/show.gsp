@@ -64,6 +64,15 @@
 					<g:link controller="Publication" action="generateBib" params="[id : bookChapterInstance.id]">Bibtex</g:link>
 				</li>
 				<!-- //#end -->
+
+                <g:if test="${bookChapterInstance?.authors}">
+                    <li class="fieldcontain">
+                        <span id="autores-label" class="property-label"><g:message code="bookChapter.autores.label" default="Autores" /></span>
+
+                        <span class="property-value" aria-labelledby="autores-label"><g:fieldValue bean="${bookChapterInstance}" field="authors"/></span>
+
+                    </li>
+                </g:if>
 			
 				<g:if test="${bookChapterInstance?.publisher}">
 				<li class="fieldcontain">

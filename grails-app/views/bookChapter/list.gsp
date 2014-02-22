@@ -43,8 +43,8 @@
 						<g:sortableColumn property="file" title="${message(code: 'bookChapter.file.label', default: 'File')}" />
 					
 						<th><g:message code="bookChapter.researchLine.label" default="Research Line" /></th>
-					
-						
+
+                        <g:sortableColumn property="autores" title="${message(code: 'bookChapter.authors.label', default: 'Autores')}" />
 					
 						<g:sortableColumn property="publisher" title="${message(code: 'bookChapter.publisher.label', default: 'Publisher')}" />
 					
@@ -61,8 +61,8 @@
 						<td>${fieldValue(bean: bookChapterInstance, field: "file")}</td>
 					
 						<td>${fieldValue(bean: bookChapterInstance, field: "researchLine")}</td>
-					
-						
+
+                        <td>${fieldValue(bean: bookChapterInstance, field: "authors")}</td>
 					
 						<td>${fieldValue(bean: bookChapterInstance, field: "publisher")}</td>
 					
