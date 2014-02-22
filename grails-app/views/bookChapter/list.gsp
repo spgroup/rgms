@@ -61,9 +61,7 @@
 						<td>${fieldValue(bean: bookChapterInstance, field: "file")}</td>
 					
 						<td>${fieldValue(bean: bookChapterInstance, field: "researchLine")}</td>
-					
-						
-					
+
 						<td>${fieldValue(bean: bookChapterInstance, field: "publisher")}</td>
 					
 					</tr>

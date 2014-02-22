@@ -1,11 +1,9 @@
 package rgms.publication
 
 import org.apache.shiro.SecurityUtils
-import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 import rgms.authentication.User
 import rgms.member.Member
-import rgms.member.Orientation
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,6 +40,19 @@ class XMLController {
         Node xmlFile ->
             XMLService.createFerramentas(xmlFile)
     }
+
+    def uploadXMLResearchLine(){
+        String flashMessage = 'The non existent Research Line were successfully imported'
+
+        if (XMLService.Import(saveResearchLine, returnWithMessage, flashMessage, "ResearchLine", request))
+            return
+    }
+
+    private Closure saveResearchLine = {
+        Node xmlFile ->
+        XMLService.createResearchLines(xmlFile)
+    }
+
 
     def uploadXMLBookChapter(){
         String flashMessage = 'The non existent Book Chapters were successfully imported'

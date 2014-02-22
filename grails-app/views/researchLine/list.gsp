@@ -25,6 +25,20 @@
                 </form>
             </ul>
 		</div>
+
+        <!-- #if($XMLImp && $ReseachLine) -->
+        <div class="xml" role="xmlUpload">
+            <ul>
+                <br>
+                <g:form controller="XML" action="uploadXMLResearchLine" method="post" enctype="multipart/form-data">
+                    <label for="file">&nbsp;&nbsp;&nbsp;&nbsp;Importar XML:</label>
+                    <input type="file" name="file" id="file"/>
+                    <input class="save" type="submit" value="Enviar"/>
+                </g:form>
+            </ul>
+        </div>
+        <!-- #end -->
+
 		<div id="list-researchLine" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

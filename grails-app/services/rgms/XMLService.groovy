@@ -75,6 +75,32 @@ class XMLService {
         newTool.save(flush: false)
     }
 
+    static void createResearchLines(Node xmlFile){
+		//Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
+		List<Node> pro_perf = ((Node)((Node) xmlFile.children()[0]).children()[4]).children() //Navega ate atuacoes profissionais e extrai a lista de atuacoes
+
+		for(Node i : pro_perf){ //Atuaçao profissional
+            for (Node j : i.children()){ //Atividades de pesquisa e desenvolvimento
+                if(((String) j.name()).equals("ATIVIDADES-DE-PESQUISA-E-DESENVOLVIMENTO")){
+                    for (Node k : j.children()){ //Pesquisa e desenvolvimento
+                        if(((String) k.name()).equals("PESQUISA-E-DESENVOLVIMENTO")){
+                            for(Node l: k.children()){ //Linha de pesquisa
+                               saveResearchLine(l)
+                            }
+                        }
+                    }
+                }
+            }
+		}
+	}
+
+    private static void saveResearchLine(Node xmlFile){
+        ResearchLine newResearchLine = new ResearchLine()
+        newResearchLine.name = getAttributeValueFromNode(xmlFile, "TITULO-DA-LINHA-DE-PESQUISA")
+        newResearchLine.description = getAttributeValueFromNode(xmlFile,"OBJETIVOS-LINHA-DE-PESQUISA")
+        newResearchLine.save(flush: false)
+    }
+
     static void createBooksChapters(Node xmlFile){
         Node bookChapters = (Node) ((Node) ((Node) xmlFile.children()[1]).children()[2]).children()[1]
         List<Object> bookChaptersChildren = bookChapters.children()
@@ -92,14 +118,12 @@ class XMLService {
         newBookChapter.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
         newBookChapter.publisher = getAttributeValueFromNode(detalhamentoCapitulo, "NOME-DA-EDITORA")
 
-        print(newBookChapter.title)
         if (Publication.findByTitle(newBookChapter.title) == null)
             fillBookChapterInfo(newBookChapter, dadosBasicos, i)
     }
 
     private static void fillBookChapterInfo (BookChapter newBookChapter, Node dadosBasicos, int i){
         fillPublicationDate(newBookChapter, dadosBasicos, "ANO")
-        print(newBookChapter.publicationDate)
 
         newBookChapter.file = 'emptyfile' + i.toString()
         newBookChapter.chapter = 2
@@ -132,15 +156,17 @@ class XMLService {
         Node trabalhosEmEventos = (Node) ((Node)xmlFile.children()[1]).children()[0]
 
         for (Node currentNode : trabalhosEmEventos.children()){
-            List<Object> nodeConferencia = currentNode.children()
+            List<Node> nodeConferencia = currentNode.children()
             saveNewConferencia (nodeConferencia);
         }
     }
 
-    private static void saveNewConferencia (List nodeConferencia){
+    private static void saveNewConferencia (List<Node> nodeConferencia){
         Node dadosBasicos = (Node) nodeConferencia[0]
         Node detalhamento = (Node) nodeConferencia[1]
-        String nomeEvento = getAttributeValueFromNode(detalhamento, "NOME-DO-EVENTO")
+        String nomeEvento = ""
+        if(((String)detalhamento.name()).equals("DETALHAMENTO-DO-TRABALHO"))
+            nomeEvento = getAttributeValueFromNode(detalhamento, "NOME-DO-EVENTO")
 
         if(nomeEvento.contains("onferenc")){
             Conferencia novaConferencia = new Conferencia()
