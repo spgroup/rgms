@@ -42,6 +42,14 @@
 	<g:field name="endYear" type="number" value="${researchProjectInstance.endYear}" required=""/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'responsavel', 'error')} ">
+	<label for="responsavel">
+		<g:message code="researchProject.responsavel.label" default="Responsavel" />
+		
+	</label>
+	<g:textField name="responsavel" value="${researchProjectInstance?.responsavel}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'funders', 'error')} ">
 	<label for="funders">
 		<g:message code="researchProject.funders.label" default="Funders" />
@@ -50,19 +58,11 @@
 	<g:select name="funders" from="${rgms.researchProject.Funder.list()}" multiple="multiple" optionKey="id" size="5" value="${researchProjectInstance?.funders*.id}" class="many-to-many"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'projectMembers', 'error')} ">
-	<label for="projectMembers">
-		<g:message code="researchProject.projectMembers.label" default="Project Members" />
+<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'members', 'error')} ">
+	<label for="members">
+		<g:message code="researchProject.members.label" default="Members" />
 		
 	</label>
-	<g:select name="projectMembers" from="${rgms.researchProject.ProjectMember.list()}" multiple="multiple" optionKey="id" size="5" value="${researchProjectInstance?.projectMembers*.id}" class="many-to-many"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'publications', 'error')} ">
-	<label for="publications">
-		<g:message code="researchProject.publications.label" default="Publications" />
-		
-	</label>
-	<g:select name="publications" from="${rgms.publication.Publication.list()}" multiple="multiple" optionKey="id" size="5" value="${researchProjectInstance?.publications*.id}" class="many-to-many"/>
+	
 </div>
 

@@ -53,6 +53,17 @@ class XMLController {
         XMLService.createResearchLines(xmlFile)
     }
 
+    def uploadXMLResearchProject(){
+        String flashMessage = 'The non existent Research Project were successfully imported'
+
+        if (XMLService.Import(saveReseachProject, returnWithMessage, flashMessage, "ResearchProject", request))
+            return
+    }
+
+    private Closure saveReseachProject = {
+        Node xmlFile ->
+        XMLService.createResearchProjects(xmlFile)
+    }
 
     def uploadXMLBookChapter(){
         String flashMessage = 'The non existent Book Chapters were successfully imported'

@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import rgms.member.*
 import rgms.publication.*
+import rgms.researchProject.*
 
 class XMLService {
 
@@ -47,7 +48,11 @@ class XMLService {
         createConferencias(xmlFile)
         createOrientations(xmlFile, user)
         createJournals(xmlFile)
+        createResearchLines(xmlFile)
+        createResearchProjects(xmlFile)
+        println "All imports done!"
     }
+
 
     static void createFerramentas(Node xmlFile){
         Node producaoTecnica = (Node) xmlFile.children()[2]
@@ -99,6 +104,73 @@ class XMLService {
         newResearchLine.name = getAttributeValueFromNode(xmlFile, "TITULO-DA-LINHA-DE-PESQUISA")
         newResearchLine.description = getAttributeValueFromNode(xmlFile,"OBJETIVOS-LINHA-DE-PESQUISA")
         newResearchLine.save(flush: false)
+    }
+
+    static void createResearchProjects(Node xmlFile){
+        //Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
+        List<Node> pro_perf = ((Node)((Node) xmlFile.children()[0]).children()[4]).children() //Navega ate atuacoes profissionais e extrai a lista de atuacoes
+
+        for(Node i : pro_perf){ //Atuaçao profissional
+            for (Node j : i.children()){ //Atividades de pesquisa em projeto
+                if(((String) j.name()).equals("ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO")){
+                    for (Node k : j.children()){ //Participacao em projeto
+                        if(((String) k.name()).equals("PARTICIPACAO-EM-PROJETO")){
+                            for(Node l: k.children()){ //Projeto de pesquisa
+                                saveResearchProject(l)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static void saveResearchProject(Node xmlFile){
+        String name = getAttributeValueFromNode(xmlFile, "NOME-DO-PROJETO")
+        ResearchProject project = ResearchProject.findByProjectName(name)
+
+        if(project == null){ //Se o projeto de pesquisa ainda nao existe no sistema hora de adiciona-lo
+            try{
+                ResearchProject newProject = new ResearchProject()
+                newProject.projectName = name
+                newProject.description = getAttributeValueFromNode(xmlFile, "DESCRICAO-DO-PROJETO")
+                newProject.status = getAttributeValueFromNode(xmlFile,"SITUACAO")
+                newProject.startYear = getAttributeValueFromNode(xmlFile,"ANO-INICIO").toInteger()
+                newProject.endYear = getAttributeValueFromNode(xmlFile,"ANO-FIM").equals("") ? 0 : getAttributeValueFromNode(xmlFile,"ANO-FIM").toInteger()
+                fillProjectMembers(getNodeFromNode(xmlFile,"EQUIPE-DO-PROJETO"),newProject)
+                fillFunders(getNodeFromNode(xmlFile,"FINANCIADORES-DO-PROJETO"),newProject)
+                newProject.save(flush: false)
+            }catch (Exception e){
+                println "Deu merda!"
+                println e
+            }
+        }
+    }
+
+    private static void fillFunders(Node xmlFile, ResearchProject project){
+        for (Node node : xmlFile?.children()){
+            String code = getAttributeValueFromNode(node,"CODIGO-INSTITUICAO")
+            Funder funder = Funder.findByCode(code)
+
+            if(funder){
+                project.addToFunders(funder)
+            }else{
+                Funder newFunder = new Funder()
+                newFunder.code = code
+                newFunder.name = getAttributeValueFromNode(node,"NOME-INSTITUICAO")
+                newFunder.nature = getAttributeValueFromNode(node,"NATUREZA")
+                newFunder.save(flush: false)
+                project.addToFunders(newFunder)
+            }
+        }
+    }
+
+    private static void fillProjectMembers(Node xmlFile, ResearchProject project){
+
+        for (Node node : xmlFile?.children()) { //Para cada integrante presente no projeto
+            String name = (String) (node.attribute("NOME-COMPLETO"))
+            project.addToMembers(name)
+        }
     }
 
     static void createBooksChapters(Node xmlFile){
@@ -358,4 +430,5 @@ class XMLService {
         if (tryingToParse.isInteger())
             publication.publicationDate.set(year: tryingToParse.toInteger())
     }
+
 }

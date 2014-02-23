@@ -68,6 +68,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${researchProjectInstance?.responsavel}">
+				<li class="fieldcontain">
+					<span id="responsavel-label" class="property-label"><g:message code="researchProject.responsavel.label" default="Responsavel" /></span>
+					
+						<span class="property-value" aria-labelledby="responsavel-label"><g:fieldValue bean="${researchProjectInstance}" field="responsavel"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${researchProjectInstance?.funders}">
 				<li class="fieldcontain">
 					<span id="funders-label" class="property-label"><g:message code="researchProject.funders.label" default="Funders" /></span>
@@ -79,24 +88,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${researchProjectInstance?.projectMembers}">
+				<g:if test="${researchProjectInstance?.members}">
 				<li class="fieldcontain">
-					<span id="projectMembers-label" class="property-label"><g:message code="researchProject.projectMembers.label" default="Project Members" /></span>
+					<span id="members-label" class="property-label"><g:message code="researchProject.members.label" default="Members" /></span>
 					
-						<g:each in="${researchProjectInstance.projectMembers}" var="p">
-						<span class="property-value" aria-labelledby="projectMembers-label"><g:link controller="projectMember" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${researchProjectInstance?.publications}">
-				<li class="fieldcontain">
-					<span id="publications-label" class="property-label"><g:message code="researchProject.publications.label" default="Publications" /></span>
-					
-						<g:each in="${researchProjectInstance.publications}" var="p">
-						<span class="property-value" aria-labelledby="publications-label"><g:link controller="publication" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
-						</g:each>
+						<span class="property-value" aria-labelledby="members-label"><g:fieldValue bean="${researchProjectInstance}" field="members"/></span>
 					
 				</li>
 				</g:if>
