@@ -39,6 +39,11 @@ Then(~'^the book "([^"]*)" is properly removed by the system$') { String title -
     checkIfExists(title)
 }
 
+Then(~'^the book "([^"]*)" is not stored twice$') { String title ->
+    books = Book.findAllByTitle(title)
+    assert books.size() == 1
+}
+
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)

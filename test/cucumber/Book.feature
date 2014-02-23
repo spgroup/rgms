@@ -12,3 +12,8 @@ Feature: Book
     Given the book "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
     When I remove the book "Next Generation Software Product Line Engineering"
     Then the book "Next Generation Software Product Line Engineering" is properly removed by the system
+
+  Scenario: duplicate book
+    Given the book "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
+    When I create the book "Next Generation Software Product Line Engineering" with file name "NGSPL-0.pdf"
+    Then the book "Next Generation Software Product Line Engineering" is not stored twice
