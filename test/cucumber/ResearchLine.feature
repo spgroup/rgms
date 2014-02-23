@@ -28,6 +28,7 @@ Feature: research line
     When I select the "Linha de pesquisa" option at the publications menu
     And I select the new research line option at the research line page
     Then I can fill the research line details
+
     Scenario: visualize research line web
     Given I am logged as admin
     And the system has a research line named as "Teoria da informacao - Complexidade no espaco"
@@ -44,3 +45,17 @@ Feature: research line
     And I click the research line "Teoria da informacao - Complexidade no espaco" at the research line list
     When I click the edit button
     Then I can change the research line "Teoria da informacao - Complexidade no espaco" details
+
+  #if ($XMLUpload)
+  Scenario: upload research line with a file
+    Given the system has some research line stored
+    When I upload a new reseach line "testelattes2.xml"
+    Then the system has more reseach lines now
+
+  Scenario: upload reseach lines with a file
+    Given I am at the publications menu
+    When I select the "Linha de pesquisa" option at the program menu
+    And I select the upload button at the research line page
+    Then I'm still on research line page
+    And an error message is showed at research line page
+  #end

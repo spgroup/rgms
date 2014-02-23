@@ -1,4 +1,5 @@
 import rgms.publication.ResearchLine
+import steps.ResearchLineTestDataAndOperations
 import steps.TestDataAndOperations
 import steps.TestDataAndOperationsResearchLine
 import pages.ResearchLineCreatePage
@@ -104,4 +105,51 @@ When(~'^I click the edit button$') { ->
 Then(~'^I can change the research line "([^"]*)" details$') {String name->
     at ResearchLineEditPage
     page.changeResearchLineDetails(name)
+}
+
+Given(~'^the system has some research line stored$'){ ->
+    TestDataAndOperations.loginController(this)
+}
+
+When(~'^I upload a new reseach line "([^"]*)"$') { filename ->
+    inicialSize = ResearchLine.findAll().size()
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    ResearchLineTestDataAndOperations.uploadOrientation(path + filename)
+}
+
+Then(~'^the system has more reseach lines now$'){ ->
+    TestDataAndOperations.logoutController(this)
+    finalSize = ResearchLine.findAll().size()
+    assert inicialSize < finalSize
+}
+
+When(~'^I select the upload button at the research line page$'){ ->
+    at ResearchLinePage
+    page.uploadWithoutFile()
+}
+
+Then(~'^I\'m still on research line page$'){ ->
+    at ResearchLinePage
+}
+
+Then(~'an error message is showed at research line page$'){ ->
+    at ResearchLinePage
+    page.hasErrorUploadXML()
+}
+
+
+//Funções Auxiliares
+private void goToResearchLineCreatePage(){
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+
+    to PublicationsPage
+    at PublicationsPage
+    page.select("Linha de pesquisa")
+
+    at ResearchLinePage
+    page.selectNewResearchLine()
+
+    at ResearchLineCreatePage
 }

@@ -20,5 +20,14 @@ class ResearchLinePage extends Page {
 	{
 		$('table').find('a', text: name).click()		
 	}
+
+    def uploadWithoutFile(){
+        $('input.save').click()
+    }
+
+    def hasErrorUploadXML() {
+        GetPageTitle gp = new GetPageTitle()
+        return gp.msg('default.xml.parserror.message') == $("div", class: "message", role: "status").text()
+    }
 }
 
