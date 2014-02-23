@@ -53,6 +53,26 @@ Then(~'^the book "([^"]*)" is properly updated by the system$') { String title -
     checkIfExists(title)
 }
 
+Given(~'^the system has some books stored$') { ->
+    initialSize = Book.findAll().size()
+}
+
+When(~'^I upload the books of "([^"]*)"$') { filename ->
+    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    initialSize = Book.findAll().size()
+    BookTestDataAndOperations.uploadBook(path)
+    finalSize = Book.findAll().size()
+    assert initialSize < finalSize
+}
+
+Then(~'^the system has all the books of the xml file$') { ->
+    assert Book.findByTitle("Proceedings of the IV Brazilian Symposium on Programming Languages") != null
+    assert Book.findByTitle("Testing Techniques in Software Engineering") != null
+    assert Book.findByTitle("Proceedings of the XXIII Brazilian Symposium on Software Engineering") != null
+    assert Book.findByTitle("Anais da IV ConferÃªncia Latina-Americana em Linguagens de PadrÃµes para ProgramaÃ§Ã£o (SugarLoafPLoP 2004)") != null
+    assert Book.findByTitle("AOSD 2011 Proceedings and Companion Material") != null
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null

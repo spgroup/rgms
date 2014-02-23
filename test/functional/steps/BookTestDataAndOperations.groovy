@@ -8,8 +8,11 @@ package steps
  * To change this template use File | Settings | File Templates.
  */
 
+import rgms.member.Member
+import rgms.publication.PublicationController
 import rgms.publication.Book
 import rgms.publication.BookController
+import rgms.publication.XMLController
 import org.springframework.web.context.request.RequestContextListener
 
 class BookTestDataAndOperations {
@@ -53,6 +56,14 @@ class BookTestDataAndOperations {
 
         def updatedBook = Book.findByTitle(newtitle)
         return updatedBook
+    }
+
+    static public void uploadBook(String filename) {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.saveBook(records.parse(xml));
+        cont.response.reset()
     }
 
     static public boolean bookCompatibleTo(book, String title) {
