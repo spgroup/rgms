@@ -44,6 +44,17 @@ class BookTestDataAndOperations {
         cont.delete(testBook.id)
     }
 
+    static public Book editBook(oldtitle, newtitle) {
+        def book = Book.findByTitle(oldtitle)
+        book.setTitle(newtitle)
+        def cont = new BookController()
+        cont.params << book.properties
+        cont.update()
+
+        def updatedBook = Book.findByTitle(newtitle)
+        return updatedBook
+    }
+
     static public boolean bookCompatibleTo(book, String title) {
         def testBook = findBookByTitle(title)
         def compatible = false

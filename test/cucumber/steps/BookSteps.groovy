@@ -44,6 +44,14 @@ Then(~'^the book "([^"]*)" is not stored twice$') { String title ->
     assert books.size() == 1
 }
 
+When(~'^I edit the book title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
+    def updatedBook = BookTestDataAndOperations.editBook(oldtitle, newtitle)
+    assert updatedBook != null
+}
+
+Then(~'^the book "([^"]*)" is properly updated by the system$') { String title ->
+    checkIfExists(title)
+}
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
