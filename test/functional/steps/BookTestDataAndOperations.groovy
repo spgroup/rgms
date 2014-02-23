@@ -8,6 +8,7 @@ package steps
  * To change this template use File | Settings | File Templates.
  */
 
+import rgms.publication.Book
 import rgms.publication.BookController
 import org.springframework.web.context.request.RequestContextListener
 
@@ -34,6 +35,13 @@ class BookTestDataAndOperations {
         cont.create()
         cont.save()
         cont.response.reset()
+    }
+
+    static public void removeBook(String title) {
+        def testBook = Book.findByTitle(title)
+        def cont = new BookController()
+        cont.params << [id: testBook.id]
+        cont.delete(testBook.id)
     }
 
     static public boolean bookCompatibleTo(book, String title) {

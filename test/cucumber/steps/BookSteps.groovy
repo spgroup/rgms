@@ -25,6 +25,21 @@ Then(~'^the book "([^"]*)" is properly stored by the system$') { String title ->
     assert BookTestDataAndOperations.bookCompatibleTo(book, title)
 }
 
+Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    book = Book.findByTitle(title)
+    assert book != null
+}
+
+When(~'^I remove the book "([^"]*)"$') { String title ->
+    BookTestDataAndOperations.removeBook(title)
+}
+
+Then(~'^the book "([^"]*)" is properly removed by the system$') { String title ->
+    checkIfExists(title)
+}
+
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
