@@ -8,10 +8,9 @@ abstract class Publication {
     Date publicationDate
     String file
     ResearchLine researchLine
-    String authors
 
     static belongsTo = Member
-    static hasMany = [members: Member]
+    static hasMany = [members: Member, authors: String]
 
     static constraints = {
         title nullable: false, blank: false, size: 1..200

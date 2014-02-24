@@ -25,6 +25,23 @@ class BookChapterController {
 
     def save() {
         def bookChapterInstance = new BookChapter(params)
+
+        // Pegando autores separados por virgula para serem inseridos. Retirando tambem os [, ]
+        String aux = bookChapterInstance.getAuthors()
+
+        if(aux != null) {
+            String[] newAuthors = aux.subSequence(1, aux.size()-1).split(",")
+
+            // Apagando os antigos
+            bookChapterInstance.setAuthors(null)
+
+            // Inserindo autores separados
+            for(int i = 0; i < newAuthors.length; i++) {
+                bookChapterInstance.addToAuthors(newAuthors[i])
+            }
+        }
+
+
         PublicationController pb = new PublicationController()
         if (!pb.upload(bookChapterInstance) || !bookChapterInstance.save(flush: true)) {
             render(view: "create", model: [bookChapterInstance: bookChapterInstance])
