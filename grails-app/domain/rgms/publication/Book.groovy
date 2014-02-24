@@ -7,7 +7,7 @@ class Book extends Publication {
     String pages
 
     static constraints = {
-        publisher nullable: false, blank: false
+        publisher nullable: false, blank: false, unique: ['title', 'volume']
         volume nullable: false, blank: false, min: 1
         pages nullable: false, blank: false
     }

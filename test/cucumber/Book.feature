@@ -1,3 +1,4 @@
+@i9n
 Feature: Book
   As a member of a research group
   I want to add, remove and modify books I have published
@@ -9,14 +10,14 @@ Feature: Book
     Then  the book "SPL Development" is properly stored by the system
 
   Scenario: remove book
-    Given the book "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
-    When I remove the book "Next Generation Software Product Line Engineering"
-    Then the book "Next Generation Software Product Line Engineering" is properly removed by the system
+    Given the book "SPL Development" is stored in the system with file name "NGSPL-2.pdf"
+    When I remove the book "SPL Development"
+    Then the book "SPL Development" is properly removed by the system
 
   Scenario: duplicate book
-    Given the book "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
-    When I create the book "Next Generation Software Product Line Engineering" with file name "NGSPL-0.pdf"
-    Then the book "Next Generation Software Product Line Engineering" is not stored twice
+    Given the book "SPL Development" is stored in the system with file name "NGSPL-0.pdf"
+    When I create the book "SPL Development" with file name "NGSPL-0.pdf"
+    Then the book "SPL Development" is not stored twice
 
   Scenario: edit existing book
     Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
