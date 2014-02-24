@@ -68,11 +68,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${researchProjectInstance?.responsavel}">
+				<g:if test="${researchProjectInstance?.responsible}">
 				<li class="fieldcontain">
 					<span id="responsavel-label" class="property-label"><g:message code="researchProject.responsavel.label" default="Responsavel" /></span>
 					
-						<span class="property-value" aria-labelledby="responsavel-label"><g:fieldValue bean="${researchProjectInstance}" field="responsavel"/></span>
+						<span class="property-value" aria-labelledby="responsavel-label"><g:fieldValue bean="${researchProjectInstance}" field="responsible"/></span>
 					
 				</li>
 				</g:if>
@@ -88,7 +88,7 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${researchProjectInstance?.members}">
+			    <g:if test="${researchProjectInstance?.members}">
 				<li class="fieldcontain">
 					<span id="members-label" class="property-label"><g:message code="researchProject.members.label" default="Members" /></span>
 					

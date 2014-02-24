@@ -32,6 +32,8 @@ class ResearchProjectController {
 
     def show(Long id) {
         def researchProjectInstance = ResearchProject.get(id)
+        //TODO:GET BACK THERE!
+        //def projectMembersInstance = ResearchProject.mem
         if (!researchProjectInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchProject.label', default: 'ResearchProject'), id])
             redirect(action: "list")

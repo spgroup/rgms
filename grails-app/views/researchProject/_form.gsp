@@ -15,7 +15,7 @@
 		<g:message code="researchProject.description.label" default="Description" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textArea name="description" cols="40" rows="5" maxlength="1000" required="" value="${researchProjectInstance?.description}"/>
+	<g:textArea name="description" cols="40" rows="5" maxlength="3000" required="" value="${researchProjectInstance?.description}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'status', 'error')} required">
@@ -42,12 +42,12 @@
 	<g:field name="endYear" type="number" value="${researchProjectInstance.endYear}" required=""/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'responsavel', 'error')} ">
-	<label for="responsavel">
-		<g:message code="researchProject.responsavel.label" default="Responsavel" />
+<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'responsible', 'error')} ">
+	<label for="responsible">
+		<g:message code="researchProject.responsible.label" default="Responsible" />
 		
 	</label>
-	<g:textField name="responsavel" value="${researchProjectInstance?.responsavel}"/>
+	<g:textArea name="responsible" cols="40" rows="5" maxlength="300" value="${researchProjectInstance?.responsible}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'funders', 'error')} ">
@@ -58,11 +58,10 @@
 	<g:select name="funders" from="${rgms.researchProject.Funder.list()}" multiple="multiple" optionKey="id" size="5" value="${researchProjectInstance?.funders*.id}" class="many-to-many"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'members', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'members', 'error')} " id="memberList">
 	<label for="members">
 		<g:message code="researchProject.members.label" default="Members" />
 		
 	</label>
-	
+    <g:textField name="members" id="members" value="${researchProjectInstance?.members}"/>
 </div>
-

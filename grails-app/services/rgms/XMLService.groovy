@@ -169,6 +169,8 @@ class XMLService {
 
         for (Node node : xmlFile?.children()) { //Para cada integrante presente no projeto
             String name = (String) (node.attribute("NOME-COMPLETO"))
+            Boolean responsavel = ((String) (node.attribute("FLAG-RESPONSAVEL"))).equals("SIM")
+            if(responsavel) project.responsible = name
             project.addToMembers(name)
         }
     }

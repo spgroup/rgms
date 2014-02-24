@@ -32,8 +32,17 @@
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <input type="button" class="create" value="Add Members" name="add" onclick="addMoreFields()">
 				</fieldset>
 			</g:form>
+
+            <script>
+                function addMoreFields()
+                {
+                    $('#memberList').append('<br><g:textField name="members" id="members" value="${researchProjectInstance?.members}"/>')
+                }
+            </script>
+
 		</div>
 	</body>
 </html>

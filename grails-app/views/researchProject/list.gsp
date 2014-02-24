@@ -48,9 +48,11 @@
 					
 						<g:sortableColumn property="endYear" title="${message(code: 'researchProject.endYear.label', default: 'End Year')}" />
 					
-						<g:sortableColumn property="responsavel" title="${message(code: 'researchProject.responsavel.label', default: 'Responsavel')}" />
-					
-					</tr>
+						<g:sortableColumn property="responsavel" title="${message(code: 'researchProject.responsible.label', default: 'Responsavel')}" />
+
+                        <g:sortableColumn property="members" title="${message(code: 'researchProject.members.label', default: 'Members')}" />
+
+                    </tr>
 				</thead>
 				<tbody>
 				<g:each in="${researchProjectInstanceList}" status="i" var="researchProjectInstance">
@@ -66,8 +68,9 @@
 					
 						<td>${fieldValue(bean: researchProjectInstance, field: "endYear")}</td>
 					
-						<td>${fieldValue(bean: researchProjectInstance, field: "responsavel")}</td>
-					
+						<td>${fieldValue(bean: researchProjectInstance, field: "responsible")}</td>
+
+                        <td>${fieldValue(bean: researchProjectInstance, field: "members")}</td>
 					</tr>
 				</g:each>
 				</tbody>

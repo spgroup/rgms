@@ -1,13 +1,10 @@
 package rgms.researchProject
 
-import rgms.member.Orientation
-import rgms.publication.Publication
-
 class ResearchProject {
     String projectName
     String description
     String status
-    String responsavel
+    String responsible
 
     int startYear
     int endYear
@@ -20,6 +17,6 @@ class ResearchProject {
         status(nullable: false, blank: false, inList: ["ENCERRADO","EM_ANDAMENTO","CONCLUIDO"])
         startYear(nullable: false, blank: false)
         endYear(nullable: true, blank: true)
-        responsavel(nullable: true, blank: true)
+        responsible(nullable: true, blank: true, maxSize: 300)
     }
 }
