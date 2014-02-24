@@ -14,7 +14,7 @@ class Book extends Publication {
 
     //#if($Bibtex)
     String generateBib() {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
+        return new BibtexExport().generateBibtexBook(this)
     }
     //#end
 }
