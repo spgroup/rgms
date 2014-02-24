@@ -69,12 +69,10 @@ Feature: research group
     And i select the edit option
     Then i can change the research group name to "rgms" and save it
 
-
-
-  Scenario: edit childof of research group
-    Given the system has a research group entitled "group" with childof none
-    When I modify the childof of research group entitled "group" to itself
-    Then the childof of research group "group" is none
+    Scenario: edit childof of research group
+      Given the system has a research group entitled "group" with childof none
+      When I modify the childof of research group entitled "group" to itself
+      Then the childof of research group "group" is none
 
 
   Scenario: edit childof of research group web

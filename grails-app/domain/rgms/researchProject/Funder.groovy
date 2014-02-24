@@ -7,7 +7,7 @@ class Funder {
 
 
     static constraints = {
-        code(nullable: true, blank: true, unique: true)
+        code(nullable: false, blank: true, unique: true)
         nature(nullable: false, blank: false, inList: ["AUXILIO_FINANCEIRO", "BOLSA", "REMUNERACAO", "COOPERACAO", "OUTRA"])
         name(maxSize: 200, nullable: false, blank: false)
     }

@@ -1,4 +1,7 @@
 import rgms.researchProject.Funder
+import steps.FunderTestDataAndOperations
+
+import static cucumber.api.groovy.EN.*
 
 /**
  * Created by Rubens on 24/02/14.
@@ -6,13 +9,18 @@ import rgms.researchProject.Funder
 
 //new Funder
 Given(~'^the system has no funder with code "([^"]*)"$') { String code ->
-    def funder = Funder.findByCode(code)
+    funder = Funder.findByCode(code)
     assert funder == null
 }
 When(~'^I create a funder with code "([^"]*)"$') { String code ->
-    (new Funder(code: code)).save()
+     FunderTestDataAndOperations.createFunderWithCode(code)
 }
 Then(~'^the funder with code "([^"]*)" is properly stored by the system$') { String code ->
-    def funder = Funder.findByCode(code)
-    assert funder == null
+    funder = Funder.findByCode(code)
+    checkIfFunderExists(code)
+}
+
+private void checkIfFunderExists(String code){
+    funder = Funder.findByCode(code)
+    assert funder != null
 }
