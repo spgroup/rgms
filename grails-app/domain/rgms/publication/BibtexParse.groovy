@@ -3,6 +3,7 @@ package rgms.publication
 import org.jbibtex.*
 import rgms.publication.strategyBibtexParse.StrategyParseBookChapter
 import rgms.publication.strategyBibtexParse.StrategyParseDissertacao
+import rgms.publication.strategyBibtexParse.StrategyParseTechnicalReport
 import rgms.publication.strategyBibtexParse.StrategyParseTese
 
 /**
@@ -21,10 +22,10 @@ class BibtexParse {
             //TODO settar todos os atributos de acordo com a classe a ser instanciada
             //Para pegar os valores do objeto 'entry' basta seguir o modelo da linha abaixo
             //String value = entry.getField(BibTeXEntry.KEY_TITLE).toUserString();
-
             switch (entry.getType()) {
 
                 case BibTeXEntry.TYPE_ARTICLE:
+
                     break
 
                 case BibTeXEntry.TYPE_BOOK:
@@ -67,7 +68,7 @@ class BibtexParse {
                     break
 
                 case BibTeXEntry.TYPE_TECHREPORT:
-                    publications.add(new TechnicalReport())
+                    publications.add(new StrategyParseTechnicalReport().execute(entry))
                     break
 
                 case BibTeXEntry.TYPE_UNPUBLISHED:
