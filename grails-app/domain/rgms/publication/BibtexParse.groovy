@@ -37,13 +37,8 @@ class BibtexParse {
                     break
 
                 //#if($Conferencia)
-                case BibTeXEntry.TYPE_CONFERENCE:
+                case BibTeXEntry.TYPE_CONFERENCE ||  BibTeXEntry.TYPE_INPROCEEDINGS:
                     publications.add(new StrategyParseConference().execute(entry))
-                    break
-
-
-                case BibTeXEntry.TYPE_INPROCEEDINGS:
-
                     break
 
                 //#end
