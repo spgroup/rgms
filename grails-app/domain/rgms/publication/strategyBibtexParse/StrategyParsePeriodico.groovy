@@ -2,7 +2,6 @@ package rgms.publication.strategyBibtexParse
 
 import org.jbibtex.BibTeXEntry
 import rgms.publication.Periodico
-import rgms.publication.Publication
 
 /**
  * Created by Joao on 2/25/14.
