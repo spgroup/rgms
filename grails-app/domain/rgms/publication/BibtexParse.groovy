@@ -1,10 +1,7 @@
 package rgms.publication
 
 import org.jbibtex.*
-import rgms.publication.strategyBibtexParse.StrategyParseBookChapter
-import rgms.publication.strategyBibtexParse.StrategyParseDissertacao
-import rgms.publication.strategyBibtexParse.StrategyParseTechnicalReport
-import rgms.publication.strategyBibtexParse.StrategyParseTese
+import rgms.publication.strategyBibtexParse.*
 
 /**
  *
@@ -23,21 +20,32 @@ class BibtexParse {
             //Para pegar os valores do objeto 'entry' basta seguir o modelo da linha abaixo
             //String value = entry.getField(BibTeXEntry.KEY_TITLE).toUserString();
             switch (entry.getType()) {
-
+                //#if($Periodico)
                 case BibTeXEntry.TYPE_ARTICLE:
-
+                    publications.add(new StrategyParsePeriodico().execute(entry))
                     break
+                //#end
 
+                //#if($BookChapter)
                 case BibTeXEntry.TYPE_BOOK:
                     publications.add(new StrategyParseBookChapter().execute(entry))
                     break
+                //#end
+
 
                 case BibTeXEntry.TYPE_BOOKLET:
                     break
 
+                //#if($Conferencia)
                 case BibTeXEntry.TYPE_CONFERENCE:
                     publications.add(new Conferencia())
                     break
+
+
+                case BibTeXEntry.TYPE_INPROCEEDINGS:
+                    break
+
+                //#end
 
                 case BibTeXEntry.TYPE_INBOOK:
                     break
@@ -45,18 +53,17 @@ class BibtexParse {
                 case BibTeXEntry.TYPE_INCOLLECTION:
                     break
 
-                case BibTeXEntry.TYPE_INPROCEEDINGS:
-                    break
-
                 case BibTeXEntry.TYPE_MANUAL:
                     break
 
+                //#if($Dissertation)
                 case BibTeXEntry.TYPE_MASTERSTHESIS:
                     publications.add(new StrategyParseDissertacao().execute(entry))
                     break
 
                 case BibTeXEntry.TYPE_MISC:
                     break
+                //#end
 
                 //#if($ImportBibtex && $TesePublication)
                 case BibTeXEntry.TYPE_PHDTHESIS:
