@@ -130,20 +130,15 @@ class XMLService {
         ResearchProject project = ResearchProject.findByProjectName(name)
 
         if(project == null){ //Se o projeto de pesquisa ainda nao existe no sistema hora de adiciona-lo
-            try{
-                ResearchProject newProject = new ResearchProject()
-                newProject.projectName = name
-                newProject.description = getAttributeValueFromNode(xmlFile, "DESCRICAO-DO-PROJETO")
-                newProject.status = getAttributeValueFromNode(xmlFile,"SITUACAO")
-                newProject.startYear = getAttributeValueFromNode(xmlFile,"ANO-INICIO").toInteger()
-                newProject.endYear = getAttributeValueFromNode(xmlFile,"ANO-FIM").equals("") ? 0 : getAttributeValueFromNode(xmlFile,"ANO-FIM").toInteger()
-                fillProjectMembers(getNodeFromNode(xmlFile,"EQUIPE-DO-PROJETO"),newProject)
-                fillFunders(getNodeFromNode(xmlFile,"FINANCIADORES-DO-PROJETO"),newProject)
-                newProject.save(flush: false)
-            }catch (Exception e){
-                println "Deu merda!"
-                println e
-            }
+            ResearchProject newProject = new ResearchProject()
+            newProject.projectName = name
+            newProject.description = getAttributeValueFromNode(xmlFile, "DESCRICAO-DO-PROJETO")
+            newProject.status = getAttributeValueFromNode(xmlFile,"SITUACAO")
+            newProject.startYear = getAttributeValueFromNode(xmlFile,"ANO-INICIO").toInteger()
+            newProject.endYear = getAttributeValueFromNode(xmlFile,"ANO-FIM").equals("") ? 0 : getAttributeValueFromNode(xmlFile,"ANO-FIM").toInteger()
+            fillProjectMembers(getNodeFromNode(xmlFile,"EQUIPE-DO-PROJETO"),newProject)
+            fillFunders(getNodeFromNode(xmlFile,"FINANCIADORES-DO-PROJETO"),newProject)
+            newProject.save(flush: false)
         }
     }
 
@@ -160,7 +155,7 @@ class XMLService {
                 newFunder.name = getAttributeValueFromNode(node,"NOME-INSTITUICAO")
                 newFunder.nature = getAttributeValueFromNode(node,"NATUREZA")
                 newFunder.save(flush: false)
-                project.addToFunders(newFunder)
+                project.addToFunders(newFunder).save(flush: false)
             }
         }
     }
@@ -171,7 +166,7 @@ class XMLService {
             String name = (String) (node.attribute("NOME-COMPLETO"))
             Boolean responsavel = ((String) (node.attribute("FLAG-RESPONSAVEL"))).equals("SIM")
             if(responsavel) project.responsible = name
-            project.addToMembers(name)
+            project.addToMembers(name).save(validate: true)
         }
     }
 
