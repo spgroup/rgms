@@ -20,7 +20,11 @@ class FunderTestDataAndOperations {
 
     static public void createFunder(){
         def cont = new FunderController()
-        createFunderAux(funder[0].code,funder[0].name,funder[0].nature)
+        createFunderAux(cont,funder[0].code,funder[0].name,funder[0].nature)
+    }
+
+    static public void removeFunder(String codigo) {
+        def funder = funder.findByCode(codigo)
     }
 
     private static void createFunderAux(FunderController cont, String code,String name, String nature){
