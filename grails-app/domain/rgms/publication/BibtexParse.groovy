@@ -46,9 +46,6 @@ class BibtexParse {
 
                 //#end
 
-                case BibTeXEntry.TYPE_MANUAL:
-                    break
-
                 //#if($Dissertation)
                 case BibTeXEntry.TYPE_MASTERSTHESIS:
                     publications.add(new StrategyParseDissertacao().execute(entry))
@@ -67,10 +64,12 @@ class BibtexParse {
                 case BibTeXEntry.TYPE_PROCEEDINGS:
                     break
 
+                //#if($TechnicalReport)
+                case BibTeXEntry.TYPE_MANUAL:
                 case BibTeXEntry.TYPE_TECHREPORT:
                     publications.add(new StrategyParseTechnicalReport().execute(entry))
                     break
-
+                //#end
                 case BibTeXEntry.TYPE_UNPUBLISHED:
                     break
 
