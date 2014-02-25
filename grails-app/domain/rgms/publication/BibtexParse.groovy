@@ -21,6 +21,7 @@ class BibtexParse {
             //String value = entry.getField(BibTeXEntry.KEY_TITLE).toUserString();
             switch (entry.getType()) {
                 //#if($Periodico)
+                case BibTeXEntry.TYPE_PROCEEDINGS:
                 case BibTeXEntry.TYPE_ARTICLE:
                     publications.add(new StrategyParsePeriodico().execute(entry))
                     break
@@ -53,6 +54,7 @@ class BibtexParse {
 
                 case BibTeXEntry.TYPE_MISC:
                     break
+
                 //#end
 
                 //#if($ImportBibtex && $TesePublication)
@@ -61,8 +63,6 @@ class BibtexParse {
                     break
                 //#end
 
-                case BibTeXEntry.TYPE_PROCEEDINGS:
-                    break
 
                 //#if($TechnicalReport)
                 case BibTeXEntry.TYPE_MANUAL:
@@ -70,6 +70,7 @@ class BibtexParse {
                     publications.add(new StrategyParseTechnicalReport().execute(entry))
                     break
                 //#end
+
                 case BibTeXEntry.TYPE_UNPUBLISHED:
                     break
 
