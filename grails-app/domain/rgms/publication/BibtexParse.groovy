@@ -27,6 +27,8 @@ class BibtexParse {
                 //#end
 
                 //#if($BookChapter)
+                case BibTeXEntry.TYPE_INCOLLECTION:
+                case BibTeXEntry.TYPE_INBOOK:
                 case BibTeXEntry.TYPE_BOOK:
                     publications.add(new StrategyParseBookChapter().execute(entry))
                     break
@@ -43,12 +45,6 @@ class BibtexParse {
                     break
 
                 //#end
-
-                case BibTeXEntry.TYPE_INBOOK:
-                    break
-
-                case BibTeXEntry.TYPE_INCOLLECTION:
-                    break
 
                 case BibTeXEntry.TYPE_MANUAL:
                     break
