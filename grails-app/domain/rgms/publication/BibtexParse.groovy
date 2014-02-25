@@ -1,6 +1,7 @@
 package rgms.publication
 
 import org.jbibtex.*
+import rgms.publication.strategyBibtexParse.StrategyParseBookChapter
 import rgms.publication.strategyBibtexParse.StrategyParseDissertacao
 import rgms.publication.strategyBibtexParse.StrategyParseTese
 
@@ -27,7 +28,7 @@ class BibtexParse {
                     break
 
                 case BibTeXEntry.TYPE_BOOK:
-                    publications.add(new BookChapter())
+                    publications.add(new StrategyParseBookChapter().execute(entry))
                     break
 
                 case BibTeXEntry.TYPE_BOOKLET:
