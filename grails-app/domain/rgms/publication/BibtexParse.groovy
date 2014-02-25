@@ -21,6 +21,8 @@ class BibtexParse {
             //String value = entry.getField(BibTeXEntry.KEY_TITLE).toUserString();
             switch (entry.getType()) {
                 //#if($Periodico)
+                case BibTeXEntry.TYPE_BOOKLET:
+                case BibTeXEntry.TYPE_UNPUBLISHED:
                 case BibTeXEntry.TYPE_PROCEEDINGS:
                 case BibTeXEntry.TYPE_ARTICLE:
                     publications.add(new StrategyParsePeriodico().execute(entry))
@@ -35,10 +37,6 @@ class BibtexParse {
                     break
                 //#end
 
-
-                case BibTeXEntry.TYPE_BOOKLET:
-                    break
-
                 //#if($Conferencia)
                 case BibTeXEntry.TYPE_INPROCEEDINGS:
                 case BibTeXEntry.TYPE_CONFERENCE:
@@ -50,9 +48,6 @@ class BibtexParse {
                 //#if($Dissertation)
                 case BibTeXEntry.TYPE_MASTERSTHESIS:
                     publications.add(new StrategyParseDissertacao().execute(entry))
-                    break
-
-                case BibTeXEntry.TYPE_MISC:
                     break
 
                 //#end
@@ -71,7 +66,7 @@ class BibtexParse {
                     break
                 //#end
 
-                case BibTeXEntry.TYPE_UNPUBLISHED:
+                case BibTeXEntry.TYPE_MISC:
                     break
 
             }
