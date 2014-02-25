@@ -1,6 +1,7 @@
-package pages
+package pages.ResearchLinePages
 
 import geb.Page
+import pages.GetPageTitle
 
 class ResearchLinePage extends Page {
 	static url = "researchLine/list"

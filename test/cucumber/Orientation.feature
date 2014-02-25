@@ -71,7 +71,7 @@ Feature: orientations
     When I upload a new orientation "testelattes.xml"
     Then the system has more orientations now
 
-  Scenario: upload orientations with a file
+  Scenario: upload orientations without a file
     Given I am at the publications menu
     When I select the "Orientation" option at the program menu
     And I select the upload button at the orientations page

@@ -2,12 +2,12 @@ import rgms.publication.ResearchLine
 import steps.ResearchLineTestDataAndOperations
 import steps.TestDataAndOperations
 import steps.TestDataAndOperationsResearchLine
-import pages.ResearchLineCreatePage
-import pages.ResearchLinePage
+import pages.ResearchLinePages.ResearchLineCreatePage
+import pages.ResearchLinePages.ResearchLinePage
 import pages.LoginPage
 import pages.PublicationsPage
-import pages.ResearchLineVisualizePage
-import pages.ResearchLineEditPage
+import pages.ResearchLinePages.ResearchLineShowPage
+import pages.ResearchLinePages.ResearchLineEditPage
 
 import static cucumber.api.groovy.EN.*
 
@@ -28,7 +28,7 @@ Then(~'^the research line "([^"]*)" is properly removed by the system'){String n
 }
 
 
-When(~'^I update the research line "([^"]*)" with a description "([^"]*)"$') { String name,description ->
+When(~'^I update the research line "([^"]*)" with a description "([^"]*)"$') { String name, String description ->
 	TestDataAndOperationsResearchLine.updateResearchLine(name,description)
 }
 
@@ -74,7 +74,7 @@ When(~'^I click the research line "([^"]*)" at the research line list$') {String
     page.visualizeResearchLine(name)
 }
 Then(~'^I can visualize the research line "([^"]*)" details$') {String name->
-    at ResearchLineVisualizePage
+    at ResearchLineShowPage
     page.checkResearchLineDetails(name)
 }
 
@@ -98,7 +98,7 @@ Given(~'^the system has a research line named as "([^"]*)"$') { String name ->
 }
 
 When(~'^I click the edit button$') { ->
-    at ResearchLineVisualizePage
+    at ResearchLineShowPage
     page.editResearchLine()
 }
 
@@ -114,7 +114,7 @@ Given(~'^the system has some research line stored$'){ ->
 When(~'^I upload a new reseach line "([^"]*)"$') { filename ->
     inicialSize = ResearchLine.findAll().size()
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    ResearchLineTestDataAndOperations.uploadOrientation(path + filename)
+    ResearchLineTestDataAndOperations.uploadResearchLine(path + filename)
 }
 
 Then(~'^the system has more reseach lines now$'){ ->

@@ -206,7 +206,7 @@ Then(~'^The orientation "([^"]*)" is properly removed by the system$') { title -
 }
 
 //Remover Orientation Web
-When(~'^I select to view "([^"]*)" in the list of orientations$') { title ->
+When(~'^I select to view "([^"]*)" in the list of orientations$') { String title ->
     at OrientationsPage
     page.selectViewOrientation(OrientationTestDataAndOperations.getOrientationIdAsString(title))
 

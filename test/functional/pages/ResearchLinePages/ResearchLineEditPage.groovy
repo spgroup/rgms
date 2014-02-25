@@ -1,4 +1,4 @@
-package pages
+package pages.ResearchLinePages
 
 import geb.Page
 
@@ -16,7 +16,7 @@ class ResearchLineEditPage extends Page {
 		def old_name = $("form").name
 		assert old_name == name
 		def new_name = "Modelo Cascata Editado"
-		def description = "Edição do modelo original"
+		def description = "Ediï¿½ï¿½o do modelo original"
 		$("form").name = new_name
 		$("form").description = description
 		assert $("form").name == new_name
