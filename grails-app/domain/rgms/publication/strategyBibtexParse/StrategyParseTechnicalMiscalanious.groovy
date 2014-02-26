@@ -7,7 +7,7 @@ import rgms.publication.Publication
 /**
  * Created by Joao on 2/26/14.
  */
-class StrategyParseTechnicalMiscalanious implements StrategyParse{
+class StrategyParseMiscalanious implements StrategyParse{
     @Override
     Miscalanious execute(BibTeXEntry entry) {
         Miscalanious misc = new Miscalanious()

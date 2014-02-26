@@ -11,12 +11,12 @@ class StrategyParsePeriodico implements StrategyParse{
     @Override
     Periodico execute(BibTeXEntry entry) {
         Periodico periodico = new Periodico()
-        periodico.setTitle(entry.getField(BibTeXEntry.KEY_TITLE).toUserString())
-        periodico.setVolume(entry.getField(BibTeXEntry.KEY_VOLUME).toUserString().toInteger())
-        periodico.setNumber(entry.getField(BibTeXEntry.KEY_NUMBER).toUserString().toInteger())
-        periodico.setPages(entry.getField(BibTeXEntry.KEY_PAGES).toUserString())
-        periodico.setJournal( entry.getField(BibTeXEntry.KEY_JOURNAL).toUserString())
-        periodico.setPublicationDate(new Date());//TODO transformar o date para setar no objeto
-        return periodico
+        periodico.title = entry.getField(BibTeXEntry.KEY_TITLE).toUserString()
+        periodico.volume = entry.getField(BibTeXEntry.KEY_VOLUME).toUserString().toInteger()
+        periodico.number = entry.getField(BibTeXEntry.KEY_NUMBER).toUserString().toInteger()
+        periodico.pages = entry.getField(BibTeXEntry.KEY_PAGES).toUserString()
+        periodico.journal = entry.getField(BibTeXEntry.KEY_JOURNAL).toUserString()
+        periodico.publicationDate = new Date();//TODO transformar o date para setar no objeto
+        periodico
     }
 }

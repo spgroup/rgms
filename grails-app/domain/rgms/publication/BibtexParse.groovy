@@ -67,7 +67,7 @@ class BibtexParse {
                 //#end
 
                 case BibTeXEntry.TYPE_MISC:
-                    publications.add(new StrategyParseTechnicalMiscalanious().execute(entry))
+                    publications.add(new StrategyParseMiscalanious().execute(entry))
                     break
 
             }
