@@ -49,6 +49,10 @@ class BibtexExport {
 
         return "@phdthesis{" + "author=\"" + BibtexAux.organizeAuthors(tese.members) + "\",\n title=\"" + tese.title + "\",\n school=\"" + tese.school + "\",\n year=\"" + tese.publicationDate.getAt(Calendar.YEAR) + "\",\n address=\"" +tese.address + "\"}"
     }
+
+    String generateBibtexMiscalenious(Miscalanious misc) {
+        return "@misc"  + "author=\"" + misc.author + "\",\n howpublished=\"" + misc.howPublished +  "\",\n note=\"" + misc.note +  "\",\n title=\"" + misc.title + "\",\n year=\"" + misc.publicationDate.getAt(Calendar.YEAR) + "\",\n month=\"" + misc.publicationDate.getAt(Calendar.MONTH)
+    }
 }
 
 //#end
