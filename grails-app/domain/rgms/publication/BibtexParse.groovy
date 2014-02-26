@@ -17,6 +17,7 @@ class BibtexParse {
 
         entries.each { BibTeXEntry entry ->
             //TODO settar todos os atributos de acordo com a classe a ser instanciada
+            //TODO completar classes strategy para cada tipo; Referência: https://www.cs.vassar.edu/people/priestdo/tips/bibtex
             //Para pegar os valores do objeto 'entry' basta seguir o modelo da linha abaixo
             //String value = entry.getField(BibTeXEntry.KEY_TITLE).toUserString();
             switch (entry.getType()) {
