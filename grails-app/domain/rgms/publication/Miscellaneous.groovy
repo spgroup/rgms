@@ -3,7 +3,7 @@ package rgms.publication
 /**
  * Created by Joao on 2/26/14.
  */
-class Miscalanious extends Publication{
+class Miscellaneous extends Publication{
 
     String author
     String howPublished
@@ -18,6 +18,6 @@ class Miscalanious extends Publication{
 
     @Override
     String generateBib() {
-        return new BibtexExport().generateBibtexMiscalenious(this)
+        return new BibtexExport().generateBibtexMiscellaneous(this)
     }
 }
