@@ -7,6 +7,10 @@
  * To change this template use File | Settings | File Templates.
  */
 
+import pages.BookPage
+import pages.BookCreatePage
+import pages.LoginPage
+import pages.PublicationsPage
 import rgms.publication.Book
 import steps.BookTestDataAndOperations
 
@@ -73,7 +77,41 @@ Then(~'^the system has all the books of the xml file$') { ->
     assert Book.findByTitle("AOSD 2011 Proceedings and Companion Material") != null
 }
 
+Given(~'^I am at the book page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to BookPage
+}
+
+When(~'^I go to new book page$') { ->
+    to BookPage
+    page.selectNewBook()
+}
+
+And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+    at BookCreatePage
+    createAndCheckBookOnBrowser(title, filename)
+    to BookPage
+    at BookPage
+}
+
+Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
+    book = Book.findByTitle(title)
+    assert book != null
+    to BookPage
+    at BookPage
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
+}
+
+def createAndCheckBookOnBrowser(String title, String filename) {
+    page.fillBookDetails(title, filename)
+    page.clickSaveBook()
+    book = Book.findByTitle(title)
+    assert book != null
 }

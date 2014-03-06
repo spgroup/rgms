@@ -28,3 +28,10 @@ Feature: Book
     Given the system has no books stored
     When I upload the books of "curriculo.xml"
     Then the system has all the books of the xml file
+
+  Scenario: new book web
+    Given I am at the book page
+    And the system has no book entitled "Next Generation Software Product Line Engineering"
+    When I go to new book page
+    And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
+    Then the book "Next Generation Software Product Line Engineering" was stored by the system

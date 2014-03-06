@@ -16,6 +16,7 @@ class BookCreatePage extends FormPage {
 
     static at = {
         GetPageTitle gp = new GetPageTitle()
+
         def currentReport = gp.msg("default.book.label")
         title ==~ gp.msg("default.create.label", [currentReport])
         publisher != null
