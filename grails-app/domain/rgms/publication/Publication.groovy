@@ -10,13 +10,14 @@ abstract class Publication {
     ResearchLine researchLine
 
     static belongsTo = Member
-    static hasMany = [members: Member]
+    static hasMany = [members: Member, authors: String]
 
     static constraints = {
         title nullable: false, blank: false, size: 1..200
         publicationDate nullable: false
         file maxSize: 100000, nullable: true, blank: true
         researchLine nullable: true, blank: true
+        authors nullable: true, blank: true
     }
 
     //#if($Bibtex)

@@ -61,6 +61,6 @@ class ArticlesPage extends Page {
 		def testarticle = Periodico.findByTitle(title)
 		assert articleColumns[0].text() == testarticle.title
 		assert articleColumns[2].text() == testarticle.file
-		assert articleColumns[4].text() == testarticle.journal
+		assert articleColumns[5].text() == testarticle.journal
 	}
 }

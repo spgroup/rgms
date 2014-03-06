@@ -17,6 +17,11 @@ class BibtexExport {
         return "@book{"+ "author=\"" + BibtexAux.organizeAuthors(bookChapter.members) + "\",\n title=\"" + bookChapter.title + "\",\n publisher=\""+ bookChapter.publisher + "\",\n year=\"" + bookChapter.publicationDate.getAt(Calendar.YEAR) + "\",\n chapter=\"" + bookChapter.chapter + "\"}"
     }
 
+    public String generateBibtexBook (Book book) {
+
+        return "@book{"+ "member=\"" + BibtexAux.organizeAuthors(book.members) + "\",\n authors=\"" + book.authors + "\",\n title=\"" + book.title + "\",\n publisher=\""+ book.publisher + "\",\n volume=\"" + book.volume + "\",\n pages=\"" + book.pages + "\"}"
+    }
+
 
     public String generateBibtexConferencia (Conferencia conferencia) {
 

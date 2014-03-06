@@ -44,6 +44,10 @@ class PeriodicoController {
 
         if(!isValidPeriodico(periodicoInstance)){return }
 
+        PublicationController pb = new PublicationController()
+        periodicoInstance = pb.extractAuthors(periodicoInstance)
+
+
         if (!periodicoInstance.save(flush: true)) {
             handleSavingError(periodicoInstance, 'periodico.saving.failure')
             return

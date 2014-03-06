@@ -36,7 +36,7 @@ class BookChapterPage extends Page {
         println bookColumns[2].text();
         assert bookColumns[0].text() == testarbook.title
         assert bookColumns[2].text() == testarbook.file
-        assert bookColumns[4].text() == testarbook.publisher
+        assert bookColumns[5].text() == testarbook.publisher
     }
 
     def uploadWithoutFile() {

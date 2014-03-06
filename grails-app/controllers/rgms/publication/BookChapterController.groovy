@@ -24,8 +24,12 @@ class BookChapterController {
     }
 
     def save() {
-        def bookChapterInstance = new BookChapter(params)
         PublicationController pb = new PublicationController()
+        def bookChapterInstance = new BookChapter(params)
+
+        bookChapterInstance = (BookChapter) pb.extractAuthors(bookChapterInstance)
+
+
         if (!pb.upload(bookChapterInstance) || !bookChapterInstance.save(flush: true)) {
             render(view: "create", model: [bookChapterInstance: bookChapterInstance])
             return
@@ -41,17 +45,11 @@ class BookChapterController {
     }
 
     def accessBookChapter(Long id) {
-        BookChapter bookChapterInstance = checkBook(id)
-        if(bookChapterInstance != null){
+        def bookChapterInstance = BookChapter.get(id)
+        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter');
+        if (!isReturned) {
             [bookChapterInstance: bookChapterInstance]
         }
-    }
-
-    private BookChapter checkBook(long id) {
-        def bookChapterInstance = BookChapter.get(id)
-        //noinspection GroovyUnusedAssignment,GroovyUnusedAssignment
-        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
-        isReturned ? bookChapterInstance : null
     }
 
     def show(Long id) {
@@ -63,9 +61,9 @@ class BookChapterController {
     }
 
     def update(Long id, Long version) {
-
-        def bookChapterInstance = checkBook(id)
-        if (bookChapterInstance != null) {
+        def bookChapterInstance = BookChapter.get(id)
+        boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
+        if (!isReturned) {
             if (version != null && bookChapterInstance.version > version) {
                 outdatedVersionError((BookChapter) bookChapterInstance)
             } else {

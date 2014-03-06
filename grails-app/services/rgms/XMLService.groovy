@@ -75,6 +75,43 @@ class XMLService {
         newTool.save(flush: false)
     }
 
+    static void createBooks(Node xmlFile){
+        Node books = (Node) ((Node) ((Node) xmlFile.children()[1]).children()[2]).children()[0]
+        List<Object> bookChildren = books.children()
+
+        int i = 0
+
+          for (Node currentNode : bookChildren) {
+            List<Object> book = currentNode.children()
+            Node dadosBasicos = (Node) book[0]
+            Node detalhamentoLivro = (Node) book[1]
+
+            Book newBook = new Book()
+
+            for (int j = 2; j < book.size() - 2; ++j){
+                newBook.addToAuthors(getAttributeValueFromNode(book[j], "NOME-COMPLETO-DO-AUTOR"))
+            }
+
+            createNewBook(newBook,dadosBasicos,detalhamentoLivro, i)
+            ++i
+        }
+    }
+
+    private static void createNewBook (Book newBook, Node dadosBasicos, Node detalhamentoLivro, int i) {
+
+        newBook.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-LIVRO")
+        newBook.publisher = getAttributeValueFromNode(detalhamentoLivro, "NOME-DA-EDITORA")
+
+        if(Publication.findByTitle(newBook.title) == null) {
+            fillPublicationDate(newBook, dadosBasicos, "ANO")
+
+            newBook.file = 'emptyfile' + i.toString()
+            newBook.pages = getAttributeValueFromNode(detalhamentoLivro, "NUMERO-DE-PAGINAS")
+            newBook.volume = getAttributeValueFromNode(detalhamentoLivro, "NUMERO-DE-VOLUMES").toInteger()
+            newBook.save(flush: false)
+        }
+    }
+
     static void createBooksChapters(Node xmlFile){
         Node bookChapters = (Node) ((Node) ((Node) xmlFile.children()[1]).children()[2]).children()[1]
         List<Object> bookChaptersChildren = bookChapters.children()
@@ -83,18 +120,32 @@ class XMLService {
             List<Object> bookChapter = ((Node) bookChaptersChildren[i]).children()
             Node dadosBasicos = (Node) bookChapter[0]
             Node detalhamentoCapitulo = (Node) bookChapter[1]
-            createNewBookChapter(dadosBasicos,detalhamentoCapitulo, i)
+
+            BookChapter newBookChapter = new BookChapter()
+
+            newBookChapter = (BookChapter) addAuthors(bookChapter, newBookChapter)
+
+            createNewBookChapter(newBookChapter,dadosBasicos,detalhamentoCapitulo, i)
         }
     }
 
-    private static void createNewBookChapter (Node dadosBasicos, Node detalhamentoCapitulo, int i){
-        BookChapter newBookChapter = new BookChapter()
+    private static void createNewBookChapter (BookChapter newBookChapter,Node dadosBasicos, Node detalhamentoCapitulo, int i){
+
         newBookChapter.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
         newBookChapter.publisher = getAttributeValueFromNode(detalhamentoCapitulo, "NOME-DA-EDITORA")
 
         print(newBookChapter.title)
         if (Publication.findByTitle(newBookChapter.title) == null)
             fillBookChapterInfo(newBookChapter, dadosBasicos, i)
+    }
+
+    private static Publication addAuthors(publication, newPublication) {
+
+        for(int j = 2; j < publication.size() - 4; ++j) {
+            newPublication.addToAuthors(getAttributeValueFromNode(publication[j], "NOME-COMPLETO-DO-AUTOR"))
+        }
+
+        return newPublication
     }
 
     private static void fillBookChapterInfo (BookChapter newBookChapter, Node dadosBasicos, int i){
@@ -240,6 +291,8 @@ class XMLService {
         Node detalhamentoArtigo = (Node) firstArticle[1]
         Periodico newJournal = new Periodico()
         getJournalTitle(dadosBasicos, newJournal)
+
+        newJournal = (Periodico) addAuthors(firstArticle, newJournal)
 
         if (Publication.findByTitle(newJournal.title) == null) {
             fillPublicationDate(newJournal, dadosBasicos, "ANO-DO-ARTIGO")
