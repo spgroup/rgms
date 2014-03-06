@@ -44,20 +44,8 @@ class PeriodicoController {
 
         if(!isValidPeriodico(periodicoInstance)){return }
 
-        // Pegando autores separados por virgula para serem inseridos. Retirando tambem os [, ]
-        String aux = periodicoInstance.getAuthors()
-
-        if(aux != null) {
-            String[] newAuthors = aux.subSequence(1, aux.size()-1).split(",")
-
-            // Apagando os antigos
-            periodicoInstance.setAuthors(null)
-
-            // Inserindo autores separados
-            for(int i = 0; i < newAuthors.length; i++) {
-                periodicoInstance.addToAuthors(newAuthors[i])
-            }
-        }
+        PublicationController pb = new PublicationController()
+        periodicoInstance = pb.extractAuthors(periodicoInstance)
 
 
         if (!periodicoInstance.save(flush: true)) {
