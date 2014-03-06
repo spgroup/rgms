@@ -50,7 +50,7 @@ When(~'^I edit the book title from "([^"]*)" to "([^"]*)"$') { String oldtitle, 
 }
 
 Then(~'^the book "([^"]*)" is properly updated by the system$') { String title ->
-    checkIfExists(title)
+    assert Book.findByTitle(title) != null
 }
 
 Given(~'^the system has some books stored$') { ->

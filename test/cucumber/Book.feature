@@ -22,7 +22,7 @@ Feature: Book
   Scenario: edit existing book
     Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
     When I edit the book title from "SPL Development" to "New Title"
-    Then the book "SPL Development" is properly updated by the system
+    Then the book "New Title" is properly updated by the system
 
   Scenario: upload book with a file
     Given the system has some books stored
