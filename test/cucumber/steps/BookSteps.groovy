@@ -28,7 +28,7 @@ Then(~'^the book "([^"]*)" is properly stored by the system$') { String title ->
 Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     BookTestDataAndOperations.createBook(title, filename)
     book = Book.findByTitle(title)
-    assert book != null
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
 }
 
 When(~'^I remove the book "([^"]*)"$') { String title ->
