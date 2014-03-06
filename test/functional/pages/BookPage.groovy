@@ -18,9 +18,8 @@ class BookPage extends Page {
         //title ==~ /Livro Listagem/
 
         GetPageTitle gp = new GetPageTitle()
-        def currentBook = gp.getMessageServerLocale("default.book.label")
-        def currentTitle = currentBook + " " + gp.getMessageServerLocale("default.button.list.label")
-
+        def currentReport = gp.msg("default.book.label")
+        def currentTitle = gp.msg("default.list.label", [currentReport])
         title ==~ currentTitle
     }
 

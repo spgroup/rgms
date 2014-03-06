@@ -15,7 +15,9 @@ class BookCreatePage extends FormPage {
     static url = "book/create"
 
     static at = {
-        title ==~ /Criar Book/
+        GetPageTitle gp = new GetPageTitle()
+        def currentReport = gp.msg("default.book.label")
+        title ==~ gp.msg("default.create.label", [currentReport])
         publisher != null
     }
 

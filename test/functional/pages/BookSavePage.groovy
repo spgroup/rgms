@@ -12,8 +12,9 @@ class BookSavePage extends FormPage {
     static url = "book/save"
 
     static at = {
-        //GetPageTitle gp = new GetPageTitle()
-        title ==~ /Livro Listagem/
+        GetPageTitle gp = new GetPageTitle()
+        def currentReport = gp.msg("default.book.label")
+        title ==~ gp.msg("default.list.label", [currentReport])
     }
 
     static content = {
