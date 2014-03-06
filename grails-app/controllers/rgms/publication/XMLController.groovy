@@ -44,7 +44,7 @@ class XMLController {
     }
 
     def uploadXMLBook(){
-        String flashMessage = 'The non existent Book were successfully imported'
+        String flashMessage = message(code: 'book.importedMsg.message')
 
         if (XMLService.Import(saveBook, returnWithMessage, flashMessage, "Book", request))
             return
