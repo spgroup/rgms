@@ -42,10 +42,7 @@ class XMLController {
     }
 
     def uploadXMLResearchLine(){
-        String flashMessage = 'The non existent Research Line were successfully imported'
-
-        if (XMLService.Import(saveResearchLine, returnWithMessage, flashMessage, "ResearchLine", request))
-            return
+        XMLService.Import(saveResearchLine, returnWithMessage,'default.researchline.import.flashmessage.success', "ResearchLine", request)
     }
 
     private Closure saveResearchLine = {
@@ -54,10 +51,7 @@ class XMLController {
     }
 
     def uploadXMLResearchProject(){
-        String flashMessage = 'The non existent Research Project were successfully imported'
-
-        if (XMLService.Import(saveReseachProject, returnWithMessage, flashMessage, "ResearchProject", request))
-            return
+        XMLService.Import(saveReseachProject, returnWithMessage, 'default.researchproject.import.flashmessage.success', "ResearchProject", request)
     }
 
     private Closure saveReseachProject = {
