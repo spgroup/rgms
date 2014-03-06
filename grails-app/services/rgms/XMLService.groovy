@@ -123,9 +123,7 @@ class XMLService {
 
             BookChapter newBookChapter = new BookChapter()
 
-            for (int j = 2; j < bookChapter.size() - 4; ++j){
-                newBookChapter.addToAuthors(getAttributeValueFromNode(bookChapter[j], "NOME-COMPLETO-DO-AUTOR"))
-            }
+            newBookChapter = (BookChapter) addAuthors(bookChapter, newBookChapter)
 
             createNewBookChapter(newBookChapter,dadosBasicos,detalhamentoCapitulo, i)
         }
@@ -139,6 +137,15 @@ class XMLService {
         print(newBookChapter.title)
         if (Publication.findByTitle(newBookChapter.title) == null)
             fillBookChapterInfo(newBookChapter, dadosBasicos, i)
+    }
+
+    private static Publication addAuthors(publication, newPublication) {
+
+        for(int j = 2; j < publication.size() - 4; ++j) {
+            newPublication.addToAuthors(getAttributeValueFromNode(publication[j], "NOME-COMPLETO-DO-AUTOR"))
+        }
+
+        return newPublication
     }
 
     private static void fillBookChapterInfo (BookChapter newBookChapter, Node dadosBasicos, int i){
@@ -285,10 +292,7 @@ class XMLService {
         Periodico newJournal = new Periodico()
         getJournalTitle(dadosBasicos, newJournal)
 
-
-        for (int j = 2; j < firstArticle.size() - 4; ++j){
-            newJournal.addToAuthors(getAttributeValueFromNode(firstArticle[j], "NOME-COMPLETO-DO-AUTOR"))
-        }
+        newJournal = (Periodico) addAuthors(firstArticle, newJournal)
 
         if (Publication.findByTitle(newJournal.title) == null) {
             fillPublicationDate(newJournal, dadosBasicos, "ANO-DO-ARTIGO")
