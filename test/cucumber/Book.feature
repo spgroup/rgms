@@ -25,6 +25,6 @@ Feature: Book
     Then the book "New Title" is properly updated by the system
 
   Scenario: upload book with a file
-    Given the system has some books stored
+    Given the system has no books stored
     When I upload the books of "curriculo.xml"
     Then the system has all the books of the xml file

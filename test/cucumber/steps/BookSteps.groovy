@@ -53,8 +53,9 @@ Then(~'^the book "([^"]*)" is properly updated by the system$') { String title -
     assert Book.findByTitle(title) != null
 }
 
-Given(~'^the system has some books stored$') { ->
+Given(~'^the system has no books stored$') { ->
     initialSize = Book.findAll().size()
+    assert initialSize == 0
 }
 
 When(~'^I upload the books of "([^"]*)"$') { filename ->
