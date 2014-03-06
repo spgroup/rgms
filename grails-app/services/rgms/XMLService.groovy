@@ -79,8 +79,10 @@ class XMLService {
         Node books = (Node) ((Node) ((Node) xmlFile.children()[1]).children()[2]).children()[0]
         List<Object> bookChildren = books.children()
 
-        for (int i = 0; i < bookChildren.size(); ++i){
-            List<Object> book = ((Node) bookChildren[i]).children()
+        int i = 0
+
+          for (Node currentNode : bookChildren) {
+            List<Object> book = currentNode.children()
             Node dadosBasicos = (Node) book[0]
             Node detalhamentoLivro = (Node) book[1]
 
@@ -91,6 +93,7 @@ class XMLService {
             }
 
             createNewBook(newBook,dadosBasicos,detalhamentoLivro, i)
+            ++i
         }
     }
 
