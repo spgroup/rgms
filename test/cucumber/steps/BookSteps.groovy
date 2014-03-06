@@ -59,9 +59,8 @@ Given(~'^the system has no books stored$') { ->
 }
 
 When(~'^I upload the books of "([^"]*)"$') { filename ->
-    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     initialSize = Book.findAll().size()
-    BookTestDataAndOperations.uploadBook(path)
+    BookTestDataAndOperations.uploadBook(filename)
     finalSize = Book.findAll().size()
     assert initialSize < finalSize
 }

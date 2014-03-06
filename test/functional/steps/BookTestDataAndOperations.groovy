@@ -60,7 +60,8 @@ class BookTestDataAndOperations {
 
     static public void uploadBook(String filename) {
         def cont = new XMLController()
-        def xml = new File(filename);
+        String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+        def xml = new File(path);
         def records = new XmlParser()
         cont.saveBook(records.parse(xml));
         cont.response.reset()
