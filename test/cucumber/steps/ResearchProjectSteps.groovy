@@ -13,8 +13,7 @@ def initialSize = 0
 
 //Create Research Project
 Given(~'^the system has no research project named as "([^"]*)"$'){ String projectName ->
-    ResearchProject project = ResearchProject.findByProjectName(projectName)
-    assert project == null
+    assert checkIfResearchProjectNoExists(projectName)
 }
 
 When(~'^I create a research project named as "([^"]*)"$'){ String projectName ->
@@ -46,7 +45,7 @@ When(~'^I remove the research project named as "([^"]*)"$'){ String projectName 
 }
 
 Then(~'^the research project named as "([^"]*)" is properly removed by the system$'){ String projectName ->
-    assert ResearchProject.findByProjectName(projectName) == null
+    assert checkIfResearchProjectNoExists(projectName)
 }
 
 //new research project without funders
@@ -83,4 +82,10 @@ Then (~'^I\'m still on the research project page$'){ ->
 
 Then (~'^the system shows an error message at the research project page$'){ ->
     assert page.hasInvalidXMLSubmited()
+}
+
+//Aux Functions
+def checkIfResearchProjectNoExists(String projectName){
+    ResearchProject project = ResearchProject.findByProjectName(projectName)
+    project == null
 }
