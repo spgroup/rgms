@@ -128,7 +128,7 @@ When(~'^I select the upload button at the research line page$'){ ->
     page.uploadWithoutFile()
 }
 
-Then(~'^I\'m still on research line page$'){ ->
+Then(~'^I\'m still on the research line page$'){ ->
     at ResearchLinePage
 }
 
