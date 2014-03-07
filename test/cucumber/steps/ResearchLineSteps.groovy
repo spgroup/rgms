@@ -110,7 +110,7 @@ Then(~'^I can change the research line "([^"]*)" details$') {String name->
 Given(~'^the system has some research line stored$'){ ->
     TestDataAndOperations.loginController(this)
     ResearchLineTestDataAndOperations.createResearchLine(0)
-    inicialSize = ResearchLine.findAll().size()
+    initialSize = ResearchLine.findAll().size()
 }
 
 When(~'^I upload new research lines from the file "([^"]*)"$') { filename ->
@@ -121,7 +121,7 @@ When(~'^I upload new research lines from the file "([^"]*)"$') { filename ->
 Then(~'^the system has more reseach lines now$'){ ->
     TestDataAndOperations.logoutController(this)
     finalSize = ResearchLine.findAll().size()
-    assert inicialSize < finalSize
+    assert initialSize < finalSize
 }
 
 When(~'^I select the upload button at the research line page$'){ ->
