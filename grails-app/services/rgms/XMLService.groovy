@@ -48,8 +48,12 @@ class XMLService {
         createConferencias(xmlFile)
         createOrientations(xmlFile, user)
         createJournals(xmlFile)
+        //#if($researchLine)
         createResearchLines(xmlFile)
+        //#end
+        //#if($researchProject)
         createResearchProjects(xmlFile)
+        //#end
         println "All imports done!"
     }
 
