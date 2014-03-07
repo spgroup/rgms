@@ -80,6 +80,7 @@ class XMLService {
         newTool.save(flush: false)
     }
 
+    //#if($researchLine)
     static void createResearchLines(Node xmlFile){
 		//Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
 		List<Node> pro_perf = ((Node)((Node) xmlFile.children()[0]).children()[4]).children() //Navega ate atuacoes profissionais e extrai a lista de atuacoes
@@ -98,14 +99,18 @@ class XMLService {
             }
 		}
 	}
+    //#end
 
+    //#if($researchLine)
     private static void saveResearchLine(Node xmlFile){
         ResearchLine newResearchLine = new ResearchLine()
         newResearchLine.name = getAttributeValueFromNode(xmlFile, "TITULO-DA-LINHA-DE-PESQUISA")
         newResearchLine.description = getAttributeValueFromNode(xmlFile,"OBJETIVOS-LINHA-DE-PESQUISA")
         newResearchLine.save(flush: false)
     }
+    //#end
 
+    //#if($researchProject)
     static void createResearchProjects(Node xmlFile){
         //Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
         List<Node> pro_perf = ((Node)((Node) xmlFile.children()[0]).children()[4]).children() //Navega ate atuacoes profissionais e extrai a lista de atuacoes
@@ -124,7 +129,9 @@ class XMLService {
             }
         }
     }
+    //#end
 
+    //#if($researchProject)
     private static void saveResearchProject(Node xmlFile){
         String name = getAttributeValueFromNode(xmlFile, "NOME-DO-PROJETO")
         ResearchProject project = ResearchProject.findByProjectName(name)
@@ -141,7 +148,9 @@ class XMLService {
             newProject.save(flush: false)
         }
     }
+    //#end
 
+    //#if($funder)
     private static void fillFunders(Node xmlFile, ResearchProject project){
         for (Node node : xmlFile?.children()){
             String code = getAttributeValueFromNode(node,"CODIGO-INSTITUICAO")
@@ -159,7 +168,9 @@ class XMLService {
             }
         }
     }
+    //#end
 
+    //#if($researchProject)
     private static void fillProjectMembers(Node xmlFile, ResearchProject project){
 
         for (Node node : xmlFile?.children()) { //Para cada integrante presente no projeto
@@ -169,6 +180,7 @@ class XMLService {
             project.addToMembers(name).save(validate: true)
         }
     }
+    //#end
 
     static void createBooksChapters(Node xmlFile){
         Node bookChapters = (Node) ((Node) ((Node) xmlFile.children()[1]).children()[2]).children()[1]
