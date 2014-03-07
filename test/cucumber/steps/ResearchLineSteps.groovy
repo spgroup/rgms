@@ -132,7 +132,7 @@ Then(~'^I\'m still on the research line page$'){ ->
     at ResearchLinePage
 }
 
-Then(~'an error message is showed at research line page$'){ ->
+Then(~'an error message is showed at the research line page$'){ ->
     at ResearchLinePage
     page.hasErrorUploadXML()
 }

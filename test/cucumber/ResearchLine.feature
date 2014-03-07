@@ -57,5 +57,5 @@ Feature: research line
     When I select the "Linha de pesquisa" option at the program menu
     And I select the upload button at the research line page
     Then I'm still on the research line page
-    And an error message is showed at research line page
+    And an error message is showed at the research line page
   #end
