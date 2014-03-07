@@ -47,12 +47,12 @@ Feature: research line
     Then I can change the research line "Teoria da informacao - Complexidade no espaco" details
 
   #if ($XMLUpload)
-  Scenario: upload research line with a file
+  Scenario: upload research lines with a file
     Given the system has some research line stored
     When I upload new research lines from the file "testelattes2.xml"
     Then the system has more reseach lines now
 
-  Scenario: upload reseach lines with a file
+  Scenario: upload research lines without a file
     Given I am at the publications menu
     When I select the "Linha de pesquisa" option at the program menu
     And I select the upload button at the research line page

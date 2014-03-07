@@ -109,10 +109,11 @@ Then(~'^I can change the research line "([^"]*)" details$') {String name->
 
 Given(~'^the system has some research line stored$'){ ->
     TestDataAndOperations.loginController(this)
+    ResearchLineTestDataAndOperations.createResearchLine(0)
+    inicialSize = ResearchLine.findAll().size()
 }
 
 When(~'^I upload new research lines from the file "([^"]*)"$') { filename ->
-    inicialSize = ResearchLine.findAll().size()
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
     ResearchLineTestDataAndOperations.uploadResearchLine(path + filename)
 }
