@@ -121,7 +121,9 @@ When(~'^I upload new research lines from the file "([^"]*)"$') { filename ->
 Then(~'^the system has more reseach lines now$'){ ->
     TestDataAndOperations.logoutController(this)
     finalSize = ResearchLine.findAll().size()
-    assert initialSize < finalSize
+    assert (finalSize - initialSize) == 5 //If all researchlines was imported, we will have 5 more than before
+    def line = ResearchLine.findByName("Desenvolvimento Progressivo de Sistemas Complexos Orientados a Objetos")
+    assert ResearchLineTestDataAndOperations.researchLineCompatibleTo(line,"Desenvolvimento Progressivo de Sistemas Complexos Orientados a Objetos")
 }
 
 When(~'^I select the upload button at the research line page$'){ ->
