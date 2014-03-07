@@ -44,12 +44,12 @@ class OrientationController {
 
     }
 
-    def show = {
-        _processOrientation()
+    def show (Long id) {
+        _processOrientation(id)
     }
 
-    def edit = {
-        _processOrientation()
+    def edit (Long id) {
+        _processOrientation(id)
     }
 
     def showFlashMessage(Long id, String action, String code){
@@ -58,12 +58,12 @@ class OrientationController {
         redirect(action: action, id: id)
     }
 
-    def _processOrientation()
+    def _processOrientation(Long id)
     {
         //noinspection GroovyAssignabilityCheck
         def orientationInstance = Orientation.get(params.id)
         if (!orientationInstance) {
-            showFlashMessage(null, "list",'default.not.found.message')
+            showFlashMessage(id, "list",'default.not.found.message')
             return
         }
 

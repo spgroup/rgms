@@ -21,45 +21,45 @@ class ResearchProjectController {
 
     def save() {
         def researchProjectInstance = new ResearchProject(params)
-        if (!researchProjectInstance.save(flush: true)) {
-            render(view: "create", model: [researchProjectInstance: researchProjectInstance])
-            return
-        }
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'researchProject.label', default: 'ResearchProject'), researchProjectInstance.id])
-        redirect(action: "show", id: researchProjectInstance.id)
+        saveInstance(researchProjectInstance,"create",'default.created.message')
     }
 
     def show(Long id) {
-        def researchProjectInstance = ResearchProject.get(id)
-
-        if (!researchProjectInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchProject.label', default: 'ResearchProject'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [researchProjectInstance: researchProjectInstance]
+        _processResearchProject(id)
     }
 
     def edit(Long id) {
-        def researchProjectInstance = ResearchProject.get(id)
-        if (!researchProjectInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchProject.label', default: 'ResearchProject'), id])
-            redirect(action: "list")
-            return
-        }
+        _processResearchProject(id)
+    }
+
+    def _processResearchProject(Long id){
+
+        def researchProjectInstance = getResearchProjectInstance(id)
+
+        // If it's not possible to find this instance of researchProject we can conclude the redirection returning and
+        // exit this function
+        if(!researchProjectInstance) return
 
         [researchProjectInstance: researchProjectInstance]
     }
 
-    def update(Long id, Long version) {
+    def getResearchProjectInstance(Long id){
         def researchProjectInstance = ResearchProject.get(id)
+
         if (!researchProjectInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchProject.label', default: 'ResearchProject'), id])
-            redirect(action: "list")
-            return
+            showFlashMessage(id,"list",'default.not.found.message')
+            return null
         }
+
+        return researchProjectInstance
+    }
+
+    def update(Long id, Long version) {
+        def researchProjectInstance = getResearchProjectInstance(id)
+
+        // If it's not possible to find this instance of researchProject we can conclude the redirection returning and
+        // exit this function
+        if(!researchProjectInstance) return
 
         if (version != null) {
             if (researchProjectInstance.version > version) {
@@ -73,31 +73,40 @@ class ResearchProjectController {
 
         researchProjectInstance.properties = params
 
+        saveInstance(researchProjectInstance,"edit",'default.updated.message')
+    }
+
+    def void saveInstance(ResearchProject researchProjectInstance, String view, String code) {
         if (!researchProjectInstance.save(flush: true)) {
-            render(view: "edit", model: [researchProjectInstance: researchProjectInstance])
+            render(view: view, model: [researchProjectInstance: researchProjectInstance])
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'researchProject.label', default: 'ResearchProject'), researchProjectInstance.id])
+        flash.message = message(code: code, args: [message(code: 'researchProject.label', default: 'ResearchProject'), researchProjectInstance.id])
         redirect(action: "show", id: researchProjectInstance.id)
     }
 
     def delete(Long id) {
-        def researchProjectInstance = ResearchProject.get(id)
-        if (!researchProjectInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'researchProject.label', default: 'ResearchProject'), id])
-            redirect(action: "list")
-            return
-        }
+        def researchProjectInstance = getResearchProjectInstance(id)
+
+        // If it's not possible to find this instance of researchProject we can conclude the redirection returning and
+        // exit this function
+        if(!researchProjectInstance) return
 
         try {
             researchProjectInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'researchProject.label', default: 'ResearchProject'), id])
-            redirect(action: "list")
+            showFlashMessage(id,"list",'default.deleted.message')
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'researchProject.label', default: 'ResearchProject'), id])
-            redirect(action: "show", id: id)
+            showFlashMessage(id,"show",'default.not.deleted.message')
         }
+    }
+
+    def showFlashMessage(Long id, String action, String code){
+        flash.message = message(code: code, args: [message(code: 'researchProject.label', default: 'ResearchProject'), id])
+        if(action.equals("show"))
+            redirect(action: action, id: id)
+        else
+            redirect(action: action)
     }
 }
