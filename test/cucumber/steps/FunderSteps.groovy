@@ -39,7 +39,7 @@ When(~'^I remove a funder with code "([^"]*)"$'){ String code ->
 
 //duplicate funder
 Then(~'^there is only one funder with code "([^"]*)" in the system$') { String code ->
-    assert Funder.findAllByCode(code).size() < 2
+    assert Funder.findAllByCode(code).size() == 1
 }
 
 
