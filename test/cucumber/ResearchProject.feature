@@ -11,7 +11,7 @@ Feature: research project
   Scenario: duplicated research project
     Given  the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" has not store twice
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not store twice
 
   Scenario: remove research project
     Given  the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"

@@ -35,7 +35,7 @@ Given(~'^the system has a research project named as "([^"]*)"$'){ String project
     assert ResearchProject.findByProjectName(projectName) != null
 }
 
-Then(~'^the research project "([^"]*)" has not store twice$'){ String projectName ->
+Then(~'^the research project "([^"]*)" is not store twice$'){ String projectName ->
     assert ResearchProject.findAllByProjectName(projectName).size() == 1
 }
 
