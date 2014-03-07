@@ -19,4 +19,13 @@ class ResearchProject {
         endYear(nullable: true, blank: true)
         responsible(nullable: true, blank: true, maxSize: 300)
     }
+
+    boolean equals(ResearchProject other) {
+        def compatible = (other != null)
+        other?.properties.each {key, value  ->
+            compatible = compatible && (this."$key".equals(value))
+        }
+        return compatible
+
+    }
 }

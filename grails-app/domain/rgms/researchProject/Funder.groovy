@@ -15,4 +15,13 @@ class Funder {
     String toString(){
         return "[" + code + "] " + name
     }
+
+    boolean equals(Funder other) {
+        def compatible = (other != null)
+        other?.properties.each {key, value  ->
+            compatible = compatible && (this."$key".equals(value))
+        }
+        return compatible
+
+    }
 }
