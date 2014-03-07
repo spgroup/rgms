@@ -1,7 +1,7 @@
 @i9n
 Feature: research project
   As a member of a research group
-  I want to add, remove and modify research lines I have done
+  I want to add, remove and modify research projects I have created
 
   Scenario: new research project
     Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
