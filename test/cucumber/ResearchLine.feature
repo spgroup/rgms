@@ -1,7 +1,7 @@
 @i9n
 Feature: research line
   As a member of a research group
-  I want to add, remove and modify research lines I have done
+  I want to add, remove and modify research lines I have create
  
 	Scenario: Delete research line
 	Given the system has a research line named "Novo Padrao Arquitetural MVCE" with a description "Nova arquitetura que promete revolucionar a web"
@@ -49,7 +49,7 @@ Feature: research line
   #if ($XMLUpload)
   Scenario: upload research line with a file
     Given the system has some research line stored
-    When I upload a new reseach line "testelattes2.xml"
+    When I upload new research lines from the file "testelattes2.xml"
     Then the system has more reseach lines now
 
   Scenario: upload reseach lines with a file

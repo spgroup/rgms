@@ -60,13 +60,13 @@ Given(~'^the system has some research project stored$'){ ->
     initialSize = ResearchProject.findAll().size()
 }
 
-When(~'^I upload a research project "([^"]*)"$') { filename ->
+When(~'^I upload new research projects from the file "([^"]*)"$') { filename ->
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
     ResearchProjectTestDadaAndOperations.uploadOrientation(path + filename)
     TestDataAndOperations.logoutController(this)
 }
 
-Then(~'^the system has more research project now$'){ ->
+Then(~'^the system has more research projects now$'){ ->
     finalSize = ResearchProject.findAll().size()
     assert initialSize < finalSize
 }
@@ -77,10 +77,10 @@ When (~'^I select the upload button at the research project page$'){ ->
     page.submitXML()
 }
 
-Then (~'^I\'m still on research project page$'){ ->
+Then (~'^I\'m still on the research project page$'){ ->
     at ResearchProjectPage
 }
 
-Then (~'^the system shows an error message on research project page$'){ ->
+Then (~'^the system shows an error message at the research project page$'){ ->
     assert page.hasInvalidXMLSubmited()
 }

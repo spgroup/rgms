@@ -26,13 +26,13 @@ Feature: research project
   #if ($XMLUpload)
   Scenario: upload research project with a file
     Given the system has some research project stored
-    When I upload a research project "testelattes2.xml"
-    Then the system has more research project now
+    When I upload new research projects from the file "testelattes2.xml"
+    Then the system has more research projects now
 
   Scenario: upload research project without a file
     Given I am at the publications menu
     When I select the "Projeto de Pesquisa" option at the program menu
     And I select the upload button at the research project page
-    Then I'm still on research project page
-    And the system shows an error message on research project page
+    Then I'm still on the research project page
+    And the system shows an error message at the research project page
   #end
