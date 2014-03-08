@@ -1,3 +1,4 @@
+<!-- #if($researchProject) -->
 <%@ page import="rgms.researchProject.ResearchProject" %>
 
 
@@ -65,3 +66,4 @@
 	</label>
     <g:textField name="members" id="members" value="${researchProjectInstance?.members}"/>
 </div>
+<!-- #end -->

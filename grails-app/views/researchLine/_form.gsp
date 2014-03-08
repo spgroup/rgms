@@ -1,3 +1,4 @@
+<!-- #if($researchLine) -->
 <%@ page import="rgms.publication.ResearchLine" %>
 
 
@@ -34,4 +35,4 @@
   </label>
   <g:select name="members" from="${rgms.member.Member.list()}" multiple="multiple" optionKey="id" size="5" value="${researchLineInstance?.members*.id}" class="many-to-one"/>
 </div>
-
+<!-- #end -->

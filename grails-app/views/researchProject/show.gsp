@@ -1,4 +1,4 @@
-
+<!-- #if($researchProject) -->
 <%@ page import="rgms.researchProject.ResearchProject" %>
 <!doctype html>
 <html>
@@ -108,3 +108,4 @@
 		</div>
 	</body>
 </html>
+<!-- #end -->

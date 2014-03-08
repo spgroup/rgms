@@ -1,3 +1,4 @@
+<!-- #if($funder) -->
 <%@ page import="rgms.researchProject.Funder" %>
 
 
@@ -25,4 +26,4 @@
 	</label>
 	<g:textField name="name" maxlength="100" required="" value="${funderInstance?.name}"/>
 </div>
-
+<!-- #end -->

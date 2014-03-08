@@ -1,3 +1,4 @@
+//#if($researchLine)
 package rgms.publication
 
 import rgms.member.Member;
@@ -18,3 +19,4 @@ class ResearchLine {
         return name;
     }
 }
+//#end

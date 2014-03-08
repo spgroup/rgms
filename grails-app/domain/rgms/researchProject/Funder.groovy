@@ -1,3 +1,4 @@
+//#if($funder)
 package rgms.researchProject
 
 class Funder {
@@ -16,3 +17,4 @@ class Funder {
         return "[" + code + "] " + name
     }
 }
+//#end

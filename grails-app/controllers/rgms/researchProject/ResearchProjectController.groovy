@@ -1,3 +1,4 @@
+//#if($researchProject)
 package rgms.researchProject
 
 import org.springframework.dao.DataIntegrityViolationException
@@ -110,3 +111,4 @@ class ResearchProjectController {
             redirect(action: action)
     }
 }
+//#end

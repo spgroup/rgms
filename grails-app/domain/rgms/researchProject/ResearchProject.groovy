@@ -1,3 +1,4 @@
+//#if($researchProject)
 package rgms.researchProject
 
 class ResearchProject {
@@ -20,3 +21,4 @@ class ResearchProject {
         responsible(nullable: true, blank: true, maxSize: 300)
     }
 }
+//#end

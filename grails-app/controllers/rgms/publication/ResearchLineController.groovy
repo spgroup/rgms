@@ -1,3 +1,4 @@
+//#if($researchLine)
 package rgms.publication
 
 import rgms.authentication.User
@@ -238,3 +239,4 @@ class ResearchLineController {
         researchLineInstance
     }
 }
+//#end

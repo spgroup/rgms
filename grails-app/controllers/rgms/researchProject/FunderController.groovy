@@ -1,3 +1,4 @@
+//#if($funder)
 package rgms.researchProject
 
 import org.springframework.dao.DataIntegrityViolationException
@@ -100,3 +101,4 @@ class FunderController {
         }
     }
 }
+//#end

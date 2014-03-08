@@ -1,4 +1,4 @@
-
+<!-- #if($funder) -->
 <%@ page import="rgms.researchProject.Funder" %>
 <!doctype html>
 <html>
@@ -52,3 +52,4 @@
 		</div>
 	</body>
 </html>
+<!-- #end -->
