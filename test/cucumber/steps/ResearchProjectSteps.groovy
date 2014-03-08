@@ -21,8 +21,7 @@ When(~'^I create a research project named as "([^"]*)"$'){ String projectName ->
 }
 
 Then(~'^the research project "([^"]*)" is properly stored by the system$'){ String projectName ->
-    ResearchProject project = ResearchProject.findByProjectName(projectName)
-    assert project != null
+    assert checkIfResearchProjectExists(projectName)
 }
 
 //Duplicated Research Project
@@ -88,4 +87,10 @@ Then (~'^the system shows an error message at the research project page$'){ ->
 def checkIfResearchProjectNoExists(String projectName){
     ResearchProject project = ResearchProject.findByProjectName(projectName)
     project == null
+}
+
+def checkIfResearchProjectExists(String projectName){
+    ResearchProject project = ResearchProject.findByProjectName(projectName)
+    ResearchProject project2 = ResearchProjectTestDadaAndOperations.findResearchProjectByProjectName(projectName)
+    project.equals(project2)
 }
