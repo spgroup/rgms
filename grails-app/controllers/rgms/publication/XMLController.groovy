@@ -46,9 +46,9 @@ class XMLController {
     def uploadXMLBook(){
         String flashMessage = message(code: 'book.importedMsg.message')
 
-        if (XMLService.Import(saveBook, returnWithMessage, flashMessage, "Book", request))
-            return
-        }
+        XMLService.Import(saveBook, returnWithMessage, flashMessage, "Book", request)
+        return
+    }
 
     private Closure saveBook = {
         Node xmlFile ->
