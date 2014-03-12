@@ -1,3 +1,4 @@
+<!-- #if($researchLine) -->
 <%--
   Created by IntelliJ IDEA.
   User: Flavia
@@ -51,3 +52,4 @@
 </div>
 </body>
 </html>
+<!-- #end -->

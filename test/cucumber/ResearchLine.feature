@@ -1,7 +1,7 @@
 @i9n
 Feature: research line
   As a member of a research group
-  I want to add, remove and modify research lines I have done
+  I want to add, remove and modify research lines I have create
  
 	Scenario: Delete research line
 	Given the system has a research line named "Novo Padrao Arquitetural MVCE" with a description "Nova arquitetura que promete revolucionar a web"
@@ -28,6 +28,7 @@ Feature: research line
     When I select the "Linha de pesquisa" option at the publications menu
     And I select the new research line option at the research line page
     Then I can fill the research line details
+
     Scenario: visualize research line web
     Given I am logged as admin
     And the system has a research line named as "Teoria da informacao - Complexidade no espaco"
@@ -44,3 +45,17 @@ Feature: research line
     And I click the research line "Teoria da informacao - Complexidade no espaco" at the research line list
     When I click the edit button
     Then I can change the research line "Teoria da informacao - Complexidade no espaco" details
+
+  #if ($XMLUpload)
+  Scenario: upload research lines with a file
+    Given the system has some research line stored
+    When I upload new research lines from the file "testelattes2.xml"
+    Then the system has more reseach lines now
+
+  Scenario: upload research lines without a file
+    Given I am at the publications menu
+    When I select the "Linha de pesquisa" option at the program menu
+    And I select the upload button at the research line page
+    Then I'm still on the research line page
+    And an error message is showed at the research line page
+  #end

@@ -1,3 +1,4 @@
+<!-- #if($researchLine) -->
 <%@ page import="rgms.publication.ResearchLine" %>
 <!doctype html>
 <html>
@@ -21,3 +22,4 @@
 		</div>
 	</body>
 </html>
+<!-- #end -->

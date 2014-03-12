@@ -1,9 +1,9 @@
-package pages
+package pages.ResearchLinePages
 
 import geb.Page
 import rgms.publication.ResearchLine
 
-class ResearchLineVisualizePage extends Page {
+class ResearchLineShowPage extends Page {
 	static url = "researchline/show"
 
 	static at = {

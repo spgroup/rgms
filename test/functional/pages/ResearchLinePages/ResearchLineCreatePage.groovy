@@ -1,4 +1,4 @@
-package pages
+package pages.ResearchLinePages
 
 import geb.Page
 import steps.TestDataAndOperationsResearchLine

@@ -1,6 +1,7 @@
-package pages
+package pages.ResearchLinePages
 
 import geb.Page
+import pages.GetPageTitle
 
 class ResearchLinePage extends Page {
 	static url = "researchLine/list"
@@ -20,5 +21,14 @@ class ResearchLinePage extends Page {
 	{
 		$('table').find('a', text: name).click()		
 	}
+
+    def uploadWithoutFile(){
+        $('input.save').click()
+    }
+
+    def hasErrorUploadXML() {
+        GetPageTitle gp = new GetPageTitle()
+        return gp.msg('default.xml.parserror.message') == $("div", class: "message", role: "status").text()
+    }
 }
 

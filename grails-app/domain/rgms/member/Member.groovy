@@ -56,6 +56,14 @@ class Member {
         
         //        historics joinTable: [name: 'USER_HIST',column: 'HIST_ID',key: 'id']
     }
+    boolean equals(Member other) {
+        def compatible = (other != null)
+        other?.properties.each {key, value  ->
+            compatible = compatible && (this."$key".equals(value))
+        }
+        return compatible
+
+    }
 
     String toString(){return this.name}
     

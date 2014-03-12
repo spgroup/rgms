@@ -27,6 +27,7 @@ class Orientation {
             compatible = compatible && (this."$key" == value)
         }
         return compatible
+        
     }
 
     String toString() {

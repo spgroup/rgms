@@ -156,6 +156,8 @@
         <!-- #if($visit) -->
         <li><g:link controller="Visit" action="list">Visita</g:link></li>
         <!-- #end -->
+        <li><g:link controller="ResearchProject" action="list">Projeto de Pesquisa</g:link></li>
+        <li><g:link controller="Funder" action="list">Financiador de projeto de Pesquisa</g:link></li>
         <!-- #if($ImportBibtex && $TesePublication) -->
         <li><g:link controller="BibtexFile" action="home">Import Bibtex File</g:link></li>
         <!-- #end -->

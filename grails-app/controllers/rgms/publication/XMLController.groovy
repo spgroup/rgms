@@ -1,11 +1,9 @@
 package rgms.publication
 
 import org.apache.shiro.SecurityUtils
-import org.springframework.web.multipart.MultipartHttpServletRequest
 import rgms.XMLService
 import rgms.authentication.User
 import rgms.member.Member
-import rgms.member.Orientation
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,6 +39,24 @@ class XMLController {
     private Closure saveTools = {
         Node xmlFile ->
             XMLService.createFerramentas(xmlFile)
+    }
+
+    def uploadXMLResearchLine(){
+        XMLService.Import(saveResearchLine, returnWithMessage,'default.researchline.import.flashmessage.success', "ResearchLine", request)
+    }
+
+    private Closure saveResearchLine = {
+        Node xmlFile ->
+        XMLService.createResearchLines(xmlFile)
+    }
+
+    def uploadXMLResearchProject(){
+        XMLService.Import(saveReseachProject, returnWithMessage, 'default.researchproject.import.flashmessage.success', "ResearchProject", request)
+    }
+
+    private Closure saveReseachProject = {
+        Node xmlFile ->
+        XMLService.createResearchProjects(xmlFile)
     }
 
     def uploadXMLBookChapter(){

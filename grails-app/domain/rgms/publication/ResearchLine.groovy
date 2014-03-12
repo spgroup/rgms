@@ -1,3 +1,4 @@
+//#if($researchLine)
 package rgms.publication
 
 import rgms.member.Member;
@@ -11,10 +12,11 @@ class ResearchLine {
 
     static constraints = {
         name(blank: false, unique: true)
-        description(maxSize: 256, blank: false)
+        description(maxSize: 1000, blank: false)
     }
 
     String toString() {
         return name;
     }
 }
+//#end
