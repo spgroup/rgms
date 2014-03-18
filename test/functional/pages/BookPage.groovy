@@ -1,5 +1,7 @@
 package pages
 
+import geb.Page
+
 /**
  * Created with IntelliJ IDEA.
  * User: dyego
@@ -7,10 +9,6 @@ package pages
  * Time: 10:05
  * To change this template use File | Settings | File Templates.
  */
-
-import geb.Page
-import rgms.publication.Book
-
 class BookPage extends Page {
     static url = "book/list"
 

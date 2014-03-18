@@ -1,7 +1,5 @@
 package rgms.publication
 
-import org.springframework.dao.DataIntegrityViolationException
-
 class BookController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]

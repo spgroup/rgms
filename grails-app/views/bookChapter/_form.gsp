@@ -38,7 +38,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: bookChapterInstance, field: 'authors', 'error')} ">
     <label for="authors">
-        <g:message code="bookChapter.authors.label" default="Authors" />
+        <g:message code="bookChapter.authors.label" default="Authors"/>
 
     </label>
     <g:textField name="authors" value="${bookChapterInstance?.authors}"/>
@@ -66,10 +66,12 @@
         <span class="required-indicator">*</span>
     </label>
 
-<!-- #if( $contextualInformation ) -->
-     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${bookChapterInstance?.members.id}"/>
-<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${bookChapterInstance?.members.id}"/> -->
-<!-- #end -->
+    <!-- #if( $contextualInformation ) -->
+    <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes"
+              optionKey="id" value="${bookChapterInstance?.members.id}"/>
+    <!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
+                         value="${bookChapterInstance?.members.id}"/> -->
+    <!-- #end -->
 
 </div>
 

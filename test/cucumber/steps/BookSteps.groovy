@@ -1,4 +1,3 @@
-
 /**
  * Created with IntelliJ IDEA.
  * User: dyego
@@ -7,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import pages.BookPage
 import pages.BookCreatePage
+import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book

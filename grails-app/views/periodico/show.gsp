@@ -86,9 +86,11 @@
 
         <g:if test="${periodicoInstance?.authors}">
             <li class="fieldcontain">
-                <span id="autores-label" class="property-label"><g:message code="periodico.autores.label" default="Autores" /></span>
+                <span id="autores-label" class="property-label"><g:message code="periodico.autores.label"
+                                                                           default="Autores"/></span>
 
-                <span class="property-value" aria-labelledby="autores-label"><g:fieldValue bean="${periodicoInstance}" field="authors"/></span>
+                <span class="property-value" aria-labelledby="autores-label"><g:fieldValue bean="${periodicoInstance}"
+                                                                                           field="authors"/></span>
 
             </li>
         </g:if>

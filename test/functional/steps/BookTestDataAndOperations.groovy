@@ -7,13 +7,9 @@ package steps
  * Time: 15:37
  * To change this template use File | Settings | File Templates.
  */
-
-import rgms.member.Member
-import rgms.publication.PublicationController
 import rgms.publication.Book
 import rgms.publication.BookController
 import rgms.publication.XMLController
-import org.springframework.web.context.request.RequestContextListener
 
 class BookTestDataAndOperations {
     static books = [

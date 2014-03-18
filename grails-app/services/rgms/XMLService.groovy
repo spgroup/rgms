@@ -2,19 +2,21 @@ package rgms
 
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
-import rgms.member.*
+import rgms.member.Member
+import rgms.member.Orientation
 import rgms.publication.*
-import rgms.researchProject.*
+import rgms.researchProject.Funder
+import rgms.researchProject.ResearchProject
 
 class XMLService {
 
     /*
         saveEntity - closure que salva a classe de domínio que está usando a importação
      */
+
     static boolean Import(Closure saveEntity, Closure returnWithMessage,
-        String flashMessage, String controller,
-        javax.servlet.http.HttpServletRequest request)
-    {
+                          String flashMessage, String controller,
+                          javax.servlet.http.HttpServletRequest request) {
         boolean errorFound = false
 
         try {
@@ -41,7 +43,7 @@ class XMLService {
         return !errorFound
     }
 
-    static void createPublications(Node xmlFile, Member user){
+    static void createPublications(Node xmlFile, Member user) {
         createFerramentas(xmlFile)
         createBooksChapters(xmlFile)
         createDissertations(xmlFile)
@@ -58,16 +60,16 @@ class XMLService {
     }
 
 
-    static void createFerramentas(Node xmlFile){
+    static void createFerramentas(Node xmlFile) {
         Node producaoTecnica = (Node) xmlFile.children()[2]
 
-        for (Node currentNode : producaoTecnica.children()){
+        for (Node currentNode : producaoTecnica.children()) {
             if (currentNode.name().equals("SOFTWARE"))
                 saveNewFerramenta(currentNode)
         }
     }
 
-    private static void saveNewFerramenta(Node currentNode){
+    private static void saveNewFerramenta(Node currentNode) {
         Node dadosBasicos = (Node) currentNode.children()[0]
         Node detalhamentoDoSoftware = (Node) currentNode.children()[1]
         Node informacoesAdicionais = getNodeFromNode(currentNode, "INFORMACOES-ADICIONAIS")
@@ -79,39 +81,39 @@ class XMLService {
         newTool.website = 'no Website'
         newTool.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-SOFTWARE")
 
-        String descricao =   getAttributeValueFromNode(informacoesAdicionais, "DESCRICAO-INFORMACOES-ADICIONAIS")
-        newTool.description = "País: "+getAttributeValueFromNode(dadosBasicos, "PAIS") +", Ambiente: " + getAttributeValueFromNode(detalhamentoDoSoftware, "AMBIENTE") + (descricao.equals("") ? "" : ", Informacoes adicionais: "+descricao)
+        String descricao = getAttributeValueFromNode(informacoesAdicionais, "DESCRICAO-INFORMACOES-ADICIONAIS")
+        newTool.description = "País: " + getAttributeValueFromNode(dadosBasicos, "PAIS") + ", Ambiente: " + getAttributeValueFromNode(detalhamentoDoSoftware, "AMBIENTE") + (descricao.equals("") ? "" : ", Informacoes adicionais: " + descricao)
         newTool.save(flush: false)
     }
 
-    static void createBooks(Node xmlFile){
+    static void createBooks(Node xmlFile) {
         Node books = (Node) ((Node) ((Node) xmlFile.children()[1]).children()[2]).children()[0]
         List<Object> bookChildren = books.children()
 
         int i = 0
 
-          for (Node currentNode : bookChildren) {
+        for (Node currentNode : bookChildren) {
             List<Object> book = currentNode.children()
             Node dadosBasicos = (Node) book[0]
             Node detalhamentoLivro = (Node) book[1]
 
             Book newBook = new Book()
 
-            for (int j = 2; j < book.size() - 2; ++j){
+            for (int j = 2; j < book.size() - 2; ++j) {
                 newBook.addToAuthors(getAttributeValueFromNode(book[j], "NOME-COMPLETO-DO-AUTOR"))
             }
 
-            createNewBook(newBook,dadosBasicos,detalhamentoLivro, i)
+            createNewBook(newBook, dadosBasicos, detalhamentoLivro, i)
             ++i
         }
     }
 
-    private static void createNewBook (Book newBook, Node dadosBasicos, Node detalhamentoLivro, int i) {
+    private static void createNewBook(Book newBook, Node dadosBasicos, Node detalhamentoLivro, int i) {
 
         newBook.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-LIVRO")
         newBook.publisher = getAttributeValueFromNode(detalhamentoLivro, "NOME-DA-EDITORA")
 
-        if(Publication.findByTitle(newBook.title) == null) {
+        if (Publication.findByTitle(newBook.title) == null) {
             fillPublicationDate(newBook, dadosBasicos, "ANO")
 
             newBook.file = 'emptyfile' + i.toString()
@@ -122,46 +124,48 @@ class XMLService {
     }
 
     //#if($researchLine)
-    static void createResearchLines(Node xmlFile){
-		//Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
-		List<Node> pro_perf = ((Node)((Node) xmlFile.children()[0]).children()[4]).children() //Navega ate atuacoes profissionais e extrai a lista de atuacoes
+    static void createResearchLines(Node xmlFile) {
+        //Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
+        List<Node> pro_perf = ((Node) ((Node) xmlFile.children()[0]).children()[4]).children()
+        //Navega ate atuacoes profissionais e extrai a lista de atuacoes
 
-		for(Node i : pro_perf){ //Atuaçao profissional
-            for (Node j : i.children()){ //Atividades de pesquisa e desenvolvimento
-                if(((String) j.name()).equals("ATIVIDADES-DE-PESQUISA-E-DESENVOLVIMENTO")){
-                    for (Node k : j.children()){ //Pesquisa e desenvolvimento
-                        if(((String) k.name()).equals("PESQUISA-E-DESENVOLVIMENTO")){
-                            for(Node l: k.children()){ //Linha de pesquisa
-                               saveResearchLine(l)
+        for (Node i : pro_perf) { //Atuaçao profissional
+            for (Node j : i.children()) { //Atividades de pesquisa e desenvolvimento
+                if (((String) j.name()).equals("ATIVIDADES-DE-PESQUISA-E-DESENVOLVIMENTO")) {
+                    for (Node k : j.children()) { //Pesquisa e desenvolvimento
+                        if (((String) k.name()).equals("PESQUISA-E-DESENVOLVIMENTO")) {
+                            for (Node l : k.children()) { //Linha de pesquisa
+                                saveResearchLine(l)
                             }
                         }
                     }
                 }
             }
-		}
-	}
+        }
+    }
     //#end
 
     //#if($researchLine)
-    private static void saveResearchLine(Node xmlFile){
+    private static void saveResearchLine(Node xmlFile) {
         ResearchLine newResearchLine = new ResearchLine()
         newResearchLine.name = getAttributeValueFromNode(xmlFile, "TITULO-DA-LINHA-DE-PESQUISA")
-        newResearchLine.description = getAttributeValueFromNode(xmlFile,"OBJETIVOS-LINHA-DE-PESQUISA")
+        newResearchLine.description = getAttributeValueFromNode(xmlFile, "OBJETIVOS-LINHA-DE-PESQUISA")
         newResearchLine.save(flush: false)
     }
     //#end
 
     //#if($researchProject)
-    static void createResearchProjects(Node xmlFile){
+    static void createResearchProjects(Node xmlFile) {
         //Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
-        List<Node> pro_perf = ((Node)((Node) xmlFile.children()[0]).children()[4]).children() //Navega ate atuacoes profissionais e extrai a lista de atuacoes
+        List<Node> pro_perf = ((Node) ((Node) xmlFile.children()[0]).children()[4]).children()
+        //Navega ate atuacoes profissionais e extrai a lista de atuacoes
 
-        for(Node i : pro_perf){ //Atuaçao profissional
-            for (Node j : i.children()){ //Atividades de pesquisa em projeto
-                if(((String) j.name()).equals("ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO")){
-                    for (Node k : j.children()){ //Participacao em projeto
-                        if(((String) k.name()).equals("PARTICIPACAO-EM-PROJETO")){
-                            for(Node l: k.children()){ //Projeto de pesquisa
+        for (Node i : pro_perf) { //Atuaçao profissional
+            for (Node j : i.children()) { //Atividades de pesquisa em projeto
+                if (((String) j.name()).equals("ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO")) {
+                    for (Node k : j.children()) { //Participacao em projeto
+                        if (((String) k.name()).equals("PARTICIPACAO-EM-PROJETO")) {
+                            for (Node l : k.children()) { //Projeto de pesquisa
                                 saveResearchProject(l)
                             }
                         }
@@ -173,37 +177,37 @@ class XMLService {
     //#end
 
     //#if($researchProject)
-    private static void saveResearchProject(Node xmlFile){
+    private static void saveResearchProject(Node xmlFile) {
         String name = getAttributeValueFromNode(xmlFile, "NOME-DO-PROJETO")
         ResearchProject project = ResearchProject.findByProjectName(name)
 
-        if(project == null){ //Se o projeto de pesquisa ainda nao existe no sistema hora de adiciona-lo
+        if (project == null) { //Se o projeto de pesquisa ainda nao existe no sistema hora de adiciona-lo
             ResearchProject newProject = new ResearchProject()
             newProject.projectName = name
             newProject.description = getAttributeValueFromNode(xmlFile, "DESCRICAO-DO-PROJETO")
-            newProject.status = getAttributeValueFromNode(xmlFile,"SITUACAO")
-            newProject.startYear = getAttributeValueFromNode(xmlFile,"ANO-INICIO").toInteger()
-            newProject.endYear = getAttributeValueFromNode(xmlFile,"ANO-FIM").equals("") ? 0 : getAttributeValueFromNode(xmlFile,"ANO-FIM").toInteger()
-            fillProjectMembers(getNodeFromNode(xmlFile,"EQUIPE-DO-PROJETO"),newProject)
-            fillFunders(getNodeFromNode(xmlFile,"FINANCIADORES-DO-PROJETO"),newProject)
+            newProject.status = getAttributeValueFromNode(xmlFile, "SITUACAO")
+            newProject.startYear = getAttributeValueFromNode(xmlFile, "ANO-INICIO").toInteger()
+            newProject.endYear = getAttributeValueFromNode(xmlFile, "ANO-FIM").equals("") ? 0 : getAttributeValueFromNode(xmlFile, "ANO-FIM").toInteger()
+            fillProjectMembers(getNodeFromNode(xmlFile, "EQUIPE-DO-PROJETO"), newProject)
+            fillFunders(getNodeFromNode(xmlFile, "FINANCIADORES-DO-PROJETO"), newProject)
             newProject.save(flush: false)
         }
     }
     //#end
 
     //#if($funder)
-    private static void fillFunders(Node xmlFile, ResearchProject project){
-        for (Node node : xmlFile?.children()){
-            String code = getAttributeValueFromNode(node,"CODIGO-INSTITUICAO")
+    private static void fillFunders(Node xmlFile, ResearchProject project) {
+        for (Node node : xmlFile?.children()) {
+            String code = getAttributeValueFromNode(node, "CODIGO-INSTITUICAO")
             Funder funder = Funder.findByCode(code)
 
-            if(funder){
+            if (funder) {
                 project.addToFunders(funder)
-            }else{
+            } else {
                 Funder newFunder = new Funder()
                 newFunder.code = code
-                newFunder.name = getAttributeValueFromNode(node,"NOME-INSTITUICAO")
-                newFunder.nature = getAttributeValueFromNode(node,"NATUREZA")
+                newFunder.name = getAttributeValueFromNode(node, "NOME-INSTITUICAO")
+                newFunder.nature = getAttributeValueFromNode(node, "NATUREZA")
                 newFunder.save(flush: false)
                 project.addToFunders(newFunder).save(flush: false)
             }
@@ -212,22 +216,22 @@ class XMLService {
     //#end
 
     //#if($researchProject)
-    private static void fillProjectMembers(Node xmlFile, ResearchProject project){
+    private static void fillProjectMembers(Node xmlFile, ResearchProject project) {
 
         for (Node node : xmlFile?.children()) { //Para cada integrante presente no projeto
             String name = (String) (node.attribute("NOME-COMPLETO"))
             Boolean responsavel = ((String) (node.attribute("FLAG-RESPONSAVEL"))).equals("SIM")
-            if(responsavel) project.responsible = name
+            if (responsavel) project.responsible = name
             project.addToMembers(name).save(validate: true)
         }
     }
     //#end
 
-    static void createBooksChapters(Node xmlFile){
+    static void createBooksChapters(Node xmlFile) {
         Node bookChapters = (Node) ((Node) ((Node) xmlFile.children()[1]).children()[2]).children()[1]
         List<Object> bookChaptersChildren = bookChapters.children()
 
-        for (int i = 0; i < bookChaptersChildren.size(); ++i){
+        for (int i = 0; i < bookChaptersChildren.size(); ++i) {
             List<Object> bookChapter = ((Node) bookChaptersChildren[i]).children()
             Node dadosBasicos = (Node) bookChapter[0]
             Node detalhamentoCapitulo = (Node) bookChapter[1]
@@ -236,11 +240,12 @@ class XMLService {
 
             newBookChapter = (BookChapter) addAuthors(bookChapter, newBookChapter)
 
-            createNewBookChapter(newBookChapter,dadosBasicos,detalhamentoCapitulo, i)
+            createNewBookChapter(newBookChapter, dadosBasicos, detalhamentoCapitulo, i)
         }
     }
 
-    private static void createNewBookChapter (BookChapter newBookChapter,Node dadosBasicos, Node detalhamentoCapitulo, int i){
+    private
+    static void createNewBookChapter(BookChapter newBookChapter, Node dadosBasicos, Node detalhamentoCapitulo, int i) {
 
         newBookChapter.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
         newBookChapter.publisher = getAttributeValueFromNode(detalhamentoCapitulo, "NOME-DA-EDITORA")
@@ -251,14 +256,14 @@ class XMLService {
 
     private static Publication addAuthors(publication, newPublication) {
 
-        for(int j = 2; j < publication.size() - 4; ++j) {
+        for (int j = 2; j < publication.size() - 4; ++j) {
             newPublication.addToAuthors(getAttributeValueFromNode(publication[j], "NOME-COMPLETO-DO-AUTOR"))
         }
 
         return newPublication
     }
 
-    private static void fillBookChapterInfo (BookChapter newBookChapter, Node dadosBasicos, int i){
+    private static void fillBookChapterInfo(BookChapter newBookChapter, Node dadosBasicos, int i) {
         fillPublicationDate(newBookChapter, dadosBasicos, "ANO")
 
         newBookChapter.file = 'emptyfile' + i.toString()
@@ -266,7 +271,7 @@ class XMLService {
         newBookChapter.save(flush: false)
     }
 
-    static void createDissertations(Node xmlFile){
+    static void createDissertations(Node xmlFile) {
         Node dadosGerais = (Node) xmlFile.children()[0]
 
         Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
@@ -288,32 +293,32 @@ class XMLService {
         newDissertation.save(flush: false)
     }
 
-    static void createConferencias(Node xmlFile){
-        Node trabalhosEmEventos = (Node) ((Node)xmlFile.children()[1]).children()[0]
+    static void createConferencias(Node xmlFile) {
+        Node trabalhosEmEventos = (Node) ((Node) xmlFile.children()[1]).children()[0]
 
-        for (Node currentNode : trabalhosEmEventos.children()){
+        for (Node currentNode : trabalhosEmEventos.children()) {
             List<Node> nodeConferencia = currentNode.children()
-            saveNewConferencia (nodeConferencia);
+            saveNewConferencia(nodeConferencia);
         }
     }
 
-    private static void saveNewConferencia (List<Node> nodeConferencia){
+    private static void saveNewConferencia(List<Node> nodeConferencia) {
         Node dadosBasicos = (Node) nodeConferencia[0]
         Node detalhamento = (Node) nodeConferencia[1]
         String nomeEvento = ""
-        if(((String)detalhamento.name()).equals("DETALHAMENTO-DO-TRABALHO"))
+        if (((String) detalhamento.name()).equals("DETALHAMENTO-DO-TRABALHO"))
             nomeEvento = getAttributeValueFromNode(detalhamento, "NOME-DO-EVENTO")
 
-        if(nomeEvento.contains("onferenc")){
+        if (nomeEvento.contains("onferenc")) {
             Conferencia novaConferencia = new Conferencia()
             novaConferencia.title = nomeEvento
 
-            if (Publication.findByTitle(novaConferencia.title) == null){
+            if (Publication.findByTitle(novaConferencia.title) == null) {
                 fillPublicationDate(novaConferencia, dadosBasicos, "ANO-DO-TRABALHO")
 
                 String tryingToParse = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-TRABALHO")
                 novaConferencia.booktitle = tryingToParse;
-                tryingToParse =  getAttributeValueFromNode(detalhamento, "PAGINA-INICIAL")
+                tryingToParse = getAttributeValueFromNode(detalhamento, "PAGINA-INICIAL")
                 String tryingToParse2 = getAttributeValueFromNode(detalhamento, "PAGINA-FINAL")
                 novaConferencia.pages = tryingToParse + " - " + tryingToParse2
                 novaConferencia.file = 'emptyfile'
@@ -322,7 +327,7 @@ class XMLService {
         }
     }
 
-    static void createOrientations(Node xmlFile, Member user){
+    static void createOrientations(Node xmlFile, Member user) {
         List<Object> completedOrientations = findCompletedOrientations(xmlFile)
 
         if (!XMLService.isNullOrEmpty(completedOrientations))
@@ -339,7 +344,7 @@ class XMLService {
         saveOrientation(newOrientation)
     }
 
-    private static void fillNewOrientation(String name, Node node, Orientation newOrientation, Member user){
+    private static void fillNewOrientation(String name, Node node, Orientation newOrientation, Member user) {
         if (name.toLowerCase().contains("mestrado")) {
             fillOrientationData(node, newOrientation, user, "Mestrado")
         } else if (name.toLowerCase().contains("doutorado")) {
@@ -376,8 +381,8 @@ class XMLService {
     }
 
     private static void fillOrientationData(Node node, Orientation newOrientation, Member user, String tipoOrientacao) {
-        Node basicData = (Node)(node.children()[0])
-        Node specificData = (Node)(node.children()[1])
+        Node basicData = (Node) (node.children()[0])
+        Node specificData = (Node) (node.children()[1])
         newOrientation.tipo = tipoOrientacao
         newOrientation.tituloTese = getAttributeValueFromNode(basicData, "TITULO")
         String ano = getAttributeValueFromNode(basicData, "ANO")
@@ -388,7 +393,7 @@ class XMLService {
         newOrientation.orientando = getAttributeValueFromNode(specificData, "NOME-DO-ORIENTADO")
     }
 
-    static void createJournals(Node xmlFile){
+    static void createJournals(Node xmlFile) {
         Node artigosPublicados = (Node) ((Node) xmlFile.children()[1]).children()[1]
         List<Object> artigosPublicadosChildren = artigosPublicados.children()
 
@@ -459,7 +464,7 @@ class XMLService {
         newMember.name = getAttributeValueFromNode(dadosGerais, "NOME-COMPLETO")
         newMember.university = getAttributeValueFromNode(enderecoProfissional, "NOME-INSTITUICAO-EMPRESA")
         newMember.phone = getAttributeValueFromNode(enderecoProfissional, "DDD") +
-            getAttributeValueFromNode(enderecoProfissional, "TELEFONE")
+                getAttributeValueFromNode(enderecoProfissional, "TELEFONE")
         newMember.website = getAttributeValueFromNode(enderecoProfissional, "HOME-PAGE")
         newMember.city = getAttributeValueFromNode(enderecoProfissional, "CIDADE")
         newMember.country = getAttributeValueFromNode(enderecoProfissional, "PAIS")
@@ -475,7 +480,7 @@ class XMLService {
         f.transferTo(file)
         def records = new XmlParser()
 
-        if (file.length()>0)
+        if (file.length() > 0)
             records.parse(file)
     }
 
@@ -483,14 +488,14 @@ class XMLService {
         n.attribute attribute
     }
 
-    static Node getNodeFromNode(Node n, String nodeName){
-        for(Node currentNodeChild : n.children()){
-            if ((currentNodeChild.name()+"").equals((nodeName)))
+    static Node getNodeFromNode(Node n, String nodeName) {
+        for (Node currentNodeChild : n.children()) {
+            if ((currentNodeChild.name() + "").equals((nodeName)))
                 return currentNodeChild
         }
     }
 
-    static void fillPublicationDate(Publication publication, Node currentNode, String field){
+    static void fillPublicationDate(Publication publication, Node currentNode, String field) {
         publication.publicationDate = new Date()
         String tryingToParse = getAttributeValueFromNode(currentNode, field)
         if (tryingToParse.isInteger())

@@ -1,17 +1,17 @@
 package rgms.publication
 
+import org.apache.http.HttpResponse
+import org.apache.http.NameValuePair
+import org.apache.http.StatusLine
+import org.apache.http.client.HttpClient
+import org.apache.http.client.entity.UrlEncodedFormEntity
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.impl.client.DefaultHttpClient
+import org.apache.http.message.BasicNameValuePair
+import org.apache.http.protocol.HTTP
 import org.apache.shiro.SecurityUtils
-import rgms.member.Member
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.NameValuePair;
-import org.apache.http.protocol.HTTP;
 import rgms.authentication.User
+import rgms.member.Member
 
 class PublicationController {
 
@@ -118,14 +118,14 @@ class PublicationController {
         // Pegando autores separados por virgula para serem inseridos. Retirando tambem os [, ]
         String aux = instance.getAuthors()
 
-        if(aux != null) {
+        if (aux != null) {
 
-            String[] newAuthors = aux.subSequence(1, aux.size()-1).split(",")
+            String[] newAuthors = aux.subSequence(1, aux.size() - 1).split(",")
             // Apagando os antigos
             instance.setAuthors(null)
 
             // Inserindo autores separados
-            for(int i = 0; i < newAuthors.length; i++) {
+            for (int i = 0; i < newAuthors.length; i++) {
                 instance.addToAuthors(newAuthors[i])
             }
         }
@@ -133,10 +133,10 @@ class PublicationController {
         return instance
     }
 
-	/**
-	*   Para enviar o post, é preciso esta autenticado com o facebook.
-	*      - Para um usuario novo, no momento do registro basta logar com o FB
-	*      - Para um usuario ja existente, edit esse usuario e adicione o a conta do FB ao usuario.
+    /**
+     *   Para enviar o post, é preciso esta autenticado com o facebook.
+     *      - Para um usuario novo, no momento do registro basta logar com o FB
+     *      - Para um usuario ja existente, edit esse usuario e adicione o a conta do FB ao usuario.
 	*/
 	//#if($facebook)
 	def static sendPostFacebook(Member user, String title){

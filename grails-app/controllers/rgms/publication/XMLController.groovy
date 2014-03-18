@@ -14,9 +14,9 @@ import rgms.member.Member
  */
 class XMLController {
 
-    def home(){}
+    def home() {}
 
-    def upload(){
+    def upload() {
         String flashMessage = 'Publications imported!'
         String controller = "Publication"
         if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request))
@@ -29,7 +29,7 @@ class XMLController {
             XMLService.createPublications(xmlFile, user)
     }
 
-    def uploadXMLFerramenta(){
+    def uploadXMLFerramenta() {
         String flashMessage = 'The non existent dissertations were successfully imported'
 
         if (!XMLService.Import(saveTools, returnWithMessage, flashMessage, "Ferramenta", request))
@@ -41,7 +41,7 @@ class XMLController {
             XMLService.createFerramentas(xmlFile)
     }
 
-    def uploadXMLBook(){
+    def uploadXMLBook() {
         String flashMessage = message(code: 'book.importedMsg.message')
 
         XMLService.Import(saveBook, returnWithMessage, flashMessage, "Book", request)
@@ -53,25 +53,25 @@ class XMLController {
             XMLService.createBooks(xmlFile)
     }
 
-    def uploadXMLResearchLine(){
-        XMLService.Import(saveResearchLine, returnWithMessage,'default.researchline.import.flashmessage.success', "ResearchLine", request)
+    def uploadXMLResearchLine() {
+        XMLService.Import(saveResearchLine, returnWithMessage, 'default.researchline.import.flashmessage.success', "ResearchLine", request)
     }
 
     private Closure saveResearchLine = {
         Node xmlFile ->
-        XMLService.createResearchLines(xmlFile)
+            XMLService.createResearchLines(xmlFile)
     }
 
-    def uploadXMLResearchProject(){
+    def uploadXMLResearchProject() {
         XMLService.Import(saveReseachProject, returnWithMessage, 'default.researchproject.import.flashmessage.success', "ResearchProject", request)
     }
 
     private Closure saveReseachProject = {
         Node xmlFile ->
-        XMLService.createResearchProjects(xmlFile)
+            XMLService.createResearchProjects(xmlFile)
     }
 
-    def uploadXMLBookChapter(){
+    def uploadXMLBookChapter() {
         String flashMessage = 'The non existent Book Chapters were successfully imported'
 
         if (XMLService.Import(saveBookChapters, returnWithMessage, flashMessage, "BookChapter", request))
@@ -83,7 +83,7 @@ class XMLController {
             XMLService.createBooksChapters(xmlFile)
     }
 
-    def uploadXMLDissertacao(){
+    def uploadXMLDissertacao() {
         String flashMessage = 'The non existent dissertations were successfully imported'
 
         if (!XMLService.Import(saveDissertations, returnWithMessage, flashMessage, "Dissertacao", request))
@@ -95,7 +95,7 @@ class XMLController {
             XMLService.createDissertations(xmlFile)
     }
 
-    def enviarConferenciaXML(){
+    def enviarConferenciaXML() {
         String flashMessage = message(code: 'default.importedMsg.message')
 
         if (!XMLService.Import(saveConferencias, returnWithMessage, flashMessage, "Conferencia", request))
@@ -107,7 +107,7 @@ class XMLController {
             XMLService.createConferencias(xmlFile)
     }
 
-    def uploadOrientationXML(){
+    def uploadOrientationXML() {
         String flashMessage = 'default.orientation.imported.message'
 
         if (!XMLService.Import(saveOrientations, returnWithMessage, flashMessage, "Orientation", request))
@@ -121,7 +121,7 @@ class XMLController {
             XMLService.createOrientations(xmlFile, user)
     }
 
-    def uploadXMLPeriodico(){
+    def uploadXMLPeriodico() {
         String flashMessage = 'default.article.imported.message'
 
         if (!XMLService.Import(saveJournals, returnWithMessage, flashMessage, "Periodico", request))
@@ -152,14 +152,14 @@ class XMLController {
             flash.message = message(code: msg)
     }
 
-    private def redirectToList(String controllerUsed){
-        if(controllerUsed == "Publication")
-            redirect (uri: '/')
+    private def redirectToList(String controllerUsed) {
+        if (controllerUsed == "Publication")
+            redirect(uri: '/')
         else
             redirect(controller: controllerUsed, action: "list", params: params)
     }
 
-    private def getCurrentUser(){
+    private def getCurrentUser() {
         User user = User.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
         return user?.author
     }

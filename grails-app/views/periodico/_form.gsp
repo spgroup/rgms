@@ -7,11 +7,11 @@
 <html>
 <!-- #if( $contextualInformation ) -->
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <script type="text/javascript" src="/rgms/js/jquery-ui-1.8.18.custom.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $( "#journal" ).autocomplete({
+        $(document).ready(function () {
+            $("#journal").autocomplete({
                 source: '<g:createLink controller='periodico' action='ajaxJournalFinder'/>'
             });
         });
@@ -56,7 +56,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: periodicoInstance, field: 'authors', 'error')} ">
     <label for="authors">
-        <g:message code="periodico.authors.label" default="Authors" />
+        <g:message code="periodico.authors.label" default="Authors"/>
 
     </label>
     <g:textField name="authors" value="${periodicoInstance?.authors}"/>
@@ -100,10 +100,12 @@
         <span class="required-indicator">*</span>
     </label>
 
-<!-- #if( $contextualInformation ) -->
-     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${periodicoInstance?.members.id}"/>
-<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${periodicoInstance?.members.id}"/> -->
-<!-- #end -->
+    <!-- #if( $contextualInformation ) -->
+    <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes"
+              optionKey="id" value="${periodicoInstance?.members.id}"/>
+    <!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
+                         value="${periodicoInstance?.members.id}"/> -->
+    <!-- #end -->
 
 </div>
 </body>

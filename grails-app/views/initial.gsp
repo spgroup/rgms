@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <g:set var="title" value="${message(code: 'mainMenu.title', default: 'RGMS')}" />
+    <g:set var="title" value="${message(code: 'mainMenu.title', default: 'RGMS')}"/>
     <title>${title}</title>
     <!--<link rel="shortcut icon" href="/images/icon.ico" type="image/x-icon" />-->
     <style type="text/css" media="screen">
@@ -164,7 +164,7 @@
         <!-- #end -->
         <!-- #if($Bibtex && $BibtexGenerateFile) -->
         <li><g:link controller="BibtexGenerateFile" action="home">Export Bibtex File</g:link></li>
-		<!-- #end -->
+        <!-- #end -->
         <!-- #if($XMLUpload) -->
         <li><g:link controller="XML" action="home">Import XML File</g:link></li>
         <!-- #end -->
