@@ -41,6 +41,18 @@ class XMLController {
             XMLService.createFerramentas(xmlFile)
     }
 
+    def uploadXMLBook(){
+        String flashMessage = message(code: 'book.importedMsg.message')
+
+        XMLService.Import(saveBook, returnWithMessage, flashMessage, "Book", request)
+        return
+    }
+
+    private Closure saveBook = {
+        Node xmlFile ->
+            XMLService.createBooks(xmlFile)
+    }
+
     def uploadXMLResearchLine(){
         XMLService.Import(saveResearchLine, returnWithMessage,'default.researchline.import.flashmessage.success', "ResearchLine", request)
     }

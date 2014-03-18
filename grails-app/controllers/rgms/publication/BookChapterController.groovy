@@ -24,8 +24,12 @@ class BookChapterController {
     }
 
     def save() {
-        def bookChapterInstance = new BookChapter(params)
         PublicationController pb = new PublicationController()
+        def bookChapterInstance = new BookChapter(params)
+
+        bookChapterInstance = (BookChapter) pb.extractAuthors(bookChapterInstance)
+
+
         if (!pb.upload(bookChapterInstance) || !bookChapterInstance.save(flush: true)) {
             render(view: "create", model: [bookChapterInstance: bookChapterInstance])
             return

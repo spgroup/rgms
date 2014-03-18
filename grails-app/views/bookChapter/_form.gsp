@@ -36,6 +36,14 @@
               value="${bookChapterInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: bookChapterInstance, field: 'authors', 'error')} ">
+    <label for="authors">
+        <g:message code="bookChapter.authors.label" default="Authors" />
+
+    </label>
+    <g:textField name="authors" value="${bookChapterInstance?.authors}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: bookChapterInstance, field: 'publisher', 'error')} required">
     <label for="publisher">
         <g:message code="bookChapter.publisher.label" default="Publisher"/>

@@ -114,6 +114,25 @@ class PublicationController {
         return true
     }
 
+    def static extractAuthors(instance) {
+        // Pegando autores separados por virgula para serem inseridos. Retirando tambem os [, ]
+        String aux = instance.getAuthors()
+
+        if(aux != null) {
+
+            String[] newAuthors = aux.subSequence(1, aux.size()-1).split(",")
+            // Apagando os antigos
+            instance.setAuthors(null)
+
+            // Inserindo autores separados
+            for(int i = 0; i < newAuthors.length; i++) {
+                instance.addToAuthors(newAuthors[i])
+            }
+        }
+
+        return instance
+    }
+
 	/**
 	*   Para enviar o post, é preciso esta autenticado com o facebook.
 	*      - Para um usuario novo, no momento do registro basta logar com o FB

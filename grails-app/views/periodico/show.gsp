@@ -83,6 +83,16 @@
                     ${periodicoInstance?.researchLine?.encodeAsHTML()}
                 </g:link></span></li>
         </g:if>
+
+        <g:if test="${periodicoInstance?.authors}">
+            <li class="fieldcontain">
+                <span id="autores-label" class="property-label"><g:message code="periodico.autores.label" default="Autores" /></span>
+
+                <span class="property-value" aria-labelledby="autores-label"><g:fieldValue bean="${periodicoInstance}" field="authors"/></span>
+
+            </li>
+        </g:if>
+
     <!-- //#if($Bibtex) -->
         <li class="fieldcontain"><g:link controller="Publication"
                                          action="generateBib" params="[id: periodicoInstance.id]">Bibtex</g:link>
