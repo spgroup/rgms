@@ -3,10 +3,7 @@ Feature: member
   As an administrator of the RGMS system
   I want to add, remove and modify users in the system.
 
-  Scenario: new member with valid mail server
-    Given the system has no member with username "usernametest"
-    When I create a member with username "usernametest"
-    Then the member with username "usernametest" is properly stored by the system
+
 
   Scenario: list existing member
     Given   the system has member with username "usernametest"
@@ -76,3 +73,35 @@ Feature: member
     Given I am at the register page
     Then I see default data filled on register form
 #end
+
+  #if ($memberListAndPageImprovement)
+  Scenario: user can order the member by id, name, username, enabled, email, roles, permissions
+    Given I am at the member List page
+    Then I can click to any attribute of member
+    And the system will display the list of member ordered them with the attribute
+
+  Scenario: new member with valid mail server
+    Given the system has no member with username "usernametest"
+    When I create a member with username "usernametest"
+    Then the member with username "usernametest" is properly stored by the system
+    And  the new member with username "usernametest" will be logged in
+    Then the system will send a welcoming email to the new member
+
+  Scenario: administrator needs to know the newest members and approve them
+    Given I am at the member List page
+    Then I see the newest members and the not approved ones
+
+  Scenario: member can see his name and a link to logout
+    Given I am at any page
+    Then I see my name and a link to logout
+
+  Scenario: administrator click on roll of member and access the member profile
+    Given I am at the member List page
+    Then I move the mouse hover on the rows to select the member
+    And click to access the profile
+
+  Scenario: member can access the facebook profile for those connect the facebook app
+    Given I am at the member profile
+    Then I can click to the link to member's facebook profile
+
+  #end
