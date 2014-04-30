@@ -18,13 +18,22 @@ class MemberController {
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def userMemberList = []
-        def members = Member.list(params)
+        def members = [];
+        if (params.get("sort").equals("username")||params.get("sort").equals("enabled")){
+            params.put("sort","name");
+            members = Member.list(params);
+        }else{
+
+            members = Member.list(params)
+        }
         for (i in members) {
             def user = User.findByAuthor(i)
             if (user)
                 userMemberList.add([user: user, member: i])
             else
                 userMemberList.add([member: i])
+
+           // userMemberList.sort()
         }
 
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
