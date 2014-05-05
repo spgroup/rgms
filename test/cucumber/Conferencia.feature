@@ -42,7 +42,6 @@ Feature: conferencia
 
 #end
 
-
   Scenario: back to main menu web
     Given I am at the publications
     When I select the conferencia option at the publications menu
@@ -78,17 +77,19 @@ Feature: conferencia
     Then I'm still on conferencia page
     And the conferencias are not stored by the system
 
+#if ($managingAuthors)
+
   Scenario: new conferencia web add name of authors
     Given I am at the publications
     When I select the conferencia option at the publications menu
     And I select the new conferencia option at the conferencia page
-    Then I can fill the first author name
-    And I can fill the others authors names by clicking in add author
+    Then I can add an author by clicking in add author
+    And I can fill the author name
 
-  Scenario: registering two or more authors of a new conferencia
+  Scenario: new conferencia registering more than one author
     Given I am at the publications
     When I select the new conferencia option at the conferencia menu
-    And I have filled two or more authors
+    And I have filled more than one author
     Then the conferencia will be stored by the system
     And all authors will be stored in the same order they were registered
 
@@ -105,3 +106,4 @@ Feature: conferencia
     Then I can remove the selected author by clicking in remove author
     And the conferencia will be updated by the system keeping the order of remaining authors
 
+#end

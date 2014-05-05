@@ -89,9 +89,34 @@ Then(~'^I can fill the conferencia details$') {->
     page.fillConferenciaDetails()
 }
 
+Then(~'^I can add an author') {->
+    at ConferenciaPage
+    page.addAuthor
+}
+
+And(~'^I can fill the author name') {->
+    at ConferenciaCreatePage
+    page.fillNewAuthorName
+}
+
 Then(~'^a list of conferencias stored by the system is displayed at the conferencia page$') {->
     at ConferenciaPage
     page.listConferencia()
+}
+
+Then(~'I can list the authors of a conferencia'){->
+    at ConferenciaPage
+    page.listAuthors
+}
+
+And(~'^I can add an author to an exsisting conferencia'){->
+    at ConferenciaPage
+    page.addAuthor
+}
+
+Then(~'I can remove an author to an exsisting conferencia'){->
+    at ConferenciaPage
+    page.removeAuthor
 }
 
 Then(~'^I can remove one conferencia$') {->
@@ -130,7 +155,6 @@ Then(~'^the system has all the conferencias of the xml file$') {->
     assert Conferencia.findByTitle("Latin American Conference On Computing (CLEI 1992)") != null
     assert Conferencia.findByTitle("Engineering Distributed Objects Workshop, 21st ACM International Conference on Software Engineering (ICSE 1999)") != null
     assert Conferencia.findByTitle("6th International Conference on Software Reuse (ICSR 2000)") != null
-
 }
 
 And(~'^I select the upload button at the conferencia page$') {->
@@ -143,5 +167,4 @@ Then(~'^I\'m still on conferencia page$') {->
 And(~'^the conferencias are not stored by the system$') {->
     at ConferenciaPage
     page.checkIfConferenciaListIsEmpty()
-
 }
