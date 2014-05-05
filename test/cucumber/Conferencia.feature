@@ -38,7 +38,7 @@ Feature: conferencia
     Given I am at the publications
     When I select the conferencia option at the publications menu
     And I select the new conferencia option at the conferencia page
-    Then I see my user listed as an author member of conferencia by default
+    Then I see my user listed as an author member of conferencia by default in the first position
 
 #end
 
@@ -77,3 +77,31 @@ Feature: conferencia
     And I select the upload button at the conferencia page
     Then I'm still on conferencia page
     And the conferencias are not stored by the system
+
+  Scenario: new conferencia web add name of authors
+    Given I am at the publications
+    When I select the conferencia option at the publications menu
+    And I select the new conferencia option at the conferencia page
+    Then I can fill the first author name
+    And I can fill the others authors names by clicking in add author
+
+  Scenario: registering two or more authors of a new conferencia
+    Given I am at the publications
+    When I select the new conferencia option at the conferencia menu
+    And I have filled two or more authors
+    Then the conferencia will be stored by the system
+    And all authors will be stored in the same order they were registered
+
+  Scenario: add an author in an existing conferencia
+    Given I am at the publications
+    When I select an existing conferencia
+    Then I can add an author by clicking in add author
+    And all authors will be stored in the same order they were registered
+
+  Scenario: remove an author in an existing conferencia
+    Given I am at the publications
+    When I select an existing conferencia
+    And I select one of authors
+    Then I can remove the selected author by clicking in remove author
+    And the conferencia will be updated by the system keeping the order of remaining authors
+
