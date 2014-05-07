@@ -52,7 +52,6 @@ class ArticleTestDataAndOperations {
 
     static public void createArticle(String title, filename) {
         def cont = new PeriodicoController()
-        def date = new Date()
         cont.params << ArticleTestDataAndOperations.findArticleByTitle(title) << [file: filename]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
@@ -90,7 +89,7 @@ class ArticleTestDataAndOperations {
         return updatedarticle
     }
 
-    static public def path(){
+    static public def path() {
         return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
     }
 }

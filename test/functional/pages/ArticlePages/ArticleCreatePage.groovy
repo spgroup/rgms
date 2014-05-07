@@ -15,6 +15,8 @@ class ArticleCreatePage extends FormPage {
         journal != null
     }
 
+    static content = { journal { $("input", id: "journal") } }
+
     def fillArticleDetails() {
         def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
         fillArticleDetails(path, "A theory of software product line refinement")
