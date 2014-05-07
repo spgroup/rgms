@@ -1,18 +1,62 @@
 @i9n
 Feature: XMLImport
   As a member of a research group
-  I want to import a xml file
+  I want to import a XML file
   So that the system register the corresponding publications
 
-  @ignore
-  Scenario: upload publications with a file
-    Given the system has some publications stored
-    When I upload the publications of "curriculo_publications.xml"
-    Then the system has all the publications of the xml file
+#if($XMLImport)
 
-  Scenario: upload publications without a file
-    Given I am at the publications menu
-    When I select the "Import XML File" option at the publications menu
-    And I select the upload button at the XML import page
-    Then I'm still on XML import page
-    And the publications are not stored by the system
+  #Controller tests
+  Scenario: upload publications with a XML file
+    Given the system has no publication entitled "A theory of software product line refinement"
+    When I upload the XML file "curriculo_publications.xml" containing a publication entitled "A theory of software product line refinement"
+    Then the publication "A theory of software product line refinement" is properly stored by the system
+
+  Scenario: upload publications without a XML file
+    Given the system has no publication entitled "A theory of software product line refinement"
+    When I do not upload any file
+    Then no publications are stored by the system
+
+  Scenario: upload publications with a invalid file
+    Given the system has no publication entitled "A theory of software product line refinement"
+    When I upload an invalid XML file
+    Then no publications are stored by the system
+
+  Scenario: upload duplicate publications with a XML file
+    Given the system has a publication entitled "A theory of software product line refinement"
+    When I upload the XML file "curriculo_publications.xml" containing a publication entitled "A theory of software product line refinement"
+    Then the publication "A theory of software product line refinement" is not stored twice
+
+  #GUI tests
+  Scenario: upload publications with a XML file
+    Given I am at the "Import XML File" page
+    And the system has no publication entitled "A theory of software product line refinement"
+    When I select the XML file "curriculo_publications.xml" containing a publication entitled "A theory of software product line refinement"  through the button "Escolher arquivo"
+    And I click the button "Enviar"
+    Then I am still at the "Import XML File" page
+    And the publication "A theory of software product line refinement" is properly stored by the system
+
+  Scenario: upload publications without a XML file
+    Given I am at the "Import XML File" page
+    And the system has no publication entitled "A theory of software product line refinement"
+    When I do not select any file through the button "Escolher arquivo"
+    And I click the button "Enviar"
+    Then no publications are stored by the system
+    And the system shows the message "No valid XML file was uploaded."
+
+  Scenario: upload publications with a invalid file
+    Given I am at the "Import XML File" page
+    And the system has no publication entitled "A theory of software product line refinement"
+    When I select an invalid XML file through the button "Escolher arquivo"
+    And I click the button "Enviar"
+    Then no publications are stored by the system
+    And the system shows the message "No valid XML file was uploaded."
+
+  Scenario: upload duplicate publications with a XML file
+    Given I am at the "Import XML File" page
+    And the system has a publication entitled "A theory of software product line refinement"
+    When I select the XML file "curriculo_publications.xml" containing a publication entitled "A theory of software product line refinement" through the button "Escolher arquivo"
+    And I click the button "Enviar"
+    Then the publication "A theory of software product line refinement" is not stored twice
+
+#end
