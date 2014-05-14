@@ -2,7 +2,7 @@
 #if ($bibtexGenerateFile)
 Feature: all bibtex
   As a member of a research group
-  I want to view all publications i have published in format of bibtex
+  I want to view all publications I have published in format of bibtex
   So that I can export this file
 
   Scenario: show all bibtex Web
@@ -13,7 +13,10 @@ Feature: all bibtex
 
   Scenario: generate bibtex file
     Given I created one article named "A theory of software product line refinement"
-    And the article "A theory of software product line refinement" is stored with the file name "TCS.pdf"
+    And I created one conferencia named "IV Conference on Software Product Lines"
+    And I created one thesis "New thesis"
     When I export all my articles to a bibtex file
     Then The article "A theory of software product line refinement" is inside the bibtex file
+    And The conferencia "IV Conference on Software Product Lines" is inside the bibtex file
+    And The thesis "New thesis" is inside the bibtex file
 #end
