@@ -75,6 +75,34 @@ Feature: Visit
     And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
     When I try to edit the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" changing the final date to "10/11/2000"
     Then the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is not properly updated by the system because it is invalid
+    
+  Scenario: list existing visits and periods
+    Given the system has visits with initial or final date greater than or equal "01/01/2011"
+    When I view the list of visits
+    Then the list is returned with a list of visits with initial or final date greater than or equal "01/01/2011"
+	
+  Scenario: visit for a stored visitor
+    Given the system has visitor named "Person"
+    When I try to create the visit for the visitor "Person"
+    Then the system asks if this visitor is the already registered visitor "Person" 
+    And the visit for the visitor "Person" is not properly stored by the system
+	
+  Scenario: asking identification for a visitor that already exists
+    Given I am logged as "admin" and at the Add Visit Page
+    And the system has visitor named "Person"
+    When I try to create a visitor named "Person"
+    Then the Confirm Identification Page is open
+   
+  Scenario: confirming identification for a visitor that already exists
+    Given I am logged as "admin" and at the Confirm Identification Page
+    When I press the "Yes" button
+    Then the visit for the visitor is properly stored by the system
+   
+  Scenario: changing the name of a visitor that already exists
+    Given I am logged as "admin" and at the Confirm Identification Page
+    When I press the "No" button
+    Then a new visitor is created with a different name and properly stored by the system
+    And the visit for the new visitor is properly stored by the system
 
 #if( $Twitter )
   Scenario: Add a new visit twitting it
