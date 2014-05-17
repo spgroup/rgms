@@ -1,8 +1,5 @@
 package pages
 
-import geb.Page
-import rgms.publication.BookChapter
-
 class BookChapterCreatePage extends FormPage {
     static url = "bookChapter/create"
 

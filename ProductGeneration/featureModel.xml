@@ -35,5 +35,20 @@
         </featureGroup>
     </feature>
 
+    <feature min="0" max="1" name="XMLImport" type="NONE" id="visit">
+        <featureGroup min="0" max="1" id="XMLImport">
+            <feature min="0" max="1" name="uploadXMLBook" type="NONE" id="uploadXMLBook"></feature>
+            <feature min="0" max="1" name="uploadXMLResearchLine" type="NONE" id="uploadXMLResearchLine"></feature>
+            <feature min="0" max="1" name="uploadXMLResearchProject" type="NONE" id="uploadXMLResearchProject"></feature>
+            <feature min="0" max="1" name="uploadXMLBookChapter" type="NONE" id="uploadXMLBookChapter"></feature>
+            <feature min="0" max="1" name="uploadXMLDissertacao" type="NONE" id="uploadXMLDissertacao"></feature>
+            <feature min="0" max="1" name="enviarConferenciaXML" type="NONE" id="descricaovisita"></feature>
+            <feature min="0" max="1" name="uploadOrientationXML" type="NONE" id="descricaovisita"></feature>
+            <feature min="0" max="1" name="uploadXMLPeriodico" type="NONE" id="descricaovisita"></feature>
+            <feature min="0" max="1" name="uploadMemberXML" type="NONE" id="descricaovisita"></feature>
+        </featureGroup>
+    </feature>
+
+
 
 </feature>

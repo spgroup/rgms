@@ -1,12 +1,12 @@
-import pages.PublicationsPage
-import pages.visit.VisitEditPage
-import rgms.visit.Visit
-import rgms.visit.Visitor
 import pages.LoginPage
-import pages.visit.VisitPage
+import pages.PublicationsPage
 import pages.visit.VisitCreatePage
+import pages.visit.VisitEditPage
+import pages.visit.VisitPage
 import pages.visit.VisitShowPage
 import rgms.tool.TwitterTool
+import rgms.visit.Visit
+import rgms.visit.Visitor
 import steps.TestDataAndOperationsVisit
 
 import static cucumber.api.groovy.EN.*

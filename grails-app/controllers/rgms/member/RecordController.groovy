@@ -2,9 +2,6 @@ package rgms.member
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import rgms.member.Record
-import rgms.member.Member
-
 class RecordController {
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -108,7 +105,7 @@ class RecordController {
 
 	static public def checkAssociations(def recordId) {
 		if(recordHasMembers(recordId)) {
-			throw new DataIntegrityViolationException("Este histórico não pode ser apagado, pois ele está associado a um membro")
+			throw new DataIntegrityViolationException("Este histï¿½rico nï¿½o pode ser apagado, pois ele estï¿½ associado a um membro")
 		}
 	}
 

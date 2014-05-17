@@ -1,13 +1,13 @@
+import pages.LoginPage
+import pages.PublicationsPage
+import pages.ResearchLinePages.ResearchLineCreatePage
+import pages.ResearchLinePages.ResearchLineEditPage
+import pages.ResearchLinePages.ResearchLinePage
+import pages.ResearchLinePages.ResearchLineShowPage
 import rgms.publication.ResearchLine
 import steps.ResearchLineTestDataAndOperations
 import steps.TestDataAndOperations
 import steps.TestDataAndOperationsResearchLine
-import pages.ResearchLinePages.ResearchLineCreatePage
-import pages.ResearchLinePages.ResearchLinePage
-import pages.LoginPage
-import pages.PublicationsPage
-import pages.ResearchLinePages.ResearchLineShowPage
-import pages.ResearchLinePages.ResearchLineEditPage
 
 import static cucumber.api.groovy.EN.*
 

@@ -3,14 +3,10 @@ package rgms.authentication
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.AuthenticationException
 import org.apache.shiro.authc.UsernamePasswordToken
-import org.apache.shiro.web.util.SavedRequest
-import org.apache.shiro.web.util.WebUtils
-import rgms.member.Member
-
-import java.security.SecureRandom
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.apache.shiro.web.util.WebUtils
 import rgms.EmailService
+import rgms.member.Member
 
 import java.security.SecureRandom
 

@@ -1,7 +1,6 @@
 package pages.ferramenta
 
 import pages.FormPage
-import geb.Page
 
 class FerramentaCreatePage extends FormPage {
     static url = "ferramenta/create"

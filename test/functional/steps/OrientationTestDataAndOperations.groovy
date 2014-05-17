@@ -3,7 +3,6 @@ package steps
 import rgms.member.Member
 import rgms.member.Orientation
 import rgms.member.OrientationController
-import steps.MemberTestDataAndOperations
 import rgms.publication.XMLController
 
 /**

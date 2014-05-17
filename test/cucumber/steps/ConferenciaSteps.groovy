@@ -1,13 +1,10 @@
-import cucumber.runtime.PendingException
 import pages.Conferencia.ConferenciaCreatePage
 import pages.Conferencia.ConferenciaPage
 import pages.LoginPage
 import pages.PublicationsPage
-import rgms.member.Member
 import rgms.publication.Conferencia
-import steps.TestDataAndOperations
-import steps.TestDataAndOperationsPublication
 import steps.ConferenciaTestDataAndOperations
+import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 

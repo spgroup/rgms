@@ -1,7 +1,5 @@
 package rgms.tool
 
-import rgms.messagesTwitter.MessagesTwitter
-
 class TwitterController {
 
 	static count = 0;

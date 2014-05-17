@@ -1,7 +1,5 @@
 package rgms.publication
 
-import org.springframework.dao.DataIntegrityViolationException
-
 class FerramentaControllerAuxiliar {
 
     def boolean checkVersionFailed(Long version, Ferramenta ferramentaInstance) {

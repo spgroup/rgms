@@ -1,11 +1,7 @@
 package rgms.publication
 
 //#if($XMLUpload && $Conferencia)
-import rgms.XMLService
 //#end
-import org.apache.shiro.SecurityUtils
-import org.springframework.web.multipart.MultipartHttpServletRequest
-
 class ConferenciaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]

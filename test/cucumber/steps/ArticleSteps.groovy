@@ -1,9 +1,13 @@
-import pages.ArticlePages.*
-import pages.*
+import pages.ArticlePages.ArticleCreatePage
+import pages.ArticlePages.ArticleEditPage
+import pages.ArticlePages.ArticleShowPage
+import pages.ArticlePages.ArticlesPage
+import pages.LoginPage
+import pages.PublicationsPage
 import rgms.publication.Periodico
 import rgms.tool.TwitterTool
-import steps.TestDataAndOperationsFacebook
 import steps.ArticleTestDataAndOperations
+import steps.TestDataAndOperationsFacebook
 import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*

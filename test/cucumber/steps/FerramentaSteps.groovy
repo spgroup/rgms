@@ -1,4 +1,7 @@
-import pages.ferramenta.*
+import pages.ferramenta.FerramentaCreatePage
+import pages.ferramenta.FerramentaEditPage
+import pages.ferramenta.FerramentaPage
+import pages.ferramenta.FerramentaShowPage
 import rgms.publication.Ferramenta
 import steps.FerramentaTestDataAndOperations
 import steps.TestDataAndOperationsPublication

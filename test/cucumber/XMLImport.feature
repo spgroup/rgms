@@ -16,3 +16,25 @@ Feature: XMLImport
     And I select the upload button at the XML import page
     Then I'm still on XML import page
     And the publications are not stored by the system
+
+  Scenario: update a duplicate file
+    Given I am at the publications menu
+    And I select the "Import XML File" option at the publications menu
+    When I select the button upload
+    And I upload the publications of file "SPL.xml" stored in the system
+    Then the file "SPL.xml" is not stored twice
+
+  Scenario: upload a different extension file
+    Given I am at the publications menu
+    And I select the "Import XML File" option at the publications menu
+    When I select the button upload
+    And I upload the publications of file "SPL.xmi", "SPL.pdf" or "SPL.doc"
+    Then the publications are not stored by the system
+
+#if ($Member and $News)
+  Scenario: update a file for substitution
+    Given I select the "Import XML File" option at the publications menu
+    When I select the button upload
+    And I upload the publications of file "SPL.xml" stored in the system
+    Then the file "SPL.xml" is substituted in stored by the system
+#end

@@ -1,4 +1,7 @@
-<configurationModel>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<configurationModel xmlns="ck.v20090401">
+
     <configuration>
         <expression>rgms</expression>
         <transformation>

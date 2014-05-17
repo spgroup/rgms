@@ -1,7 +1,8 @@
 package steps
 
-import rgms.member.Member
-import rgms.publication.*
+import rgms.publication.Dissertacao
+import rgms.publication.DissertacaoController
+import rgms.publication.XMLController
 
 class TestDataDissertacao
 {
