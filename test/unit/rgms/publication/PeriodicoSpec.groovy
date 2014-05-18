@@ -1,3 +1,4 @@
+//#if($Article)
 package rgms.publication
 
 import grails.test.mixin.TestFor
@@ -100,3 +101,4 @@ class PeriodicoSpec extends Specification{
 
 
 }
+//#end

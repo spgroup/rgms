@@ -145,7 +145,9 @@
         <li><g:link controller="Conferencia" action="list">Conferencia</g:link></li>
         <li><g:link controller="Dissertacao" action="list">Dissertacao</g:link></li>
         <li><g:link controller="Ferramenta" action="list">Ferramenta</g:link></li>
+        <!-- #if($Article)  -->
         <li><g:link controller="Periodico" action="list">Periodico</g:link></li>
+        <!-- #end -->
         <li><g:link controller="ResearchLine" action="list">Linha de pesquisa</g:link></li>
         <li><g:link controller="TechnicalReport" action="list">Technical Report</g:link></li>
         <!-- #if($TesePublication) -->

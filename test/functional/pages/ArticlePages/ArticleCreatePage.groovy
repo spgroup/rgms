@@ -1,3 +1,4 @@
+//#if($Article)
 package pages.ArticlePages
 
 import pages.FormPage
@@ -34,3 +35,4 @@ class ArticleCreatePage extends FormPage {
         $("input", name: "create").click()
     }
 }
+//#end

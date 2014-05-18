@@ -1,3 +1,4 @@
+//#if($Article)
 package rgms.publication
 
 import grails.converters.JSON
@@ -187,3 +188,4 @@ class PeriodicoController {
     }
     //#end
 }
+//#end

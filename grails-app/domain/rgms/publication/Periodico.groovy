@@ -1,3 +1,4 @@
+//#if($Article)
 package rgms.publication
 
 class Periodico extends Publication {
@@ -47,3 +48,4 @@ class Periodico extends Publication {
         return super.hashCode();
     }
 }
+//#end
