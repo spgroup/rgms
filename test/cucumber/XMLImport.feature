@@ -58,15 +58,22 @@ Feature: XMLImport
          a tool, a journal article, a thesis and an orientation
 
   #if ($ResearchLine)
-  Scenario: import xml file that contains publications and research line
-    Given the system has some publications stored
-    When  I upload the file "curriculo.xml" which contains publications and a research line
-    Then the system stores the publications and the research line
+  Scenario: import xml file that contains a research line
+    Given the system has no research line named as "Modularidade Emergente"
+    When  I upload the file "curriculo.xml" which contains a research line named as "Modularidade Emergente"
+    Then the research line named as "Modularidade Emergente" is stored
   #end
 
   #if($ResearchProject)
-  Scenario: import xml file that contains publications and research project
-    Given the system has some publications stored
-    When  I upload the file "curriculo.xml" which contains publications and a research project
-    Then the system stores the publications and the research project
+  Scenario: import xml file that contains a research project
+    Given the system has no research project named as "Modularização Emergente para Linhas de Produtos de Software"
+    When  I upload the file "curriculo.xml" which contains a research project named as "Modularização Emergente para Linhas de Produtos de Software"
+    Then the research project named as "Modularização Emergente para Linhas de Produtos de Software" is stored
+  #end
+
+  #if($Orientation)
+  Scenario: import xml file that contains publications and orientation
+    Given the system has no master orientation entitled "Structuring Adaptive Aplications using AspectJ"
+    When  I upload the file "curriculo.xml" which contains a master's orientation entitled "Structuring Adaptive Aplications using AspectJ"
+    Then the master's orientation entitled "Structuring Adaptive Apllications using AspectJ" is stored
   #end
