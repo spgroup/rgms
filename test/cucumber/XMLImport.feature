@@ -32,26 +32,21 @@ Feature: XMLImport
     When  I upload the file "curriculo.xml" which also contains a journal article entitled "An Abstract Equivalence Notion for Object Models"
     Then the journal article entitled "An Abstract Equivalence Notion for Object Models" is not stored twice
 
-  Scenario: publications with same name and type, but also with conflicted details
+  Scenario: duplicated publications with conflicted details
     Given the system has a journal article entitled "An Abstract Equivalence Notion for Object Models" which authors are Rohit Gheyi, Tiago Massoni and Paulo Borba
     When  I upload the file "curriculo.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models" authored by R. Gheyi, T. Massoni and P. Borba
     Then the system offers the option to store both publications or to choose the author's name to be stored
 
-  Scenario: publications with same name and type, but also with different details
+  Scenario: duplicated publications with different details
     Given the system has a conference article entitled "An Abstract Equivalence Notion for Object Models" with pages "1-14"
     When  I upload the file "curriculo.xml" which contains a conference article entitled "An Abstract Equivalence Notion for Object Models" with locale "Recife"
     Then the system updates the previously stored article to include the locale "Recife"
-
-  Scenario: import other author's publications
-    Given the system has the member "John" stored
-    When I upload the file "curriculo.xml" which contains John's publication
-    Then no publication is stored by the system
 
   Scenario: import other author's publications web
     Given the system has the member "John" stored
     And I am logged in as "Maria" member
     And I am at the "Import XML File" Page
-    When I upload the file "curriculo.xml" which contains John's publication
+    When I upload the file "curriculo.xml" which contains John's publications
     Then no publication is stored by the system
     And the system outputs a warning message
 
@@ -63,14 +58,14 @@ Feature: XMLImport
          a tool, a journal article, a thesis and an orientation
 
   #if ($ResearchLine)
-  Scenario: import research line
+  Scenario: import xml file that contains publications and research line
     Given the system has some publications stored
     When  I upload the file "curriculo.xml" which contains publications and a research line
     Then the system stores the publications and the research line
   #end
 
   #if($ResearchProject)
-  Scenario: import research project
+  Scenario: import xml file that contains publications and research project
     Given the system has some publications stored
     When  I upload the file "curriculo.xml" which contains publications and a research project
     Then the system stores the publications and the research project
