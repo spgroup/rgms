@@ -147,6 +147,7 @@ ResearchGroupController => grailsapp/controllers/rgms/ResearchGrogroovy;
 TeseController => grailsapp/controllers/rgms/TeseController.groovy;
 ResearchGroupController => grailsapp/controllers/rgms/ResearchGrogroovy;
 TeseController => grailsapp/controllers/rgms/TeseController.groovy;
+XMLController => grailsapp/controllers/rgms/publication/XMLController.groovy
 
 
 
@@ -219,3 +220,6 @@ ArticleEditPage => test/functional/pages/ArticleEditPage.groovy;
 ArticleShowPage => test/functional/pages/ArticleShowPage.groovy;
 ArticlePage => test/functional/pages/ArticlesPage.groovy;
 UserRegisterPage => test/functional/pages/UserRegisterPage.groovy;
+
+XMLService => grailsapp/services/rgms/XMLService.groovy
+XMLImportTest => test/cucumber/XMLImport.feature

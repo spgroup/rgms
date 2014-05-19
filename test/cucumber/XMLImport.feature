@@ -73,7 +73,7 @@ Feature: XMLImport
 
   #if($Orientation)
   Scenario: import xml file that contains publications and orientation
-    Given the system has no master orientation entitled "Structuring Adaptive Aplications using AspectJ"
+    Given the system has no master's orientation entitled "Structuring Adaptive Aplications using AspectJ"
     When  I upload the file "curriculo.xml" which contains a master's orientation entitled "Structuring Adaptive Aplications using AspectJ"
     Then the master's orientation entitled "Structuring Adaptive Apllications using AspectJ" is stored
   #end
