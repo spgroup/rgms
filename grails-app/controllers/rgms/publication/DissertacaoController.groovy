@@ -1,9 +1,5 @@
 package rgms.publication
 
-import org.springframework.web.multipart.MultipartHttpServletRequest
-import javax.servlet.http.HttpServletRequest
-import rgms.XMLService
-
 class DissertacaoController extends ThesisOrDissertationController {
 
 

@@ -1,6 +1,7 @@
 import pages.BibtexGenerateFilePage
 
-import static cucumber.api.groovy.EN.*
+import static cucumber.api.groovy.EN.Then
+import static cucumber.api.groovy.EN.When
 
 When(~'^I select the export bibtex file option at the publications menu$') {->
     page.select("Export Bibtex File")

@@ -65,7 +65,7 @@ Feature: orientations
     And I select the option remove at the orientation show page
     Then The orientation "Hexa2" is properly removed by the system
 
-  #if ($XMLUpload)
+  #if ($XMLImport)
   Scenario: upload orientation with a file
     Given the system has some orientations stored
     When I upload a new orientation "testelattes.xml"

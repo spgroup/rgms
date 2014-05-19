@@ -1,3 +1,4 @@
+import org.codehaus.groovy.grails.web.context.ServletContextHolder
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.ThesisPage
@@ -9,7 +10,6 @@ import steps.TestDataAndOperationsPublication
 import steps.ThesisTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
-import org.codehaus.groovy.grails.web.context.ServletContextHolder
 
 Given(~'^The system has no thesis entitled "([^"]*)"$') { String title ->
     article = Tese.findByTitle(title)

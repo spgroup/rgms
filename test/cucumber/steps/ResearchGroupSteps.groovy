@@ -1,12 +1,13 @@
-import steps.TestDataAndOperationsResearchGroup
-import static cucumber.api.groovy.EN.*
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGroup.ResearchGroupCreatePage
+import pages.ResearchGroup.ResearchGroupEditarPage
 import pages.ResearchGroup.ResearchGroupPage
 import pages.ResearchGroup.ResearchGroupShowPage
-import pages.ResearchGroup.ResearchGroupEditarPage
 import rgms.member.ResearchGroup
+import steps.TestDataAndOperationsResearchGroup
+
+import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no research group entitled "([^"]*)" stored in the system$') { String name ->
 	researchGroup = ResearchGroup.findByName(name)

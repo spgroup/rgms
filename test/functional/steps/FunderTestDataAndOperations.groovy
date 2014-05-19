@@ -3,8 +3,6 @@ package steps
 /**
  * Created by Bruno Soares on 24/02/14.
  */
-
-import rgms.researchProject.Funder
 import rgms.researchProject.FunderController
 
 class FunderTestDataAndOperations {

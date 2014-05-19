@@ -1,15 +1,13 @@
 import pages.Conferencia.ConferenciaCreatePage
 import pages.Conferencia.ConferenciaPage
 import pages.LoginPage
-import pages.member.MemberListPage
-import pages.member.MemberPage
-import pages.member.MemberCreatePage
-
 import pages.PublicationsPage
 import pages.Report.ReportHTMLPage
-import pages.ResearchGroup.ResearchGroupPage
 import pages.ResearchGroup.ResearchGroupListPage
 import pages.ResearchGroup.ResearchGroupShowPage
+import pages.member.MemberCreatePage
+import pages.member.MemberListPage
+import pages.member.MemberPage
 
 import static cucumber.api.groovy.EN.*
 

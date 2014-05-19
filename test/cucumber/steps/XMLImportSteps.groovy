@@ -2,18 +2,13 @@ import pages.ArticlePages.ArticlesPage
 import pages.BookChapterPage
 import pages.Conferencia.ConferenciaPage
 import pages.DissertationPage
-import pages.LoginPage
 import pages.OrientationPages.OrientationsPage
 import pages.XMLImportPage
 import pages.ferramenta.FerramentaPage
-import rgms.publication.*
-import static cucumber.api.groovy.EN.*
+import rgms.publication.Publication
 import steps.TestDataAndOperations
-import CommonSteps
 
-import org.apache.shiro.util.ThreadContext
-import org.apache.shiro.subject.Subject
-import org.apache.shiro.SecurityUtils
+import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has some publications stored$') { ->
 

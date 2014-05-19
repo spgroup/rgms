@@ -1,8 +1,8 @@
-package pages.record;
+package pages.record
 
 import geb.Page
-import rgms.member.Record
 import pages.GetPageTitle
+import rgms.member.Record
 
 public class RecordVisualizePage extends Page {
     static url = "record/show"
