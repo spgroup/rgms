@@ -3,12 +3,29 @@ Feature: XMLImport
   As a member of a research group
   I want to import a xml file
   So that the system register the corresponding publications in my profile
+  	
+ <!-- checar duplicacoes -->
+  Scenario: upload publications without a file
+    Given I am at the publications menu
+    When I select the "Import XML File" option at the publications menu
+    And I select the upload button at the XML import page
+    Then I'm still on XML import page
+    And the publications are not stored by the system
 
-  Scenario: import invalid file web
-    Given I am at the "Import XML File" Page
+  Scenario: update a duplicate file
+    Given I am at the publications menu
+    And I select the "Import XML File" option at the publications menu
     When I select the button upload
-    And I upload the publications of file "cv.xml", "cv.pdf" or "cv.doc"
-    Then no publications is stored by the system
+    And I upload the publications of file "SPL.xml" stored in the system
+    Then the file "SPL.xml" is not stored twice
+
+  Scenario: upload a different extension file
+    Given I am at the publications menu
+    And I select the "Import XML File" option at the publications menu
+    When I select the button upload
+    And I upload the publications of file "SPL.xmi", "SPL.pdf" or "SPL.doc"
+    Then the publications are not stored by the system
+<!-- duplicoes terminam aqui-->
 	
   Scenario: import invalid file
     Given the system has some publications stored  
@@ -83,3 +100,4 @@ Feature: XMLImport
     When  I upload the file "curriculo.xml" which contains a master's orientation entitled "Structuring Adaptive Aplications using AspectJ"
     Then the master's orientation entitled "Structuring Adaptive Apllications using AspectJ" is stored
   #end
+>>>>>>> 659bdf33f850f1118fbbe43477bd44c4d2a86f0c
