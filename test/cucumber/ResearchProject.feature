@@ -23,7 +23,7 @@ Feature: research project
     When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos" without funders
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos" is properly stored by the system
 
-  #if ($XMLUpload)
+  #if ($XMLImport)
   Scenario: upload research project with a file
     Given the system has some research project stored
     When I upload new research projects from the file "testelattes2.xml"
