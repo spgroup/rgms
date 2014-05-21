@@ -12,8 +12,10 @@ Feature: research project
 
   Scenario: duplicated research project
     Given  the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    And I am logged in the system
     When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not store twice
+    And no research project stored is affected
 
   Scenario: remove research project
     Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
@@ -21,25 +23,27 @@ Feature: research project
     When I remove the research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     Then the research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is properly removed by the system
 
-  SScenario: new research project without funders
+  Scenario: new research project without funders
     Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos"
     When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos"
 	And the funders list of the research project is empty
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos" is properly stored by the system
 
-  #if ($XMLUpload)
+ #if ($XMLUpload)
   Scenario: upload research project with a file
     Given the system has some research project stored
+    And I am logged in the system
     When I upload new research projects from the file "testelattes2.xml"
     Then the system has more research projects now
 
   Scenario: upload research project without a file
     Given I am at the publications menu
+    And I am logged in the system
     When I select the "Projeto de Pesquisa" option at the program menu
     And I select the upload button at the research project page
     Then I'm still on the research project page
     And the system shows an error message at the research project page
-  #end
+ #end
   
   Scenario: list member research projects
 	Given I am logged in the system
@@ -66,3 +70,52 @@ Feature: research project
 	When I try to edit the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" in the system
 	And I changed the data of the research project
 	Then the data of the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is updated in the system
+
+  Scenario: new invalid research project with blank name
+    Given the system has no research project named as ""
+    When I create a research project named as ""
+    Then the research project "" is not stored by the system because it is invalid
+    And no research project stored is affected
+
+  Scenario: new invalid research project with blank description
+    Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with description field blank
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored by the system because it is invalid
+    And no research project stored is affected
+
+  Scenario: new research project with duplicated members
+    Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with member field duplicated
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is properly stored by the system
+    And the stored member list does not have duplicated members
+
+  Scenario: new research project web
+    Given I am at new research project page
+    And the system has no research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I create the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    Then the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is stored by the system
+    And it is shown in the research project list with name "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+
+  Scenario: new invalid research project with blank name web
+    Given I am at new research project page
+    And the system has no research project named ""
+    When I create the research project named ""
+    Then the research project named "" is not stored by the system because it is invalid
+    And  the system shows an error message at the research project page
+    And no research project stored is affected
+
+  Scenario: new invalid research project with blank description web
+    Given I am at new research project page
+    And the system has no research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I create the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with description field blank
+    Then the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored by the system because it is invalid
+    And  the system shows an error message at the research project page
+    And no research project stored is affected
+
+  Scenario: duplicated research project web
+    Given I am at new research project page
+    And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I create the research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored twice
+    And it is not shown duplicated in the research project list
+    And  the system shows an warning message at the research project page
