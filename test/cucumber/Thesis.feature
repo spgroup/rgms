@@ -45,3 +45,55 @@ Feature: Thesis Tests
     Then I see my user listed as an author member of thesis by default
     And I see my school name as school of thesis by default
 #end
+
+  Scenario: order thesis list by date
+    Given at least one thesis is stored in the system
+    And I am at the thesis list page
+    When I click in order thesis by date
+    Then the returned thesis list has the same items but it is sorted by date
+
+  Scenario: search an existing thesis
+    Given the system has one thesis entitled "Software Engineering" with author name "Pressman", year of publication "1998" and university "UFPE"
+    And I am at the thesis search page
+    When I search for "Software Enginnering" by "Pressman"
+    And I select to view the entry that has university "UFPE" and publication year "1998"
+    Then the thesis "Software Enginnering" by "Pressman" appears in the thesis view page
+
+  Scenario: create thesis web without a file
+    Given I am at the create thesis page
+    When I fill the thesis fields with "My Thesis", "2014/05/16", "UFPE","Address", "Author","Advisor"
+    And I click in create button
+    Then the system shows a warning message "Thesis without file, it is mandatory"
+
+#if($contextualInformation)
+  Scenario: search an existing thesis filled by default
+    Given the system has at least one thesis entitled "Software Engineering"
+    And I am at the thesis search page
+    And I have already done a search about "Software Enginnering" previously
+    When I press "S"
+    And I choose "Software Enginnering" in dropdown search list
+    And I click in search button
+    Then all theses entitled "Software Engineering" are shown
+#end
+
+  Scenario: edit thesis title
+    Given the system has a thesis stored entitled "My Thesis"
+    When I change the title from "My Thesis" to "My Thesis Renamed"
+    Then the thesis entitled "My Thesis Renamed" is properly renamed by the system
+    And the other theses are not changed by the system
+
+  Scenario: edit thesis with invalid data
+    Given the system has a thesis stored entitled "My Thesis"
+    When I change the title from "My Thesis" to "" (blank)
+    Then the existing thesis are not changed by the system
+
+  Scenario: search a thesis
+    Given the system has one thesis entitled "My Thesis"
+    When I search for thesis entitled "My Thesis"
+    Then the existing thesis are not changed by the system
+
+  Scenario: upload thesis with a file
+    Given the system has no thesis entitled "My Thesis"
+    When I upload the file "My Thesis.xml"
+    Then the system stores properly the thesis entitled "My Thesis"
+    And the existing thesis are not changed by the system
