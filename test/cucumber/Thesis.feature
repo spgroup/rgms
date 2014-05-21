@@ -79,19 +79,21 @@ Feature: Thesis Tests
   Scenario: edit thesis title
     Given the system has a thesis stored entitled "My Thesis"
     When I change the title from "My Thesis" to "My Thesis Renamed"
-    Then the thesis entitled "My Thesis Renamed" is properly renamed by the system.
+    Then the thesis entitled "My Thesis Renamed" is properly renamed by the system
+    And the other theses are not changed by the system
 
   Scenario: edit thesis with invalid data
     Given the system has a thesis stored entitled "My Thesis"
     When I change the title from "My Thesis" to "" (blank)
-    Then the system return an exception with message "the title is a mandatory field"
+    Then the existing thesis are not changed by the system
 
   Scenario: search a thesis
     Given the system has one thesis entitled "My Thesis"
     When I search for thesis entitled "My Thesis"
-    Then the system return a thesis list that contains "My Thesis"
+    Then the existing thesis are not changed by the system
 
   Scenario: upload thesis with a file
     Given the system has no thesis entitled "My Thesis"
     When I upload the file "My Thesis.xml"
     Then the system stores properly the thesis entitled "My Thesis"
+    And the existing thesis are not changed by the system
