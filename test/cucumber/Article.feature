@@ -138,13 +138,13 @@ Feature: journal article
 	Given	the system has article entitled "A theory of software product line refinement" with file name "TCS-1401.pdf"
 	And	the system has article entitled "Modularity analysis of use case implementations" with file name "MACI.pdf"
 	When	the system orders the article list by "title"
-	Then	the system article list contains "A theory of software product line refinement" and  "Modularity analysis of use case implementations" ordered by "title"
+	Then	the system article list content is not modified
 
   Scenario	list existing articles ordered by publication date
 	Given	the system has article entitled "A theory of software product line refinement" with file name "TCS-1401.pdf" dated on "22/10/2011"
 	And	the system has article entitled "Modularity analysis of use case implementations" with file name "MACI.pdf" dated on "05/08/2010"
 	When	the system orders the article list by "publication date"
-	Then	the system article list contains "A theory of software product line refinement" and  "Modularity analysis of use case implementations" ordered by "publication date"
+	Then	the system article list content is not modified
 
   Scenario	new invalid article (title field blank)
 	Given	the all fields from article information are filled except the title field
@@ -154,7 +154,7 @@ Feature: journal article
   Scenario	filter existing articles by author
 	Given	the system has some articles authored by "Paulo Borba"
 	When	the system filter the articles authored by author "Paulo Borba"
-	Then	the system article list contains only the articles authored by "Paulo Borba"
+	Then	the system article list content is not modified
 
   Scenario	remove multiple articles
 	Given	the system has 3 articles entitled "A theory of product line 1", "A theory of product line 2" and "A theory of product line 3"
