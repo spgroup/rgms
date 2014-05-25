@@ -6,8 +6,7 @@ Feature: research project
   Scenario: new research project
     Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
 	And I am logged in the system
-    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-	And I entered all the required data of research project
+    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with all required data
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is properly stored by the system
 
   Scenario: duplicated research project
@@ -25,8 +24,7 @@ Feature: research project
 
   Scenario: new research project without funders
     Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos"
-    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos"
-	And the funders list of the research project is empty
+    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos" without funders
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos" is properly stored by the system
 
  #if ($XMLUpload)
@@ -38,7 +36,6 @@ Feature: research project
 
   Scenario: upload research project without a file
     Given I am at the publications menu
-    And I am logged in the system
     When I select the "Projeto de Pesquisa" option at the program menu
     And I select the upload button at the research project page
     Then I'm still on the research project page
@@ -72,8 +69,8 @@ Feature: research project
 	Then the data of the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is updated in the system
 
   Scenario: new invalid research project with blank name
-    Given the system has no research project named as ""
-    When I create a research project named as ""
+    Given the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is stored in the system
+    When I try to create a research project named as ""
     Then the research project "" is not stored by the system because it is invalid
     And no research project stored is affected
 
