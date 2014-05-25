@@ -12,7 +12,7 @@ Feature: research project
   Scenario: duplicated research project
     Given  the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     And I am logged in the system
-    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not store twice
     And no research project stored is affected
 
@@ -42,18 +42,16 @@ Feature: research project
     And the system shows an error message at the research project page
  #end
   
-  Scenario: list member research projects
-	Given I am logged in the system
-	And I am at the research projects menu
-	When I select the "Listar" option at research projects menu
-	Then the system shows the research projects where I am member
+  Scenario: list research projects where I am a member
+	Given I am at the research project list page
+	When I select the "Meus Projetos de Pesquisa" option at research project menu
+	Then the system shows a list with the research projects where I am a member
 
   Scenario: filter research projects
-	Given I am logged in the system
-	And I am at the research projects list page
-	When I select the option "Filtrar"
-	And fill the filter fields
-	Then the system shows the research projects list filtered
+	Given  I am at the research projects list page
+	When I fill the project name field
+	And select the option "Filtrar Projetos de Pesquisa"
+	Then the system shows the research projects listed by the research projects name
 
   Scenario: remove research project that does not exist
 	Given the system has no research projects named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
@@ -76,7 +74,7 @@ Feature: research project
 
   Scenario: new invalid research project with blank description
     Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with description field blank
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with description field blank
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored by the system because it is invalid
     And no research project stored is affected
 
@@ -95,8 +93,8 @@ Feature: research project
 
   Scenario: new invalid research project with blank name web
     Given I am at new research project page
-    And the system has no research project named ""
-    When I create the research project named ""
+    And the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is stored in the system
+    When I try to create the research project named ""
     Then the research project named "" is not stored by the system because it is invalid
     And  the system shows an error message at the research project page
     And no research project stored is affected
@@ -104,7 +102,7 @@ Feature: research project
   Scenario: new invalid research project with blank description web
     Given I am at new research project page
     And the system has no research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I create the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with description field blank
+    When I try to create the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with description field blank
     Then the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored by the system because it is invalid
     And  the system shows an error message at the research project page
     And no research project stored is affected
@@ -112,7 +110,7 @@ Feature: research project
   Scenario: duplicated research project web
     Given I am at new research project page
     And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I create the research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I try to create the research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored twice
     And it is not shown duplicated in the research project list
     And  the system shows an warning message at the research project page
