@@ -1,5 +1,6 @@
 package pages.Conferencia
 
+import org.openqa.selenium.WebElement
 import pages.FormPage
 
 class ConferenciaCreatePage extends FormPage {

@@ -11,38 +11,38 @@ import steps.ConferenciaTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
-Given(~'^the system has no conferencia entitled "([^"]*)"$') { String title ->
-    conferencia = Conferencia.findByTitle(title)
-    assert conferencia == null
+Given(~'^the system has no conference entitled "([^"]*)"$') { String title ->
+    conference = Conferencia.findByTitle(title)
+    assert conference == null
 }
 
-When(~'^I create the conferencia "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+When(~'^I create the conference "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
     ConferenciaTestDataAndOperations.createConferencia(title, filename)
 }
 
-Then(~'^the conferencia "([^"]*)" is properly stored by the system$') { String title ->
-    conferencia = Conferencia.findByTitle(title)
-    assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conferencia, title)
+Then(~'^the conference "([^"]*)" is properly stored by the system$') { String title ->
+    conference = Conferencia.findByTitle(title)
+    assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conference, title)
 }
 
-Given(~'^the conferencia "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+Given(~'^the conference "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     ConferenciaTestDataAndOperations.createConferencia(title, filename)
-    conferencia = Conferencia.findByTitle(title)
-    assert conferencia != null
+    conference = Conferencia.findByTitle(title)
+    assert conference != null
 }
 
-Then(~'^the conferencia "([^"]*)" is not stored twice$') { String title ->
-    conferencia = Conferencia.findAllByTitle(title)
-    assert conferencia.size() == 1
+Then(~'^the conference "([^"]*)" is not stored twice$') { String title ->
+    conference = Conferencia.findAllByTitle(title)
+    assert conference.size() == 1
 }
 
-When(~'^I remove the conferencia "([^"]*)"$') { String title ->
+When(~'^I remove the conference "([^"]*)"$') { String title ->
     ConferenciaTestDataAndOperations.removeConferencia(title)
 }
 
-Then(~'^the conferencia "([^"]*)" is properly removed by the system$') { String title ->
-    conferencia = Conferencia.findByTitle(title)
-    assert conferencia == null
+Then(~'^the conference "([^"]*)" is properly removed by the system$') { String title ->
+    conference = Conferencia.findByTitle(title)
+    assert conference == null
 }
 
 Given(~'^I am at the publications$') {->
@@ -56,27 +56,27 @@ def LogInToPublication(){
     at PublicationsPage
 }
 
-Given(~'^I am at the conferencias page$') {->
+Given(~'^I am at the conferences page$') {->
     LogInToPublication()
     page.select("Conferencia")
     at ConferenciaPage
 }
 
-When(~'^I select the conferencia option at the publications menu$') {->
+When(~'^I select the conference option at the publications menu$') {->
     page.select("Conferencia")
 }
 
-When(~'^I select the new conferencia option at the conferencia page$') {->
+When(~'^I select the new conference option at the conference page$') {->
     at ConferenciaPage
     page.selectNewConferencia()
 }
 
-When(~'^I select the home option at the conferencia page$') {->
+When(~'^I select the home option at the conference page$') {->
     at ConferenciaPage
     page.selectHome()
 }
 
-When(~'^I select the conferencia "([^"]*)"$') {String title ->
+When(~'^I select the conference "([^"]*)"$') {String title ->
     page.select(title)
 }
 
@@ -84,56 +84,31 @@ When(~'^I click on remove$') {->
     page.select("Remove")
 }
 
-Then(~'^I can fill the conferencia details$') {->
+Then(~'^I can fill the conference details$') {->
     at ConferenciaCreatePage
     page.fillConferenciaDetails()
 }
 
-Then(~'^I can add an author') {->
-    at ConferenciaPage
-    page.addAuthor
-}
-
-And(~'^I can fill the author name') {->
-    at ConferenciaCreatePage
-    page.fillNewAuthorName
-}
-
-Then(~'^a list of conferencias stored by the system is displayed at the conferencia page$') {->
+Then(~'^a list of conferences stored by the system is displayed at the conference page$') {->
     at ConferenciaPage
     page.listConferencia()
 }
 
-Then(~'I can list the authors of a conferencia'){->
-    at ConferenciaPage
-    page.listAuthors
-}
-
-And(~'^I can add an author to an exsisting conferencia'){->
-    at ConferenciaPage
-    page.addAuthor
-}
-
-Then(~'I can remove an author to an exsisting conferencia'){->
-    at ConferenciaPage
-    page.removeAuthor
-}
-
-Then(~'^I can remove one conferencia$') {->
+Then(~'^I can remove one conference$') {->
     at ConferenciaPage
     page.removeConferencia()
 }
 
-Then(~'^I see my user listed as an author member of conferencia by default$') {->
+Then(~'^I see my user listed as an author member of conference by default$') {->
     at ConferenciaCreatePage
     assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
 
-Then(~'^I am back at the publications and conferencias menu$') {->
+Then(~'^I am back at the publications and conferences menu$') {->
     at PublicationsPage
 }
 
-When(~'^I try to remove the conferencia "([^"]*)"$') { String title ->
+When(~'^I try to remove the conference "([^"]*)"$') { String title ->
     assert Conferencia.findByTitle(title) == null
 }
 
@@ -141,30 +116,107 @@ Then(~'^nothing happens$') {->
 
 }
 
-Given(~'^the system has some conferencias stored$') {->
+Given(~'^the system has some conferences stored$') {->
     initialSize = Conferencia.findAll().size()
 }
-When(~'^I upload the conferencias of "([^"]*)"$') { filename ->
+When(~'^I upload the conferences of "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     initialSize = Conferencia.findAll().size()
     ConferenciaTestDataAndOperations.uploadConferencias(path)
     finalSize = Conferencia.findAll().size()
     assert initialSize < finalSize
 }
-Then(~'^the system has all the conferencias of the xml file$') {->
+Then(~'^the system has all the conferences of the xml file$') {->
     assert Conferencia.findByTitle("Latin American Conference On Computing (CLEI 1992)") != null
     assert Conferencia.findByTitle("Engineering Distributed Objects Workshop, 21st ACM International Conference on Software Engineering (ICSE 1999)") != null
     assert Conferencia.findByTitle("6th International Conference on Software Reuse (ICSR 2000)") != null
+
 }
 
-And(~'^I select the upload button at the conferencia page$') {->
+And(~'^I select the upload button at the conference page$') {->
     at ConferenciaPage
     page.uploadWithoutFile()
 }
-Then(~'^I\'m still on conferencia page$') {->
+Then(~'^I\'m still on conference page$') {->
     at ConferenciaPage
 }
-And(~'^the conferencias are not stored by the system$') {->
+And(~'^the conferences are not stored by the system$') {->
     at ConferenciaPage
     page.checkIfConferenciaListIsEmpty()
+
+}
+
+Then(~'^I see my user listed as an author member of conference by default in the first position$') {
+    at ConferenciaCreatePage
+}
+
+Given(~'^the member "([^"]*)" is registered$') {String memberName ->
+
+}
+
+/*
+When(~'^I select the "([^"]*)"$ option at the conference page$'){option ->
+
+}
+*/
+
+And(~'^I click on "([^"]*)" at the create conference page$') {String option ->
+    page.select(option)
+}
+
+Then(~'^I select the member "([^"]*)" in member list at the create conference page$') {
+
+}
+
+Then(~'^I select the member "([^"]*)" in member list$') { String memberName ->
+
+}
+
+And(~'^I see the new member author "([^"]*)" at the last position of members authors$'){String memberName ->
+
+}
+
+Then(~'^I see the new member author "([^"]*)" only one time$'){String memberName ->
+
+}
+
+Given(~'^the conference "([^"]*)" is stored in the system$'){String title ->
+    conference = Conferencia.findByTitle(title)
+    assert conference != null
+}
+
+And(~'^I click on "([^"]*)" at the edit conference page$') {option ->
+
+}
+
+And(~'^I see the new member author "([^"]*)" at the last position of members authors list$') {String memberName ->
+
+}
+
+And(~'^the member "([^"]*)" is member author of the conference "([^"]*)"$'){String memberName, String title ->
+
+}
+
+And(~'^I select the author "([^"]*)" at the member authors list in the show conference page$') {String memberName ->
+
+}
+
+And( ~'^"([^"]*)" is removed from the member authors list of conference "([^"]*)"$') {String memberName, String title ->
+
+}
+
+And(~'^I click on "([^"]*)" at the show conference page$') {String option ->
+
+}
+
+And(~'^I click on "([^"]*)" at the edit conference page$') {String option ->
+
+}
+
+Then(~'^I select the member "([^"]*)" in member list at the edit conference page$') {String memberName ->
+
+}
+
+And(~'^the member authors list of the conference "([^"]*)" remain the same$') {String title ->
+
 }
