@@ -1,5 +1,6 @@
 package steps
 
+import rgms.member.Member
 import rgms.publication.Conferencia
 import rgms.publication.ConferenciaController
 import rgms.publication.XMLController
@@ -16,7 +17,8 @@ class ConferenciaTestDataAndOperations {
     static conferencias = [
             [title: "I International Conference on Software Engineering",
                     publicationDate: (new Date("12 October 2012")),
-                    booktitle: "Software Engineering", pages: "20-120"],
+                    booktitle: "Software Engineering", pages: "20-120",
+                    authors: (new HashSet<Member>({"John Smith"}))],
             [title: "IV Conference on Software Product Lines",
                     publicationDate: (new Date("14 October 2012")),
                     booktitle: "Practices and Patterns", pages: "150-200"],
@@ -67,6 +69,11 @@ class ConferenciaTestDataAndOperations {
         def records = new XmlParser()
         cont.saveConferencias(records.parse(xml));
         cont.response.reset()
+    }
+
+    static public boolean containsAuthor(String memberName, String title){
+        def conference = findConferenciaByTitle(title)
+        return conference.authors.contains(memberName)
     }
 
 }

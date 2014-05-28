@@ -1,8 +1,8 @@
-import cucumber.runtime.PendingException
 import pages.Conferencia.ConferenciaCreatePage
 import pages.Conferencia.ConferenciaPage
 import pages.LoginPage
 import pages.PublicationsPage
+import rgms.authentication.User
 import rgms.member.Member
 import rgms.publication.Conferencia
 import steps.TestDataAndOperations
@@ -147,11 +147,12 @@ And(~'^the conferences are not stored by the system$') {->
 }
 
 Then(~'^I see my user listed as an author member of conference by default in the first position$') {
-    at ConferenciaCreatePage
+
 }
 
 Given(~'^the member "([^"]*)" is registered in the system$') { String memberName ->
-
+    author = Member.findByName(memberName)
+    assert author != null
 }
 
 /*
@@ -161,6 +162,7 @@ When(~'^I select the "([^"]*)"$ option at the conference page$'){ String option 
 */
 
 And(~'^I click on "([^"]*)" at the create conference page$') { String option ->
+    at ConferenciaCreatePage
     page.select(option)
 }
 
@@ -173,7 +175,7 @@ And(~'^I see the new member author "([^"]*)" at the last position of members aut
 }
 
 Given(~'^the conference "([^"]*)" is stored in the system$'){ String title ->
-    def conference = Conferencia.findByTitle(title)
+    conference = Conferencia.findByTitle(title)
     assert conference != null
 }
 
@@ -182,7 +184,7 @@ And(~'^I see the new member author "([^"]*)" at the last position of members aut
 }
 
 And(~'^the member "([^"]*)" is member author of the conference "([^"]*)"$'){ String memberName, String title ->
-
+    assert ConferenciaTestDataAndOperations.containsAuthor(memberName, title)
 }
 
 And(~'^I select the author "([^"]*)" at the member authors list in the show conference page$') { String memberName ->
@@ -206,5 +208,7 @@ And(~'^I click on "([^"]*)" at the show member page$') { String option ->
 }
 
 Then(~'^the member "([^"]*)" is not member author of the conference "([^"]*)"$') { String memberName, String title ->
-
+    conference = Conferencia.findByTitle(title)
+    member = Member.findByName(memberName)
+    assert !conference.authors.contains(member)
 }

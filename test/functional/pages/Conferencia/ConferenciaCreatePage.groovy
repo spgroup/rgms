@@ -1,6 +1,5 @@
 package pages.Conferencia
 
-import org.openqa.selenium.WebElement
 import pages.FormPage
 
 class ConferenciaCreatePage extends FormPage {
@@ -37,5 +36,7 @@ class ConferenciaCreatePage extends FormPage {
     def selectHome() {
         $('a.home').click()
     }
+
+
 
 }
