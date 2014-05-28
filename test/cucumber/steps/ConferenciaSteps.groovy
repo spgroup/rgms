@@ -12,7 +12,7 @@ import steps.ConferenciaTestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no conference entitled "([^"]*)"$') { String title ->
-    conference = Conferencia.findByTitle(title)
+    def conference = Conferencia.findByTitle(title)
     assert conference == null
 }
 
@@ -21,18 +21,18 @@ When(~'^I create the conference "([^"]*)" with file name "([^"]*)"$') { String t
 }
 
 Then(~'^the conference "([^"]*)" is properly stored by the system$') { String title ->
-    conference = Conferencia.findByTitle(title)
+    def conference = Conferencia.findByTitle(title)
     assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conference, title)
 }
 
 Given(~'^the conference "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     ConferenciaTestDataAndOperations.createConferencia(title, filename)
-    conference = Conferencia.findByTitle(title)
+    def conference = Conferencia.findByTitle(title)
     assert conference != null
 }
 
 Then(~'^the conference "([^"]*)" is not stored twice$') { String title ->
-    conference = Conferencia.findAllByTitle(title)
+    def conference = Conferencia.findAllByTitle(title)
     assert conference.size() == 1
 }
 
@@ -150,73 +150,61 @@ Then(~'^I see my user listed as an author member of conference by default in the
     at ConferenciaCreatePage
 }
 
-Given(~'^the member "([^"]*)" is registered$') {String memberName ->
+Given(~'^the member "([^"]*)" is registered in the system$') { String memberName ->
 
 }
 
 /*
-When(~'^I select the "([^"]*)"$ option at the conference page$'){option ->
+When(~'^I select the "([^"]*)"$ option at the conference page$'){ String option ->
 
 }
 */
 
-And(~'^I click on "([^"]*)" at the create conference page$') {String option ->
+And(~'^I click on "([^"]*)" at the create conference page$') { String option ->
     page.select(option)
-}
-
-Then(~'^I select the member "([^"]*)" in member list at the create conference page$') {
-
 }
 
 Then(~'^I select the member "([^"]*)" in member list$') { String memberName ->
 
 }
 
-And(~'^I see the new member author "([^"]*)" at the last position of members authors$'){String memberName ->
+And(~'^I see the new member author "([^"]*)" at the last position of members authors$'){ String memberName ->
 
 }
 
-Then(~'^I see the new member author "([^"]*)" only one time$'){String memberName ->
-
-}
-
-Given(~'^the conference "([^"]*)" is stored in the system$'){String title ->
-    conference = Conferencia.findByTitle(title)
+Given(~'^the conference "([^"]*)" is stored in the system$'){ String title ->
+    def conference = Conferencia.findByTitle(title)
     assert conference != null
 }
 
-And(~'^I click on "([^"]*)" at the edit conference page$') {option ->
+And(~'^I see the new member author "([^"]*)" at the last position of members authors list$') { String memberName ->
 
 }
 
-And(~'^I see the new member author "([^"]*)" at the last position of members authors list$') {String memberName ->
+And(~'^the member "([^"]*)" is member author of the conference "([^"]*)"$'){ String memberName, String title ->
 
 }
 
-And(~'^the member "([^"]*)" is member author of the conference "([^"]*)"$'){String memberName, String title ->
+And(~'^I select the author "([^"]*)" at the member authors list in the show conference page$') { String memberName ->
 
 }
 
-And(~'^I select the author "([^"]*)" at the member authors list in the show conference page$') {String memberName ->
+And(~'^I click on "([^"]*)" at the show conference page$') { String option ->
 
 }
 
-And( ~'^"([^"]*)" is removed from the member authors list of conference "([^"]*)"$') {String memberName, String title ->
+And(~'^I click on "([^"]*)" at the edit conference page$') { String option ->
 
 }
 
-And(~'^I click on "([^"]*)" at the show conference page$') {String option ->
+Then(~'^the member "([^"]*)" is no more listed in possible authors list$') { String memberName ->
 
 }
 
-And(~'^I click on "([^"]*)" at the edit conference page$') {String option ->
+And(~'^I click on "([^"]*)" at the show member page$') { String option ->
 
 }
 
-Then(~'^I select the member "([^"]*)" in member list at the edit conference page$') {String memberName ->
-
-}
-
-And(~'^the member authors list of the conference "([^"]*)" remain the same$') {String title ->
+Then(~'^the member "([^"]*)" is not member author of the conference "([^"]*)"$') { String memberName, String title ->
 
 }
