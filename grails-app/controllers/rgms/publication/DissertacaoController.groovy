@@ -1,5 +1,6 @@
 package rgms.publication
 
+//if($Dissertation)
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import javax.servlet.http.HttpServletRequest
 import rgms.XMLService
@@ -50,3 +51,4 @@ class DissertacaoController extends ThesisOrDissertationController {
         deleteThesisOrDissertation("Dissertacao", params)
     }
 }
+//#end

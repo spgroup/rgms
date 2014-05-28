@@ -15,6 +15,7 @@ class BibtexImportPage extends Page {
     }
 
     def selectButton(String name) {
-        $('form').find('a', text: name).click()
+        $('form').fileChooser().click()
+
     }
 }
