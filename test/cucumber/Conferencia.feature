@@ -95,47 +95,43 @@ Feature: conference
 #if ($managingAuthors)
 
   Scenario: insert a member author into a new conference
-    Given the member "John Smith" is registered
-    And I am at the conferences page
-    When I select the new conference option at the conference page
-    And I click on "add author" at the create conference page
-    Then I select the member "John Smith" in member list
-    And  I see the new member author "John Smith" at the last position of members authors
+    Given the member "John Smith" is registered in the system
+    When I click on "add author" at the create conference page
+    And I select the member "John Smith" in member list
+    Then I see the new member author "John Smith" at the last position of members authors
 
-  Scenario: insert an member author that is already in the member authors list of a new conference
-    Given the member "John Smith" is registered
-    And I am at the conferences page
-    When I select the new conference option at the conference page
-    And I click on "add author" at the create conference page
+  Scenario: insert an already member author to a new conference
+    Given the member "John Smith" is registered in the system
+    When I click on "add author" at the create conference page
     And I select the member "John Smith" in member list
     And I click on "add author" at the create conference page
-    And I select the member "John Smith" in member list
-    Then  I see the new member author "John Smith" only one time
+    Then the member "John Smith" is no more listed in possible authors list
 
   Scenario: insert a member author into an existing conference
-    Given the conference "I International Conference on Software Engineering" is stored in the system
-    And the member "Adam Sandman" is registered
-    And I am at the conferences page
+    Given I am at the conferences page
+    And the conference "I International Conference on Software Engineering" is stored in the system
+    And the member "Adam Sandman" is registered in the system
     When I select the conference "I International Conference on Software Engineering"
     And I click on "add author" at the edit conference page
-    Then I select the member "Adam Sandman" in member list
-    And I see the new member author "Adam Sandman" at the last position of members authors list
+    And I select the member "Adam Sandman" in member list
+    Then I see the new member author "Adam Sandman" at the last position of members authors list
 
-  Scenario: remove a member author from an existing conference
-    Given the conference "I International Conference on Software Engineering" is stored in the system
-    And the member "Adam Sandman" is member author of the conference "I International Conference on Software Engineering"
-    When I select the conference "I International Conference on Software Engineering"
-    And I select the author "Adam Sandman" at the member authors list in the show conference page
-    Then I click on "remove" at the show member page
-    And "Adam Sandman" is removed from the member authors list of conference "I International Conference on Software Engineering"
-
-  Scenario: insert a member author into an existing conference
-    Given the conference "I International Conference on Software Engineering" is stored in the system
+  Scenario: insert an already member author to an existing conference
+    Given I am at the conferences page
+    And the conference "I International Conference on Software Engineering" is stored in the system
     And the member "Adam Sandman" is member author of the conference "I International Conference on Software Engineering"
     When I select the conference "I International Conference on Software Engineering"
     And I click on "edit" at the show conference page
     And I click on "add author" at the edit conference page
-    Then I select the member "Adam Sandman"
-    And the member authors list of the conference "I International Conference on Software Engineering" remain the same
+    Then  the member "Adam Sandman" is no more listed in possible authors list
+
+  Scenario: remove a member author from an existing conference
+    Given I am at the conferences page
+    And the conference "I International Conference on Software Engineering" is stored in the system
+    And the member "Adam Sandman" is member author of the conference "I International Conference on Software Engineering"
+    When I select the conference "I International Conference on Software Engineering"
+    And I select the author "Adam Sandman" at the member authors list in the show conference page
+    And I click on "remove" at the show member page
+    Then the member "Adam Sandman" is not member author of the conference "I International Conference on Software Engineering"
 
 #end
