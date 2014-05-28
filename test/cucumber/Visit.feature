@@ -82,12 +82,25 @@ Feature: Visit
     When I try to create an visit
     And I share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then A tweet is added to my twitter account regarding the new visit "Primeira Visita"
-    
+
   Scenario: Add a new visit with twitter, but don't tweet it
-   Given I am logged as "admin" and at the Add Visit Page
-   When I try to create an visit
-   Then The visit "Primeira Visita" is created but no tweet should be post
+    Given I am logged as "admin" and at the Add Visit Page
+    When I try to create an visit
+    Then The visit "Primeira Visita" is created but no tweet should be post
 
 #end
 
 #end
+
+
+# [5/12/14, 3:38:04 PM] Paulo Borba: voce poderia fazer cenários para devolver uma lista com os nomes dos visitantes e o período da visita, para um dado período
+#  [5/12/14, 3:38:07 PM] Paulo Borba: algo como
+#  [5/12/14, 3:39:25 PM] Paulo Borba: Naman Goel (BHU Indian Institute of Technology, India, 5--7/2012),
+#  Ralf Lämmel (University of Koblenz-Landau, Aelamanha, 8/2012),
+#  Andrzej Wąsowski (IT University of Copenhagen, Dinamarca, 12/2013).
+#  [5/12/14, 3:39:33 PM] Paulo Borba: se o período fosse de 2011 pra ca
+#  [5/12/14, 3:40:02 PM] Paulo Borba: isso mostra alguns dados que precisamos ter sobre a visita
+#  [5/12/14, 3:40:13 PM] Paulo Borba: e que não estão presentes na versão atual
+#  [5/12/14, 3:40:46 PM] Paulo Borba: isso pode entao ser usado para revisar e ajustar os outros cenarios
+#  [5/12/14, 3:41:17 PM] Marcello Valença: certo
+#  [5/12/14, 3:41:39 PM] Paulo Borba: um outro novo cenário poderia ter a ver com o cadastro de pessoas diferente com o mesmo nome; o sistema deveria perguntar se trata-se da pessoa ja cadastrada

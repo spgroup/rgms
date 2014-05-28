@@ -16,3 +16,7 @@ Feature: XMLImport
     And I select the upload button at the XML import page
     Then I'm still on XML import page
     And the publications are not stored by the system
+
+# o que acontece quando o arquivo tem publicações já cadastradas? e
+# publicações com mesmos títulos mas outras partes diferentes? e
+# se o arquivo nao estiver no formato correto?

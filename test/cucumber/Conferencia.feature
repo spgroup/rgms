@@ -77,3 +77,5 @@ Feature: conferencia
     And I select the upload button at the conferencia page
     Then I'm still on conferencia page
     And the conferencias are not stored by the system
+
+    # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.

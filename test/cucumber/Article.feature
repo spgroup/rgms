@@ -63,7 +63,7 @@ Feature: journal article
     And I select the "Alterar" option in Article Show Page
     Then I am at Article show page
 
-  
+
   Scenario: Add a new article tweeting it
     Given I am logged as "admin"
     And I am at the Article Page
@@ -71,7 +71,7 @@ Feature: journal article
     And I click on Share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then A tweet is added to my twitter account regarding the new article "A theory of software product line refinement 1"
 
-  Scenario: Add a new article and try to tweet the article using wrong login and password 
+  Scenario: Add a new article and try to tweet the article using wrong login and password
     Given I am logged as "admin"
     And I am at the Article Page
     When I try to create an article named as "Teoria de Sw" with filename "TCS-102.pdf"
@@ -83,7 +83,7 @@ Feature: journal article
     And I am at the Article Page
     When I try to create an article named as "Empirical Studies in Product Line 2" with filename "TCS.pdf"
     Then No tweet should be post about "Empirical Studies in Product Line 2"
-	
+
   Scenario: Add a new article and post it in the facebook
     Given I am logged as "admin"
     And   I am at the Add Article Page
@@ -125,3 +125,6 @@ Feature: journal article
     And I select the upload button at the article page
     Then I'm still on article page
     And the articles are not stored by the system
+
+ # [5/12/14, 3:59:48 PM] Paulo Borba: voces podem criar cenários para ordenar a lista, filtrar a lista
+ # [5/12/14, 3:59:58 PM] Paulo Borba: verificar se alguns campos podem ser opcionais, etc.

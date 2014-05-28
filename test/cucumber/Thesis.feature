@@ -45,3 +45,10 @@ Feature: Thesis Tests
     Then I see my user listed as an author member of thesis by default
     And I see my school name as school of thesis by default
 #end
+
+# editar dados de uma tese, ordenar lista de teses, filtrar lista de teses,
+# criar tese com dados inválidos, a chave é mesmo o título da tese?, tamanho
+# dos campos, o dia e o arquivo deveriam ser opcional, deveria poder adicionar
+# o arquivo depois, address deveria ser opcional, deveria ter universidade e
+# centro/departamento, deveria ter apenas um autor e a possibilidade de um
+# orientador e co-orientador
