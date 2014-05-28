@@ -1175,4 +1175,39 @@
             <args>FacebookController,grails-app/controllers/rgms/tool/FacebookController.groovy</args>
         </transformation>
     </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>createBuildEntries</name>
+            <args>XMLImport</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>XMLController,grails-app/controllers/rgms/publication/XMLController.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>XMLService,grails-app/services/rgms/XMLService.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>XMLImportTest,test/cucumber/XMLImport.feature</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>test/cucumber/XMLImport.feature</args>
+        </transformation>
+    </configuration>
 </configurationModel>

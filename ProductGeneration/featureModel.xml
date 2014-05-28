@@ -35,5 +35,12 @@
         </featureGroup>
     </feature>
 
+    <feature min="0" max="1" name="XMLImport" type="NONE" id="XMLImport"></feature>
+
+    <feature min="0" max="1" name="ResearchLine" type="NONE" id="ResearchLine"></feature>
+
+    <feature min="0" max="1" name="ResearchProject" type="NONE" id="ResearchProject"></feature>
+
+    <feature min="0" max="1" name="Orientation" type="NONE" id="Orientation"></feature>
 
 </feature>
