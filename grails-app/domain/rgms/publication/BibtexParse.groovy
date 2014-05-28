@@ -1,8 +1,7 @@
 package rgms.publication
 
 import org.jbibtex.*
-import rgms.publication.strategyBibtexParse.StrategyParseDissertacao
-import rgms.publication.strategyBibtexParse.StrategyParseTese
+import rgms.publication.strategyBibtexParse.*
 
 /**
  *
@@ -16,41 +15,61 @@ class BibtexParse {
         BibTeXDatabase bibtexDatabase = parseBibTeX(file)
         Collection<BibTeXEntry> entries = bibtexDatabase.getEntries().values();
 
-        for (BibTeXEntry entry : entries) {
+        entries.each { BibTeXEntry entry ->
             //TODO settar todos os atributos de acordo com a classe a ser instanciada
+            //TODO completar classes strategy para cada tipo; Referência: https://www.cs.vassar.edu/people/priestdo/tips/bibtex
             //Para pegar os valores do objeto 'entry' basta seguir o modelo da linha abaixo
             //String value = entry.getField(BibTeXEntry.KEY_TITLE).toUserString();
-            if (entry.getType().equals(BibTeXEntry.TYPE_ARTICLE)) {
+            switch (entry.getType()) {
+                //#if($Periodico)
+                case BibTeXEntry.TYPE_BOOKLET:
+                case BibTeXEntry.TYPE_UNPUBLISHED:
+                case BibTeXEntry.TYPE_PROCEEDINGS:
+                case BibTeXEntry.TYPE_ARTICLE:
+                    publications.add(new StrategyParsePeriodico().execute(entry))
+                    break
+                //#end
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_BOOK)) {
-                publications.add(new BookChapter())
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_BOOKLET)) {
+                //#if($BookChapter)
+                case BibTeXEntry.TYPE_INCOLLECTION:
+                case BibTeXEntry.TYPE_INBOOK:
+                case BibTeXEntry.TYPE_BOOK:
+                    publications.add(new StrategyParseBookChapter().execute(entry))
+                    break
+                //#end
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_CONFERENCE)) {
-                publications.add(new Conferencia())
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_INBOOK)) {
+                //#if($Conferencia)
+                case BibTeXEntry.TYPE_INPROCEEDINGS:
+                case BibTeXEntry.TYPE_CONFERENCE:
+                    publications.add(new StrategyParseConference().execute(entry))
+                    break
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_INCOLLECTION)) {
+                //#end
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_INPROCEEDINGS)) {
+                //#if($Dissertation)
+                case BibTeXEntry.TYPE_MASTERSTHESIS:
+                    publications.add(new StrategyParseDissertacao().execute(entry))
+                    break
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_MANUAL)) {
+                //#end
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_MASTERSTHESIS)) {
-                publications.add(new StrategyParseDissertacao().execute(entry))
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_MISC)) {
+                //#if($ImportBibtex && $TesePublication)
+                case BibTeXEntry.TYPE_PHDTHESIS:
+                    publications.add(new StrategyParseTese().execute(entry))
+                    break
+                //#end
 
-            }
-            //#if($ImportBibtex && $TesePublication)
-            else if (entry.getType().equals(BibTeXEntry.TYPE_PHDTHESIS)) {
-                publications.add(new StrategyParseTese().execute(entry))
-            }
-            //#end
-            else if (entry.getType().equals(BibTeXEntry.TYPE_PROCEEDINGS)) {
 
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_TECHREPORT)) {
-                publications.add(new TechnicalReport())
-            } else if (entry.getType().equals(BibTeXEntry.TYPE_UNPUBLISHED)) {
+                //#if($TechnicalReport)
+                case BibTeXEntry.TYPE_MANUAL:
+                case BibTeXEntry.TYPE_TECHREPORT:
+                    publications.add(new StrategyParseTechnicalReport().execute(entry))
+                    break
+                //#end
+
+                case BibTeXEntry.TYPE_MISC:
+                    publications.add(new StrategyParseMiscalanious().execute(entry))
+                    break
 
             }
 

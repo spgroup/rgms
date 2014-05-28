@@ -1,3 +1,5 @@
+package cucumber.steps
+
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.BibtexImportPage
@@ -5,7 +7,6 @@ import rgms.publication.*
 import steps.TestDataBibTexFile
 
 import static cucumber.api.groovy.EN.*
-import steps.TestDataAndOperations
 
 def LogInToPublication(){
     to LoginPage
@@ -25,18 +26,18 @@ When(~'^I click "([^"]*)"$') { String arg1 ->
     page.selectButton(arg1)
 }
 
-When(~'^selected a bibtex file and I click "([^"]*)"$') { String arg1 ->
+When(~'^I select a bibtex file and I click "([^"]*)"$') { String arg1 ->
 }
 
-Then(~'^is created all corresponding publications$') {->
+Then(~'^all corresponding publications are created$') {->
     BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("test//cucumber//steps//sample.bibtex")
-    assert bibtexFile.getPublications().size() == 3
+    assert bibtexFile.getPublications().size() >= 3
 }
 
-Then(~'^all of then are stored$') {->
+Then(~'^all of them are stored$') {->
 }
 
-When(~'^selected a bibtex file unformatted and I click "([^"]*)"$') { String arg1 ->
+When(~'^I select a bibtex file unformatted and I click "([^"]*)"$') { String arg1 ->
 }
 
 //@Test(expected=RuntimeException.class)
@@ -44,23 +45,23 @@ Then(~'^the system output the message error "([^"]*)"$') { String arg1 ->
     BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("test//cucumber//steps//sample.bibtex")
 }
 
-Then(~'^none publication is stored$') {->
+Then(~'^no publication is stored$') {->
 }
 
-When(~'^selected a bibtex file with one Dissertation and two Thesis and I click "([^"]*)"$') { String arg1 ->
+When(~'^I select a bibtex file with one Dissertation and two Thesis and I click "([^"]*)"$') { String arg1 ->
 }
 
-Then(~'^is created one Dissertation publication$') {->
+Then(~'^at least one Dissertation publication is created$') {->
     BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("test//cucumber//steps//sample.bibtex")
-    assert bibtexFile.getPublications(Conferencia.class).isEmpty()
-    assert bibtexFile.getPublications(Dissertacao.class).size() == 1
+    assert bibtexFile.getPublications(Dissertacao.class).size() >= 1
 }
 
-Then(~'^is created two Thesis publications$') {->
+Then(~'^at least two Thesis publications is created$') {->
     BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("test//cucumber//steps//sample.bibtex")
-    assert bibtexFile.getPublications(TechnicalReport.class).isEmpty()
-    assert bibtexFile.getPublications(Tese.class).size() == 2
+    assert bibtexFile.getPublications(Tese.class).size() >= 2
 }
 
-Then(~'^one Dissertation is stored and two Thesis is stored$') {->
+And(~'^one Dissertation is stored$') { ->
+}
+And(~'^two Thesis is stored$') { ->
 }

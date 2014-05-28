@@ -21,17 +21,9 @@ class BibtexFileController {
         bos.write(bytes)
         bos.close()
 
-        System.out.println("********** " + file.getBytes().size());
-
         BibtexFile bibtexFile = transform(file)
 
-        System.out.println("********** " + bibtexFile.getPublications().size())
         for (Publication publication : bibtexFile.getPublications()) {
-            System.out.println("************* " + publication);
-            System.out.println("************************** School : " + publication.getSchool());
-            System.out.println("************************** Address: " + publication.getAddress());
-            System.out.println("************************** Title  : " + publication.getTitle());
-            System.out.println("************************** Date   : " + publication.getPublicationDate());
             if (publication.save(failOnError: true)) {
                 System.out.println("Saving the Object");
             }
