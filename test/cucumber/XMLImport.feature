@@ -34,7 +34,7 @@ Feature: XMLImport
 
   Scenario: new publication
     Given the system has some publications stored
-      And the system has no journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me
+    And the system has no journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me
     When  I upload the file "cv.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me
     Then the system outputs a list of imported publications which contains the journal article entitled "An Abstract Equivalence Notion for Object Models" with status "stable"
     And no new publication is stored by the system
@@ -169,7 +169,7 @@ Feature: XMLImport
   #end
 
   #if($ResearchProject)
-    Scenario: new research project
+  Scenario: new research project
     Given the system has some research projects stored
     And the system has no research project named as "Modularização Emergente para Linhas de Produtos de Software"
     When  I upload the file "cv.xml" which contains a research project named as "Modularização Emergente para Linhas de Produtos de Software"
@@ -290,3 +290,6 @@ Feature: XMLImport
     And the master's orientation entitled "Structuring Adaptive Aplications using AspectJ" with status "conflicted" is removed from the list of imported orientations
     And the previously stored orientations do not change
   #end
+# o que acontece quando o arquivo tem publicações já cadastradas? e
+# publicações com mesmos títulos mas outras partes diferentes? e
+# se o arquivo nao estiver no formato correto?
