@@ -26,4 +26,12 @@ class MemberListPage extends Page {
         $("a", text: member).click()
     }
 
+    //#if ($memberListAndPageImprovement)
+    def orderMemberByName() {
+        $("th", text: "Name").click()
+    }
+
+
+    //#end
+
 }

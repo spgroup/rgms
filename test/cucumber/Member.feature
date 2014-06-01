@@ -75,33 +75,36 @@ Feature: member
 #end
 
   #if ($memberListAndPageImprovement)
-  Scenario: user can order the member by id, name, username, enabled, email, roles, permissions
-    Given I am at the member List page
-    Then I can click to any attribute of member
-    And the system will display the list of member ordered them with the attribute
+
+
+  Scenario: user can order the member by "any-attribute"
+    Given I am at the member List page and there is "number" members to order by name
+    When I can click the attribute name of member
+    Then the system will display the list of "number" members
+    And  the members are ordered in ascendant order with the attribute name in order
 
   Scenario: new member with valid mail server
     Given the system has no member with username "usernametest"
     When I create a member with username "usernametest"
     Then the member with username "usernametest" is properly stored by the system
-    And  the new member with username "usernametest" will be logged in
-    Then the system will send a welcoming email to the new member
+    And  the system will send a welcoming email to the new member
 
   Scenario: administrator needs to know the newest members and approve them
-    Given I am at the member List page
-    Then I see the newest members and the not approved ones
+    Given the administrator logs at system and there is "number" of new not approved members
+    When I am at the member List page
+    Then I see the "number"new and the not approved members
 
   Scenario: member can see his name and a link to logout
-    Given I am at any page
-    Then I see my name and a link to logout
+    Given The system has any member with username "name"
+    When I am at any page
+    Then I see my "name" and a link to logout
 
-  Scenario: administrator click on roll of member and access the member profile
+  Scenario: administrator click on the roll of member and access the member profile
     Given I am at the member List page
-    Then I move the mouse hover on the rows to select the member
-    And click to access the profile
+    When  I move the mouse hover the rows and click to select the member
+    Then  the administrator access the member profile
 
-  Scenario: member can access the facebook profile for those connect the facebook app
-    Given I am at the member profile
-    Then I can click to the link to member's facebook profile
+  #Scenario: When the system try to retrieve the member list and is empty
+    #Given System access the
 
   #end
