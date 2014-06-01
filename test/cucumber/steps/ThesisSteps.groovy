@@ -152,6 +152,130 @@ Then(~'^the thesis "([^"]*)" is properly removed by the system$') { title ->
     assert tese == null
 }
 
+//Scenario: order thesis list by date
+Given(~'^at least one thesis is stored in the system$') {
+
+}
+
+And(~'^I am at the thesis list page$') {
+
+}
+
+And(~'^I click in order thesis by date$') {
+
+}
+
+Then(~'^the returned thesis list has the same items but it is sorted by date$') {
+
+}
+
+//Scenario: search an existing thesis
+Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)", year of publication "([^"]*)" and university "([^"]*)"$') { title, author, year, university ->
+
+}
+
+And(~'^I am at the thesis search page$') {
+
+}
+
+When(~'^I search for "([^"]*)" by "([^"]*)"$') { title, author ->
+
+}
+
+And(~'^I select to view the entry that has university "([^"]*)" and publication year "([^"]*)"$') { university, year ->
+
+}
+
+Then(~'^the thesis "([^"]*)" by "([^"]*)" appears in the thesis view page$') { title, year ->
+
+}
+
+//Scenario: create thesis web without a file
+Given(~'^I am at the create thesis page$') {
+
+}
+
+When(~'^I fill the thesis fields with "([^"]*)", "([^"]*)", "([^"]*)","([^"]*)", "([^"]*)","([^"]*)"$') { title, date, university, address, author, advisor ->
+
+}
+
+And(~'^I click in create button$') {
+
+}
+
+Then(~'^the system shows a warning message "([^"]*)"$') { warningmessage ->
+
+}
+
+//#if($contextualInformation)
+//    Scenario: search an existing thesis filled by default
+
+Given(~'^the system has at least one thesis entitled "([^"]*)"$') { title ->
+
+}
+
+And(~'^I am at the thesis search page$') {
+
+}
+
+And(~'^I have already done a search about "([^"]*)" previously$') { title ->
+
+}
+
+When(~'^I press "([^"]*)"$') { input ->
+
+}
+
+And(~'^I choose "([^"]*)" in dropdown search list$') { title ->
+
+}
+
+And(~'^I click in search button$') {
+
+}
+
+Then(~'^all theses entitled "([^"]*)" are shown$') { title ->
+
+}
+
+//#end
+
+
+//Scenario: edit thesis title
+When(~'^I change the title from "([^"]*)" to "([^"]*)"$') { String title, newtitle ->
+
+}
+
+Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { String title, newtitle ->
+
+}
+
+And(~'^the other theses are not changed by the system$') {
+
+}
+
+//Scenario: edit thesis with invalid data
+Then(~'^the existing thesis are not changed by the system$') {
+
+}
+
+//Scenario: search a thesis
+Given(~'^the system has one thesis entitled "([^"]*)"$') { title ->
+}
+
+When(~'^I search for thesis entitled "([^"]*)"$') { title ->
+}
+
+//Scenario: upload thesis with a file
+When(~'^I upload the file "([^"]*)"$') { file ->
+
+}
+
+And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
+
+}
+
+
 //FUNÇÔES AUXILIARES
 def thesisDoNotExists(title) {
     tese = Tese.findByTitle(title)

@@ -77,14 +77,14 @@ Feature: Thesis Tests
 #end
 
   Scenario: edit thesis title
-    Given the system has a thesis stored entitled "My Thesis"
+    Given the system has thesis entitled "My Thesis"
     When I change the title from "My Thesis" to "My Thesis Renamed"
     Then the thesis entitled "My Thesis Renamed" is properly renamed by the system
     And the other theses are not changed by the system
 
   Scenario: edit thesis with invalid data
-    Given the system has a thesis stored entitled "My Thesis"
-    When I change the title from "My Thesis" to "" (blank)
+    Given the system has thesis entitled "My Thesis"
+    When I change the title from "My Thesis" to ""
     Then the existing thesis are not changed by the system
 
   Scenario: search a thesis
@@ -93,7 +93,7 @@ Feature: Thesis Tests
     Then the existing thesis are not changed by the system
 
   Scenario: upload thesis with a file
-    Given the system has no thesis entitled "My Thesis"
+    Given The system has no thesis entitled "My Thesis"
     When I upload the file "My Thesis.xml"
-    Then the system stores properly the thesis entitled "My Thesis"
-    And the existing thesis are not changed by the system
+    Then the existing thesis are not changed by the system
+    And the system stores properly the thesis entitled "My Thesis"
