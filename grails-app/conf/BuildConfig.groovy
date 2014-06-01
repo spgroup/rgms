@@ -14,6 +14,20 @@ grails.project.dependency.resolution = {
     def gebVersion = "0.7.1"
     def seleniumVersion = "2.22.0"
 
+    production {
+        dataSource {
+            dbCreate = "update"
+            driverClassName = "org.postgresql.Driver"
+            dialect = org.hibernate.dialect.PostgreSQLDialect
+
+            uri = new URI(System.env.DATABASE_URL?:"postgres://test:test@localhost/test")
+
+            url = "jdbc:postgresql://"+uri.host+uri.path
+            username = uri.userInfo.split(":")[0]
+            password = uri.userInfo.split(":")[1]
+        }
+    }
+
     // inherit Grails' default dependencies
     inherits("global") {
         // uncomment to disable ehcache
@@ -39,6 +53,8 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
+        runtime 'postgresql:postgresql:8.4-702.jdbc3'
+
         test("org.codehaus.geb:geb-junit4:$gebVersion")
         test("org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion")
         test("org.seleniumhq.selenium:selenium-support:$seleniumVersion")
@@ -61,6 +77,8 @@ grails.project.dependency.resolution = {
         compile ":remote-control:1.4"
         compile ":codenarc:0.20"
         compile ":gmetrics:0.3.1"
+
+
 
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.7.1"

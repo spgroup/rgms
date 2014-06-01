@@ -2,7 +2,7 @@ package steps
 
 import rgms.authentication.User
 import rgms.member.MemberController
-
+import rgms.member.Member
 /**
  * Created with IntelliJ IDEA.
  * User: jucemberg
@@ -24,6 +24,47 @@ class MemberTestDataAndOperations {
             [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
             ]]
+
+//#if ($memberListAndPageImprovement)
+
+    static newMembers = [
+            [name: "Rodolfo", username: "newUser1", email: "rodolfofake@gmail.com",
+             status: "Graduate Student", university: "UFPE", enabled: false
+            ],
+            [name: "Rebeca Souza", username: "newUser2", email: "rsa2fake@cin.ufpe.br",
+             status: "Graduate Student", university: "UFPE", enabled: false
+            ],
+            [name: "Rubens Lopes", username: "newUser3", email: "rlfsfake@cin.ufpe.br",
+             status: "Graduate Student", university: "UFPE", enabled: false
+            ],
+            [name: "Alvaro Joao", username: "ajsss", email: "ajsss@cin.ufpe.br",
+             status: "Graduate Student", university: "UFPE", enabled: true
+            ]
+            ]
+
+
+    static public def sendEmailToMember(String username) {
+        Member.sendEmail()
+    }
+
+    static public def orderMembers(int number,String attribute) {
+        int countMember = newMembers.sort{member ->
+            member.name.hashCode()
+        }.size()
+        assert countMember,number
+    }
+
+    static public def orderNewMembersFirst(int number) {
+      int countNewMember = newMembers.find{member ->
+            member.enabled==false
+        }.size()
+
+        assert countNewMember,number
+    }
+
+
+
+    //#end
 
     static public def findByUsername(String username) {
         members.find { member ->

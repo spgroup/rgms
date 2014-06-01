@@ -8,11 +8,6 @@ import steps.MemberTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
-Given(~'^the system has no member with username "([^"]*)"$') { String username ->
-    user = User.findByUsername(username);
-    member = user?.author
-    assert member == null
-}
 
 When(~'^I create a member with username "([^"]*)"$') { String username ->
     MemberTestDataAndOperations.createMember(username, "")
@@ -192,3 +187,30 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     //member = Member.findByEmail(email)
     //assert member.name == name
 }
+
+
+
+//#if ($memberListAndPageImprovement)
+
+Given(~'^the administrator logs at system and there is "([^"]*)" of new not approved members$'){ int numberOfMembers ->
+    MemberTestDataAndOperations.orderNewMembersFirst(number)
+
+}
+
+Given(~'^I am at the member List page and there is "([^"]*)" members to order by name"$'){ int number, String attribute ->
+    MemberTestDataAndOperations.orderMembers(number,attribute)
+}
+
+Given(~'^the system has no member with username "([^"]*)"$') { String username ->
+    user = User.findByUsername(username);
+    member = user?.author
+    login();
+    assert member == null
+    ok = MemberTestDataAndOperations.sendEmailToMember(username)
+    assert ok== true
+}
+
+
+
+
+//#end
