@@ -1,3 +1,4 @@
+//#if($Article)
 import pages.ArticlePages.*
 import pages.*
 import rgms.publication.Periodico
@@ -325,6 +326,18 @@ Given(~'^the system has some articles stored$') {->
     initialSize = Periodico.findAll().size()
 }
 
+//#if($Report)
+When(~"^I view the report of articles\$") {->
+	articles = Periodico.findAll()
+	assert articles != null
+}
+
+Then(~'the report of articles contains "([^"]*)"$') { String title ->
+	articles = Periodico.findAll()
+	assert ArticleTestDataAndOperations.containsArticle(title, articles)
+}
+//#end
+
 //Funcoes Auxiliares
 def addPage(){
     Login()
@@ -336,3 +349,4 @@ def addPage(){
     def f = new File(path)
     println "exist Path?" + f.exists()
 }
+//#end

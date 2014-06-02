@@ -1,3 +1,4 @@
+<!-- #if($Article) -->
 <%@ page import="rgms.publication.Periodico" %>
 <!doctype html>
 <html>
@@ -76,3 +77,4 @@
 </div>
 </body>
 </html>
+<!-- #end -->
