@@ -191,9 +191,7 @@ Then(~'^the thesis "([^"]*)" by "([^"]*)" appears in the thesis view page$') { t
 }
 
 //Scenario: create thesis web without a file
-Given(~'^I am at the create thesis page$') {
 
-}
 
 When(~'^I fill the thesis fields with "([^"]*)", "([^"]*)", "([^"]*)","([^"]*)", "([^"]*)","([^"]*)"$') { title, date, university, address, author, advisor ->
 
@@ -214,9 +212,6 @@ Given(~'^the system has at least one thesis entitled "([^"]*)"$') { title ->
 
 }
 
-And(~'^I am at the thesis search page$') {
-
-}
 
 And(~'^I have already done a search about "([^"]*)" previously$') { title ->
 
