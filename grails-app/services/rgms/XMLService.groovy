@@ -393,8 +393,8 @@ class XMLService {
         newOrientation.orientando = getAttributeValueFromNode(specificData, "NOME-DO-ORIENTADO")
     }
 
-	//#if($Article)
-   static void createJournals(Node xmlFile) {
+    //#if($Article)
+    static void createJournals(Node xmlFile) {
         Node artigosPublicados = (Node) ((Node) xmlFile.children()[1]).children()[1]
         List<Object> artigosPublicadosChildren = artigosPublicados.children()
 
@@ -454,8 +454,8 @@ class XMLService {
         else
             newJournal.volume = 1   //if not parsed successfully, least value possible
     }
-	//#end
-	
+    //#end
+
     static void createMember(Node xmlFile, Member newMember) {
         Node dadosGerais = (Node) xmlFile.children()[0]
         List<Object> dadosGeraisChildren = dadosGerais.children()

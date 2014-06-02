@@ -382,7 +382,7 @@
             <name>selectAndMoveComponent</name>
             <args>reportPeriodico,grails-app/views/periodico/report.gsp</args>
         </transformation>
-    </configuration> 
+    </configuration>
 
     <configuration>
         <expression>rgms</expression>
@@ -1109,7 +1109,7 @@
             <name>selectAndMoveComponent</name>
             <args>ArticleTestDataAndOperations,test/functional/steps/ArticleTestDataAndOperations.groovy</args>
         </transformation>
-    </configuration>    
+    </configuration>
     <configuration>
         <expression>rgms</expression>
         <transformation>
@@ -1123,7 +1123,7 @@
             <name>preprocessFiles</name>
             <args>test/functional/steps/ArticleTestDataAndOperations.groovy</args>
         </transformation>
-    </configuration>    
+    </configuration>
     <configuration>
         <expression>rgms</expression>
         <transformation>
