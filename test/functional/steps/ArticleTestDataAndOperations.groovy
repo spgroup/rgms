@@ -1,3 +1,4 @@
+//#if($Article)
 package steps
 
 import rgms.publication.Periodico
@@ -93,3 +94,5 @@ class ArticleTestDataAndOperations {
         return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
     }
 }
+//#end
+

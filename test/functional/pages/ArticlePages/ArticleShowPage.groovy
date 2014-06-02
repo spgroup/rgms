@@ -1,3 +1,4 @@
+//#if($Article)
 package pages.ArticlePages
 
 import geb.Page
@@ -48,3 +49,4 @@ class ArticleShowPage extends Page {
     }
 //#end
 }
+//#end

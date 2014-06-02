@@ -1,3 +1,4 @@
+//#if($Article)
 package rgms.publication
 
 class Periodico extends Publication {
@@ -22,16 +23,16 @@ class Periodico extends Publication {
 
     @Override
     public String toString() {
-        return "Journal: " +  journal + " | Volume: " + volume + " | Number: " + number
+        return "Journal: " + journal + " | Volume: " + volume + " | Number: " + number
     }
 
     @Override
     public boolean equals(Object other) {
 
-        if(!other || other.getClass() != this.getClass())return false
+        if (!other || other.getClass() != this.getClass()) return false
 
         //Para a interação assim que um valor diferente é encontrado
-        for(elem in other?.properties){
+        for (elem in other?.properties) {
             def thisValue = this."$elem.key"
             def otherValue = elem.value
 
@@ -47,3 +48,4 @@ class Periodico extends Publication {
         return super.hashCode();
     }
 }
+//#end
