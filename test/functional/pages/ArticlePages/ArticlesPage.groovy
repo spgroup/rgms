@@ -28,6 +28,12 @@ class ArticlesPage extends Page {
     def selectNewArticle() {
         $('a.create').click()
     }
+	
+	def selectViewReports() {
+		def listAnchors  = $('a.list')
+		def reportAnchor = listAnchors[1]
+		reportAnchor.click()
+	}
 
     def checkIfArticlesListIsEmpty() {
         def listDiv = $('div', id: 'list-periodico')

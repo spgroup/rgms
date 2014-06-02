@@ -20,7 +20,10 @@ class ArticleTestDataAndOperations {
                     publicationDate: (new Date("12 October 2012"))],
             [journal: "Science of Computer Programming", volume: 455, pages: "2-30",
                     title: "Algebraic reasoning for object-oriented programming",
-                    publicationDate: (new Date("12 October 2012"))]
+                    publicationDate: (new Date("12 October 2012"))],
+			[journal: "Science of Computer Programming", volume: 300, pages: "50-70",
+				title: "Modularity analysis of use case implementations",
+				publicationDate: (new Date("12 October 2012"))]
     ]
 
     static public def findArticleByTitle(String title) {
@@ -60,6 +63,16 @@ class ArticleTestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+	
+	static public void createArticleDated(String title, filename, date) {
+		def cont = new PeriodicoController()
+		cont.params << ArticleTestDataAndOperations.findArticleByTitle(title) << [file: filename]
+        cont.params["publicationDate"] = new Date(date)
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
 
     static void clearArticles() {
         Periodico.findAll()*.delete flush: true // Could also delete the created files.
