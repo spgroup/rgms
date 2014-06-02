@@ -19,4 +19,9 @@ class BibtexGenerateFilePage extends FormPage {
     def showBibtex() {
         $('a.Generate All BibTex').click()
     }
+/* #if($bibtexGenerateFile)
+    def checkBibtexDetails() {
+        assert $('p#bibtex').text() != null
+    }
+    #end */
 }
