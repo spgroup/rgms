@@ -4,7 +4,6 @@ Feature: Visit
   I want to add, remove and modify visits of external members to the group
   so that I can store the visits that external member perform to the group, so do as the visitor
 
-#if ( $visit )
   Scenario: visit of a day for a non stored visitor
     Given the system has no visitor named "Person"
     When I create the visit for the visitor "Person" with initial date "11/11/2000"
@@ -87,9 +86,6 @@ Feature: Visit
     Given I am logged as "admin" and at the Add Visit Page
     When I try to create an visit
     Then The visit "Primeira Visita" is created but no tweet should be post
-
-#end
-
 #end
 
 

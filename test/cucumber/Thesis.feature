@@ -13,7 +13,6 @@ Feature: Thesis Tests
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
     Then  The thesis "New thesis" is properly stored by the system
 
-  #6
   Scenario: remove existing thesis
     Given   the system has thesis entitled "New thesis2"
     When    I delete the thesis "New thesis2"
@@ -30,7 +29,6 @@ Feature: Thesis Tests
     When  I fill some thesis details with "Tese002", "10", "8", "1998", "UFPE" and "Recife"
     Then  I am still on the create thesis page with the error message
 
-   #7
   Scenario: remove existing thesis web
     Given I am at the thesis page and the thesis "Software Enginnering2" is stored in the system
     When I select to view thesis "Software Enginnering2" in resulting list
@@ -66,6 +64,7 @@ Feature: Thesis Tests
     Then the system shows a warning message "Thesis without file, it is mandatory"
 
 #if($contextualInformation)
+  @ignore
   Scenario: search an existing thesis filled by default
     Given the system has at least one thesis entitled "Software Engineering"
     And I am at the thesis search page
@@ -76,22 +75,26 @@ Feature: Thesis Tests
     Then all theses entitled "Software Engineering" are shown
 #end
 
+  @ignore
   Scenario: edit thesis title
     Given the system has thesis entitled "My Thesis"
     When I change the title from "My Thesis" to "My Thesis Renamed"
     Then the thesis entitled "My Thesis Renamed" is properly renamed by the system
     And the other theses are not changed by the system
 
+  @ignore
   Scenario: edit thesis with invalid data
     Given the system has thesis entitled "My Thesis"
     When I change the title from "My Thesis" to ""
     Then the existing thesis are not changed by the system
 
+  @ignore
   Scenario: search a thesis
     Given the system has one thesis entitled "My Thesis"
     When I search for thesis entitled "My Thesis"
     Then the existing thesis are not changed by the system
 
+  @ignore
   Scenario: upload thesis with a file
     Given The system has no thesis entitled "My Thesis"
     When I upload the file "My Thesis.xml"

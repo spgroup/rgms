@@ -153,19 +153,19 @@ Then(~'^the thesis "([^"]*)" is properly removed by the system$') { title ->
 }
 
 //Scenario: order thesis list by date
-Given(~'^at least one thesis is stored in the system$') {
+Given(~'^at least one thesis is stored in the system$') { ->
 
 }
 
-And(~'^I am at the thesis list page$') {
+And(~'^I am at the thesis list page$') { ->
 
 }
 
-And(~'^I click in order thesis by date$') {
+And(~'^I click in order thesis by date$') { ->
 
 }
 
-Then(~'^the returned thesis list has the same items but it is sorted by date$') {
+Then(~'^the returned thesis list has the same items but it is sorted by date$') { ->
 
 }
 
@@ -174,7 +174,7 @@ Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)"
 
 }
 
-And(~'^I am at the thesis search page$') {
+And(~'^I am at the thesis search page$') { ->
 
 }
 
@@ -197,7 +197,7 @@ When(~'^I fill the thesis fields with "([^"]*)", "([^"]*)", "([^"]*)","([^"]*)",
 
 }
 
-And(~'^I click in create button$') {
+And(~'^I click in create button$') { ->
 
 }
 
@@ -225,7 +225,7 @@ And(~'^I choose "([^"]*)" in dropdown search list$') { title ->
 
 }
 
-And(~'^I click in search button$') {
+And(~'^I click in search button$') { ->
 
 }
 
@@ -244,12 +244,12 @@ Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { Str
 
 }
 
-And(~'^the other theses are not changed by the system$') {
+And(~'^the other theses are not changed by the system$') { ->
 
 }
 
 //Scenario: edit thesis with invalid data
-Then(~'^the existing thesis are not changed by the system$') {
+Then(~'^the existing thesis are not changed by the system$') { ->
 
 }
 
