@@ -37,6 +37,7 @@ Feature: technical report
     Then   The technical report is not saved by the system
     And    I remain at the technical report edit page
 
+  @ignore
   Scenario: edit existing technical report with valid title, a valid filename and valid institution
     Given The system has an technical report entitled "TechRepo" with file name "TechRepo.pdf" and institution "UFPE"
     And   I am at the technical reports list page
