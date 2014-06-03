@@ -10,11 +10,6 @@ import steps.ConferenciaTestDataAndOperations
 import steps.ThesisOrDissertationTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
-
-When(~'^I select Generate All BibTex option at the export bibtex page$') {
-    at BibtexGenerateFilePage
-    page.showBibtex()
-}
 // #if($bibtexGenerateFile)
 Then(~'^I can see the bibtex details$') {
     at BibtexGenerateFilePage
@@ -32,28 +27,27 @@ Given(~'^I created one conferencia named "([^"]*)"$') {  String conferencia ->
 }
 
 Given(~'^I created one thesis named "([^"]*)"$') { String thesis ->
-    BibtexGenerateFileTestDataAndOperations.createThesis(thesis);
+    ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(thesis, "thesis", "school", "cont");
     assert Tese.findByTitle(thesis) != null
 }
 
-When(~'^I export all my publications to a bibtex file with the file name "([^"]*)"$') { String filename ->
+When(~'^I export all my publications to the bibtex file "([^"]*)"$') { String filename ->
     BibtexGenerateFileController cont = new BibtexGenerateFileController()
-    cont.params << [id:PublicationController.loggedMember.id.intValue()]
-    // TODO usar o file name
+    cont.params << [id:PublicationController.loggedMember.id.intValue(), filename: filename]
     cont.request.setContent(new byte[1000])
     cont.generateBibTex()
     cont.response.reset()
 }
 
-Then(~'The article "([^"]*)" is inside the bibtex file with the file name "([^"]*)"$') { String article, filename ->
+Then(~'The article "([^"]*)" is inside the bibtex file "([^"]*)"$') { String article, filename ->
     BibtexGenerateFileTestDataAndOperations.checkPublicationInsideBibtex(article, filename)
 }
 
-Then(~'The conferencia "([^"]*)" is inside the bibtex file with the file name "([^"]*)"$') { String conferencia, filename ->
+Then(~'The conferencia "([^"]*)" is inside the bibtex file "([^"]*)"$') { String conferencia, filename ->
     BibtexGenerateFileTestDataAndOperations.checkPublicationInsideBibtex(conferencia, filename)
 }
 
-Then(~'The thesis "([^"]*)" is inside the bibtex file with the file name "([^"]*)"$') { String thesis, filename ->
+Then(~'The thesis "([^"]*)" is inside the bibtex file "([^"]*)"$') { String thesis, filename ->
     BibtexGenerateFileTestDataAndOperations.checkPublicationInsideBibtex(thesis, filename)
 }
 // #end

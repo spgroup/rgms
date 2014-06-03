@@ -47,15 +47,6 @@ Then(~'^I can fill the article details$') {->
     page.fillArticleDetails()
 }
 
-
-/**
- * @author Guilherme
- */
-Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    ArticleTestDataAndOperations.createArticle(title, filename)
-    assert Periodico.findByTitle(title) != null
-}
-
 /**
  * @author Guilherme
  */

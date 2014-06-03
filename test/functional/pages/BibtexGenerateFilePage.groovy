@@ -1,10 +1,11 @@
 package pages
-
+// #if($bibtexGenerateFile)
 class BibtexGenerateFilePage extends FormPage {
+    def titleName = /${(new GetPageTitle()).getMessageServerLocale("bibtex.generate.title")}/
     static url = "bibtexGenerateFile/home"
 
     static at = {
-        title ==~ /Member Listagem/
+        title ==~ titleName
     }
 
     static content = {
@@ -16,12 +17,9 @@ class BibtexGenerateFilePage extends FormPage {
         }
     }
 
-    def showBibtex() {
-        $('a.Generate All BibTex').click()
+    def select(String s) {
+        $('div').find('a', text: s).click()
     }
-/* #if($bibtexGenerateFile)
-    def checkBibtexDetails() {
-        assert $('p#bibtex').text() != null
-    }
-    #end */
+
 }
+// #end

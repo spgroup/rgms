@@ -5,12 +5,13 @@ import geb.Page
 /**
  * Created by ELLIS on 20/05/2014.
  */
-// #if($ResearchGate)
+// #if($researchGate)
 class ResearchGatePage extends Page {
+    def titleName = /${(new GetPageTitle()).getMessageServerLocale("researchgate.title")}/
     static url = "bibtexGenerateFile/toResearchGate"
 
     static at = {
-        title ==~ /Exportar para Research Gate/
+        title ==~ titleName
     }
 
     def fillCredentials() {
@@ -20,6 +21,10 @@ class ResearchGatePage extends Page {
 
     def clickOnExport() {
         $("#btnExport").click()
+    }
+
+    def consultOnResearchGate(string filename) {
+        return ResearchGateTool.consult(filename);
     }
 }
 // #end

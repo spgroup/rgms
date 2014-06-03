@@ -2,37 +2,15 @@ import pages.BibtexGenerateFilePage
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGatePage
+import rgms.authentication.User
 import rgms.publication.Periodico
 import steps.ArticleTestDataAndOperations
 import steps.ResearchGateTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
-// #if($ResearchGate)
-Given(~'^I have the article "([^"]*)" with file name "([^"]*)" stored in the system$') { String title, filename ->
-    ArticleTestDataAndOperations.createArticle(title, filename)
-    assert Periodico.findByTitle(title) != null
-}
-
-When(~'^I export a file with the articles "([^"]*)" and "([^"]*)" to Research Gate$') { String article1, article2 ->
-    Periodico p1 = Periodico.findByTitle(article1);
-    Periodico p2 = Periodico.findByTitle(article2);
-    ResearchGateTestDataAndOperations.exportFile(p1, p2);
-}
-
-Then(~'^The articles "([^"]*)" and "([^"]*)" are stored on Research Gate database$') { String article1, article2 ->
-    Periodico p1 = Periodico.findByTitle(article1);
-    Periodico p2 = Periodico.findByTitle(article2);
-    assert ResearchGateTestDataAndOperations.fileIsOnResearchGate(p1)
-    assert ResearchGateTestDataAndOperations.fileIsOnResearchGate(p2)
-}
-
+// #if($researchGate)
 Given(~'^my Research Gate credentials were not given to the system previously$') {
-    assert ResearchGateTestDataAndOperations.getUserResearchGateCredentials() == null
-}
-
-When(~'^I select Export to Research Gate option at the export bibtex page$') {
-    at BibtexGenerateFilePage
-    page.select("Export to Research Gate")
+    assert User.getResearchGateCredentials() == null
 }
 
 Then(~'^I can fill my Research Gate credentials$') {
@@ -62,7 +40,9 @@ When(~'^I click on the button Export$') {
 }
 
 Then(~'^I can see the articles "([^"]*)" and "([^"]*)" on the Research Gate website$') { String article1, article2 ->
-    at ResearchGateWebsite
-    // TODO find articles
+    at ResearchGatePage
+    assert page.consultOnResearchGate(article1) != null
+    assert page.consultOnResearchGate(article2) != null
 }
+
 // #end
