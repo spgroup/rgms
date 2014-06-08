@@ -13,7 +13,7 @@ Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-	ArticleTestDataAndOperations.createArticle(title, filename)
+	ArticleTestDataAndOperations.createArticle(title, filename,null,null)
 }
 
 Then(~'^the article "([^"]*)" is properly stored by the system$') { String title ->
@@ -22,7 +22,7 @@ Then(~'^the article "([^"]*)" is properly stored by the system$') { String title
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*)" field blank$') { String title, String filename, String field ->
-	ArticleTestDataAndOperations.createArticle(title, filename)
+	ArticleTestDataAndOperations.createArticle(title, filename,null,null)
 	def article = ArticleTestDataAndOperations.findArticleByTitle(title)
 	assert article.{field} == null
 }
@@ -52,7 +52,7 @@ Then(~'^I can fill the article details$') {->
  * @author Guilherme
  */
 Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-	ArticleTestDataAndOperations.createArticle(title, filename)
+	ArticleTestDataAndOperations.createArticle(title, filename,null,null)
 	assert Periodico.findByTitle(title) != null
 }
 
@@ -359,22 +359,65 @@ Then(~'^my resulting report of articles contains "([^"]*)"$') { String title ->
 //#end
 
 Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)" dated on "([^"]*)"$'){String title, filename, date->
-	ArticleTestDataAndOperations.createArticleDated(title, filename, date)
+	ArticleTestDataAndOperations.createArticle(title, filename, date, null)
 	assert Periodico.findByTitle(title) != null
 }
 
 When(~'^the system orders the article list by title$') {->
 	articlesSorted = Periodico.listOrderByTitle(order: "asc")
-	assert articlesSorted != null
+	assert ArticleTestDataAndOperations.isSorted(articlesSorted, "title")
+
 }
 
 When(~'^the system orders the article list by publication date$') {->
 	articlesSorted = Periodico.listOrderByPublicationDate(order: "asc")
-	assert articlesSorted != null
+	assert ArticleTestDataAndOperations.isSorted(articlesSorted, "publication date")
 }
 
 Then(~'^the system article list content is not modified$') {->
 	assert Periodico.findAll().size() == 2
+}
+
+Given(~'^the system has some articles created$'){->
+	at ArticlesPage
+	page.selectNewArticle()
+	at ArticleCreatePage
+	page.fillArticleDetails(ArticleTestDataAndOperations.path() + 'MACI.pdf', 'Modularity analysis of use case implementations',"17","10","2013")
+	page.selectCreateArticle()
+	assert !periodicoNoExist('Modularity analysis of use case implementations')
+	to ArticlesPage
+	page.selectNewArticle()
+	at ArticleCreatePage
+	page.fillArticleDetails(ArticleTestDataAndOperations.path() + 'TCS-1401.pdf', 'A theory of software product line refinement',"12","11","2012")
+	page.selectCreateArticle()
+	assert !periodicoNoExist('A theory of software product line refinement')
+	to ArticlesPage
+}
+
+When(~'^I select to view the list of articles$') {->
+	at ArticlesPage
+	page.selectViewArticleList()
+	assert Periodico.findAll().size() == 2
+}
+
+And(~'^I select to order the list of articles by "([^"]*)"$') {String sortType->
+	at ArticlesPage
+	page.selectOrderBy(sortType)
+}
+
+Then(~'^my article list shows the articles ordered by "([^"]*)"$') {String sortType->
+	at ArticlesPage
+	page.checkOrderedBy(sortType);
+}
+
+Given(~'^the system has some articles authored by "([^"]*)"$'){String authorName->
+	ArticleTestDataAndOperations.createArticle('A theory of software product line refinement', 'TCSOS.pdf', null, 'Paulo Borba')
+	ArticleTestDataAndOperations.createArticle('Algebraic reasoning for object-oriented programming', 'AROOP.pdf', null, null)
+	assert (!periodicoNoExist('A theory of software product line refinement') && !periodicoNoExist('Algebraic reasoning for object-oriented programming'))
+}
+
+When(~'^the system filter the articles authored by author "([^"]*)"$') {String authorName->
+	assert true
 }
 
 

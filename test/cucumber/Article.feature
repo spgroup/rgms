@@ -171,37 +171,35 @@ Feature: journal article
 
 Scenario: list existing articles in alphabetical order of title web
 	Given I am at the articles page 
-	And	the system has some articles stored
+	And the system has some articles created
 	When I select to view the list of articles
-	And	I select to order the list of articles by "title"
+	And I select to order the list of articles by "title"
 	Then my article list shows the articles ordered by "title"
 
-  Scenario:	list existing articles ordered by publication date web
+  Scenario: list existing articles ordered by publication date web
 	Given I am at the articles page 
-	And	the system has some articles stored
+	And the system has some articles created
 	When I select to view the list of articles
-	And	I select to order the list of articles by "publication date"
+	And I select to order the list of articles by "publication date"
 	Then my article list shows the articles ordered by "publication date"
 
-  Scenario:	new invalid article web (title field blank)
+  Scenario: new invalid article web (title field blank)
 	Given I am at the new article page
 	When I fill all article information except the title field
-	And	I select to create the article
+	And I select to create the article
 	Then an error message is showed for the title field
 
-  Scenario:	filter existing articles by author web
+  Scenario: filter existing articles by author web
 	Given I am at the articles page 
-	And	the system has some articles authored by "Paulo Borba"
+	And the system has some articles authored by "Paulo Borba"
 	When I select to view the list of articles
-	And	I select to filter the list of articles by author "Paulo Borba"
+	And I select to filter the list of articles by author "Paulo Borba"
 	Then my article list shows only the articles authored  by "Paulo Borba"
 
-  Scenario:	remove multiple articles web
+  Scenario: remove multiple articles web
 	Given I am at the articles page 
-	And	the system has 3 articles entitled "A theory of product line 1", "A theory of product line 2" and "A theory of product line 3"
+	And the system has 3 articles entitled "A theory of product line 1", "A theory of product line 2" and "A theory of product line 3"
 	When I am at the articles view list
-	And	I select the articles "A theory of product line 1" and "A theory of product line 3"
-	And	I select to remove the selected articles
+	And I select the articles "A theory of product line 1" and "A theory of product line 3"
+	And I select to remove the selected articles
 	Then my article list page contains only the "A theory of product line 2" article
-
-	
