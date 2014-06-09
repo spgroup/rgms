@@ -1,4 +1,3 @@
-//#if($Article)
 package steps
 
 import rgms.publication.Periodico
@@ -116,6 +115,13 @@ class ArticleTestDataAndOperations {
 		}
 		return isSorted
 	}
+	
+	static public def isFiltered(articles,authorName) {
+		for (article in articles) {
+			if(!(article.authors).contains(authorName))
+				return false
+		}
+		return true
+	}
 }
-//#end
 

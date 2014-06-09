@@ -417,9 +417,35 @@ Given(~'^the system has some articles authored by "([^"]*)"$'){String authorName
 }
 
 When(~'^the system filter the articles authored by author "([^"]*)"$') {String authorName->
-	assert true
+	articlesFiltered = Periodico.findAllByAuthor(authorName)
+	assert ArticleTestDataAndOperations.isFiltered(articlesFiltered,authorName)
 }
 
+And(~'^I create some articles authored by "([^"]*)"$') {String authorName->
+	at ArticlesPage
+	page.selectNewArticle()
+	at ArticleCreatePage
+	page.fillArticleDetails(ArticleTestDataAndOperations.path() + 'MACI.pdf', 'Modularity analysis of use case implementations', authorName)
+	page.selectCreateArticle()
+	assert !periodicoNoExist('Modularity analysis of use case implementations')
+	to ArticlesPage
+	page.selectNewArticle()
+	at ArticleCreatePage
+	page.fillArticleDetails(ArticleTestDataAndOperations.path() + 'TCS-1401.pdf', 'A theory of software product line refinement')
+	page.selectCreateArticle()
+	assert !periodicoNoExist('A theory of software product line refinement')
+	to ArticlesPage
+}
+
+And(~'^I select to filter the list of articles by author "([^"]*)"$') {String authorName->
+	at ArticlesPage
+	page.fillAndSelectFilter(authorName)
+}
+
+Then(~'^my article list shows only the articles authored by "([^"]*)"$') {String authorName->
+	at ArticlesPage
+	assert page.checkFilteredBy(authorName);
+}
 
 //Funcoes Auxiliares
 def addPage(){

@@ -191,10 +191,10 @@ Scenario: list existing articles in alphabetical order of title web
 
   Scenario: filter existing articles by author web
 	Given I am at the articles page 
-	And the system has some articles authored by "Paulo Borba"
+	And I create some articles authored by "Paulo Borba"
 	When I select to view the list of articles
 	And I select to filter the list of articles by author "Paulo Borba"
-	Then my article list shows only the articles authored  by "Paulo Borba"
+	Then my article list shows only the articles authored by "Paulo Borba"
 
   Scenario: remove multiple articles web
 	Given I am at the articles page 

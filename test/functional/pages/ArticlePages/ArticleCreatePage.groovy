@@ -44,6 +44,16 @@ class ArticleCreatePage extends FormPage {
 
 	}
 
+	def fillArticleDetails(filename, title, authorName) {
+		$("form").title = title
+		$("form").journal = "Theoretical Computer Science"
+		$("form").authors = authorName
+		$("form").file = filename
+		$("form").volume = 455
+		$("form").number = 1
+		$("form").pages = "2-30"
+	}
+
 	def selectCreateArticle() {
 		$("input", name: "create").click()
 	}

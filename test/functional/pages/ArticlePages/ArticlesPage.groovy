@@ -97,11 +97,28 @@ class ArticlesPage extends Page {
 		def articleColumns = articleRows[row].find('td')
 		return articleColumns
 	}
-	
+
 	def selectViewArticleList() {
 		def listAnchors  = $('a.list')
 		def listAnchor = listAnchors[0]
 		listAnchor.click()
+	}
+
+	def fillAndSelectFilter(authorName){
+		$("form").author = authorName
+		$("input", id: "findByAuthor").click()
+	}
+
+	def checkFilteredBy(authorName){
+		def listDiv = $('div', id: 'list-periodico')
+		def articleTable = (listDiv.find('table'))[0]
+		def articleRows = articleTable.find('tbody').find('tr')
+		for (row in articleRows) {
+			def articleColumns = row.find('td')
+			if(!articleColumns[4].text().contains(authorName))
+				return false
+		}
+		return true
 	}
 }
 //#end
