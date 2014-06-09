@@ -170,29 +170,36 @@ Then(~'^the returned thesis list has the same items but it is sorted by date$') 
 }
 
 //Scenario: search an existing thesis
-Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)", year of publication "([^"]*)" and university "([^"]*)"$') { title, author, year, university ->
-
+Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)", year of publication "([^"]*)" and university "([^"]*)"$') { title, author, year, school ->
+    ThesisTestDataAndOperations.createTese(title, author, year, school)
+    tese = Tese.findByTitle(title)
 }
 
 And(~'^I am at the thesis search page$') { ->
-
+    to ThesisSearchPage
+    at ThesisSearchPage
 }
 
 When(~'^I search for "([^"]*)" by "([^"]*)"$') { title, author ->
-
+    at ThesisSearchPage
+    page.fillSomeSearchDetails(title, author)
+    page.search()
 }
 
 And(~'^I select to view the entry that has university "([^"]*)" and publication year "([^"]*)"$') { university, year ->
+    at ThesisSearchPage
 
+    page.selectViewThesisByUniversityAndYear(university, year)
 }
 
 Then(~'^the thesis "([^"]*)" by "([^"]*)" appears in the thesis view page$') { title, year ->
+    at ThesisSearchPage
 
+    tese = Tese.findByTitle(title, year)
+    assert tese != null
 }
 
 //Scenario: create thesis web without a file
-
-
 When(~'^I fill the thesis fields with "([^"]*)", "([^"]*)", "([^"]*)","([^"]*)", "([^"]*)","([^"]*)"$') { title, date, university, address, author, advisor ->
 
 }
@@ -205,42 +212,57 @@ Then(~'^the system shows a warning message "([^"]*)"$') { warningmessage ->
 
 }
 
-//#if($contextualInformation)
 //    Scenario: search an existing thesis filled by default
-
+//#if($contextualInformation)
 Given(~'^the system has at least one thesis entitled "([^"]*)"$') { title ->
 
+    ThesisTestDataAndOperations.createTese(title, "teste.txt", "UFPE")
+    tese = Tese.findByTitle(title)
+    assert tese != null
 }
 
 
 And(~'^I have already done a search about "([^"]*)" previously$') { title ->
+    to ThesisSearchPage
+    at ThesisSearchPage
 
+    page.fillSearch(title)
+    page.search();
 }
 
 When(~'^I press "([^"]*)"$') { input ->
+    at ThesisSearchPage
 
+    page.fillSearch(input)
+    page.showDropdownList()
 }
 
 And(~'^I choose "([^"]*)" in dropdown search list$') { title ->
+    at ThesisSearchPage
 
+    page.selectThesisInDropdownList(title)
 }
 
 And(~'^I click in search button$') { ->
-
+    at ThesisSearchPage
+    page.search()
 }
 
 Then(~'^all theses entitled "([^"]*)" are shown$') { title ->
+    at ThesisSearchPage
 
+    tese = Tese.findByTitle(title)
+    assert tese != null
 }
 
 //#end
 
 //Scenario: edit thesis title
-When(~'^I change the title from "([^"]*)" to "([^"]*)"$') { String title, newtitle ->
+When(~'^I change the title from "([^"]*)" to "([^"]*)"$') { title, newtitle ->
 
 }
 
-Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { String title, newtitle ->
+Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { title, newtitle ->
 
 }
 
@@ -262,11 +284,15 @@ When(~'^I search for thesis entitled "([^"]*)"$') { title ->
 
 //Scenario: upload thesis with a file
 When(~'^I upload the file "([^"]*)"$') { file ->
-
+    path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + arg1
+    initialSize = Tese.findAll().size()
+    ThesisTestDataAndOperations.uploadArticle(path)
+    finalSize = Periodico.findAll().size()
+    assert initialSize < finalSize
 }
 
 And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
-
+    assert ThesisTestDataAndOperations.containsThesis(title)
 }
 
 //FUNÇÔES AUXILIARES
