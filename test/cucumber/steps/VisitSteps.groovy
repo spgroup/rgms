@@ -183,6 +183,109 @@ Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and
 }
 
 
+/**
+ * @author mclv
+ */
+Given(~'^the system has visits with initial or final date greater than or equal "([^"]*)"$') { String date ->
+	TestDataAndOperationsVisit.createVisit("Person", date, date)
+}
+
+/**
+ * @author mclv
+ */
+When(~'^I view the list of visits for the period from "([^"]*)" to today$') { String date ->
+	def visits = TestDataAndOperationsVisit.searchVisit("Person", date, date)
+	//def visits = Visit.findAllFromPeriod(date)
+	assert visits != null
+}
+
+/**
+ * @author mclv
+ */
+Then(~'^no data is stored by the system$') { ->
+	assert Visitor.findByName("Person") != null
+}
+
+/**
+ * @author mclv
+ */
+Given(~'^I am at the Add Visit Page$') { ->
+	to VisitCreatePage
+}
+
+/**
+ * @author mclv
+ */
+Given(~'^I have created a visitor named "([^"]*)"$') { ->
+	at VisitCreatePage
+	page.fillVisitDetails(name)
+	page.clickOnCreate()
+}
+
+/**
+ * @author mclv
+ */
+When(~'^I try to create the visit for the visitor "([^"]*)"$') { String name ->
+	at VisitCreatePage
+	page.fillVisitDetails(name)
+	page.clickOnCreate()
+}
+
+/**
+ * @author mclv
+ */
+Then(~'^the Confirm Identification Page is open$') { String name ->
+	at ConfirmIdentificationPage
+}
+
+/**
+ * @author mclv
+ */
+Given(~'^I have tried to create a visit with initial date "([^"]*)" for the visitor "([^"]*)" that already exists$') { String date, String name ->
+	at VisitCreatePage
+	page.fillVisitDetails(name)
+	page.clickOnCreate()
+}
+
+/**
+ * @author mclv
+ */
+Given(~'^I am at the Confirm Identification Page$') { ->
+	at ConfirmIdentificationPage
+}
+
+/**
+ * @author mclv
+ */
+When(~'^I press the "Yes" button$') { ->
+	at ConfirmIdentificationPage
+	page.clickYes()
+}
+
+/**
+ * @author mclv
+ */
+Then(~'^the visit with initial date "([^"]*)" for the visitor "([^"]*)" is properly stored by the system$') { String date, String name ->
+	assert TestDataAndOperationsVisit.searchVisit(name, date, date) != null
+}
+
+/**
+ * @author mclv
+ */
+When(~'^I press the "No" button$') { ->
+	at ConfirmIdentificationPage
+	page.clickNo()
+}
+
+/**
+ * @author mclv
+ */
+Then(~'^a new visitor "([^"]*)" is created$') { String name ->
+	at VisitCreatePage
+	page.fillVisitDetails(name)
+	page.clickOnCreate()
+}
+
 //#if( $Twitter )
 
 Given(~'^I am logged as "([^"]*)" and at the Add Visit Page$') { String userName ->
