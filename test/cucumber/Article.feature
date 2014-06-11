@@ -145,21 +145,21 @@ Feature: journal article
 	When the system orders the article list by publication date
 	Then the system article list content is not modified
 
-  Scenario:	new invalid article (title field blank)
-	Given the all fields from article information are filled except the title field
-	When the system try to create the article
-	Then the article with blank title field is not stored by the system
+  Scenario: new invalid article (title field blank)
+	Given the system has no article without title and with filename "TCS-01.pdf"
+	When I create the article with filename "TCS-01.pdf" and with the title field blank
+	Then the article with blank title and with filename "TCS-01.pdf" field is not stored by the system
 
   Scenario: filter existing articles by author
 	Given the system has some articles authored by "Paulo Borba"
 	When the system filter the articles authored by author "Paulo Borba"
 	Then the system article list content is not modified
 
-  Scenario:	remove multiple articles
-	Given the system has 3 articles entitled "A theory of product line 1", "A theory of product line 2" and "A theory of product line 3"
+  Scenario: remove multiple articles
+	Given the system has 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf" and "Modularity analysis of use case implementations" with file name "MACI-03.pdf"
 	When I remove the articles "A theory of product line 1" and "A theory of product line 3"
-	Then the system remove the articles "A theory of product line 1" and "A theory of product line 3"
-	And the system contains only the "A theory of product line 2" article
+	Then the system remove the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
+	And the system contains the "Algebraic reasoning for object-oriented programming" article
 
 #if($Report)  
   Scenario:	report existing article web
@@ -198,8 +198,8 @@ Scenario: list existing articles in alphabetical order of title web
 
   Scenario: remove multiple articles web
 	Given I am at the articles page 
-	And the system has 3 articles entitled "A theory of product line 1", "A theory of product line 2" and "A theory of product line 3"
-	When I am at the articles view list
-	And I select the articles "A theory of product line 1" and "A theory of product line 3"
+	And I create 3 articles entitled "A theory of product line 1" with file name "TCS-01.pdf", "A theory of product line 2" with file name "TCS-02.pdf" and "A theory of product line 3" with file name "TCS-01.pdf"
+	When I select to view the list of articles	
+	And I mark multiple articles to be removed
 	And I select to remove the selected articles
-	Then my article list page contains only the "A theory of product line 2" article
+	Then my resulting articles list contains "A theory of product line 2"

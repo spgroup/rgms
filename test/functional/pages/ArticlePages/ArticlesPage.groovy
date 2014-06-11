@@ -120,5 +120,15 @@ class ArticlesPage extends Page {
 		}
 		return true
 	}
+
+	def selectRemoveMultipleArticles() {
+		$("input", id: "removeMultiple").click()
+	}
+
+	def markArticles(){
+		def listcheckbox  = $('checkbox')
+		listcheckbox[0].click()
+		listcheckbox[2].click()
+	}
 }
 //#end

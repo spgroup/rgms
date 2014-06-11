@@ -54,6 +54,14 @@ class ArticleCreatePage extends FormPage {
 		$("form").pages = "2-30"
 	}
 
+	def fillArticleDetailsExceptTitle() {
+		$("form").journal = "Theoretical Computer Science"
+		$("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
+		$("form").volume = 455
+		$("form").number = 1
+		$("form").pages = "2-30"
+	}
+	
 	def selectCreateArticle() {
 		$("input", name: "create").click()
 	}

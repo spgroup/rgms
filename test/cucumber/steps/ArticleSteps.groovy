@@ -397,7 +397,6 @@ Given(~'^the system has some articles created$'){->
 When(~'^I select to view the list of articles$') {->
 	at ArticlesPage
 	page.selectViewArticleList()
-	assert Periodico.findAll().size() == 2
 }
 
 And(~'^I select to order the list of articles by "([^"]*)"$') {String sortType->
@@ -457,4 +456,95 @@ def addPage(){
 	println path
 	def f = new File(path)
 	println "exist Path?" + f.exists()
+}
+
+
+def addNewArticleWeb(title, filename){
+	selectNewArticleInArticlesPage()
+	page.fillArticleDetails(ArticleTestDataAndOperations.path() + filename, title)
+	page.selectCreateArticle()
+	assert !periodicoNoExist(title)
+	to ArticlesPage
+	at ArticlesPage
+}
+
+Given(~'^the system has 3 articles entitled "([^"]*)" with file name "([^"]*)", "([^"]*)" with file name "([^"]*)" and "([^"]*)" with file name "([^"]*)"$') {String title1, filename1, title2, filename2, title3, filename3 ->
+	ArticleTestDataAndOperations.createArticle(title1, filename1,null,null)
+	ArticleTestDataAndOperations.createArticle(title2, filename2,null,null)
+	ArticleTestDataAndOperations.createArticle(title3, filename3,null,null)
+	assert Periodico.findByTitle(title1) != null
+	assert Periodico.findByTitle(title2) != null
+	assert Periodico.findByTitle(title3) != null
+}
+
+When(~'^I remove the articles "([^"]*)" and "([^"]*)"$') { String title1, title2 ->
+
+	Periodico.removeMultipleArticle(title1, title2)
+
+	def testDeleteArticle1 = Periodico.findByTitle(title1)
+	def testDeleteArticle2 = Periodico.findByTitle(title2)
+	assert testDeleteArticle1 == null
+	assert testDeleteArticle2 == null
+}
+
+Then(~'^the system remove the articles "([^"]*)" and "([^"]*)"$') { String title1, title2 ->
+	assert periodicoNoExist(title1)
+	assert periodicoNoExist(title2)
+}
+
+And(~'^the system contains the "([^"]*)" article$') { String title1 ->
+	assert Periodico.findByTitle(title1) != null
+}
+
+And(~'^I create 3 articles entitled "([^"]*)" with file name "([^"]*)", "([^"]*)" with file name "([^"]*)" and "([^"]*)" with file name "([^"]*)"$') { String title1, filename1, title2, filename2, title3, filename3 ->
+	addNewArticleWeb(title1, filename1)
+	addNewArticleWeb(title2, filename2)
+	addNewArticleWeb(title3, filename3)
+}
+
+And(~'I select to remove the selected articles$') {->
+	at ArticlesPage
+	page.selectRemoveMultipleArticles()
+}
+
+Given(~'^I am at the new article page$'){->
+	Login()
+	at PublicationsPage
+	page.select("Periodico")
+	selectNewArticleInArticlesPage()
+}
+
+When(~'^I fill all article information except the title field$') {->
+	at ArticleCreatePage
+	page.fillArticleDetailsExceptTitle()
+}
+
+And(~'^I select to create the article$') {->
+	at ArticleCreatePage
+	page.selectCreateArticle()
+}
+
+When(~'^I create the article with filename "([^"]*)" and with the title field blank$') {String filename ->
+	ArticleTestDataAndOperations.createArticleWithoutTitle(filename)
+	def article = ArticleTestDataAndOperations.findArticleByFilename(filename)
+	assert article.{title} == null
+}
+
+Given(~'^the system has no article without title and with filename "([^"]*)"$') {String filename ->
+	def article = Periodico.findByFile(filename)
+	assert article == null
+}
+
+Then(~'^the article with blank title and with filename "([^"]*)" field is not stored by the system$') {String filename ->
+	def article = Periodico.findByFile(filename)
+	assert article == null
+}
+
+Then(~'^an error message is showed for the title field$') { ->
+	assert (page.readFlashMessage() != null)
+}
+
+And(~'^I mark multiple articles to be removed$') {->
+	at ArticlePage
+	page.markArticles()
 }

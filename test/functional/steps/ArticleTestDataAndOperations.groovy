@@ -22,7 +22,9 @@ class ArticleTestDataAndOperations {
 			publicationDate: (new Date("12 October 2012"))],
 		[journal: "Science of Computer Programming", volume: 300, pages: "50-70",
 			title: "Modularity analysis of use case implementations",
-			publicationDate: (new Date("12 October 2012"))]
+			publicationDate: (new Date("12 October 2012"))],
+		[journal: "Science of Computer Programming", volume: 255, pages: "30-50",
+			filename: "TCS-01.pdf", publicationDate: (new Date("12 October 2012"))]
 	]
 
 	static public def findArticleByTitle(String title) {
@@ -69,6 +71,15 @@ class ArticleTestDataAndOperations {
 		cont.response.reset()
 	}
 
+	static public void createArticleWithoutTitle(filename) {
+		def cont = new PeriodicoController()
+		cont.params << ArticleTestDataAndOperations.findArticleByFilename(filename) 
+		cont.request.setContent(new byte[1000]) // Could also vary the request content.
+		cont.create()
+		cont.save()
+		cont.response.reset()
+	}
+	
 	static void clearArticles() {
 		Periodico.findAll()*.delete flush: true // Could also delete the created files.
 	}
@@ -122,6 +133,12 @@ class ArticleTestDataAndOperations {
 				return false
 		}
 		return true
+	}
+	
+	static public def findArticleByFilename(String filename) {
+		articles.find { article ->
+			article.filename == filename
+		}
 	}
 }
 
