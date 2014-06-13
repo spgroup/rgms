@@ -37,7 +37,7 @@ class ResearchProjectTestDadaAndOperations {
              responsible: "Paulo Henrique Monteiro Borba",
              startYear: 2001,
              endYear: 2004,
-             members: ["Bruno Soares da Silva","Dyego Felipe Oliveira de Penha", "Pedro Henrique Torres Gonçalves"]
+             members: ["Bruno Soares da Silva"]
             ],
             [projectName:"Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated",
                description:"Neste projeto pretendemso definir e validar um método para a implementação de aplicações orientadas a objetos complexas. Em particular, este método deve suportar uma abordagem progressiva para implementação orientada a objetos, de forma que aspectos de distribuição, concorrência, e persistência não sejam inicialmente considerados pelo processo de implementação, mas sejam gradualmente introduzidos, preservando os requisitos funcionais da aplicação.",
@@ -45,8 +45,14 @@ class ResearchProjectTestDadaAndOperations {
                responsible: "Paulo Henrique Monteiro Borba",
                startYear: 2000,
                endYear: 2003,
-               funders: FunderTestDataAndOperations.funder[0],
                members: ["Rubens Lopes da Silva", "Rubens Lopes da Silva"]
+            ],
+            [projectName:"Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web",
+                    description:"Neste projeto pretendemso definir e validar um método para a implementação de aplicações orientadas a Aspectos Complexas web. Em particular, este método deve suportar uma abordagem progressiva para implementação orientada a objetos, de forma que aspectos de distribuição, concorrência, e persistência não sejam inicialmente considerados pelo processo de implementação, mas sejam gradualmente introduzidos, preservando os requisitos funcionais da aplicação.",
+                    status:"CONCLUIDO",
+                    responsible: "Paulo Henrique Monteiro Borba",
+                    startYear: 2001,
+                    endYear: 2004,
             ]
     ]
 

@@ -84,10 +84,9 @@ Feature: research project
 
   Scenario: new research project web
     Given I am at new research project page
-    And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with all required data
-    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is properly stored by the system
-    And it is shown in the research project list with name "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
+    When I can create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" with all required data
+    Then it is shown in the research project list with name "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
 
   Scenario: new invalid research project with blank name web
     Given I am at new research project page
@@ -99,16 +98,16 @@ Feature: research project
 
   Scenario: new invalid research project with blank description web
     Given I am at new research project page
-    And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas"
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" with description field blank
-    Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" is not stored by the system because it is invalid
+    And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
+    When I can try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" with description field blank
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" is not stored by the system because it is invalid
     And  I'm still on the new research project page
     And no research project stored is affected
 
   Scenario: duplicated research project web
     Given I am at new research project page
-    And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored twice
-    And it is not shown duplicated in the research project list
-    And  the system shows an warning message at the research project page
+    And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
+    When I can try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
+    Then  the system shows an warning message at the new research project page
+    And the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" is not shown duplicated in the research project list
+

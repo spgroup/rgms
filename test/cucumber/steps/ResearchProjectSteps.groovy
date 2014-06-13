@@ -17,7 +17,10 @@ def initialSize = 0
 
 //Create Research Project
 Given(~'^the system has no research project named as "([^"]*)"$'){ String projectName ->
-    assert checkIfResearchProjectNoExists(projectName)
+
+    if (!checkIfResearchProjectNoExists(projectName)) {
+        ResearchProject.findByProjectName(projectName).delete()
+    }
 }
 
 When(~'^I create a research project named as "([^"]*)" with all required data$'){ String projectName ->
@@ -194,7 +197,12 @@ Given (~'^I am at new research project page$'){ ->
     to ResearchProjectPage
     page.selectNewReseachGroup()
     at ResearchProjectPageCreatePage
-    page.fillResearchProjectDetails()
+
+}
+
+When(~'^I can create a research project named as "([^"]*)" with all required data$'){ String projectName ->
+    page.fillResearchProjectDetails(projectName)
+    page.createResearchProject()
 }
 
 Then (~'^I\'m still on the new research project page$'){ ->
@@ -206,12 +214,30 @@ Then(~'^it is shown in the research project list with name "([^"]*)"$'){ String 
     page.checkResearchGroupAtList(projectName)
 }
 
-Then(~'^it is not shown duplicated in the research project list$'){ ->
-    // Como mostrar erro
+When(~'^I can try to create a research project named as "([^"]*)" with description field blank$'){ String projectName ->
+    // updated
+    ResearchProjectTestDadaAndOperations.oldProjects =  ResearchProject.findAll()
+    page.fillResearchProjectDetailsWithBlankDescription(projectName)
+    page.createResearchProject()
 }
 
-Then(~'^the system shows an warning message at the research project page$'){ ->
-    // Como mostrar erro
+
+When(~'^I can try to create a research project named as "([^"]*)"$'){ String projectName ->
+    // updated
+    ResearchProjectTestDadaAndOperations.oldProjects =  ResearchProject.findAll()
+    at ResearchProjectPageCreatePage
+    page.fillResearchProjectDetails(projectName)
+    page.createResearchProject()
+}
+
+Then(~'^the research project "([^"]*)" is not shown duplicated in the research project list$'){ projectName ->
+    to ResearchProjectPage
+    page.checkResearchGroupDuplicatedAtList(projectName)
+}
+
+Then(~'^the system shows an warning message at the new research project page$'){ ->
+    at ResearchProjectPageCreatePage
+    page.checkHasErrorMsg()
 }
 
 //Aux Functions
@@ -222,6 +248,10 @@ def checkIfResearchProjectNoExists(String projectName){
 
 def checkIfResearchProjectExists(String projectName){
     ResearchProject project = ResearchProject.findByProjectName(projectName)
+    Console.println(projectName)
+    if (project == null) {
+        Console.println("Project NUll")
+    }
     ResearchProject project2 = ResearchProjectTestDadaAndOperations.findResearchProjectByProjectName(projectName)
     project.equals(project2)
 }

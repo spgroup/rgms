@@ -54,4 +54,21 @@ class ResearchProjectPage extends FormPage {
         assert researchGroupColumns[0].text() == projectName
     }
 
+    def checkResearchGroupDuplicatedAtList(projectName) {
+        boolean check = true;
+        def listDiv = $('div', id: 'list-researchProject')
+        def researchGroupTable = (listDiv.find('table'))[0]
+        def researchGroupRows = researchGroupTable.find('tbody').find('tr')
+        int size = researchGroupRows.size();
+        if (size > 1) {
+            def researchGroupColumns = researchGroupRows[size - 1].find('td')
+            def researchGroupColumnsPreviews = researchGroupRows[size - 2].find('td')
+            if ((researchGroupColumns[0].text() == projectName) &&
+                    researchGroupColumnsPreviews[0].text() == projectName) {
+                check = false
+            }
+        }
+        assert check
+    }
+
 }
