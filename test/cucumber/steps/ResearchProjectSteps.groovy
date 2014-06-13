@@ -248,10 +248,6 @@ def checkIfResearchProjectNoExists(String projectName){
 
 def checkIfResearchProjectExists(String projectName){
     ResearchProject project = ResearchProject.findByProjectName(projectName)
-    Console.println(projectName)
-    if (project == null) {
-        Console.println("Project NUll")
-    }
     ResearchProject project2 = ResearchProjectTestDadaAndOperations.findResearchProjectByProjectName(projectName)
     project.equals(project2)
 }
