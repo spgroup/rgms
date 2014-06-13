@@ -94,7 +94,7 @@ Feature: research project
     And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     When I try to create a research project named as ""
     Then the research project "" is not stored by the system because it is invalid
-    And  the system shows an error message at the research project page
+    And  I'm still on the new research project page
     And no research project stored is affected
 
   Scenario: new invalid research project with blank description web
@@ -102,7 +102,7 @@ Feature: research project
     And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas"
     When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" with description field blank
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" is not stored by the system because it is invalid
-    And  the system shows an error message at the research project page
+    And  I'm still on the new research project page
     And no research project stored is affected
 
   Scenario: duplicated research project web

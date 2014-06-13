@@ -2,6 +2,7 @@ package pages.researchProject
 
 import pages.FormPage
 import pages.GetPageTitle
+import rgms.researchProject.ResearchProject
 
 /**
  * Created by Bruno Soares on 24/02/14.
@@ -41,6 +42,16 @@ class ResearchProjectPage extends FormPage {
 
     def selectReseachGroup(String name){
         $("a", text: name).click()
+    }
+
+    def checkResearchGroupAtList(projectName) {
+        def listDiv = $('div', id: 'list-researchProject')
+        def researchGroupTable = (listDiv.find('table'))[0]
+        def researchGroupRows = researchGroupTable.find('tbody').find('tr')
+        int size = researchGroupRows.size();
+        def researchGroupColumns = researchGroupRows[size - 1].find('td')
+
+        assert researchGroupColumns[0].text() == projectName
     }
 
 }

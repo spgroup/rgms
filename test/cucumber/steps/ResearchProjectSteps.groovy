@@ -93,7 +93,7 @@ Then (~'^I\'m still on the research project page$'){ ->
 }
 
 Then (~'^the system shows an error message at the research project page$'){ ->
-
+    assert page.hasInvalidXMLSubmited()
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------
@@ -173,7 +173,7 @@ When(~'^I create a research project named as "([^"]*)" with member field duplica
     ResearchProjectTestDadaAndOperations.createResearchProject(projectName)
 }
 
-Then(~'^the research project "([^"]*)" does not have duplicated members$'){ projectName ->
+Then(~'^the research project "([^"]*)" does not have duplicated members$'){String projectName ->
     ResearchProject project  = ResearchProject.findByProjectName(projectName);
     boolean check = true
     // Não vai ter nunca porque é um SET
@@ -197,8 +197,13 @@ Given (~'^I am at new research project page$'){ ->
     page.fillResearchProjectDetails()
 }
 
+Then (~'^I\'m still on the new research project page$'){ ->
+    at ResearchProjectPageCreatePage
+}
+
 Then(~'^it is shown in the research project list with name "([^"]*)"$'){ String projectName ->
-    // Como verificar lista
+    to ResearchProjectPage
+    page.checkResearchGroupAtList(projectName)
 }
 
 Then(~'^it is not shown duplicated in the research project list$'){ ->
