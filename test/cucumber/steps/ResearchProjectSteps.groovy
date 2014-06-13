@@ -257,10 +257,10 @@ def checkIfNoResearchProjectAffected() {
     List<ResearchProject> beforeProjects = ResearchProjectTestDadaAndOperations.oldProjects
     List<ResearchProject> afterProjects = ResearchProject.findAll()
 
-    for(int i = 0; i < beforeProjects.size();i++) {
-        if (!beforeProjects.get(i).equals(afterProjects.get(i))) {
+    beforeProjects.eachWithIndex { ResearchProject entry, int i ->
+        if (!entry.equals(afterProjects.get(i))) {
             check = false
-            if (!check) break
+            check
         }
     }
 
