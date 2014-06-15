@@ -44,12 +44,14 @@ Feature: Thesis Tests
     And I see my school name as school of thesis by default
 #end
 
+  @ignore
   Scenario: order thesis list by date
     Given at least one thesis is stored in the system
     And I am at the thesis list page
     When I click in order thesis by date
     Then the returned thesis list has the same items but it is sorted by date
 
+  @ignore
   Scenario: search an existing thesis
     Given the system has one thesis entitled "Software Engineering" with author name "Pressman", year of publication "1998" and university "UFPE"
     And I am at the thesis search page
@@ -57,6 +59,7 @@ Feature: Thesis Tests
     And I select to view the entry that has university "UFPE" and publication year "1998"
     Then the thesis "Software Enginnering" by "Pressman" appears in the thesis view page
 
+  @ignore
   Scenario: create thesis without a file
     Given I am at the create thesis page
     When I fill the thesis fields with "My Thesis", "2014/05/16", "UFPE","Address", "Author","Advisor"
