@@ -3,6 +3,7 @@ import pages.LoginPage
 import pages.PublicationsPage
 import pages.ThesisPage
 import pages.thesis.ThesisCreatePage
+import pages.thesis.ThesisEditPage
 import pages.thesis.ThesisShowPage
 import rgms.authentication.User
 import rgms.publication.Tese
@@ -154,19 +155,25 @@ Then(~'^the thesis "([^"]*)" is properly removed by the system$') { title ->
 
 //Scenario: order thesis list by date
 Given(~'^at least one thesis is stored in the system$') { ->
-
+    title = "title"
+    ThesisTestDataAndOperations.createTese(title, "author", "2014", "school")
+    thesis = Tese.findByTitle(title)
+    assert thesis != null
 }
 
 And(~'^I am at the thesis list page$') { ->
-
+    to ThesisPage
+    at ThesisPage
 }
 
 And(~'^I click in order thesis by date$') { ->
-
+    at ThesisPage
+    page.orderByDate()
 }
 
 Then(~'^the returned thesis list has the same items but it is sorted by date$') { ->
-
+    at ThesisPage
+    page.checkListSortedByDate()
 }
 
 //Scenario: search an existing thesis
@@ -182,65 +189,54 @@ And(~'^I am at the thesis search page$') { ->
 
 When(~'^I search for "([^"]*)" by "([^"]*)"$') { title, author ->
     at ThesisSearchPage
-    page.fillSomeSearchDetails(title, author)
+    page.fillThesisSearchDetails(title, author)
     page.search()
 }
 
 And(~'^I select to view the entry that has university "([^"]*)" and publication year "([^"]*)"$') { university, year ->
-    at ThesisSearchPage
-
-    page.selectViewThesisByUniversityAndYear(university, year)
+    at ThesisPage
+    page.selectViewThesis(university, year)
 }
 
 Then(~'^the thesis "([^"]*)" by "([^"]*)" appears in the thesis view page$') { title, year ->
-    at ThesisSearchPage
-
-    tese = Tese.findByTitle(title, year)
-    assert tese != null
+    at ThesisShowPage
+    page.checkThesisDetails(title, year)
 }
 
-//Scenario: create thesis web without a file
+//Scenario: create thesis without a file
 When(~'^I fill the thesis fields with "([^"]*)", "([^"]*)", "([^"]*)","([^"]*)", "([^"]*)","([^"]*)"$') { title, date, university, address, author, advisor ->
-
+    at ThesisCreatePage
+    page.fillThesisDetailsWithouFile(title, date, university, address, author, advisor)
 }
 
 And(~'^I click in create button$') { ->
-
+    at ThesisCreatePage
+    page.selectCreateThesis()
 }
 
-Then(~'^the system shows a warning message "([^"]*)"$') { warningmessage ->
-
-}
-
-//    Scenario: search an existing thesis filled by default
+//Scenario: search an existing thesis filled by default
 //#if($contextualInformation)
 Given(~'^the system has at least one thesis entitled "([^"]*)"$') { title ->
-
     ThesisTestDataAndOperations.createTese(title, "teste.txt", "UFPE")
     tese = Tese.findByTitle(title)
     assert tese != null
 }
 
-
 And(~'^I have already done a search about "([^"]*)" previously$') { title ->
-    to ThesisSearchPage
     at ThesisSearchPage
-
-    page.fillSearch(title)
+    page.fillTitleInSearch(title)
     page.search();
 }
 
 When(~'^I press "([^"]*)"$') { input ->
     at ThesisSearchPage
-
-    page.fillSearch(input)
+    page.fillTitleInSearch(input)
     page.showDropdownList()
 }
 
 And(~'^I choose "([^"]*)" in dropdown search list$') { title ->
     at ThesisSearchPage
-
-    page.selectThesisInDropdownList(title)
+    page.selectItemInDropdownList(title)
 }
 
 And(~'^I click in search button$') { ->
@@ -249,46 +245,51 @@ And(~'^I click in search button$') { ->
 }
 
 Then(~'^all theses entitled "([^"]*)" are shown$') { title ->
-    at ThesisSearchPage
-
-    tese = Tese.findByTitle(title)
-    assert tese != null
+    at ThesisPage
+    theses = Tese.findAllByTitle(title)
+    page.checkThesisList(theses)
 }
-
 //#end
+
 
 //Scenario: edit thesis title
 When(~'^I change the title from "([^"]*)" to "([^"]*)"$') { title, newtitle ->
-
+    oldThesesQuantity = ThesisTestDataAndOperations.findAllByTitle(newtitle).size()
+    ThesisTestDataAndOperations.edit(title, newtitle)
+    newThesesQuantity = ThesisTestDataAndOperations.findAllByTitle(newtitle).size()
 }
 
-Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { title, newtitle ->
-
+Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { newtitle ->
+    thesis = ThesisTestDataAndOperations.findByTitle(newTitle)
+    assert thesis != null
 }
 
 And(~'^the other theses are not changed by the system$') { ->
-
+    assert (newThesesQuantity - oldThesesQuantity) == 1
 }
 
 //Scenario: edit thesis with invalid data
 Then(~'^the existing thesis are not changed by the system$') { ->
-
+    assert oldThesesQuantity == newThesesQuantity
 }
 
 //Scenario: search a thesis
 Given(~'^the system has one thesis entitled "([^"]*)"$') { title ->
+    assert ThesisTestDataAndOperations.findAllByTitle(title).size() == 1
 }
 
 When(~'^I search for thesis entitled "([^"]*)"$') { title ->
+    oldThesesQuantity = ThesisTestDataAndOperations.findAllByTitle(title).size()
+    newThesesQuantity = ThesisTestDataAndOperations.findAllByTitle(title).size()
 }
 
 //Scenario: upload thesis with a file
 When(~'^I upload the file "([^"]*)"$') { file ->
     path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + arg1
-    initialSize = Tese.findAll().size()
-    ThesisTestDataAndOperations.uploadArticle(path)
-    finalSize = Periodico.findAll().size()
-    assert initialSize < finalSize
+    oldThesesQuantity = ThesisTestDataAndOperations.findAll().size()
+    ThesisTestDataAndOperations.uploadThesis(path)
+    newThesesQuantity = ThesisTestDataAndOperations.findAll().size()
+    assert oldThesesQuantity < newThesesQuantity
 }
 
 And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->

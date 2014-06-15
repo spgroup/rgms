@@ -57,11 +57,11 @@ Feature: Thesis Tests
     And I select to view the entry that has university "UFPE" and publication year "1998"
     Then the thesis "Software Enginnering" by "Pressman" appears in the thesis view page
 
-  Scenario: create thesis web without a file
+  Scenario: create thesis without a file
     Given I am at the create thesis page
     When I fill the thesis fields with "My Thesis", "2014/05/16", "UFPE","Address", "Author","Advisor"
     And I click in create button
-    Then the system shows a warning message "Thesis without file, it is mandatory"
+    Then I am still on the create thesis page with the error message
 
 #if($contextualInformation)
   @ignore
