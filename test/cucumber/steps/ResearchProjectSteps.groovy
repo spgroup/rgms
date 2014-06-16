@@ -2,12 +2,12 @@ package steps
 
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.UnavailableSecurityManagerException
-import pages.ArticlePages.ArticleShowPage
 import pages.researchProject.ResearchProjectPage
 import pages.researchProject.ResearchProjectPageCreatePage
 import rgms.authentication.User
 import rgms.member.Member
 import rgms.researchProject.ResearchProject
+
 import static cucumber.api.groovy.EN.*
 
 /**
@@ -286,30 +286,30 @@ Then(~'^the system shows an warning message at the new research project page$'){
 // ------------------------------------------------------------------------------------------------------------------------------
 // Aux Functions
 
-def checkIfResearchProjectNoExists(String projectName) {
-    ResearchProject project = ResearchProject.findByProjectName(projectName);
-    project == null;
+def checkIfResearchProjectNoExists(String projectName){
+    ResearchProject project = ResearchProject.findByProjectName(projectName)
+    project == null
 }
 
-def checkIfResearchProjectExists(String projectName) {
-    ResearchProject project = ResearchProject.findByProjectName(projectName);
-    ResearchProject project2 = ResearchProjectTestDadaAndOperations.findResearchProjectByProjectName(projectName);
-    project.equals(project2);
+def checkIfResearchProjectExists(String projectName){
+    ResearchProject project = ResearchProject.findByProjectName(projectName)
+    ResearchProject project2 = ResearchProjectTestDadaAndOperations.findResearchProjectByProjectName(projectName)
+    project.equals(project2)
 }
 
 def checkIfNoResearchProjectAffected() {
     boolean check = true;
-    List<ResearchProject> beforeProjects = ResearchProjectTestDadaAndOperations.oldProjects;
-    List<ResearchProject> afterProjects = ResearchProject.findAll();
+    List<ResearchProject> beforeProjects = ResearchProjectTestDadaAndOperations.oldProjects
+    List<ResearchProject> afterProjects = ResearchProject.findAll()
 
     beforeProjects.eachWithIndex { ResearchProject entry, int i ->
-        if(!entry.equals(afterProjects.get(i))) {
+        if (!entry.equals(afterProjects.get(i))) {
             check = false
             check
         }
     }
 
-    check;
+    check
 }
 
 def checkIfLoggedUserIsAdminOfResearchProject(String projectName) {
