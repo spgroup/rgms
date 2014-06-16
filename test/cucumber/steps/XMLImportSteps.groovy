@@ -2,6 +2,7 @@ import pages.ArticlePages.ArticlesPage
 import pages.BookChapterPage
 import pages.Conferencia.ConferenciaPage
 import pages.DissertationPage
+import pages.LoginPage
 import pages.OrientationPages.OrientationsPage
 import pages.XMLImportPage
 import pages.ferramenta.FerramentaPage
@@ -195,4 +196,63 @@ Then(~'^ no publication is stored by the system $') { ->
 And(~'^ And previusly stored publications do not change  $'){->
     assert inicial == finalS
     TestDataAndOperations.logoutController(this)
+}
+
+
+
+/**
+ * @author Kamilla Cardoso
+ * Scenario invalid file web
+ */
+Given(~'^I am at the "Import XML File" Page$'){ ->
+    to LoginPage
+    at LoginPage
+    page.add("admin", "adminadmin")
+    at XMLImportPage
+}
+
+When(~'^I select the "([^"]*)" button$'){ String uploadButton ->
+    at XMLImportPage
+    page.selectButton(uploadButton)
+}
+
+And(~' I upload the file "([^"]*)"$'){ String file ->
+    at XMLImportPage
+    page.uploadFile(file)
+}
+
+Then(~'^ the system outputs an error message$'){ ->
+    at XMLImportPage
+    assert page.invalidXML()
+}
+
+And(~'^ no new publication is stored by the system$'){ ->
+    to ArticlesPage
+    at ArticlesPage
+    page.checkIfArticlesListIsEmpty()
+
+    to BookChapterPage
+    at BookChapterPage
+    page.checkIfBookChapterListIsEmpty()
+
+    to ConferenciaPage
+    at ConferenciaPage
+    page.checkIfConferenciaListIsEmpty()
+
+    to DissertationPage
+    at DissertationPage
+    page.checkIfDissertationListIsEmpty()
+
+    to FerramentaPage
+    at FerramentaPage
+    page.checkIfFerramentaListIsEmpty()
+
+    to OrientationsPage
+    at OrientationsPage
+    page.checkIfOrientationListIsEmpty()
+}
+
+And(~'^ the previously stored publications do not change$'){
+    to XMLImportPage
+    at XMLImportPage
 }
