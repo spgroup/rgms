@@ -145,3 +145,71 @@ And(~'^the conferencias are not stored by the system$') {->
     page.checkIfConferenciaListIsEmpty()
 
 }
+
+//if(ConferenciaFeature)
+ 
+When(~'^I click on the column "Date" at the conferencia list table$') {->
+    at ConferenciaPage
+    page.selectColumn("Date") //Método a ser criado
+}
+
+Then(~'^a list of conferencias stored by the system is displayed at the conferencia page by publication ascending date order$') {->
+    at ConferenciaPage
+    page.listConferencia()
+    page.orderListConferencia("Date") //Método a ser criado
+}
+
+When(~'^I click on the column "Research Line" at the conferencia list table$') {->
+    at ConferenciaPage
+    page.selectColumn("Research Line") //Método a ser criado
+}
+
+Then(~'^a list of conferencias stored by the system is displayed at the conferencia page by publication ascending alphabetic order$') {->
+    at ConferenciaPage
+    page.listConferencia()
+    page.orderListConferencia("Research Line") //Método a ser criado
+}
+
+When(~'^I select the search conferencia option at the conferencia page$') {->
+    at ConferenciaPage //Página a ser criada
+    page.selectSearchConferencia() //Método a ser criado
+}
+
+Then(~'^I am at the search conference page$') {->
+    at ConferenciaSearchPage //Página a ser criada
+}
+
+Given(~'^the system has conferencia entitled "([^"]*)"$') { String title ->
+    conferencia = Conferencia.findByTitle(title)
+    assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conferencia, title)
+}
+
+When(~'^I search for the conferencia "([^"]*)"$') { String title ->
+    ConferenciaTestDataAndOperations.searchConferencia(title)
+}
+
+Then(~'^there is no change in the data stored by the system$') {->
+
+}
+
+
+Given(~'^The system has conference dated "([^"]*)"$') {String date->
+    conferencia = Conferencia.findByDate(date) //Método a ser criado
+}
+
+When(~'^I write "([^"]*)" at the date field$') {String date->
+    at ConferenciaPage
+    page.fillDateField(date) //Método a ser criado
+}
+
+When(~'^I select the option Search for Conference at the conference page$') {->
+    at at ConferenciaPage 
+    page.selectSearchConferencia() //Método a ser criado
+}
+
+Then(~'^a list of all conferences containing the date "([^"]*)" will be presented in the conference screen$') { String date->
+    at ConferenciaPage
+    page.FindByDate(date) //Método a ser criado
+}
+    
+//#End    

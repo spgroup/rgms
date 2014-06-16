@@ -118,19 +118,16 @@ Scenario: Order  conference web by research line
     When I click on the column "Research Line" at the conference list table
     then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
 
-Scenario: Go to search page
-    Given I am at the conference page
-    When I select the Search Conference option
-    Then I am at the search conference page
+
 
 Scenario: Search for conference
     Given the system has conference entitled "IV Conference on Software Product Lines"
     When I search for the conferencia entitled "IV Conference on Software Product Lines"
     Then theres no change in the data stored by the system.
 
-Scenario: Search for conference web by date
-    Given I am at the Seach Conference page
-    And  the system has conference dated "2007"
+Scenario: Search for conference web
+    Given I'm at the conference page    
+    And the system has conference dated "2007"
     When I write "2007" at the date field
-    And I select the option Serach for Conference at the conference page
-    then a list of all conferences containing that date will be presented in the conference screen
+    And I select the option Search for Conference at the conference page
+    then a list of all conferences containing the date "2007" will be presented in the conference screen
