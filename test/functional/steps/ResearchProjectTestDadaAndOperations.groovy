@@ -70,6 +70,16 @@ class ResearchProjectTestDadaAndOperations {
         cont.response.reset()
     }
 
+    public static void createResearchProjectWithoutFunders(String name) {
+        def rp = findResearchProjectByProjectName(name);
+        rp.funders = null;
+        cont.params << rp;
+        cont.request.setContent(new byte[1000]);
+        cont.create();
+        cont.save();
+        cont.response.reset();
+    }
+
     public static void createResearchProject(String name){
         createResearchProjectDefault(name)
     }

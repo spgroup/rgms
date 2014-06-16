@@ -42,26 +42,25 @@ Feature: research project
   
   Scenario: list research projects where I am a member
     Given I am at the research project list page
-    When I select the "Meus Projetos de Pesquisa" option at research project menu
+    When I select the option to show my research projects
     Then the system shows a list with the research projects where I am a member
 
   Scenario: filter research projects by name
     Given  I am at the research projects list page
-    When I fill the project name field
-    And select the option "Filtrar Projetos de Pesquisa"
-    Then the system shows the research projects listed by the research projects name
+    When I fill the project name filter field with "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    And select the option to filter the research projects
+    Then the system shows the research projects with the name "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
 
   Scenario: remove research project that does not exist
     Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     And I am logged into the system as administrator
-    When I try to remove a research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I remove the research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     Then no research project stored is affected
 
   Scenario: edit existing research project
     Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     And I am logged into the system as administrator of the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I try to edit the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" in the system
-    And I changed the data of the research project
+    When I edit the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" in the system
     Then the data of the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is updated in the system
 
   Scenario: new invalid research project with blank name

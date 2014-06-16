@@ -30,6 +30,10 @@ class ResearchProjectPageShowPage extends FormPage {
         $('a', class: 'create').click()
     }
 
+    def selectEditReseachGroup() {
+        $('a', class: 'edit').click()
+    }
+
     def backToHome(){
         $('a', class:'home').click()
     }

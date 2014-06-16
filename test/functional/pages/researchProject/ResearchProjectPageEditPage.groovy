@@ -21,4 +21,12 @@ class ResearchProjectPageEditPage extends FormPage{
             $("div", class: "message")
         }
     }
+
+    def fillUpdateDescription(newDescription) {
+        $("form").description = newDescription;
+    }
+
+    def saveUpdates() {
+        $("input", class: "save").click();
+    }
 }
