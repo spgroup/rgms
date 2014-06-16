@@ -27,4 +27,14 @@ class XMLImportPage extends Page {
     def uploadWithoutFile(){
         $('input.save').click()
     }
+
+    def uploadFile(String file){
+        $('input.save').click().add(file)
+    }
+
+    def invalidXML(){
+        GetPageTitle gp = new GetPageTitle()
+        return gp.msg('default.xml.parserror.message') == $("div", class: "message", role: "status").text()
+
+    }
 }
