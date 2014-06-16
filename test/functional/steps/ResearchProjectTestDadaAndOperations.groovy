@@ -11,6 +11,8 @@ class ResearchProjectTestDadaAndOperations {
 
     static ResearchProjectController cont = new ResearchProjectController()
 
+    static List<ResearchProject> oldProjects
+
     static researchProjects =[
             [projectName:"Implementação Progressiva de Aplicações Orientadas a Objetos Complexas",
                     description:"Neste projeto pretendemso definir e validar um método para a implementação de aplicações orientadas a objetos complexas. Em particular, este método deve suportar uma abordagem progressiva para implementação orientada a objetos, de forma que aspectos de distribuição, concorrência, e persistência não sejam inicialmente considerados pelo processo de implementação, mas sejam gradualmente introduzidos, preservando os requisitos funcionais da aplicação.",
@@ -28,6 +30,29 @@ class ResearchProjectTestDadaAndOperations {
                     startYear: 2001,
                     endYear: 2004,
                     members: ["Bruno Soares da Silva","Dyego Felipe Oliveira de Penha", "Pedro Henrique Torres Gonçalves"]
+            ],
+            [projectName:"Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas",
+             description:"",
+             status:"CONCLUIDO",
+             responsible: "Paulo Henrique Monteiro Borba",
+             startYear: 2001,
+             endYear: 2004,
+             members: ["Bruno Soares da Silva"]
+            ],
+            [projectName:"Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated",
+               description:"Neste projeto pretendemso definir e validar um método para a implementação de aplicações orientadas a objetos complexas. Em particular, este método deve suportar uma abordagem progressiva para implementação orientada a objetos, de forma que aspectos de distribuição, concorrência, e persistência não sejam inicialmente considerados pelo processo de implementação, mas sejam gradualmente introduzidos, preservando os requisitos funcionais da aplicação.",
+               status:"CONCLUIDO",
+               responsible: "Paulo Henrique Monteiro Borba",
+               startYear: 2000,
+               endYear: 2003,
+               members: ["Rubens Lopes da Silva", "Rubens Lopes da Silva"]
+            ],
+            [projectName:"Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web",
+                    description:"Neste projeto pretendemso definir e validar um método para a implementação de aplicações orientadas a Aspectos Complexas web. Em particular, este método deve suportar uma abordagem progressiva para implementação orientada a objetos, de forma que aspectos de distribuição, concorrência, e persistência não sejam inicialmente considerados pelo processo de implementação, mas sejam gradualmente introduzidos, preservando os requisitos funcionais da aplicação.",
+                    status:"CONCLUIDO",
+                    responsible: "Paulo Henrique Monteiro Borba",
+                    startYear: 2001,
+                    endYear: 2004,
             ]
     ]
 
@@ -43,6 +68,16 @@ class ResearchProjectTestDadaAndOperations {
         cont.create()
         cont.save()
         cont.response.reset()
+    }
+
+    public static void createResearchProjectWithoutFunders(String name) {
+        def rp = findResearchProjectByProjectName(name);
+        rp.funders = null;
+        cont.params << rp;
+        cont.request.setContent(new byte[1000]);
+        cont.create();
+        cont.save();
+        cont.response.reset();
     }
 
     public static void createResearchProject(String name){
