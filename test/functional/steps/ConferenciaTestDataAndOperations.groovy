@@ -22,7 +22,8 @@ class ConferenciaTestDataAndOperations {
                     booktitle: "Practices and Patterns", pages: "150-200"],
             [title: "V Conference on Software Product Lines",
                     publicationDate: (new Date("16 October 2012")),
-                    booktitle: "Practices and Patterns", pages: "50-100"]
+                    booktitle: "Practices and Patterns", pages: "50-100",
+                    authors: ["Paulo Henrique Monteiro Borba", "Tiago Massoni", "Rohit Gheyi"] as Set]
     ]
 
 
@@ -43,7 +44,7 @@ class ConferenciaTestDataAndOperations {
         } else if (testConferencia != null && conferencia != null) {
             compatible = true
             testConferencia.each { key, data ->
-                compatible = compatible && (conferencia."$key" == data)
+                if(key != 'publicationDate') compatible = compatible && (conferencia."$key" == data) //para evitar problema de lidar com data
             }
         }
         return compatible

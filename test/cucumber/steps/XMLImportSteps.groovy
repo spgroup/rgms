@@ -1,107 +1,231 @@
-import pages.ArticlePages.ArticlesPage
-import pages.BookChapterPage
-import pages.Conferencia.ConferenciaPage
-import pages.DissertationPage
-import pages.LoginPage
-import pages.OrientationPages.OrientationsPage
-import pages.XMLImportPage
-import pages.ferramenta.FerramentaPage
+import rgms.authentication.User
 import rgms.publication.*
+import rgms.researchProject.ResearchProject
+import steps.ArticleTestDataAndOperations
+import steps.ConferenciaTestDataAndOperations
+import steps.ResearchProjectTestDadaAndOperations
+import steps.XMLImportTestDataAndOperations
+
+import pages.XMLImportPage
+
+import javax.servlet.http.HttpServletResponse
 import static cucumber.api.groovy.EN.*
 import steps.TestDataAndOperations
-import CommonSteps
 
-import org.apache.shiro.util.ThreadContext
-import org.apache.shiro.subject.Subject
-import org.apache.shiro.SecurityUtils
+XMLController xmlController
+int publicationsTotal
+
+//#if($ResearchProject)
+int researchProjectsTotal
+//#end
 
 Given(~'^the system has some publications stored$') { ->
-
     TestDataAndOperations.loginController(this)
-
-    initialSize = Publication.findAll().size()
-}
-When(~'^I upload the publications of "([^"]*)"$') { filename ->
-    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    initialSize = Publication.findAll().size()
-    TestDataAndOperations.uploadPublications(path)
-    finalSize = Publication.findAll().size()
-    assert initialSize < finalSize
-}
-Then(~'^the system has all the publications of the xml file$') { ->
-    TestDataAndOperations.logoutController(this)
-
-    //Book Chapters
-    assert Publication.findByTitle("Refinement of Concurrent Object Oriented Programs") != null
-    assert Publication.findByTitle("A RUP-Based Software Process Supporting Progressive Implementation") != null
-    assert Publication.findByTitle("Transformation Laws for Sequential Object-Oriented Programming") != null
-    assert Publication.findByTitle("Mapping Features to Aspects: A Model-Based Generative Approach") != null
-    assert Publication.findByTitle("Recommending Mechanisms for Modularizing Mobile Software Variabilities") != null
-    assert Publication.findByTitle("An Introduction to Software Product Line Refactoring") != null
-
-    //Conferencias
-    assert Publication.findByTitle("Latin American Conference On Computing (CLEI 1992)") != null
-    assert Publication.findByTitle("Engineering Distributed Objects Workshop, 21st ACM International Conference on Software Engineering (ICSE 1999)") != null
-    assert Publication.findByTitle("6th International Conference on Software Reuse (ICSR 2000)") != null
-
-    //Dissertacoes
-    assert Publication.findByTitle("De especificaÃ§Ãµes formais para protÃ³tipos funcionais") != null
-    assert Publication.findByTitle("Semantics and Refinement for a Concurrent Object Oriented Language") != null
-
-    //Ferramentas
-    assert Publication.findByTitle("Sherlock") != null
-    assert Publication.findByTitle("FOOPS Proof Assistant and Simulator") != null
-    assert Publication.findByTitle("TaRGeT: Test and Requirements Generation Tool") != null
-    assert Publication.findByTitle("JaTS: Java Transformation System") != null
-    assert Publication.findByTitle("SGC") != null
-    assert Publication.findByTitle("FLiP: Ferramenta para ExtraÃ§Ã£o de Linhas de Produtos de Software") != null
-
-    //Periodicos
-    assert Publication.findByTitle("A System For Translating Executable VDM Specifications Into Lazy ML") != null
-    assert Publication.findByTitle("From VDM Specifications To Functional Prototypes") != null
-    assert Publication.findByTitle("Basic laws of ROOL: an object-oriented language") != null
-    assert Publication.findByTitle("Implementing distribution and persistence aspects with AspectJ") != null
-    assert Publication.findByTitle("Developing adaptive J2ME applications using AspectJ") != null
-    assert Publication.findByTitle("Algebraic reasoning for object-oriented programming") != null
-    assert Publication.findByTitle("Refactoring Alloy Specifications") != null
-
-    //Orientacoes
-    assert Publication.findByTitle("Desenvolvimento de Software Como Um Processo ContÃ­nuo e ReversÃ­vel Usando Bon e Java") != null
-    assert Publication.findByTitle("Design and Evaluation of an Object-Oriented Formal Specification Language") != null
-    assert Publication.findByTitle("Um MÃ©todo para ImplementaÃ§Ã£o Orientada a Objetos Usando Java e Banco de Dados Relacional.") != null
-    assert Publication.findByTitle("Progressive Development of Distributed Object-Oriented Applications") != null
-    assert Publication.findByTitle("Um Processo de Software com Suporte para ImplementaÃ§Ã£o Progressiva") != null
+    XMLImportTestDataAndOperations.initializePublicationDB()
+    publicationsTotal = 4
+    assert Publication.findAll().size() == publicationsTotal
 }
 
-And(~'^I select the upload button at the XML import page$') {->
+Given(~'^the system has no journal article entitled "([^"]*)" with journal "([^"]*)" authored by me$'){ pubName, journalName ->
+    assert XMLImportTestDataAndOperations.isANewJournal(pubName, journalName)
+}
+
+When(~'^I upload the file "([^"]*)" which contains a journal article entitled "([^"]*)" with journal "([^"]*)" authored by me$') { filename, pubName, journalName ->
+    String path = "test" + File.separator + "files" + File.separator + filename
+    assert XMLImportTestDataAndOperations.fileContainsJournal(path, pubName, journalName)
+    xmlController = new XMLController()
+    XMLImportTestDataAndOperations.uploadPublications(xmlController,path)
+}
+
+Then(~'^no new publication is stored by the system$'){ ->
+    assert Publication.findAll().size() == publicationsTotal
+}
+
+Then(~'^the previously stored publications do not change$'){ ->
+    // sempre vai conter as publicacoes conf1, conf2, journal1, journal2
+    def conf1 = Conferencia.findByTitle(ConferenciaTestDataAndOperations.conferencias[0].title)
+    assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conf1, conf1.title)
+
+    def conf2 = Conferencia.findByTitle(ConferenciaTestDataAndOperations.conferencias[1].title)
+    assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conf2, conf2.title)
+
+    def journal1 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[0].title)
+    assert ArticleTestDataAndOperations.compatibleTo(journal1, journal1.title)
+
+    def journal2 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[1].title)
+    assert ArticleTestDataAndOperations.compatibleTo(journal2, journal2.title)
+
+    //caso do sistema já ter um dado periodico
+    if(publicationsTotal == 5){
+        def journal3 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[2].title)
+        assert ArticleTestDataAndOperations.compatibleTo(journal3, journal3.title)
+    }
+}
+
+Then(~'^the system outputs a list of imported publications which contains the journal article entitled "([^"]*)" with status "([^"]*)"$'){ pubName, status ->
+    assert xmlController.response.status == HttpServletResponse.SC_OK //A grails render is an HTTP 200 status
+    assert xmlController.modelAndView.viewName == '/XML/home' //modelAndView is used only when is render
+    assert xmlController.modelAndView.model.publications.journals.find{it["obj"].title == pubName && it["status"] == status}
+}
+
+Given(~'^the system has a journal article entitled "([^"]*)" with journal "([^"]*)" authored by me, among several publications$'){ pubName, journalName ->
+    TestDataAndOperations.loginController(this)
+    XMLImportTestDataAndOperations.initializePublicationDB()
+    def p = XMLImportTestDataAndOperations.addJournalPublication(pubName, journalName)
+    publicationsTotal = 5
+    assert Publication.findAll().size() == publicationsTotal
+
+    String author = User.findByUsername('admin')?.author?.name
+    assert p.authors.contains(author)
+}
+
+When(~'^I upload the file "([^"]*)" which contains a conference article entitled "([^"]*)" from "([^"]*)" authored by me$'){ filename, pubName, confName ->
+    String path = "test" + File.separator + "files" + File.separator + filename
+    assert XMLImportTestDataAndOperations.fileContainsConference(path, pubName, confName)
+
+    def member = User.findByUsername('admin')?.author
+    assert !Conferencia.findByBooktitleAndTitle(pubName, confName)?.authors?.contains(member.name)
+    xmlController = new XMLController()
+    XMLImportTestDataAndOperations.uploadPublications(xmlController, path)
+}
+
+Then(~'^the system outputs a list of imported publications which contains the conference article entitled "([^"]*)" with status "([^"]*)"$'){ pubName, status ->
+    assert xmlController.response.status == HttpServletResponse.SC_OK //A grails render is an HTTP 200 status
+    assert xmlController.modelAndView.viewName == '/XML/home' //modelAndView is used only when is render
+    assert xmlController.modelAndView.model.publications.conferences.find{it["obj"].booktitle == pubName && it["status"] == status}
+}
+
+When(~'^I upload the file "([^"]*)" which also contains a journal article entitled "([^"]*)" with the same details information$'){ filename, pubName ->
+    String path = "test" + File.separator + "files" + File.separator + filename
+    assert XMLImportTestDataAndOperations.fileContainsJournal(path, pubName, null)
+
+    String author = User.findByUsername('admin')?.author?.name
+    Periodico dbPub = Periodico.findAllByTitle(pubName).find{
+        it.authors.contains(author)
+    }
+    assert ArticleTestDataAndOperations.compatibleTo(dbPub, pubName)
+    xmlController = new XMLController()
+    XMLImportTestDataAndOperations.uploadPublications(xmlController, path)
+}
+
+Then(~'^the system outputs a list of imported publications which does not contain the journal article entitled "([^"]*)"$'){ pubName ->
+    assert xmlController.response.status == HttpServletResponse.SC_OK //A grails render is an HTTP 200 status
+    assert xmlController.modelAndView.viewName == '/XML/home' //modelAndView is used only when is render
+    assert !xmlController.modelAndView.model.publications.journals.find{it["obj"].title == pubName}
+}
+
+Given(~'^the system has a journal article entitled "([^"]*)" with journal "([^"]*)" and pages "([^"]*)" that is authored by me, among several publications$'){ pubName, journalName, pages ->
+    TestDataAndOperations.loginController(this)
+    XMLImportTestDataAndOperations.initializePublicationDB()
+    def journal = XMLImportTestDataAndOperations.addJournalPublication(pubName, journalName)
+    publicationsTotal = 5
+    assert Publication.findAll().size() == publicationsTotal
+
+    String author = User.findByUsername('admin')?.author?.name
+    assert journal.authors.contains(author)
+    assert journal.pages == pages
+}
+
+When(~'^I upload the file "([^"]*)" which contains a journal article entitled "([^"]*)" with journal "([^"]*)" and pages "([^"]*)" authored by me$'){
+    filename, pubName, journalName, pages ->
+    String path = "test" + File.separator + "files" + File.separator + filename
+    assert XMLImportTestDataAndOperations.fileContainsJournalWithPages(path, pubName, journalName, pages)
+    xmlController = new XMLController()
+    XMLImportTestDataAndOperations.uploadPublications(xmlController, path)
+}
+
+When(~'^I click on "([^"]*)" at the "([^"]*)" Page without select a xml file$'){ option, xmlPage ->
+    to XMLImportPage
     at XMLImportPage
     page.uploadWithoutFile()
 }
-Then(~'^I\'m still on XML import page$') {->
+
+Then(~'^the system outputs an error message$') { ->
     at XMLImportPage
+    assert page.hasErrorUploadFile()
 }
-And(~'^the publications are not stored by the system$') {->
-    to ArticlesPage
-    at ArticlesPage
-    page.checkIfArticlesListIsEmpty()
 
-    to BookChapterPage
-    at BookChapterPage
-    page.checkIfBookChapterListIsEmpty()
-
-    to ConferenciaPage
-    at ConferenciaPage
-    page.checkIfConferenciaListIsEmpty()
-
-    to DissertationPage
-    at DissertationPage
-    page.checkIfDissertationListIsEmpty()
-
-    to FerramentaPage
-    at FerramentaPage
-    page.checkIfFerramentaListIsEmpty()
-
-    to OrientationsPage
-    at OrientationsPage
-    page.checkIfOrientationListIsEmpty()
+//#if ($ResearchProject)
+Given(~'^the system has some research projects stored$'){ ->
+    TestDataAndOperations.loginController(this)
+    XMLImportTestDataAndOperations.initializeResearchProjectDB()
+    researchProjectsTotal = 2
+    assert ResearchProject.findAll().size() == researchProjectsTotal
 }
+
+/*Given(~'^the system has no research project named as "([^"]*)"$'){ projectName ->
+    assert XMLImportTestDataAndOperations.isANewResearchProject(projectName)
+}*/
+
+When(~'^I upload the file "([^"]*)" which contains a research project named as "([^"]*)"$'){ filename, projectName ->
+    String path = "test" + File.separator + "files" + File.separator + filename
+    assert XMLImportTestDataAndOperations.fileContainsResearchProject(path, projectName)
+    xmlController = new XMLController()
+    XMLImportTestDataAndOperations.uploadPublications(xmlController,path)
+}
+
+Then(~'^no new research project is stored by the system$'){ ->
+    assert ResearchProject.findAll().size() == researchProjectsTotal
+}
+
+Then(~'^the previously stored research projects do not change$'){ ->
+    def project1 = ResearchProject.findByProjectName(ResearchProjectTestDadaAndOperations.researchProjects[0].projectName)
+    assert ResearchProjectTestDadaAndOperations.compatibleTo(project1, project1.projectName)
+    def project2 = ResearchProject.findByProjectName(ResearchProjectTestDadaAndOperations.researchProjects[1].projectName)
+    assert ResearchProjectTestDadaAndOperations.compatibleTo(project2, project2.projectName)
+}
+
+Then(~'^the system outputs a list of imported research projects which contains the one named as "([^"]*)" with status "([^"]*)"$'){
+    projectName, status ->
+    assert xmlController.response.status == HttpServletResponse.SC_OK //A grails render is an HTTP 200 status
+    assert xmlController.modelAndView.viewName == '/XML/home' //modelAndView is used only when is render
+    assert xmlController.modelAndView.model.publications.researchProjects.find{it["obj"].projectName == projectName && it["status"] == status}
+}
+
+Given(~'^the system has a research project named as "([^"]*)", among several research projects$'){ projectName ->
+    TestDataAndOperations.loginController(this)
+    XMLImportTestDataAndOperations.initializeResearchProjectDB()
+    researchProjectsTotal = 2
+    assert ResearchProject.findAll().size() == researchProjectsTotal
+
+    def project = ResearchProject.findByProjectName(projectName)
+    assert project
+    String author = User.findByUsername('admin')?.author?.name
+    assert project.members.contains(author) || project.responsible==author
+}
+
+When(~'^I upload the file "([^"]*)" which also contains a research project named as "([^"]*)" with the same details information$'){
+    filename, projectName ->
+        String path = "test" + File.separator + "files" + File.separator + filename
+        assert XMLImportTestDataAndOperations.fileContainsResearchProject(path, projectName)
+        xmlController = new XMLController()
+        XMLImportTestDataAndOperations.uploadPublications(xmlController, path)
+}
+
+Then(~'^the system outputs a list of imported research projects which does not contain the one named as "([^"]*)"$'){ projectName ->
+    assert xmlController.response.status == HttpServletResponse.SC_OK //A grails render is an HTTP 200 status
+    assert xmlController.modelAndView.viewName == '/XML/home' //modelAndView is used only when is render
+    assert !xmlController.modelAndView.model.publications.researchProjects.find{it["obj"].projectName == projectName}
+}
+
+Given(~'^the system has a research project named as "([^"]*)" with status "([^"]*)", among several research projects$'){
+    projectName, projectStatus ->
+        TestDataAndOperations.loginController(this)
+        XMLImportTestDataAndOperations.initializeResearchProjectDB()
+        researchProjectsTotal = 2
+        assert ResearchProject.findAll().size() == researchProjectsTotal
+
+        def project = ResearchProject.findByProjectNameAndStatus(projectName, projectStatus)
+        assert project
+        String author = User.findByUsername('admin')?.author?.name
+        assert project.members.contains(author) || project.responsible==author
+}
+
+When(~'^I upload the file "([^"]*)" which also contains a research project named as "([^"]*)" with status "([^"]*)"$'){
+    filename, projectName, projectStatus ->
+        String path = "test" + File.separator + "files" + File.separator + filename
+        assert XMLImportTestDataAndOperations.fileContainsResearchProjectWithStatus(path, projectName, projectStatus)
+        xmlController = new XMLController()
+        XMLImportTestDataAndOperations.uploadPublications(xmlController, path)
+}
+//#end

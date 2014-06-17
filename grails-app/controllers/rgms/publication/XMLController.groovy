@@ -1,7 +1,6 @@
 package rgms.publication
 
 import org.apache.shiro.SecurityUtils
-import rgms.XMLService
 import rgms.authentication.User
 import rgms.member.Member
 
@@ -14,6 +13,8 @@ import rgms.member.Member
  */
 class XMLController {
 
+    def XMLService
+
     def home() {}
 
     def upload() {
@@ -23,7 +24,7 @@ class XMLController {
             return
     }
 
-    private Closure savePublication = {
+    private savePublication = {
         Node xmlFile ->
             Member user = getCurrentUser()
             XMLService.createPublications(xmlFile, user)
@@ -36,9 +37,10 @@ class XMLController {
             return
     }
 
-    private Closure saveTools = {
+    private saveTools = {
         Node xmlFile ->
-            XMLService.createFerramentas(xmlFile)
+            Member user = getCurrentUser()
+            XMLService.createTools(xmlFile, user.name)
     }
 
     def uploadXMLBook() {
@@ -48,16 +50,17 @@ class XMLController {
         return
     }
 
-    private Closure saveBook = {
+    private saveBook = {
         Node xmlFile ->
-            XMLService.createBooks(xmlFile)
+            Member user = getCurrentUser()
+            XMLService.createBooks(xmlFile, user.name)
     }
 
     def uploadXMLResearchLine() {
         XMLService.Import(saveResearchLine, returnWithMessage, 'default.researchline.import.flashmessage.success', "ResearchLine", request)
     }
 
-    private Closure saveResearchLine = {
+    private saveResearchLine = {
         Node xmlFile ->
             XMLService.createResearchLines(xmlFile)
     }
@@ -66,7 +69,7 @@ class XMLController {
         XMLService.Import(saveReseachProject, returnWithMessage, 'default.researchproject.import.flashmessage.success', "ResearchProject", request)
     }
 
-    private Closure saveReseachProject = {
+    private saveReseachProject = {
         Node xmlFile ->
             XMLService.createResearchProjects(xmlFile)
     }
@@ -78,9 +81,10 @@ class XMLController {
             return
     }
 
-    public Closure saveBookChapters = {
+    public saveBookChapters = {
         Node xmlFile ->
-            XMLService.createBooksChapters(xmlFile)
+            Member user = getCurrentUser()
+            XMLService.createBooksChapters(xmlFile, user.name)
     }
 
     def uploadXMLDissertacao() {
@@ -90,9 +94,10 @@ class XMLController {
             return
     }
 
-    private Closure saveDissertations = {
+    private saveDissertations = {
         Node xmlFile ->
-            XMLService.createDissertations(xmlFile)
+            Member user = getCurrentUser()
+            XMLService.createMasterDissertation(xmlFile, user.name)
     }
 
     def enviarConferenciaXML() {
@@ -102,9 +107,10 @@ class XMLController {
             return
     }
 
-    private Closure saveConferencias = {
+    private saveConferencias = {
         Node xmlFile ->
-            XMLService.createConferencias(xmlFile)
+            Member user = getCurrentUser()
+            XMLService.createConferencias(xmlFile, user.name)
     }
 
     def uploadOrientationXML() {
@@ -114,7 +120,7 @@ class XMLController {
             return
     }
 
-    private Closure saveOrientations = {
+    private saveOrientations = {
         Node xmlFile ->
             Member user = getCurrentUser()
 
@@ -128,9 +134,10 @@ class XMLController {
             return
     }
 
-    private Closure saveJournals = {
+    private saveJournals = {
         Node xmlFile ->
-            XMLService.createJournals(xmlFile)
+            Member user = getCurrentUser()
+            XMLService.createJournals(xmlFile, user.name)
     }
 
     def uploadMemberXML() {
