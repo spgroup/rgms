@@ -79,14 +79,14 @@ Feature: conferencia
     And the conferencias are not stored by the system
 
  Scenario: edit existing conference
-    Given the system has conference entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
+    Given the system has conferencia entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
     When I change the conference file from "SPLC.pdf" to "SPLC2.pdf"
     Then the conference "IV Conference on Software Product Lines" is properly updated by the system
 
 Scenario: edit existing conference web
     Given I am at the conference page 
-    And the conference "IV Conference on Software Product Lines" is stored in the system with file name "SPLC.pdf"
-    When I select to view "IV Conference on Software Product Lines" in resulting list
+    And the conference entitled "IV Conference on Software Product Lines" is stored in the system with file name "SPLC.pdf"
+    When I select to view the conference "IV Conference on Software Product Lines" in resulting list
     And I change the conference file to "SPLC2.pdf"
     And I select the "Alterar" option in Conference Registration Page
     And A success message is displayed
@@ -101,36 +101,31 @@ Scenario: new invalid conference web (fields blank)
 Scenario: list existing conference
     Given the system has conference entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
     When I view the conference list
-    Then my conference list contains "IV Conference on Software Product Lines"
+    Then the conference list contains "IV Conference on Software Product Lines"
 
 Scenario: Order conference web by title
     Given I am at the conference page
     When I click on the column "title" at the conference list table
-    then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
+    Then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
 
 Scenario: Order conference web by conference data
     Given I am at the conference page
     When I click on the column "Date" at the conference list table
-    then a list of conferences stored by the system is displayed at the conference page by publication ascending date order
+    Then a list of conferences stored by the system is displayed at the conference page by publication ascending date order
 
 Scenario: Order  conference web by research line
     Given I am at the conference page
     When I click on the column "Research Line" at the conference list table
-    then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
-
-Scenario: Go to search page
-    Given I am at the conference page
-    When I select the Search Conference option
-    Then I am at the search conference page
+    Then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
 
 Scenario: Search for conference
     Given the system has conference entitled "IV Conference on Software Product Lines"
     When I search for the conferencia entitled "IV Conference on Software Product Lines"
     Then theres no change in the data stored by the system.
 
-Scenario: Search for conference web by date
-    Given I am at the Seach Conference page
-    And  the system has conference dated "2007"
+Scenario: Search for conference web
+    Given I am at the conference page    
+    And the system has conference dated "2007"
     When I write "2007" at the date field
-    And I select the option Serach for Conference at the conference page
-    then a list of all conferences containing that date will be presented in the conference screen
+    And I select the option Search for Conference at the conference page
+    Then a list of all conferences containing the date "2007" will be presented in the conference screen
