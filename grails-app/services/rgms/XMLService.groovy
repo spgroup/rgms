@@ -54,8 +54,10 @@ class XMLService {
         def publications = [:]
         if(!xmlFile) return publications
 
+        //#if($Article)
         def journals = createJournals(xmlFile, user.name)
         if(journals) publications.put("journals", journals)
+        //#end
 
         def tools = createTools(xmlFile, user.name)
         if(tools) publications.put("tools", tools)
@@ -349,6 +351,7 @@ class XMLService {
         return status
     }
 
+    //#if($Article)
     def createJournals(Node xmlFile, String authorName) {
         def publishedArticles = xmlFile.depthFirst().findAll{ it.name() == 'ARTIGO-PUBLICADO' }
         def journals = []
@@ -422,6 +425,7 @@ class XMLService {
         else
             newJournal.volume = 1   //if not parsed successfully, least value possible
     }
+    //#end
 
     private static prepareDate(Date date){
         def year = date.toCalendar().get(Calendar.YEAR)
