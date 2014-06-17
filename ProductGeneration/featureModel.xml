@@ -16,8 +16,6 @@
 
     <feature min="0" max="1" name="Autofill_Feature" type="NONE" id="Autofill"></feature>
 
-    <feature min="0" max="1" name="Article_Feature" type="NONE" id="Article"></feature>
-
     <feature min="0" max="1" name="Generate_Website" type="NONE" id="Website">
         <featureGroup min="0" max="3" id="group1">
             <feature min="0" max="1" name="XML" type="NONE" id="XML"></feature>
@@ -36,6 +34,14 @@
             <feature min="0" max="1" name="descricaovisita" type="NONE" id="descricaovisita"></feature>
         </featureGroup>
     </feature>
+
+    <feature min="0" max="1" name="XMLImport" type="NONE" id="XMLImport"></feature>
+
+    <feature min="0" max="1" name="ResearchLine" type="NONE" id="ResearchLine"></feature>
+
+    <feature min="0" max="1" name="ResearchProject" type="NONE" id="ResearchProject"></feature>
+
+    <feature min="0" max="1" name="Orientation" type="NONE" id="Orientation"></feature>
 
     <feature min="0" max="1" name="XMLImport" type="NONE" id="XMLImport"></feature>
 

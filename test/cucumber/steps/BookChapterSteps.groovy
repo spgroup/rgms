@@ -2,7 +2,6 @@ import pages.BookChapterCreatePage
 import pages.BookChapterPage
 import pages.LoginPage
 import pages.PublicationsPage
-import pages.*
 import rgms.publication.BookChapter
 import steps.BookChapterTestDataAndOperations
 import steps.TestDataAndOperationsPublication

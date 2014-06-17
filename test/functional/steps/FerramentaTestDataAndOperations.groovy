@@ -2,8 +2,9 @@ package steps
 
 import rgms.publication.Ferramenta
 import rgms.publication.FerramentaController
-//#if($XMLUpload)
 import rgms.publication.XMLController
+
+//#if($XMLUpload)
 //#end
 
 class FerramentaTestDataAndOperations {

@@ -3,12 +3,11 @@ package steps
 import pages.researchProject.ResearchProjectPage
 import rgms.researchProject.ResearchProject
 
+import static cucumber.api.groovy.EN.*
+
 /**
  * Created by Bruno Soares on 24/02/14.
  */
-
-import static cucumber.api.groovy.EN.*
-
 def initialSize = 0
 
 //Create Research Project

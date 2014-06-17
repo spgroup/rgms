@@ -1,9 +1,8 @@
 package pages
 
 import grails.plugin.remotecontrol.RemoteControl
-
-import org.springframework.context.i18n.LocaleContextHolder as LCH
 import org.codehaus.groovy.grails.commons.ApplicationHolder
+
 class GetPageTitle {
 
 RemoteControl remoteControl = new RemoteControl()

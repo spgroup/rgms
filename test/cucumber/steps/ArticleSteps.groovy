@@ -1,4 +1,3 @@
-//#if($Article)
 import pages.ArticlePages.ArticleCreatePage
 import pages.ArticlePages.ArticleEditPage
 import pages.ArticlePages.ArticleShowPage
@@ -29,9 +28,7 @@ Then(~'^the article "([^"]*)" is properly stored by the system$') { String title
 When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*)" field blank$') { String title, String filename, String field ->
     ArticleTestDataAndOperations.createArticle(title, filename)
     def article = ArticleTestDataAndOperations.findArticleByTitle(title)
-    assert article.{
-        field
-    } == null
+    assert article.{field} == null
 }
 
 Then(~'^the article "([^"]*)" is not stored by the system because it is invalid$') { String title ->
@@ -45,14 +42,15 @@ Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
     // which is changed by the system during the file upload.
 }
 
-When(~'^I select the new article option at the article page$') { ->
+When(~'^I select the new article option at the article page$') {->
     selectNewArticleInArticlesPage()
 }
 
-Then(~'^I can fill the article details$') { ->
+Then(~'^I can fill the article details$') {->
     at ArticleCreatePage
     page.fillArticleDetails()
 }
+
 
 /**
  * @author Guilherme
@@ -101,7 +99,7 @@ When(~'^I edit the article title from "([^"]*)" to "([^"]*)"$') { String oldtitl
 /**
  * @author Guilherme
  */
-When(~"^I view the article list\$") { ->
+When(~"^I view the article list\$") {->
     articles = Periodico.findAll()
     assert articles != null
 }
@@ -159,7 +157,7 @@ Then(~'my resulting articles list contains "([^"]*)"$') { String title ->
  * @author Guilherme
  */
 
-When(~'I select the option to remove in show page$') { ->
+When(~'I select the option to remove in show page$') {->
     at ArticleShowPage
     page.select('input', 'delete')
 }
@@ -178,13 +176,14 @@ Then(~'^I am at Article show page$') { ->
     at ArticleShowPage
 }
 
+
 //#if( $Twitter )
 Given(~'^I am logged as "([^"]*)"$') { String userName ->
     to LoginPage
     at LoginPage
     page.fillLoginData(userName, "adminadmin")
 }
-Given(~'^I am at the Article Page$') { ->
+Given (~'^I am at the Article Page$'){->
 
     addPage()
 }
@@ -205,7 +204,7 @@ Then(~'^A tweet is added to my twitter account regarding the new article "([^"]*
     assert TwitterTool.consult(articleTitle)
 }
 
-Then(~'No tweet should be post about "([^"]*)"$') { String article ->
+Then (~'No tweet should be post about "([^"]*)"$'){ String article ->
     assert !TwitterTool.consult(null)
 }
 
@@ -235,7 +234,7 @@ Then(~'^No facebook message was posted$') { ->
     assert true
 }
 
-Given(~'^I am at the Add Article Page$') { ->
+Given(~'^I am at the Add Article Page$') {  ->
     at PublicationsPage
     page.select("Periodico")
     to ArticlesPage
@@ -252,32 +251,32 @@ When(~'^I share the article entitled "([^"]*)" on facebook$') { String title ->
 
 //#end
 
-def selectNewArticleInArticlesPage() {
+def selectNewArticleInArticlesPage(){
 
     at ArticlesPage
     page.selectNewArticle()
     at ArticleCreatePage
 
-}
+    }
 
-def periodicoNoExist(String title) {
-    return Periodico.findByTitle(title) == null
-}
+def periodicoNoExist(String title){
+      return Periodico.findByTitle(title) == null
+    }
 
-def Login() {
+def Login(){
 
     to LoginPage
     at LoginPage
 
-    page.fillLoginData("admin", "adminadmin")
+        page.fillLoginData("admin", "adminadmin")
 
 
-}
+    }
 
 /**
  * @author carloscemb
  */
-Then(~'^I see my user listed as an author member of article by default$') { ->
+Then(~'^I see my user listed as an author member of article by default$') {->
     at ArticleCreatePage
     assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
 }
@@ -290,7 +289,7 @@ When(~'^I upload the articles of "([^"]*)"$') { String arg1 ->
     finalSize = Periodico.findAll().size()
     assert initialSize < finalSize
 }
-Then(~'^the system has all the articles of the xml file$') { ->
+Then(~'^the system has all the articles of the xml file$') {->
     assert Periodico.findByTitle("A System For Translating Executable VDM Specifications Into Lazy ML") != null
     assert Periodico.findByTitle("From VDM Specifications To Functional Prototypes") != null
     assert Periodico.findByTitle("Basic laws of ROOL: an object-oriented language") != null
@@ -315,35 +314,23 @@ Then(~'^the system has all the articles of the xml file$') { ->
     assert Periodico.findByTitle("A Theory of Software Product Line Refinement") != null
     assert Periodico.findByTitle("The Crosscutting Impact of the AOSD Brazilian Research Community (accepted)") != null
 }
-And(~'^I select the upload button at the article page$') { ->
+And(~'^I select the upload button at the article page$') {->
     at ArticlesPage
     page.uploadWithoutFile()
 }
-Then(~'^I\'m still on article page$') { ->
+Then(~'^I\'m still on article page$') {->
     at ArticlesPage
 }
-And(~'^the articles are not stored by the system$') { ->
+And(~'^the articles are not stored by the system$') {->
     at ArticlesPage
     page.checkIfArticlesListIsEmpty()
 }
-Given(~'^the system has some articles stored$') { ->
+Given(~'^the system has some articles stored$') {->
     initialSize = Periodico.findAll().size()
 }
 
-//#if($Report)
-When(~"^I view the report of articles\$") { ->
-    articles = Periodico.findAll()
-    assert articles != null
-}
-
-Then(~'the report of articles contains "([^"]*)"$') { String title ->
-    articles = Periodico.findAll()
-    assert ArticleTestDataAndOperations.containsArticle(title, articles)
-}
-//#end
-
 //Funcoes Auxiliares
-def addPage() {
+def addPage(){
     Login()
     at PublicationsPage
     page.select("Periodico")
@@ -353,4 +340,3 @@ def addPage() {
     def f = new File(path)
     println "exist Path?" + f.exists()
 }
-//#end

@@ -1,3 +1,4 @@
+import pages.LoginPage
 import pages.OrientationPages.OrientationCreatePage
 import pages.OrientationPages.OrientationEditPage
 import pages.OrientationPages.OrientationShowPage
@@ -8,10 +9,6 @@ import rgms.member.Member
 import rgms.member.Orientation
 import steps.MemberTestDataAndOperations
 import steps.OrientationTestDataAndOperations
-import pages.LoginPage
-import org.apache.shiro.SecurityUtils
-import org.apache.shiro.subject.Subject
-import org.apache.shiro.util.ThreadContext
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*

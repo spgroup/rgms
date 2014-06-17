@@ -4,11 +4,10 @@ import pages.DissertationPage
 import pages.DissertationShowPage
 import rgms.authentication.User
 import rgms.publication.Dissertacao
-import steps.TestDataDissertacao
 import steps.TestDataAndOperationsPublication
+import steps.TestDataDissertacao
 
 import static cucumber.api.groovy.EN.*
-
 
 When(~'^I select the new dissertation option at the dissertation page$') {->
     at DissertationPage

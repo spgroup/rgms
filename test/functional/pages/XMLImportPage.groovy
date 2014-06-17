@@ -14,8 +14,8 @@ class XMLImportPage extends Page {
         //title ==~ /XMLImport Listagem/
 
         GetPageTitle gp = new GetPageTitle()
-        def currentBookChapter = gp.getMessageServerLocale("xml.label")
-        def currentTitle = currentBookChapter + " " + gp.getMessageServerLocale("default.button.list.label")
+        def current = gp.getMessageServerLocale("xml.label")
+        def currentTitle = current + " " + gp.getMessageServerLocale("default.button.list.label")
 
         title ==~ currentTitle
     }
@@ -25,6 +25,21 @@ class XMLImportPage extends Page {
     }
 
     def uploadWithoutFile(){
-        $('input.save').click()
+        $('input[type=submit]').click()
+    }
+
+    def hasErrorUploadFile() {
+        GetPageTitle gp = new GetPageTitle()
+        return gp.msg('default.xml.parserror.message') == $("div", class: "message", role: "status").text()
+    }
+
+    def uploadFile(String file){
+        $('input.save').click().add(file)
+    }
+
+    def invalidXML(){
+        GetPageTitle gp = new GetPageTitle()
+        return gp.msg('default.xml.parserror.message') == $("div", class: "message", role: "status").text()
+
     }
 }

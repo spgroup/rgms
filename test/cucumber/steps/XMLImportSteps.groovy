@@ -6,14 +6,10 @@ import pages.LoginPage
 import pages.OrientationPages.OrientationsPage
 import pages.XMLImportPage
 import pages.ferramenta.FerramentaPage
-import rgms.publication.*
-import static cucumber.api.groovy.EN.*
+import rgms.publication.Publication
 import steps.TestDataAndOperations
-import CommonSteps
 
-import org.apache.shiro.util.ThreadContext
-import org.apache.shiro.subject.Subject
-import org.apache.shiro.SecurityUtils
+import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has some publications stored$') { ->
 
@@ -104,4 +100,159 @@ And(~'^the publications are not stored by the system$') {->
     to OrientationsPage
     at OrientationsPage
     page.checkIfOrientationListIsEmpty()
+}
+
+/**
+ * @author Kamilla Cardoso
+ * #if($ResearchLine)
+ * Scenario: new research line
+ */
+Given(~'^ the system has some research lines stored$'){ ->
+    TestDataAndOperations.loginController(this)
+    initialSize = ResearchLine.findAll().size()
+}
+And(~'^ the system has no research line named as "([^"]*)" associated with me $'){ String nameResearch ->
+    //myIdentification = TestDataAuthentication.getProperties().get(this)
+
+    //Se existe uma linha de pesquisa de nome (nameResearch), mas ela não é existe na listas de pesquisas do usuário atual, ou seja,
+    // o usuário logado não à possui
+    assert ResearchLine.findByName(nameResearch) != PublicationController.getLoggedMember().researchLines.contains(nameResearch)
+}
+
+When(~'^ I upload the file "([^"]*)" which contains a research line named as "([^"]*)" $'){ file, researchLineName ->
+    TestDataAndOperations.uploadPublications(file)
+    TestDataAndOperationsResearchLine.findResearchLineByName(researchLineName)
+}
+
+Then(~'^ the system outputs a list of imported research lines which contains the one named as "([^"]*)" with status "([^"]*)" $'){  research_Line, status ->
+    //lista linha de pesquisa
+    assert Publication.findAllByResearchLineInListAndTitle(ResearchLine.findAll(), research_Line).size() > 1
+    //deve conter apenas uma linha de pesquisa
+    TestDataAndOperationsResearchLine.deleteResearchLine(ResearchLine.findByName(research_Line).getMembers())
+    //status definido na descrição deve ser "stable"
+    assert ResearchLine.findByName(research_Line).getDescription() == status
+}
+
+And(~'^ no new research line is stored by the system$'){ ->
+    finalSize = ResearchLine.findAll().size()
+}
+And(~'^ the previously stored research lines do not change$'){
+    assert inicialSize == finalSize
+}
+//#end
+
+
+/**
+ * @author Kamilla Cardoso
+ * #if($ResearchLine)
+ * Scenario: import xml file that contains a research line
+ */
+Given(~'^ the system has no research line named as "([^"]*)" $'){ nameResearch ->
+    assert ResearchLine.findByName(nameResearch) == null
+    inicialSize = ResearchLineController.findAll().size()
+}
+
+When(~'^ I upload the file "([^"]*)" which contains a research line named as "([^"]*)" $') { file, research_name ->
+    TestDataAndOperations.uploadPublications(file)
+    assert ResearchLine.findByName(research_name) == research_name
+    finalSize = ResearchLineController.findAll().size()
+    assert inicialSize < finalSize
+}
+
+Then(~'^ the research line named as "([^"]*)" is stored &'){ research->
+    assert ResearchLine.findByName(research) != null
+
+}
+//#end
+
+
+
+/**
+ * @author Kamilla Cardoso
+ * Scenario import invalid file
+ */
+Given(~'^The system has some publications stored $'){ ->
+    inicial = Publication.findAll().size()
+}
+
+When(~'^ I upload the file "([^"]*)" $') { String typeFile ->
+    TestDataAndOperations.uploadPublications(typeFile)
+    currentTypeFile = Publication.findByFile(typeFile).getFile().hasProperty(".xml")
+    assert currentTypeFile == false
+    //Publication.findByFile(typeFile).removeFromMembers()
+
+
+    //Vai verificar que a publicacao era inconsistente ao tipo, e será removido o arquivo do sistema
+    //Como este arquivo pode ter pessistido informacoes entao deve-se deletar todas as informacoes juntamente com o arquivo
+
+    Publication.findAllByFile(typeFile).remove(this)
+    //Publication.removeFromPublications()
+}
+
+Then(~'^ no publication is stored by the system $') { ->
+    finalS = Publication.findAll().size()
+}
+
+And(~'^ And previusly stored publications do not change  $'){->
+    assert inicial == finalS
+    TestDataAndOperations.logoutController(this)
+}
+
+
+
+/**
+ * @author Kamilla Cardoso
+ * Scenario invalid file web
+ */
+Given(~'^I am at the "Import XML File" Page$'){ ->
+    to LoginPage
+    at LoginPage
+    page.add("admin", "adminadmin")
+    at XMLImportPage
+}
+
+When(~'^I select the "([^"]*)" button$'){ String uploadButton ->
+    at XMLImportPage
+    page.selectButton(uploadButton)
+}
+
+And(~' I upload the file "([^"]*)"$'){ String file ->
+    at XMLImportPage
+    page.uploadFile(file)
+}
+
+Then(~'^ the system outputs an error message$'){ ->
+    at XMLImportPage
+    assert page.invalidXML()
+}
+
+And(~'^ no new publication is stored by the system$'){ ->
+    to ArticlesPage
+    at ArticlesPage
+    page.checkIfArticlesListIsEmpty()
+
+    to BookChapterPage
+    at BookChapterPage
+    page.checkIfBookChapterListIsEmpty()
+
+    to ConferenciaPage
+    at ConferenciaPage
+    page.checkIfConferenciaListIsEmpty()
+
+    to DissertationPage
+    at DissertationPage
+    page.checkIfDissertationListIsEmpty()
+
+    to FerramentaPage
+    at FerramentaPage
+    page.checkIfFerramentaListIsEmpty()
+
+    to OrientationsPage
+    at OrientationsPage
+    page.checkIfOrientationListIsEmpty()
+}
+
+And(~'^ the previously stored publications do not change$'){
+    to XMLImportPage
+    at XMLImportPage
 }

@@ -1,7 +1,6 @@
 package pages
 
 import geb.Page
-import rgms.publication.PeriodicoController
 
 class PublicationsPage extends Page {
     static url = ""

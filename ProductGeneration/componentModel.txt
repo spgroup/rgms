@@ -57,7 +57,6 @@ listPeriodico => grailsapp/views/periodico/list.gsp;
 editPeriodico => grailsapp/views/periodico/edit.gsp;
 createPeriodico => grailsapp/views/periodico/create.gsp;
 formPeriodico => grailsapp/views/periodico/form.gsp;
-reportPeriodico => grailsapp/views/periodico/report.gsp;
 
 mainGSP => grailsapp/views/layouts/main.gsp;
 
@@ -148,6 +147,7 @@ ResearchGroupController => grailsapp/controllers/rgms/ResearchGrogroovy;
 TeseController => grailsapp/controllers/rgms/TeseController.groovy;
 ResearchGroupController => grailsapp/controllers/rgms/ResearchGrogroovy;
 TeseController => grailsapp/controllers/rgms/TeseController.groovy;
+XMLController => grailsapp/controllers/rgms/publication/XMLController.groovy
 
 
 
@@ -215,9 +215,11 @@ ArticleSteps => test/cucumber/steps/ArticleSteps.groovy;
 GebConfig => test/functional/GebConfig.groovy;
 TestDataAndOperation => test/functional/steps/TestDataAndOperations.groovy;
 TestDataAuthentication => test/functional/steps/TestDataAuthentication.groovy;
-ArticleTestDataAndOperations => test/functional/steps/ArticleTestDataAndOperations.groovy;
 ArticleCreatePage => test/functional/pages/ArticleCreatePage.groovy;
 ArticleEditPage => test/functional/pages/ArticleEditPage.groovy;
 ArticleShowPage => test/functional/pages/ArticleShowPage.groovy;
 ArticlePage => test/functional/pages/ArticlesPage.groovy;
 UserRegisterPage => test/functional/pages/UserRegisterPage.groovy;
+
+XMLService => grailsapp/services/rgms/XMLService.groovy
+XMLImportTest => test/cucumber/XMLImport.feature

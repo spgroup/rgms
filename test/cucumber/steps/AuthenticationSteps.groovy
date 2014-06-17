@@ -1,32 +1,13 @@
-import geb.Browser
-import geb.ConfigurationLoader
-import org.apache.commons.validator.EmailValidator
-import org.apache.shiro.SecurityUtils
 import org.apache.shiro.crypto.hash.Sha256Hash
-import org.openqa.selenium.Capabilities
-import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.remote.DesiredCapabilities
-import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.remote.SessionId
-import pages.ArticlePages.ArticleCreatePage
-import pages.ArticlePages.ArticlesPage
-import pages.LoginPage
-
+import pages.*
 import pages.member.MemberListPage
-import pages.PublicationsPage
-import pages.RootPage
-import pages.UnauthorizedPage
-import pages.UserRegisterPage
 import rgms.authentication.User
-import rgms.publication.Periodico
 import rgms.member.Member
-import rgms.member.MemberController
-import steps.TestDataAndOperations
 import steps.TestDataAuthentication
 
 import static cucumber.api.groovy.EN.*
-import geb.Page
 
 Then (~'I am redirected to the Publications Menu page') { ->
     at PublicationsPage

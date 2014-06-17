@@ -1,7 +1,6 @@
 package steps
 
 import rgms.authentication.User
-import rgms.member.*
 
 class TestDataAndOperationsPublication {
 

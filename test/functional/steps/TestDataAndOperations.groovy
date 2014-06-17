@@ -1,15 +1,11 @@
 package steps
 
+import org.apache.shiro.SecurityUtils
 import org.apache.shiro.subject.Subject
 import org.apache.shiro.util.ThreadContext
-import org.codehaus.groovy.tools.GroovyClass
 import rgms.authentication.User
 import rgms.member.*
-import rgms.news.News
-import rgms.news.NewsController
 import rgms.publication.*
-import org.apache.shiro.SecurityUtils
-import steps.ThesisOrDissertationTestDataAndOperations
 
 class TestDataAndOperations {
 
@@ -100,8 +96,9 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    /* ESSE MÉTODO JÁ FOI DEFINIDO EM ConferenciaTestDataAndOperations.groovy */
     static public boolean conferenciaCompatibleTo(conferencia, title) {
-        def testConferencia = findConferenciaByTitle(title)
+        def testConferencia = findConferenciaByTitle(title) //o método não existe
         def compatible = false
         if (testConferencia == null && conferencia == null) {
             compatible = true
