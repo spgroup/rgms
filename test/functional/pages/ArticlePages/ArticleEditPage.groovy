@@ -1,3 +1,4 @@
+//#if($Article)
 package pages.ArticlePages
 
 import geb.Page
@@ -24,3 +25,4 @@ class ArticleEditPage extends Page {
         $("form").find("input", value: s).click()
     }
 }
+//#end

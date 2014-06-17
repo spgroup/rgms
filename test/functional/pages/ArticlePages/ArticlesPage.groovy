@@ -1,3 +1,4 @@
+//#if($Article)
 package pages.ArticlePages
 
 import geb.Page
@@ -63,3 +64,4 @@ class ArticlesPage extends Page {
         assert articleColumns[5].text() == testarticle.journal
     }
 }
+//#end

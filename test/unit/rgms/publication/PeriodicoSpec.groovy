@@ -1,3 +1,4 @@
+//#if($Article)
 package rgms.publication
 
 import grails.test.mixin.TestFor
@@ -7,15 +8,15 @@ import spock.lang.Specification
  * Created by JoaoGFarias on 2/18/14.
  */
 @TestFor(Periodico)
-class PeriodicoSpec extends Specification{
+class PeriodicoSpec extends Specification {
 
     def "Equal Periodicos"() {
         setup:
         mockDomain(Periodico)
 
         when:
-        def periodico1 = new Periodico(journal:journal, volume:vol, number:num, pages:pag )
-        def periodico2 = new Periodico(journal:journal, volume:vol, number:num, pages:pag )
+        def periodico1 = new Periodico(journal: journal, volume: vol, number: num, pages: pag)
+        def periodico2 = new Periodico(journal: journal, volume: vol, number: num, pages: pag)
 
         then:
         periodico1.equals(periodico2)
@@ -32,8 +33,8 @@ class PeriodicoSpec extends Specification{
         mockDomain(Periodico)
 
         when:
-        def periodico1 = new Periodico(journal:journal, volume:vol, number:num+1, pages:pag )
-        def periodico2 = new Periodico(journal:journal, volume:vol, number:num, pages:pag )
+        def periodico1 = new Periodico(journal: journal, volume: vol, number: num + 1, pages: pag)
+        def periodico2 = new Periodico(journal: journal, volume: vol, number: num, pages: pag)
 
         then:
         !periodico1.equals(periodico2) && periodico1.number != periodico2.number && periodico1.volume == periodico2.volume
@@ -50,7 +51,7 @@ class PeriodicoSpec extends Specification{
         mockDomain(Periodico)
 
         when:
-        def periodico1 = new Periodico(journal:journal, volume:vol, number:num, pages:pag )
+        def periodico1 = new Periodico(journal: journal, volume: vol, number: num, pages: pag)
 
         then:
         !periodico1.equals(nullPointer)
@@ -68,7 +69,7 @@ class PeriodicoSpec extends Specification{
         mockDomain(Periodico)
 
         when:
-        def periodico1 = new Periodico(journal:journal, volume:vol, number:num, pages:pag )
+        def periodico1 = new Periodico(journal: journal, volume: vol, number: num, pages: pag)
 
         then:
         !periodico1.equals(sampleObj)
@@ -86,10 +87,10 @@ class PeriodicoSpec extends Specification{
         mockDomain(Periodico)
 
         when:
-        def periodico = new Periodico(journal:journal, volume:vol, number:num, pages:pag )
+        def periodico = new Periodico(journal: journal, volume: vol, number: num, pages: pag)
 
         then:
-        periodico.toString() == "Journal: " +  journal + " | Volume: " + vol + " | Number: " + num
+        periodico.toString() == "Journal: " + journal + " | Volume: " + vol + " | Number: " + num
 
         where:
         journal = "UFPE Journal"
@@ -100,3 +101,4 @@ class PeriodicoSpec extends Specification{
 
 
 }
+//#end

@@ -1,3 +1,4 @@
+//#if($Article)
 package pages.ArticlePages
 
 import pages.FormPage
@@ -14,6 +15,8 @@ class ArticleCreatePage extends FormPage {
         title ==~ currentTitle
         journal != null
     }
+
+    static content = { journal { $("input", id: "journal") } }
 
     def fillArticleDetails() {
         def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
@@ -34,3 +37,4 @@ class ArticleCreatePage extends FormPage {
         $("input", name: "create").click()
     }
 }
+//#end
