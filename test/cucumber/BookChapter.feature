@@ -8,7 +8,6 @@ Feature: BookChapter
     Given the system has no book chapter entitled "SPL Development"
     When  I create the book chapter "SPL Development" with file name "HSPLE.pdf"
     Then  the book chapter "SPL Development" is properly stored by the system
-    And the other book chapters still stored in the system
 
   Scenario: duplicate book chapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
@@ -18,23 +17,21 @@ Feature: BookChapter
   Scenario: remove book chapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
     When I remove the book chapter "Next Generation Software Product Line Engineering"
-    Then the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
-    And the other book chapter still stored in the system
+    * the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
 
-  Scenario: register book chapter with invalid data web
+  Scenario: register book chapter with invalid data
     Given I am at the book chapter page
     And I select the new book chapter option at the book chapter page
     And I fill only the title field with the value "Next Generation Software Product Line Engineering"
     Then A failure message is displayed
-    And I am still on the book chapter create page
-    And the book chapter is not stored by the system
+    And I still on the book chapter create page
 
   Scenario: new book chapter web
     Given I am at the book chapter page
     And the system has no book chapter entitled "Next Generation Software Product Line Engineering"
     When I go to new book chapter page
     And I use the webpage to create the book chapter "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
-    Then the book chapter "Next Generation Software Product Line Engineering" is stored by the system
+    Then the book chapter "Next Generation Software Product Line Engineering" was stored by the system
     And it is shown in the book chapter list with title "Next Generation Software Product Line Engineering"
 
   #4
@@ -68,62 +65,10 @@ Feature: BookChapter
     Given the system has some book chapters stored
     When I upload the book chapters of "curriculo.xml"
     Then the system has all the book chapters of the xml file
-    And the other book chapters still stored in the system
 
-  Scenario: upload book chapters without a file web
+  Scenario: upload book chapters without a file
     Given I am at the publications menu
     When I select the Book Chapter option at the program menu
     And I select the upload button at the book chapter page
-    Then I can not add the book chapters without a file
-    And I'm still on book chapter page
+    Then I'm still on book chapter page
     And the book chapters are not stored by the system
-
-
-  Scenario: upload book chapter with a file web
-    Given I am at the publications menu
-    Given The system does not have a book chapter "Capitulo 1"
-    When I select the Book Chapter option at the program menu
-    And I select the upload button at the book chapter page
-    And I add the book chapters with a file “Book chapters 1.xml"
-    Then the book chapters in the file are stored by the system
-
-  Scenario: edit existing book chapter  web
-    Given I am at the book chapters page
-    When I select to view "Basic Concepts, Classification, and Quality Criteria" in resulting list
-    And I change the book chapter title to ”Chapter 3"
-    Then The book chapter is updated
-    And I am at Book Chapter show page
-
-  Scenario: order existing book chapters by title web
-    Given I am at the book chapters page
-    When I select to view all book chapters ordered by title in resulting list
-    Then The resulting book chapter list contains all book chapters ordered by title
-
-  Scenario: filter existing book chapters by author web
-    Given I am at the book chapters page
-    When I select to view all my book chapters filtered by author “Larissa Falcao” in resulting list
-    Then The resulting book chapter list contains only book chapters filtered by author "Larissa Falcao"
-
-  Scenario: upload book chapter without a file
-    Given the system has some book chapters stored
-    When I upload the book chapters of "chapters.xml"
-    Then book chapters are not stored by the system
-    And the system has the same number of book chapters
-
-  Scenario: edit book chapter
-    Given the book chapter "Basic Concepts, Classification, and Quality Criteria" is stored in the system with file name ”chapter3.pdf"
-    And the system has no book chapter entitled "Chapter 3"
-    When I edit the book chapter title from "Basic Concepts, Classification, and Quality Criteria" to ”Chapter 3"
-    Then the book chapter "Basic Concepts, Classification, and Quality Criteria" is properly updated by the system
-
-  Scenario: order book chapters by title
-    Given the system has some book chapters stored
-    When I view the book chapter list
-    And I choose to view the book chapter list ordered by title
-    Then the system book chapter list content is not modified
-
-  Scenario: filter book chapters by author
-    Given the system has some book chapters stored
-    When I view the book chapter list
-    And I choose to filter my book chapter list by author "Larissa Falcao"
-    Then the system book chapter list content is not modified
