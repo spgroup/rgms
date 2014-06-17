@@ -1,3 +1,4 @@
+//#if($Article)
 package rgms.publication
 
 import grails.converters.JSON
@@ -42,7 +43,9 @@ class PeriodicoController {
         //def pb = new PublicationController()
         def periodicoInstance = new Periodico(params)
 
-        if(!isValidPeriodico(periodicoInstance)){return }
+        if (!isValidPeriodico(periodicoInstance)) {
+            return
+        }
 
         periodicoInstance = PublicationController.extractAuthors(periodicoInstance)
 
@@ -61,7 +64,7 @@ class PeriodicoController {
         redirect(action: "show", id: periodicoInstance.id)
     }
 
-    def isValidPeriodico (Periodico periodicoInstance) {
+    def isValidPeriodico(Periodico periodicoInstance) {
 
         if (Periodico.findByTitle(params.title)) {
             handleSavingError(periodicoInstance, 'periodico.duplicatetitle.failure')
@@ -110,7 +113,9 @@ class PeriodicoController {
             return
         }
 
-        if(!checkPeriodicoVersion(periodicoInstance)){return }
+        if (!checkPeriodicoVersion(periodicoInstance)) {
+            return
+        }
 
         periodicoInstance.properties = params
 
@@ -124,16 +129,16 @@ class PeriodicoController {
         redirect(action: "show", id: periodicoInstance.id)
     }
 
-    def checkPeriodicoVersion(Periodico periodicoInstance){
+    def checkPeriodicoVersion(Periodico periodicoInstance) {
 
         if (params.version) {
             def version = params.version.toLong()
             if (periodicoInstance.version > version) {
                 periodicoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                [message(code: 'periodico.label', default: 'Periodico')] as Object[],
-                'default.article.checkVersion.message')
-            render(view: "edit", model: [periodicoInstance: periodicoInstance])
-            return  false
+                        [message(code: 'periodico.label', default: 'Periodico')] as Object[],
+                        'default.article.checkVersion.message')
+                render(view: "edit", model: [periodicoInstance: periodicoInstance])
+                return false
             }
         }
 
@@ -152,7 +157,7 @@ class PeriodicoController {
         deletePeriodico(periodicoInstance)
     }
 
-    def deletePeriodico (Periodico periodicoInstance){
+    def deletePeriodico(Periodico periodicoInstance) {
 
         try {
             periodicoInstance.removeFromPublications()
@@ -167,10 +172,10 @@ class PeriodicoController {
 
     }
     //#if( $Facebook )
-    def share(){
+    def share() {
         def periodicoInstance = Periodico.get(params.id)
         def member = User.findByUsername(SecurityUtils.subject?.principal).author
-        if(!member.getFacebook_id()?.equals(""))
+        if (!member.getFacebook_id()?.equals(""))
             PublicationController.sendPostFacebook(member, periodicoInstance.toString())
         redirect(action: "show", id: params.id)
     }
@@ -182,8 +187,9 @@ class PeriodicoController {
             ilike 'journal', params.term + '%'
         }
         Set journalsFound = new ListOrderedSet()
-        periodicalsFound?.each{journalsFound.add(it.journal)}
-        render (journalsFound as JSON)
+        periodicalsFound?.each { journalsFound.add(it.journal) }
+        render(journalsFound as JSON)
     }
     //#end
 }
+//#end

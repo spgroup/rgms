@@ -1,3 +1,4 @@
+<!-- #if($Article) -->
 <%@ page import="rgms.member.Member" %>
 <%@ page import="rgms.publication.Periodico" %>
 <%@ page import="rgms.publication.PublicationController" %>
@@ -110,5 +111,5 @@
 </div>
 </body>
 </html>
-
+<!-- #end -->
 

@@ -91,6 +91,13 @@
         </transformation>
     </configuration>
     <configuration>
+        <expression>Article</expression>
+        <transformation>
+            <name>createBuildEntries</name>
+            <args>Article</args>
+        </transformation>
+    </configuration>
+    <configuration>
         <expression>visit</expression>
         <transformation>
             <name>createBuildEntries</name>
@@ -335,41 +342,47 @@
 
 
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>formPeriodico,grails-app/views/periodico/form.gsp</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>createPeriodico,grails-app/views/periodico/create.gsp</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>editPeriodico,grails-app/views/periodico/edit.gsp</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>listPeriodico,grails-app/views/periodico/list.gsp</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>showPeriodico,grails-app/views/periodico/show.gsp</args>
         </transformation>
     </configuration>
-
+    <configuration>
+        <expression>Article</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>reportPeriodico,grails-app/views/periodico/report.gsp</args>
+        </transformation>
+    </configuration>
 
     <configuration>
         <expression>rgms</expression>
@@ -552,14 +565,14 @@
     </configuration>
 
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>periodical,grails-app/domain/rgms/publication/Periodico.groovy</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>preprocessFiles</name>
             <args>grails-app/domain/rgms/publication/Periodico.groovy</args>
@@ -690,14 +703,14 @@
     </configuration>
 
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>PeriodicoController,grails-app/controllers/rgms/publication/PeriodicoController.groovy</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>preprocessFiles</name>
             <args>grails-app/controllers/rgms/publication/PeriodicoController.groovy</args>
@@ -1042,14 +1055,14 @@
     </configuration>
 
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>ArticleFeature,test/cucumber/Article.feature</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>preprocessFiles</name>
             <args>test/cucumber/Article.feature</args>
@@ -1063,14 +1076,14 @@
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>ArticleSteps,test/cucumber/steps/ArticleSteps.groovy</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>preprocessFiles</name>
             <args>test/cucumber/steps/ArticleSteps.groovy</args>
@@ -1091,10 +1104,24 @@
         </transformation>
     </configuration>
     <configuration>
+        <expression>Article</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>ArticleTestDataAndOperations,test/functional/steps/ArticleTestDataAndOperations.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
         <expression>rgms</expression>
         <transformation>
             <name>preprocessFiles</name>
             <args>test/functional/steps/TestDataAndOperations.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>Article</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>test/functional/steps/ArticleTestDataAndOperations.groovy</args>
         </transformation>
     </configuration>
     <configuration>
@@ -1112,28 +1139,28 @@
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>ArticleCreatePage,test/functional/pages/ArticleCreatePage.groovy</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>ArticleEditPage,test/functional/pages/ArticleEditPage.groovy</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>ArticleShowPage,test/functional/pages/ArticleShowPage.groovy</args>
         </transformation>
     </configuration>
     <configuration>
-        <expression>rgms</expression>
+        <expression>Article</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>ArticlePage,test/functional/pages/ArticlesPage.groovy</args>

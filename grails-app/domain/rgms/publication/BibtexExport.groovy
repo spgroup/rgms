@@ -37,10 +37,12 @@ class BibtexExport {
         return "@misc{" + "author=\"" + BibtexAux.organizeAuthors(ferramenta.members) + "\",\n title=\"" + ferramenta.title + "\",\n website=\"" + ferramenta.website + "\",\n year=\"" + ferramenta.publicationDate.getAt(Calendar.YEAR) + "\",\n description=\"" + ferramenta.description + "\",\n month=\"" + ferramenta.publicationDate.getAt(Calendar.MONTH) + "\"}"
     }
 
+    //#if($Article)
     public String generateBibtexPeriodico(Periodico periodico) {
 
         return "@article{" + "author=\"" + BibtexAux.organizeAuthors(periodico.members) + "\",\n title=\"" + periodico.title + "\",\n journal=\"" + periodico.journal + "\",\n year=\"" + periodico.publicationDate.getAt(Calendar.YEAR) + "\",\n volume=\"" + periodico.volume + "\",\n month=\"" + periodico.publicationDate.getAt(Calendar.MONTH) + "\",\n number=\"" + periodico.number + "\",\n pages=\"" + periodico.pages + "\"}"
     }
+    //#end
 
     public String generateBibtexTechnicalReport(TechnicalReport technicalReport) {
 

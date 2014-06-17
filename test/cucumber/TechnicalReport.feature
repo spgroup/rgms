@@ -4,29 +4,27 @@ Feature: technical report
   I want to add, remove and modify technical report I have published
   so that I can generate web pages and reports containing these technical reports
 
-#Controller tests
   Scenario: new valid technical report
-    Given 	The system has no technical report entitled "Evaluating Natural Languages System"
-    When 	I create the technical report "Evaluating Natural Languages System" with file name "EvaluateNLS.txt"
-    Then 	The technical report "Evaluating Natural Languages System" is properly stored by the system.
+    Given    The system has no technical report entitled "Evaluating Natural Languages System"
+    When    I create the technical report "Evaluating Natural Languages System" with file name "EvaluateNLS.txt"
+    Then    The technical report "Evaluating Natural Languages System" is properly stored by the system.
 
   Scenario: new invalid technical report (empty institution)
-    Given 	The system has no technical report entitled "Evaluating Natural Languages System"
-    When 	I create the technical report "Evaluating Natural Languages System" with file name "TCS-99.pdf" and empty institution
-    Then 	The technical report "Evaluating Natural Languages System" is not properly stored by the system
+    Given    The system has no technical report entitled "Evaluating Natural Languages System"
+    When    I create the technical report "Evaluating Natural Languages System" with file name "TCS-99.pdf" and empty institution
+    Then    The technical report "Evaluating Natural Languages System" is not properly stored by the system
 
   Scenario: edit existing technical report with empty title
     Given    The system has an technical report entitled "NFL Languages System" with file name "NLS.pdf"
     When    I edit the technical report title from "NFL Languages System" to ""
     Then    The technical report "NFL Languages System" is not updated by the system
 
-#GUI tests
   Scenario: new valid technical report
     Given   I am at the technical reports page
-    And 	The system has no technical report entitled "TechRepo"
-    When 	I select the new technical report button
+    And    The system has no technical report entitled "TechRepo"
+    When    I select the new technical report button
     And     I fill the technical report details with title "TechRepo" file name "TechRepo.pdf" and institution "UFPE"
-    And 	I select the save technical report button
+    And    I select the save technical report button
     Then    The technical report "TechRepo" details page is shown
 
   Scenario: edit existing technical report with invalid title web
@@ -39,6 +37,7 @@ Feature: technical report
     Then   The technical report is not saved by the system
     And    I remain at the technical report edit page
 
+  @ignore
   Scenario: edit existing technical report with valid title, a valid filename and valid institution
     Given The system has an technical report entitled "TechRepo" with file name "TechRepo.pdf" and institution "UFPE"
     And   I am at the technical reports list page
@@ -58,7 +57,6 @@ Feature: technical report
     And    The system goes to the technical reports page
 
 #if ($contextualInformation)
-
   Scenario: new technical report web has user data already filled by default
     Given I am at the publications menu
     And I select the "Technical Report" option at the publications menu

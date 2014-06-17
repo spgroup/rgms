@@ -57,6 +57,7 @@ listPeriodico => grailsapp/views/periodico/list.gsp;
 editPeriodico => grailsapp/views/periodico/edit.gsp;
 createPeriodico => grailsapp/views/periodico/create.gsp;
 formPeriodico => grailsapp/views/periodico/form.gsp;
+reportPeriodico => grailsapp/views/periodico/report.gsp;
 
 mainGSP => grailsapp/views/layouts/main.gsp;
 
@@ -214,6 +215,7 @@ ArticleSteps => test/cucumber/steps/ArticleSteps.groovy;
 GebConfig => test/functional/GebConfig.groovy;
 TestDataAndOperation => test/functional/steps/TestDataAndOperations.groovy;
 TestDataAuthentication => test/functional/steps/TestDataAuthentication.groovy;
+ArticleTestDataAndOperations => test/functional/steps/ArticleTestDataAndOperations.groovy;
 ArticleCreatePage => test/functional/pages/ArticleCreatePage.groovy;
 ArticleEditPage => test/functional/pages/ArticleEditPage.groovy;
 ArticleShowPage => test/functional/pages/ArticleShowPage.groovy;
