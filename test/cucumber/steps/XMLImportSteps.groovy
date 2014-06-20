@@ -9,7 +9,6 @@ import pages.ferramenta.FerramentaPage
 import rgms.publication.*
 import static cucumber.api.groovy.EN.*
 import steps.TestDataAndOperations
-import CommonSteps
 
 import org.apache.shiro.util.ThreadContext
 import org.apache.shiro.subject.Subject
