@@ -1,6 +1,6 @@
 language: groovy
 jdk: 
- - openjdk7
+ - openjdk6
 
 branches:
  only:
@@ -39,7 +39,7 @@ notifications:
  email: false
  
 script: 
+ - java -jar PasswordScript.jar grails-app/conf/Config.groovy
  - ./grailsw clean 
  - ./grailsw refresh-dependencies --non-interactive
- - java -jar PasswordScript.jar grails-app/conf/Config.groovy
  - ./grailsw "-Dgeb.env=chrome -Dwebdriver.chrome.driver=chromedrivers/chromedriver-travis-64 test-app functional:cucumber --stacktrace"
