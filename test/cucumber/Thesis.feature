@@ -78,7 +78,6 @@ Feature: Thesis Tests
     Then all theses entitled "Software Engineering" are shown
 #end
 
-  @ignore
   Scenario: edit thesis title
     Given the system has thesis entitled "My Thesis"
     When I change the title from "My Thesis" to "My Thesis Renamed"

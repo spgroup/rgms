@@ -253,14 +253,14 @@ Then(~'^all theses entitled "([^"]*)" are shown$') { title ->
 
 
 //Scenario: edit thesis title
-When(~'^I change the title from "([^"]*)" to "([^"]*)"$') { title, newtitle ->
-    oldThesesQuantity = ThesisTestDataAndOperations.findAllByTitle(newtitle).size()
-    ThesisTestDataAndOperations.edit(title, newtitle)
-    newThesesQuantity = ThesisTestDataAndOperations.findAllByTitle(newtitle).size()
+When(~'^I change the title from "([^"]*)" to "([^"]*)"$') { title, newTitle ->
+    oldThesesQuantity = Tese.findAllByTitle(newTitle).size()
+    ThesisTestDataAndOperations.editThesis(title, newTitle)
+    newThesesQuantity = Tese.findAllByTitle(newTitle).size()
 }
 
-Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { newtitle ->
-    thesis = ThesisTestDataAndOperations.findByTitle(newTitle)
+Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { newTitle ->
+    def thesis = Tese.findByTitle(newTitle)
     assert thesis != null
 }
 

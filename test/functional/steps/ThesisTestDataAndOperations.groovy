@@ -1,5 +1,6 @@
 package steps
 
+import rgms.publication.Tese
 import rgms.publication.TeseController
 
 class ThesisTestDataAndOperations {
@@ -14,4 +15,14 @@ class ThesisTestDataAndOperations {
         ThesisOrDissertationTestDataAndOperations.deleteThesisOrDissertation(title, cont)
     }
 
+    static public Tese editThesis(title, newtitle) {
+        def thesis = Tese.findByTitle(title)
+        thesis.setTitle(newtitle)
+        def controller = new TeseController()
+        controller.params << thesis.properties
+        controller.update()
+
+        def updatedThesis = Tese.findByTitle(newtitle)
+        return updatedThesis
+    }
 }
