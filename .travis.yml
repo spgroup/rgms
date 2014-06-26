@@ -32,7 +32,7 @@ before_install:
 before_script:
  - chmod +x grailsw
  - cd chromedrivers/
- - chmod +x chromedriver-travis-64
+ - chmod +x chromedriverlinux64
  - cd ..
  
 notifications:
@@ -42,4 +42,4 @@ script:
  - java -jar PasswordScript.jar grails-app/conf/Config.groovy
  - ./grailsw clean 
  - ./grailsw refresh-dependencies --non-interactive
- - ./grailsw "-Dgeb.env=chrome -Dwebdriver.chrome.driver=chromedrivers/chromedriver-travis-64 test-app functional:cucumber Article.feature --stacktrace"
+ - ./grailsw "-Dgeb.env=chrome -Dwebdriver.chrome.driver=chromedrivers/chromedriverlinux64 test-app functional:cucumber Article.feature --stacktrace"
