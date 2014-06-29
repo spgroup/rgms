@@ -18,9 +18,13 @@ class ArticleTestDataAndOperations {
             [journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
                     title: "A theory of software product line refinement",
                     publicationDate: (new Date("12 October 2012"))],
-            [journal: "Science of Computer Programming", volume: 455, pages: "2-30",
+            [journal: "Science of Computer Programming", volume: 455, number: 1, pages: "2-30",
                     title: "Algebraic reasoning for object-oriented programming",
-                    publicationDate: (new Date("12 October 2012"))]
+                    publicationDate: (new Date("12 October 2012"))],
+            [journal: "Eletronic Notes In Theoretical Computer Science", volume: 130, number: 1, pages: "3-21",
+                    title: "An Abstract Equivalence Notion for Object Models",
+                    publicationDate: (new Date("12 October 2005")),
+                    authors: ["Paulo Henrique Monteiro Borba", "Tiago Massoni", "Rohit Gheyi"] as Set]
     ]
 
     static public def findArticleByTitle(String title) {
@@ -45,7 +49,7 @@ class ArticleTestDataAndOperations {
         } else if (testarticle != null && article != null) {
             compatible = true
             testarticle.each { key, data ->
-                compatible = compatible && (article."$key" == data)
+                if(key != 'publicationDate') compatible = compatible && (article."$key" == data) //para evitar problema de lidar com data
             }
         }
         return compatible

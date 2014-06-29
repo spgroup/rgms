@@ -1,3 +1,4 @@
+#Para executar os testes, alterar o nome do usuário admin para "Paulo Henrique Monteiro Borba" em BootStrap.groovy
 @i9n
 Feature: XMLImport
   As a member of a research group
@@ -27,20 +28,17 @@ Feature: XMLImport
     Then no new publication is stored by the system
     And the previously stored publications do not change
 
-  @ignore
   Scenario: no file web
-    Given I am at the "Import XML File" Page
-    And the system has some publications stored
-    When I click on "upload" without select a xml file
+    Given the system has some publications stored
+    When I click on "upload" at the "Import XML File" Page without select a xml file
     Then the system outputs an error message
     And no new publication is stored by the system
     And the previously stored publications do not change
 
-  @ignore
   Scenario: new publication
     Given the system has some publications stored
-    And the system has no journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me
-    When  I upload the file "cv.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me
+    And the system has no journal article entitled "An Abstract Equivalence Notion for Object Models" with journal "Eletronic Notes In Theoretical Computer Science" authored by me
+    When  I upload the file "cv.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models" with journal "Eletronic Notes In Theoretical Computer Science" authored by me
     Then the system outputs a list of imported publications which contains the journal article entitled "An Abstract Equivalence Notion for Object Models" with status "stable"
     And no new publication is stored by the system
     And the previously stored publications do not change
@@ -65,25 +63,22 @@ Feature: XMLImport
     And no new publication is stored by the system
     And the previously stored publications do not change
 
-  @ignore
   Scenario: publications with same name and different type
-    Given the system has a journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me, among several publications
-    When I upload the file "cv.xml" which contains a conference article entitled "An Abstract Equivalence Notion for Object Models" authored by me
-    Then the system outputs a list of imported publications which contains the conference article entitled "An Abstract Equivalence Notion for Object Models" with status "stable"
-    And no new publication is stored by the system
+    Given the system has a journal article entitled "An Abstract Equivalence Notion for Object Models" with journal "Eletronic Notes In Theoretical Computer Science" authored by me, among several publications
+    When I upload the file "cv.xml" which contains a conference article entitled "An Abstract Equivalence Notion for Object Models" from "Seventh Brazilian Conference on Formal Methods" authored by me
+    Then no new publication is stored by the system
     And the previously stored publications do not change
+    And the system outputs a list of imported publications which contains the conference article entitled "An Abstract Equivalence Notion for Object Models" with status "stable"
 
-  @ignore
   Scenario: duplicated publication with equal details
-    Given the system has a journal article entitled "An Abstract Equivalence Notion for Object Models" with some extra information, among several publications
-    When I upload the file "cv-duplicated.xml" which also contains a journal article entitled "An Abstract Equivalence Notion for Object Models" with the same extra information
-    Then the system outputs a list of imported publications which does not contain the journal article entitled "An Abstract Equivalence Notion for Object Models"
-    And the previously stored publications do not change
+    Given the system has a journal article entitled "An Abstract Equivalence Notion for Object Models" with journal "Eletronic Notes In Theoretical Computer Science" authored by me, among several publications
+    When I upload the file "cv.xml" which also contains a journal article entitled "An Abstract Equivalence Notion for Object Models" with the same details information
+    Then the previously stored publications do not change
+    And the system outputs a list of imported publications which does not contain the journal article entitled "An Abstract Equivalence Notion for Object Models"
 
-  @ignore
   Scenario: duplicated publications with conflicted details
-    Given the system has a journal article entitled "An Abstract Equivalence Notion for Object Models" with year "2003" that is authored by me, among several publications
-    When  I upload the file "cv-duplicatedConflictedDetails.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me with year "2004"
+    Given the system has a journal article entitled "An Abstract Equivalence Notion for Object Models" with journal "Eletronic Notes In Theoretical Computer Science" and pages "3-21" that is authored by me, among several publications
+    When  I upload the file "cv-duplicatedConflictedDetails.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models" with journal "Eletronic Notes In Theoretical Computer Science" and pages "3-10" authored by me
     Then the system outputs a list of imported publications which contains the journal article entitled "An Abstract Equivalence Notion for Object Models" with status "conflicted"
     And no new publication is stored by the system
     And the previously stored publications do not change
@@ -104,13 +99,15 @@ Feature: XMLImport
     Then the journal article entitled "An Abstract Equivalence Notion for Object Models" with status "conflicted" is removed from the list of imported publications
     And the previously stored publications do not change
 
+  #Esse cenário não faz sentido hoje, porque todos os atributos de uma publicação são obrigatórios, com exceção do filename.
+  #Daí que não tem como uma publicação importada ter informações extra em relação à uma publicação já existente no sistema.
   @ignore
   Scenario: duplicated publications with different details
-    Given the system has a conference article entitled "An Abstract Equivalence Notion for Object Models" with pages "1-14" that is authored by me
-    When  I upload the file "cv-duplicatedDifferentDetails.xml" which contains a conference article entitled "An Abstract Equivalence Notion for Object Models" with locale "Recife" that is also authored by me
-    Then the system outputs a list of imported publications which contains the conference article entitled "An Abstract Equivalence Notion for Object Models" with status "to update"
-    And no new publication is stored by the system
+    Given the system has a journal article entitled "An Abstract Equivalence Notion for Object Models" with file name "ArticleExample.pdf" that is authored by me, among several publications
+    When  I upload the file "cv.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me
+    Then no new publication is stored by the system
     And the previously stored publications do not change
+    And the system outputs a list of imported publications which contains the journal article entitled "An Abstract Equivalence Notion for Object Models" with status "to update"
 
   @ignore
   Scenario: confirm import of publication with different details
@@ -191,14 +188,13 @@ Feature: XMLImport
   #end
 
   #if($ResearchProject)
-  @ignore
   Scenario: new research project
     Given the system has some research projects stored
-    And the system has no research project named as "Modularização Emergente para Linhas de Produtos de Software"
-    When  I upload the file "cv.xml" which contains a research project named as "Modularização Emergente para Linhas de Produtos de Software"
-    Then the system outputs a list of imported research projects which contains the one named as "Modularização Emergente para Linhas de Produtos de Software" with status "stable"
-    And no new research project is stored by the system
+    And the system has no research project named as "Desenvolvimento Formal de Componentes de Software Reutilizáveis"
+    When  I upload the file "cv.xml" which contains a research project named as "Desenvolvimento Formal de Componentes de Software Reutilizáveis"
+    Then no new research project is stored by the system
     And the previously stored research projects do not change
+    And the system outputs a list of imported research projects which contains the one named as "Desenvolvimento Formal de Componentes de Software Reutilizáveis" with status "stable"
 
   @ignore
   Scenario: confirm import of new research project
@@ -220,20 +216,18 @@ Feature: XMLImport
     And the research project named as "Modularização Emergente para Linhas de Produtos de Software" with status "stable" is removed from the list of imported research projects
     And the previously stored research projects do not change
 
-  @ignore
   Scenario: duplicated research project
-    Given the system has a research project named as "Modularização Emergente para Linhas de Produtos de Software" with status "EM_ANDAMENTO", among several research projects
-    When  I upload the file "cv-duplicatedRPE.xml" which contains a research project named as "Modularização Emergente para Linhas de Produtos de Software" with status "EM_ANDAMENTO"
-    Then the system outputs a list of imported research projects which does not contain the one named as "Modularização Emergente para Linhas de Produtos de Software"
-    And the previously stored research projects do not change
+    Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas", among several research projects
+    When  I upload the file "cv.xml" which also contains a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with the same details information
+    Then the previously stored research projects do not change
+    And the system outputs a list of imported research projects which does not contain the one named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
 
-  @ignore
   Scenario: duplicated research project with conflicted details
-    Given the system has a research project named as "Modularização Emergente para Linhas de Produtos de Software" with status "EM_ANDAMENTO", among several research projects
-    When  I upload the file "cv-duplicatedRPC.xml" which contains a research project named as "Modularização Emergente para Linhas de Produtos de Software" with status "ENCERRADO"
-    Then the system outputs a list of imported research projects which contains the one named as "Modularidade Emergente" with status "conflicted"
-    And no new research project is stored by the system
+    Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with status "CONCLUIDO", among several research projects
+    When  I upload the file "cv-duplicatedRPC.xml" which also contains a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with status "ENCERRADO"
+    Then no new research project is stored by the system
     And the previously stored research projects do not change
+    And the system outputs a list of imported research projects which contains the one named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with status "conflicted"
 
   @ignore
   Scenario: confirm import of research project with conflicted details
@@ -327,7 +321,7 @@ Feature: XMLImport
     When I cancel the import of the master's orientation entitled "Structuring Adaptive Aplications using AspectJ" with status "conflicted"
     And the master's orientation entitled "Structuring Adaptive Aplications using AspectJ" with status "conflicted" is removed from the list of imported orientations
     And the previously stored orientations do not change
-#end
+  #end
 # o que acontece quando o arquivo tem publicações já cadastradas? e
 # publicações com mesmos títulos mas outras partes diferentes? e
 # se o arquivo nao estiver no formato correto?
