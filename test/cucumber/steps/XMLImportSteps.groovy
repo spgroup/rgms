@@ -153,10 +153,6 @@ Given(~'^the system has some research projects stored$'){ ->
     assert ResearchProject.findAll().size() == researchProjectsTotal
 }
 
-/*Given(~'^the system has no research project named as "([^"]*)"$'){ projectName ->
-    assert XMLImportTestDataAndOperations.isANewResearchProject(projectName)
-}*/
-
 When(~'^I upload the file "([^"]*)" which contains a research project named as "([^"]*)"$'){ filename, projectName ->
     String path = "test" + File.separator + "files" + File.separator + filename
     assert XMLImportTestDataAndOperations.fileContainsResearchProject(path, projectName)

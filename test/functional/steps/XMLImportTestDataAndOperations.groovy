@@ -152,10 +152,6 @@ class XMLImportTestDataAndOperations {
         rp.save(flush: true)
     }
 
-    static isANewResearchProject(projectName){
-        def project = ResearchProject.findByProjectName(projectName)
-    }
-
     static fileContainsResearchProject(path, projectName){
         def name = User.findByUsername('admin')?.author?.name
         def projects = extractResearchProjectsFromFile(path)?.find{
