@@ -17,7 +17,9 @@ class Member {
     Boolean active
     String access_token
     String facebook_id
-    
+    String researchGate_username
+    String researchGate_password
+
    //static hasMany = [roles: Role, permissions: String, #if($History) historics: Record,#end memberships : Membership, publications: Publication]
    static hasMany = [historics: Record, memberships : Membership, publications: Publication, researchLines: ResearchLine]
    static belongsTo = ResearchLine
@@ -44,6 +46,8 @@ class Member {
     	active(nullable: true)
         access_token(nullable: true)
         facebook_id(nullable: true)
+        researchGate_username(nullable: true)
+        researchGate_password(nullable: true)
     }
 
     static mapping = {

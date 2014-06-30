@@ -5,36 +5,37 @@ import pages.ResearchGatePage
 import rgms.authentication.User
 import rgms.publication.Periodico
 import steps.ArticleTestDataAndOperations
-import steps.ResearchGateTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 // #if($researchGate)
-Given(~'^my Research Gate credentials were not given to the system previously$') {
-    assert User.getResearchGateCredentials() == null
+Given(~'^my Research Gate credentials were not given to the system previously$') { ->
+    assert User.findByUsername("admin").author.researchGate_username == null
 }
 
-Then(~'^I can fill my Research Gate credentials$') {
+Then(~'^I can fill my Research Gate credentials$') { ->
     at ResearchGatePage
     page.fillCredentials()
 }
 
-Given(~'^I am at the export to research gate page$') {
+Given(~'^I am at the export to research gate page$') { ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
-    page.select("Export bibtex file")
+    page.select("Export Bibtex File")
     at BibtexGenerateFilePage
+    page.select("Generate All BibTex")
     page.select("Export to Research Gate")
     at ResearchGatePage
 }
 
-Given(~'^I had filled the Research Gate credentials with valid credentials$') {
+Given(~'^I had filled the Research Gate credentials with valid credentials$') { ->
     at ResearchGatePage
     page.fillCredentials()
+    page.select("Log in")
 }
 
-When(~'^I click on the button Export$') {
+When(~'^I click on the button Export$') { ->
     at ResearchGatePage
     page.clickOnExport()
 }

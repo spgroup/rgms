@@ -609,3 +609,9 @@ a.skip {
 .checklist label { display: block; padding: 0 0.2em 0 25px; text-indent: -25px; }
 .checklist label:hover, .checklist label.hover { background: #777; color: #fff; }
 * html .checklist label { height: 1%; }
+
+textarea.bibtexContent {
+    width: 900px;
+    resize: none;
+    margin-bottom: 20px;
+}

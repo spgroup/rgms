@@ -21,6 +21,9 @@ class BibtexGenerateFileController {
     def list = {
     }
 
+    def show = {
+    }
+
     def home = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def userMemberList = []
@@ -35,12 +38,29 @@ class BibtexGenerateFileController {
         [researchGroupInstanceList: ResearchGroup.list(params), researchGroupInstanceTotal: ResearchGroup.count(), userMemberInstance: userMemberList, userMemberInstanceTotal: userMemberList.size() ]
     }
 
-    def generateBibTex = {
-        int numero = (params.id).toInteger()
-        render(memberPublications(numero))
+    def exportToResearchGate = {
+        if(PublicationController.getLoggedMember().researchGate_username != null)
+            redirect(url: "https://www.researchgate.net/home.Home.html")
+        else
+            redirect(url: "https://www.researchgate.net")
     }
 
-    private String memberPublications(int numero) {
+    def generateBibTex = {
+        int numero = (params.id).toInteger()
+        render(view: "show", model: [bibtexContent: memberPublications(numero)])
+    }
+
+    def saveBibtexInFile = {
+        String bibtex = params.bibtexContent
+        def tempfile = new File("My bibtex.bibtex")
+        tempfile.write(bibtex)
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-disposition", "attachment;filename=${tempfile.getName()}")
+        tempfile.withInputStream { response.outputStream << it }
+        tempfile.delete()
+    }
+
+    public String memberPublications(int numero) {
         String bibtex = ""
         for (publication in Publication.getAll()) {
             for (member in publication.getMembers()) {

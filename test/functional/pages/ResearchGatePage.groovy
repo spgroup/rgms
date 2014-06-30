@@ -7,23 +7,27 @@ import geb.Page
  */
 // #if($researchGate)
 class ResearchGatePage extends Page {
-    def titleName = /${(new GetPageTitle()).getMessageServerLocale("researchgate.title")}/
-    static url = "bibtexGenerateFile/toResearchGate"
+    static url = "https://www.researchgate.net/home.Home.html"
 
     static at = {
-        title ==~ titleName
+
     }
 
     def fillCredentials() {
-        $("input#username").text = "ellis"
-        $("input#password").text = "123"
+        $(".login-btn a").click()
+        $("form", name: "loginForm").login = "evc2@cin.ufpe.br"
+        $("form", name: "loginForm").password = "teste123"
+    }
+
+    def select(String s) {
+        $('input', value: s).click()
     }
 
     def clickOnExport() {
         $("#btnExport").click()
     }
 
-    def consultOnResearchGate(string filename) {
+    def consultOnResearchGate(String filename) {
         return ResearchGateTool.consult(filename);
     }
 }
