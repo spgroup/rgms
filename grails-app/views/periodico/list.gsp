@@ -13,12 +13,23 @@
                                                                 default="Skip to content&hellip;"/></a>
 <g:render template="navigation"/>
 <!-- #if($XMLImp && $Journal) -->
-<div class="xml" role="xmlUpload">
+<div class="fieldcontain">
     <ul>
         <g:form controller="XML" action="uploadXMLPeriodico" method="post" enctype="multipart/form-data">
-            <label for="file">Import XML:</label>
+            <label for="file">Import XML</label>
             <input type="file" name="file" id="file"/>
             <input class="save" type="submit" value="Upload"/>
+        </g:form>
+    </ul>
+</div>
+<!-- #end -->
+<!-- #if($FilterArticlesByAuthor) -->
+<div class="fieldcontain">
+    <ul>
+        <g:form action="filterByAuthor" method="post">
+            <label for="filter">${message(code: 'default.author.label', default: 'Author')}</label>
+            <input name="authorName" id="authorName" type="text">
+            <input name="buttonFilterByAuthor" class="save" type="submit" value="${message(code: 'default.button.search.label', default: 'Search')}"/>
         </g:form>
     </ul>
 </div>
