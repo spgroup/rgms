@@ -191,5 +191,18 @@ class PeriodicoController {
         render(journalsFound as JSON)
     }
     //#end
+	
+	//#if($FilterArticlesByAuthor)
+	def filterByAuthor() {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		def articles = Periodico.list(params)
+		def authorName = params.authorName
+		if(authorName!="")
+			articles = articles.findAll{it.authors.contains(authorName)}
+		render(view: "list", model: [periodicoInstanceList: articles, periodicoInstanceTotal: articles.size()])
+		[periodicoInstanceList: articles, periodicoInstanceTotal: articles.size()]
+	}
+	//#end
+	
 }
 //#end
