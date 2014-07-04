@@ -13,7 +13,7 @@ Given(~'^the system has no article entitled "([^"]*)"$') { String title ->
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-	ArticleTestDataAndOperations.createArticle(title, filename,null,null)
+	ArticleTestDataAndOperations.createArticle(title, filename)
 }
 
 Then(~'^the article "([^"]*)" is properly stored by the system$') { String title ->
@@ -22,7 +22,7 @@ Then(~'^the article "([^"]*)" is properly stored by the system$') { String title
 }
 
 When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*)" field blank$') { String title, String filename, String field ->
-	ArticleTestDataAndOperations.createArticle(title, filename,null,null)
+	ArticleTestDataAndOperations.createArticle(title, filename)
 	def article = ArticleTestDataAndOperations.findArticleByTitle(title)
 	assert article.{field} == null
 }
@@ -52,7 +52,7 @@ Then(~'^I can fill the article details$') {->
  * @author Guilherme
  */
 Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-	ArticleTestDataAndOperations.createArticle(title, filename,null,null)
+	ArticleTestDataAndOperations.createArticle(title, filename)
 	assert Periodico.findByTitle(title) != null
 }
 
@@ -324,6 +324,7 @@ Given(~'^I am at the articles page$'){->
 	Login()
 	at PublicationsPage
 	page.select("Periodico")
+	at ArticlesPage	
 }
 
 And(~'^the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
@@ -333,21 +334,21 @@ And(~'^the article "([^"]*)" is stored in the system with file name "([^"]*)"$')
 	page.fillArticleDetails(ArticleTestDataAndOperations.path() + filename, title)
 	page.selectCreateArticle()
 	assert !periodicoNoExist(title)
-	to ArticlesPage
 }
 
 //#if($Report)
 When(~'^the system reports the existing articles$') {->
-	articles = Periodico.findAll()
+	articles = ArticleTestDataAndOperations.reportArticles()
 	assert articles != null
 }
 
 Then(~'^the system report contains "([^"]*)" article$') { String title ->
-	articles = Periodico.findAll()
+	articles = ArticleTestDataAndOperations.reportArticles()
 	assert ArticleTestDataAndOperations.containsArticle(title, articles)
 }
 
 When(~'^I select to view the report of articles$') {->
+	to ArticlesPage
 	at ArticlesPage
 	page.selectViewReports()
 }
@@ -375,7 +376,9 @@ When(~'^the system orders the article list by publication date$') {->
 }
 
 Then(~'^the system article list content is not modified$') {->
-	assert Periodico.findAll().size() == 2
+	assert Periodico.findAll().size() == 2 
+	assert !periodicoNoExist('Modularity analysis of use case implementations') 
+	assert !periodicoNoExist('A theory of software product line refinement')
 }
 
 Given(~'^the system has some articles created$'){->
@@ -411,12 +414,12 @@ Then(~'^my article list shows the articles ordered by "([^"]*)"$') {String sortT
 
 Given(~'^the system has some articles authored by "([^"]*)"$'){String authorName->
 	ArticleTestDataAndOperations.createArticle('A theory of software product line refinement', 'TCSOS.pdf', null, 'Paulo Borba')
-	ArticleTestDataAndOperations.createArticle('Algebraic reasoning for object-oriented programming', 'AROOP.pdf', null, null)
-	assert (!periodicoNoExist('A theory of software product line refinement') && !periodicoNoExist('Algebraic reasoning for object-oriented programming'))
+	ArticleTestDataAndOperations.createArticle('Modularity analysis of use case implementations', 'MACI.pdf')
+	assert (!periodicoNoExist('A theory of software product line refinement') && !periodicoNoExist('Modularity analysis of use case implementations'))
 }
 
 When(~'^the system filter the articles authored by author "([^"]*)"$') {String authorName->
-	articlesFiltered = Periodico.findAllByAuthor(authorName)
+	articlesFiltered = ArticleTestDataAndOperations.findAllByAuthor(authorName)
 	assert ArticleTestDataAndOperations.isFiltered(articlesFiltered,authorName)
 }
 
@@ -487,7 +490,7 @@ When(~'^I remove the articles "([^"]*)" and "([^"]*)"$') { String title1, title2
 	assert testDeleteArticle2 == null
 }
 
-Then(~'^the system remove the articles "([^"]*)" and "([^"]*)"$') { String title1, title2 ->
+Then(~'^the system removes the articles "([^"]*)" and "([^"]*)"$') { String title1, title2 ->
 	assert periodicoNoExist(title1)
 	assert periodicoNoExist(title2)
 }

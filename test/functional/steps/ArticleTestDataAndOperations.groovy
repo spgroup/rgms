@@ -54,6 +54,10 @@ class ArticleTestDataAndOperations {
 		}
 		return compatible
 	}
+	
+	static public void createArticle(String title, filename) {
+		createArticle(title,filename, null,null)
+	}
 
 	static public void createArticle(String title, filename, date, authorName) {
 		def cont = new PeriodicoController()
@@ -73,13 +77,13 @@ class ArticleTestDataAndOperations {
 
 	static public void createArticleWithoutTitle(filename) {
 		def cont = new PeriodicoController()
-		cont.params << ArticleTestDataAndOperations.findArticleByFilename(filename) 
+		cont.params << ArticleTestDataAndOperations.findArticleByFilename(filename)
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.
 		cont.create()
 		cont.save()
 		cont.response.reset()
 	}
-	
+
 	static void clearArticles() {
 		Periodico.findAll()*.delete flush: true // Could also delete the created files.
 	}
@@ -126,7 +130,7 @@ class ArticleTestDataAndOperations {
 		}
 		return isSorted
 	}
-	
+
 	static public def isFiltered(articles,authorName) {
 		for (article in articles) {
 			if(!(article.authors).contains(authorName))
@@ -134,11 +138,22 @@ class ArticleTestDataAndOperations {
 		}
 		return true
 	}
-	
+
 	static public def findArticleByFilename(String filename) {
 		articles.find { article ->
 			article.filename == filename
 		}
+	}
+
+	static public List<Periodico> reportArticles() {
+		def cont = new PeriodicoController()
+		return cont.report().periodicoInstanceList
+	}
+	
+	static public List<Periodico> findAllByAuthor(authorName) {
+		def cont = new PeriodicoController()
+		cont.params << [authorName: authorName]
+		return cont.filterByAuthor().periodicoInstanceList
 	}
 }
 

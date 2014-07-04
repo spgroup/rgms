@@ -158,7 +158,7 @@ Feature: journal article
   Scenario: remove multiple articles
 	Given the system has 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf" and "Modularity analysis of use case implementations" with file name "MACI-03.pdf"
 	When I remove the articles "A theory of product line 1" and "A theory of product line 3"
-	Then the system remove the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
+	Then the system removes the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 	And the system contains the "Algebraic reasoning for object-oriented programming" article
 
 #if($Report)  

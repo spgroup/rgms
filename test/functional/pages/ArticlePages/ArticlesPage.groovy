@@ -105,8 +105,8 @@ class ArticlesPage extends Page {
 	}
 
 	def fillAndSelectFilter(authorName){
-		$("form").author = authorName
-		$("input", id: "findByAuthor").click()
+		$("form").authorName = authorName
+		$("input", name: "buttonFilterByAuthor").click()
 	}
 
 	def checkFilteredBy(authorName){
