@@ -29,4 +29,12 @@ class VisitCreatePage extends Page {
         //#end
         clickOnCreate()
     }
+    
+	def fillVisitDetails(String name) {
+		$("form").nameVisitor = name
+		//#if( $descricaovisita )
+		$("form").description = "None"
+		//#end
+		clickOnCreate()
+	}
 }
