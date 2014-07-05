@@ -11,9 +11,9 @@ class VisitController {
     }
     
     def confirm(Long id) {
-		def visitInstance = getVisitInstance(id)
+	def visitInstance = getVisitInstance(id)
         if(visitInstance) [visitInstance: visitInstance]
-	}
+    }
     
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -32,23 +32,23 @@ class VisitController {
     }
 
     def save() {
-		def visitor = Visitor.findByName((String)params.nameVisitor)
-		if(!visitor) 
-		{ 
-			visitor = createVisitor()
-			def visitInstance = new Visit(params)
-			saveVisit(visitInstance, visitor, "create", "created")
-		}
-		else
-		{
-			def visitInstance = new Visit(params)
-			visitInstance.visitor = visitor
+	def visitor = Visitor.findByName((String)params.nameVisitor)
+	if(!visitor) 
+	{ 
+		visitor = createVisitor()
+		def visitInstance = new Visit(params)
+		saveVisit(visitInstance, visitor, "create", "created")
+	}
+	else
+	{
+		def visitInstance = new Visit(params)
+		visitInstance.visitor = visitor
 	        if (!visitInstance.save(flush: true)) {
 	            render(view: "create", model: [visitInstance: visitInstance])
 	            return
 	        }
-			redirect(action: "confirm", id: visitInstance.id)
-		}
+		redirect(action: "confirm", id: visitInstance.id)
+	}
         
     }
 
