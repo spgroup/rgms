@@ -11,8 +11,6 @@ class ResearchProjectTestDadaAndOperations {
 
     static ResearchProjectController cont = new ResearchProjectController()
 
-    static List<ResearchProject> oldProjects
-
     static researchProjects =[
             [projectName:"Implementação Progressiva de Aplicações Orientadas a Objetos Complexas",
                     description:"Neste projeto pretendemso definir e validar um método para a implementação de aplicações orientadas a objetos complexas. Em particular, este método deve suportar uma abordagem progressiva para implementação orientada a objetos, de forma que aspectos de distribuição, concorrência, e persistência não sejam inicialmente considerados pelo processo de implementação, mas sejam gradualmente introduzidos, preservando os requisitos funcionais da aplicação.",

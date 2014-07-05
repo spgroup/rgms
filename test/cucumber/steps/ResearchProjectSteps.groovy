@@ -16,6 +16,7 @@ import static cucumber.api.groovy.EN.*
  */
 def initialSize = 0
 
+def List<ResearchProject> oldProjects
 
 // ------------------------------------------------------------------------------------------------------------------------------
 // Scenario: new research project
@@ -23,11 +24,13 @@ def initialSize = 0
 Given(~'^the system has no research project named as "([^"]*)"$') { String projectName ->
     if(!checkIfResearchProjectNoExists(projectName)) {
         ResearchProject.findByProjectName(projectName).delete();
+        assert checkIfResearchProjectNoExists(projectName);
     }
 }
 
 When(~'^I create a research project named as "([^"]*)" with all required data$') { String projectName ->
     ResearchProjectTestDadaAndOperations.createResearchProject(projectName);
+    assert ResearchProject.findByProjectName(projectName) != null;
 }
 
 Then(~'^the research project "([^"]*)" is properly stored by the system$') { String projectName ->
@@ -50,7 +53,7 @@ Given(~'^the system has a research project named as "([^"]*)"$') { String projec
 }
 
 When(~'^I try to create a research project named as "([^"]*)"$') { String projectName ->
-    ResearchProjectTestDadaAndOperations.oldProjects =  ResearchProject.findAll();
+    oldProjects =  ResearchProject.findAll();
     ResearchProjectTestDadaAndOperations.createResearchProject(projectName);
 }
 
@@ -82,6 +85,7 @@ Then(~'^the research project named as "([^"]*)" is properly removed by the syste
 
 When(~'^I create a research project named as "([^"]*)" without funders$'){ String projectName ->
     ResearchProjectTestDadaAndOperations.createResearchProjectWithoutFunders(projectName);
+    assert ResearchProject.findByProjectName(projectName) != null;
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -199,11 +203,7 @@ Then(~'^the data of the research project named "([^"]*)" is updated in the syste
 // ------------------------------------------------------------------------------------------------------------------------------
 // NOVOS Vilmar
 Then(~'^no research project stored is affected'){ ->
-    assert checkIfNoResearchProjectAffected()
-}
-
-Given(~'^I am logged in the system$'){ ->
-    TestDataAndOperations.loginController(this)
+    assert checkIfNoResearchProjectAffected(oldProjects)
 }
 
 Then(~'^the research project "([^"]*)" is not stored by the system because it is invalid$'){ String projectName ->
@@ -211,25 +211,24 @@ Then(~'^the research project "([^"]*)" is not stored by the system because it is
 }
 
 When(~'^I try to create a research project named as "([^"]*)" with description field blank$'){ String projectName ->
-    ResearchProjectTestDadaAndOperations.oldProjects =  ResearchProject.findAll()
+    oldProjects =  ResearchProject.findAll()
     ResearchProjectTestDadaAndOperations.createResearchProject(projectName)
 }
 
 When(~'^I create a research project named as "([^"]*)" with member field duplicated$'){ String projectName ->
     ResearchProjectTestDadaAndOperations.createResearchProject(projectName)
+    assert ResearchProject.findByProjectName(projectName) != null;
 }
 
 Then(~'^the research project "([^"]*)" does not have duplicated members$'){String projectName ->
     ResearchProject project  = ResearchProject.findByProjectName(projectName);
     boolean check = true
-    // Não vai ter nunca porque é um SET
     Iterator i = project.members.iterator()
-    while (i.hasNext()) {
+    while (i.hasNext() && check) {
         String m = i.next()
         project.members.remove(m)
         if (project.members.contains(m)) {
             check = false
-            break
         }
     }
 
@@ -244,8 +243,9 @@ Given (~'^I am at new research project page$'){ ->
 }
 
 When(~'^I can create a research project named as "([^"]*)" with all required data$'){ String projectName ->
-    page.fillResearchProjectDetails(projectName)
+    page.fillResearchProject(projectName)
     page.createResearchProject()
+    assert ResearchProject.findByProjectName(projectName) != null
 }
 
 Then (~'^I\'m still on the new research project page$'){ ->
@@ -257,19 +257,19 @@ Then(~'^it is shown in the research project list with name "([^"]*)"$'){ String 
     page.checkResearchGroupAtList(projectName)
 }
 
-When(~'^I can try to create a research project named as "([^"]*)" with description field blank$'){ String projectName ->
+When(~'^I try to create a research project named as "([^"]*)" with description field blank on the web site$'){ String projectName ->
     // updated
-    ResearchProjectTestDadaAndOperations.oldProjects =  ResearchProject.findAll()
-    page.fillResearchProjectDetailsWithBlankDescription(projectName)
+    oldProjects =  ResearchProject.findAll()
+    page.fillResearchProjectWithBlankDescription(projectName)
     page.createResearchProject()
 }
 
 
-When(~'^I can try to create a research project named as "([^"]*)"$'){ String projectName ->
+When(~'^I try to create a research project named as "([^"]*)" on the web site$'){ String projectName ->
     // updated
-    ResearchProjectTestDadaAndOperations.oldProjects =  ResearchProject.findAll()
+    oldProjects =  ResearchProject.findAll()
     at ResearchProjectPageCreatePage
-    page.fillResearchProjectDetails(projectName)
+    page.fillResearchProject(projectName)
     page.createResearchProject()
 }
 
@@ -297,9 +297,9 @@ def checkIfResearchProjectExists(String projectName){
     project.equals(project2)
 }
 
-def checkIfNoResearchProjectAffected() {
+def checkIfNoResearchProjectAffected(oldProjects) {
     boolean check = true;
-    List<ResearchProject> beforeProjects = ResearchProjectTestDadaAndOperations.oldProjects
+    List<ResearchProject> beforeProjects = oldProjects
     List<ResearchProject> afterProjects = ResearchProject.findAll()
 
     beforeProjects.eachWithIndex { ResearchProject entry, int i ->

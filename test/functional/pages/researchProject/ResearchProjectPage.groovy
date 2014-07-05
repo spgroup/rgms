@@ -1,5 +1,7 @@
 package pages.researchProject
 
+import org.apache.shiro.SecurityUtils
+import org.apache.shiro.UnavailableSecurityManagerException
 import pages.FormPage
 import pages.GetPageTitle
 import rgms.authentication.User
@@ -62,10 +64,15 @@ class ResearchProjectPage extends FormPage {
         $("form").filterProjectName = projectName;
     }
 
-    def checkResearchGroupAtList(projectName) {
+    def getResearchGroupRows() {
         def listDiv = $('div', id: 'list-researchProject')
         def researchGroupTable = (listDiv.find('table'))[0]
         def researchGroupRows = researchGroupTable.find('tbody').find('tr')
+        researchGroupRows
+    }
+
+    def checkResearchGroupAtList(projectName) {
+        def researchGroupRows = getResearchGroupRows()
         int size = researchGroupRows.size();
         def researchGroupColumns = researchGroupRows[size - 1].find('td')
 
@@ -74,9 +81,7 @@ class ResearchProjectPage extends FormPage {
 
     def checkResearchGroupDuplicatedAtList(projectName) {
         boolean check = true;
-        def listDiv = $('div', id: 'list-researchProject')
-        def researchGroupTable = (listDiv.find('table'))[0]
-        def researchGroupRows = researchGroupTable.find('tbody').find('tr')
+        def researchGroupRows = getResearchGroupRows()
         int size = researchGroupRows.size();
         if (size > 1) {
             def researchGroupColumns = researchGroupRows[size - 1].find('td')
@@ -100,9 +105,7 @@ class ResearchProjectPage extends FormPage {
         }
 
         boolean check = true;
-        def listDiv = $('div', id: 'list-researchProject');
-        def researchGroupTable = (listDiv.find('table'))[0];
-        def researchGroupRows = researchGroupTable.find('tbody').find('tr');
+        def researchGroupRows = getResearchGroupRows()
         int size = researchGroupRows.size();
 
         if(size > 1) {
@@ -120,9 +123,7 @@ class ResearchProjectPage extends FormPage {
 
     def checkResearchGroupListFilteredByName(filter) {
         boolean check = true;
-        def listDiv = $('div', id: 'list-researchProject');
-        def researchGroupTable = (listDiv.find('table'))[0];
-        def researchGroupRows = researchGroupTable.find('tbody').find('tr');
+        def researchGroupRows = getResearchGroupRows()
         int size = researchGroupRows.size();
 
         if(size > 1) {
