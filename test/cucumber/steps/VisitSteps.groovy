@@ -6,10 +6,13 @@ import pages.LoginPage
 import pages.visit.VisitPage
 import pages.visit.VisitCreatePage
 import pages.visit.VisitShowPage
+import pages.visit.VisitConfirmPage
 import rgms.tool.TwitterTool
 import steps.TestDataAndOperationsVisit
 
 import static cucumber.api.groovy.EN.*
+
+import java.text.SimpleDateFormat
 
 Given(~'^the system has no visitor named "([^"]*)"$') { String name ->
     assert Visitor.findByName(name) == null
@@ -187,16 +190,16 @@ Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and
  * @author mclv
  */
 Given(~'^the system has visits with initial or final date greater than or equal "([^"]*)"$') { String date ->
-	TestDataAndOperationsVisit.createVisit("Person", date, date)
+    TestDataAndOperationsVisit.createVisit("Person", date, date)
 }
 
 /**
  * @author mclv
  */
-When(~'^I view the list of visits for the period from "([^"]*)" to today$') { String date ->
+When(~'^I ask for the list of visits for the period from "([^"]*)" to today$') { String date ->
 	def visits = TestDataAndOperationsVisit.searchVisit("Person", date, date)
 	//def visits = Visit.findAllFromPeriod(date)
-	assert visits != null
+    assert visits != null
 }
 
 /**
@@ -211,79 +214,76 @@ Then(~'^no data is stored by the system$') { ->
  */
 Given(~'^I am at the Add Visit Page$') { ->
 	to VisitCreatePage
+	at VisitCreatePage
 }
 
 /**
  * @author mclv
  */
-Given(~'^I have created a visitor named "([^"]*)"$') { ->
+Given(~'^I have created a visitor named "([^"]*)"$') { String name ->
 	at VisitCreatePage
-	page.fillVisitDetails(name)
-	page.clickOnCreate()
+    page.fillVisitDetails(name)
+    page.clickOnCreate()
 }
 
 /**
  * @author mclv
  */
 When(~'^I try to create the visit for the visitor "([^"]*)"$') { String name ->
+	to VisitCreatePage
 	at VisitCreatePage
-	page.fillVisitDetails(name)
-	page.clickOnCreate()
+    page.fillVisitDetails(name)
+    page.clickOnCreate()
 }
 
 /**
  * @author mclv
  */
-Then(~'^the Confirm Identification Page is open$') { String name ->
-	at ConfirmIdentificationPage
+Then(~'^the Confirm Identification Page is open$') { ->
+	at VisitConfirmPage
 }
 
 /**
  * @author mclv
  */
-Given(~'^I have tried to create a visit with initial date "([^"]*)" for the visitor "([^"]*)" that already exists$') { String date, String name ->
+Given(~'^I have tried to create a visit for the visitor "([^"]*)" that already exists$') { String name ->
+	to VisitCreatePage
 	at VisitCreatePage
-	page.fillVisitDetails(name)
-	page.clickOnCreate()
+    page.fillVisitDetails(name)
+    page.clickOnCreate()
 }
 
 /**
  * @author mclv
  */
 Given(~'^I am at the Confirm Identification Page$') { ->
-	at ConfirmIdentificationPage
+	at VisitConfirmPage
 }
 
 /**
  * @author mclv
  */
-When(~'^I press the "Yes" button$') { ->
-	at ConfirmIdentificationPage
-	page.clickYes()
+When(~'^I press the No button$') { ->
+	at VisitConfirmPage
+	page.clickOnNo()
 }
 
 /**
  * @author mclv
  */
-Then(~'^the visit with initial date "([^"]*)" for the visitor "([^"]*)" is properly stored by the system$') { String date, String name ->
-	assert TestDataAndOperationsVisit.searchVisit(name, date, date) != null
+Then(~'^the visit for the visitor "([^"]*)" is properly stored by the system$') { String name ->
+	def date = new Date()  
+	sdf = new SimpleDateFormat("dd/MM/yyyy")  
+	String st = sdf.format(date)
+	assert TestDataAndOperationsVisit.searchVisit(name, st, st) != null
 }
 
 /**
  * @author mclv
  */
-When(~'^I press the "No" button$') { ->
-	at ConfirmIdentificationPage
-	page.clickNo()
-}
-
-/**
- * @author mclv
- */
-Then(~'^a new visitor "([^"]*)" is created$') { String name ->
-	at VisitCreatePage
-	page.fillVisitDetails(name)
-	page.clickOnCreate()
+When(~'^I press the Yes button$') { ->
+	at VisitConfirmPage
+	page.clickOnYes()
 }
 
 //#if( $Twitter )
