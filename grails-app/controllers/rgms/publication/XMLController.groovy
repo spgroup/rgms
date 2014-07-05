@@ -154,7 +154,7 @@ class XMLController {
     }
 
     private Closure returnWithMessage = {
-        String msg, String controller ->
+        String msg, String controller, publications ->
             redirectToList(controller)
             flash.message = message(code: msg)
     }

@@ -15,6 +15,10 @@ import rgms.researchProject.ResearchProject
  */
 class XMLImportTestDataAndOperations {
 
+    static configureFileName(filename){
+        String path = "test" + File.separator + "files" + File.separator + filename
+    }
+
     static addJournalPublication(pubName, journalName){
         Periodico p = new Periodico(ArticleTestDataAndOperations.findArticleByTitle(pubName))
         p.journal = journalName
@@ -96,27 +100,23 @@ class XMLImportTestDataAndOperations {
         return result
     }
 
-    static isANewJournal(title, journal){
-        def member = User.findByUsername('admin')?.author
+    static isANewJournal(authorName, title, journal){
         def periodic = Periodico.findByTitleAndJournal(title, journal)
-        !periodic || !(periodic?.authors?.contains(member.name))
+        !periodic || !(periodic?.authors?.contains(authorName))
     }
 
-    static fileContainsJournal(path, pubName, journalName){
-        def name = User.findByUsername('admin')?.author?.name
-        def journalArticles = extractJournalsFromFile(path, name)
+    static fileContainsJournal(path, authorName, pubName, journalName){
+        def journalArticles = extractJournalsFromFile(path, authorName)
         checkJournal(journalArticles, pubName, journalName)
     }
 
-    static fileContainsJournalWithPages(path, pubName, journal, pages){
-        def name = User.findByUsername('admin')?.author?.name
-        def journalArticles = extractJournalsFromFile(path, name)
+    static fileContainsJournalWithPages(path, authorName, pubName, journal, pages){
+        def journalArticles = extractJournalsFromFile(path, authorName)
         checkJournalWithPages(journalArticles, pubName, journal, pages)
     }
 
-    static fileContainsConference(path, pubName, confName){
-        def name = User.findByUsername('admin')?.author?.name
-        def conferences = extractConferencesFromFile(path, name)
+    static fileContainsConference(path, authorName, pubName, confName){
+        def conferences = extractConferencesFromFile(path, authorName)
         checkConference(conferences, pubName, confName)
     }
 
@@ -152,24 +152,26 @@ class XMLImportTestDataAndOperations {
         rp.save(flush: true)
     }
 
-    static fileContainsResearchProject(path, projectName){
-        def name = User.findByUsername('admin')?.author?.name
-        def projects = extractResearchProjectsFromFile(path)?.find{
+    static fileContainsResearchProject(path, projectName, authorName){
+        def projects = extractResearchProjectsFromFile(path, authorName)?.find{
             it.projectName == projectName
         }
         return projects
     }
 
-    static fileContainsResearchProjectWithStatus(path, projectName, status){
-        def name = User.findByUsername('admin')?.author?.name
-        def projects = extractResearchProjectsFromFile(path)?.find{
+    static fileContainsResearchProjectWithStatus(path, projectName, authorName, status){
+        def projects = extractResearchProjectsFromFile(path, authorName)?.find{
             it.projectName==projectName && it.status==status
         }
         return projects
     }
 
-    static extractResearchProjectsFromFile(filename){
+    static extractResearchProjectsFromFile(filename, authorName){
         def xmlFile = getRootNode(filename)
+
+        def author = xmlFile.depthFirst().find{it.name() == 'DADOS-GERAIS'}.'@NOME-COMPLETO'
+        if(author != authorName) return null
+
         def projects = xmlFile.depthFirst().findAll{ it.name() == 'PROJETO-DE-PESQUISA' }
         def projectsList = []
 

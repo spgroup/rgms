@@ -97,6 +97,12 @@ class ArticleTestDataAndOperations {
     static public def path() {
         return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
     }
+
+    static findArticleByTitleAndAuthor(title, author){
+        Periodico dbPub = Periodico.findAllByTitle(title).find{
+            it.authors.contains(author)
+        }
+    }
 }
 //#end
 
