@@ -23,7 +23,6 @@ class XMLImportTestDataAndOperations {
         Periodico p = new Periodico(ArticleTestDataAndOperations.findArticleByTitle(pubName))
         p.journal = journalName
         p.save(flush: true)
-        return p
     }
 
     static public void uploadPublications(controller, filename) {

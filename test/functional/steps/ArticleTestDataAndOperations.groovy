@@ -49,7 +49,7 @@ class ArticleTestDataAndOperations {
         } else if (testarticle != null && article != null) {
             compatible = true
             testarticle.each { key, data ->
-                if(key != 'publicationDate') compatible = compatible && (article."$key" == data) //para evitar problema de lidar com data
+                compatible = compatible && (article."$key" == data)
             }
         }
         return compatible

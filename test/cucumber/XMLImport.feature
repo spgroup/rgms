@@ -79,9 +79,9 @@ Feature: XMLImport
   Scenario: duplicated publications with conflicted details
     Given the system has a journal article entitled "An Abstract Equivalence Notion for Object Models" with journal "Eletronic Notes In Theoretical Computer Science" and pages "3-21" that is authored by me, among several publications
     When  I upload the file "cv-duplicatedConflictedDetails.xml" that contains a journal article entitled "An Abstract Equivalence Notion for Object Models" with journal "Eletronic Notes In Theoretical Computer Science" and pages "3-10" authored by me
-    Then the system outputs a list of imported publications that contains the journal article entitled "An Abstract Equivalence Notion for Object Models" with status "conflicted"
-    And no new publication is stored by the system
+    Then no new publication is stored by the system
     And the previously stored publications do not change
+    And the system outputs a list of imported publications that contains the journal article entitled "An Abstract Equivalence Notion for Object Models" with status "conflicted"
 
   @ignore
   Scenario: confirm import of publication with conflicted details

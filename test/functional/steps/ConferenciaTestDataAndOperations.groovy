@@ -44,7 +44,7 @@ class ConferenciaTestDataAndOperations {
         } else if (testConferencia != null && conferencia != null) {
             compatible = true
             testConferencia.each { key, data ->
-                if(key != 'publicationDate') compatible = compatible && (conferencia."$key" == data) //para evitar problema de lidar com data
+               compatible = compatible && (conferencia."$key" == data)
             }
         }
         return compatible

@@ -427,34 +427,24 @@ class XMLService {
     }
     //#end
 
-    private static prepareDate(Date date){
-        def year = date.toCalendar().get(Calendar.YEAR)
-        def newDate = new Date()
-        newDate.clearTime()
-        newDate.set(year: year)
-        return newDate
-    }
-
     private static checkPublicationStatus(Publication pubDB, Publication pub){
         def status = XMLService.PUB_STATUS_DUPLICATED
 
-        //necessário para analisar apenas diferença de ano
-        if(pubDB.publicationDate && pub.publicationDate) {
-            pubDB.publicationDate = prepareDate(pubDB.publicationDate)
-            pub.publicationDate = prepareDate(pub.publicationDate)
-        }
-
-        def missingPropertiesDB = pubDB.properties.findAll{it.key != 'id' && it.key != 'members' && !it.value}
-        def missingProperties = pub.properties.findAll{it.key != 'id' && it.key != 'members' && !it.value}
-
+        def missingPropertiesDB = pubDB.properties.findAll{it.key != 'id' && !it.value}
+        def missingProperties = pub.properties.findAll{it.key != 'id' && !it.value}
         if(missingPropertiesDB != missingProperties){
             status = XMLService.PUB_STATUS_TO_UPDATE
         }
 
-        def detailsDB = pubDB.properties.findAll{it.key!='id' && it.key != 'members'} - missingPropertiesDB
-        def details = pub.properties.findAll{it.key!='id '&& it.key != 'members'} - missingProperties
-
+        def detailsDB = pubDB.properties.findAll{it.key!='id' && it.key!='publicationDate'} - missingPropertiesDB
+        def details = pub.properties.findAll{it.key!='id' && it.key!='publicationDate'} - missingProperties
         if(detailsDB != details){
+            status = XMLService.PUB_STATUS_CONFLICTED
+        }
+
+        def date1 = pubDB.publicationDate?.toCalendar().get(Calendar.YEAR)
+        def date2 = pub.publicationDate?.toCalendar().get(Calendar.YEAR)
+        if(date1 && date2 && date1!=date2){
             status = XMLService.PUB_STATUS_CONFLICTED
         }
 
@@ -553,15 +543,15 @@ class XMLService {
         if(orientationDB){
             status = XMLService.PUB_STATUS_DUPLICATED
 
-            def missingPropertiesDB = orientationDB.properties.findAll{it.key != 'id' && it.key != 'members' && !it.value}
-            def missingProperties = orientation.properties.findAll{it.key != 'id' && it.key != 'members' && !it.value}
+            def missingPropertiesDB = orientationDB.properties.findAll{it.key != 'id' && !it.value}
+            def missingProperties = orientation.properties.findAll{it.key != 'id' && !it.value}
 
             if(missingPropertiesDB != missingProperties){
                 status = XMLService.PUB_STATUS_TO_UPDATE
             }
 
-            def detailsDB = orientationDB.properties.findAll{it.key!='id' && it.key != 'members'} - missingPropertiesDB
-            def details = orientation.properties.findAll{it.key!='id '&& it.key != 'members'} - missingProperties
+            def detailsDB = orientationDB.properties.findAll{it.key!='id'} - missingPropertiesDB
+            def details = orientation.properties.findAll{it.key!='id'} - missingProperties
 
             if(detailsDB != details){
                 status = XMLService.PUB_STATUS_CONFLICTED
@@ -622,15 +612,15 @@ class XMLService {
         if(rlDB){
             status = XMLService.PUB_STATUS_DUPLICATED
 
-            def missingPropertiesDB = rlDB.properties.findAll{it.key != 'id' && it.key != 'members' && !it.value}
-            def missingProperties = researchLine.properties.findAll{it.key != 'id' && it.key != 'members' && !it.value}
+            def missingPropertiesDB = rlDB.properties.findAll{it.key != 'id' && !it.value}
+            def missingProperties = researchLine.properties.findAll{it.key != 'id' && !it.value}
 
             if(missingPropertiesDB != missingProperties){
                 status = XMLService.PUB_STATUS_TO_UPDATE
             }
 
-            def detailsDB = rlDB.properties.findAll{it.key!='id' && it.key != 'members'} - missingPropertiesDB
-            def details = researchLine.properties.findAll{it.key!='id '&& it.key != 'members'} - missingProperties
+            def detailsDB = rlDB.properties.findAll{it.key!='id'} - missingPropertiesDB
+            def details = researchLine.properties.findAll{it.key!='id'} - missingProperties
 
             if(detailsDB != details){
                 status = XMLService.PUB_STATUS_CONFLICTED
