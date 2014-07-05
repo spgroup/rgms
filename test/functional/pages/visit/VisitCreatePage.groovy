@@ -30,11 +30,11 @@ class VisitCreatePage extends Page {
         clickOnCreate()
     }
     
-	def fillVisitDetails(String name) {
-		$("form").nameVisitor = name
-		//#if( $descricaovisita )
-		$("form").description = "None"
-		//#end
-		clickOnCreate()
-	}
+    def fillVisitDetails(String name) {
+	$("form").nameVisitor = name
+	//#if( $descricaovisita )
+	$("form").description = "None"
+	//#end
+	clickOnCreate()
+    }
 }
