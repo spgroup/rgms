@@ -78,7 +78,7 @@ Feature: Visit
     
   Scenario: list existing visits and periods
     Given the system has visits with initial or final date greater than or equal "01/01/2011"
-    When I view the list of visits for the period from "01/01/2011" to today
+    When I ask for the list of visits for the period from "01/01/2011" to today
     Then no data is stored by the system
 
   Scenario: asking identification for a visitor that already exists
@@ -90,19 +90,18 @@ Feature: Visit
  
   Scenario: confirming identification for a visitor that already exists
     Given I am logged as "admin"
-    And I have tried to create a visit with initial date "01/01/2011" for the visitor "Person" that already exists
+    And I have tried to create a visit for the visitor "Person" that already exists
     And I am at the Confirm Identification Page
-    When I press the "Yes" button
-    Then the visit with initial date "01/01/2011" for the visitor "Person" is properly stored by the system
+    When I press the No button
+    Then the visit for the visitor "Person" is properly stored by the system
 
   Scenario: changing the name of a visitor that already exists
     Given I am logged as "admin"
-    And I have tried to create a visit with initial date "01/01/2011" for the visitor "Person" that already exists
+    And I have tried to create a visit for the visitor "Person" that already exists
     And I am at the Confirm Identification Page
-    When I press the "No" button
-    Then a new visitor "Person2" is created
-    And the visitor named "Person2" is properly stored by the system
-    And the visit with initial date "01/01/2011" for the visitor "Person2" is properly stored by the system
+    When I press the Yes button
+    Then the visitor named "Person2" is properly stored by the system
+    And the visit for the visitor "Person2" is properly stored by the system
     
 #if( $Twitter )
   Scenario: Add a new visit twitting it
