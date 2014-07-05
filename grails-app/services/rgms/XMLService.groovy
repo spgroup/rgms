@@ -696,26 +696,24 @@ class XMLService {
         newProject.startYear = getAttributeValueFromNode(xmlFile, "ANO-INICIO").toInteger()
         newProject.endYear = getAttributeValueFromNode(xmlFile, "ANO-FIM").equals("") ? 0 : getAttributeValueFromNode(xmlFile, "ANO-FIM").toInteger()
         fillProjectMembers(getNodeFromNode(xmlFile, "EQUIPE-DO-PROJETO"), newProject)
-        /* Por hora essa feature está sendo desconsiderada (16.06.14)
-            //#if($funder)
-            fillFunders(getNodeFromNode(xmlFile, "FINANCIADORES-DO-PROJETO"), newProject)
-            //#end
-        */
+        //#if($funder)
+        fillFunders(getNodeFromNode(xmlFile, "FINANCIADORES-DO-PROJETO"), newProject)
+        //#end
         return newProject
     }
 
     private static void fillProjectMembers(Node xmlFile, ResearchProject project) {
-        for (Node node : xmlFile?.children()) { //Para cada integrante presente no projeto
+        for (Node node : xmlFile?.children()) {
             String name = (String) (node.attribute("NOME-COMPLETO"))
             Boolean responsavel = ((String) (node.attribute("FLAG-RESPONSAVEL"))).equals("SIM")
             if (responsavel) project.responsible = name
-            else project.addToMembers(name)//.save(validate: true) //não deve mais salvar diretamente (16.06.14)
+            else project.addToMembers(name)
         }
     }
     //#end
 
     //#if($funder)
-    private static void fillFunders(Node xmlFile, ResearchProject project) {
+    private static fillFunders(Node xmlFile, ResearchProject project) {
         for (Node node : xmlFile?.children()) {
             String code = getAttributeValueFromNode(node, "CODIGO-INSTITUICAO")
             Funder funder = Funder.findByCode(code)
@@ -727,10 +725,10 @@ class XMLService {
                 newFunder.code = code
                 newFunder.name = getAttributeValueFromNode(node, "NOME-INSTITUICAO")
                 newFunder.nature = getAttributeValueFromNode(node, "NATUREZA")
-                newFunder.save(flush: false)  //não deve mais salvar diretamente (16.06.14)
-                project.addToFunders(newFunder).save(flush: false)
+                project.addToFunders(newFunder)
             }
         }
+        return project
     }
     //#end
 
