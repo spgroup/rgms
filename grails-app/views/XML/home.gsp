@@ -16,6 +16,9 @@
         </ul>
     </div>
     <br/>
+    <g:if test="${request.message}">
+        <div id="resultMessage" class="message" role="status">${request.message}</div>
+    </g:if>
     <g:form controller="XML" method="post" action="upload" enctype="multipart/form-data">
         <input type="file" name="file"/>
         <input type="submit"/>

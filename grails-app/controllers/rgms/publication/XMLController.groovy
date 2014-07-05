@@ -153,17 +153,15 @@ class XMLController {
             XMLService.createMember(xmlFile, newMember)
     }
 
-    private Closure returnWithMessage = {
-        String msg, String controller, publications ->
-            redirectToList(controller)
+    private returnWithMessage = { String msg, String controller, publications ->
+        if (controller == "Publication"){ //importacao via opcao XMLImport no menu da tela inicial do sistema
+            request.message = message(code: msg)
+            render(view:"home", model:[publications:publications])
+        }
+        else{ //importacao via outras telas (ainda precisa corrigir)
             flash.message = message(code: msg)
-    }
-
-    private def redirectToList(String controllerUsed) {
-        if (controllerUsed == "Publication")
-            redirect(uri: '/')
-        else
-            redirect(controller: controllerUsed, action: "list", params: params)
+            redirect(controller: controller, action: "list", params: params)
+        }
     }
 
     private def getCurrentUser() {
