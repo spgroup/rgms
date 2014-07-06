@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <meta name="layout" content="main"/>
-    <g:set var="entityName" value="${ message(code: 'xml.label', default: 'XMLImport')}" />
+    <g:set var="entityName"><g:message code="xml.label" default="XMLImport"/></g:set>
     <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 
