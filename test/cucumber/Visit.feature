@@ -79,7 +79,7 @@ Feature: Visit
   Scenario: list existing visits and periods
     Given the system has visits with initial or final date greater than or equal "01/01/2011"
     When I ask for the list of visits for the period from "01/01/2011" to today
-    Then no data is stored by the system
+    Then a visit with initial or final date greater than or equal "01/01/2011" is not lost
 
   Scenario: asking identification for a visitor that already exists
     Given I am logged as "admin"
