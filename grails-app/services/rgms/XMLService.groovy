@@ -117,6 +117,7 @@ class XMLService {
         Node additionalInfo = getNodeFromNode(currentNode, "INFORMACOES-ADICIONAIS")
 
         Ferramenta newTool = new Ferramenta()
+        newTool.members = []
         newTool = (Ferramenta) addAuthors(currentNode, newTool)
         if(!newTool.authors.contains(authorName)) return null //the user is not author
 
@@ -160,8 +161,9 @@ class XMLService {
         List<Object> book = currentNode.children()
         Node basicData = (Node) book[0]
         Node bookDetails = (Node) book[1]
-        Book newBook = new Book()
 
+        Book newBook = new Book()
+        newBook.members = []
         newBook = (Book) addAuthors(currentNode, newBook)
         if(!newBook.authors.contains(authorName)) return null //the user is not author
 
@@ -204,6 +206,7 @@ class XMLService {
         Node chapterDetails = (Node) bookChapter[1]
 
         BookChapter newBookChapter = new BookChapter()
+        newBookChapter.members = []
         newBookChapter = (BookChapter) addAuthors(bookChapter, newBookChapter)
         if(!newBookChapter.authors.contains(authorName)) return null
 
@@ -252,6 +255,7 @@ class XMLService {
         if(author != authorName) return null
 
         Dissertacao newDissertation = new Dissertacao()
+        newDissertation.members = []
         newDissertation = getDissertationOrThesisDetails(mestrado, newDissertation)
         newDissertation.addToAuthors(author)
 
@@ -287,6 +291,7 @@ class XMLService {
         if(author != authorName) return null
 
         Tese newThesis = new Tese()
+        newThesis.members = []
         newThesis = getDissertationOrThesisDetails(doutorado, newThesis)
         newThesis.addToAuthors(author)
 
@@ -327,7 +332,7 @@ class XMLService {
 
             if (eventName.contains("onferenc")) {
                 newConference = new Conferencia()
-
+                newConference.members = []
                 def authorsNode = conferenceNode.depthFirst().findAll{ it.name() == 'AUTORES'}
                 newConference = (Conferencia) addAuthors(authorsNode, newConference)
                 if(!newConference.authors.contains(authorName)) return null
@@ -375,7 +380,7 @@ class XMLService {
         Node articleDetails = (Node) firstArticle[1]
         Periodico newJournal = new Periodico()
         getJournalTitle(basicData, newJournal)
-
+        newJournal.members = []
         newJournal = (Periodico) addAuthors(firstArticle, newJournal)
         if(!newJournal.authors.contains(authorName)) return null //the user is not author
 
@@ -600,6 +605,7 @@ class XMLService {
 
     private static saveResearchLine(Node xmlFile) {
         ResearchLine newResearchLine = new ResearchLine()
+        newResearchLine.members = []
         newResearchLine.name = getAttributeValueFromNode(xmlFile, "TITULO-DA-LINHA-DE-PESQUISA")
         newResearchLine.description = getAttributeValueFromNode(xmlFile, "OBJETIVOS-LINHA-DE-PESQUISA")
         return newResearchLine

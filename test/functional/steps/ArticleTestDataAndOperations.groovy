@@ -17,13 +17,13 @@ class ArticleTestDataAndOperations {
     static articles = [
             [journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
                     title: "A theory of software product line refinement",
-                    publicationDate: (new Date("12 October 2012"))],
+                    publicationDate: (new Date("12 October 2012")), members:[] as Set],
             [journal: "Science of Computer Programming", volume: 455, number: 1, pages: "2-30",
                     title: "Algebraic reasoning for object-oriented programming",
-                    publicationDate: (new Date("12 October 2012"))],
+                    publicationDate: (new Date("12 October 2012")), members:[] as Set],
             [journal: "Eletronic Notes In Theoretical Computer Science", volume: 130, number: 1, pages: "3-21",
                     title: "An Abstract Equivalence Notion for Object Models",
-                    publicationDate: (new Date("12 October 2005")),
+                    publicationDate: (new Date("12 October 2005")), members:[] as Set,
                     authors: ["Paulo Henrique Monteiro Borba", "Tiago Massoni", "Rohit Gheyi"] as Set]
     ]
 
