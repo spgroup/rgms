@@ -33,4 +33,11 @@ class TeseController extends ThesisOrDissertationController {
         deleteThesisOrDissertation("Tese", params)
     }
 
+    def search() {
+        searchThesisOrDissertation("Tese", params)
+    }
+
+    def searchList() {
+        searchListThesisOrDissertation("Tese", params)
+    }
 }

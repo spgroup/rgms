@@ -2,6 +2,7 @@ package steps
 
 import rgms.publication.Tese
 import rgms.publication.TeseController
+import rgms.publication.XMLController
 
 class ThesisTestDataAndOperations {
 
@@ -24,5 +25,13 @@ class ThesisTestDataAndOperations {
 
         def updatedThesis = Tese.findByTitle(newtitle)
         return updatedThesis
+    }
+
+    static public void uploadThesis(filename) {
+        def controller = new XMLController()
+        def xmlFile = new File(filename);
+        def xmlParser = new XmlParser()
+        controller.saveThesis(xmlParser.parse(xmlFile))
+        controller.response.reset()
     }
 }

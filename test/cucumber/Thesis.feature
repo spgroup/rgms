@@ -44,14 +44,12 @@ Feature: Thesis Tests
     And I see my school name as school of thesis by default
 #end
 
-  @ignore
   Scenario: order thesis list by date
-    Given at least one thesis is stored in the system
+    Given at least two thesis is stored in the system
     And I am at the thesis list page
     When I click in order thesis by date
     Then the returned thesis list has the same items but it is sorted by date
 
-  @ignore
   Scenario: search an existing thesis
     Given the system has one thesis entitled "Software Engineering" with author name "Pressman", year of publication "1998" and university "UFPE"
     And I am at the thesis search page
@@ -59,49 +57,45 @@ Feature: Thesis Tests
     And I select to view the entry that has university "UFPE" and publication year "1998"
     Then the thesis "Software Enginnering" by "Pressman" appears in the thesis view page
 
-  @ignore
   Scenario: create thesis without a file
     Given I am at the create thesis page
-    When I fill the thesis fields with "My Thesis", "2014/05/16", "UFPE","Address", "Author","Advisor"
-    And I click in create button
+    When I fill the thesis fields with "My Thesis", "2014", "5", "16", "UFPE", "Address"
+    And I try to create a new thesis
     Then I am still on the create thesis page with the error message
 
 #if($contextualInformation)
-  @ignore
   Scenario: search an existing thesis filled by default
     Given the system has at least one thesis entitled "Software Engineering"
     And I am at the thesis search page
     And I have already done a search about "Software Enginnering" previously
     When I press "S"
-    And I choose "Software Enginnering" in dropdown search list
+    And I choose "Software Enginnering" in the list
     And I click in search button
     Then all theses entitled "Software Engineering" are shown
 #end
 
   Scenario: edit thesis title
     Given the system has thesis entitled "My Thesis"
+    And The system has no thesis entitled "My Thesis Renamed"
     When I change the title from "My Thesis" to "My Thesis Renamed"
     Then the thesis entitled "My Thesis Renamed" is properly renamed by the system
     And the other theses are not changed by the system
 
-  @ignore
   Scenario: edit thesis with invalid data
-    Given the system has thesis entitled "My Thesis"
-    When I change the title from "My Thesis" to ""
+    Given the system has thesis entitled "My Thesis 2014"
+    When I change the title from "My Thesis 2014" to ""
     Then the existing thesis are not changed by the system
 
-  @ignore
   Scenario: search a thesis
     Given the system has one thesis entitled "My Thesis"
     When I search for thesis entitled "My Thesis"
     Then the existing thesis are not changed by the system
 
-  @ignore
   Scenario: upload thesis with a file
-    Given The system has no thesis entitled "My Thesis"
-    When I upload the file "My Thesis.xml"
+    Given The system has no thesis entitled "Semantics and Refinement for a Concurrent Object Oriented Language"
+    When I upload the file "curriculo.xml"
     Then the existing thesis are not changed by the system
-    And the system stores properly the thesis entitled "My Thesis"
+     And the system properly stores the thesis entitled "Semantics and Refinement for a Concurrent Object Oriented Language"
 # editar dados de uma tese, ordenar lista de teses, filtrar lista de teses,
 # criar tese com dados inválidos, a chave é mesmo o título da tese?, tamanho
 # dos campos, o dia e o arquivo deveriam ser opcional, deveria poder adicionar

@@ -456,6 +456,27 @@ class XMLService {
     }
     //#end
 
+    //#if(Thesis)
+    static void createTheses(Node xmlFile) {
+        Node dadosGerais = getNodeFromNode(xmlFile, "DADOS-GERAIS")
+        Node formacaoAcademicaTitulacao = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node doutorado = getNodeFromNode(formacaoAcademicaTitulacao, "DOUTORADO")
+
+        createThesis(doutorado)
+    }
+
+    private static void createThesis(Node xmlNode) {
+        Tese newThesis = new Tese()
+        newThesis.title = getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")
+
+        fillPublicationDate(newThesis, xmlNode, "ANO-DE-OBTENCAO-DO-TITULO")
+        newThesis.school = getAttributeValueFromNode(xmlNode, "NOME-INSTITUICAO")
+        newThesis.file = 'no File'
+        newThesis.address = 'no Address'
+        newThesis.save(flush: false)
+    }
+    //#end
+
     static void createMember(Node xmlFile, Member newMember) {
         Node dadosGerais = (Node) xmlFile.children()[0]
         List<Object> dadosGeraisChildren = dadosGerais.children()
