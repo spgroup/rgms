@@ -3,20 +3,20 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'projectName', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'projectName', 'error')}">
 	<label for="projectName">
 		<g:message code="researchProject.projectName.label" default="Project Name" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textArea name="projectName" cols="40" rows="5" maxlength="300" required="" value="${researchProjectInstance?.projectName}"/>
+	<g:textArea name="projectName" cols="40" rows="5" maxlength="300" value="${researchProjectInstance?.projectName}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'description', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'description', 'error')}">
 	<label for="description">
 		<g:message code="researchProject.description.label" default="Description" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textArea name="description" cols="40" rows="5" maxlength="3000" required="" value="${researchProjectInstance?.description}"/>
+	<g:textArea name="description" cols="40" rows="5" maxlength="3000" value="${researchProjectInstance?.description}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: researchProjectInstance, field: 'status', 'error')} required">
