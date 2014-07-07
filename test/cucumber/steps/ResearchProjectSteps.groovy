@@ -235,14 +235,14 @@ Then(~'^the research project "([^"]*)" does not have duplicated members$'){Strin
     assert check
 }
 
-Given (~'^I am at new research project page$'){ ->
+Given (~'^I go to new research project page$'){ ->
     to ResearchProjectPage
     page.selectNewReseachGroup()
     at ResearchProjectPageCreatePage
 
 }
 
-When(~'^I can create a research project named as "([^"]*)" with all required data$'){ String projectName ->
+When(~'^I create a research project named as "([^"]*)" with all required data filled on the web$'){ String projectName ->
     page.fillResearchProject(projectName)
     page.createResearchProject()
     assert ResearchProject.findByProjectName(projectName) != null
@@ -250,6 +250,11 @@ When(~'^I can create a research project named as "([^"]*)" with all required dat
 
 Then (~'^I\'m still on the new research project page$'){ ->
     at ResearchProjectPageCreatePage
+}
+
+Then (~'^the system shows an error message at the new research project page$') { ->
+    at ResearchProjectPageCreatePage
+    page.checkHasErrorMsg()
 }
 
 Then(~'^it is shown in the research project list with name "([^"]*)"$'){ String projectName ->
@@ -264,6 +269,19 @@ When(~'^I try to create a research project named as "([^"]*)" with description f
     page.createResearchProject()
 }
 
+Given(~'^the system has a research project named as "([^"]*)" created on web$') { String projectName ->
+    ResearchProject project = ResearchProject.findByProjectName(projectName);
+
+    if(!project) {
+        page.fillResearchProject(projectName)
+        page.createResearchProject()
+        to ResearchProjectPage
+        page.selectNewReseachGroup()
+        at ResearchProjectPageCreatePage
+    }
+
+    assert ResearchProject.findByProjectName(projectName) != null;
+}
 
 When(~'^I try to create a research project named as "([^"]*)" on the web site$'){ String projectName ->
     // updated
@@ -276,11 +294,6 @@ When(~'^I try to create a research project named as "([^"]*)" on the web site$')
 Then(~'^the research project "([^"]*)" is not shown duplicated in the research project list$'){ projectName ->
     to ResearchProjectPage
     page.checkResearchGroupDuplicatedAtList(projectName)
-}
-
-Then(~'^the system shows an warning message at the new research project page$'){ ->
-    at ResearchProjectPageCreatePage
-    page.checkHasErrorMsg()
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------
@@ -302,11 +315,8 @@ def checkIfNoResearchProjectAffected(oldProjects) {
     List<ResearchProject> beforeProjects = oldProjects
     List<ResearchProject> afterProjects = ResearchProject.findAll()
 
-    beforeProjects.eachWithIndex { ResearchProject entry, int i ->
-        if (!entry.equals(afterProjects.get(i))) {
-            check = false
-            check
-        }
+    if(!beforeProjects.equals(afterProjects)) {
+        check = false
     }
 
     check

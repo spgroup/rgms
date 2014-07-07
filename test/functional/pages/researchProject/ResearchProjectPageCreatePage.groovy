@@ -52,4 +52,8 @@ class ResearchProjectPageCreatePage extends FormPage{
 
         assert (size > 0)
     }
+
+    def checkHasWarningMsg() {
+        checkHasErrorMsg()
+    }
 }

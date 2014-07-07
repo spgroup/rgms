@@ -8,12 +8,6 @@ Feature: research project
     When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with all required data
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is properly stored by the system
 
-  Scenario: duplicated research project
-    Given  the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored twice
-    And no research project stored is affected
-
   Scenario: remove research project
     Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     And I am logged into the system as administrator of the research group named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
@@ -40,9 +34,57 @@ Feature: research project
     And the system shows an error message at the research project page
 #end
 
+  Scenario: new research project with duplicated members
+    Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated"
+    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated" with member field duplicated
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated" is properly stored by the system
+    And the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated" does not have duplicated members
+
+  Scenario: new research project web
+    Given I am at the publications menu
+    And I go to new research project page
+    And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
+    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" with all required data filled on the web
+    Then it is shown in the research project list with name "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
+
+  Scenario: new invalid research project with blank name web
+    Given I am at the publications menu
+    And I go to new research project page
+    And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" created on web
+    When I try to create a research project named as "" on the web site
+    Then the research project "" is not stored by the system because it is invalid
+    And  the system shows an error message at the new research project page
+    And  I'm still on the new research project page
+    And  no research project stored is affected
+
+  Scenario: new invalid research project with blank description web
+    Given I am at the publications menu
+    And I go to new research project page
+    And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web 2"
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web 2" with description field blank on the web site
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web 2" is not stored by the system because it is invalid
+    And  I'm still on the new research project page
+    And  the system shows an error message at the new research project page
+    And no research project stored is affected
+
+  Scenario: duplicated research project web
+    Given I am at the publications menu
+    And I go to new research project page
+    And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" created on web
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" on the web site
+    Then  the system shows an error message at the new research project page
+    And the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" is not shown duplicated in the research project list
+
+
+  Scenario: duplicated research project
+    Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored twice
+    And no research project stored is affected
+
   Scenario: new invalid research project with blank name
     Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I try to create a research project named as ""
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     Then the research project "" is not stored by the system because it is invalid
     And no research project stored is affected
 
@@ -51,41 +93,6 @@ Feature: research project
     When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" with description field blank
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" is not stored by the system because it is invalid
     And no research project stored is affected
-
-  Scenario: new research project with duplicated members
-    Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated"
-    When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated" with member field duplicated
-    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated" is properly stored by the system
-    And the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated" does not have duplicated members
-
-  Scenario: new research project web
-    Given I am at new research project page
-    And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
-    When I can create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" with all required data
-    Then it is shown in the research project list with name "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
-
-  Scenario: new invalid research project with blank name web
-    Given I am at new research project page
-    And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I try to create a research project named as ""
-    Then the research project "" is not stored by the system because it is invalid
-    And  I'm still on the new research project page
-    And no research project stored is affected
-
-  Scenario: new invalid research project with blank description web
-    Given I am at new research project page
-    And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" with description field blank on the web site
-    Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" is not stored by the system because it is invalid
-    And  I'm still on the new research project page
-    And no research project stored is affected
-
-  Scenario: duplicated research project web
-    Given I am at new research project page
-    And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web"
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" on the web site
-    Then  the system shows an warning message at the new research project page
-    And the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" is not shown duplicated in the research project list
 
   Scenario: list research projects where I am a member
     Given I am at the research project list page
