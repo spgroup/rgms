@@ -78,54 +78,55 @@ Feature: conferencia
     Then I'm still on conferencia page
     And the conferencias are not stored by the system
 
- Scenario: edit existing conference
+ Scenario: edit existing conferencia
     Given the system has conferencia entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
-    When I change the conference file from "SPLC.pdf" to "SPLC2.pdf"
-    Then the conference "IV Conference on Software Product Lines" is properly updated by the system
+    When I change the conferencia file from "SPLC.pdf" to "SPLC2.pdf"
+    Then the conferencia "IV Conference on Software Product Lines" is properly updated by the system
 
-Scenario: edit existing conference web
-    Given I am at the conference page 
-    And the conference entitled "IV Conference on Software Product Lines" is stored in the system with file name "SPLC.pdf"
-    When I select to view the conference "IV Conference on Software Product Lines" in resulting list
-    And I change the conference file to "SPLC2.pdf"
-    And I select the "Alterar" option in Conference Registration Page
+Scenario: edit existing conferencia web
+    Given I am at the conferencia page 
+    And the conferencia entitled "IV Conference on Software Product Lines" is stored in the system with file name "SPLC.pdf"
+    When I select to view the conferencia "IV Conference on Software Product Lines" in resulting list
+    And I change the conferencia file to "SPLC2.pdf"
+    And I select the "Alterar" option in Conferencia Registration Page
     And A success message is displayed
-    Then I am at Conference page
+    Then I am at Conferencia page
 
-Scenario: new invalid conference web (fields blank)
-	Given I am at the conference registration page
-	When I create the conference with some field blank
-	Then the conference is not stored by the system because it is invalid
-        And an error menssage is displayed
+Scenario: new invalid conferencia web (fields blank)
+	Given I am at the conferencia registration page
+	When I create the conferencia with some field blank
+	Then the conferencia is not stored by the system because it is invalid
+        And an error message is displayed
 
-Scenario: list existing conference
-    Given the system has conference entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
-    When I view the conference list
-    Then the conference list contains "IV Conference on Software Product Lines"
+Scenario: list existing conferencia
+    Given the system has conferencia entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
+    When I view the conferencia list
+    Then the conferencia list contains "IV Conference on Software Product Lines"
 
-Scenario: Order conference web by title
-    Given I am at the conference page
-    When I click on the column "title" at the conference list table
-    Then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
+Scenario: Order conferencia web by title
+    Given I am at the conferencia page
+    When I click on the column "title" at the conferencia list table
+    Then a list of conferencias stored by the system is displayed at the conferencia page by ascending alphabetic order
 
-Scenario: Order conference web by conference data
-    Given I am at the conference page
-    When I click on the column "Date" at the conference list table
-    Then a list of conferences stored by the system is displayed at the conference page by publication ascending date order
+Scenario: Order conferencia web by conferencia data
+    Given I am at the conferencia page
+    When I click on the column "Date" at the conferencia list table
+    Then a list of conferencias stored by the system is displayed at the conferencia page by publication ascending date order
 
-Scenario: Order  conference web by research line
-    Given I am at the conference page
-    When I click on the column "Research Line" at the conference list table
-    Then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
+Scenario: Order  conferencia web by research line
+    Given I am at the conferencia page
+    When I click on the column "Research Line" at the conferencia list table
+    Then a list of conferencias stored by the system is displayed at the conferencia page by ascending alphabetic order
 
-Scenario: Search for conference
-    Given the system has conference entitled "IV Conference on Software Product Lines"
+Scenario: Search for conferencia
+    Given the system has conferencia entitled "IV Conference on Software Product Lines"
+    Given the system has conferencia entitled "IV Conference on Software Product Lines"
     When I search for the conferencia entitled "IV Conference on Software Product Lines"
-    Then theres no change in the data stored by the system.
+    Then theres no change in the data stored by the system
 
-Scenario: Search for conference web
-    Given I am at the conference page    
-    And the system has conference dated "2007"
+Scenario: Search for conferencia web
+    Given I am at the conferencia page    
+    And the system has conferencia dated "2007"
     When I write "2007" at the date field
-    And I select the option Search for Conference at the conference page
-    Then a list of all conferences containing the date "2007" will be presented in the conference screen
+    And I select the option Search for conferencia at the conferencia page
+    Then a list of all conferencias containing the date "2007" will be presented in the conferencia screen
