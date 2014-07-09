@@ -305,18 +305,19 @@ When(~'^I search for thesis entitled "([^"]*)"$') { title ->
 }
 
 //Scenario: upload thesis with a file
-When(~'^I upload the file "([^"]*)"$') { filename ->
+When(~'^I upload the file "([^"]*)" with thesis entitled "([^"]*)"$') { filename, title ->
     thesesListBeforeModification = Tese.findAll()
 
     String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
     ThesisTestDataAndOperations.uploadThesis(path)
 
-    thesesListAfterModification = Tese.findAll().remove(Tese.findByFile(filename))
-
+    thesesListAfterModification = Tese.findAll()
+    thesesListAfterModification.remove(Tese.findByTitle(title))
 }
 
 And(~'^the system properly stores the thesis entitled "([^"]*)"$') { title ->
-    assert ThesisTestDataAndOperations.containsThesis(title)
+    thesis = Tese.findByTitle(title)
+    assert thesis != null
 }
 
 //VARIAVÉIS AUXILIARES

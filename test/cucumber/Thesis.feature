@@ -93,7 +93,7 @@ Feature: Thesis Tests
 
   Scenario: upload thesis with a file
     Given The system has no thesis entitled "Semantics and Refinement for a Concurrent Object Oriented Language"
-    When I upload the file "curriculo.xml"
+    When I upload the file "curriculo.xml" with thesis entitled "Semantics and Refinement for a Concurrent Object Oriented Language"
     Then the existing thesis are not changed by the system
      And the system properly stores the thesis entitled "Semantics and Refinement for a Concurrent Object Oriented Language"
 # editar dados de uma tese, ordenar lista de teses, filtrar lista de teses,
