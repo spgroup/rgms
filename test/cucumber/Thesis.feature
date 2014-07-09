@@ -75,19 +75,19 @@ Feature: Thesis Tests
 #end
 
   Scenario: edit thesis title
-    Given the system has thesis entitled "My Thesis"
-    And The system has no thesis entitled "My Thesis Renamed"
-    When I change the title from "My Thesis" to "My Thesis Renamed"
+    Given the system has thesis entitled "Thesis"
+    And The system has no thesis entitled "Thesis Renamed"
+    When I change the title from "Thesis" to "My Thesis Renamed"
     Then the thesis entitled "My Thesis Renamed" is properly renamed by the system
     And the other theses are not changed by the system
 
   Scenario: edit thesis with invalid data
     Given the system has thesis entitled "My Thesis 2014"
-    When I change the title from "My Thesis 2014" to ""
+    When I try to change the title from "My Thesis 2014" to ""
     Then the existing thesis are not changed by the system
 
   Scenario: search a thesis
-    Given the system has one thesis entitled "My Thesis"
+    Given the system has thesis entitled "My Thesis"
     When I search for thesis entitled "My Thesis"
     Then the existing thesis are not changed by the system
 

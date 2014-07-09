@@ -263,12 +263,15 @@ Then(~'^all theses entitled "([^"]*)" are shown$') { title ->
 }
 //#end
 
-
 //Scenario: edit thesis title
 When(~'^I change the title from "([^"]*)" to "([^"]*)"$') { title, newTitle ->
-    oldThesesQuantity = Tese.findAllByTitle(newTitle).size()
+    thesesListBeforeModification = Tese.findAll()
+    thesesListBeforeModification.remove(Tese.findByTitle(title))
+
     def updatedThesis = ThesisTestDataAndOperations.editThesis(title, newTitle)
-    newThesesQuantity = Tese.findAllByTitle(newTitle).size()
+
+    thesesListAfterModification = Tese.findAll()
+    thesesListAfterModification.remove(Tese.findByTitle(newTitle))
 
     assert updatedThesis != null
 }
@@ -279,38 +282,44 @@ Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { new
 }
 
 And(~'^the other theses are not changed by the system$') { ->
-    assert (newThesesQuantity - oldThesesQuantity) == 1
+    assert thesesListBeforeModification.equals(thesesListAfterModification)
 }
 
 //Scenario: edit thesis with invalid data
+When(~'^I try to change the title from "([^"]*)" to "([^"]*)"$') { title, newTitle ->
+    thesesListBeforeModification = Tese.findAll()
+    def updatedThesis = ThesisTestDataAndOperations.editThesis(title, newTitle)
+    thesesListAfterModification = Tese.findAll()
+    assert updatedThesis == null
+}
+
 Then(~'^the existing thesis are not changed by the system$') { ->
-    assert oldThesesQuantity == newThesesQuantity
+    assert thesesListBeforeModification.equals(thesesListAfterModification)
 }
 
 //Scenario: search a thesis
-Given(~'^the system has one thesis entitled "([^"]*)"$') { title ->
-    ThesisTestDataAndOperations.createTese(title, title+".txt", "UFPE")
-    def thesis = Tese.findByTitle(title)
-    assert thesis != null
-}
-
 When(~'^I search for thesis entitled "([^"]*)"$') { title ->
-    oldThesesQuantity = Tese.findByTitle(title)
-    newThesesQuantity = Tese.findByTitle(title)
+    thesesListBeforeModification = Tese.findAll()
+    Tese.findByTitle(title)
+    thesesListAfterModification = Tese.findAll()
 }
 
 //Scenario: upload thesis with a file
 When(~'^I upload the file "([^"]*)"$') { filename ->
+    thesesListBeforeModification = Tese.findAll()
+
     String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    oldThesesQuantity = Tese.findAll().size()
     ThesisTestDataAndOperations.uploadThesis(path)
-    newThesesQuantity = Tese.findAll().size()
-    assert newThesesQuantity > oldThesesQuantity
+
+    thesesListAfterModification = Tese.findAll().remove(Tese.findByFile(filename))
+
 }
 
 And(~'^the system properly stores the thesis entitled "([^"]*)"$') { title ->
     assert ThesisTestDataAndOperations.containsThesis(title)
 }
+
+//VARIAVÉIS AUXILIARES
 
 //FUNÇÔES AUXILIARES
 def thesisDoNotExists(title) {
