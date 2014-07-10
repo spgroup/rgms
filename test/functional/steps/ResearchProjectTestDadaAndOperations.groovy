@@ -9,8 +9,6 @@ import rgms.researchProject.ResearchProjectController
  */
 class ResearchProjectTestDadaAndOperations {
 
-    static ResearchProjectController cont = new ResearchProjectController()
-
     static researchProjects =[
             [projectName:"Implementação Progressiva de Aplicações Orientadas a Objetos Complexas",
                     description:"Neste projeto pretendemso definir e validar um método para a implementação de aplicações orientadas a objetos complexas. Em particular, este método deve suportar uma abordagem progressiva para implementação orientada a objetos, de forma que aspectos de distribuição, concorrência, e persistência não sejam inicialmente considerados pelo processo de implementação, mas sejam gradualmente introduzidos, preservando os requisitos funcionais da aplicação.",
@@ -68,6 +66,7 @@ class ResearchProjectTestDadaAndOperations {
     }
 
     private static void createResearchProjectDefault(String name) {
+        def cont = new ResearchProjectController()
         cont.params << findResearchProjectByProjectName(name)
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
@@ -76,6 +75,7 @@ class ResearchProjectTestDadaAndOperations {
     }
 
     public static void createResearchProjectWithoutFunders(String name) {
+        def cont = new ResearchProjectController()
         def rp = findResearchProjectByProjectName(name);
         rp.funders = null;
         cont.params << rp;
@@ -94,6 +94,7 @@ class ResearchProjectTestDadaAndOperations {
     }
 
     public static void deleteResearchProject(String name){
+        def cont = new ResearchProjectController()
         ResearchProject project = getIfResearchProjectExists(findResearchProjectByProjectName(name).projectName)
         if(project) {
             cont.delete(project.id)

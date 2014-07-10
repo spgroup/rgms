@@ -8,6 +8,12 @@ Feature: research project
     When I create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" with all required data
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is properly stored by the system
 
+  Scenario: duplicated research project
+    Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored twice
+    And no research project stored is affected
+
   Scenario: remove research project
     Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     And I am logged into the system as administrator of the research group named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
@@ -33,6 +39,18 @@ Feature: research project
     Then I'm still on the research project page
     And the system shows an error message at the research project page
 #end
+
+  Scenario: new invalid research project with blank name
+    Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    When I try to create a research project named as ""
+    Then the research project "" is not stored by the system because it is invalid
+    And no research project stored is affected
+
+  Scenario: new invalid research project with blank description
+    Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas"
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" with description field blank
+    Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" is not stored by the system because it is invalid
+    And no research project stored is affected
 
   Scenario: new research project with duplicated members
     Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas members duplicated"
@@ -74,25 +92,6 @@ Feature: research project
     When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" on the web site
     Then  the system shows an error message at the new research project page
     And the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" is not shown duplicated in the research project list
-
-
-  Scenario: duplicated research project
-    Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    Then the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is not stored twice
-    And no research project stored is affected
-
-  Scenario: new invalid research project with blank name
-    Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
-    Then the research project "" is not stored by the system because it is invalid
-    And no research project stored is affected
-
-  Scenario: new invalid research project with blank description
-    Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas"
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" with description field blank
-    Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas" is not stored by the system because it is invalid
-    And no research project stored is affected
 
   Scenario: list research projects where I am a member
     Given I am at the research project list page
