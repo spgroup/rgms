@@ -203,6 +203,33 @@ class PeriodicoController {
 		[periodicoInstanceList: articles, periodicoInstanceTotal: articles.size()]
 	}
 	//#end
-	
+
+	//#if($RemoveMultiplesArticles)
+	def deleteMultiples() {
+		println params
+		def instancesId = params?.check
+		if (instancesId) {
+			if (instancesId.toString().indexOf("]") > 0 ) {
+				//mais de um checkbox foi selecionado
+				for (String instanceid: instancesId) {
+					Periodico periodicoInstance = Periodico.get(Long.parseLong(instanceid))
+					periodicoInstance.removeFromPublications()
+					periodicoInstance.discardMembers()
+					periodicoInstance.discard()
+					periodicoInstance?.delete(flush: true)
+				}
+			} else {
+				//somente um checkbox foi selecionado
+				def periodicoInstance = Periodico.get(Long.parseLong(instancesId))
+				periodicoInstance.removeFromPublications()
+				periodicoInstance?.delete(flush: true)
+			}
+			redirect(action: "list")
+		}else {
+			flash.message = "Nenhum item foi selecionado."
+			redirect(action: "list")
+		}
+	}
+	//#end
 }
 //#end
