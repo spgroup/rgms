@@ -54,7 +54,7 @@ class ArticleTestDataAndOperations {
 		}
 		return compatible
 	}
-	
+
 	static public void createArticle(String title, filename) {
 		createArticle(title,filename, null,null)
 	}
@@ -149,11 +149,19 @@ class ArticleTestDataAndOperations {
 		def cont = new PeriodicoController()
 		return cont.report().periodicoInstanceList
 	}
-	
+
 	static public List<Periodico> findAllByAuthor(authorName) {
 		def cont = new PeriodicoController()
 		cont.params << [authorName: authorName]
 		return cont.filterByAuthor().periodicoInstanceList
+	}
+
+	static public void removeMultiplesArticles(String... titles) {
+		def ids = []
+		titles.each {ids.add(String.valueOf(Periodico.findByTitle(it).id))}
+		def cont = new PeriodicoController()
+		cont.params << [check: ids]
+		cont.deleteMultiples()
 	}
 }
 

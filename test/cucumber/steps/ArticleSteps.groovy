@@ -482,7 +482,7 @@ Given(~'^the system has 3 articles entitled "([^"]*)" with file name "([^"]*)", 
 
 When(~'^I remove the articles "([^"]*)" and "([^"]*)"$') { String title1, title2 ->
 
-	Periodico.removeMultipleArticle(title1, title2)
+	ArticleTestDataAndOperations.removeMultiplesArticles(title1, title2)
 
 	def testDeleteArticle1 = Periodico.findByTitle(title1)
 	def testDeleteArticle2 = Periodico.findByTitle(title2)
@@ -548,6 +548,6 @@ Then(~'^an error message is showed for the title field$') { ->
 }
 
 And(~'^I mark multiple articles to be removed$') {->
-	at ArticlePage
+	at ArticlesPage
 	page.markArticles()
 }

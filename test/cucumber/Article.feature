@@ -157,7 +157,7 @@ Feature: journal article
 
   Scenario: remove multiple articles
 	Given the system has 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf" and "Modularity analysis of use case implementations" with file name "MACI-03.pdf"
-	When I remove the articles "A theory of product line 1" and "A theory of product line 3"
+	When I remove the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 	Then the system removes the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 	And the system contains the "Algebraic reasoning for object-oriented programming" article
 
@@ -198,8 +198,8 @@ Scenario: list existing articles in alphabetical order of title web
 
   Scenario: remove multiple articles web
 	Given I am at the articles page 
-	And I create 3 articles entitled "A theory of product line 1" with file name "TCS-01.pdf", "A theory of product line 2" with file name "TCS-02.pdf" and "A theory of product line 3" with file name "TCS-01.pdf"
+	And I create 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Modularity analysis of use case implementations" with file name "MACI-03.pdf" and "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf"
 	When I select to view the list of articles	
 	And I mark multiple articles to be removed
 	And I select to remove the selected articles
-	Then my resulting articles list contains "A theory of product line 2"
+	Then my resulting articles list contains "Modularity analysis of use case implementations"

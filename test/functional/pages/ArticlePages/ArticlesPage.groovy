@@ -1,4 +1,3 @@
-//#if($Article)
 package pages.ArticlePages
 
 import geb.Page
@@ -61,9 +60,9 @@ class ArticlesPage extends Page {
 	def checkArticleAtList(title, row) {
 		def articleColumns = this.getArticleColumns(row)
 		def testarticle = Periodico.findByTitle(title)
-		assert articleColumns[0].text() == testarticle.title
-		assert articleColumns[2].text() == testarticle.file
-		assert articleColumns[5].text() == testarticle.journal
+		assert articleColumns[1].text() == testarticle.title
+		assert articleColumns[3].text() == testarticle.file
+		assert articleColumns[6].text() == testarticle.journal
 	}
 
 	def selectOrderBy(sortType){
@@ -122,13 +121,14 @@ class ArticlesPage extends Page {
 	}
 
 	def selectRemoveMultipleArticles() {
-		$("input", id: "removeMultiple").click()
+		assert withConfirm(true) {
+			$("input", id: "removeMultiple").click()
+		}
 	}
 
 	def markArticles(){
-		def listcheckbox  = $('checkbox')
+		def listcheckbox  = $('input', type:'checkbox')
 		listcheckbox[0].click()
 		listcheckbox[2].click()
 	}
 }
-//#end
