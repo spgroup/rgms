@@ -7,7 +7,7 @@ class Ferramenta extends Publication {
     String description
 
     static constraints = {
-        website nullable: false, blank: false
+        website nullable: true, blank: true
         description nullable: false, blank: false
     }
 

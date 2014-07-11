@@ -14,7 +14,7 @@ class ResearchProject {
 
     static constraints = {
         projectName(maxSize: 300, nullable: false, blank: false, unique: true)
-        description(maxSize: 3000, nullable: false, blank: false)
+        description(maxSize: 3000, nullable: true, blank: true)
         status(nullable: false, blank: false, inList: ["ENCERRADO","EM_ANDAMENTO","CONCLUIDO"])
         startYear(nullable: false, blank: false)
         endYear(nullable: true, blank: true)
