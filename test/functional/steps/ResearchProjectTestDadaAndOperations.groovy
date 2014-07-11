@@ -3,6 +3,7 @@ package steps
 import rgms.publication.XMLController
 import rgms.researchProject.ResearchProject
 import rgms.researchProject.ResearchProjectController
+import rgms.researchProject.aspect.ResearchProjectControllerAspect
 
 /**
  * Created by Bruno Soares on 24/02/14.
@@ -65,8 +66,11 @@ class ResearchProjectTestDadaAndOperations {
         }
     }
 
+    static ResearchProjectController cont = new ResearchProjectController()
+
     private static void createResearchProjectDefault(String name) {
-        def cont = new ResearchProjectController()
+        def contAspect = new ResearchProjectControllerAspect()
+        contAspect.init()
         cont.params << findResearchProjectByProjectName(name)
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
