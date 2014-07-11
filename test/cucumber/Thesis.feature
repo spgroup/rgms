@@ -51,11 +51,11 @@ Feature: Thesis Tests
     Then the returned thesis list has the same items but it is sorted by date
 
   Scenario: search an existing thesis
-    Given the system has one thesis entitled "Software Engineering" with author name "Pressman", year of publication "1998" and university "UFPE"
+    Given the system has one thesis entitled "Software Engineering" with publication year "1998" and school "UFPE"
     And I am at the thesis search page
-    When I search for "Software Enginnering" by "Pressman"
-    And I select to view the entry that has university "UFPE" and publication year "1998"
-    Then the thesis "Software Enginnering" by "Pressman" appears in the thesis view page
+    When I search for "Software Engineering" with publication year "1998" and school "UFPE"
+    And I select to view the entry that has title "Software Engineering"
+    Then the thesis "Software Engineering" with publication year "1998" and school "UFPE" appears in the thesis view page
 
   Scenario: create thesis without a file
     Given I am at the create thesis page

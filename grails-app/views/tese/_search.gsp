@@ -10,9 +10,16 @@
 
 <div class="fieldcontain">
 	<label for="publicationDate">
-		<g:message code="tese.publicationDate.label" default="Publication Date" />
+		<g:message code="tese.publicationInitalDate.label" default="Initial Date" />
 	</label>
-	<g:datePicker name="publicationDate" precision="year"  value="${teseInstance?.publicationDate}"  />
+	<g:datePicker name="publicationInitialDate" precision="day"  value="${teseInstance?.publicationDate}"  />
+</div>
+
+<div class="fieldcontain">
+    <label for="publicationDate">
+        <g:message code="tese.publicationEndDate.label" default="End Date" />
+    </label>
+    <g:datePicker name="publicationEndDate" precision="day"  value="${teseInstance?.publicationDate}"  />
 </div>
 
 <div class="fieldcontain">

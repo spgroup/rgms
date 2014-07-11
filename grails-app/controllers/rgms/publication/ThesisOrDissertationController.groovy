@@ -46,55 +46,8 @@ class ThesisOrDissertationController {
 
     def searchListThesisOrDissertation(String thesisOrDissertation, params) {
         if (thesisOrDissertation == "Tese") {
-            def theses = Tese.findAllByTitle(params.title)
-
-//            if(theses != null) {
-//                [teseInstanceList: Tese.list(params.title), teseInstanceTotal: Tese.list(params.title).count()]
-//            } else {
-//                [teseInstanceList: theses, teseInstanceTotal: 0]
-//            }
-            redirect(action: "list")
-
-
-
-
-
-
-
-//            def list = {
-//                flash.firstName = params.firstName
-//                flash.lastName = params.lastName
-//                flash.department = params.department
-//
-////                if(!params.max) {
-////                    params.max = 10
-////                }
-                def query
-                def criteria = Tese.createCriteria()
-                def results
-
-                query = {
-                    and {
-                        like("title", params.title + '%')
-
-//                        if(params.department){
-//                            def selectedDepartment = Department.get(Integer.parseInt(params.department))
-//                            eq('department', selectedDepartment )
-//                        }
-                    }
-                }
-
-                results = criteria.list(params, query)
-
-                render(view:'list', model:[ teseInstanceList: results, teseInstanceTotal:results.size()])
-
-        //    }
-
-
-
-
-
-
+            def results = Tese.findAllByTitleLikeAndPublicationDateBetweenAndSchoolLike('%'+params.title+'%', params.publicationInitialDate, params.publicationEndDate, '%'+params.school+'%')
+            render(view:'list', model:[teseInstanceList: results, teseInstanceTotal:results.size()], bean: Tese)
         }
     }
 

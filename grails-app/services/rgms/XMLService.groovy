@@ -456,7 +456,7 @@ class XMLService {
     }
     //#end
 
-    //#if(Thesis)
+    //#if($maisresul)
     static void createTheses(Node xmlFile) {
         Node dadosGerais = getNodeFromNode(xmlFile, "DADOS-GERAIS")
         Node formacaoAcademicaTitulacao = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")

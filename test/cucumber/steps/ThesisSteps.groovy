@@ -4,6 +4,7 @@ import pages.PublicationsPage
 import pages.ThesisPage
 import pages.thesis.ThesisCreatePage
 import pages.thesis.ThesisEditPage
+import pages.thesis.ThesisSearchPage
 import pages.thesis.ThesisShowPage
 import rgms.authentication.User
 import rgms.publication.Tese
@@ -187,11 +188,15 @@ Then(~'^the returned thesis list has the same items but it is sorted by date$') 
 }
 
 //Scenario: search an existing thesis
-Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)", year of publication "([^"]*)" and university "([^"]*)"$') { title, author, year, school ->
-    ThesisTestDataAndOperations.createTese(title, author, year, school)
-    thesis = Tese.findByTitle(title)
+Given(~'^the system has one thesis entitled "([^"]*)" with publication year "([^"]*)" and school "([^"]*)"$') { title, year, school ->
+    Login()
 
-    assert thesis == null
+    to ThesisCreatePage
+    at ThesisCreatePage
+
+    def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/TCS-03.pdf")
+    absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
+    page.fillThesisDetails(title, "1", "1", year, school, "Cidade Universitaria", absolutePath)
 }
 
 And(~'^I am at the thesis search page$') { ->
@@ -199,20 +204,20 @@ And(~'^I am at the thesis search page$') { ->
     at ThesisSearchPage
 }
 
-When(~'^I search for "([^"]*)" by "([^"]*)"$') { title, author ->
+When(~'^I search for "([^"]*)" with publication year "([^"]*)" and school "([^"]*)"$') { title, year, school ->
     at ThesisSearchPage
-    page.fillThesisSearchDetails(title, author)
-    page.search()
+    page.fillThesisSearchDetails(title, year, school)
+    page.searchTheses()
 }
 
-And(~'^I select to view the entry that has university "([^"]*)" and publication year "([^"]*)"$') { university, year ->
+And(~'^I select to view the entry that has title "([^"]*)"$') { title ->
     at ThesisPage
-    page.selectViewThesis(university, year)
+    page.selectViewThesis(title)
 }
 
-Then(~'^the thesis "([^"]*)" by "([^"]*)" appears in the thesis view page$') { title, year ->
+Then(~'^the thesis "([^"]*)" with publication year "([^"]*)" and school "([^"]*)" appears in the thesis view page$') { title, year, school ->
     at ThesisShowPage
-    page.checkThesisDetails(title, year)
+    page.checkThesisDetails(title, year, school)
 }
 
 //Scenario: create thesis without a file

@@ -133,7 +133,7 @@ class XMLController {
             XMLService.createJournals(xmlFile)
     }
 
-    //#if(Thesis)
+    //#if($maisresul)
     private Closure saveThesis = {
         Node xmlFile ->
             XMLService.createTheses(xmlFile)

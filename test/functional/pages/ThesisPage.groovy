@@ -56,5 +56,4 @@ class ThesisPage extends Page {
         def publicationDateOption = headers.find('th')[1].find('a')
         publicationDateOption.click()
     }
-
 }
