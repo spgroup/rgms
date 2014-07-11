@@ -1,15 +1,10 @@
 package rgms.publication
 
-import grails.converters.JSON
 import org.apache.shiro.SecurityUtils
-import org.codehaus.groovy.grails.web.json.JSONArray
 import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Orientation
 import rgms.researchProject.ResearchProject
-
-import org.codehaus.groovy.grails.web.json.JSONObject
-import groovy.json.JsonSlurper
 
 /**
  * Created with IntelliJ IDEA.
