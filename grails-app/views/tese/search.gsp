@@ -5,6 +5,14 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'tese.label', default: 'Tese')}" />
 		<title><g:message code="default.search.label" args="[entityName]" /></title>
+        <script type="text/javascript" src="/rgms/js/jquery-ui-1.8.18.custom.min.js"></script>
+        <script>
+            $(function() {
+                $( "#title" ).autocomplete({
+                    source: <%='['+((java.lang.String)session.getAttribute("previous_search")).toString()+']'%>
+                });
+            });
+        </script>
 	</head>
 	<body>
 		<a href="#search-tese" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

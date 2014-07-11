@@ -1,11 +1,11 @@
 <%@page import="rgms.member.Member"%>
-<%@ page import="rgms.publication.Tese" %>
+<%@page import="rgms.publication.Tese" %>
 
 <div class="fieldcontain">
 	<label for="title">
 		<g:message code="tese.title.label" default="Title" />
 	</label>
-	<g:textField name="title" value="${teseInstance?.title}"/>
+	<g:textField id="title" name="title" value="${teseInstance?.title}"/>
 </div>
 
 <div class="fieldcontain">

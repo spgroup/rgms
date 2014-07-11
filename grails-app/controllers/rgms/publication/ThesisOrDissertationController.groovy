@@ -46,6 +46,16 @@ class ThesisOrDissertationController {
 
     def searchListThesisOrDissertation(String thesisOrDissertation, params) {
         if (thesisOrDissertation == "Tese") {
+            if(session["previous_search"] == null){
+                session["previous_search"] = '"'+params.title+'"'
+            }else{
+                def previous_search = session["previous_search"]
+                if(previous_search instanceof java.lang.String){
+                    previous_search = previous_search + ',"'+params.title+'"'
+                    session["previous_search"] = previous_search
+                    //Verificar se a consulta não foi realizada para não inserir dois registros iguais
+                }
+            }
             def results = Tese.findAllByTitleLikeAndPublicationDateBetweenAndSchoolLike('%'+params.title+'%', params.publicationInitialDate, params.publicationEndDate, '%'+params.school+'%')
             render(view:'list', model:[teseInstanceList: results, teseInstanceTotal:results.size()], bean: Tese)
         }
