@@ -319,6 +319,11 @@
                                                         NOME-PARA-CITACAO="Rubens Lopes da Silva" ORDEM-DE-INTEGRACAO="2"
                                                         FLAG-RESPONSAVEL="NAO"/>
                             </EQUIPE-DO-PROJETO>
+                            <FINANCIADORES-DO-PROJETO>
+                                <FINANCIADOR-DO-PROJETO SEQUENCIA-FINANCIADOR="1" CODIGO-INSTITUICAO="002200000000"
+                                                        NOME-INSTITUICAO="Conselho Nacional de Desenvolvimento Científico e Tecnológico"
+                                                        NATUREZA="BOLSA"/>
+                            </FINANCIADORES-DO-PROJETO>
                         </PROJETO-DE-PESQUISA>
                     </PARTICIPACAO-EM-PROJETO>
                     <PARTICIPACAO-EM-PROJETO SEQUENCIA-FUNCAO-ATIVIDADE="13" FLAG-PERIODO="ANTERIOR" MES-INICIO="8"
@@ -367,6 +372,11 @@
                                                         NOME-PARA-CITACAO="BORBA, Paulo" ORDEM-DE-INTEGRACAO="1"
                                                         FLAG-RESPONSAVEL="SIM"/>
                             </EQUIPE-DO-PROJETO>
+                            <FINANCIADORES-DO-PROJETO>
+                                <FINANCIADOR-DO-PROJETO SEQUENCIA-FINANCIADOR="1" CODIGO-INSTITUICAO="002200000000"
+                                                        NOME-INSTITUICAO="Conselho Nacional de Desenvolvimento Científico e Tecnológico"
+                                                        NATUREZA="BOLSA"/>
+                            </FINANCIADORES-DO-PROJETO>
                         </PROJETO-DE-PESQUISA>
                     </PARTICIPACAO-EM-PROJETO>
                 </ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO>
