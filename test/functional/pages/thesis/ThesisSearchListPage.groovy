@@ -27,4 +27,8 @@ class ThesisSearchListPage extends Page {
         showLink.click()
     }
 
+    def checkIfThesisWasFound(title) {
+        def thesis = getRow().find('td').find([text: title])
+        assert thesis != null
+    }
 }

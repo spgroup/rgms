@@ -3,7 +3,7 @@ package pages.thesis
 import geb.Page
 import pages.GetPageTitle
 
-class selectTitleInPreviousSearchThesisShowPage extends Page {
+class ThesisShowPage extends Page {
     static url = "tese/show"
 
     static at = {

@@ -264,15 +264,14 @@ And(~'^I fill the year "([^"]*)" and school "([^"]*)"$') { year, school ->
     page.fillSomeDetaisInSearch(1, 1, year, 1, 1, year, school)
 }
 
-And(~'^I click in search button$') { ->
+And(~'^I search') { ->
     at ThesisSearchPage
     page.searchTheses()
 }
 
-Then(~'^all theses entitled "([^"]*)" are shown$') { title ->
-    at ThesisPage
-    theses = Tese.findAllByTitle(title)
-    page.checkThesisList(theses)
+Then(~'^the thesis "([^"]*)" appears in the thesis view page$') { title ->
+    at ThesisSearchListPage
+    page.checkIfThesisWasFound(title)
 }
 //#end
 

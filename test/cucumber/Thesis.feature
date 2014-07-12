@@ -71,7 +71,7 @@ Feature: Thesis Tests
     When I press "Soft" and choose "Software Product Lines 2" in the list
     And I fill the year "2014" and school "UFPE"
     And I search
-    Then all theses entitled "Software Product Lines 2" are shown
+    Then the thesis "Software Product Lines 2" appears in the thesis view page
 #end
 
   Scenario: edit thesis title
