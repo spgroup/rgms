@@ -15,77 +15,77 @@ Given(~'^the system has no conferencia entitled "([^"]*)"$') { String title ->
     conferencia = Conferencia.findByTitle(title)
     assert conferencia == null
 }
-//#if(ConferenciaFeature)
+
 Given(~'^the system has conferencia entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
    ConferenciaTestDataAndOperations.createConferencia(title, filename)
     conferencia = Conferencia.findByTitle(title)
     assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conferencia, title)
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
     When(~'^I change the conferencia title from "([^"]*)" to "([^"]*)"$') { String title ->
     ConferenciaTestDataAndOperations.editConferencia(title)
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
     And(~'^I change the conferencia title to "([^"]*)"$') { String newtitle ->
     page.select('a', 'edit')
     at ConferenceEditPage
    page.edit(path + newtitle)
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
     Given(~'^I am at the conferencia page$') {->
     at ConferenciaPage
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 And(~'^the conferencia entitled "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     ConferenciaTestDataAndOperations.createConferencia(title, filename)
     conferencia = Conferencia.findByTitle(title)
     assert conferencia != null
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 When(~'^I select to view the conferencia "([^"]*)" in resulting list$') { String title ->
     page.selectViewConference(title)
     at ConferenceShowPage
 }
-//#end
 
 
-//#if(ConferenciaFeature)
+
+
 And(~'^I select the edit option in Conferencia Registration Page$') { String newfile ->
     page.select('a', 'edit')
     at ConferenciaEditPage
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 Given(~'^I am at the conferencia registration page$') {
     at ConferenciaEditPage
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 Then(~'^the conferencia is not stored by the system because it is invalid$') {
      finalSize = Conferencia.findAll().size()
     assert initialSize == finalSize
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 When(~'^I create the conferencia with some field blank$') {
     at ConferenciaCreatePage
      page.fillConferenciaDetailsPartially()
      assert page.isSomeConferenciaFildsBlank() == true
 }
-//#end
+
 
 
 When(~'^I create the conferencia "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
@@ -224,89 +224,89 @@ And(~'^the conferencias are not stored by the system$') {->
 
 }
 
-//#if(ConferenciaFeature)
+
 When(~'^I click on the column date at the conferencia list table$') {->
     at ConferenciaPage
     page.selectColumn("Date")
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 Then(~'^a list of conferencias stored by the system is displayed at the conferencia page by publication ascending date order$') {->
     at ConferenciaPage
     page.listConferencia()
     def conferencias = Conferencia.findAll()
     conferencias.sort(it.date)
 }
-//#end
+
 
 Given(~'^the system has conferencia entitled "([^"]*)"$') { String title ->
     def conferencia = Conferencia.findByTitle(title)
     assert conferencia != null
 }
 
-//#if(ConferenciaFeature)
+
 When(~'^I click on the column title at the conferencia list table$') {->
     at ConferenciaPage
     page.selectColumn("Title")
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 Then(~'^a list of conferencias stored by the system is displayed at the conferencia page by ascending alphabetic order$') {->
     at ConferenciaPage
     page.listConferencia()
     def conferencias = Conferencia.findAll()
     conferencias.sort(it.title)
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 When(~'^I select the search conferencia option at the conferencia page$') {->
     at ConferenciaPage
     page.selectSearchConferencia()
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 When(~'^I search for the conferencia entitled "([^"]*)"$') { String title ->
     assert ConferenciaTestDataAndOperations.searchConferencia(title)
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 Then(~'^theres no change in the data stored by the system$') {
 
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 And(~'^the system has conferencia dated "([^"]*)"$') {String date->
     conferencia = Conferencia.findByDate(date)
     assert conferencia !=null
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 When(~'^I write "([^"]*)" at the date field$') {String date->
     at ConferenciaPage
     page.fillDateField(date)
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 When(~'^I select the option Search for conferencia at the conferencia page$') {->
     at ConferenciaPage 
     page.selectSearchConferencia()
 }
-//#end
 
-//#if(ConferenciaFeature)
+
+
 Then(~'^a list of all conferencias containing the date "([^"]*)" will be presented in the conferencia screen$') { String date->
     at ConferenciaPage
     page.FindByDate(date)
 }
-//#end    
+    
 
 When(~'^I view the conferencia list$') {->
     def conferencias = Conferencia.findAll()
