@@ -51,11 +51,11 @@ Feature: Thesis Tests
     Then the returned thesis list has the same items but it is sorted by date
 
   Scenario: search an existing thesis
-    Given the system has one thesis entitled "Software Engineering" with publication year "1998" and school "UFPE"
+    Given the system has one thesis entitled "Software Product Lines" with publication year "1998" and school "UFPE"
     And I am at the thesis search page
-    When I search for "Software Engineering" with publication year "1998" and school "UFPE"
-    And I select to view the entry that has title "Software Engineering"
-    Then the thesis "Software Engineering" with publication year "1998" and school "UFPE" appears in the thesis view page
+    When I search for "Software Product Lines" with publication year "1998" and school "UFPE"
+    And I select to view the entry that has title "Software Product Lines"
+    Then the thesis "Software Product Lines" with publication year "1998" and school "UFPE" appears in the thesis view page
 
   Scenario: create thesis without a file
     Given I am at the create thesis page
@@ -65,13 +65,13 @@ Feature: Thesis Tests
 
 #if($contextualInformation)
   Scenario: search an existing thesis filled by default
-    Given the system has at least one thesis entitled "Software Engineering"
+    Given the system has one thesis entitled "Software Product Lines 2" with publication year "2014" and school "UFPE"
+    And I have already done a search about "Software Product Lines 2" previously
     And I am at the thesis search page
-    And I have already done a search about "Software Enginnering" previously
-    When I press "S"
-    And I choose "Software Enginnering" in the list
+    When I press "Soft" and choose "Software Product Lines 2" in the list
+    And I fill the year "2014" and school "UFPE"
     And I click in search button
-    Then all theses entitled "Software Engineering" are shown
+    Then all theses entitled "Software Product Lines 2" are shown
 #end
 
   Scenario: edit thesis title

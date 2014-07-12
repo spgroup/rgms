@@ -5,6 +5,7 @@ import pages.ThesisPage
 import pages.thesis.ThesisCreatePage
 import pages.thesis.ThesisEditPage
 import pages.thesis.ThesisSearchPage
+import pages.thesis.ThesisSearchListPage
 import pages.thesis.ThesisShowPage
 import rgms.authentication.User
 import rgms.publication.Tese
@@ -124,7 +125,6 @@ When(~'^I select to view thesis "([^"]*)" in resulting list$') { title ->
     page.selectViewThesis(title)
 
     at ThesisShowPage
-
 }
 
 When(~'^I select the remover option at the thesis show page$') { ->
@@ -206,12 +206,13 @@ And(~'^I am at the thesis search page$') { ->
 
 When(~'^I search for "([^"]*)" with publication year "([^"]*)" and school "([^"]*)"$') { title, year, school ->
     at ThesisSearchPage
-    page.fillThesisSearchDetails(title, year, school)
+
+    page.fillThesisSearchDetails(title, "1", "1", year, "31", "12", year, school)
     page.searchTheses()
 }
 
 And(~'^I select to view the entry that has title "([^"]*)"$') { title ->
-    at ThesisPage
+    at ThesisSearchListPage
     page.selectViewThesis(title)
 }
 
@@ -233,32 +234,39 @@ And(~'^I try to create a new thesis$') { ->
 
 //Scenario: search an existing thesis filled by default
 //#if($contextualInformation)
-Given(~'^the system has at least one thesis entitled "([^"]*)"$') { title ->
-    ThesisTestDataAndOperations.createTese(title, "teste.txt", "UFPE")
-    tese = Tese.findByTitle(title)
-    assert tese != null
+Given(~'^the system has one thesis entitled "([^"]*)" with current day and school "([^"]*)"$') { title, school ->
+    Login()
+
+    to ThesisCreatePage
+    at ThesisCreatePage
+
+    def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/TCS-03.pdf")
+    absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
+    page.fillThesisDetails(title, 1, 1, 2014, school, "Cidade Universitaria", absolutePath)
 }
 
 And(~'^I have already done a search about "([^"]*)" previously$') { title ->
+    to ThesisSearchPage
     at ThesisSearchPage
-    page.fillTitleInSearch(title)
-    page.search();
+
+    page.fillTitleInSearchDetails(title)
+    page.searchTheses()
 }
 
-When(~'^I press "([^"]*)"$') { input ->
+When(~'^I press "([^"]*)" and choose "([^"]*)" in the list$') { input, title ->
+    to ThesisSearchPage
     at ThesisSearchPage
-    page.fillTitleInSearch(input)
-    page.showDropdownList()
+    page.selectTitleInPreviousSearch(input)
 }
 
-And(~'^I choose "([^"]*)" in the list$') { title ->
+And(~'^I fill the year "([^"]*)" and school "([^"]*)"$') { year, school ->
     at ThesisSearchPage
-    page.selectItemInDropdownList(title)
+    page.fillSomeDetaisInSearch(1, 1, year, 1, 1, year, school)
 }
 
 And(~'^I click in search button$') { ->
     at ThesisSearchPage
-    page.search()
+    page.searchTheses()
 }
 
 Then(~'^all theses entitled "([^"]*)" are shown$') { title ->

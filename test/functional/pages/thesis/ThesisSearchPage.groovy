@@ -13,13 +13,31 @@ class ThesisSearchPage extends FormPage {
         title ==~ currentTitle
     }
 
-    def fillThesisSearchDetails(title, year, school) {
+    def fillTitleInSearchDetails(title) {
         $("form").title = title
-        $("form").publicationDate_year = year
+    }
+
+    def fillThesisSearchDetails(title, initialDay, initialMonth, initialYear, endDay, endMonth, endYear, school) {
+        fillTitleInSearchDetails(title)
+        fillSomeDetaisInSearch(initialDay, initialMonth, initialYear, endDay, endMonth, endYear, school)
+    }
+
+    def fillSomeDetaisInSearch(initialDay, initialMonth, initialYear, endDay, endMonth, endYear, school)  {
+        $("form").publicationInitialDate_day= initialDay
+        $("form").publicationInitialDate_month = initialMonth
+        $("form").publicationInitialDate_year = initialYear
+        $("form").publicationEndDate_day= endDay
+        $("form").publicationEndDate_month = endMonth
+        $("form").publicationEndDate_year = endYear
         $("form").school = school
     }
 
     def searchTheses() {
-        $("input", name: "search").click()
+        $("input", id:"search").click()
+    }
+
+    def selectTitleInPreviousSearch(input) {
+        $("form").title = input
+        $("ul", class:"ui-autocomplete").find("li")[0].click()
     }
 }
