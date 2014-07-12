@@ -454,9 +454,7 @@ class XMLService {
         else
             newJournal.volume = 1   //if not parsed successfully, least value possible
     }
-    //#end
 
-    //#if($maisresul)
     static void createTheses(Node xmlFile) {
         Node dadosGerais = getNodeFromNode(xmlFile, "DADOS-GERAIS")
         Node formacaoAcademicaTitulacao = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
@@ -475,7 +473,6 @@ class XMLService {
         newThesis.address = 'no Address'
         newThesis.save(flush: false)
     }
-    //#end
 
     static void createMember(Node xmlFile, Member newMember) {
         Node dadosGerais = (Node) xmlFile.children()[0]
