@@ -56,4 +56,29 @@ class BookChapterPage extends Page {
         GetPageTitle gp = new GetPageTitle()
         return gp.msg('file.already.exist.message') == $("div", class: "message", role: "status").text()
     }
+
+    def select(String e, v) {
+        if (v == 'delete') {
+            assert withConfirm(true) { $("form").find(e, class: v).click() }
+        } else {
+            $("form").find(e, class: v).click()
+        }
+    }
+
+    def edit(String novovalor, filename) {
+        $("form").title = novovalor
+        $("form").file = filename
+    }
+
+    def checkBookChapterAtList(title, row) {
+        def listDiv = $('div', id: 'list-bookChapter')
+        def bookChapterTable = (listDiv.find('table'))[0]
+        def bookChapterRows = bookChapterTable.find('tbody').find('tr')
+        def bookChapterColumns = bookChapterRows[row].find('td')
+
+        def testBookChapter = BookChapter.findByTitle(title)
+        assert bookChapterColumns[0].text() == testBookChapter.title
+        assert bookChapterColumns[2].text() == testBookChapter.file
+        assert bookChapterColumns[5].text() == testBookChapter.journal
+    }
 }

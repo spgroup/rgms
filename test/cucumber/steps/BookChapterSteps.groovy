@@ -47,12 +47,6 @@ Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String
     checkIfExists(title)
 }
 
-And(~'^the other book chapters still stored in the system$'){
-    bookChapters = BookChapter.findAll()
-    assert bookChapters != null
-
-}
-
 When(~'^I select the new book chapter option at the book chapter page$') { ->
     at BookChapterPage
     page.selectNewBookChapter()
@@ -91,14 +85,15 @@ Then(~'^I see my user listed as a member of book chapter by default$') { ->
 }
 
 When(~'^I view the book chapter list$') { ->
-    to BookChapterPage
+    bookChapters = BookChapter.findAll()
+    bookChapters != null
 }
 
 Then(~'my book chapter list contains "([^"]*)"$') { String title ->
-    at BookChapterPage
-    bookChapterList = BookChapter.findAll()
-    assert BookChapterTestDataAndOperations.containsBookChapter(title)
+    bookChapters = BookChapter.findAll()
+    assert BookChapterTestDataAndOperations.containsBookChapter(title, bookChapters)
 }
+
 And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$') { String title, filename ->
     page.selectNewBookChapter()
     to BookChapterCreatePage
@@ -109,7 +104,8 @@ And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$')
 }
 
 Then(~'My resulting book chapter list contains "([^"]*)"$') { String title ->
-    checkIfBookIsOnListAtBookChapterPage(title)
+    at BookChapterPage
+    page.checkBookChapterAtList(title, 0)
 }
 
 private void checkIfBookIsOnListAtBookChapterPage(String title) {
@@ -141,6 +137,7 @@ And(~'^it is shown in the book chapter list with title "([^"]*)"$') { String tit
 }
 Given(~'^the system has some book chapters stored$') { ->
     initialSize = BookChapter.findAll().size()
+    assert initialSize != 0
 }
 When(~'^I upload the book chapters of "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
@@ -235,17 +232,13 @@ When (~'^I select the book chapter option at the program menu'){ ->
 
 And(~'^I select the upload button at the Book Chapter page$'){ ->
     at BookChapterPage
-    page.uploadWithFile() //Nao tem
+    page.uploadWithoutFile()
 
 }
 
 And(~'^ I add the book chapters with the file "([^"]*)"$') { String filename ->
-    page.selectNewBookChapter()
-    to BookChapterCreatePage
-    at BookChapterCreatePage
-    createAndCheckBookOnBrowser(filename)
-    to BookChapterPage
     at BookChapterPage
+    page.uploadWithoutFile(filename)
 
 
 }
@@ -259,104 +252,86 @@ Then (~'^the book chapters in the file "([^"]*)" are stored by the system$'){ St
 }
 
 //Edit existing book chapter web
-Given (~'^I am at the book chapter page$') { ->
+Given (~'^I am at the book chapters page and the book chapter "([^"]*)" is stored in the system with the file name "([^"]*)"$') { String title, filename ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
+    page.select("Book Chapter")
+    selectNewBookChapterInBookChapterPage()
+    page.fillBookChapterDetails(BookChapterTestDataAndOperations.path() + filename, title)
+    page.selectCreateBookChapter()
+    assert !bookChapterNoExist(title)
     to BookChapterPage
     at BookChapterPage
 }
 
-
 When (~'^I select to view "([^"]*)" in resulting list$'){ String title ->
     at BookChapterPage
-    page.selectBookChapter(title) //nao tem
+    page.selectBookChapter(title)
 
 }
 
 And(~'^I change the book chapter title to "([^"]*)"$'){ String newtitle ->
     at BookChapterPage
-    page.select('a', 'edit') //nao tem
-    at BookChapterEditPage //nao
+    page.select('a', 'edit')
+    at BookChapterPage
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
     page.edit(newtitle, path + "chapter.pdf") //nao tem
 
 }
 
-
-Then (~'^The book chapter "([^"]*)" is updated$'){ String title ->
-    assert checkIfBookIsOnListAtBookChapterPage(title)
-
-}
-
-And (~'^I am at Book Chapter show page$'){ ->
-    at BookChapterShowPage //nao tem
+Then (~'^I select the "([^"]*)" option in Book Chapter Show Page$'){ String option ->
+    at BookChapterPage
+    page.select(option)
 
 }
 
 //Order existing book chapters by title web
-Given (~'^I am at the book chapter page$') { ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-    to BookChapterPage
-    at BookChapterPage
-}
-
 When (~'^I select to view the list of book chapterst$'){ ->
     at BookChapterPage
-    page.selectViewBookChapterList()//nao tem
+    page.selectViewBookChapterList()
 
 }
 
-And (~'^I select to view all book chapters ordered by "([^"]*)" in resulting list$'){ String orderType ->
+And (~'^I select to view all book chapters ordered by title in resulting list$'){ ->
     at BookChapterPage
-    page.selectOrderBy(orderType)
+    page.selectOrderBy(title)
 
 }
 
-Then (~'^The resulting book chapter list contains all book chapters ordered by "([^"]*)"$'){ String orderType ->
+Then (~'^The resulting book chapter list contains all book chapters ordered by title$'){ ->
     to BookChapterPage
-    page.checkOrderBy(orderType)
+    page.checkOrderBy(title)
 
 
 }
 //Filter book chapters web
-Given (~'^I am at the book chapter page$') { ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-    to BookChapterPage
-    at BookChapterPage
-}
-
 When (~'^I select to view all my book chapters filtered by title in resulting list$'){ ->
     at BookChapterPage
-    page.fillAndSelectFilter(authorName) //Nao tem
+    page.fillAndSelectFilter(authorName)
 
 }
 
 Then (~'^The resulting book chapter list contains only book chapters filtered by title$'){ ->
     at BookChapterPage
-    assert page.checkBookChapterFilteredBy(authorName) //Nao tem
+    assert page.checkBookChapterFilteredBy(authorName)
 
 }
 
 //Upload book chapters without a file
-Given(~'^the system has some book chapters stored$') { ->
-    initialSize = BookChapter.findAll().size()
-}
-
 When (~'^I upload the book chapters of "([^"]*)"$'){ String filename->
-    assert filename == null
+    String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    initialSize = BookChapter.findAll().size()
+    BookChapterTestDataAndOperations.uploadArticle(path)
+    finalSize = BookChapter.findAll().size()
+    assert initialSize < finalSize
 
 }
 
 Then (~'^book chapters are not stored by the system$'){ ->
-    assert bookChapterNotExist(title) //nao tem
+    assert BookChapterNotExist(title)
+
 }
 
 And(~'^the system has the same number of book chapters$'){
@@ -386,51 +361,27 @@ When (~'^I edit the book chapter title from "([^"]*)" to "([^"]*)"$'){ String ti
 }
 
 Then (~'^the book chapter "([^"]*)" is properly updated by the system$'){ String title ->
-    def bookChapter = BookChapter.findByTitle(title)
-    assert bookChapter == null
+    assert bookChapterNoExist(title)
 
 }
 
 //Order book chapters
-Given(~'^the system has some book chapters stored$') { ->
-    initialSize = BookChapter.findAll().size()
-}
-
-When (~'^I view the book chapter list$'){ ->
-    bookChapters = BookChapter.findAll()
-    assert bookChapters != null
-}
-
-And (~'^I choose to view the book chapter list ordered by "([^"]*)"$'){ String orderType ->
-    assert BookChapterTestDataAndOperations.isOrdered(orderType)
+And (~'^I choose to view the book chapter list ordered by title$'){ ->
+    assert BookChapterTestDataAndOperations.isOrdered()
 
 }
 
 Then (~'^the system book chapter list content is not modified $'){ ->
-    assert BookChapter.findAll().size() != 0
+    bookChapters = BookChapter.findAll().size()
 
 }
 
 //Filter book chapters
-Given(~'^the system has some book chapters stored$') { ->
-    initialSize = BookChapter.findAll().size()
-}
-
-When (~'^I view the book chapter list$'){ String authorName->
-    bookChapters = BookChapter.findAll()
-    assert bookChapters != null
-}
-
 And(~'^I choose to filter my book chapter list by author "([^"]*)"$'){ String authorName ->
     bookChapterFiltered = BookChapter.findAllByAuthors(authorName)
-    //Precisa criar isFiltered
     assert BookChapterTestDataAndOperations.isFiltered(authorName)
-
-
 }
 
-Then (~'^the system book chapter list content is not modified$'){ ->
-    assert BookChapter.findAll().size() != 0
-
-
+def bookChapterNoExist(String title){
+    return BookChapter.findByTitle(title) == null
 }

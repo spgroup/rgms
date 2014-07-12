@@ -76,11 +76,31 @@ class BookChapterTestDataAndOperations {
         return result.contains(testarbook)
     }
 
+    static public boolean isOrdered(){
+
+    }
+
+    static public boolean isFiltered(){
+
+    }
+
     static public void ShareArticleOnFacebook(String title){
         def member = new Member()
         member.access_token =  "CAAJIlmRWCUwBAN0r1puBTUa4vDZAKxWWlR5gN4qtgZAosBDKGUOLBquyKuHYQ0zxICioiarTJ66mpdZC08U4rHJOrtvXJCB8hMBcLKlQaTdwYZCgMTJtbFnQfIBZAxi6hRIkfw2fCSyCS6DuFIrGRThI53ZCzBOLsZD"
         member.facebook_id = "100006411132660"
         PublicationController.sendPostFacebook(member, title)
+    }
+
+    static public def path(){
+        return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    }
+
+    static public void uploadBookChapter(filename) {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.saveBookChapters(records.parse(xml))
+        cont.response.reset()
     }
 
 

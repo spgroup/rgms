@@ -8,7 +8,7 @@ Feature: BookChapter
     Given the system has no book chapter entitled "SPL Development"
     When  I create the book chapter "SPL Development" with file name "HSPLE.pdf"
     Then  the book chapter "SPL Development" is properly stored by the system
-    And the other book chapters still stored in the system
+    And the other book chapters are still stored in the system
 
   Scenario: duplicate book chapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
@@ -19,7 +19,7 @@ Feature: BookChapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
     When I remove the book chapter "Next Generation Software Product Line Engineering"
     Then the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
-    And the other book chapter still stored in the system
+    And the other book chapters are still stored in the system
 
   Scenario: register book chapter with invalid data web
     Given I am at the book chapter page
@@ -68,31 +68,31 @@ Feature: BookChapter
     Given the system has some book chapters stored
     When I upload the book chapters of "curriculo.xml"
     Then the system has all the book chapters of the xml file
-    And the other book chapters still stored in the system
+    And the other book chapters are still stored in the system
 
   Scenario: upload book chapters without a file web
     Given I am at the publications menu
     When I select the Book Chapter option at the program menu
     And I select the upload button at the book chapter page
-    Then I can not add the book chapters without a file
-    And I'm still on book chapter page
+    Then no book chapters are added to the system
+    And the existing book chapters are not changed
     And the book chapters are not stored by the system
-
 
   Scenario: upload book chapter with a file web
     Given I am at the publications menu
-    Given The system does not have a book chapter "Capitulo 1"
+    And The system does not have a book chapter "Capitulo 1" with file “Book chapters 1.xml"
     When I select the Book Chapter option at the program menu
     And I select the upload button at the book chapter page
     And I add the book chapters with a file “Book chapters 1.xml"
     Then the book chapters in the file are stored by the system
+    And the existing book chapters are not changed
 
   Scenario: edit existing book chapter  web
-    Given I am at the book chapters page
+    Given I am at the book chapters page and the book chapter "Basic Concepts, Classification, and Quality Criteria" is stored in the system with the file name "chapter3.pdf"
     When I select to view "Basic Concepts, Classification, and Quality Criteria" in resulting list
-    And I change the book chapter title to ”Chapter 3"
-    Then The book chapter is updated
-    And I am at Book Chapter show page
+    And I change the book chapter title to "Chapter 3"
+    Then I select the "Alterar" option in Book Chapter Show Page
+    And I am at Book Chapter Show Page
 
   Scenario: order existing book chapters by title web
     Given I am at the book chapters page
@@ -111,9 +111,9 @@ Feature: BookChapter
     And the system has the same number of book chapters
 
   Scenario: edit book chapter
-    Given the book chapter "Basic Concepts, Classification, and Quality Criteria" is stored in the system with file name ”chapter3.pdf"
+    Given the book chapter "Basic Concepts, Classification, and Quality Criteria" is stored in the system with file name "chapter3.pdf"
     And the system has no book chapter entitled "Chapter 3"
-    When I edit the book chapter title from "Basic Concepts, Classification, and Quality Criteria" to ”Chapter 3"
+    When I edit the book chapter title from "Basic Concepts, Classification, and Quality Criteria" to "Chapter 3"
     Then the book chapter "Basic Concepts, Classification, and Quality Criteria" is properly updated by the system
 
   Scenario: order book chapters by title

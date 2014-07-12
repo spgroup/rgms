@@ -14,6 +14,25 @@ class BookChapterController {
         params.max = Math.min(max ?: 10, 100)
         [bookChapterInstanceList: BookChapter.list(params), bookChapterInstanceTotal: BookChapter.count()]
     }
+    //#if($orderByTitle)
+    def orderByTitle(){
+        def bookChapters = BookChapter.listOrderByTitle()
+        render(view:"list", model: [bookChapterInstanceList: bookChapters, bookChapterInstanceTotal: bookChapters.size()])
+
+    }
+    //#end
+
+    //#if($filterByAuthor)
+    def filterByAuthor(){
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        def bookChapters = BookChapter.list(params)
+        def authorName = params.authorName
+        if(authorName != "")
+        bookChapters = bookChapters.findAll{it.authors.contains(authorName)}
+        render(view: "list", model: [bookChapterInstanceList: bookChapters, bookChapterInstanceTotal: bookChapters.size()])
+
+    }
+    //#end
 
     def create() {
         def bookChapterInstance = new BookChapter(params)
