@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
             <tbody>
-                <!-- journals -->
+                <!-- #if($Article) -->
                 <g:if test="${publications?.journals}">
                     <g:each in="${publications?.journals}" status="i" var="journalInstance">
                         <input name="journals${i}.title" type="hidden" value="${journalInstance.obj.title}" />
@@ -76,6 +76,7 @@
                         </tr>
                     </g:each>
                 </g:if>
+                <!-- #end -->
                 <!-- books -->
                 <g:if test="${publications?.books}">
                     <g:each in="${publications?.books}" status="i" var="bookInstance">
@@ -157,7 +158,7 @@
                         </tr>
                     </g:each>
                 </g:if>
-                <!-- researchLines -->
+                <!-- #if($researchLine) -->
                 <g:if test="${publications?.researchLines}">
                     <g:each in="${publications?.researchLines}" status="i" var="researchLineInstance">
                         <input name="researchLines${i}.name" type="hidden" value="${researchLineInstance.obj.name}" />
@@ -171,7 +172,8 @@
                         </tr>
                     </g:each>
                 </g:if>
-                <!-- researchProjects -->
+                <!-- #end -->
+                <!-- #if($researchProject) -->
                 <g:if test="${publications?.researchProjects}">
                     <g:each in="${publications?.researchProjects}" status="i" var="projectInstance">
                         <input name="researchProjects${i}.projectName" type="hidden" value="${projectInstance.obj.projectName}" />
@@ -181,17 +183,20 @@
                         <input name="researchProjects${i}.startYear" type="hidden" value="${projectInstance.obj.startYear}" />
                         <input name="researchProjects${i}.endYear" type="hidden" value="${projectInstance.obj.endYear}" />
                         <input name="researchProjects${i}.members" type="hidden" value="${projectInstance.obj.members}" />
-                        <input name="researchProjects${i}.funders" type="hidden" value="${projectInstance.obj.funders}" />
+                        <!-- #if($funder) -->
+                            <input name="researchProjects${i}.funders" type="hidden" value="${projectInstance.obj.funders}" />
+                        <!-- #end -->
                         <tr>
                             <td>Research Project</td>
                             <td>${projectInstance?.obj?.projectName}</td>
                             <td>${projectInstance?.obj?.startYear} </td>
-                            <td>${projectInstance?.obj?.funders}</td>
+                            <td><!-- #if($funder) -->${projectInstance?.obj?.funders}<!-- #end --></td>
                             <td>${projectInstance?.status}</td>
                         </tr>
                     </g:each>
                 </g:if>
-                <!-- orientations -->
+                <!-- #end -->
+                <!-- #if(Orientation) -->
                 <g:if test="${publications?.orientations}">
                     <g:each in="${publications?.orientations}" status="i" var="orientationInstance">
                         <input name="orientations${i}.tipo" type="hidden" value="${orientationInstance.obj.tipo}" />
@@ -209,6 +214,7 @@
                         </tr>
                     </g:each>
                 </g:if>
+                <!-- #end -->
             </tbody>
             </table>
             </div>

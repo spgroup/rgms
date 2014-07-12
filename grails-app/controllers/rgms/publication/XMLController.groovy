@@ -73,7 +73,7 @@ class XMLController {
     }
     //#end
 
-    //#if($researchProject && $funder)
+    //#if($researchProject)
     def uploadXMLResearchProject() {
         XMLService.Import(saveReseachProject, returnWithMessage, 'default.researchproject.import.flashmessage.success', "ResearchProject", request)
     }
@@ -177,7 +177,6 @@ class XMLController {
         //importacao via opcao XMLImport no menu da tela inicial do sistema
         if (controller == "Publication"){
             request.message = message(code: msg)
-            println "publications_import:"+publications
             render(view:"home", model:[publications:publications])
         }
         //importacao via outras telas (ainda precisa corrigir)
@@ -194,7 +193,6 @@ class XMLController {
 
     def save() {
         Member user = getCurrentUser()
-        println "params em save() = "+params
         def msg = XMLService.saveImportedPublications(params, user)
         flash.message = message(code: msg)
         redirect(uri: '/')
