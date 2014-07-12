@@ -201,7 +201,6 @@ Then(~'^the data of the research project named "([^"]*)" is updated in the syste
 
 
 // ------------------------------------------------------------------------------------------------------------------------------
-// NOVOS Vilmar
 Then(~'^no research project stored is affected'){ ->
     assert checkIfNoResearchProjectAffected(oldProjects)
 }
@@ -262,7 +261,7 @@ Then(~'^it is shown in the research project list with name "([^"]*)"$'){ String 
     page.checkResearchGroupAtList(projectName)
 }
 
-When(~'^I try to create a research project named as "([^"]*)" with description field blank on the web site$'){ String projectName ->
+When(~'^I try to create a research project named as "([^"]*)" with description field blank on the web$'){ String projectName ->
     // updated
     oldProjects =  ResearchProject.findAll()
     page.fillResearchProjectWithBlankDescription(projectName)
@@ -283,7 +282,7 @@ Given(~'^the system has a research project named as "([^"]*)" created on web$') 
     assert ResearchProject.findByProjectName(projectName) != null;
 }
 
-When(~'^I try to create a research project named as "([^"]*)" on the web site$'){ String projectName ->
+When(~'^I try to create a research project named as "([^"]*)" on the web$'){ String projectName ->
     // updated
     oldProjects =  ResearchProject.findAll()
     at ResearchProjectPageCreatePage

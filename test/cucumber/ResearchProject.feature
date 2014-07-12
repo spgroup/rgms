@@ -69,7 +69,7 @@ Feature: research project
     Given I am at the publications menu
     And I go to new research project page
     And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" created on web
-    When I try to create a research project named as "" on the web site
+    When I try to create a research project named as "" on the web
     Then the research project "" is not stored by the system because it is invalid
     And  the system shows an error message at the new research project page
     And  I'm still on the new research project page
@@ -79,7 +79,7 @@ Feature: research project
     Given I am at the publications menu
     And I go to new research project page
     And the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web 2"
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web 2" with description field blank on the web site
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web 2" with description field blank on the web
     Then the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web 2" is not stored by the system because it is invalid
     And  I'm still on the new research project page
     And  the system shows an error message at the new research project page
@@ -89,7 +89,7 @@ Feature: research project
     Given I am at the publications menu
     And I go to new research project page
     And the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" created on web
-    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" on the web site
+    When I try to create a research project named as "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" on the web
     Then  the system shows an error message at the new research project page
     And the research project "Implementação Progressiva de Aplicações Orientadas a Aspectos Complexas web" is not shown duplicated in the research project list
 
