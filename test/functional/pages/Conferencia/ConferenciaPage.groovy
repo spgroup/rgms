@@ -22,6 +22,23 @@ class ConferenciaPage extends Page{
         $('a.list').click()
     }
 
+    def select(String s) {
+		$('div', id: 'status').find('a', text: s).click()
+	}
+    
+    //verificar pag da tabela
+     def selectColumn(String s) {
+		$('div', id: 'column').find('a', text: s).click()
+	}
+        
+    def fillDateField(String date){
+        $("form").date = date
+    }
+    
+    def selectSearchConferencia(){
+        $('a.search').click()
+    }
+    
     def selectHome() {
         $('a.home').click()
     }

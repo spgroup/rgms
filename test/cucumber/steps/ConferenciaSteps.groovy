@@ -16,29 +16,29 @@ Given(~'^the system has no conferencia entitled "([^"]*)"$') { String title ->
     assert conferencia == null
 }
 //#if(ConferenciaFeature)
-Given(~'^the system has conference entitled "([^"]*)" with a file name "([^"]*)"$') { String title ->
+Given(~'^the system has conferencia entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+   ConferenciaTestDataAndOperations.createConferencia(title, filename)
     conferencia = Conferencia.findByTitle(title)
-    assert conferencia != null
+    assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conferencia, title)
 }
 //#end
 
 //#if(ConferenciaFeature)
-    When(~'^I change the conference file from "([^"]*)" to "([^"]*)"$') { String filename ->
-    ConferenciaTestDataAndOperations.editConferencia(filename)
+    When(~'^I change the conferencia title from "([^"]*)" to "([^"]*)"$') { String title ->
+    ConferenciaTestDataAndOperations.editConferencia(title)
 }
 //#end
 
 //#if(ConferenciaFeature)
-    And(~'^I change the conferencia file to "([^"]*)"$') { String newarchive ->
+    And(~'^I change the conferencia title to "([^"]*)"$') { String newtitle ->
     page.select('a', 'edit')
     at ConferenceEditPage
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    page.edit(path + newarchive)
+   page.edit(path + newtitle)
 }
 //#end
 
 //#if(ConferenciaFeature)
-    Given(~'^I am at the conference page$') {->
+    Given(~'^I am at the conferencia page$') {->
     at ConferenciaPage
 }
 //#end
@@ -52,52 +52,46 @@ And(~'^the conferencia entitled "([^"]*)" is stored in the system with file name
 //#end
 
 //#if(ConferenciaFeature)
-When(~'^I select to view the conference "([^"]*)" in resulting list$') { String title ->
+When(~'^I select to view the conferencia "([^"]*)" in resulting list$') { String title ->
     page.selectViewConference(title)
     at ConferenceShowPage
 }
 //#end
 
-//#if(ConferenciaFeature)
-And(~'^I change the conference file to "([^"]*)"$') { String newfile ->
- //   page.select('a', 'edit')
-  //  at ArticleEditPage
-    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    page.edit(path + newfile)
-}
-//#end
 
 //#if(ConferenciaFeature)
-And(~'^I select the "Alterar" option in Conference Registration Page$') { String newfile ->
+And(~'^I select the edit option in Conferencia Registration Page$') { String newfile ->
     page.select('a', 'edit')
     at ConferenciaEditPage
 }
 //#end
 
 //#if(ConferenciaFeature)
-Given(~'^I am at the conference registration page$') {
+Given(~'^I am at the conferencia registration page$') {
     at ConferenciaEditPage
 }
 //#end
 
 //#if(ConferenciaFeature)
-Then(~'^the conference is not stored by the system because it is invalid$') {
+Then(~'^the conferencia is not stored by the system because it is invalid$') {
      finalSize = Conferencia.findAll().size()
     assert initialSize == finalSize
 }
 //#end
 
 //#if(ConferenciaFeature)
-When(~'^I create the conference with some field blank$') {
+When(~'^I create the conferencia with some field blank$') {
     at ConferenciaCreatePage
      page.fillConferenciaDetailsPartially()
-     assert page.isSomeConferenciaFildsBlank()
+     assert page.isSomeConferenciaFildsBlank() == true
 }
 //#end
 
 
 When(~'^I create the conferencia "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    ConferenciaTestDataAndOperations.createConferencia(title, filename)
+  ConferenciaTestDataAndOperations.createConferencia(title, filename)
+  conferencia = Conferencia.findByTitle(title)
+  assert conferencia != null
 }
 
 Then(~'^the conferencia "([^"]*)" is properly stored by the system$') { String title ->
@@ -117,7 +111,11 @@ Then(~'^the conferencia "([^"]*)" is not stored twice$') { String title ->
 }
 
 When(~'^I remove the conferencia "([^"]*)"$') { String title ->
+    conferencia = Conferencia.findByTitle(title)
+   assert conferencia != null
     ConferenciaTestDataAndOperations.removeConferencia(title)
+    testRemoveConferencia = Conferencia.findByTitle(title)
+    assert testRemoveConferencia == null
 }
 
 Then(~'^the conferencia "([^"]*)" is properly removed by the system$') { String title ->
@@ -227,7 +225,7 @@ And(~'^the conferencias are not stored by the system$') {->
 }
 
 //#if(ConferenciaFeature)
-When(~'^I click on the column "Date" at the conferencia list table$') {->
+When(~'^I click on the column date at the conferencia list table$') {->
     at ConferenciaPage
     page.selectColumn("Date")
 }
@@ -237,22 +235,29 @@ When(~'^I click on the column "Date" at the conferencia list table$') {->
 Then(~'^a list of conferencias stored by the system is displayed at the conferencia page by publication ascending date order$') {->
     at ConferenciaPage
     page.listConferencia()
-    page.orderListConferencia("Date")
+    def conferencias = Conferencia.findAll()
+    conferencias.sort(it.date)
 }
 //#end
 
+Given(~'^the system has conferencia entitled "([^"]*)"$') { String title ->
+    def conferencia = Conferencia.findByTitle(title)
+    assert conferencia != null
+}
+
 //#if(ConferenciaFeature)
-When(~'^I click on the column "Research Line" at the conferencia list table$') {->
+When(~'^I click on the column title at the conferencia list table$') {->
     at ConferenciaPage
-    page.selectColumn("Research Line")
+    page.selectColumn("Title")
 }
 //#end
 
 //#if(ConferenciaFeature)
-Then(~'^a list of conferencias stored by the system is displayed at the conferencia page by publication ascending alphabetic order$') {->
+Then(~'^a list of conferencias stored by the system is displayed at the conferencia page by ascending alphabetic order$') {->
     at ConferenciaPage
     page.listConferencia()
-    page.orderListConferencia("Research Line")
+    def conferencias = Conferencia.findAll()
+    conferencias.sort(it.title)
 }
 //#end
 
@@ -264,20 +269,21 @@ When(~'^I select the search conferencia option at the conferencia page$') {->
 //#end
 
 //#if(ConferenciaFeature)
-When(~'^I search for the conferencia "([^"]*)"$') { String title ->
-    ConferenciaTestDataAndOperations.searchConferencia(title)
+When(~'^I search for the conferencia entitled "([^"]*)"$') { String title ->
+    assert ConferenciaTestDataAndOperations.searchConferencia(title)
 }
 //#end
 
 //#if(ConferenciaFeature)
-Then(~'^there is no change in the data stored by the system$') {
+Then(~'^theres no change in the data stored by the system$') {
 
 }
 //#end
 
 //#if(ConferenciaFeature)
-And(~'^The system has conference dated "([^"]*)"$') {String date->
+And(~'^the system has conferencia dated "([^"]*)"$') {String date->
     conferencia = Conferencia.findByDate(date)
+    assert conferencia !=null
 }
 //#end
 
@@ -289,15 +295,25 @@ When(~'^I write "([^"]*)" at the date field$') {String date->
 //#end
 
 //#if(ConferenciaFeature)
-When(~'^I select the option Search for Conference at the conference page$') {->
-    at at ConferenciaPage 
+When(~'^I select the option Search for conferencia at the conferencia page$') {->
+    at ConferenciaPage 
     page.selectSearchConferencia()
 }
 //#end
 
 //#if(ConferenciaFeature)
-Then(~'^a list of all conferences containing the date "([^"]*)" will be presented in the conference screen$') { String date->
+Then(~'^a list of all conferencias containing the date "([^"]*)" will be presented in the conferencia screen$') { String date->
     at ConferenciaPage
     page.FindByDate(date)
 }
 //#end    
+
+When(~'^I view the conferencia list$') {->
+    def conferencias = Conferencia.findAll()
+    assert conferencias !=null
+}
+
+Then(~'^the conferencia list contains "([^"]*)"$') {String title->
+    def conferencia = Conferencia.findByTitle(title)
+    assert conferencia !=null
+}

@@ -31,8 +31,26 @@ class ConferenciaCreatePage extends FormPage {
         $("form").title = "A theory of Software Product Line Refinement"
         $("form").create().click()
     }
-
-
+    
+    def fillConferenciaDetailsPartially(){
+        $("form").title = null
+        $("form").booktitle = "Theoretical Computer Science"
+        $("form").pages = null
+        $("form").create().click()
+    }
+    
+    def boolean isSomeConferenciaFildsBlank(){
+        def resp = false
+       if($("form").title == null || $("form").booktitle ==null || 
+           $("form").pages == null){
+        resp = true
+       }
+       return resp
+    }
+    
+      def selectedMembers() {
+        $("form").members
+    }
     def selectHome() {
         $('a.home').click()
     }

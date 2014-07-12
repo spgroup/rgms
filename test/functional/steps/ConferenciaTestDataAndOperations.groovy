@@ -60,7 +60,27 @@ class ConferenciaTestDataAndOperations {
             conferencia.title == title
         }
     }
+    
+     static public Conferencia editConferencia(oldtitle, newtitle) {
+        def conferencia = Conferencia.findByTitle(oldtitle)
+        conferencia.setTitle(newtitle)
+        def cont = new ConferenciaController()
+        cont.params << conferencia.properties
+        cont.update()
 
+        def updatedconferencia = Conferencia.findByTitle(newtitle)
+        return updatedconferencia
+    }
+
+    static public Conferencia searchConferencia(String title){
+        def conferencia = Conferencia.findByTitle(title)
+        return conferencia
+    }
+        static public boolean containsUser(members){
+        def userData = User.findByUsername('admin')?.author?.id.toString()
+        return members.contains(userData)
+    }
+    
     static public void uploadConferencias(filename) {
         def cont = new XMLController()
         def xml = new File(filename);
