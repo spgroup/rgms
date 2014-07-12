@@ -70,7 +70,7 @@ Feature: Thesis Tests
     And I am at the thesis search page
     When I press "Soft" and choose "Software Product Lines 2" in the list
     And I fill the year "2014" and school "UFPE"
-    And I click in search button
+    And I search
     Then all theses entitled "Software Product Lines 2" are shown
 #end
 

@@ -38,6 +38,9 @@ class ThesisSearchPage extends FormPage {
 
     def selectTitleInPreviousSearch(input) {
         $("form").title = input
-        $("ul", class:"ui-autocomplete").find("li")[0].click()
+        def timer = new Timer()
+        def task = timer.runAfter(1000) {
+            def title = $("ul", class:"ui-autocomplete").find("li")[0].text()
+        }
     }
 }
