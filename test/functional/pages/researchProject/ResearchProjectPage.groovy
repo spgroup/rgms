@@ -43,7 +43,7 @@ class ResearchProjectPage extends FormPage {
     }
 
     def myProjects() {
-        $("a", class: "my-research-projects").click();
+        $("a", class: "myProjects").click();
     }
 
     def hasInvalidXMLSubmited(){
@@ -52,12 +52,7 @@ class ResearchProjectPage extends FormPage {
     }
 
     def selectReseachGroup(String name){
-        $("a", text: name).click()
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize()
+        $("a", text: name).click();
     }
 
     def fillFilterResearchProject(projectName) {
@@ -94,7 +89,8 @@ class ResearchProjectPage extends FormPage {
         assert check
     }
 
-    def checkResearchGroupHasMeAsMember() {
+    def checkResearchGroupHasLoggedUserAsMember() {
+        // Procura usuário logado no Apache Shiro
         def User user;
         try {
             if(SecurityUtils.subject?.principal!=null) {
@@ -105,9 +101,12 @@ class ResearchProjectPage extends FormPage {
         }
 
         boolean check = true;
+
+        // obtém da tela as linhas da tabela que lista os Projetos de Pesquisa
         def researchGroupRows = getResearchGroupRows()
         int size = researchGroupRows.size();
 
+        // percorre a tabela para procurar o nome do usuário logado como membro dos Projetos de Pesquisa
         if(size > 1) {
             for(int i=0; i<size; i++) {
                 def researchGroupColumns = researchGroupRows[i].find('td');

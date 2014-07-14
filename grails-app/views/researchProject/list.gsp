@@ -13,6 +13,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="myProjects" action="myProjects"><g:message code="default.researchproject.myProjects"/></g:link></li>
 			</ul>
 		</div>
 
@@ -28,6 +29,17 @@
             </ul>
         </div>
         <!-- #end -->
+
+        <div class="filter" role="filter">
+            <ul>
+                <br>
+                <g:form controller="ResearchProject" action="filter" method="post" enctype="multipart/form-data">
+                    <label for="projectName">&nbsp;&nbsp;&nbsp;&nbsp;Filtrar por nome:</label>
+                    <input type="text" name="projectName" id="projectName"/>
+                    <input class="save" type="submit" value="Filtrar"/>
+                </g:form>
+            </ul>
+        </div>
 
 		<div id="list-researchProject" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>

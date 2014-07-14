@@ -1,7 +1,10 @@
 //#if($researchProject)
 package rgms.researchProject
 
+import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
+import rgms.authentication.User
+import rgms.member.Member
 
 class ResearchProjectController {
 
@@ -18,6 +21,17 @@ class ResearchProjectController {
 
     def create() {
         [researchProjectInstance: new ResearchProject(params)]
+    }
+
+    def myProjects() {
+        User user = User.findByUsername(SecurityUtils.subject.principal);
+        List<ResearchProject> listP = ResearchProject.findAllByResponsible(user.getAuthor().getName());
+        render(view: '/researchProject/list', model: [researchProjectInstanceList: listP, researchProjectInstanceTotal: listP.size()]);
+    }
+
+    def filter(String projectName) {
+        List<ResearchProject> listP = ResearchProject.findAllByProjectName(projectName);
+        render(view: '/researchProject/list', model: [researchProjectInstanceList: listP, researchProjectInstanceTotal: listP.size()]);
     }
 
     def save() {

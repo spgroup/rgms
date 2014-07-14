@@ -2,8 +2,11 @@ package steps
 
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.UnavailableSecurityManagerException
+import pages.LoginPage
 import pages.researchProject.ResearchProjectPage
 import pages.researchProject.ResearchProjectPageCreatePage
+import pages.researchProject.ResearchProjectPageEditPage
+import pages.researchProject.ResearchProjectPageShowPage
 import rgms.authentication.User
 import rgms.member.Member
 import rgms.researchProject.ResearchProject
@@ -24,13 +27,13 @@ def List<ResearchProject> oldProjects
 Given(~'^the system has no research project named as "([^"]*)"$') { String projectName ->
     if(!checkIfResearchProjectNoExists(projectName)) {
         ResearchProject.findByProjectName(projectName).delete();
-        assert checkIfResearchProjectNoExists(projectName);
     }
+
+    assert checkIfResearchProjectNoExists(projectName);
 }
 
 When(~'^I create a research project named as "([^"]*)" with all required data$') { String projectName ->
     ResearchProjectTestDadaAndOperations.createResearchProject(projectName);
-    assert ResearchProject.findByProjectName(projectName) != null;
 }
 
 Then(~'^the research project "([^"]*)" is properly stored by the system$') { String projectName ->
@@ -45,7 +48,7 @@ Then(~'^the research project "([^"]*)" is properly stored by the system$') { Str
 Given(~'^the system has a research project named as "([^"]*)"$') { String projectName ->
     ResearchProject project = ResearchProject.findByProjectName(projectName);
 
-    if(!project) {
+    if(project==null) {
         ResearchProjectTestDadaAndOperations.createResearchProject(projectName);
     }
 
@@ -66,11 +69,8 @@ Then(~'^the research project "([^"]*)" is not stored twice$') { String projectNa
 // ------------------------------------------------------------------------------------------------------------------------------
 // Scenario: remove research project
 
-Given(~'^I am logged into the system as administrator of the research group named as "([^"]*)"$') { String projectName ->
-    assert checkIfLoggedUserIsAdminOfResearchProject(projectName);
-}
-
 When(~'^I remove the research project named as "([^"]*)"$') { String projectName ->
+    oldProjects = ResearchProject.findAll();
     ResearchProjectTestDadaAndOperations.deleteResearchProject(projectName);
 }
 
@@ -85,7 +85,6 @@ Then(~'^the research project named as "([^"]*)" is properly removed by the syste
 
 When(~'^I create a research project named as "([^"]*)" without funders$'){ String projectName ->
     ResearchProjectTestDadaAndOperations.createResearchProjectWithoutFunders(projectName);
-    assert ResearchProject.findByProjectName(projectName) != null;
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -133,6 +132,10 @@ Then (~'^the system shows an error message at the research project page$'){ ->
 // Scenario: list research projects where I am a member
 
 Given(~'^I am at the research project list page$') { ->
+    to LoginPage;
+    at LoginPage;
+    page.fillLoginData("admin", "adminadmin");
+    to ResearchProjectPage;
     at ResearchProjectPage;
 }
 
@@ -141,7 +144,7 @@ When(~'^I select the option to show my research projects$') { ->
 }
 
 Then(~'^the system shows a list with the research projects where I am a member$') { ->
-    page.checkResearchGroupHasMeAsMember();
+    page.checkResearchGroupHasLoggedUserAsMember();
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -167,7 +170,11 @@ Then(~'^the system shows the research projects with the name "([^"]*)"$') { Stri
 // Scenario: remove research project that does not exist
 
 Given(~'^I am logged into the system as administrator$') { ->
-    TestDataAndOperations.loginController(this);
+    if(!checkIfLoggedUserIsAdmin()) {
+        TestDataAndOperations.loginController(this);
+    }
+
+    assert checkIfLoggedUserIsAdmin();
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -175,27 +182,22 @@ Given(~'^I am logged into the system as administrator$') { ->
 // ------------------------------------------------------------------------------------------------------------------------------
 // Scenario: edit existing research project
 
-def projectDataUpdate = "Descrição teste";
-
 When(~'^I edit the research project "([^"]*)" in the system$') { String projectName ->
+    oldProject = ResearchProject.findByProjectName(projectName);
+
     to ResearchProjectPage;
+    at ResearchProjectPage;
     page.selectReseachGroup(projectName);
     at ResearchProjectPageShowPage;
     page.selectEditReseachGroup();
     at ResearchProjectPageEditPage;
-    page.fillUpdateDescription(projectDataUpdate);
+    page.fillUpdateDescription("Nova Descrição para Teste");
     page.saveUpdates();
 }
 
 Then(~'^the data of the research project named "([^"]*)" is updated in the system$') { String projectName ->
-    def check = false;
-    def rp = ResearchProject.findByProjectName(projectName);
-
-    if(rp!=null && rp.description==projectDataUpdate) {
-        check = true;
-    }
-
-    assert check;
+    newProject = ResearchProject.findByProjectName(projectName);
+    assert oldProject != newProject;
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -321,18 +323,10 @@ def checkIfNoResearchProjectAffected(oldProjects) {
     check
 }
 
-def checkIfLoggedUserIsAdminOfResearchProject(String projectName) {
-    ResearchProject project = ResearchProject.findByProjectName(projectName);
-    Member author = null;
-
+def checkIfLoggedUserIsAdmin() {
     try {
-        if(SecurityUtils.subject?.principal!=null) {
-            User user = User.findByUsername(SecurityUtils.subject.principal);
-            author = user.getAuthor();
-        }
+        return SecurityUtils.subject.principal=="admin";
     } catch(UnavailableSecurityManagerException e) {
         return false;
     }
-
-    return author.name == project.responsible;
 }
