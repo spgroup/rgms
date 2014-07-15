@@ -238,5 +238,101 @@ class ResearchLineController {
 
         researchLineInstance
     }
+
+    def findAllResearchLine(){
+        HashMap<String,String> lista = new HashMap<String, String>()
+        for(researchline in ResearchLine.getAll())
+        {
+            if(!researchline.getDescription().equals("stable")){
+                researchline.setDescription("stable")
+                lista.put(researchline.getName(),researchline.getDescription())
+            }else{
+                lista.put(researchline.getName(),researchline.getDescription())
+            }
+
+        }
+        [researchLineInstanceList: lista]
+    }
+
+    def findByActor(def member){
+        ArrayList<String> lista = new ArrayList<String>()
+        Member actor = new Member()
+        for(research in ResearchLine.getAll())
+        {
+            for(members in research.getMembers()){
+                if(member.equals(members.getName())){
+                    actor.getId()
+                }
+            }
+        }
+        return actor
+    }
+
+    def findResearchByActor(def member,def research){
+        HashMap<String, String> listagem = new  HashMap<String, String>()
+        for(researchL in ResearchLine.getAll()){
+            if((researchL.equals(research)) && (researchL.getMembers().contains(member))){
+                listagem.put(member, research)
+            }
+        }
+        return listagem.size()
+    }
+
+    def checkIfResearchLineExists(researchName, list){
+       List listCheck = list
+       for(research in list){
+           if((!listCheck.isEmpty()) && (research.equals(researchName))){
+               return true
+           }
+       }
+       return false
+    }
+
+    def checkIfResearchLineNoExists(def researchName){
+        ResearchLine line = ResearchLine.findByName(researchName)
+        line == null
+    }
+
+    def statusChanged(def lista){
+           def sizeList = findAllResearchLine()
+           def inicialSize = sizeList.size()
+           def finalSize = lista.size()
+        if((lista.empty) || (inicialSize == finalSize) ){
+            return false
+        }else if (inicialSize < finalSize){
+            return true
+        }
+    return false
+    }
+
+    def checkSavedResearchByDescription(nameOfResearch, status){
+        HashMap<String,String> lista = findAllResearchLine()
+        for(int i; i< lista.size(); i++){
+
+            if(lista.containsKey(nameOfResearch)) {
+               if(lista.containsValue(status)){
+
+                   return  true
+               }
+            }
+        }
+        return  false
+
+    }
+
+    def checkDeletedResearchByDescription(nameOfResearch, status){
+        List<ResearchLine> lista = ResearchLine.findAll()
+        boolean exist = checkSavedResearchByDescription(nameOfResearch, status)
+        for(research in lista){
+            if((exist) && (research.getName().equals(nameOfResearch))){
+                if(research.getDescription().equals(status)){
+                    lista.remove(research)
+                    return true
+                }
+
+            }
+        }
+        return false
+    }
 }
 //#end

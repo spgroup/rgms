@@ -2,6 +2,7 @@ package rgms
 
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.MultipartFile
+import org.xml.sax.SAXParseException
 import rgms.member.Member
 import rgms.member.Orientation
 import rgms.publication.*
@@ -162,8 +163,8 @@ class XMLService {
         List<Object> book = currentNode.children()
         Node basicData = (Node) book[0]
         Node bookDetails = (Node) book[1]
-
         Book newBook = new Book()
+
         newBook.members = []
         newBook = (Book) addAuthors(currentNode, newBook)
         if(!newBook.authors.contains(authorName)) return null //the user is not author
@@ -546,7 +547,7 @@ class XMLService {
             def status = checkOrientationStatus(newOrientation, user)
 
             if(status && status!=XMLService.PUB_STATUS_DUPLICATED) {
-                def obj = newOrientation.properties.findAll{it.key in ["tipo", "orientando", "tituloTese", "anoPublicacao", "instituicao", "curso", "orientador"]}
+                def obj = newOrientation.properties.findAll{it.key in ["tipo", "orientando", "tituloTese", "anoPublicacao", "instituicao", "curso"]}
                 orientations += ["obj": obj, "status":status]
             }
         }
@@ -619,8 +620,6 @@ class XMLService {
 
     private static saveResearchLine(Node xmlFile) {
         ResearchLine newResearchLine = new ResearchLine()
-        newResearchLine.members = []
-        newResearchLine.publications = []
         newResearchLine.name = getAttributeValueFromNode(xmlFile, "TITULO-DA-LINHA-DE-PESQUISA")
         newResearchLine.description = getAttributeValueFromNode(xmlFile, "OBJETIVOS-LINHA-DE-PESQUISA")
         return newResearchLine
@@ -726,10 +725,11 @@ class XMLService {
     //#end
 
     //#if($funder)
-    private static fillFunders(Node xmlFile, ResearchProject project) {
+    private static void fillFunders(Node xmlFile, ResearchProject project) {
         for (Node node : xmlFile?.children()) {
             String code = getAttributeValueFromNode(node, "CODIGO-INSTITUICAO")
             Funder funder = Funder.findByCode(code)
+
             if (funder) {
                 project.addToFunders(funder)
             }
@@ -764,29 +764,7 @@ class XMLService {
         newMember.save(flush: false)
     }
 
-    private def extractDate(params,name,i,k){
-        def dateString = params[name+i+".$k"]
-        if(!dateString || dateString=="null") return null
-        def date = new Date()
-        def year = dateString?.substring(dateString?.length()-5,dateString?.length()) as int
-        date.set(year: year)
-        return date
-    }
 
-    private def extractAuthors(params,name,i,k){
-        def authors = params[name+i+".$k"]
-        if(!authors || authors=="null") return null
-        def authorsList = authors?.substring(1,authors.length()-1)?.split(",") as List
-        def result = []
-        authorsList.each{
-            if(it.startsWith(" ")){
-                result += it.substring(1)
-            }
-            else result += it
-        }
-        if(result.isEmpty()) return authorsList
-        else return result
-    }
 
     private def extractImportedJournals(name, params, keys){
         def journals = []
@@ -799,7 +777,7 @@ class XMLService {
             def journal = [:]
             keys?.each{ k -> //"title", "publicationDate", "authors", "journal", "volume", "number", "pages"
                 if(k=="publicationDate") journal.put("$k", extractDate(params,name,i,k))
-                else if(k=="authors") {
+                else if(k=="au thors") {
                     journal.put("$k", extractAuthors(params,name,i,k))
                 }
                 else if(k=="volume" || k=="number") journal.put("$k", params[name+i+".$k"] as int)
@@ -837,7 +815,31 @@ class XMLService {
         return pubs
     }
 
-    private def extractBooks(name, params, keys){
+    //if(ResearchLine)
+    private static checkContResearch(List researchLine, int i, String researchName) {
+        List<Node> researchs = ((Node) researchLine[i]).children()
+        Node basicData = (Node) researchs[0]
+        List<String> lista = new ArrayList<String>()
+
+        ResearchLine newResearch = new ResearchLine()
+
+        while (!basicData.children().empty){
+            newResearch = getResearchLine(basicData, researchName)
+            lista.add(newResearch)
+            researchs.add(this)
+        }
+        return lista
+    }
+
+    private static String getResearchLine(Node basicData, ResearchLine researchLine) {
+        researchLine.name = getAttributeValueFromNode(basicData, "TITULO-DA-LINHA-DE-PESQUISA")
+        return researchLine.name
+    }
+    //end
+
+
+
+   private def extractBooks(name, params, keys){
         def books = []
         def bookKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
 
@@ -879,6 +881,33 @@ class XMLService {
 
         return dissertation
     }
+
+
+    private def extractDate(params,name,i,k){
+        def dateString = params[name+i+".$k"]
+        if(!dateString || dateString=="null") return null
+        def date = new Date()
+        def year = dateString?.substring(dateString?.length()-5,dateString?.length()) as int
+        date.set(year: year)
+        return date
+    }
+
+    private def extractAuthors(params,name,i,k){
+        def authors = params[name+i+".$k"]
+        if(!authors || authors=="null") return null
+        def authorsList = authors?.substring(1,authors.length()-1)?.split(",") as List
+        def result = []
+        authorsList.each{
+            if(it.startsWith(" ")){
+                result += it.substring(1)
+            }
+            else result += it
+        }
+        if(result.isEmpty()) return authorsList
+        else return result
+    }
+
+
 
     //#if($researchLine)
     private def extractResearchLines(name, params, keys){
