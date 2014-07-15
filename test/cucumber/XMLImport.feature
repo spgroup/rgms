@@ -5,7 +5,6 @@ Feature: XMLImport
   I want to import a xml file
   So that the system register the corresponding publications in my profile
 
-  @ignore
   Scenario: invalid file web
     Given I am at the "Import XML File" Page
     When I select the "upload" button
@@ -14,7 +13,6 @@ Feature: XMLImport
     And no new publication is stored by the system
     And the previously stored publications do not change
 
-  @ignore
   Scenario: invalid file
     Given the system has some publications stored
     When I upload the file "cv.pdf"
@@ -126,7 +124,6 @@ Feature: XMLImport
     And the previously stored publications do not change
 
   #if ($ResearchLine)
-  @ignore
   Scenario: new research line
     Given the system has some research lines stored
     And the system has no research line named as "Modularidade Emergente" associated with me
@@ -135,7 +132,7 @@ Feature: XMLImport
     And no new research line is stored by the system
     And the previously stored research lines do not change
 
-  @ignore
+
   Scenario: confirm import of new research line
     Given the system has some research lines stored
     And the system has no research line named as "Modularidade Emergente" associated with me

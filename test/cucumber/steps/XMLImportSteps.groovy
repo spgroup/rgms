@@ -10,7 +10,9 @@ import rgms.publication.*
 import rgms.researchProject.ResearchProject
 import steps.ArticleTestDataAndOperations
 import steps.ConferenciaTestDataAndOperations
+import steps.ResearchLineTestDataAndOperations
 import steps.ResearchProjectTestDadaAndOperations
+import steps.TestDataAndOperationsPublication
 import steps.TestDataAndOperationsResearchLine
 import steps.XMLImportTestDataAndOperations
 
@@ -197,9 +199,9 @@ Then(~'^the previously stored research projects do not change$'){ ->
 
 Then(~'^the system outputs a list of imported research projects that contains the one named as "([^"]*)" with status "([^"]*)"$'){
     projectName, status ->
-    assert xmlController.response.status == HttpServletResponse.SC_OK //A grails render is an HTTP 200 status
-    assert xmlController.modelAndView.viewName == '/XML/home' //modelAndView is used only when is render
-    assert xmlController.modelAndView.model.publications.researchProjects.find{it["obj"].projectName == projectName && it["status"] == status}
+        assert xmlController.response.status == HttpServletResponse.SC_OK //A grails render is an HTTP 200 status
+        assert xmlController.modelAndView.viewName == '/XML/home' //modelAndView is used only when is render
+        assert xmlController.modelAndView.model.publications.researchProjects.find{it["obj"].projectName == projectName && it["status"] == status}
 }
 
 Given(~'^the system has a research project named as "([^"]*)", among several research projects$'){ projectName ->
@@ -252,104 +254,133 @@ When(~'^I upload the file "([^"]*)" that also contains a research project named 
 }
 //#end
 
-/**
- * @author Kamilla Cardoso
- * #if($ResearchLine)
- * Scenario: new research line
- */
-Given(~'^ The system has some research lines stored$'){ ->
+
+// #if($ResearchLine)
+Given(~'^ the system has some research lines stored$'){
     TestDataAndOperations.loginController(this)
+    ResearchLineTestDataAndOperations.createResearchLine(0)
+    ResearchLineTestDataAndOperations.createResearchLine(1)
+    ResearchLineTestDataAndOperations.createResearchLine(2)
     initialSize = ResearchLine.findAll().size()
 }
 
-Given(~'^ The system has no research line named as "([^"]*)" associated with me $'){ String nameResearch ->
-    //Se existe uma linha de pesquisa de nome (nameResearch), mas ela não é existe na lista de pesquisas do usuário atual,
-    // o usuário logado não à possui
-    assert ResearchLine.findByName(nameResearch) != PublicationController.getLoggedMember().researchLines.contains(nameResearch)
+Given(~'^ the system has no research line named as "([^"]*)" associated with me $') { String nameOfResearch ->
+    xmlImport = new ResearchLineController()
+    def autor =  xmlImport.findByActor(this)
+    List listaDeVerificacao = xmlImport.findResearchByActor(autor, nameOfResearch)
+    assert listaDeVerificacao.size() == 0
 }
 
-When(~'^ I upload the file "([^"]*)" which contains a research line named as "([^"]*)" $'){ file, researchLineName ->
+When(~'^I upload the file "([^"]*)" which contains a research line named as "([^"]*)" $'){ String research, file ->
     TestDataAndOperations.uploadPublications(file)
-    TestDataAndOperationsResearchLine.findResearchLineByName(researchLineName)
+    String path = "test" + File.separator + "files" + File.separator + file
+    xmlImport2 = XMLImportTestDataAndOperations.checkResearchLineFromFile(file, research)
+    assert xmlImport2 != 0
 }
 
-Then(~'^ The system outputs a list of imported research lines which contains the one named as "([^"]*)" with status "([^"]*)" $'){  research_Line, status ->
-    //lista a quantidades de linha de pesquisas armazenadas para o nome especifico
-    assert Publication.findAllByResearchLineInListAndTitle(ResearchLine.findAll(), research_Line).size() > 1
-    //deve conter apenas uma linha de pesquisa, entao a linha de pesquisa armazenada recentemente é removida
-    TestDataAndOperationsResearchLine.deleteResearchLine(ResearchLine.findByName(research_Line).getMembers())
-    //status definido na descrição deve ser "stable" para a linha de pesquisa que se manteve armazenada
-    assert ResearchLine.findByName(research_Line).getDescription() == status
+Then(~'^the system outputs a list of imported research lines which contains the one named as "([^"]*)" with status "([^"]*)" $'){ String researchOfLine, status ->
+
+    xmlImport2 = new ResearchLineController()
+    //O metodo retorna todos as research que estao com status stable
+    lista = xmlImport2.findAllResearchLine()
+    assert xmlImport2.checkIfResearchLineExists(researchOfLine,lista)
 }
 
-Then(~'^ No new research line is stored by the system$'){ ->
+Then(~'^ no new research line is stored by the system $'){
     finalSize = ResearchLine.findAll().size()
-}
-
-Then(~'^ The previously stored research lines do not change$'){
     assert initialSize == finalSize
+
+}
+
+Then(~'^ the previously stored research lines do not change $'){
+    ResearchLineController controller = new XMLController()
+    def lista = ResearchLine.findAll()
+    status = controller.statusChanged(lista) //se true é porque modificou, se false é porque nada foi modificado
+    assert status == false
 }
 //#end
 
-/**
- * @author Kamilla Cardoso
- * #if($ResearchLine)
- * Scenario: import xml file that contains a research line
- */
-Given(~'^ The system has no research line named as "([^"]*)" $'){ nameResearch ->
-    assert ResearchLine.findByName(nameResearch) == null
-    inicialSize = ResearchLineController.findAll().size()
+
+Given(~'^ the system has some research lines stored $'){
+    ResearchLineTestDataAndOperations.createResearchLine(0)
+    ResearchLineTestDataAndOperations.createResearchLine(1)
+    initialSize = ResearchLine.findAll().size()
+}
+Given(~'^ the system has no research line named as "([^"]*)" associated with me $'){ nameOfResearch ->
+    xmlImport = new ResearchLineController()
+    def autor =  xmlImport.findByActor(this)
+    List listaDeVerificacao = xmlImport.findResearchByActor(autor, nameOfResearch)
+    assert listaDeVerificacao.size() == 0
 }
 
-When(~'^ I upload the file "([^"]*)" which contains a research line named as "([^"]*)" $') { file, research_name ->
-    TestDataAndOperations.uploadPublications(file)
-    assert ResearchLine.findByName(research_name) == research_name
-    finalSize = ResearchLineController.findAll().size()
-    assert inicialSize < finalSize
+Given(~'^the file "([^"]*)", which contains a research line named as "([^"]*)", is uploaded $'){ String theFile, researchLineName ->
+    TestDataAndOperations.uploadPublications(theFile)
+    status = XMLImportTestDataAndOperations.extractSpecificResearchLineFromFile(theFile, researchLineName)
+    assert status == true
 }
 
-Then(~'^ the research line named as "([^"]*)" is stored &'){ research->
-    assert ResearchLine.findByName(research) != null
+When(~'^ I confirm the import of the research line named as "([^"]*)" with status "([^"]*)" $'){ String nameOfResearch, status ->
+    ResearchLineController controller = new ResearchLineController()
+    statusController =  controller.checkSavedResearchByDescription(nameOfResearch, status)
+    assert statusController == true
+
+}
+Then(~'^ the research line named as "([^"]*)" is stored by the system $'){ String research ->
+    list = ResearchLine.findAll()
+    ResearchLineController controller = new ResearchLineController()
+    statusSave = controller.checkIfResearchLineExists(research,list)
+    assert statusSave == true
+}
+
+Then(~'^ the research line named as "([^"]*)" with status "([^"]*)" is removed from the list of imported research lines $'){ String nameOfResearch, status ->
+    ResearchLineController cont = new ResearchLineController()
+    check = cont.checkDeletedResearchByDescription(nameOfResearch, status)
+    assert check == true
+
+}
+Then(~'^ the previously stored research lines do not change $'){
+
+    ResearchLineController controller = new XMLController()
+    def lista = ResearchLine.findAll()
+    status = controller.statusChanged(lista) //se true é porque modificou, se false é porque nada foi modificado
+    assert status == false
 }
 //#end
 
-/**
- * @author Kamilla Cardoso
- * Scenario: import invalid file
- */
+
 Given(~'^The system has some publications stored $'){ ->
+    Publication.findOrSaveById(0)
+    Publication.findOrSaveById(1)
+    Publication.findOrSaveById(2)
     inicial = Publication.findAll().size()
 }
 
 When(~'^ I upload the file "([^"]*)" $') { String typeFile ->
-    TestDataAndOperations.uploadPublications(typeFile)
-    currentTypeFile = Publication.findByFile(typeFile).getFile().hasProperty(".xml")
-    assert currentTypeFile == false
-
-    //Verifica se o arquivo possuia tipo invalido, caso seja e removido do sistema
-    //Como este arquivo pode ter persistido informacoes entao deve-se deletar todas as informacoes juntamente com o arquivo
-
-    Publication.findAllByFile(typeFile).remove(this)
+    TestDataAndOperationsPublication.uploadPublication(typeFile)
+    PublicationController controllerP = new PublicationController()
+    status = controllerP.checkTypeFile(typeFile)
+    assert status == false
 }
 
 Then(~'^ no publication is stored by the system $') { ->
     finalS = Publication.findAll().size()
+    assert inicial == finalS
 }
 
 Then(~'^ And previusly stored publications do not change  $'){->
-    assert inicial == finalS
+    PublicationController contr = new PublicationController()
+    def lista = Publication.findAll()
+    result = contr.statusChanged(lista)
+    assert result == false
     TestDataAndOperations.logoutController(this)
 }
 
-/**
- * @author Kamilla Cardoso
- * Scenario: invalid file web
- */
+
 Given(~'^I am at the "Import XML File" page$'){ ->
     to LoginPage
     at LoginPage
     page.add("admin", "adminadmin")
-    at XMLImportPage
+    to XMLImportPage
 }
 
 When(~'^I select the "([^"]*)" button$'){ String uploadButton ->
@@ -367,7 +398,7 @@ Then(~'^ the system outputs an error message$'){ ->
     assert page.invalidXML()
 }
 
-And(~'^ no new publication is stored by the system$'){ ->
+Then(~'^ no new publication is stored by the system$'){ ->
     to ArticlesPage
     at ArticlesPage
     page.checkIfArticlesListIsEmpty()
@@ -393,7 +424,7 @@ And(~'^ no new publication is stored by the system$'){ ->
     page.checkIfOrientationListIsEmpty()
 }
 
-And(~'^ the previously stored publications do not change$'){
+Then(~'^ the previously stored publications do not change$'){
     to XMLImportPage
     at XMLImportPage
 }

@@ -44,6 +44,7 @@ class TestDataAndOperationsResearchLine {
         res.delete()
         res.response.reset()
     }
+
     static public void updateResearchLine(String name, String description) {
         def res = new ResearchLineController()
         def research_line = ResearchLine.findByName(name)
@@ -64,6 +65,13 @@ class TestDataAndOperationsResearchLine {
         cont.create()
         cont.save()
         cont.response.reset()
+    }
+
+    static public void listAllResearchLine(){
+        def cont2 = new ResearchLineController()
+        cont2.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont2.findAllResearchLine()
+        cont2.response.reset()
     }
 
 }

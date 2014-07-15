@@ -125,6 +125,11 @@
                                            FLAG-LINHA-DE-PESQUISA-ATIVA="NAO" OBJETIVOS-LINHA-DE-PESQUISA="">
                             <AREAS-DO-CONHECIMENTO/>
                         </LINHA-DE-PESQUISA>
+                        <LINHA-DE-PESQUISA SEQUENCIA-LINHA="3"
+                                           TITULO-DA-LINHA-DE-PESQUISA="Modularidade Emergente"
+                                           FLAG-LINHA-DE-PESQUISA-ATIVA="NAO" OBJETIVOS-LINHA-DE-PESQUISA="">
+                            <AREAS-DO-CONHECIMENTO/>
+                        </LINHA-DE-PESQUISA>
                     </PESQUISA-E-DESENVOLVIMENTO>
                 </ATIVIDADES-DE-PESQUISA-E-DESENVOLVIMENTO>
                 <ATIVIDADES-DE-ENSINO>

@@ -8,6 +8,8 @@ import rgms.member.Orientation
 import rgms.publication.Conferencia
 import rgms.publication.Periodico
 import rgms.publication.ResearchLine
+import rgms.publication.ResearchLineController
+import rgms.publication.XMLController
 import rgms.researchProject.ResearchProject
 
 /**
@@ -190,4 +192,33 @@ class XMLImportTestDataAndOperations {
         o.save(flush: true)
     }
     //#end
+
+    //#if(ResearchLine)
+    static checkResearchLineFromFile(fileName, researchName){
+        getRootNode(fileName)
+        def researchLine = fileName.depthFirst().findAll{ it.name() == 'TITULO-DA-LINHA-DE-PESQUISA' }
+        def List researchs = new ArrayList<List>()
+        def newResearch
+
+        for (int i = 0; i < researchLine?.size(); ++i) {
+            newResearch = XMLService.checkContResearch(researchLine, i, researchName)
+            researchs.add(newResearch)
+        }
+
+        return researchs.size()
+    }
+
+    static extractSpecificResearchLineFromFile(fileName, researchLineName){
+        getRootNode(fileName)
+        List specificResearchs = fileName.depthFirst().findAll{ it.name() == 'TITULO-DA-LINHA-DE-PESQUISA' }
+        for (research in specificResearchs) {
+            if(research.equals(researchLineName)){
+                TestDataAndOperationsResearchLine.createResearchLine(researchLineName)
+                return true
+            }
+        }
+        return false
+    }
+
+
 }
