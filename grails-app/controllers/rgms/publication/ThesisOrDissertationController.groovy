@@ -46,14 +46,17 @@ class ThesisOrDissertationController {
 
     def searchListThesisOrDissertation(String thesisOrDissertation, params) {
         if (thesisOrDissertation == "Tese") {
-            if(session["previous_search"] == null){
-                session["previous_search"] = '"'+params.title+'"'
+            if(session["previous_search_list"] == null){
+                session["previous_search_list"] = [params.title]
+                session["previous_search_string"] = '"'+params.title+'"'
             }else{
-                def previous_search = session["previous_search"]
-                if(previous_search instanceof java.lang.String){
-                    previous_search = previous_search + ',"'+params.title+'"'
-                    session["previous_search"] = previous_search
-                    //Verificar se a consulta não foi realizada para não inserir dois registros iguais
+                def previousSearchList = session["previous_search_list"]
+                if(previousSearchList instanceof java.util.List){
+                    if(!previousSearchList.contains(params.title)){
+                        previousSearchList.add(params.title)
+                        session["previous_search_string"] = session["previous_search_string"] + ',"'+params.title+'"'
+                    }
+                    session["previous_search_list"] = previousSearchList
                 }
             }
             def results = Tese.findAllByTitleLikeAndPublicationDateBetweenAndSchoolLike('%'+params.title+'%', params.publicationInitialDate, params.publicationEndDate, '%'+params.school+'%')

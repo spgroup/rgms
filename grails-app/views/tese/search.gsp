@@ -8,8 +8,10 @@
         <script type="text/javascript" src="/rgms/js/jquery-ui-1.8.18.custom.min.js"></script>
         <script>
             $(function() {
+                var searches = <%='['+((java.lang.String)session.getAttribute("previous_search_string")).toString()+']'%>;
                 $( "#title" ).autocomplete({
-                    source: <%='['+((java.lang.String)session.getAttribute("previous_search")).toString()+']'%>
+                    source: searches,
+                    autoFocus: true
                 });
             });
         </script>

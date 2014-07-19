@@ -1,5 +1,6 @@
 package pages.thesis
 
+import org.openqa.selenium.Keys
 import pages.FormPage
 import pages.GetPageTitle
 
@@ -38,9 +39,18 @@ class ThesisSearchPage extends FormPage {
 
     def selectTitleInPreviousSearch(input) {
         $("form").title = input
-        def timer = new Timer()
-        def task = timer.runAfter(3000) {
-            def title = $("ul", class:"ui-autocomplete").find("li")[0].click()
-        }
+//        def timer = new Timer()
+//        def task = timer.runAfter(3000) {
+          //  def title = $("ul", class:"ui-autocomplete").find("li")[0].click()
+       // def title = $("ul", class:"ui-autocomplete").find(".ui-corner-all")
+        def elem = $(id:"ui-active-menuitem").
+        print(elem.getText())
+//        sendKeys(Keys.RETURN);
+
+
+       // $("form").title = title
+//
+//      title.click()
+//        }x
     }
 }
