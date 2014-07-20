@@ -68,7 +68,8 @@ Feature: Thesis Tests
     Given the system has one thesis entitled "Software Product Lines 2" with publication year "2014" and school "UFPE"
     And I have already done a search about "Software Product Lines 2" previously
     And I am at the thesis search page
-    When I press "Soft" and choose "Software Product Lines 2" in the list
+    When I enter "Soft" in the title field
+    And I choose "Software Product Lines 2" in the displayed list
     And I fill the year "2014" and school "UFPE"
     And I search
     Then the thesis "Software Product Lines 2" appears in the thesis view page

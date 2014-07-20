@@ -3,7 +3,6 @@ import pages.LoginPage
 import pages.PublicationsPage
 import pages.ThesisPage
 import pages.thesis.ThesisCreatePage
-import pages.thesis.ThesisEditPage
 import pages.thesis.ThesisSearchPage
 import pages.thesis.ThesisSearchListPage
 import pages.thesis.ThesisShowPage
@@ -253,10 +252,15 @@ And(~'^I have already done a search about "([^"]*)" previously$') { title ->
     page.searchTheses()
 }
 
-When(~'^I press "([^"]*)" and choose "([^"]*)" in the list$') { input, title ->
+When(~'^I enter "([^"]*)" in the title field$') { input->
     to ThesisSearchPage
     at ThesisSearchPage
-    page.selectTitleInPreviousSearch(input)
+    page.enterText(input)
+}
+
+And(~'^I choose "([^"]*)" in the displayed list$') { title ->
+    at ThesisSearchPage
+    page.chooseOption(title)
 }
 
 And(~'^I fill the year "([^"]*)" and school "([^"]*)"$') { year, school ->

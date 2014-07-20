@@ -1,6 +1,7 @@
 package pages.thesis
 
-import org.openqa.selenium.Keys
+import org.openqa.selenium.WebElement
+import org.openqa.selenium.interactions.Actions
 import pages.FormPage
 import pages.GetPageTitle
 
@@ -37,20 +38,31 @@ class ThesisSearchPage extends FormPage {
         $("input", id:"search").click()
     }
 
-    def selectTitleInPreviousSearch(input) {
-        $("form").title = input
-//        def timer = new Timer()
-//        def task = timer.runAfter(3000) {
-          //  def title = $("ul", class:"ui-autocomplete").find("li")[0].click()
-       // def title = $("ul", class:"ui-autocomplete").find(".ui-corner-all")
-        def elem = $(id:"ui-active-menuitem").
-        print(elem.getText())
-//        sendKeys(Keys.RETURN);
+    def enterText(input){
+        WebElement titleField = $("input",id:"title").firstElement()
+        titleField.sendKeys(input)
+        sleep(1000)
+    }
 
+    def chooseOption(option){
+        List<WebElement> items = $("a",class:"ui-corner-all").allElements().asList()
+        def index = 0
+        def found = false
 
-       // $("form").title = title
-//
-//      title.click()
-//        }x
+        while(index < items.size() && !found){
+            if(items.get(index).getText().equalsIgnoreCase(option)){
+                found = true
+            }else{
+                index ++
+            }
+        }
+
+        if(found){
+            def builder = new Actions(driver)
+            def actions =  builder.moveToElement(items.get(index)).click().build()
+            actions.perform()
+        }else{
+
+        }
     }
 }
