@@ -185,7 +185,6 @@ Then(~'^the visit of the visitor named "([^"]*)" with initial date "([^"]*)" and
     assert TestDataAndOperationsVisit.searchVisit(name, initialDate, finalDate) != null
 }
 
-
 /**
  * @author mclv
  */
@@ -214,50 +213,37 @@ Then(~'^a visit with initial or final date greater than or equal "([^"]*)" is no
  * @author mclv
  */
 Given(~'^I am at the Add Visit Page$') { ->
-    to VisitCreatePage
-    at VisitCreatePage
+    to VisitPage
+    at VisitPage
+    page.selectNewVisit()
 }
 
 /**
  * @author mclv
  */
 Given(~'^I have created a visitor named "([^"]*)"$') { String name ->
-    at VisitCreatePage
-    page.fillVisitDetails(name)
-    page.clickOnCreate()
+    if (Visitor.findByName(name) == null)
+    {
+    	at VisitCreatePage
+    	page.fillVisitDetails(name)
+    }
 }
 
 /**
  * @author mclv
  */
 When(~'^I try to create the visit for the visitor "([^"]*)"$') { String name ->
-    to VisitCreatePage
+    to VisitPage
+    at VisitPage
+    page.selectNewVisit()
     at VisitCreatePage
     page.fillVisitDetails(name)
-    page.clickOnCreate()
 }
 
 /**
  * @author mclv
  */
 Then(~'^the Confirm Identification Page is open$') { ->
-    at VisitConfirmPage
-}
-
-/**
- * @author mclv
- */
-Given(~'^I have tried to create a visit for the visitor "([^"]*)" that already exists$') { String name ->
-    to VisitCreatePage
-    at VisitCreatePage
-    page.fillVisitDetails(name)
-    page.clickOnCreate()
-}
-
-/**
- * @author mclv
- */
-Given(~'^I am at the Confirm Identification Page$') { ->
     at VisitConfirmPage
 }
 
@@ -292,10 +278,20 @@ Given(~'^I am logged as "([^"]*)" and at the Add Visit Page$') { String userName
 }
 
 When(~'^I try to create an visit$') { ->
+    boolean confirm = false
+    if (Visitor.findByName("Visitor") != null)
+    	confirm = true
+	
     at VisitPage
     page.selectNewVisit()
     at VisitCreatePage
     page.fillVisitDetails()
+	
+    if (confirm)
+    {	
+    	at VisitConfirmPage
+    	page.clickOnNo()
+    }
 
 }
 
