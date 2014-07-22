@@ -264,9 +264,12 @@ Given(~'^I am at the Confirm Identification Page$') { ->
 /**
  * @author mclv
  */
-When(~'^I press the No button$') { ->
+When(~'^I press the button "([^"]*)"$') { String button->
     at VisitConfirmPage
-    page.clickOnNo()
+    if (button.equalsIgnoreCase("Yes"))
+    	page.clickOnYes()
+    else if (button.equalsIgnoreCase("No"))
+    	page.clickOnNo()
 }
 
 /**
@@ -277,14 +280,6 @@ Then(~'^the visit for the visitor "([^"]*)" is properly stored by the system$') 
     sdf = new SimpleDateFormat("dd/MM/yyyy")  
     String st = sdf.format(date)
     assert TestDataAndOperationsVisit.searchVisit(name, st, st) != null
-}
-
-/**
- * @author mclv
- */
-When(~'^I press the Yes button$') { ->
-    at VisitConfirmPage
-    page.clickOnYes()
 }
 
 //#if( $Twitter )
