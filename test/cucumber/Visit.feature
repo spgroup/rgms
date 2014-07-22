@@ -92,14 +92,14 @@ Feature: Visit
     Given I am logged as "admin"
     And I have tried to create a visit for the visitor "Person" that already exists
     And I am at the Confirm Identification Page
-    When I press the No button
+    When I press the button "No"
     Then the visit for the visitor "Person" is properly stored by the system
 
   Scenario: changing the name of a visitor that already exists
     Given I am logged as "admin"
     And I have tried to create a visit for the visitor "Person" that already exists
     And I am at the Confirm Identification Page
-    When I press the Yes button
+    When I press the button "Yes"
     Then the visitor named "Person2" is properly stored by the system
     And the visit for the visitor "Person2" is properly stored by the system
     
