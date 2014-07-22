@@ -90,15 +90,19 @@ Feature: Visit
  
   Scenario: confirming identification for a visitor that already exists
     Given I am logged as "admin"
-    And I have tried to create a visit for the visitor "Person" that already exists
-    And I am at the Confirm Identification Page
+    And I am at the Add Visit Page
+    And I have created a visitor named "Person"
+    And I try to create the visit for the visitor "Person"
+    And the Confirm Identification Page is open
     When I press the button "No"
     Then the visit for the visitor "Person" is properly stored by the system
 
   Scenario: changing the name of a visitor that already exists
     Given I am logged as "admin"
-    And I have tried to create a visit for the visitor "Person" that already exists
-    And I am at the Confirm Identification Page
+    And I am at the Add Visit Page
+    And I have created a visitor named "Person"
+    And I try to create the visit for the visitor "Person"
+    And the Confirm Identification Page is open
     When I press the button "Yes"
     Then the visitor named "Person2" is properly stored by the system
     And the visit for the visitor "Person2" is properly stored by the system
