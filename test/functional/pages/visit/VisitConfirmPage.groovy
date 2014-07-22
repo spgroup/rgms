@@ -12,7 +12,7 @@ class VisitConfirmPage extends Page {
 		def currentVisit = gp.msg("default.visit.label")
 		def currentTitle = gp.msg("default.confirm.label", [currentVisit])
 
-		//title ==~ currentTitle
+		title ==~ currentTitle
 	}
 
 	static content = {
