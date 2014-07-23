@@ -1,6 +1,7 @@
 package pages.Conferencia
 
 import pages.FormPage
+import steps.ArticleTestDataAndOperations
 
 class ConferenciaCreatePage extends FormPage {
     static url = "conferencia/create"
@@ -32,6 +33,16 @@ class ConferenciaCreatePage extends FormPage {
         $("form").create().click()
     }
 
+    def fillConferenciaDetails(String title) {
+        $("form").title = title
+        $("form").booktitle = title
+        $("form").pages = "20-100"
+        $("form").file = ArticleTestDataAndOperations.path() + "filename"
+    }
+
+    def selectCreateConferencia() {
+        $("form").create().click()
+    }
 
     def selectHome() {
         $('a.home').click()

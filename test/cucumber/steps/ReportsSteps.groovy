@@ -175,8 +175,8 @@ Then(~'^I can select the Member "([^"]*)" option$') { String memberId ->
     page.selectGenerateBibtex(memberId)
 }
 
-/*Then(~'^I can see the bibtex details$') {->
-}*/
+Then(~'^I can see the bibtex details$') {->
+}
 
 
 When(~'^I select the Conferencia option at the Publications menu$') {->

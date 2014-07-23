@@ -1,4 +1,9 @@
+import pages.ArticlePages.ArticleCreatePage
+import pages.ArticlePages.ArticlesPage
 import pages.BibtexGenerateFilePage
+import pages.Conferencia.ConferenciaCreatePage
+import pages.Conferencia.ConferenciaPage
+import pages.PublicationsPage
 import rgms.authentication.User
 import rgms.publication.BibtexGenerateFileController
 import rgms.publication.Conferencia
@@ -15,47 +20,40 @@ import steps.ThesisOrDissertationTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 // #if($bibtexGenerateFile)
-Then(~'^I can see the bibtex details$') { ->
+Then(~'^I can see the publication "([^"]*)" inside the bibtex$') { String title ->
     at BibtexGenerateFilePage
     String bibtex = page.getBibtexDetails()
     assert bibtex != null && bibtex.length() > 0
+    assert bibtex.contains(title)
+}
+
+Then(~'^I can export this bibtex to a file$') { ->
+    at BibtexGenerateFilePage
+    page.select("Save in file")
 }
 
 Given(~'^I created one article named "([^"]*)"$') { String article ->
-    ArticleTestDataAndOperations.createArticle(article, "article")
-    assert Periodico.findByTitle(article) != null
+    at PublicationsPage
+    page.select("Periodico")
+    at ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + "filename", article)
+    page.selectCreateArticle()
+    to PublicationsPage
+    at PublicationsPage
 }
 
 Given(~'^I created one conferencia named "([^"]*)"$') {  String conferencia ->
-    ConferenciaTestDataAndOperations.createConferencia(conferencia, "conferencia")
-    assert Conferencia.findByTitle(conferencia) != null
+    at PublicationsPage
+    page.select("Conferencia")
+    at ConferenciaPage
+    page.selectNewConferencia()
+    at ConferenciaCreatePage
+    page.fillConferenciaDetails(conferencia)
+    page.selectCreateConferencia()
+    to PublicationsPage
+    at PublicationsPage
 }
 
-Given(~'^I created one thesis named "([^"]*)"$') { String thesis ->
-    def cont = new TeseController()
-    ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(thesis, "filename", "school", cont)
-    assert Tese.findByTitle(thesis) != null
-}
-
-When(~'^I export all my publications to the bibtex file "([^"]*)"$') { String filename ->
-    BibtexGenerateFileController cont = new BibtexGenerateFileController()
-    String content = cont.memberPublications(User.findByUsername("admin").id.toInteger())
-    BibtexGenerateFileTestDataAndOperations.bibtexContent = content
-    cont.params << [bibtexContent:content]
-    cont.request.setContent(new byte[1000])
-    cont.saveBibtexInFile()
-    BibtexGenerateFileTestDataAndOperations.bibtexResponse = cont.response;
-}
-
-Then(~'The article "([^"]*)" is inside the bibtex file "([^"]*)"$') { String article, filename ->
-    BibtexGenerateFileTestDataAndOperations.checkPublicationInsideBibtex(article, filename)
-}
-
-Then(~'The conferencia "([^"]*)" is inside the bibtex file "([^"]*)"$') { String conferencia, filename ->
-    BibtexGenerateFileTestDataAndOperations.checkPublicationInsideBibtex(conferencia, filename)
-}
-
-Then(~'The thesis "([^"]*)" is inside the bibtex file "([^"]*)"$') { String thesis, filename ->
-    BibtexGenerateFileTestDataAndOperations.checkPublicationInsideBibtex(thesis, filename)
-}
 // #end
