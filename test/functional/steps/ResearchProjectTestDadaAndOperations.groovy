@@ -66,11 +66,8 @@ class ResearchProjectTestDadaAndOperations {
         }
     }
 
-    static ResearchProjectController cont = new ResearchProjectController()
-
     private static void createResearchProjectDefault(String name) {
-        def contAspect = new ResearchProjectControllerAspect()
-        contAspect.init()
+        def cont = new ResearchProjectController()
         cont.params << findResearchProjectByProjectName(name)
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()

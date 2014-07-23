@@ -95,6 +95,7 @@ When(~'^I create a research project named as "([^"]*)" without funders$'){ Strin
 
 Given(~'^the system has some research project stored$'){ ->
     initialSize = ResearchProject.findAll().size()
+    assert initialSize > 0
 }
 
 When(~'^I upload new research projects from the file "([^"]*)"$') { filename ->
@@ -224,11 +225,10 @@ When(~'^I create a research project named as "([^"]*)" with member field duplica
 Then(~'^the research project "([^"]*)" does not have duplicated members$'){String projectName ->
     ResearchProject project  = ResearchProject.findByProjectName(projectName);
     boolean check = true
-    Iterator i = project.members.iterator()
-    while (i.hasNext() && check) {
-        String m = i.next()
-        project.members.remove(m)
-        if (project.members.contains(m)) {
+
+    project.members.each {member ->
+        project.members.remove(member)
+        if (project.members.contains(member)) {
             check = false
         }
     }
@@ -312,15 +312,10 @@ def checkIfResearchProjectExists(String projectName){
 }
 
 def checkIfNoResearchProjectAffected(oldProjects) {
-    boolean check = true;
     List<ResearchProject> beforeProjects = oldProjects
     List<ResearchProject> afterProjects = ResearchProject.findAll()
 
-    if(!beforeProjects.equals(afterProjects)) {
-        check = false
-    }
-
-    check
+    beforeProjects.equals(afterProjects)
 }
 
 def checkIfLoggedUserIsAdmin() {
