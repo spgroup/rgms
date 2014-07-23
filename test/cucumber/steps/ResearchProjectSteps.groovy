@@ -94,6 +94,7 @@ When(~'^I create a research project named as "([^"]*)" without funders$'){ Strin
 // XML import
 
 Given(~'^the system has some research project stored$'){ ->
+    ResearchProjectTestDadaAndOperations.createResearchProject("Implementação Progressiva de Aplicações Orientadas a Objetos Complexas");
     initialSize = ResearchProject.findAll().size()
     assert initialSize > 0
 }
