@@ -3,7 +3,6 @@ package steps
 import rgms.publication.XMLController
 import rgms.researchProject.ResearchProject
 import rgms.researchProject.ResearchProjectController
-import rgms.researchProject.aspect.ResearchProjectControllerAspect
 
 /**
  * Created by Bruno Soares on 24/02/14.
