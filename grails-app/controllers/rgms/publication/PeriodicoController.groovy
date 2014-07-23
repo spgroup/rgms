@@ -196,35 +196,38 @@ class PeriodicoController {
 		if(authorName!="")
 			articles = articles.findAll{it.authors.contains(authorName)}
 		render(view: "list", model: [periodicoInstanceList: articles, periodicoInstanceTotal: articles.size()])
-		[periodicoInstanceList: articles, periodicoInstanceTotal: articles.size()]
 	}
 	//#end
 
 	//#if($RemoveMultiplesArticles)
 	def deleteMultiples() {
-		println params
 		def instancesId = params?.check
 		if (instancesId) {
 			if (instancesId.toString().indexOf("]") > 0 ) {
-				//mais de um checkbox foi selecionado
-				for (String instanceid: instancesId) {
-					Periodico periodicoInstance = Periodico.get(Long.parseLong(instanceid))
-					periodicoInstance.removeFromPublications()
-					periodicoInstance.discardMembers()
-					periodicoInstance.discard()
-					periodicoInstance?.delete(flush: true)
-				}
+				deletingFromMultipleSelectedCheckboxes(instancesId)
 			} else {
-				//somente um checkbox foi selecionado
-				def periodicoInstance = Periodico.get(Long.parseLong(instancesId))
-				periodicoInstance.removeFromPublications()
-				periodicoInstance?.delete(flush: true)
+				deletingFromUniqueSelectedCheckbox(instancesId)
 			}
-			redirect(action: "list")
 		}else {
-			flash.message = "Nenhum item foi selecionado."
-			redirect(action: "list")
+			flash.message = message(code: 'default.not.selected.message')
 		}
+		redirect(action: "list")
+	}
+	
+	private def deletingFromMultipleSelectedCheckboxes(instancesId){
+		for (String instanceid: instancesId) {
+			Periodico periodicoInstance = Periodico.get(Long.parseLong(instanceid))
+			periodicoInstance.removeFromPublications()
+			periodicoInstance.discardMembers()
+			periodicoInstance.discard()
+			periodicoInstance?.delete(flush: true)
+		}
+	}
+	
+	private def deletingFromUniqueSelectedCheckbox(instancesId){
+		def periodicoInstance = Periodico.get(Long.parseLong(instancesId))
+		periodicoInstance.removeFromPublications()
+		periodicoInstance?.delete(flush: true)
 	}
 	//#end
 }
