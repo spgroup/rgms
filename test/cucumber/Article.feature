@@ -125,95 +125,83 @@ Feature: journal article
     Then I'm still on article page
     And the articles are not stored by the system
 
-#if($report)
-  @ignore
-  Scenario:    report existing article
-    Given    the system has article entitled "A theory of software product line refinement" with file name "TCS-1401.pdf"
-    When    the system reports the existing articles
-    Then    the system report contains "A theory of software product line refinement" article
+#if($Report)  
+  Scenario:	report existing article
+	Given the system has article entitled "A theory of software product line refinement" with file name "TCS-1401.pdf"
+	When the system reports the existing articles
+	Then the system report contains "A theory of software product line refinement" article
 #end
 
-  @ignore
-  Scenario:    list existing articles in alphabetical order of title
-    Given   the system has article entitled "A theory of software product line refinement" with file name "TCS-1401.pdf"
-    And     the system has article entitled "Modularity analysis of use case implementations" with file name "MACI.pdf"
-    When    the system orders the article list by "title"
-    Then    the system article list content is not modified
+  Scenario:	list existing articles in alphabetical order of title
+	Given the system has article entitled "A theory of software product line refinement" with file name "TCS-1401.pdf"
+	And the system has article entitled "Modularity analysis of use case implementations" with file name "MACI.pdf"
+	When the system orders the article list by title
+	Then the system article list content is not modified
 
-  @ignore
-  Scenario:    list existing articles ordered by publication date
-    Given    the system has article entitled "A theory of software product line refinement" with file name "TCS-1401.pdf" dated on "22/10/2011"
-    And    the system has article entitled "Modularity analysis of use case implementations" with file name "MACI.pdf" dated on "05/08/2010"
-    When    the system orders the article list by "publication date"
-    Then    the system article list content is not modified
+  Scenario:	list existing articles ordered by publication date
+	Given the system has article entitled "A theory of software product line refinement" with file name "TCS-1401.pdf" dated on "22 October 2011"
+	And the system has article entitled "Modularity analysis of use case implementations" with file name "MACI.pdf" dated on "05 August 2010"
+	When the system orders the article list by publication date
+	Then the system article list content is not modified
 
-  @ignore
-  Scenario:    new invalid article (title field blank)
-    Given    the all fields from article information are filled except the title field
-    When    the system try to create the article
-    Then    the article with blank title field is not stored by the system
+  Scenario: new invalid article (title field blank)
+	Given the system has no article without title and with filename "TCS-01.pdf"
+	When I create the article with filename "TCS-01.pdf" and with the title field blank
+	Then the article with blank title and with filename "TCS-01.pdf" field is not stored by the system
 
-  @ignore
-  Scenario:    filter existing articles by author
-    Given    the system has some articles authored by "Paulo Borba"
-    When    the system filter the articles authored by author "Paulo Borba"
-    Then    the system article list content is not modified
+  Scenario: filter existing articles by author
+	Given the system has some articles authored by "Paulo Borba"
+	When the system filter the articles authored by author "Paulo Borba"
+	Then the system article list content is not modified
 
-  @ignore
-  Scenario:    remove multiple articles
-    Given    the system has 3 articles entitled "A theory of product line 1", "A theory of product line 2" and "A theory of product line 3"
-    When    I remove the articles "A theory of product line 1" and "A theory of product line 3"
-    Then    the system remove the articles "A theory of product line 1" and "A theory of product line 3"
-    And    the system contains only the "A theory of product line 2" article
+  Scenario: remove multiple articles
+	Given the system has 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf" and "Modularity analysis of use case implementations" with file name "MACI-03.pdf"
+	When I remove the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
+	Then the system removes the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
+	And the system contains the "Algebraic reasoning for object-oriented programming" article
 
-#if($report)
-  @ignore
-  Scenario:    report existing article web
-    Given    I am at the articles page
-    And    the system has article entitled "A theory of software product line refinement" with file name "TCS-88.pdf"
-    When    I select to view the report of articles
-    Then    my resulting report of articles contains "A theory of software product line refinement"
+#if($Report)  
+  Scenario:	report existing article web
+	Given I am at the articles page
+	And the article "A theory of software product line refinement" is stored in the system with file name "TCS-88.pdf"
+	When I select to view the report of articles
+	Then my resulting report of articles contains "A theory of software product line refinement"
 #end
 
-  @ignore
-  Scenario:    list existing articles in alphabetical order of title web
-    Given    I am at the articles page
-    And    the system has some articles stored
-    When    I select to view the list of articles
-    And    I select to order the list of articles by "title"
-    Then    my article list shows the articles ordered by "title"
+Scenario: list existing articles in alphabetical order of title web
+	Given I am at the articles page 
+	And the system has some articles created
+	When I select to view the list of articles
+	And I select to order the list of articles by "title"
+	Then my article list shows the articles ordered by "title"
 
-  @ignore
-  Scenario:    list existing articles ordered by publication date
-    Given    I am at the articles page
-    And    the system has some articles stored
-    When    I select to view the list of articles
-    And    I select to order the list of articles by "publication date"
-    Then    my article list shows the articles ordered by "publication date"
+  Scenario: list existing articles ordered by publication date web
+	Given I am at the articles page 
+	And the system has some articles created
+	When I select to view the list of articles
+	And I select to order the list of articles by "publication date"
+	Then my article list shows the articles ordered by "publication date"
 
-  @ignore
-  Scenario:    new invalid article web (title field blank)
-    Given    I am at the new article page
-    When    I fill all article information except the title field
-    And    I select to create the article
-    Then    an error message is showed for the title field
+  Scenario: new invalid article web (title field blank)
+	Given I am at the new article page
+	When I fill all article information except the title field
+	And I select to create the article
+	Then an error message is showed for the title field
 
-  @ignore
-  Scenario:    filter existing articles by author web
-    Given    I am at the articles page
-    And    the system has some articles authored by "Paulo Borba"
-    When    I select to view the list of articles
-    And    I select to filter the list of articles by author "Paulo Borba"
-    Then    my article list shows only the articles authored  by "Paulo Borba"
+  Scenario: filter existing articles by author web
+	Given I am at the articles page 
+	And I create some articles authored by "Paulo Borba"
+	When I select to view the list of articles
+	And I select to filter the list of articles by author "Paulo Borba"
+	Then my article list shows only the articles authored by "Paulo Borba"
 
-  @ignore
-  Scenario:    remove multiple articles web
-    Given    I am at the articles page
-    And    the system has 3 articles entitled "A theory of product line 1", "A theory of product line 2" and "A theory of product line 3"
-    When    I am at the articles view list
-    And    I select the articles "A theory of product line 1" and "A theory of product line 3"
-    And    I select to remove the selected articles
-    Then    my article list page contains only the "A theory of product line 2" article
-
+  Scenario: remove multiple articles web
+	Given I am at the articles page 
+	And I create 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Modularity analysis of use case implementations" with file name "MACI-03.pdf" and "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf"
+	When I select to view the list of articles	
+	And I mark multiple articles to be removed
+	And I select to remove the selected articles
+	Then my resulting articles list contains "Modularity analysis of use case implementations"
+	
 # Paulo Borba: voces podem criar cenários para ordenar a lista, filtrar a lista
 # Paulo Borba: verificar se alguns campos podem ser opcionais, etc.
