@@ -27,12 +27,12 @@
     </g:form>
 
     <g:if test="${publications?.size()>0}">
-        <g:set var="total" value="${0}"/>
-        <g:form action="save">
+        <form id="publicationsForm" method="post" action="save">
             <div id="list-journals" class="content scaffold-list" role="main">
             <table>
                 <thead>
                     <tr>
+                        <td><input type="button" value="To Save" onclick="checkAll();"/></td>
                         <td>Publication Type</td>
                         <td>Title</td>
                         <td>Publication Date</td>
@@ -44,18 +44,24 @@
                 <!-- #if($Article) -->
                 <g:if test="${publications?.journals}">
                     <g:each in="${publications?.journals}" status="i" var="journalInstance">
+                        <input name="journals${i}.id" type="hidden" value="${journalInstance.id}" />
                         <input name="journals${i}.title" type="hidden" value="${journalInstance.obj.title}" />
-                        <input name="journals${i}.publicationDate" type="hidden" value="${journalInstance.obj.publicationDate}" />
-                        <input name="journals${i}.authors" type="hidden" value="${journalInstance.obj.authors}" />
+                        <input name="journals${i}.publicationDate" type="hidden" value="${journalInstance.obj.publicationDate?.toCalendar().get(Calendar.YEAR)}" />
                         <input name="journals${i}.journal" type="hidden" value="${journalInstance.obj.journal}" />
                         <input name="journals${i}.volume" type="hidden" value="${journalInstance.obj.volume}" />
                         <input name="journals${i}.number" type="hidden" value="${journalInstance.obj.number}" />
                         <input name="journals${i}.pages" type="hidden" value="${journalInstance.obj.pages}" />
                         <tr>
+                            <td><input type="checkbox" value="journals${i}" checked/></td>
                             <td>Journal</td>
                             <td>${journalInstance?.obj?.title}</td>
-                            <td><g:formatDate date="${journalInstance?.obj?.publicationDate}"/></td>
-                            <td>${journalInstance?.obj?.authors}</td>
+                            <td>${journalInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
+                            <td>
+                                <g:each in="${journalInstance.obj.authors}" status="j" var="author">
+                                    <input name="journals${i}.authors${j}" type="hidden" value="${author}" />
+                                    ${author}<br/>
+                                </g:each>
+                            </td>
                             <td>${journalInstance?.status}</td>
                         </tr>
                     </g:each>
@@ -63,15 +69,21 @@
                 <!-- tools -->
                 <g:if test="${publications?.tools}">
                     <g:each in="${publications?.tools}" status="i" var="toolInstance">
+                        <input name="tools${i}.id" type="hidden" value="${toolInstance.id}" />
                         <input name="tools${i}.title" type="hidden" value="${toolInstance.obj.title}" />
-                        <input name="tools${i}.publicationDate" type="hidden" value="${toolInstance.obj.publicationDate}" />
-                        <input name="tools${i}.authors" type="hidden" value="${toolInstance.obj.authors}" />
+                        <input name="tools${i}.publicationDate" type="hidden" value="${toolInstance.obj.publicationDate?.toCalendar().get(Calendar.YEAR)}" />
                         <input name="tools${i}.description" type="hidden" value="${toolInstance.obj.description}" />
                         <tr>
+                            <td><input type="checkbox" value="tools${i}" checked/></td>
                             <td>Tool</td>
                             <td>${toolInstance?.obj?.title}</td>
-                            <td><g:formatDate date="${toolInstance?.obj?.publicationDate}"/></td>
-                            <td>${toolInstance?.obj?.authors}</td>
+                            <td>${toolInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
+                            <td>
+                                <g:each in="${toolInstance.obj?.authors}" status="j" var="author">
+                                    <input name="tools${i}.authors${j}" type="hidden" value="${author}" />
+                                    ${author}<br/>
+                                </g:each>
+                            </td>
                             <td>${toolInstance?.status}</td>
                         </tr>
                     </g:each>
@@ -80,17 +92,23 @@
                 <!-- books -->
                 <g:if test="${publications?.books}">
                     <g:each in="${publications?.books}" status="i" var="bookInstance">
+                        <input name="books${i}.id" type="hidden" value="${bookInstance.id}" />
                         <input name="books${i}.title" type="hidden" value="${bookInstance.obj.title}" />
-                        <input name="books${i}.publicationDate" type="hidden" value="${bookInstance.obj.publicationDate}" />
-                        <input name="books${i}.authors" type="hidden" value="${bookInstance.obj.authors}" />
+                        <input name="books${i}.publicationDate" type="hidden" value="${bookInstance.obj.publicationDate?.toCalendar().get(Calendar.YEAR)}" />
                         <input name="books${i}.publisher" type="hidden" value="${bookInstance.obj.publisher}" />
                         <input name="books${i}.volume" type="hidden" value="${bookInstance.obj.volume}" />
                         <input name="books${i}.pages" type="hidden" value="${bookInstance.obj.pages}" />
                         <tr>
+                            <td><input type="checkbox" value="books${i}" checked/></td>
                             <td>Book</td>
                             <td>${bookInstance?.obj?.title}</td>
-                            <td><g:formatDate date="${bookInstance?.obj?.publicationDate}"/></td>
-                            <td>${bookInstance?.obj?.authors}</td>
+                            <td>${bookInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
+                            <td>
+                                <g:each in="${bookInstance.obj.authors}" status="j" var="author">
+                                    <input name="books${i}.authors${j}" type="hidden" value="${author}" />
+                                    ${author}<br/>
+                                </g:each>
+                            </td>
                             <td>${bookInstance?.status}</td>
                         </tr>
                     </g:each>
@@ -98,62 +116,78 @@
                 <!-- bookChapters -->
                 <g:if test="${publications?.bookChapters}">
                     <g:each in="${publications?.bookChapters}" status="i" var="bookChapterInstance">
+                        <input name="bookChapters${i}.id" type="hidden" value="${bookChapterInstance.id}" />
                         <input name="bookChapters${i}.title" type="hidden" value="${bookChapterInstance.obj.title}" />
-                        <input name="bookChapters${i}.publicationDate" type="hidden" value="${bookChapterInstance.obj.publicationDate}" />
-                        <input name="bookChapters${i}.authors" type="hidden" value="${bookChapterInstance.obj.authors}" />
+                        <input name="bookChapters${i}.publicationDate" type="hidden" value="${bookChapterInstance.obj.publicationDate?.toCalendar().get(Calendar.YEAR)}" />
                         <input name="bookChapters${i}.publisher" type="hidden" value="${bookChapterInstance.obj.publisher}" />
                         <tr>
+                            <td><input type="checkbox" value="bookChapters${i}" checked/></td>
                             <td>Book Chapter</td>
                             <td>${bookChapterInstance?.obj?.title}</td>
-                            <td><g:formatDate date="${bookChapterInstance?.obj?.publicationDate}"/></td>
-                            <td>${bookChapterInstance?.obj?.authors}</td>
+                            <td>${bookChapterInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
+                            <td>
+                                <g:each in="${bookChapterInstance.obj.authors}" status="j" var="author">
+                                    <input name="bookChapters${i}.authors${j}" type="hidden" value="${author}" />
+                                    ${author}<br/>
+                                </g:each>
+                            </td>
                             <td>${bookChapterInstance?.status}</td>
                         </tr>
                     </g:each>
                 </g:if>
                 <!-- masterDissertation -->
                 <g:if test="${publications?.masterDissertation}">
+                    <input name="masterDissertation0.id" type="hidden" value="${publications?.masterDissertation.id}" />
                     <input name="masterDissertation0.title" type="hidden" value="${publications?.masterDissertation.obj.title}" />
-                    <input name="masterDissertation0.publicationDate" type="hidden" value="${publications?.masterDissertation.obj.publicationDate}" />
-                    <input name="masterDissertation0.authors" type="hidden" value="${publications?.masterDissertation.obj.authors}" />
+                    <input name="masterDissertation0.publicationDate" type="hidden" value="${publications?.masterDissertation.obj.publicationDate?.toCalendar().get(Calendar.YEAR)}" />
+                    <input name="masterDissertation0.authors" type="hidden" value="${publications?.masterDissertation.obj.authors?.iterator()[0]}" />
                     <input name="masterDissertation0.school" type="hidden" value="${publications?.masterDissertation.obj.school}" />
                     <input name="masterDissertation0.address" type="hidden" value="${publications?.masterDissertation.address}" />
                     <tr>
+                        <td><input type="checkbox" value="masterDissertation0" checked/></td>
                         <td>Dissertation</td>
                         <td>${publications?.masterDissertation?.obj?.title}</td>
-                        <td><g:formatDate date="${publications?.masterDissertation?.obj?.publicationDate}"/></td>
-                        <td>${publications?.masterDissertation?.obj?.authors}</td>
+                        <td>${publications?.masterDissertation?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
+                        <td>${publications?.masterDissertation?.obj?.authors?.iterator()[0]}</td>
                         <td>${publications?.masterDissertation?.status}</td>
                     </tr>
                 </g:if>
                 <!-- thesis -->
                 <g:if test="${publications?.thesis}">
+                    <input name="thesis0.id" type="hidden" value="${publications?.thesis.id}" />
                     <input name="thesis0.title" type="hidden" value="${publications?.thesis.obj.title}" />
-                    <input name="thesis0.publicationDate" type="hidden" value="${publications?.thesis.obj.publicationDate}" />
-                    <input name="thesis0.authors" type="hidden" value="${publications?.thesis.obj.authors}" />
+                    <input name="thesis0.publicationDate" type="hidden" value="${publications?.thesis.obj.publicationDate?.toCalendar().get(Calendar.YEAR)}" />
+                    <input name="thesis0.authors" type="hidden" value="${publications?.thesis.obj.authors?.iterator()[0]}" />
                     <input name="thesis0.school" type="hidden" value="${publications?.thesis.obj.school}" />
                     <input name="thesis0.address" type="hidden" value="${publications?.thesis.address}" />
                     <tr>
+                        <td><input type="checkbox" value="thesis0" checked/></td>
                         <td>Thesis</td>
                         <td>${publications?.thesis?.obj?.title}</td>
-                        <td><g:formatDate date="${publications?.thesis?.obj?.publicationDate}"/></td>
-                        <td>${publications?.thesis?.obj?.authors}</td>
+                        <td>${publications?.thesis?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
+                        <td>${publications?.thesis?.obj?.authors?.iterator()[0]}</td>
                         <td>${publications?.thesis?.status}</td>
                     </tr>
                 </g:if>
                 <!-- conferences -->
                 <g:if test="${publications?.conferences}">
                     <g:each in="${publications?.conferences}" status="i" var="conferenceInstance">
+                        <input name="conferences${i}.id" type="hidden" value="${conferenceInstance.id}" />
                         <input name="conferences${i}.title" type="hidden" value="${conferenceInstance.obj.title}" />
-                        <input name="conferences${i}.publicationDate" type="hidden" value="${conferenceInstance.obj.publicationDate}" />
-                        <input name="conferences${i}.authors" type="hidden" value="${conferenceInstance.obj.authors}" />
+                        <input name="conferences${i}.publicationDate" type="hidden" value="${conferenceInstance.obj.publicationDate?.toCalendar().get(Calendar.YEAR)}" />
                         <input name="conferences${i}.booktitle" type="hidden" value="${conferenceInstance.obj.booktitle}" />
                         <input name="conferences${i}.pages" type="hidden" value="${conferenceInstance.obj.pages}" />
                         <tr>
+                            <td><input type="checkbox" value="conferences${i}" checked/></td>
                             <td>Conference</td>
                             <td>${conferenceInstance?.obj?.title}</td>
-                            <td><g:formatDate date="${conferenceInstance?.obj?.publicationDate}"/></td>
-                            <td>${conferenceInstance?.obj?.authors}</td>
+                            <td>${conferenceInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
+                            <td>
+                                <g:each in="${conferenceInstance.obj.authors}" status="j" var="author">
+                                    <input name="conferences${i}.authors${j}" type="hidden" value="${author}" />
+                                    ${author}<br/>
+                                </g:each>
+                            </td>
                             <td>${conferenceInstance?.status}</td>
                         </tr>
                     </g:each>
@@ -161,13 +195,15 @@
                 <!-- #if($researchLine) -->
                 <g:if test="${publications?.researchLines}">
                     <g:each in="${publications?.researchLines}" status="i" var="researchLineInstance">
+                        <input name="researchLines${i}.id" type="hidden" value="${researchLineInstance.id}" />
                         <input name="researchLines${i}.name" type="hidden" value="${researchLineInstance.obj.name}" />
                         <input name="researchLines${i}.description" type="hidden" value="${researchLineInstance.obj.description}" />
                         <tr>
+                            <td><input type="checkbox" value="researchLines${i}" checked/></td>
                             <td>Research Line</td>
                             <td>${researchLineInstance?.obj?.name}</td>
-                            <td> </td>
-                            <td>${researchLineInstance?.obj?.members}</td>
+                            <td></td>
+                            <td></td>
                             <td>${researchLineInstance?.status}</td>
                         </tr>
                     </g:each>
@@ -176,21 +212,31 @@
                 <!-- #if($researchProject) -->
                 <g:if test="${publications?.researchProjects}">
                     <g:each in="${publications?.researchProjects}" status="i" var="projectInstance">
+                        <input name="researchProjects${i}.id" type="hidden" value="${projectInstance.id}" />
                         <input name="researchProjects${i}.projectName" type="hidden" value="${projectInstance.obj.projectName}" />
                         <input name="researchProjects${i}.description" type="hidden" value="${projectInstance.obj.description}" />
                         <input name="researchProjects${i}.status" type="hidden" value="${projectInstance.obj.status}" />
                         <input name="researchProjects${i}.responsible" type="hidden" value="${projectInstance.obj.responsible}" />
                         <input name="researchProjects${i}.startYear" type="hidden" value="${projectInstance.obj.startYear}" />
                         <input name="researchProjects${i}.endYear" type="hidden" value="${projectInstance.obj.endYear}" />
-                        <input name="researchProjects${i}.members" type="hidden" value="${projectInstance.obj.members}" />
                         <!-- #if($funder) -->
-                            <input name="researchProjects${i}.funders" type="hidden" value="${projectInstance.obj.funders}" />
+                            <g:each in="${projectInstance.obj.funders}" status="j" var="funder">
+                                <input name="researchProjects${i}.funders${j}.name" type="hidden" value="${funder?.name}" />
+                                <input name="researchProjects${i}.funders${j}.code" type="hidden" value="${funder?.code}" />
+                                <input name="researchProjects${i}.funders${j}.nature" type="hidden" value="${funder?.nature}" />
+                            </g:each>
                         <!-- #end -->
                         <tr>
+                            <td><input type="checkbox" value="researchProjects${i}" checked/></td>
                             <td>Research Project</td>
                             <td>${projectInstance?.obj?.projectName}</td>
-                            <td>${projectInstance?.obj?.startYear} </td>
-                            <td><!-- #if($funder) -->${projectInstance?.obj?.funders}<!-- #end --></td>
+                            <td>${projectInstance?.obj?.startYear}</td>
+                            <td><!-- #if($funder) -->
+                                <g:each in="${projectInstance.obj.members}" status="j" var="member">
+                                    <input name="researchProjects${i}.members.${j}" type="hidden" value="${member}" />
+                                    ${member}<br/>
+                                </g:each><!-- #end -->
+                            </td>
                             <td>${projectInstance?.status}</td>
                         </tr>
                     </g:each>
@@ -199,6 +245,7 @@
                 <!-- #if(Orientation) -->
                 <g:if test="${publications?.orientations}">
                     <g:each in="${publications?.orientations}" status="i" var="orientationInstance">
+                        <input name="orientations${i}.id" type="hidden" value="${orientationInstance.id}" />
                         <input name="orientations${i}.tipo" type="hidden" value="${orientationInstance.obj.tipo}" />
                         <input name="orientations${i}.orientando" type="hidden" value="${orientationInstance.obj.orientando}" />
                         <input name="orientations${i}.tituloTese" type="hidden" value="${orientationInstance.obj.tituloTese}" />
@@ -206,6 +253,7 @@
                         <input name="orientations${i}.instituicao" type="hidden" value="${orientationInstance.obj.instituicao}" />
                         <input name="orientations${i}.curso" type="hidden" value="${orientationInstance.obj.curso}" />
                         <tr>
+                            <td><input type="checkbox" value="orientations${i}" checked/></td>
                             <td>Orientação de ${orientationInstance?.obj?.tipo}</td>
                             <td>${orientationInstance?.obj?.tituloTese}</td>
                             <td>${orientationInstance?.obj?.anoPublicacao}</td>
@@ -222,8 +270,33 @@
             <fieldset class="buttons">
                 <g:submitButton name="create" class="save" value="Save"/>
             </fieldset>
-        </g:form>
+        </form>
     </g:if>
+
+    <script language="javascript" type="text/javascript">
+        var checkedAll = true;
+
+        $("#publicationsForm").submit(function(){
+            $(":checkbox").each(function() {
+                if (!$(this).is(':checked')) {
+                    var name = $(this).val()+"\\.";
+                    $("input[type=hidden][name^="+name+"]").val("");
+                }
+            });
+        });
+
+        function checkAll(){
+           if(checkedAll){
+               checkedAll = false;
+               $(":checkbox").prop("checked", false);
+           }
+           else {
+               checkedAll = true;
+               $(":checkbox").prop("checked", true);
+           }
+        }
+    </script>
+
 </div>
 </body>
 </html>

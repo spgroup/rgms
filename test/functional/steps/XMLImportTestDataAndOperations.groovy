@@ -11,6 +11,7 @@ import rgms.publication.ResearchLine
 import rgms.publication.ResearchLineController
 import rgms.publication.XMLController
 import rgms.researchProject.ResearchProject
+import rgms.researchProject.Funder
 
 /**
  * Created by Thaís Burity on 02/06/2014.
@@ -142,13 +143,44 @@ class XMLImportTestDataAndOperations {
         rl = new ResearchLine(ResearchLineTestDataAndOperations.researchlines[1])
         rl.save(flush: true)
     }
+
+    static checkResearchLineFromFile(fileName, researchName){
+        getRootNode(fileName)
+        def researchLine = fileName.depthFirst().findAll{ it.name() == 'TITULO-DA-LINHA-DE-PESQUISA' }
+        def List researchs = new ArrayList<List>()
+        def newResearch
+
+        for (int i = 0; i < researchLine?.size(); ++i) {
+            newResearch = XMLService.checkContResearch(researchLine, i, researchName)
+            researchs.add(newResearch)
+        }
+
+        return researchs.size()
+    }
+
+    static extractSpecificResearchLineFromFile(fileName, researchLineName){
+        getRootNode(fileName)
+        List specificResearchs = fileName.depthFirst().findAll{ it.name() == 'TITULO-DA-LINHA-DE-PESQUISA' }
+        for (research in specificResearchs) {
+            if(research.equals(researchLineName)){
+                TestDataAndOperationsResearchLine.createResearchLine(researchLineName)
+                return true
+            }
+        }
+        return false
+    }
     //#end
 
     //#if($ResearchProject)
     static void initializeResearchProjectDB() {
+        def xmlservice = new XMLService()
         ResearchProject rp = new ResearchProject(ResearchProjectTestDadaAndOperations.researchProjects[0])
-        rp.funders = null
+        //#if($funder)
+        def funder1 = new Funder(FunderTestDataAndOperations.funder[0])
+        xmlservice.saveImportedFunders([funder1], rp)
+        //#end
         rp.save(flush: true)
+
         rp = new ResearchProject(ResearchProjectTestDadaAndOperations.researchProjects[1])
         rp.save(flush: true)
     }
@@ -192,33 +224,6 @@ class XMLImportTestDataAndOperations {
         o.save(flush: true)
     }
     //#end
-
-    //#if(ResearchLine)
-    static checkResearchLineFromFile(fileName, researchName){
-        getRootNode(fileName)
-        def researchLine = fileName.depthFirst().findAll{ it.name() == 'TITULO-DA-LINHA-DE-PESQUISA' }
-        def List researchs = new ArrayList<List>()
-        def newResearch
-
-        for (int i = 0; i < researchLine?.size(); ++i) {
-            newResearch = XMLService.checkContResearch(researchLine, i, researchName)
-            researchs.add(newResearch)
-        }
-
-        return researchs.size()
-    }
-
-    static extractSpecificResearchLineFromFile(fileName, researchLineName){
-        getRootNode(fileName)
-        List specificResearchs = fileName.depthFirst().findAll{ it.name() == 'TITULO-DA-LINHA-DE-PESQUISA' }
-        for (research in specificResearchs) {
-            if(research.equals(researchLineName)){
-                TestDataAndOperationsResearchLine.createResearchLine(researchLineName)
-                return true
-            }
-        }
-        return false
-    }
 
 
 }

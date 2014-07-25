@@ -1,5 +1,6 @@
 package rgms.publication
 
+import grails.converters.JSON
 import org.apache.shiro.SecurityUtils
 import rgms.authentication.User
 import rgms.member.Member
@@ -192,8 +193,9 @@ class XMLController {
     }
 
     def save() {
+        def msg = 'default.xml.saveerror.message'
         Member user = getCurrentUser()
-        def msg = XMLService.saveImportedPublications(params, user)
+        msg = XMLService.saveImportedPublications(params, user)
         flash.message = message(code: msg)
         redirect(uri: '/')
     }
