@@ -133,10 +133,12 @@ class XMLController {
             XMLService.createJournals(xmlFile)
     }
 
+    //#if($Thesis)
     private Closure saveThesis = {
         Node xmlFile ->
             XMLService.createTheses(xmlFile)
     }
+    //#end
 
     def uploadMemberXML() {
         String flashMessage = 'XML data extracted. Complete the remaining fields'

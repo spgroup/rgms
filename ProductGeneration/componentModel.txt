@@ -95,6 +95,17 @@ edittese => grailsapp/views/tese/edit.gsp;
 createtese => grailsapp/views/tese/create.gsp;
 listtese=> grailsapp/views/tese/list.gsp;
 formtese=> grailsapp/views/tese/form.gsp;
+searchtese => grailsapp/views/tese/search.gsp;
+searchtemplatetese => grailsapp/views/tese/_search.gsp
+
+testFunctionalThesisCreatePage => test/functional/pages/thesis/ThesisCreatePage.groovy;
+testFunctionalThesisEditPage => test/functional/pages/thesis/ThesisEditPage.groovy;
+testFunctionalThesisSearchListPage => test/functional/pages/thesis/ThesisSearchListPage.groovy;
+testFunctionalThesisSearchPage => test/functional/pages/thesis/ThesisSearchPage.groovy;
+testFunctionalThesisShowPage => test/functional/pages/thesis/ThesisShowPage.groovy;
+testFunctionalThesisPage => test/functional/pages/ThesisPage.groovy;
+
+
 
 showvisit => grailsapp/views/visit/show.gsp;
 editvisit => grailsapp/views/visit/edit.gsp;
@@ -190,6 +201,7 @@ bookchapterFeature => test/cucumber/BookChapter.feature;
 dissertacaoFeature => test/cucumber/Dissertacao.feature;
 conferenciaFeature => test/cucumber/Conferencia.feature;
 technicalreportFeature => test/cucumber/TechnicalReport.feature;
+thesisFeature => test/cucumber/Thesis.feature;
 
 testFunctionalFormPage => test/functional/pages/FormPage.groovy;
 testFunctionalTechnicalReportCreatePage => test/functional/pages/TechnicalReportCreatePage.groovy;
