@@ -32,7 +32,7 @@
             <table>
                 <thead>
                     <tr>
-                        <g:set var="checkButtonLabel"><g:message code="xml.checkAll.label" default="To Save"/></g:set>
+                        <g:set var="checkButtonLabel"><g:message code="xml.checkAll.label" default="All"/></g:set>
                         <td><input type="button" value="${checkButtonLabel}" onclick="checkAll();"/></td>
                         <td><g:message code="xml.importedPublicationType.label"/></td>
                         <td><g:message code="xml.importedPublicationTitle.label"/></td>
