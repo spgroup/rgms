@@ -47,7 +47,7 @@ class XMLImportTestDataAndOperations {
         def journalArticles = []
 
         for (int i = 0; i < publishedArticles?.size(); ++i) {
-            def newJournal = XMLService.saveNewJournal(publishedArticles, i, name)
+            def newJournal = XMLService.createNewJournal(publishedArticles, i, name)
             if(newJournal) journalArticles += newJournal
         }
 
@@ -60,7 +60,7 @@ class XMLImportTestDataAndOperations {
         def conferences = []
 
         for (Node currentNode : conferencePublications) {
-            def newConference = XMLService.saveNewConferencia(currentNode, name);
+            def newConference = XMLService.createNewConferencia(currentNode, name);
             if(newConference) conferences += newConference
         }
 
@@ -209,7 +209,7 @@ class XMLImportTestDataAndOperations {
         def projectsList = []
 
         for (Node project: projects) {
-            def newProject = XMLService.saveResearchProject(project)
+            def newProject = XMLService.createNewResearchProject(project)
             if(newProject){
                 projectsList += newProject
             }

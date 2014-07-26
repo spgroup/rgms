@@ -87,7 +87,7 @@ class XMLService {
         def bookChapters = createBooksChapters(xmlFile, user.name)
         if(bookChapters) publications.put("bookChapters", bookChapters)
 
-        def masterDissertation = createMasterDissertation(xmlFile, user.name)
+        def masterDissertation = createDissertation(xmlFile, user.name)
         if(masterDissertation) publications.put("masterDissertation", masterDissertation)
 
         def thesis = createThesis(xmlFile, user.name)
@@ -119,7 +119,7 @@ class XMLService {
         def tools = []
 
         for (Node currentNode : softwares) {
-            def newTool = saveNewTool(currentNode, authorName)
+            def newTool = createNewTool(currentNode, authorName)
             def result = checkToolStatus(newTool)
             if (result?.status && result?.status != XMLService.PUB_STATUS_DUPLICATED) {
                 def obj = newTool.properties.findAll{it.key in XMLService.TOOL_KEYS}
@@ -130,7 +130,7 @@ class XMLService {
         return tools
     }
 
-    private static saveNewTool(Node currentNode, String authorName) {
+    private static createNewTool(Node currentNode, String authorName) {
         Node basicData = (Node) currentNode.children()[0]
         Node softwareDetails = (Node) currentNode.children()[1]
         Node additionalInfo = getNodeFromNode(currentNode, "INFORMACOES-ADICIONAIS")
@@ -253,8 +253,8 @@ class XMLService {
         return newPublication
     }
 
-    def createMasterDissertation(Node xmlFile, String authorName) {
-        def newDissertation = saveMasterDissertation(xmlFile, authorName)
+    def createDissertation(Node xmlFile, String authorName) {
+        def newDissertation = createNewDissertation(xmlFile, authorName)
         if(!newDissertation) return null
 
         def dissertationDB = Dissertacao.findByTitle(newDissertation?.title)
@@ -266,7 +266,7 @@ class XMLService {
         return [obj: obj, status:status, id:dissertationDB?.id]
     }
 
-    private static saveMasterDissertation(Node xmlFile, String authorName){
+    private static createNewDissertation(Node xmlFile, String authorName){
         def mestrado = xmlFile.depthFirst().find{ it.name() == 'MESTRADO' }
         if(!mestrado) return null
 
@@ -289,7 +289,7 @@ class XMLService {
     }
 
     def createThesis(Node xmlFile, String authorName) {
-        def newThesis = saveThesis(xmlFile, authorName)
+        def newThesis = createNewThesis(xmlFile, authorName)
         if(!newThesis) return null
 
         def thesisDB = Tese.findByTitle(newThesis?.title)
@@ -302,7 +302,7 @@ class XMLService {
         return [obj: obj, status:status, id:thesisDB?.id]
     }
 
-    private static saveThesis(Node xmlFile, String authorName){
+    private static createNewThesis(Node xmlFile, String authorName){
         def doutorado = xmlFile.depthFirst().find{ it.name() == 'DOUTORADO' }
         if(!doutorado) return null
 
@@ -329,7 +329,7 @@ class XMLService {
         def conferences = []
 
         for (Node currentNode : conferencePublications) {
-            def newConference = saveNewConferencia(currentNode, authorName)
+            def newConference = createNewConferencia(currentNode, authorName)
             def result = checkConferenceStatus(newConference)
 
             if(result?.status && result?.status != PUB_STATUS_DUPLICATED){
@@ -341,7 +341,7 @@ class XMLService {
         return conferences
     }
 
-    private static saveNewConferencia(conferenceNode, authorName) {
+    private static createNewConferencia(conferenceNode, authorName) {
         def newConference = null
         def basicData = conferenceNode?.depthFirst()?.find{ it.name() == 'DADOS-BASICOS-DO-TRABALHO' }
         def details = conferenceNode?.depthFirst()?.find{ it.name() == 'DETALHAMENTO-DO-TRABALHO' }
@@ -381,7 +381,7 @@ class XMLService {
         def journals = []
 
         for (int i = 0; i < publishedArticles?.size(); ++i) {
-            def newJournal = saveNewJournal(publishedArticles, i, authorName)
+            def newJournal = createNewJournal(publishedArticles, i, authorName)
             def result = checkJournalStatus(newJournal)
 
             if(result?.status && result?.status!=XMLService.PUB_STATUS_DUPLICATED) {
@@ -393,7 +393,7 @@ class XMLService {
         return journals
     }
 
-    private static saveNewJournal(List publishedArticlesChildren, int i, String authorName) {
+    private static createNewJournal(List publishedArticlesChildren, int i, String authorName) {
         List<Node> firstArticle = ((Node) publishedArticlesChildren[i]).children()
         Node basicData = (Node) firstArticle[0]
         Node articleDetails = (Node) firstArticle[1]
@@ -623,7 +623,7 @@ class XMLService {
         for(Node i: researchAndDevelopment){
             def researchLines = i.getAt("LINHA-DE-PESQUISA")
             for(Node j:researchLines){
-                def newResearchLine = saveResearchLine(j)
+                def newResearchLine = createNewResearchLine(j)
                 def result = checkResearchLineStatus(newResearchLine)
 
                 if(result?.status && result?.status!=XMLService.PUB_STATUS_DUPLICATED) {
@@ -635,7 +635,7 @@ class XMLService {
         return researchLinesList
     }
 
-    private static saveResearchLine(Node xmlFile) {
+    private static createNewResearchLine(Node xmlFile) {
         ResearchLine newResearchLine = new ResearchLine()
         newResearchLine.members = []
         newResearchLine.publications = []
@@ -680,7 +680,7 @@ class XMLService {
         def researchProjects = xmlFile.depthFirst().findAll{ it.name() == 'PROJETO-DE-PESQUISA' }
 
         for(Node project: researchProjects){
-            def newProject = saveResearchProject(project)
+            def newProject = createNewResearchProject(project)
             def result = checkResearchProjectStatus(newProject)
 
             if(result?.status && result?.status!=XMLService.PUB_STATUS_DUPLICATED) {
@@ -717,7 +717,7 @@ class XMLService {
         return [status:status, id:researchProjectDB?.id]
     }
 
-    private static saveResearchProject(Node xmlFile) {
+    private static createNewResearchProject(Node xmlFile) {
         ResearchProject newProject = new ResearchProject()
         newProject.projectName = getAttributeValueFromNode(xmlFile, "NOME-DO-PROJETO")
         newProject.description = getAttributeValueFromNode(xmlFile, "DESCRICAO-DO-PROJETO")
@@ -761,7 +761,7 @@ class XMLService {
     }
     //#end
 
-    static void createMember(Node xmlFile, Member newMember) {
+    static void saveMember(Node xmlFile, Member newMember) {
         Node dadosGerais = (Node) xmlFile.children()[0]
         List<Object> dadosGeraisChildren = dadosGerais.children()
 

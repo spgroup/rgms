@@ -1,11 +1,8 @@
 package rgms.publication
 
-import grails.converters.JSON
 import org.apache.shiro.SecurityUtils
 import rgms.authentication.User
 import rgms.member.Member
-import rgms.member.Orientation
-import rgms.researchProject.ResearchProject
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,7 +41,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def tools = XMLService.createTools(xmlFile, user.name)*.obj
-            XMLService.saveImportedTools(tools)
+            XMLService.save(tools)
     }
 
     def uploadXMLBook() {
@@ -58,7 +55,8 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def books = XMLService.createBooks(xmlFile, user.name)*.obj
-            XMLService.saveImportedBooks(books)
+            XMLService.save(books)
+            println "salvou books!"
     }
 
     //#if($researchLine)
@@ -70,7 +68,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def researchLines = XMLService.createResearchLines(xmlFile, user.name)*.obj
-            XMLService.saveImportedResearchLines(researchLines)
+            XMLService.save(researchLines)
     }
     //#end
 
@@ -98,7 +96,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def bookChapters = XMLService.createBooksChapters(xmlFile, user.name)*.obj
-            XMLService.saveImportedBookChapters(bookChapters)
+            XMLService.save(bookChapters)
     }
 
     def uploadXMLDissertacao() {
@@ -111,8 +109,8 @@ class XMLController {
     private saveDissertations = {
         Node xmlFile ->
             Member user = getCurrentUser()
-            def dissertation = XMLService.createMasterDissertation(xmlFile, user.name).obj
-            XMLService.saveImportedDissertation(dissertation)
+            def dissertation = XMLService.createDissertation(xmlFile, user.name).obj
+            XMLService.save(dissertation)
     }
 
     def enviarConferenciaXML() {
@@ -126,7 +124,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def conferences = XMLService.createConferencias(xmlFile, user.name)*.obj
-            XMLService.saveImportedConferences(conferences)
+            XMLService.save(conferences)
     }
 
     //#if($Orientation)
@@ -157,7 +155,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def journals = XMLService.createJournals(xmlFile, user.name)*.obj
-            XMLService.saveImportedJournals(journals)
+            XMLService.save(journals)
     }
     //#end
 
@@ -171,7 +169,7 @@ class XMLController {
     private Closure saveMember = {
         Node xmlFile ->
             Member newMember = new Member(params)
-            XMLService.createMember(xmlFile, newMember)
+            XMLService.saveMember(xmlFile, newMember)
     }
 
     private returnWithMessage = { String msg, String controller, publications ->
