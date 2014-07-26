@@ -20,11 +20,11 @@ class XMLController {
     def upload() {
         String flashMessage = 'default.xml.import.message'
         String controller = "Publication"
-        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request))
+        if (!XMLService.Import(createPublication, returnWithMessage, flashMessage, controller, request))
             return
     }
 
-    private savePublication = {
+    private createPublication = {
         Node xmlFile ->
             Member user = getCurrentUser()
             XMLService.createPublications(xmlFile, user)
