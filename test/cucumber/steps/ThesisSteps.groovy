@@ -157,15 +157,8 @@ Then(~'^the thesis "([^"]*)" is properly removed by the system$') { title ->
 Given(~'^at least two thesis is stored in the system$') { ->
     Login()
 
-    for (int i = 1; i <= 2; i++) {
-        to ThesisCreatePage
-        at ThesisCreatePage
-
-        def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/TCS-0" +i +".pdf")
-        absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
-        def day = (3 - i).toString()
-        page.fillThesisDetails("thesis"+i, day, "1", "1914", "UFPE", "Cidade Universitaria", absolutePath)
-    }
+    storeThesisWithIndexAndDay(1, 2)
+    storeThesisWithIndexAndDay(2, 1)
 }
 
 And(~'^I am at the thesis list page$') { ->
@@ -349,4 +342,13 @@ def Login() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
+}
+
+def storeThesisWithIndexAndDay(index, day) {
+    to ThesisCreatePage
+    at ThesisCreatePage
+
+    def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/TCS-0" +index +".pdf")
+    absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
+    page.fillThesisDetails("thesis"+index, day, "1", "1914", "UFPE", "Cidade Universitaria", absolutePath)
 }

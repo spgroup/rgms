@@ -61,8 +61,6 @@ class ThesisSearchPage extends FormPage {
             def builder = new Actions(driver)
             def actions =  builder.moveToElement(items.get(index)).click().build()
             actions.perform()
-        }else{
-
         }
     }
 }
