@@ -41,7 +41,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def tools = XMLService.createTools(xmlFile, user.name)*.obj
-            XMLService.save(tools)
+            XMLService.saveImportedPubsOfType(tools,"tools")
     }
 
     def uploadXMLBook() {
@@ -55,8 +55,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def books = XMLService.createBooks(xmlFile, user.name)*.obj
-            XMLService.save(books)
-            println "salvou books!"
+            XMLService.saveImportedPubsOfType(books, "books")
     }
 
     //#if($researchLine)
@@ -68,7 +67,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def researchLines = XMLService.createResearchLines(xmlFile, user.name)*.obj
-            XMLService.save(researchLines)
+            XMLService.saveImportedPubsOfType(researchLines, "researchLines")
     }
     //#end
 
@@ -81,7 +80,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def researchProjects = XMLService.createResearchProjects(xmlFile, user.name)*.obj
-            XMLService.saveImportedResearchProjects(researchProjects)
+            XMLService.saveImportedPubsOfType(researchProjects, "researchProjects")
     }
     //#end
 
@@ -96,7 +95,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def bookChapters = XMLService.createBooksChapters(xmlFile, user.name)*.obj
-            XMLService.save(bookChapters)
+            XMLService.saveImportedPubsOfType(bookChapters, "bookChapters")
     }
 
     def uploadXMLDissertacao() {
@@ -110,7 +109,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def dissertation = XMLService.createDissertation(xmlFile, user.name).obj
-            XMLService.save(dissertation)
+            XMLService.saveImportedPubsOfType([dissertation], "dissertation")
     }
 
     def enviarConferenciaXML() {
@@ -124,7 +123,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def conferences = XMLService.createConferencias(xmlFile, user.name)*.obj
-            XMLService.save(conferences)
+            XMLService.saveImportedPubsOfType(conferences, "conferences")
     }
 
     //#if($Orientation)
@@ -139,7 +138,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def orientations = XMLService.createOrientations(xmlFile, user)*.obj
-            XMLService.saveImportedOrientations(orientations)
+            XMLService.saveImportedPubsOfType(orientations, "orientations")
     }
     //#end
 
@@ -155,7 +154,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def journals = XMLService.createJournals(xmlFile, user.name)*.obj
-            XMLService.save(journals)
+            XMLService.saveImportedPubsOfType(journals, "journals")
     }
     //#end
 
@@ -181,7 +180,7 @@ class XMLController {
         //importacao via outras telas (ainda precisa corrigir)
         else{
             flash.message = message(code: msg)
-            redirect(controller: controller, action: "list", params: params)
+            redirect(controller: controller, action: "list")
         }
     }
 

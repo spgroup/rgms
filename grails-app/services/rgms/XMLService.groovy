@@ -825,21 +825,52 @@ class XMLService {
         def n = (importedKeys.size()-authorsTotal)/(keys.size()-1)
     }
 
-    private static getObject(name){
+    private static getObject(name, properties){
         switch(name){
-            case "journals": return new Periodico()
-            case "tools": return new Ferramenta()
-            case "books": return new Book()
-            case "bookChapters": return new BookChapter()
-            case "conferences": return new Conferencia()
+            case "journals":
+                if(properties) return new Periodico(properties)
+                else return new Periodico()
+            case "tools":
+                if(properties) return new Ferramenta(properties)
+                else return new Ferramenta()
+            case "books":
+                if(properties) return new Book(properties)
+                else return new Book()
+            case "bookChapters":
+                if(properties) return new BookChapter(properties)
+                else return new BookChapter()
+            case "conferences":
+                if(properties) return new Conferencia(properties)
+                else return new Conferencia()
+            case "dissertation":
+                if(properties) return new Dissertacao(properties)
+                else return new Dissertacao()
+            case "thesis":
+                if(properties) return new Tese(properties)
+                else return new Tese()
             //#if($researchLine)
-            case "researchLines": return new ResearchLine()
+            case "researchLines":
+                if(properties) return new ResearchLine(properties)
+                else return new ResearchLine()
             //#end
             //#if($researchProject)
-            case "researchProjects": return new ResearchProject()
+            case "researchProjects":
+                def project = new ResearchProject()
+                if(properties){
+                    project.properties = properties
+                    return project
+                }
+                else return project
+            //#end
+            //#if($funder)
+            case "funders":
+                if(properties) return new Funder(properties)
+                else return new Funder()
             //#end
             //#if($Orientation)
-            case "orientations": return new Orientation()
+            case "orientations":
+                if(properties) return new Orientation(properties)
+                else return new Orientation()
             //#end
             default: return null
         }
@@ -847,7 +878,7 @@ class XMLService {
 
     //esse método deveria funcionar com ResearchProject, mas não funciona
     private static fullImportedPublication(keys, params, name, i){
-        def pub = getObject(name)
+        def pub = getObject(name, null)
         keys.each{ k ->
             switch (k){
                 case "publicationDate": pub."$k" = XMLService.extractDate(params,name,i,k)
@@ -1081,6 +1112,16 @@ class XMLService {
                 pub.save(flush:true)
             }
         }
+    }
+
+    def saveImportedPubsOfType(pubs, type) {
+        def objects = []
+        pubs?.each{ p ->
+            def obj = getObject(type, p)
+            objects += obj
+        }
+        save(objects)
+        return objects
     }
 
     //#if($researchProject)
