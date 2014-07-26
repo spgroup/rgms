@@ -32,12 +32,13 @@
             <table>
                 <thead>
                     <tr>
-                        <td><input type="button" value="To Save" onclick="checkAll();"/></td>
-                        <td>Publication Type</td>
-                        <td>Title</td>
-                        <td>Publication Date</td>
-                        <td>Authors</td>
-                        <td>Import Status</td>
+                        <g:set var="checkButtonLabel"><g:message code="xml.checkAll.label" default="To Save"/></g:set>
+                        <td><input type="button" value="${checkButtonLabel}" onclick="checkAll();"/></td>
+                        <td><g:message code="xml.importedPublicationType.label"/></td>
+                        <td><g:message code="xml.importedPublicationTitle.label"/></td>
+                        <td><g:message code="xml.importedPublicationDate.label"/></td>
+                        <td><g:message code="xml.importedPublicationAuthors.label"/></td>
+                        <td><g:message code="xml.importStatus.label"/></td>
                     </tr>
                 </thead>
             <tbody>
@@ -53,7 +54,7 @@
                         <input name="journals${i}.pages" type="hidden" value="${journalInstance.obj.pages}" />
                         <tr>
                             <td><input type="checkbox" value="journals${i}" checked/></td>
-                            <td>Journal</td>
+                            <td><g:message code="periodico.journal.label" default="Journal"/></td>
                             <td>${journalInstance?.obj?.title}</td>
                             <td>${journalInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
                             <td>
@@ -75,7 +76,7 @@
                         <input name="tools${i}.description" type="hidden" value="${toolInstance.obj.description}" />
                         <tr>
                             <td><input type="checkbox" value="tools${i}" checked/></td>
-                            <td>Tool</td>
+                            <td><g:message code="default.ferramenta.label" default="Tool"/></td>
                             <td>${toolInstance?.obj?.title}</td>
                             <td>${toolInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
                             <td>
@@ -100,7 +101,7 @@
                         <input name="books${i}.pages" type="hidden" value="${bookInstance.obj.pages}" />
                         <tr>
                             <td><input type="checkbox" value="books${i}" checked/></td>
-                            <td>Book</td>
+                            <td><g:message code="default.book.label" default="Book"/></td>
                             <td>${bookInstance?.obj?.title}</td>
                             <td>${bookInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
                             <td>
@@ -122,7 +123,7 @@
                         <input name="bookChapters${i}.publisher" type="hidden" value="${bookChapterInstance.obj.publisher}" />
                         <tr>
                             <td><input type="checkbox" value="bookChapters${i}" checked/></td>
-                            <td>Book Chapter</td>
+                            <td><g:message code="default.bookchapter.label" default="Book Chapter"/></td>
                             <td>${bookChapterInstance?.obj?.title}</td>
                             <td>${bookChapterInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
                             <td>
@@ -145,7 +146,7 @@
                     <input name="masterDissertation0.address" type="hidden" value="${publications?.masterDissertation.address}" />
                     <tr>
                         <td><input type="checkbox" value="masterDissertation0" checked/></td>
-                        <td>Dissertation</td>
+                        <td><g:message code="default.dissertacao.label" default="Dissertation"/></td>
                         <td>${publications?.masterDissertation?.obj?.title}</td>
                         <td>${publications?.masterDissertation?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
                         <td>${publications?.masterDissertation?.obj?.authors?.iterator()[0]}</td>
@@ -162,7 +163,7 @@
                     <input name="thesis0.address" type="hidden" value="${publications?.thesis.address}" />
                     <tr>
                         <td><input type="checkbox" value="thesis0" checked/></td>
-                        <td>Thesis</td>
+                        <td><g:message code="default.tese.label" default="Thesis"/></td>
                         <td>${publications?.thesis?.obj?.title}</td>
                         <td>${publications?.thesis?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
                         <td>${publications?.thesis?.obj?.authors?.iterator()[0]}</td>
@@ -179,7 +180,7 @@
                         <input name="conferences${i}.pages" type="hidden" value="${conferenceInstance.obj.pages}" />
                         <tr>
                             <td><input type="checkbox" value="conferences${i}" checked/></td>
-                            <td>Conference</td>
+                            <td><g:message code="default.conferencia.label" default="Conference"/></td>
                             <td>${conferenceInstance?.obj?.title}</td>
                             <td>${conferenceInstance?.obj?.publicationDate?.toCalendar().get(Calendar.YEAR)}</td>
                             <td>
@@ -200,7 +201,7 @@
                         <input name="researchLines${i}.description" type="hidden" value="${researchLineInstance.obj.description}" />
                         <tr>
                             <td><input type="checkbox" value="researchLines${i}" checked/></td>
-                            <td>Research Line</td>
+                            <td><g:message code="technicalReport.researchLine.label" default="Research Line"/></td>
                             <td>${researchLineInstance?.obj?.name}</td>
                             <td></td>
                             <td></td>
@@ -228,7 +229,7 @@
                         <!-- #end -->
                         <tr>
                             <td><input type="checkbox" value="researchProjects${i}" checked/></td>
-                            <td>Research Project</td>
+                            <td><g:message code="researchProject.label" default="Research Project"/></td>
                             <td>${projectInstance?.obj?.projectName}</td>
                             <td>${projectInstance?.obj?.startYear}</td>
                             <td><!-- #if($funder) -->
@@ -254,7 +255,8 @@
                         <input name="orientations${i}.curso" type="hidden" value="${orientationInstance.obj.curso}" />
                         <tr>
                             <td><input type="checkbox" value="orientations${i}" checked/></td>
-                            <td>Orientação de ${orientationInstance?.obj?.tipo}</td>
+                            <g:set var="type" value="${orientationInstance?.obj?.tipo}" />
+                            <td><g:message code="xml.importOrientation.label" args="[type]" default="Orientation Type: "/></td>
                             <td>${orientationInstance?.obj?.tituloTese}</td>
                             <td>${orientationInstance?.obj?.anoPublicacao}</td>
                             <td>${orientationInstance?.obj?.orientando}</td>
@@ -268,7 +270,8 @@
             </div>
 
             <fieldset class="buttons">
-                <g:submitButton name="create" class="save" value="Save"/>
+                <g:set var="saveButtonLabel"><g:message code="xml.button.save.label" default="Save"/></g:set>
+                <g:submitButton name="create" class="save" value="${saveButtonLabel}" />
             </fieldset>
         </form>
     </g:if>
