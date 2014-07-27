@@ -1043,58 +1043,40 @@ class XMLService {
     def saveImportedPublications(params, user) {
         //#if($Article)
         def journals = extractImportedPublications("journals", params, XMLService.JOURNAL_KEYS)
-        println "total de journals importados = "+journals.size()
         save(journals)
-        println "salvou journals!"
         //#end
 
         def tools = extractImportedPublications("tools", params, TOOL_KEYS)
-        println "total de tools importados = "+tools.size()
         save(tools)
-        println "salvou tools!"
 
         def books = extractImportedPublications("books", params, BOOK_KEYS)
-        println "total de books importados = "+books.size()
         save(books)
-        println "salvou books!"
 
         def bookChapters = extractImportedPublications("bookChapters", params, BOOK_CHAPTER_KEYS)
-        println "total de bookChapters importados = "+bookChapters.size()
         save(bookChapters)
-        println "salvou bookChapters!"
 
         def dissertation = extractDissertation(new Dissertacao(), "masterDissertation", params, DISSERTATION_KEYS)
         if (dissertation) save([dissertation])
-        println "salvou dissertation!"
 
         def thesis = extractDissertation(new Tese(), "thesis", params, DISSERTATION_KEYS)
         if (thesis) save([thesis])
-        println "salvou thesis!"
 
         def conferences = extractImportedPublications("conferences", params, CONFERENCE_KEYS)
-        println "total de conferences importados = "+conferences.size()
         save(conferences)
-        println "salvou conferences!"
 
         //#if($researchLine)
         def researchLines = extractResearchLines("researchLines", params, RESEARCH_LINE_KEYS)
-        println "total de researchLines importados = "+researchLines.size()
         save(researchLines)
-        println "salvou researchLines!"
         //#end
 
         //#if($researchProject)
         def researchProjects = extractResearchProjects("researchProjects", params, RESEARCH_PROJECT_KEYS)
-        println "total de researchProjects importados = "+researchProjects.size()
         saveImportedResearchProjects(researchProjects)
-        println "salvou researchProjects!"
         //#end
 
         //#if($Orientation)
         def orientations = extractOrientations("orientations", params, ORIENTATION_KEYS, user)
-        println "total de orientations importados = "+orientations.size()
         saveImportedOrientations(orientations)
-        println "salvou orientations!"
         //#end
 
         return 'default.xml.save.message'
