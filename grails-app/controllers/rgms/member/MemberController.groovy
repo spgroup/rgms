@@ -18,6 +18,10 @@ class MemberController {
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def userMemberList = []
+        //#if(memberNotApproved)
+
+        def userMemberListNotApproved = []
+        //#end
         def members = [];
         if (params.get("sort").equals("username")||params.get("sort").equals("enabled")){
             params.put("sort","name");
@@ -28,6 +32,11 @@ class MemberController {
         }
         for (i in members) {
             def user = User.findByAuthor(i)
+            //#if(memberNotApproved)
+            if(!user.enabled){
+                userMemberListNotApproved.add([user:user,member:i])
+            }
+            //#end
             if (user)
                 userMemberList.add([user: user, member: i])
             else
@@ -36,7 +45,9 @@ class MemberController {
            // userMemberList.sort()
         }
 
-        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+        //#if(memberNotApproved)
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count(),userMemberNotApprovedList:userMemberListNotApproved]
+        //#end
     }
 
     def create = {
@@ -94,8 +105,10 @@ class MemberController {
         def content = message(code: 'mail.body.create.account', args: [memberInstance.name, params.username, password, createLink(absolute: true, uri: '/')])
 
         EmailService emailService = new EmailService();
-        emailService.sendEmail(email, mailSender, title, content)
 
+        //#if($Email)
+        //emailService.sendEmail(email, mailSender, title, content)
+        //#end
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
     }
