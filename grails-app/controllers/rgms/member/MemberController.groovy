@@ -17,6 +17,11 @@ class MemberController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        ArrayList userMemberList = GetUserMemberList(params)
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+    }
+
+    public static ArrayList GetUserMemberList(params) {
         def userMemberList = []
         def members = Member.list(params)
         for (i in members) {
@@ -26,8 +31,7 @@ class MemberController {
             else
                 userMemberList.add([member: i])
         }
-
-        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+        userMemberList
     }
 
     def create = {
