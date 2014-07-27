@@ -76,7 +76,7 @@ class BibtexGenerateFileController {
             {
                 for(member in Membership.getAllMembers(group))
                 {
-                   bibtex = bibtex + memberPublications(member.getId())
+                   bibtex = bibtex + memberPublications(member.getId().toInteger())
                 }
             }
         }
