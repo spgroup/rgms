@@ -15,10 +15,10 @@ class MemberTestDataAndOperations {
 
     //TODO member não tem username!
     static members = [
-            [name: "Rodolfo", username: "usernametest", email: "rodolfofake@gmail.com",
+            [name: "Rodolfo",  email: "rodolfofake@gmail.com",
                     status: "Graduate Student", university: "UFPE", enabled: true
             ],
-            [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
+            [name: "Rebeca Souza",  email: "rsa2fake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
             ],
             [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
@@ -28,20 +28,19 @@ class MemberTestDataAndOperations {
 //#if ($memberListAndPageImprovement)
 
     static newMembers = [
-            [name: "Rodolfo", username: "newUser1", email: "rodolfofake@gmail.com",
+            [name: "Rodolfo",  email: "rodolfofake@gmail.com",
              status: "Graduate Student", university: "UFPE", enabled: false
             ],
-            [name: "Rebeca Souza", username: "newUser2", email: "rsa2fake@cin.ufpe.br",
+            [name: "Rebeca Souza",  email: "rsa2fake@cin.ufpe.br",
              status: "Graduate Student", university: "UFPE", enabled: false
             ],
-            [name: "Rubens Lopes", username: "newUser3", email: "rlfsfake@cin.ufpe.br",
+            [name: "Rubens Lopes",  email: "rlfsfake@cin.ufpe.br",
              status: "Graduate Student", university: "UFPE", enabled: false
             ],
-            [name: "Alvaro Joao", username: "ajsss", email: "ajsss@cin.ufpe.br",
-             status: "Graduate Student", university: "UFPE", enabled: true
+            [name: "Alvaro Joao",  email: "ajsss@cin.ufpe.br",
+             status: "Graduate Student", university: "UFPE", enabled: false
             ]
             ]
-
 
     static public def sendEmailToMember(String username) {
         Member.sendEmail()
@@ -66,9 +65,9 @@ class MemberTestDataAndOperations {
 
     //#end
 
-    static public def findByUsername(String username) {
+    static public def findByEmail(String email) {
         members.find { member ->
-            member.username == username
+            member.email == email
         }
     }
 
