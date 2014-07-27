@@ -75,7 +75,8 @@ class AuthController {
             if (user.passwordChangeRequiredOnNextLogon) {
                 redirect(action: newPassword)
             } else {
-                render(view: "/initial")
+                redirect(uri: "/home/index")
+              //  render(view: "/initial")
 //                redirect(uri: targetUri)
             }
         }
