@@ -100,11 +100,10 @@ Feature: member
     Then I see my "name" and a link to logout
 
   Scenario: administrator click on the roll of member and access the member profile
-    Given I am at the member List page
+    Given I am at the member List page and there is "number" members to order by name
     When  I move the mouse hover the rows and click to select the member
     Then  the administrator access the member profile
 
-  #Scenario: When the system try to retrieve the member list and is empty
-    #Given System access the
+
 
   #end

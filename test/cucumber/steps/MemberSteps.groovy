@@ -89,6 +89,7 @@ When(~'^I create the member with username "([^"]*)"$') { String username ->
     MemberTestDataAndOperations.createMember(username, "")
 }
 
+
 Then(~'^the member "([^"]*)" is not registered$') { String username ->
     users = User.findAllByUsername(username);
     assert users.size() == 1
@@ -193,12 +194,45 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
 //#if ($memberListAndPageImprovement)
 
 Given(~'^the administrator logs at system and there is "([^"]*)" of new not approved members$'){ int numberOfMembers ->
-    MemberTestDataAndOperations.orderNewMembersFirst(number)
+    MemberTestDataAndOperations.orderNewMembersFirst(numberOfMembers)
 
 }
 
+When(~'^I can click the attribute name of "([^"]*)" member$'){ int numberOfMembers ->
+    MemberTestDataAndOperations.orderMembers(numberOfMembers,"name")
+
+}
+
+Then(~'^the system will display the list of "number" members'){
+
+}
+
+
 Given(~'^I am at the member List page and there is "([^"]*)" members to order by name"$'){ int number, String attribute ->
-    MemberTestDataAndOperations.orderMembers(number,attribute)
+    MemberTestDataAndOperations.orderMembers(number,"name")
+}
+
+When(~'^I am at the member List page$'){
+
+
+}
+
+Then(~'^I see the "([^"]*)"new and the not approved members'){ int number ->
+    MemberTestDataAndOperations.orderNewMembersFirst(number)
+}
+
+Given(~'^The system has any member with username "([^"]*)"$') { String username ->
+    user = User.findByUsername(username);
+    member = user?.author
+    login();
+}
+When(~'^I am at any pager$'){ ->
+    to RegisterPage
+    at RegisterPage
+}
+
+Then(~'^I see my "([^"]*)" and a link to logout'){ String name ->
+    assert page.compareMemberName(name);
 }
 
 Given(~'^the system has no member with username "([^"]*)"$') { String username ->
@@ -210,7 +244,13 @@ Given(~'^the system has no member with username "([^"]*)"$') { String username -
     assert ok== true
 }
 
+When(~'^I move the mouse hover the rows and click to select the member$'){
 
+}
+
+Then(~'^the administrator access the member profile'){
+
+}
 
 
 //#end
