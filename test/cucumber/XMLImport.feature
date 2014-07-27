@@ -1,4 +1,3 @@
-#Para executar os testes, alterar o nome do usuário admin para "Paulo Henrique Monteiro Borba" em BootStrap.groovy
 @i9n
 Feature: XMLImport
   As a member of a research group

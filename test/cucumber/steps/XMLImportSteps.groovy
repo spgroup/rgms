@@ -24,14 +24,15 @@ import steps.TestDataAndOperations
 
 XMLController xmlController
 int publicationsTotal
-String authorName = User.findByUsername('admin')?.author?.name
+String authorName = XMLImportTestDataAndOperations.getUser()
+String user = "paulo"
 
 //#if($ResearchProject)
 int researchProjectsTotal
 //#end
 
 Given(~'^the system has some publications stored$') { ->
-    TestDataAndOperations.loginController(this)
+    TestDataAndOperations.loginController(this,user)
     XMLImportTestDataAndOperations.initializePublicationDB()
     publicationsTotal = 4
     assert Publication.findAll().size() == publicationsTotal
@@ -85,7 +86,7 @@ Then(~'^the system outputs a list of imported publications that contains the jou
 }
 
 Given(~'^the system has a journal article entitled "([^"]*)" with journal "([^"]*)" authored by me, among several publications$'){ pubName, journalName ->
-    TestDataAndOperations.loginController(this)
+    TestDataAndOperations.loginController(this, user)
     XMLImportTestDataAndOperations.initializePublicationDB()
     XMLImportTestDataAndOperations.addJournalPublication(pubName, journalName)
     publicationsTotal = 5
@@ -133,7 +134,7 @@ Then(~'^the system outputs a list of imported publications that does not contain
 }
 
 Given(~'^the system has a journal article entitled "([^"]*)" with journal "([^"]*)" and pages "([^"]*)" that is authored by me, among several publications$'){ pubName, journalName, pages ->
-    TestDataAndOperations.loginController(this)
+    TestDataAndOperations.loginController(this, user)
     XMLImportTestDataAndOperations.initializePublicationDB()
     XMLImportTestDataAndOperations.addJournalPublication(pubName, journalName)
     publicationsTotal = 5
@@ -168,7 +169,7 @@ Then(~'^the system outputs an error message$') { ->
 
 //#if ($ResearchProject)
 Given(~'^the system has some research projects stored$'){ ->
-    TestDataAndOperations.loginController(this)
+    TestDataAndOperations.loginController(this, user)
     XMLImportTestDataAndOperations.initializeResearchProjectDB()
     researchProjectsTotal = 2
     assert ResearchProject.findAll().size() == researchProjectsTotal
@@ -205,7 +206,7 @@ Then(~'^the system outputs a list of imported research projects that contains th
 }
 
 Given(~'^the system has a research project named as "([^"]*)", among several research projects$'){ projectName ->
-    TestDataAndOperations.loginController(this)
+    TestDataAndOperations.loginController(this, user)
     XMLImportTestDataAndOperations.initializeResearchProjectDB()
     researchProjectsTotal = 2
     def project = ResearchProject.findByProjectName(projectName)
@@ -233,7 +234,7 @@ Then(~'^the system outputs a list of imported research projects that does not co
 
 Given(~'^the system has a research project named as "([^"]*)" with status "([^"]*)", among several research projects$'){
     projectName, projectStatus ->
-        TestDataAndOperations.loginController(this)
+        TestDataAndOperations.loginController(this, user)
         XMLImportTestDataAndOperations.initializeResearchProjectDB()
         researchProjectsTotal = 2
         def project = ResearchProject.findByProjectNameAndStatus(projectName, projectStatus)

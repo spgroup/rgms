@@ -323,6 +323,18 @@ class TestDataAndOperations {
         SecurityUtils.metaClass.static.getSubject = { subject }
     }
 
+    static public void loginController(cla, username){
+        def registry = GroovySystem.metaClassRegistry
+        cla.oldMetaClass = registry.getMetaClass(SecurityUtils)
+        registry.removeMetaClass(SecurityUtils)
+        def subject = [getPrincipal: { username },
+                       isAuthenticated: { true }
+        ]as Subject
+        ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+                [getSubject: { subject } as SecurityManager])
+        SecurityUtils.metaClass.static.getSubject = { subject }
+    }
+
     static public void logoutController(cla){
         GroovySystem.metaClassRegistry.setMetaClass(SecurityUtils, cla.oldMetaClass)
     }

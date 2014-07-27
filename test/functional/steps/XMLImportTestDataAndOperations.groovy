@@ -1,9 +1,12 @@
 package steps
 
+import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.mock.web.MockMultipartFile
 import org.springframework.mock.web.MockMultipartHttpServletRequest
 import rgms.XMLService
+import rgms.authentication.Role
 import rgms.authentication.User
+import rgms.member.Member
 import rgms.member.Orientation
 import rgms.publication.Conferencia
 import rgms.publication.Periodico
@@ -225,5 +228,26 @@ class XMLImportTestDataAndOperations {
     }
     //#end
 
+    static getUser(){
+        def adminRole = Role.findByName("Administrator")
+        if (!adminRole) {
+            adminRole = new Role(name: 'Administrator')
+            adminRole.addToPermissions("*:*")
+            adminRole.save()
+        }
+
+        def user = new User(username: 'paulo', passwordHash: new Sha256Hash("paulo").toHex(),enabled: true)
+        def member = new Member(name: "Paulo Henrique Monteiro Borba",email: "phmb@cin.ufpe.br", status: "Professor",
+                university: "UFPE")
+
+        adminRole.addToUsers(user)
+        adminRole.save()
+
+        member.save()
+
+        user.author = member
+        user.save()
+        return User.findByUsername('paulo')?.author?.name
+    }
 
 }
