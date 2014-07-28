@@ -12,7 +12,7 @@
                                                                 default="Skip to content&hellip;"/></a>
 <g:render template="navigation"/>
 <!-- #if($XMLImp && $Journal) -->
-<div class="fieldcontain">
+<div class="fieldcontain" role="xmlUpload">
     <ul>
         <g:form controller="XML" action="uploadXMLPeriodico" method="post" enctype="multipart/form-data">
             <label for="file">Import XML</label>
