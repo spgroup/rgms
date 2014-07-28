@@ -186,15 +186,13 @@ Then(~'^I am back at the publications and conferencias menu$') {->
     at PublicationsPage
 }
 
-When(~'^I try to remove the conferencia "([^"]*)"$') { String title ->
-    assert Conferencia.findByTitle(title) == null
-}
 
-Then(~'^nothing happens$') {->
-
+Then(~'^theres no change in the data stored by the system$') {->
+    
 }
 
 Given(~'^the system has some conferencias stored$') {->
+    assert conferencia != null
     initialSize = Conferencia.findAll().size()
 }
 When(~'^I upload the conferencias of "([^"]*)"$') { filename ->
@@ -225,9 +223,9 @@ And(~'^the conferencias are not stored by the system$') {->
 }
 
 
-When(~'^I click on the column date at the conferencia list table$') {->
+When(~'^I click on the column "([^"]*)" at the conferencia list table$') {String columnName ->
     at ConferenciaPage
-    page.selectColumn("Date")
+    page.selectColumn(columnName)
 }
 
 
@@ -243,12 +241,6 @@ Then(~'^a list of conferencias stored by the system is displayed at the conferen
 Given(~'^the system has conferencia entitled "([^"]*)"$') { String title ->
     def conferencia = Conferencia.findByTitle(title)
     assert conferencia != null
-}
-
-
-When(~'^I click on the column title at the conferencia list table$') {->
-    at ConferenciaPage
-    page.selectColumn("Title")
 }
 
 

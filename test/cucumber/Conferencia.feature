@@ -51,8 +51,8 @@ Feature: conferencia
 
   Scenario: remove conferencia that does not exist
     Given the system has no conferencia entitled "IV Conference on Software Product Lines"
-    When I try to remove the conferencia "IV Conference on Software Product Lines"
-    Then nothing happens
+    When I remove the conferencia "IV Conference on Software Product Lines"
+    Then there's no change in the data stored by the system
 
   Scenario: remove and create the same conferencia
     Given the conferencia "V Conference on Software Product Lines" is stored in the system with file name "IICSE-10.pdf"
@@ -100,7 +100,7 @@ Scenario: new invalid conferencia web (fields blank)
 
 Scenario: list existing conferencia
     Given the system has conferencia entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
-    When I view the conferencia list
+    When I view the conferencia list 
     Then the conferencia list contains "IV Conference on Software Product Lines"
 
 Scenario: Order conferencia web by title
