@@ -83,12 +83,17 @@ class BookChapterController {
         def bookChapterInstance = BookChapter.get(id)
         boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
         if (!isReturned) {
-            if (version != null && bookChapterInstance.version > version) {
+            if (checkVersion(version, bookChapterInstance)) {
                 outdatedVersionError((BookChapter) bookChapterInstance)
             } else {
                 saveUpdate((BookChapter) bookChapterInstance)
             }
         }
+    }
+
+    public boolean checkVersion(long version, BookChapter bookChapterInstance) {
+        version != null && bookChapterInstance.version > version
+
     }
 
     def outdatedVersionError(BookChapter bookChapterInstance) {
