@@ -76,11 +76,31 @@ class BookChapterTestDataAndOperations {
         return result.contains(testarbook)
     }
 
-    static public boolean isOrdered(){
+    static public def isOrdered(bookChapters){
+        def isOrdered = false
+        isOrdered = (bookChapters.size() < 2 || (1..<bookChapters.size()).every { (bookChapters[it - 1].title).compareTo(bookChapters[it].title) < 0})
+        return isOrdered
 
     }
 
-    static public boolean isFiltered(){
+    static public def isFiltered(bookChapters, authorName){
+        for(bookChapter in bookChapters){
+            if(!(bookChapter.authors).contains(authorName)){
+                return false
+            }
+        }
+        return true
+
+    }
+
+    static public BookChapter editBookChapter(oldTitle, newTitle){
+        def bookChapter = BookChapter.findByTitle(oldTitle)
+        bookChapter.setTitle(newTitle)
+        def controller = new BookChapterController()
+        controller.params << bookChapter.properties
+        controller.update()
+        def updatedBookChapter = BookChapter.findByTitle(newTitle)
+        return updatedBookChapter
 
     }
 
@@ -93,14 +113,6 @@ class BookChapterTestDataAndOperations {
 
     static public def path(){
         return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    }
-
-    static public void uploadBookChapter(filename) {
-        def cont = new XMLController()
-        def xml = new File(filename);
-        def records = new XmlParser()
-        cont.saveBookChapters(records.parse(xml))
-        cont.response.reset()
     }
 
 

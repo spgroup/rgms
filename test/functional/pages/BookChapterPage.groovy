@@ -70,15 +70,43 @@ class BookChapterPage extends Page {
         $("form").file = filename
     }
 
-    def checkBookChapterAtList(title, row) {
+    def getBookChapterColumns(row){
         def listDiv = $('div', id: 'list-bookChapter')
         def bookChapterTable = (listDiv.find('table'))[0]
         def bookChapterRows = bookChapterTable.find('tbody').find('tr')
         def bookChapterColumns = bookChapterRows[row].find('td')
+        return bookChapterColumns
 
-        def testBookChapter = BookChapter.findByTitle(title)
-        assert bookChapterColumns[0].text() == testBookChapter.title
-        assert bookChapterColumns[2].text() == testBookChapter.file
-        assert bookChapterColumns[5].text() == testBookChapter.journal
     }
+
+    def checkOrderByTitle(){
+        $('a[href="/rgms/bookChapter/list?sort=title&max=10&order=asc"]').click()
+
+    }
+
+    def checkOrderedByTitle(){
+        def bookChapter1Columns 	= this.getBookChapterColumns(0)
+        def bookChapter2Columns 	= this.getBookChapterColumns(1)
+        assert bookChapter1Columns[0].text().compareTo(bookChapter2Columns[0].text()) < 0
+
+    }
+
+    def fillAndSelectFilter(authorName){
+        $("form").authorName = authorName
+        $("input", name: "buttonFilterByAuthor").click()
+    }
+
+    def checkBookChapterFilteredByAuthor(authorName){
+        def listDiv = $('div', id: 'list-periodico')
+        def articleTable = (listDiv.find('table'))[0]
+        def articleRows = articleTable.find('tbody').find('tr')
+        for (row in articleRows) {
+            def articleColumns = row.find('td')
+            if(!articleColumns[5].text().contains(authorName))
+                return false
+        }
+        return true
+    }
+
+
 }
