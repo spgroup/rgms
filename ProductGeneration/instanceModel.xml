@@ -12,6 +12,8 @@
 
     <feature name="TesePublication_Feature" type="NONE" id="TesePublication"></feature>
 
+    <feature name="BookChapter_Feature" type="NONE" id="BookChapter"></feature>
+
     <feature name="ImportBibtex_Feature" type="NONE" id="ImportBibtex"></feature>
 
     <feature name="Autofill_Feature" type="NONE" id="Autofill"></feature>
