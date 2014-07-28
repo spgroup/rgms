@@ -49,7 +49,7 @@ class BookChapterController {
         bookChapterInstance = (BookChapter) pb.extractAuthors(bookChapterInstance)
 
 
-        if (!pb.upload(bookChapterInstance) || !bookChapterInstance.save(flush: true)) {
+        if (verifyBookChapter(pb, bookChapterInstance)) {
             render(view: "create", model: [bookChapterInstance: bookChapterInstance])
             return
         }
@@ -61,6 +61,14 @@ class BookChapterController {
         //noinspection InvalidI18nProperty
         flash.message = message(code: 'default.created.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
         redirect(action: "show", id: bookChapterInstance.id)
+    }
+
+    public boolean verifyBookChapter(PublicationController pb, BookChapter bookChapterInstance) {
+        Boolean state = false
+        if(!pb.upload(bookChapterInstance) || !bookChapterInstance.save(flush: true)){
+            state = true
+        }
+        return state
     }
 
     def accessBookChapter(Long id) {
