@@ -64,7 +64,7 @@ class PeriodicoController {
         redirect(action: "show", id: periodicoInstance.id)
     }
 
-    def isValidPeriodico(Periodico periodicoInstance) {
+    private def isValidPeriodico(Periodico periodicoInstance) {
 
         if (Periodico.findByTitle(params.title)) {
             handleSavingError(periodicoInstance, 'periodico.duplicatetitle.failure')
@@ -80,7 +80,7 @@ class PeriodicoController {
 
     }
 
-    def handleSavingError(Periodico periodicoInstance, String message) {
+    private def handleSavingError(Periodico periodicoInstance, String message) {
         periodicoInstance.discardMembers()
         flash.message = message
         render(view: "create", model: [periodicoInstance: periodicoInstance])
@@ -95,7 +95,7 @@ class PeriodicoController {
     }
 
 
-    def accessArticle() {
+    private def accessArticle() {
         def periodicoInstance = Periodico.get(params.id)
         if (!periodicoInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'periodico.label', default: 'Periodico'), params.id])
@@ -129,7 +129,7 @@ class PeriodicoController {
         redirect(action: "show", id: periodicoInstance.id)
     }
 
-    def checkPeriodicoVersion(Periodico periodicoInstance) {
+    private def checkPeriodicoVersion(Periodico periodicoInstance) {
 
         if (params.version) {
             def version = params.version.toLong()
@@ -157,7 +157,7 @@ class PeriodicoController {
         deletePeriodico(periodicoInstance)
     }
 
-    def deletePeriodico(Periodico periodicoInstance) {
+    private def deletePeriodico(Periodico periodicoInstance) {
 
         try {
             periodicoInstance.removeFromPublications()
@@ -191,5 +191,49 @@ class PeriodicoController {
         render(journalsFound as JSON)
     }
     //#end
+	
+	//#if($FilterArticlesByAuthor)
+	def filterByAuthor() {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		def articles = Periodico.list(params)
+		def authorName = params.authorName
+		if(authorName!="")
+			articles = articles.findAll{it.authors.contains(authorName)}
+		render(view: "list", model: [periodicoInstanceList: articles, periodicoInstanceTotal: articles.size()])
+	}
+	//#end
+
+	//#if($RemoveMultiplesArticles)
+	def deleteMultiples() {
+		def instancesId = params?.check
+		if (instancesId) {
+			def selectedMultiples = instancesId.toString().indexOf("]") > 0
+			if (selectedMultiples) {
+				deletingFromMultipleSelectedCheckboxes(instancesId)
+			} else {
+				deletingFromUniqueSelectedCheckbox(instancesId)
+			}
+		}else {
+			flash.message = message(code: 'default.not.selected.message')
+		}
+		redirect(action: "list")
+	}
+	
+	private def deletingFromMultipleSelectedCheckboxes(instancesId){
+		for (String instanceid: instancesId) {
+			Periodico periodicoInstance = Periodico.get(Long.parseLong(instanceid))
+			periodicoInstance.removeFromPublications()
+			periodicoInstance.discardMembers()
+			periodicoInstance.discard()
+			periodicoInstance?.delete(flush: true)
+		}
+	}
+	
+	private def deletingFromUniqueSelectedCheckbox(instancesId){
+		def periodicoInstance = Periodico.get(Long.parseLong(instancesId))
+		periodicoInstance.removeFromPublications()
+		periodicoInstance?.delete(flush: true)
+	}
+	//#end
 }
 //#end
