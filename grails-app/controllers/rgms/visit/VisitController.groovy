@@ -33,23 +33,29 @@ class VisitController {
 
     def save() {
 	def visitor = Visitor.findByName((String)params.nameVisitor)
-	if(!visitor) 
-	{ 
-		visitor = createVisitor()
-		def visitInstance = new Visit(params)
-		saveVisit(visitInstance, visitor, "create", "created")
+	if(!visitor) { 
+	    saveWithoutConfirm(visitor)
 	}
-	else
-	{
-		def visitInstance = new Visit(params)
-		visitInstance.visitor = visitor
-	        if (!visitInstance.save(flush: true)) {
-	            render(view: "create", model: [visitInstance: visitInstance])
-	            return
-	        }
-		redirect(action: "confirm", id: visitInstance.id)
+	else {
+	    saveAndConfirm(visitor)
 	}
         
+    }
+	
+    def saveWithoutConfirm(Visitor visitor) {
+	visitor = createVisitor()
+	def visitInstance = new Visit(params)
+	saveVisit(visitInstance, visitor, "create", "created")
+    }
+	
+    def saveAndConfirm(Visitor visitor) {
+	def visitInstance = new Visit(params)
+	visitInstance.visitor = visitor
+	if (!visitInstance.save(flush: true)) {
+	    render(view: "create", model: [visitInstance: visitInstance])
+	    return
+	}
+	redirect(action: "confirm", id: visitInstance.id)
     }
 
     def show(Long id) {
