@@ -19,9 +19,13 @@ class OrientationController {
     }
 
     def save() {
-        def orientationInstance = new Orientation(params)
 
-        if(!compareOrientationWithRender(orientationInstance, "create")) {
+        showResultByOrientationInstance(new Orientation(params))
+
+    }
+
+    private Object showResultByOrientationInstance(Orientation orientationInstance) {
+        if (!compareOrientationWithRender(orientationInstance, "create")) {
             return false
         }
         if (!orientationInstance.save(flush: true)) {
@@ -30,7 +34,6 @@ class OrientationController {
         }
 
         showFlashMessage(orientationInstance.id, "show", 'default.created.message')
-
     }
 
     def compareOrientationWithRender(orientationInstance, tipoRender) {
@@ -39,8 +42,10 @@ class OrientationController {
             //noinspection InvalidI18nProperty
             flash.message = message(code: 'orientation.same.members', args: [message(code: 'orientation.label', default: 'Orientation'), orientationInstance.id])
             return false
+        }else{
+
+            return true
         }
-        return true
 
     }
 
