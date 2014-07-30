@@ -3,8 +3,7 @@ package rgms.publication
 //#if($XMLUpload && $Conferencia)
 import rgms.XMLService
 //#end
-import org.apache.shiro.SecurityUtils
-import org.springframework.web.multipart.MultipartHttpServletRequest
+import rgms.member.Member
 
 class ConferenciaController {
 
@@ -26,6 +25,7 @@ class ConferenciaController {
         PublicationController.addAuthor(conferenciaInstance)
         //#end
         [conferenciaInstance: conferenciaInstance]
+        session.removeAttribute("authors")
     }
 
     private alertMessage(String typeMessage, Conferencia conferenciaInstance){
@@ -34,6 +34,8 @@ class ConferenciaController {
     }
 
     def save() {
+
+        print(params)
         def conferenciaInstance = new Conferencia(params)
         PublicationController pb = new PublicationController()
         if (!pb.upload(conferenciaInstance) || !conferenciaInstance.save(flush: true)) {
@@ -41,6 +43,7 @@ class ConferenciaController {
             return
         }
         alertMessage('created',conferenciaInstance)
+        session.removeAttribute("authors")
     }
 
     private returnConferenciaInstance(){
@@ -49,7 +52,6 @@ class ConferenciaController {
         if(!isReturned){
             [conferenciaInstance: conferenciaInstance]
         }
-
     }
 
     private returnConferenciaActualVersion()
@@ -91,4 +93,83 @@ class ConferenciaController {
 		def conferenciaInstance = Conferencia.get(params.id)
 		aux.delete(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
 	}
+
+    // $if($managingAuthors)
+
+    def static String getLoggedMemberName()
+    {
+        String loggedMemberName = ""
+        Member loggedMember = PublicationController.getLoggedMember()
+
+        if ( loggedMember != null )
+            loggedMemberName = loggedMember.name
+
+        return loggedMemberName
+    }
+
+    def static List<String> getAuthors()
+    {
+        Set<Member> members = PublicationController.membersOrderByUsually()
+        ArrayList<String> memberAuthors = new ArrayList<String>()
+
+        for ( Member member : members )
+            memberAuthors.add(member.name)
+
+        return memberAuthors
+    }
+
+    def updateAuthorList()
+    {
+        List<String> authorList = (List<String>) session["authors"]
+        String loggedMemberName = getLoggedMemberName()
+
+        render("<table>")
+        for ( String authorName : authorList )
+        {
+            if ( loggedMemberName.equals(authorName) )
+                render("<tr><td>" + authorName + "</td></tr>")
+            else
+            {
+                render("<tr><td>" + authorName + "</td>")
+                render("<td><input id=\"${authorName}\" onclick=\"removeFromList(this)\" type=\"button\" value=\"${message(code: 'conferencia.removeAuthor.label', default: 'remove author')}\" /></td></tr>")
+                render( "<td><g:field type=\"hidden\" name=\"authors\" value=\""+ authorName +"\"/></td></tr>" )
+            }
+        }
+        render("</table>")
+    }
+
+    def addAuthor()
+    {
+      List<String> authorList = (List<String>) session["authors"]
+      String addedAuthor = params.addAuthor
+
+      if ( authorList == null )
+      {
+          Set<Member> members = PublicationController.membersOrderByUsually()
+          authorList = new ArrayList<String>()
+
+          for ( Member member : members )
+            authorList.add( member.name )
+      }
+
+      if ( addedAuthor.length() > 0 )
+        authorList.add(addedAuthor)
+
+      session["authors"] = authorList
+      updateAuthorList()
+    }
+
+    def removeAuthor()
+    {
+        List<String> authorList = (List<String>) session["authors"]
+        String selectedAuthor = params.selectedAuthor
+
+        if (authorList != null && !selectedAuthor.equals(loggedMemberName))
+        {
+            authorList.remove(selectedAuthor)
+            session["authors"] = authorList
+            updateAuthorList()
+        }
+    }
+    //#end
 }

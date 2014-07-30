@@ -1,11 +1,12 @@
 import pages.Conferencia.ConferenciaCreatePage
 import pages.Conferencia.ConferenciaPage
+import pages.Conferencia.ConferenciaShowPage
+import pages.Conferencia.ConferenciaEditPage
 import pages.LoginPage
 import pages.PublicationsPage
-import rgms.authentication.User
 import rgms.member.Member
 import rgms.publication.Conferencia
-import steps.TestDataAndOperations
+import steps.MemberTestDataAndOperations
 import steps.TestDataAndOperationsPublication
 import steps.ConferenciaTestDataAndOperations
 
@@ -76,7 +77,7 @@ When(~'^I select the home option at the conference page$') {->
     page.selectHome()
 }
 
-When(~'^I select the conference "([^"]*)"$') {String title ->
+When(~'^I select the conference article entitled "([^"]*)"$') {String title ->
     page.select(title)
 }
 
@@ -146,57 +147,60 @@ And(~'^the conferences are not stored by the system$') {->
 
 }
 
-Then(~'^I see my user listed as an author member of conference by default in the first position$') {
+//#if ($managingAuthors)
 
+Then(~'^I see my user listed as an author member of conference by default in the first position$') {->
+    at ConferenciaCreatePage
+    page.checkFirstAuthor()
 }
 
 Given(~'^the member "([^"]*)" is registered in the system$') { String memberName ->
-    author = Member.findByName(memberName)
-    assert author != null
+   member = MemberTestDataAndOperations.findByName(memberName)
+   assert member != null
 }
 
 /*
 When(~'^I select the "([^"]*)"$ option at the conference page$'){ String option ->
 
-}
-*/
+}*/
 
-And(~'^I click on "([^"]*)" at the create conference page$') { String option ->
+
+And(~'^I click on "([^"]*)" at the create conference article page$') { String option ->
     at ConferenciaCreatePage
-    page.select(option)
+    page.clickOn(option)
 }
 
-Then(~'^I select the member "([^"]*)" in member list$') { String memberName ->
-
+Then(~'^I fill the author name with "([^"]*)"$') { String authorName ->
+    at ConferenciaCreatePage
+    page.fillAuthorName(authorName)
 }
 
-And(~'^I see the new member author "([^"]*)" at the last position of members authors$'){ String memberName ->
-
+And(~'^I see the new member author "([^"]*)" at the last position of members authors list$'){ String memberAuthorName ->
+    at ConferenciaCreatePage
+    page.checkLastAuthor(memberAuthorName)
 }
 
-Given(~'^the conference "([^"]*)" is stored in the system$'){ String title ->
-    conference = Conferencia.findByTitle(title)
+Given(~'^the conference article entitled "([^"]*)" is stored in the system$'){ String title ->
+    conference = ConferenciaTestDataAndOperations.findConferenciaByTitle(title)
     assert conference != null
 }
 
-And(~'^I see the new member author "([^"]*)" at the last position of members authors list$') { String memberName ->
-
-}
-
-And(~'^the member "([^"]*)" is member author of the conference "([^"]*)"$'){ String memberName, String title ->
+And(~'^the member "([^"]*)" is member author of the conference article "([^"]*)"$'){ String memberName, String title ->
     assert ConferenciaTestDataAndOperations.containsAuthor(memberName, title)
 }
 
-And(~'^I select the author "([^"]*)" at the member authors list in the show conference page$') { String memberName ->
+And(~'^I select the author "([^"]*)" at the member authors list in the show conference article page$'){ String memberName ->
 
 }
 
-And(~'^I click on "([^"]*)" at the show conference page$') { String option ->
-
+And(~'^I click on "([^"]*)" at the show conference article page$') { String option ->
+    at ConferenciaShowPage
+    page.clickOn(option)
 }
 
-And(~'^I click on "([^"]*)" at the edit conference page$') { String option ->
-
+And(~'^I click on "([^"]*)" at the edit conference article page$') { String option ->
+    at ConferenciaEditPage
+    page.clickOn(option)
 }
 
 Then(~'^the member "([^"]*)" is no more listed in possible authors list$') { String memberName ->
@@ -207,8 +211,10 @@ And(~'^I click on "([^"]*)" at the show member page$') { String option ->
 
 }
 
-Then(~'^the member "([^"]*)" is not member author of the conference "([^"]*)"$') { String memberName, String title ->
+Then(~'^the member "([^"]*)" is not member author of the conference article "([^"]*)"$') { String memberName, String title ->
     conference = Conferencia.findByTitle(title)
     member = Member.findByName(memberName)
-    assert !conference.authors.contains(member)
+    assert !conference.authors.contains(member.name)
 }
+
+//#end //$managingAuthors

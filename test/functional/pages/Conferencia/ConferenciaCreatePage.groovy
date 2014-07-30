@@ -1,6 +1,7 @@
 package pages.Conferencia
 
 import pages.FormPage
+import rgms.member.Member
 
 class ConferenciaCreatePage extends FormPage {
     static url = "conferencia/create"
@@ -32,11 +33,38 @@ class ConferenciaCreatePage extends FormPage {
         $("form").create().click()
     }
 
-
     def selectHome() {
         $('a.home').click()
     }
 
+    def fillAuthorName(String name)
+    {
+        $("form").authorName = name
+    }
 
+    def checkFirstAuthor()
+    {
+      String firstAuthor = $("form").find("select#members option", value: "1").text()
+      assert firstAuthor.equals("Administrador do sistema")
+    }
+
+    def checkLastAuthor(String authorName)
+    {
+        int listLen = $("form").members.collect().size()
+        String lastPos = String.valueOf(listLen)
+
+        String lastAuthor = $("form").find("select#members option", value: lastPos).text()
+        assert authorName.equals(lastAuthor)
+    }
+
+    def clickOn(String option)
+    {
+        if (option.equals("home"))
+            selectHome()
+        else if (option.equals("add author"))
+            addAuthor()
+        else if (option.equals("remove author"))
+            removeAuthor()
+    }
 
 }
