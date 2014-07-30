@@ -67,7 +67,7 @@ And(~'^I select the edit option in Conferencia Registration Page$') { String new
 
 
 
-Given(~'^I am at the conferencia registration page$') {
+Given(~'^I am at the conferencia registration page$') {->
     at ConferenciaEditPage
 }
 
@@ -111,7 +111,7 @@ Then(~'^the conferencia "([^"]*)" is not stored twice$') { String title ->
 }
 
 When(~'^I remove the conferencia "([^"]*)"$') { String title ->
-    conferencia = Conferencia.findByTitle(title)
+    def conferencia = Conferencia.findByTitle(title)
    assert conferencia != null
     ConferenciaTestDataAndOperations.removeConferencia(title)
     testRemoveConferencia = Conferencia.findByTitle(title)
@@ -187,8 +187,8 @@ Then(~'^I am back at the publications and conferencias menu$') {->
 }
 
 
-Then(~'^theres no change in the data stored by the system$') {->
-    
+Then(~'^the conferencia entitled "([^"]*)" is found$') {->
+ assert ConferenciaTestDataAndOperations.searchConferencia(title)
 }
 
 Given(~'^the system has some conferencias stored$') {->
@@ -267,8 +267,8 @@ When(~'^I search for the conferencia entitled "([^"]*)"$') { String title ->
 
 
 
-Then(~'^theres no change in the data stored by the system$') {
-
+Then(~'^the conferencia entitled "([^"]*)" is not found$') { String title ->    
+    assert Conferencia.findByTitle(title) == null
 }
 
 
