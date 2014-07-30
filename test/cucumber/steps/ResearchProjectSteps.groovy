@@ -199,7 +199,7 @@ When(~'^I edit the research project "([^"]*)" in the system$') { String projectN
 
 Then(~'^the data of the research project named "([^"]*)" is updated in the system$') { String projectName ->
     newProject = ResearchProject.findByProjectName(projectName);
-    assert oldProject != newProject;
+    assert (oldProject.description != newProject.description) && (oldProject.projectName == newProject.projectName);
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 

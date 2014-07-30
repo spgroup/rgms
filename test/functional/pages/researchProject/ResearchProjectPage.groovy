@@ -90,52 +90,40 @@ class ResearchProjectPage extends FormPage {
     }
 
     def checkResearchGroupHasLoggedUserAsMember() {
-        // Procura usuário logado no Apache Shiro
-        def User user;
+        def User user = getLoggedUser();
+        def membersColumn = 6;
+        assert checkResearchProjectFilter(membersColumn, user.getAuthor().getName());
+    }
+
+    def checkResearchGroupListFilteredByName(String name) {
+        def projectNameColumn = 0;
+        assert checkResearchProjectFilter(projectNameColumn, name);
+    }
+
+    def getLoggedUser() {
         try {
             if(SecurityUtils.subject?.principal!=null) {
                 user = User.findByUsername(SecurityUtils.subject.principal);
             }
         } catch(UnavailableSecurityManagerException e) {
-            return false;
+            return null;
         }
-
-        boolean check = true;
-
-        // obtém da tela as linhas da tabela que lista os Projetos de Pesquisa
-        def researchGroupRows = getResearchGroupRows()
-        int size = researchGroupRows.size();
-
-        // percorre a tabela para procurar o nome do usuário logado como membro dos Projetos de Pesquisa
-        if(size > 1) {
-            for(int i=0; i<size; i++) {
-                def researchGroupColumns = researchGroupRows[i].find('td');
-
-                if(!researchGroupColumns[0].text().contains(user.getAuthor().getName())) {
-                    check = false;
-                }
-            }
-        }
-
-        assert check;
     }
 
-    def checkResearchGroupListFilteredByName(filter) {
-        boolean check = true;
-        def researchGroupRows = getResearchGroupRows()
-        int size = researchGroupRows.size();
+    def checkResearchProjectFilter(int column, String text) {
+        def check = true;
+        def researchProjectRows = getResearchGroupRows();
+        int size = researchProjectRows.size();
 
-        if(size > 1) {
-            for(int i=0; i<size; i++) {
-                def researchGroupColumns = researchGroupRows[i].find('td');
-
-                if(!researchGroupColumns[6].text().contains(filter)) {
+        if(researchProjectRows.size() > 1) {
+            for(def row : researchProjectRows) {
+                if(!row.find('td')[column].text().contains(text)) {
                     check = false;
                 }
             }
         }
 
-        assert check;
+        return check;
     }
 
 }
