@@ -219,3 +219,22 @@ ArticleEditPage => test/functional/pages/ArticleEditPage.groovy;
 ArticleShowPage => test/functional/pages/ArticleShowPage.groovy;
 ArticlePage => test/functional/pages/ArticlesPage.groovy;
 UserRegisterPage => test/functional/pages/UserRegisterPage.groovy;
+
+formResearchProject => grails-app/views/researchProject/_form.gsp;
+createResearchProject => grails-app/views/researchProject/create.gsp;
+editResearchProject => grails-app/views/researchProject/edit.gsp;
+listResearchProject => grails-app/views/researchProject/list.gsp;
+showResearchProject => grails-app/views/researchProject/show.gsp;
+
+researchProject => grails-app/domain/rgms/ResearchGroup/ResearchGroup.groovy;
+researchProjectController => grails-app/controllers/rgms/researchProject/ResearchProjectController.groovy;
+XMLServiceResearchProjectAspect => grails-app/services/rgms/XMLServiceResearchProjectAspect.groovy
+
+ResearchProjectFeature => test/cucumber/ResearchProject.feature;
+ResearchProjectSteps => test/cucumber/steps/ResearchProjectSteps.groovy;
+ResearchProjectTestDataAndOperations => test/functional/steps/ResearchProjectTestDadaAndOperations.groovy;
+ResearchProjectPage => test/functional/pages/researchProject/ResearchProjectPage.groovy;
+ResearchProjectCreatePage => test/functional/pages/researchProject/ResearchProjectCreatePage.groovy;
+ResearchProjectEditPage => test/functional/pages/researchProject/ResearchProjectEditPage.groovy;
+ResearchProjectShowPage => test/functional/pages/researchProject/ResearchProjectShowPage.groovy;
+

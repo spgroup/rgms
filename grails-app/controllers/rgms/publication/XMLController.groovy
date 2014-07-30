@@ -1,6 +1,8 @@
 package rgms.publication
 
 import org.apache.shiro.SecurityUtils
+import org.springframework.web.multipart.MultipartHttpServletRequest
+import org.springframework.web.multipart.commons.CommonsMultipartFile
 import rgms.XMLService
 import rgms.authentication.User
 import rgms.member.Member
@@ -62,14 +64,11 @@ class XMLController {
             XMLService.createResearchLines(xmlFile)
     }
 
+    //#if($researchProject)
     def uploadXMLResearchProject() {
-        XMLService.Import(saveReseachProject, returnWithMessage, 'default.researchproject.import.flashmessage.success', "ResearchProject", request)
+        XMLService.Import(XMLService.saveResearchProject, returnWithMessage, 'default.researchproject.import.flashmessage.success', "ResearchProject", this.request)
     }
-
-    private Closure saveReseachProject = {
-        Node xmlFile ->
-            XMLService.createResearchProjects(xmlFile)
-    }
+    //#end
 
     def uploadXMLBookChapter() {
         String flashMessage = 'The non existent Book Chapters were successfully imported'

@@ -98,6 +98,13 @@
         </transformation>
     </configuration>
     <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>createBuildEntries</name>
+            <args>ResearchProject</args>
+        </transformation>
+    </configuration>
+    <configuration>
         <expression>rgms</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
@@ -1173,6 +1180,156 @@
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>FacebookController,grails-app/controllers/rgms/tool/FacebookController.groovy</args>
+        </transformation>
+    </configuration>
+
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>formResearchProject,grails-app/views/researchProject/_form.gsp</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>createResearchProject,grails-app/views/researchProject/create.gsp</args>
+        </transformation>
+    </configuration>
+    <configuration>
+      <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>editResearchProject,grails-app/views/researchProject/edit.gsp</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>listResearchProject,grails-app/views/researchProject/list.gsp</args>
+        </transformation>
+    </configuration>
+    <configuration>
+       <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>showResearchProject,grails-app/views/researchProject/show.gsp</args>
+        </transformation>
+    </configuration>
+
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>researchProject,grails-app/domain/rgms/ResearchGroup/ResearchGroup.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+        <name>preprocessFiles</name>
+        <args>grails-app/domain/rgms/ResearchGroup/ResearchGroup.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>researchProjectController,grails-app/controllers/rgms/researchProject/ResearchProjectController.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+        <name>preprocessFiles</name>
+        <args>grails-app/controllers/rgms/researchProject/ResearchProjectController.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>ResearchProjectFeature,test/cucumber/ResearchProject.feature</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>test/cucumber/ResearchProject.feature</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>XMLServiceResearchProjectAspect,grails-app/services/rgms/XMLServiceResearchProjectAspect.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>grails-app/services/rgms/XMLServiceResearchProjectAspect.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>grails-app/services/rgms/XMLService.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>grails-app/controllers/rgms/publication/XMLController.groovy</args>
+        </transformation>
+    </configuration>
+
+    <configuration>
+       <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>ResearchProjectSteps,test/cucumber/steps/ResearchProjectSteps.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>ResearchProjectTestDataAndOperations,test/functional/steps/ResearchProjectTestDadaAndOperations.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>ResearchProjectPage,test/functional/pages/researchProject/ResearchProjectPage.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>ResearchProjectCreatePage,test/functional/pages/researchProject/ResearchProjectCreatePage.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>ResearchProjectEditPage,test/functional/pages/researchProject/ResearchProjectEditPage.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>ResearchProject</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>ResearchProjectShowPage,test/functional/pages/researchProject/ResearchProjectShowPage.groovy</args>
         </transformation>
     </configuration>
 </configurationModel>

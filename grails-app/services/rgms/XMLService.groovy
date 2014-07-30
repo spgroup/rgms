@@ -1,5 +1,6 @@
 package rgms
 
+import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import rgms.member.Member
@@ -9,6 +10,13 @@ import rgms.researchProject.Funder
 import rgms.researchProject.ResearchProject
 
 class XMLService {
+
+    //#if($researchProject)
+    static {
+        def XMLServiceRPAspect = new XMLServiceResearchProjectAspect()
+        XMLServiceRPAspect.init()
+    }
+    //#end
 
     /*
         saveEntity - closure que salva a classe de domínio que está usando a importação
@@ -155,43 +163,8 @@ class XMLService {
     //#end
 
     //#if($researchProject)
-    static void createResearchProjects(Node xmlFile) {
-        //Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
-        List<Node> pro_perf = ((Node) ((Node) xmlFile.children()[0]).children()[4]).children()
-        //Navega ate atuacoes profissionais e extrai a lista de atuacoes
-
-        for (Node i : pro_perf) { //Atuaçao profissional
-            for (Node j : i.children()) { //Atividades de pesquisa em projeto
-                if (((String) j.name()).equals("ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO")) {
-                    for (Node k : j.children()) { //Participacao em projeto
-                        if (((String) k.name()).equals("PARTICIPACAO-EM-PROJETO")) {
-                            for (Node l : k.children()) { //Projeto de pesquisa
-                                saveResearchProject(l)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    //#end
-
-    //#if($researchProject)
-    private static void saveResearchProject(Node xmlFile) {
-        String name = getAttributeValueFromNode(xmlFile, "NOME-DO-PROJETO")
-        ResearchProject project = ResearchProject.findByProjectName(name)
-
-        if (project == null) { //Se o projeto de pesquisa ainda nao existe no sistema hora de adiciona-lo
-            ResearchProject newProject = new ResearchProject()
-            newProject.projectName = name
-            newProject.description = getAttributeValueFromNode(xmlFile, "DESCRICAO-DO-PROJETO")
-            newProject.status = getAttributeValueFromNode(xmlFile, "SITUACAO")
-            newProject.startYear = getAttributeValueFromNode(xmlFile, "ANO-INICIO").toInteger()
-            newProject.endYear = getAttributeValueFromNode(xmlFile, "ANO-FIM").equals("") ? 0 : getAttributeValueFromNode(xmlFile, "ANO-FIM").toInteger()
-            fillProjectMembers(getNodeFromNode(xmlFile, "EQUIPE-DO-PROJETO"), newProject)
-            fillFunders(getNodeFromNode(xmlFile, "FINANCIADORES-DO-PROJETO"), newProject)
-            newProject.save(flush: false)
-        }
+    static Closure saveResearchProject = { Node xmlFile ->
+        XMLService.createResearchProjects(xmlFile)
     }
     //#end
 
@@ -211,18 +184,6 @@ class XMLService {
                 newFunder.save(flush: false)
                 project.addToFunders(newFunder).save(flush: false)
             }
-        }
-    }
-    //#end
-
-    //#if($researchProject)
-    private static void fillProjectMembers(Node xmlFile, ResearchProject project) {
-
-        for (Node node : xmlFile?.children()) { //Para cada integrante presente no projeto
-            String name = (String) (node.attribute("NOME-COMPLETO"))
-            Boolean responsavel = ((String) (node.attribute("FLAG-RESPONSAVEL"))).equals("SIM")
-            if (responsavel) project.responsible = name
-            project.addToMembers(name).save(validate: true)
         }
     }
     //#end
@@ -475,11 +436,10 @@ class XMLService {
 
     static Node parseReceivedFile(MultipartHttpServletRequest request) {
         MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
-        CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
+        MultipartFile f = (MultipartFile) mpr.getFile("file");
         File file = new File("xmlimported.xml");
         f.transferTo(file)
         def records = new XmlParser()
-
         if (file.length() > 0)
             records.parse(file)
     }

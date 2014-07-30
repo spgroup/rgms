@@ -1,9 +1,11 @@
 package steps
 
+import org.springframework.mock.web.MockMultipartFile
+import org.springframework.mock.web.MockMultipartHttpServletRequest
+import rgms.XMLService
 import rgms.publication.XMLController
 import rgms.researchProject.ResearchProject
 import rgms.researchProject.ResearchProjectController
-import rgms.researchProject.aspect.ResearchProjectControllerAspect
 
 /**
  * Created by Bruno Soares on 24/02/14.
@@ -102,11 +104,12 @@ class ResearchProjectTestDadaAndOperations {
         }
     }
 
-    static public void uploadOrientation(filepath) {
+    static public void uploadOrientation(filePath) {
         def cont = new XMLController()
-        def xml = new File((String) filepath);
-        def records = new XmlParser()
-        cont.saveReseachProject(records.parse(xml));
-        cont.response.reset()
+        def mockRequest = new MockMultipartHttpServletRequest()
+        def uploadedFile = new File(filePath)
+        mockRequest.addFile(new MockMultipartFile("file", uploadedFile.bytes))
+        cont.metaClass.request = mockRequest
+        cont.uploadXMLResearchProject()
     }
 }

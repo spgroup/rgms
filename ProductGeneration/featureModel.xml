@@ -35,5 +35,5 @@
         </featureGroup>
     </feature>
 
-
+    <feature min="0" max="1" name="ResearchProject" type="NONE" id="ResearchProject"></feature>
 </feature>
