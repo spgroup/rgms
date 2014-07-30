@@ -1,6 +1,7 @@
 import pages.LoginPage
 import pages.RegisterPage
 import pages.member.MemberCreatePage
+import pages.member.MemberListPage
 import pages.member.MemberViewPage
 import rgms.authentication.User
 import rgms.member.Member
@@ -194,6 +195,7 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
 //#if ($memberListAndPageImprovement)
 
 Given(~'^the administrator logs at system and there is "([^"]*)" of new not approved members$'){ int numberOfMembers ->
+    at MemberListPage
     MemberTestDataAndOperations.orderNewMembersFirst(numberOfMembers)
 
 }
@@ -204,7 +206,7 @@ When(~'^I can click the attribute name of "([^"]*)" member$'){ int numberOfMembe
 }
 
 Then(~'^the system will display the list of "number" members'){
-
+     at MemberListPage
 }
 
 
@@ -213,7 +215,7 @@ Given(~'^I am at the member List page and there is "([^"]*)" members to order by
 }
 
 When(~'^I am at the member List page$'){
-
+    at MemberListPage
 
 }
 
@@ -227,12 +229,12 @@ Given(~'^The system has any member with username "([^"]*)"$') { String username 
     login();
 }
 When(~'^I am at any pager$'){ ->
-    to RegisterPage
-    at RegisterPage
+    to MemberViewPage
+    at MemberViewPage
 }
 
 Then(~'^I see my "([^"]*)" and a link to logout'){ String name ->
-    assert page.compareMemberName(name);
+    assert MemberViewPage.compareMemberName(name);
 }
 
 Given(~'^the system has no member with username "([^"]*)"$') { String username ->
@@ -244,12 +246,15 @@ Given(~'^the system has no member with username "([^"]*)"$') { String username -
     assert ok== true
 }
 
-When(~'^I move the mouse hover the rows and click to select the member$'){
+When(~'^I move the mouse hover the rows and click to select the "([^"]*)"$'){ String username ->
+    user = User.findByUsername(username);
+    member = user?.author
+    assert member != null
 
 }
 
 Then(~'^the administrator access the member profile'){
-
+    at MemberViewPage
 }
 
 

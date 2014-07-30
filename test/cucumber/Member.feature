@@ -101,7 +101,7 @@ Feature: member
 
   Scenario: administrator click on the roll of member and access the member profile
     Given I am at the member List page and there is "number" members to order by name
-    When  I move the mouse hover the rows and click to select the member
+    When  I move the mouse hover the rows and click to select the "member"
     Then  the administrator access the member profile
 
 

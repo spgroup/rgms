@@ -13,5 +13,8 @@ class MemberViewPage extends Page {
 
     }
 
+    def boolean compareMemberName(String name){
+       return $("link").getAttribute('text') ==~ /${name}/
+    }
 
 }
