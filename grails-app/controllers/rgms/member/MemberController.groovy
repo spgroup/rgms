@@ -17,10 +17,10 @@ class MemberController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        def userMemberList = []
-        //#if(memberNotApproved)
+        userMemberList = []
+//#if(memberNotApproved)
 
-        def userMemberListNotApproved = []
+        userMemberListNotApproved = []
         //#end
         def members = [];
         if (params.get("sort").equals("username")||params.get("sort").equals("enabled")){
@@ -30,25 +30,32 @@ class MemberController {
 
             members = Member.list(params)
         }
+
+        settingMembersAuth(members)
+
+        //#if(memberNotApproved)
+        [userMemberInstanceList: this.userMemberList, memberInstanceTotal: Member.count(),userMemberNotApprovedList:this.userMemberListNotApproved]
+        //#end
+    }
+
+    //#ifmemberRefact
+    private void settingMembersAuth(List<Member> members) {
         for (i in members) {
             def user = User.findByAuthor(i)
             //#if(memberNotApproved)
-            if(!user.enabled){
-                userMemberListNotApproved.add([user:user,member:i])
+            if (!user.enabled) {
+                this.userMemberListNotApproved.add([user: user, member: i])
             }
             //#end
             if (user)
-                userMemberList.add([user: user, member: i])
+                this.userMemberList.add([user: user, member: i])
             else
-                userMemberList.add([member: i])
+                this.userMemberList.add([member: i])
 
-           // userMemberList.sort()
+            // userMemberList.sort()
         }
-
-        //#if(memberNotApproved)
-        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count(),userMemberNotApprovedList:userMemberListNotApproved]
-        //#end
     }
+    //#end
 
     def create = {
         def member = new Member(params)
@@ -121,6 +128,8 @@ class MemberController {
     def edit = {
         Get_MemberInstance()
     }
+    private ArrayList userMemberListNotApproved
+    private ArrayList userMemberList
 
     boolean check_version(String version, Member memberInstance) {
         if (version) {
