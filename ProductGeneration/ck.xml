@@ -105,6 +105,13 @@
         </transformation>
     </configuration>
     <configuration>
+        <expression>Filter_ResearchProject</expression>
+        <transformation>
+            <name>createBuildEntries</name>
+            <args>Filter_ResearchProject</args>
+        </transformation>
+    </configuration>
+    <configuration>
         <expression>rgms</expression>
         <transformation>
             <name>selectAndMoveComponent</name>

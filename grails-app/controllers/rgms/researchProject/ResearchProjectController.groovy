@@ -4,7 +4,6 @@ package rgms.researchProject
 import org.apache.shiro.SecurityUtils
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.authentication.User
-import rgms.member.Member
 
 class ResearchProjectController {
 
@@ -25,14 +24,16 @@ class ResearchProjectController {
 
     def myProjects() {
         User user = User.findByUsername(SecurityUtils.subject.principal);
-        List<ResearchProject> listP = ResearchProject.findAllByResponsible(user.getAuthor().getName());
-        render(view: '/researchProject/list', model: [researchProjectInstanceList: listP, researchProjectInstanceTotal: listP.size()]);
+        List<ResearchProject> projectsList = ResearchProject.findAllByResponsible(user.getAuthor().getName());
+        render(view: '/researchProject/list', model: [researchProjectInstanceList: projectsList, researchProjectInstanceTotal: projectsList.size()]);
     }
 
+    //#if($Filter_ResearchProject)
     def filter(String projectName) {
-        List<ResearchProject> listP = ResearchProject.findAllByProjectName(projectName);
-        render(view: '/researchProject/list', model: [researchProjectInstanceList: listP, researchProjectInstanceTotal: listP.size()]);
+        List<ResearchProject> projectsList = ResearchProject.findAllByProjectName(projectName);
+        render(view: '/researchProject/list', model: [researchProjectInstanceList: projectsList, researchProjectInstanceTotal: projectsList.size()]);
     }
+    //#end
 
     def save() {
         def researchProjectInstance = new ResearchProject(params)
@@ -47,7 +48,7 @@ class ResearchProjectController {
         _processResearchProject(id)
     }
 
-    def _processResearchProject(Long id){
+    private def _processResearchProject(Long id){
 
         def researchProjectInstance = getResearchProjectInstance(id)
 
@@ -58,7 +59,7 @@ class ResearchProjectController {
         [researchProjectInstance: researchProjectInstance]
     }
 
-    def getResearchProjectInstance(Long id){
+    private def getResearchProjectInstance(Long id){
         def researchProjectInstance = ResearchProject.get(id)
 
         if (!researchProjectInstance) {
@@ -91,7 +92,7 @@ class ResearchProjectController {
         saveInstance(researchProjectInstance,"edit",'default.updated.message')
     }
 
-    def void saveInstance(ResearchProject researchProjectInstance, String view, String code) {
+    private def void saveInstance(ResearchProject researchProjectInstance, String view, String code) {
         if (!researchProjectInstance.save(flush: true)) {
             render(view: view, model: [researchProjectInstance: researchProjectInstance])
             return

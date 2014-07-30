@@ -1,4 +1,4 @@
-<!-- #if($researchProject) -->
+<!-- #if($ResearchProject) -->
 <%@ page import="rgms.researchProject.ResearchProject" %>
 <!doctype html>
 <html>
@@ -30,6 +30,7 @@
         </div>
         <!-- #end -->
 
+        <!-- #if($Filter_ResearchProject) -->
         <div class="filter" role="filter">
             <ul>
                 <br>
@@ -40,6 +41,7 @@
                 </g:form>
             </ul>
         </div>
+        <!-- #end -->
 
 		<div id="list-researchProject" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>

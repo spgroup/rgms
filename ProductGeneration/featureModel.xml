@@ -35,5 +35,9 @@
         </featureGroup>
     </feature>
 
-    <feature min="0" max="1" name="ResearchProject" type="NONE" id="ResearchProject"></feature>
+    <feature min="0" max="1" name="ResearchProject" type="NONE" id="ResearchProject">
+        <featureGroup min="0" max="1" id="filtrar">
+            <feature min="0" max="1" name="Filter_ResearchProject" type="NONE" id="Filter_ResearchProject"></feature>
+        </featureGroup>
+    </feature>
 </feature>
