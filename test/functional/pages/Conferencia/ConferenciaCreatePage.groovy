@@ -40,12 +40,9 @@ class ConferenciaCreatePage extends FormPage {
     }
     
     def boolean isSomeConferenciaFildsBlank(){
-        def resp = false
-       if($("form").title == null || $("form").booktitle ==null || 
-           $("form").pages == null){
-        resp = true
-       }
-       return resp
+       
+        return ($("form").title == null || $("form").booktitle ==null || 
+           $("form").pages == null)
     }
     
       def selectedMembers() {
