@@ -98,11 +98,13 @@ Feature: research project
     When I select the option to show my research projects
     Then the system shows a list with the research projects where I am a member
 
+  #if($Filter_ResearchProject)
   Scenario: filter research projects by name
     Given  I am at the research project list page
     When I fill the project name filter field with "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
     And select the option to filter the research projects
     Then the system shows the research projects with the name "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+  #end
 
   Scenario: remove research project that does not exist
     Given the system has no research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
