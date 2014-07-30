@@ -92,7 +92,7 @@ class MemberTestDataAndOperations {
     }
 
     //TODO evitar duplicação, depois de resolver toda a confusão conceitual entre user vs member
-    /*
+
     static public void createMemberWithEmail(String name, String email) {
         def cont = new MemberController()
         cont.params << findByName(name) << [email: email]
@@ -119,5 +119,5 @@ class MemberTestDataAndOperations {
         }
         return false;
     }
-    */
+
 }
