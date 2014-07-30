@@ -43,7 +43,7 @@ class ConferenciaController {
         alertMessage('created',conferenciaInstance)
     }
 
-    private returnConferenciaInstance(){
+    private getConferenciaInstance(){
         def conferenciaInstance = Conferencia.get(params.id)
         boolean isReturned = aux.check(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
         if(!isReturned){
@@ -52,7 +52,7 @@ class ConferenciaController {
 
     }
 
-    private returnConferenciaActualVersion()
+    private getConferenciaActualVersion()
     {
         def conferenciaInstance = Conferencia.get(params.id)
         boolean isReturned = aux.check(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
@@ -76,15 +76,15 @@ class ConferenciaController {
     }
 
     def show() {
-        returnConferenciaInstance()
+        getConferenciaInstance()
     }
 
     def edit() {
-        returnConferenciaInstance()
+        getConferenciaInstance()
     }
 
     def update() {
-        returnConferenciaActualVersion();
+        getConferenciaActualVersion();
     }
 
     def delete() {

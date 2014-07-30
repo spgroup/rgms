@@ -267,12 +267,6 @@ When(~'^I search for the conferencia entitled "([^"]*)"$') { String title ->
 
 
 
-Then(~'^theres no change in the data stored by the system$') {
-
-}
-
-
-
 And(~'^the system has conferencia dated "([^"]*)"$') {String date->
     conferencia = Conferencia.findByDate(date)
     assert conferencia !=null
