@@ -60,8 +60,6 @@ class ResearchLineController {
             [researchLineInstanceList: lista]
 
         }
-
-
     }
     //#end
 
@@ -243,32 +241,29 @@ class ResearchLineController {
         HashMap<String,String> lista = new HashMap<String, String>()
         for(researchline in ResearchLine.getAll())
         {
-            if(!researchline.getDescription().equals("stable")){
+            if(!researchline.getDescription().equals("stable")) {
                 researchline.setDescription("stable")
-                lista.put(researchline.getName(),researchline.getDescription())
-            }else{
-                lista.put(researchline.getName(),researchline.getDescription())
             }
-
+                lista.put(researchline.getName(),researchline.getDescription())
         }
         [researchLineInstanceList: lista]
     }
 
-    def findByActor(def member){
+    def findByActor(member){
         ArrayList<String> lista = new ArrayList<String>()
         Member actor = new Member()
         for(research in ResearchLine.getAll())
         {
-            for(members in research.getMembers()){
-                if(member.equals(members.getName())){
-                    actor.getId()
+            for(currentMember in research.getMembers()){
+                if(member.equals(currentMember.getName())){
+                    actor = currentMember
                 }
             }
         }
-        return actor
+        return actor.getId()
     }
 
-    def findResearchByActor(def member,def research){
+    def findAllResearchByMember(member, research){
         HashMap<String, String> listagem = new  HashMap<String, String>()
         for(researchL in ResearchLine.getAll()){
             if((researchL.equals(research)) && (researchL.getMembers().contains(member))){
@@ -280,29 +275,24 @@ class ResearchLineController {
 
     def checkIfResearchLineExists(researchName, list){
        List listCheck = list
-       for(research in list){
-           if((!listCheck.isEmpty()) && (research.equals(researchName))){
-               return true
-           }
-       }
-       return false
-    }
-
-    def checkIfResearchLineNoExists(def researchName){
-        ResearchLine line = ResearchLine.findByName(researchName)
-        line == null
+            for (research in list) {
+                if (research.equals(researchName)) {
+                    return true
+                }
+            }
+            return false
     }
 
     def statusChanged(def lista){
            def sizeList = findAllResearchLine()
-           def inicialSize = sizeList.size()
-           def finalSize = lista.size()
-        if((lista.empty) || (inicialSize == finalSize) ){
-            return false
-        }else if (inicialSize < finalSize){
+           def sizeI = sizeList.size()
+           def sizeF = lista.size()
+
+        def resultado = Math.max(sizeI, sizeF)
+        if(sizeF.compareTo(resultado)){
             return true
         }
-    return false
+        return false
     }
 
     def checkSavedResearchByDescription(nameOfResearch, status){

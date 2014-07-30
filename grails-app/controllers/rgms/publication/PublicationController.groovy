@@ -163,21 +163,18 @@ class PublicationController {
     //#end
 
     def static checkTypeFile(file){
-       if(!file.hasProperty(".xml")){
-           return false
-       }
-       return true
+       file.hasProperty(".xml")
     }
 
     def statusChanged(def lista){
         def sizeList = Publication.findAll()
-        def inicialSize = sizeList.size()
-        def finalSize = lista.size()
-        if((lista.empty) || (inicialSize == finalSize) ){
-            return false
-        }else if (inicialSize < finalSize){
-            return true
+        def sizeI = sizeList.size()
+        def sizeF = lista.size()
+
+        def resultado = Math.max(sizeI, sizeF)
+        if(sizeF.compareTo(resultado)){
+           return true
         }
-        return false
+       return false
     }
 }
