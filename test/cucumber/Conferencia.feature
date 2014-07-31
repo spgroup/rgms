@@ -110,19 +110,19 @@ Feature: conferencia
   Scenario: Order conference web by title
     Given I am at the conference page
     When I click on the column "title" at the conference list table
-    then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
+    Then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
 
   @ignore
   Scenario: Order conference web by conference data
     Given I am at the conference page
     When I click on the column "Date" at the conference list table
-    then a list of conferences stored by the system is displayed at the conference page by publication ascending date order
+    Then a list of conferences stored by the system is displayed at the conference page by publication ascending date order
 
   @ignore
   Scenario: Order  conference web by research line
     Given I am at the conference page
     When I click on the column "Research Line" at the conference list table
-    then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
+    Then a list of conferences stored by the system is displayed at the conference page by ascending alphabetic order
 
   @ignore
   Scenario: Go to search page
@@ -142,6 +142,6 @@ Feature: conferencia
     And  the system has conference dated "2007"
     When I write "2007" at the date field
     And I select the option Serach for Conference at the conference page
-    then a list of all conferences containing that date will be presented in the conference screen
+    Then a list of all conferences containing that date will be presented in the conference screen
 
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
