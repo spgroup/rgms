@@ -816,12 +816,15 @@ class XMLService {
                 funder."$fk" = value
             }
 
-            Funder savedFunder = Funder.findByCode(funder?.code)
-            if(savedFunder) {
-                project.addToFunders(savedFunder)
-            } else {
-                funder.save(flush:true)
-                project.addToFunders(funder)
+            def projectFunder = project.funders?.find{ it.code = funder.code }
+            if(!projectFunder) {
+                Funder savedFunder = Funder.findByCode(funder?.code)
+                if (savedFunder) {
+                    project.addToFunders(savedFunder)
+                } else {
+                    funder.save(flush: true)
+                    project.addToFunders(funder)
+                }
             }
         }
     }
