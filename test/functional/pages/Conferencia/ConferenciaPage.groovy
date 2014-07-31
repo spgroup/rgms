@@ -55,4 +55,42 @@ class ConferenciaPage extends Page{
 
         assert conferenciaColumns.size() == 0
     }
+    
+    def checkIfConferenciaListIsOrderedByTitle(){
+         def listDiv = $('div', id: 'list-conferencia')
+        def conferenciaTable = (listDiv.find('table'))[0]
+        def conferenciaRows  = conferenciaTable.find('tbody').find('tr')
+        
+        def list = []
+        def y = conferenciaRows.size()
+        def x = 0
+        
+        while(y-- > 0){
+            def conferenciaColumns = conferenciaRows[x].find('td')
+            list.add(articleColumns[0].text())
+            x++
+        }
+        def list2 = list.clone()
+        list2.sort(it.title)
+        assert list == list2
+    }
+    
+    def checkIfConferenciaListIsOrderedByDate(){
+         def listDiv = $('div', id: 'list-conferencia')
+        def conferenciaTable = (listDiv.find('table'))[0]
+        def conferenciaRows  = conferenciaTable.find('tbody').find('tr')
+        
+        def list = []
+        def y = conferenciaRows.size()
+        def x = 0
+        
+        while(y-- > 0){
+            def conferenciaColumns = conferenciaRows[x].find('td')
+            list.add(articleColumns[1].text())
+            x++
+        }
+        def list2 = list.clone()
+        list2.sort(it.date)
+        assert list == list2
+    }
 }

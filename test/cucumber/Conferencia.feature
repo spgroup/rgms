@@ -98,7 +98,7 @@ Scenario: new invalid conferencia web (fields blank)
 
 Scenario: list existing conferencia
     Given the system has conferencia entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
-    When I view the conferencia list
+    When I check the conferencia list
     Then the conferencia list contains "IV Conference on Software Product Lines"
 
 Scenario: Order conferencia web by title

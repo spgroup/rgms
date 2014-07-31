@@ -232,9 +232,7 @@ When(~'^I click on the column "([^"]*)" at the conferencia list table$') {String
 
 Then(~'^a list of conferencias stored by the system is displayed at the conferencia page by publication ascending date order$') {->
     at ConferenciaPage
-    page.listConferencia()
-    def conferencias = Conferencia.findAll()
-    conferencias.sort(it.date)
+    page.checkIfConferenciaListIsOrderedByDate()
 }
 
 
@@ -247,9 +245,7 @@ Given(~'^the system has conferencia entitled "([^"]*)"$') { String title ->
 
 Then(~'^a list of conferencias stored by the system is displayed at the conferencia page by ascending alphabetic order$') {->
     at ConferenciaPage
-    page.listConferencia()
-    def conferencias = Conferencia.findAll()
-    conferencias.sort(it.title)
+    page.checkIfConferenciaListIsOrderedByTitle()
 }
 
 
@@ -300,7 +296,7 @@ Then(~'^a list of all conferencias containing the date "([^"]*)" will be present
 }
     
 
-When(~'^I view the conferencia list$') {->
+When(~'^I check the conferencia list$') {->
     def conferencias = Conferencia.findAll()
     assert conferencias !=null
 }
