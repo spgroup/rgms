@@ -827,7 +827,7 @@ class XMLService {
     }
     //#end
 
-    private static calcImportedPublicationSize(importedKeys, keys){
+    private def countImportedPublications = { importedKeys, keys ->
         def authors = importedKeys.findAll{ it.contains("authors")}
         def authorsTotal = (authors) ? authors.size() : 0
         def n = (importedKeys.size()-authorsTotal)/(keys.size()-1)
@@ -884,7 +884,6 @@ class XMLService {
         }
     }
 
-    //esse método deveria funcionar com ResearchProject, mas não funciona
     private static fullImportedPublication(keys, params, name, i){
         def pub = getObject(name, null)
         keys.each{ k ->
@@ -922,7 +921,7 @@ class XMLService {
         return pub
     }
 
-    private def extractImportedPublications(name, params, keys){
+    private def extractImportedPublications(name, params, keys, calcImportedPublicationSize, propertyTitle){
         def pubs = []
         def pubKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
 
@@ -930,7 +929,7 @@ class XMLService {
 
         def n = calcImportedPublicationSize(pubKeySet, keys)
         for(i in 0..n-1){
-            String title = params[name+i+".title"]
+            String title = params[name+i+propertyTitle]
             if(!title || title.isEmpty()) continue
             def pub = fullImportedPublication(keys, params, name, i)
             pubs += pub
@@ -938,43 +937,14 @@ class XMLService {
         return pubs
     }
 
-    //#if($researchLine)
-    private def extractResearchLines(name, params, keys){
-        def lines = []
-        def linesKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
-
-        if(!linesKeySet || !keys) return lines
-
-        def n = linesKeySet.size()/keys.size()
-        for(i in 0..n-1){
-            String title = params[name+i+".name"]
-            if(!title || title.isEmpty()) continue
-            def pub = fullImportedPublication(keys, params, name, i)
-            pub.publications = []
-            lines += pub
-        }
-        return lines
+    //#if($researchLine || $Orientation)
+    private def countImportedElements = { importedKeys, keys ->
+        def n = importedKeys?.size()/keys?.size()
     }
     //#end
 
     //#if($researchProject)
-    private def extractResearchProjects(name, params, keys){
-        def projects = []
-        def projectKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
-
-        if(!projectKeySet || !keys) return projects
-
-        def n = calcImportedResearchProjects(projectKeySet,keys)
-        for(i in 0..n-1){
-            String title = params[name+i+".projectName"]
-            if(!title || title.isEmpty()) continue
-            def pub = fullImportedPublication(keys, params, name, i)
-            projects += pub
-        }
-        return projects
-    }
-
-    private static calcImportedResearchProjects(importedKeys, keys){
+    private def countImportedResearchProjects = { importedKeys, keys ->
         def funders = importedKeys.findAll{ it.contains("funders")}
         def fundersTotal = (funders) ? funders.size() : 0
         def members = importedKeys.findAll{ it.contains("members")}
@@ -983,62 +953,57 @@ class XMLService {
     }
     //#end
 
-    //#if(Orientation)
-    private def extractOrientations(name, params, keys, user){
-        def orientations = []
-        def orientationKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
-
-        if(!orientationKeySet || !keys) return orientations
-
-        def n = orientationKeySet.size()/keys.size()
-        for(i in 0..n-1){
-            String title = params[name+i+".tituloTese"]
-            if(!title || title.isEmpty()) continue
-            def orientation = fullImportedPublication(keys, params, name, i)
-            orientation.orientador = user
-            orientations += orientation
-        }
-        return orientations
-    }
-    //#end
-
     def saveImportedPublications(params, user) {
+        def propertyTitle = ".title"
+
         //#if($Article)
-        def journals = extractImportedPublications("journals", params, JOURNAL_KEYS)
+        def journals = extractImportedPublications("journals", params, JOURNAL_KEYS, countImportedPublications, propertyTitle)
+        journals.each{ if(!it.members) it.members = [] }
         save(journals)
         //#end
 
-        def tools = extractImportedPublications("tools", params, TOOL_KEYS)
+        def tools = extractImportedPublications("tools", params, TOOL_KEYS, countImportedPublications, propertyTitle)
+        tools.each{ if(!it.members) it.members = [] }
         save(tools)
 
-        def books = extractImportedPublications("books", params, BOOK_KEYS)
+        def books = extractImportedPublications("books", params, BOOK_KEYS, countImportedPublications, propertyTitle)
+        books.each{ if(!it.members) it.members = [] }
         save(books)
 
-        def bookChapters = extractImportedPublications("bookChapters", params, BOOK_CHAPTER_KEYS)
+        def bookChapters = extractImportedPublications("bookChapters", params, BOOK_CHAPTER_KEYS, countImportedPublications, propertyTitle)
+        bookChapters.each{ if(!it.members) it.members = [] }
         save(bookChapters)
 
-        def dissertation = extractImportedPublications("masterDissertation", params, DISSERTATION_KEYS)
+        def dissertation = extractImportedPublications("masterDissertation", params, DISSERTATION_KEYS, countImportedPublications, propertyTitle)
+        dissertation.each{ if(!it.members) it.members = [] }
         save(dissertation)
 
-        def thesis = extractImportedPublications("thesis", params, DISSERTATION_KEYS)
+        def thesis = extractImportedPublications("thesis", params, DISSERTATION_KEYS, countImportedPublications, propertyTitle)
+        thesis.each{ if(!it.members) it.members = [] }
         save(thesis)
 
-        def conferences = extractImportedPublications("conferences", params, CONFERENCE_KEYS)
+        def conferences = extractImportedPublications("conferences", params, CONFERENCE_KEYS, countImportedPublications, propertyTitle)
+        conferences.each{ if(!it.members) it.members = [] }
         save(conferences)
 
         //#if($researchLine)
-        def researchLines = extractResearchLines("researchLines", params, RESEARCH_LINE_KEYS)
+        def researchLines = extractImportedPublications("researchLines", params, RESEARCH_LINE_KEYS, countImportedElements, ".name")
+        researchLines.each{
+            it.publications = []
+            if(!it.members) it.members = []
+        }
         save(researchLines)
         //#end
 
         //#if($researchProject)
-        def researchProjects = extractResearchProjects("researchProjects", params, RESEARCH_PROJECT_KEYS)
-        saveImportedResearchProjects(researchProjects)
+        def researchProjects = extractImportedPublications("researchProjects", params, RESEARCH_PROJECT_KEYS, countImportedResearchProjects, ".projectName")
+        save(researchProjects)
         //#end
 
         //#if($Orientation)
-        def orientations = extractOrientations("orientations", params, ORIENTATION_KEYS, user)
-        saveImportedOrientations(orientations)
+        def orientations = extractImportedPublications("orientations", params, ORIENTATION_KEYS, countImportedElements, ".tituloTese")
+        orientations.each{ it.orientador = user }
+        save(orientations)
         //#end
 
         return 'default.xml.save.message'
@@ -1046,7 +1011,6 @@ class XMLService {
 
     def save(publications) {
         publications?.each{ pub ->
-            if(!pub?.members) pub?.members = []
             if(pub.id){
                 def originalPub = Publication.get(pub.id)
                 originalPub.properties = pub.properties
@@ -1058,6 +1022,7 @@ class XMLService {
         }
     }
 
+    /* Esse método deve ser chamado pelo controller para o caso de publicações importadas por telas específicas */
     def saveImportedPubsOfType(pubs, type) {
         def objects = []
         pubs?.each{ p ->
@@ -1067,36 +1032,6 @@ class XMLService {
         save(objects)
         return objects
     }
-
-    //#if($researchProject)
-    def saveImportedResearchProjects(researchProjects){
-        researchProjects?.each { rp ->
-            if(rp.id){
-                def originalRP = ResearchProject.get(rp.id)
-                originalRP.properties = rp.properties
-                originalRP.save(flush:true)
-            }
-            else{
-                rp.save(flush:true)
-            }
-        }
-    }
-    //#end
-
-    //#if($Orientation)
-    def saveImportedOrientations(orientations){
-        orientations?.each{ orientation ->
-            if(orientation.id){
-                def originalOrientation = Orientation.get(orientation.id)
-                originalOrientation.properties = orientation.properties
-                originalOrientation.save(flush:true)
-            }
-            else{
-                orientation.save(flush:true)
-            }
-        }
-    }
-    //#end
 
     //#if($researchLine)
     private static checkContResearch(List researchLine, int i, String researchName) {
@@ -1118,5 +1053,5 @@ class XMLService {
         researchLine.name = getAttributeValueFromNode(basicData, "TITULO-DA-LINHA-DE-PESQUISA")
         return researchLine.name
     }
-    //end
+    //#end
 }
