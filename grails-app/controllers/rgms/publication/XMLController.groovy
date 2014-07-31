@@ -109,7 +109,7 @@ class XMLController {
         Node xmlFile ->
             Member user = getCurrentUser()
             def dissertation = XMLService.createDissertation(xmlFile, user.name).obj
-            XMLService.saveImportedPubsOfType([dissertation], "dissertation")
+            XMLService.saveImportedPubsOfType([dissertation], "masterDissertation")
     }
 
     def enviarConferenciaXML() {
@@ -174,7 +174,8 @@ class XMLController {
     private returnWithMessage = { String msg, String controller, publications ->
         //importacao via opcao XMLImport no menu da tela inicial do sistema
         if (controller == "Publication"){
-            request.message = message(code: msg)
+            if(publications.isEmpty()) request.message = message(code: "xml.import.empty.message")
+            else request.message = message(code: msg)
             render(view:"home", model:[publications:publications])
         }
         //importacao via outras telas (ainda precisa corrigir)
