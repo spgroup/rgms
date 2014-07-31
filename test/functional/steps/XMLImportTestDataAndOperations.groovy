@@ -133,9 +133,9 @@ class XMLImportTestDataAndOperations {
         conf.save(flush: true)
 
         //salvar 2 artigos de periodico
-        Periodico journal = new Periodico(ArticleTestDataAndOperations.articles[0])
+        Periodico journal = new Periodico(ArticleTestDataAndOperations.articles[4])
         journal.save(flush: true)
-        journal = new Periodico(ArticleTestDataAndOperations.articles[1])
+        journal = new Periodico(ArticleTestDataAndOperations.articles[5])
         journal.save(flush: true)
     }
 

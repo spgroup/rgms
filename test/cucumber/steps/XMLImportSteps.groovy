@@ -66,15 +66,15 @@ Then(~'^the previously stored publications do not change$'){ ->
     def conf2 = Conferencia.findByTitle(ConferenciaTestDataAndOperations.conferencias[1].title)
     assert ConferenciaTestDataAndOperations.conferenciaCompatibleTo(conf2, conf2.title)
 
-    def journal1 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[0].title)
+    def journal1 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[4].title)
     assert ArticleTestDataAndOperations.compatibleTo(journal1, journal1.title)
 
-    def journal2 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[1].title)
+    def journal2 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[5].title)
     assert ArticleTestDataAndOperations.compatibleTo(journal2, journal2.title)
 
     //caso do sistema já ter um dado periodico
     if(publicationsTotal == 5){
-        def journal3 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[2].title)
+        def journal3 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[6].title)
         assert ArticleTestDataAndOperations.compatibleTo(journal3, journal3.title)
     }
 }
