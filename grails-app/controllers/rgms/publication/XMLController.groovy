@@ -174,7 +174,9 @@ class XMLController {
     private returnWithMessage = { String msg, String controller, publications ->
         //importacao via opcao XMLImport no menu da tela inicial do sistema
         if (controller == "Publication"){
-            if(!publications || publications.isEmpty()) request.message = message(code: "xml.import.empty.message")
+            if(msg == 'default.xml.import.message' && (!publications || publications.isEmpty())){
+                request.message = message(code: "xml.import.empty.message")
+            }
             else request.message = message(code: msg)
             render(view:"home", model:[publications:publications])
         }
