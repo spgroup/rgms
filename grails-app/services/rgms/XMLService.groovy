@@ -800,7 +800,8 @@ class XMLService {
         return result
     }
 
-    private static extractFunders(params,name,i,k){
+    //#if($funder)
+    private static extractFunders(params,name,i,k, project){
         def result = []
         def funders = params.keySet()?.findAll{ it.contains(name+i+".$k")}?.sort()
         if(!funders || funders=="null") return result
@@ -814,10 +815,17 @@ class XMLService {
                 if(value == "null") value = null
                 funder."$fk" = value
             }
-            result += funder
+
+            Funder savedFunder = Funder.findByCode(funder?.code)
+            if(savedFunder) {
+                project.addToFunders(savedFunder)
+            } else {
+                funder.save(flush:true)
+                project.addToFunders(funder)
+            }
         }
-        return result
     }
+    //#end
 
     private static calcImportedPublicationSize(importedKeys, keys){
         def authors = importedKeys.findAll{ it.contains("authors")}
@@ -899,9 +907,7 @@ class XMLService {
                     break
                 //#end
                 //#if($funder)
-                case "funders":
-                    def funders = extractFunders(params,name,i,k)
-                    saveImportedFunders(funders, pub)
+                case "funders": extractFunders(params,name,i,k, pub)
                     break
                 //#end
                 //#if($Orientation)
@@ -962,32 +968,7 @@ class XMLService {
         for(i in 0..n-1){
             String title = params[name+i+".projectName"]
             if(!title || title.isEmpty()) continue
-
-            def pub = new ResearchProject()
-            keys.each{ k -> //"projectName","description", "status", "responsible", "startYear", "endYear", "members", "funders"
-                switch (k){
-                    case "id":
-                    case "startYear":
-                    case "endYear":
-                        def value = params[name+i+".$k"]
-                        if(value!="") pub."$k" = value as int
-                        else pub."$k" = null
-                        break
-                    //#if($researchProject)
-                    case "members": pub."$k" = extractNamesSet(params,name,i,k)
-                        break
-                    //#end
-                    //#if($funder)
-                    case "funders":
-                        def funders = extractFunders(params,name,i,k)
-                        saveImportedFunders(funders, pub)
-                        break
-                    //#end
-                    default: def value = params[name+i+".$k"]
-                        if(value == "null") value = null
-                        pub."$k" =  value
-                }
-            }
+            def pub = fullImportedPublication(keys, params, name, i)
             projects += pub
         }
         return projects
@@ -1097,20 +1078,6 @@ class XMLService {
             }
             else{
                 rp.save(flush:true)
-            }
-        }
-    }
-    //#end
-
-    //#if($funder)
-    public def saveImportedFunders(funders, ResearchProject project){
-        funders?.each(){ f ->
-            Funder funder = Funder.findByCode(f.code)
-            if (funder) {
-                project.addToFunders(funder)
-            } else {
-                f.save(flush:true)
-                project.addToFunders(f)
             }
         }
     }
