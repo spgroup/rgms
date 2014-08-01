@@ -133,9 +133,9 @@ class XMLImportTestDataAndOperations {
         conf.save(flush: true)
 
         //salvar 2 artigos de periodico
-        Periodico journal = new Periodico(ArticleTestDataAndOperations.articles[0])
+        Periodico journal = new Periodico(ArticleTestDataAndOperations.articles[4])
         journal.save(flush: true)
-        journal = new Periodico(ArticleTestDataAndOperations.articles[1])
+        journal = new Periodico(ArticleTestDataAndOperations.articles[5])
         journal.save(flush: true)
     }
 
@@ -179,8 +179,14 @@ class XMLImportTestDataAndOperations {
         def xmlservice = new XMLService()
         ResearchProject rp = new ResearchProject(ResearchProjectTestDadaAndOperations.researchProjects[0])
         //#if($funder)
-        def funder1 = new Funder(FunderTestDataAndOperations.funder[0])
-        xmlservice.saveImportedFunders([funder1], rp)
+        def funder = new Funder(FunderTestDataAndOperations.funder[0])
+        Funder savedFunder = Funder.findByCode(funder?.code)
+        if(savedFunder) {
+            rp.addToFunders(savedFunder)
+        } else {
+            funder.save(flush:true)
+            rp.addToFunders(funder)
+        }
         //#end
         rp.save(flush: true)
 

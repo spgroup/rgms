@@ -18,21 +18,21 @@ class XMLService {
     public static final String PUB_STATUS_DUPLICATED = "duplicated"
 
     //#if($Article)
-    public static final JOURNAL_KEYS = ["title", "publicationDate", "authors", "journal", "volume", "number", "pages"]
+    public static final JOURNAL_KEYS = ["id", "title", "publicationDate", "authors", "journal", "volume", "number", "pages"]
     //#end
-    public static final TOOL_KEYS = ["title", "publicationDate", "authors", "description"]
-    public static final BOOK_KEYS = ["title", "publicationDate", "authors", "publisher", "volume", "pages"]
-    public static final BOOK_CHAPTER_KEYS = ["title", "publicationDate", "authors", "publisher"]
-    public static final DISSERTATION_KEYS = ["title", "publicationDate", "authors", "school"]
-    public static final CONFERENCE_KEYS = ["title", "publicationDate", "authors", "booktitle", "pages"]
+    public static final TOOL_KEYS = ["id", "title", "publicationDate", "authors", "description"]
+    public static final BOOK_KEYS = ["id", "title", "publicationDate", "authors", "publisher", "volume", "pages"]
+    public static final BOOK_CHAPTER_KEYS = ["id", "title", "publicationDate", "authors", "publisher"]
+    public static final DISSERTATION_KEYS = ["id", "title", "publicationDate", "authors", "school"]
+    public static final CONFERENCE_KEYS = ["id", "title", "publicationDate", "authors", "booktitle", "pages"]
     //#if($researchLine)
-    public static final RESEARCH_LINE_KEYS = ["name","description"]
+    public static final RESEARCH_LINE_KEYS = ["id", "name","description"]
     //#end
     //#if($researchProject)
-    public static final RESEARCH_PROJECT_KEYS = ["projectName","description", "status", "responsible", "startYear", "endYear", "members", "funders"]
+    public static final RESEARCH_PROJECT_KEYS = ["id", "projectName","description", "status", "responsible", "startYear", "endYear", "members", "funders"]
     //#end
     //#if($Orientation)
-    public static final ORIENTATION_KEYS = ["tipo", "orientando", "tituloTese", "anoPublicacao", "instituicao", "curso"]
+    public static final ORIENTATION_KEYS = ["id", "tipo", "orientando", "tituloTese", "anoPublicacao", "instituicao", "curso"]
     //#end
 
     /*
@@ -59,7 +59,7 @@ class XMLService {
             flashMessage = 'default.xml.structure.message'
             errorFound = true
         }
-        catch (Exception ex) {
+        catch (Exception) {
             flashMessage = 'default.xml.unknownerror.message'
             errorFound = true
         }
@@ -121,8 +121,8 @@ class XMLService {
         for (Node currentNode : softwares) {
             def newTool = createNewTool(currentNode, authorName)
             def result = checkToolStatus(newTool)
-            if (result?.status && result?.status != XMLService.PUB_STATUS_DUPLICATED) {
-                def obj = newTool.properties.findAll{it.key in XMLService.TOOL_KEYS}
+            if (result?.status && result?.status != PUB_STATUS_DUPLICATED) {
+                def obj = newTool.properties.findAll{it.key in TOOL_KEYS}
                 tools += [obj: obj, status:result.status, id:result.id]
             }
         }
@@ -152,7 +152,7 @@ class XMLService {
 
     static checkToolStatus(Ferramenta tool){
         if(!tool) return null
-        def status = XMLService.PUB_STATUS_STABLE
+        def status = PUB_STATUS_STABLE
         def toolDB = Ferramenta.findByTitle(tool.title)
         if(toolDB) status = checkPublicationStatus(toolDB, tool)
         return [status:status, id:toolDB?.id]
@@ -167,7 +167,7 @@ class XMLService {
             def newBook = createNewBook(currentNode, i, authorName)
             def result = checkBookStatus(newBook)
             if(result?.status && result?.status != PUB_STATUS_DUPLICATED) {
-                def obj = newBook.properties.findAll{it.key in XMLService.BOOK_KEYS}
+                def obj = newBook.properties.findAll{it.key in BOOK_KEYS}
                 booksList += [obj: obj, status:result.status, id:result.id]
             }
             ++i
@@ -211,7 +211,7 @@ class XMLService {
             def newBookChapter = createNewBookChapter(publishedBookChapters, i, authorName)
             def result = checkBookChapterStatus(newBookChapter)
             if(result?.status && result?.status != PUB_STATUS_DUPLICATED) {
-                def obj = newBookChapter.properties.findAll{it.key in XMLService.BOOK_CHAPTER_KEYS}
+                def obj = newBookChapter.properties.findAll{it.key in BOOK_CHAPTER_KEYS}
                 bookChaptersList += [obj: obj, status:result.status, id:result.id]
             }
         }
@@ -262,12 +262,12 @@ class XMLService {
 
         def status = checkDissertationOrThesisStatus(dissertationDB, newDissertation)
         if(status == PUB_STATUS_DUPLICATED) return null
-        def obj = newDissertation.properties.findAll{it.key in XMLService.DISSERTATION_KEYS}
+        def obj = newDissertation.properties.findAll{it.key in DISSERTATION_KEYS}
         return [obj: obj, status:status, id:dissertationDB?.id]
     }
 
     private static createNewDissertation(Node xmlFile, String authorName){
-        def mestrado = xmlFile.depthFirst().find{ it.name() == 'MESTRADO' }
+        def mestrado = xmlFile?.depthFirst()?.find{ it.name() == 'MESTRADO' }
         if(!mestrado) return null
 
         String author = xmlFile.depthFirst().find{it.name() == 'DADOS-GERAIS'}.'@NOME-COMPLETO'
@@ -298,7 +298,7 @@ class XMLService {
         def status = checkDissertationOrThesisStatus(thesisDB, newThesis)
         if(status == PUB_STATUS_DUPLICATED) return null
 
-        def obj = newThesis.properties.findAll{it.key in XMLService.DISSERTATION_KEYS}
+        def obj = newThesis.properties.findAll{it.key in DISSERTATION_KEYS}
         return [obj: obj, status:status, id:thesisDB?.id]
     }
 
@@ -333,7 +333,7 @@ class XMLService {
             def result = checkConferenceStatus(newConference)
 
             if(result?.status && result?.status != PUB_STATUS_DUPLICATED){
-                def obj = newConference.properties.findAll{it.key in XMLService.CONFERENCE_KEYS}
+                def obj = newConference.properties.findAll{it.key in CONFERENCE_KEYS}
                 conferences += [obj: obj, status:result.status, id:result.id]
             }
         }
@@ -384,8 +384,8 @@ class XMLService {
             def newJournal = createNewJournal(publishedArticles, i, authorName)
             def result = checkJournalStatus(newJournal)
 
-            if(result?.status && result?.status!=XMLService.PUB_STATUS_DUPLICATED) {
-                def obj = newJournal.properties.findAll{it.key in XMLService.JOURNAL_KEYS}
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newJournal.properties.findAll{it.key in JOURNAL_KEYS}
                 journals += [obj: obj, status:result.status, id:result.id]
             }
         }
@@ -460,12 +460,12 @@ class XMLService {
     }
 
     private static checkPublicationStatus(Publication pubDB, Publication pub){
-        def status = XMLService.PUB_STATUS_DUPLICATED
+        def status = PUB_STATUS_DUPLICATED
 
         def missingPropertiesDB = pubDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
         def missingProperties = pub.properties.findAll{it.key != 'id' && !it.value}.keySet()
         if(missingPropertiesDB != missingProperties){
-            status = XMLService.PUB_STATUS_TO_UPDATE
+            status = PUB_STATUS_TO_UPDATE
         }
 
         def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
@@ -474,13 +474,13 @@ class XMLService {
         def detailsProperties = pub.properties.findAll{!(it.key in missingPropertiesTotal)}
         def details = detailsProperties.findAll{it.key!='id' && it.key!='publicationDate'}
         if(detailsDB != details){
-            status = XMLService.PUB_STATUS_CONFLICTED
+            status = PUB_STATUS_CONFLICTED
         }
 
-        def date1 = pubDB.publicationDate?.toCalendar().get(Calendar.YEAR)
-        def date2 = pub.publicationDate?.toCalendar().get(Calendar.YEAR)
+        def date1 = pubDB?.publicationDate?.toCalendar()?.get(Calendar.YEAR)
+        def date2 = pub?.publicationDate?.toCalendar()?.get(Calendar.YEAR)
         if(date1 && date2 && date1!=date2){
-            status = XMLService.PUB_STATUS_CONFLICTED
+            status = PUB_STATUS_CONFLICTED
         }
 
         return status
@@ -519,7 +519,7 @@ class XMLService {
         if(author != user.name) return null
 
         def orientations = []
-        Node completedOrientationNode = xmlFile.depthFirst().find{ it.name() == 'ORIENTACOES-CONCLUIDAS' }
+        def completedOrientationNode = xmlFile.depthFirst().find{ it.name() == 'ORIENTACOES-CONCLUIDAS' }
         orientations = createMasterOrientations(orientations, completedOrientationNode, user)
         orientations = createThesisOrientations(orientations, completedOrientationNode, user)
         orientations = createUndergraduateResearch(orientations, completedOrientationNode, user)
@@ -532,8 +532,8 @@ class XMLService {
             def newOrientation = fillOrientationData(orientation, user, "Mestrado")
             def result = checkOrientationStatus(newOrientation, user)
 
-            if(result?.status && result?.status!=XMLService.PUB_STATUS_DUPLICATED) {
-                def obj = newOrientation.properties.findAll{it.key in XMLService.ORIENTATION_KEYS}
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newOrientation.properties.findAll{it.key in ORIENTATION_KEYS}
                 orientations += ["obj": obj, status:result.status, id:result.id]
             }
         }
@@ -546,8 +546,8 @@ class XMLService {
             def newOrientation = fillOrientationData(orientation, user, "Doutorado")
             def result = checkOrientationStatus(newOrientation, user)
 
-            if(result?.status && result?.status!=XMLService.PUB_STATUS_DUPLICATED) {
-                def obj = newOrientation.properties.findAll{it.key in XMLService.ORIENTATION_KEYS}
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newOrientation.properties.findAll{it.key in ORIENTATION_KEYS}
                 orientations += ["obj": obj, status:result.status, id:result.id]
             }
         }
@@ -555,16 +555,16 @@ class XMLService {
     }
 
     static private createUndergraduateResearch(orientations, completedOrientationNode, user){
-        def undergraduateResearch = completedOrientationNode?.getAt("OUTRAS-ORIENTACOES-CONCLUIDAS").findAll{
-            it.children().get(0).'@NATUREZA' == "INICIACAO_CIENTIFICA"
+        def undergraduateResearch = completedOrientationNode?.getAt("OUTRAS-ORIENTACOES-CONCLUIDAS")?.findAll{
+            it.children()?.get(0)?.'@NATUREZA' == "INICIACAO_CIENTIFICA"
         }
 
         for(Node orientation: undergraduateResearch){
             def newOrientation = fillOrientationData(orientation, user, "Iniciação Científica")
             def result = checkOrientationStatus(newOrientation, user)
 
-            if(result?.status && result?.status!=XMLService.PUB_STATUS_DUPLICATED) {
-                def obj = newOrientation.properties.findAll{it.key in XMLService.ORIENTATION_KEYS}
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newOrientation.properties.findAll{it.key in ORIENTATION_KEYS}
                 orientations += [obj: obj, status:result.status, id:result.id]
             }
         }
@@ -573,16 +573,16 @@ class XMLService {
 
     static checkOrientationStatus(Orientation orientation, Member user){
         if(!orientation) return null
-        def status = XMLService.PUB_STATUS_STABLE
+        def status = PUB_STATUS_STABLE
         def orientationDB = Orientation.findByOrientadorAndTituloTese(user, orientation.tituloTese)
 
         if(orientationDB){
-            status = XMLService.PUB_STATUS_DUPLICATED
+            status = PUB_STATUS_DUPLICATED
 
             def missingPropertiesDB = orientationDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
             def missingProperties = orientation.properties.findAll{it.key != 'id' && !it.value}.keySet()
             if(missingPropertiesDB != missingProperties){
-                status = XMLService.PUB_STATUS_TO_UPDATE
+                status = PUB_STATUS_TO_UPDATE
             }
 
             def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
@@ -591,7 +591,7 @@ class XMLService {
             def detailsProperties = orientation.properties.findAll{!(it.key in missingPropertiesTotal)}
             def details = detailsProperties.findAll{it.key!='id'}
             if(detailsDB != details){
-                status = XMLService.PUB_STATUS_CONFLICTED
+                status = PUB_STATUS_CONFLICTED
             }
         }
         return [status:status, id:orientationDB?.id]
@@ -626,8 +626,8 @@ class XMLService {
                 def newResearchLine = createNewResearchLine(j)
                 def result = checkResearchLineStatus(newResearchLine)
 
-                if(result?.status && result?.status!=XMLService.PUB_STATUS_DUPLICATED) {
-                    def obj = newResearchLine.properties.findAll{it.key in XMLService.RESEARCH_LINE_KEYS}
+                if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                    def obj = newResearchLine.properties.findAll{it.key in RESEARCH_LINE_KEYS}
                     researchLinesList += [obj: obj, status:result.status, id:result.id]
                 }
             }
@@ -646,16 +646,16 @@ class XMLService {
 
     static checkResearchLineStatus(ResearchLine researchLine){
         if(!researchLine) return null
-        def status = XMLService.PUB_STATUS_STABLE
+        def status = PUB_STATUS_STABLE
         def rlDB = ResearchLine.findByName(researchLine.name)
 
         if(rlDB){
-            status = XMLService.PUB_STATUS_DUPLICATED
+            status = PUB_STATUS_DUPLICATED
 
             def missingPropertiesDB = rlDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
             def missingProperties = researchLine.properties.findAll{it.key != 'id' && !it.value}.keySet()
             if(missingPropertiesDB != missingProperties){
-                status = XMLService.PUB_STATUS_TO_UPDATE
+                status = PUB_STATUS_TO_UPDATE
             }
 
             def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
@@ -664,7 +664,7 @@ class XMLService {
             def detailsProperties = researchLine.properties.findAll{!(it.key in missingPropertiesTotal)}
             def details = detailsProperties.findAll{it.key!='id'}
             if(detailsDB != details){
-                status = XMLService.PUB_STATUS_CONFLICTED
+                status = PUB_STATUS_CONFLICTED
             }
         }
         return [status:status, id:rlDB?.id]
@@ -683,8 +683,8 @@ class XMLService {
             def newProject = createNewResearchProject(project)
             def result = checkResearchProjectStatus(newProject)
 
-            if(result?.status && result?.status!=XMLService.PUB_STATUS_DUPLICATED) {
-                def obj = newProject.properties.findAll{ it.key in XMLService.RESEARCH_PROJECT_KEYS }
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newProject.properties.findAll{ it.key in RESEARCH_PROJECT_KEYS }
                 researchProjectsList += [obj: obj, status:result.status, id:result.id]
             }
         }
@@ -693,15 +693,15 @@ class XMLService {
 
     static checkResearchProjectStatus(ResearchProject researchProject){
         if(!researchProject) return null
-        def status = XMLService.PUB_STATUS_STABLE
+        def status = PUB_STATUS_STABLE
         def researchProjectDB = ResearchProject.findByProjectName(researchProject.projectName)
 
         if(researchProjectDB){
-            status = XMLService.PUB_STATUS_DUPLICATED
+            status = PUB_STATUS_DUPLICATED
             def missingPropertiesDB = researchProjectDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
             def missingProperties = researchProject.properties.findAll{it.key != 'id' && !it.value}.keySet()
             if(missingPropertiesDB != missingProperties){
-                status = XMLService.PUB_STATUS_TO_UPDATE
+                status = PUB_STATUS_TO_UPDATE
             }
 
             def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
@@ -710,7 +710,7 @@ class XMLService {
             def detailsProperties = researchProject.properties.findAll{!(it.key in missingPropertiesTotal)}
             def details = detailsProperties.findAll{it.key!='id'}
             if(detailsDB != details){
-                status = XMLService.PUB_STATUS_CONFLICTED
+                status = PUB_STATUS_CONFLICTED
             }
         }
 
@@ -800,7 +800,8 @@ class XMLService {
         return result
     }
 
-    private static extractFunders(params,name,i,k){
+    //#if($funder)
+    private static extractFunders(params,name,i,k, project){
         def result = []
         def funders = params.keySet()?.findAll{ it.contains(name+i+".$k")}?.sort()
         if(!funders || funders=="null") return result
@@ -814,12 +815,22 @@ class XMLService {
                 if(value == "null") value = null
                 funder."$fk" = value
             }
-            result += funder
-        }
-        return result
-    }
 
-    private static calcImportedPublicationSize(importedKeys, keys){
+            def projectFunder = project.funders?.find{ it.code = funder.code }
+            if(!projectFunder) {
+                Funder savedFunder = Funder.findByCode(funder?.code)
+                if (savedFunder) {
+                    project.addToFunders(savedFunder)
+                } else {
+                    funder.save(flush: true)
+                    project.addToFunders(funder)
+                }
+            }
+        }
+    }
+    //#end
+
+    private def countImportedPublications = { importedKeys, keys ->
         def authors = importedKeys.findAll{ it.contains("authors")}
         def authorsTotal = (authors) ? authors.size() : 0
         def n = (importedKeys.size()-authorsTotal)/(keys.size()-1)
@@ -842,7 +853,7 @@ class XMLService {
             case "conferences":
                 if(properties) return new Conferencia(properties)
                 else return new Conferencia()
-            case "dissertation":
+            case "masterDissertation":
                 if(properties) return new Dissertacao(properties)
                 else return new Dissertacao()
             case "thesis":
@@ -876,29 +887,29 @@ class XMLService {
         }
     }
 
-    //esse método deveria funcionar com ResearchProject, mas não funciona
     private static fullImportedPublication(keys, params, name, i){
         def pub = getObject(name, null)
         keys.each{ k ->
             switch (k){
-                case "publicationDate": pub."$k" = XMLService.extractDate(params,name,i,k)
+                case "publicationDate": pub."$k" = extractDate(params,name,i,k)
                     break
-                case "authors": pub."$k" = XMLService.extractNamesSet(params,name,i,k)
+                case "authors": pub."$k" = extractNamesSet(params,name,i,k)
                     break
                 case "id":
                 case "volume":
                 case "number":
                 case "startYear":
-                case "endYear": pub."$k" = params[name+i+".$k"] as int
+                case "endYear":
+                    def value = params[name+i+".$k"]
+                    if(value!="") pub."$k" = value as int
+                    else pub."$k" = null
                     break
                 //#if($researchProject)
-                case "members": pub."$k" = XMLService.extractNamesSet(params,name,i,k)
+                case "members": pub."$k" = extractNamesSet(params,name,i,k)
                     break
                 //#end
                 //#if($funder)
-                case "funders":
-                    def funders = XMLService.extractFunders(params,name,i,k)
-                    saveImportedFunders(funders, pub)
+                case "funders": extractFunders(params,name,i,k, pub)
                     break
                 //#end
                 //#if($Orientation)
@@ -913,106 +924,30 @@ class XMLService {
         return pub
     }
 
-    private def extractImportedPublications(name, params, keys){
+    private def extractImportedPublications(name, params, keys, calcImportedPublicationSize, propertyTitle){
         def pubs = []
         def pubKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
 
         if(!pubKeySet || !keys) return pubs
 
-        def n = XMLService.calcImportedPublicationSize(pubKeySet, keys)
+        def n = calcImportedPublicationSize(pubKeySet, keys)
         for(i in 0..n-1){
-            String title = params[name+i+".title"]
+            String title = params[name+i+propertyTitle]
             if(!title || title.isEmpty()) continue
-            def pub = XMLService.fullImportedPublication(keys, params, name, i)
+            def pub = fullImportedPublication(keys, params, name, i)
             pubs += pub
         }
         return pubs
     }
 
-    private def extractDissertation(obj, name, params, keys){
-        def dissertationKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
-
-        if(dissertationKeySet.isEmpty()) return null
-        obj.title = params[name+"0.title"]
-        if(!obj.title || obj.title.isEmpty()) return null
-
-        keys?.each{ k -> //"title", "publicationDate", "authors", "school"
-            switch (k){
-                case "publicationDate": obj."$k" = XMLService.extractDate(params,name,0,k)
-                    break
-                case "authors": obj."$k" = XMLService.extractNamesSet(params,name,0,k)
-                    break
-                case "id": obj."$k" = params[name+"0.$k"] as int
-                    break
-                default:
-                    def value = params[name+"0.$k"]
-                    if(value == "null") value = null
-                    obj."$k" = value
-            }
-        }
-
-        return obj
-    }
-
-    //#if($researchLine)
-    private def extractResearchLines(name, params, keys){
-        def lines = []
-        def linesKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
-
-        if(!linesKeySet || !keys) return lines
-
-        def n = linesKeySet.size()/keys.size()
-        for(i in 0..n-1){
-            String title = params[name+i+".name"]
-            if(!title || title.isEmpty()) continue
-            def pub = XMLService.fullImportedPublication(keys, params, name, i)
-            pub.publications = []
-            lines += pub
-        }
-        return lines
+    //#if($researchLine || $Orientation)
+    private def countImportedElements = { importedKeys, keys ->
+        def n = importedKeys?.size()/keys?.size()
     }
     //#end
 
     //#if($researchProject)
-    private def extractResearchProjects(name, params, keys){
-        def projects = []
-        def projectKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
-
-        if(!projectKeySet || !keys) return projects
-
-        def n = XMLService.calcImportedResearchProjects(projectKeySet,keys)
-        for(i in 0..n-1){
-            String title = params[name+i+".projectName"]
-            if(!title || title.isEmpty()) continue
-
-            def pub = new ResearchProject()
-            keys.each{ k -> //"projectName","description", "status", "responsible", "startYear", "endYear", "members", "funders"
-                switch (k){
-                    case "id":
-                    case "startYear":
-                    case "endYear": pub."$k" = params[name+i+".$k"] as int
-                        break
-                    //#if($researchProject)
-                    case "members": pub."$k" = XMLService.extractNamesSet(params,name,i,k)
-                        break
-                    //#end
-                    //#if($funder)
-                    case "funders":
-                        def funders = XMLService.extractFunders(params,name,i,k)
-                        saveImportedFunders(funders, pub)
-                        break
-                    //#end
-                    default: def value = params[name+i+".$k"]
-                        if(value == "null") value = null
-                        pub."$k" =  value
-                }
-            }
-            projects += pub
-        }
-        return projects
-    }
-
-    private static calcImportedResearchProjects(importedKeys, keys){
+    private def countImportedResearchProjects = { importedKeys, keys ->
         def funders = importedKeys.findAll{ it.contains("funders")}
         def fundersTotal = (funders) ? funders.size() : 0
         def members = importedKeys.findAll{ it.contains("members")}
@@ -1021,62 +956,57 @@ class XMLService {
     }
     //#end
 
-    //#if(Orientation)
-    private def extractOrientations(name, params, keys, user){
-        def orientations = []
-        def orientationKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
-
-        if(!orientationKeySet || !keys) return orientations
-
-        def n = orientationKeySet.size()/keys.size()
-        for(i in 0..n-1){
-            String title = params[name+i+".tituloTese"]
-            if(!title || title.isEmpty()) continue
-            def orientation = XMLService.fullImportedPublication(keys, params, name, i)
-            orientation.orientador = user
-            orientations += orientation
-        }
-        return orientations
-    }
-    //#end
-
     def saveImportedPublications(params, user) {
+        def propertyTitle = ".title"
+
         //#if($Article)
-        def journals = extractImportedPublications("journals", params, XMLService.JOURNAL_KEYS)
+        def journals = extractImportedPublications("journals", params, JOURNAL_KEYS, countImportedPublications, propertyTitle)
+        journals.each{ if(!it.members) it.members = [] }
         save(journals)
         //#end
 
-        def tools = extractImportedPublications("tools", params, TOOL_KEYS)
+        def tools = extractImportedPublications("tools", params, TOOL_KEYS, countImportedPublications, propertyTitle)
+        tools.each{ if(!it.members) it.members = [] }
         save(tools)
 
-        def books = extractImportedPublications("books", params, BOOK_KEYS)
+        def books = extractImportedPublications("books", params, BOOK_KEYS, countImportedPublications, propertyTitle)
+        books.each{ if(!it.members) it.members = [] }
         save(books)
 
-        def bookChapters = extractImportedPublications("bookChapters", params, BOOK_CHAPTER_KEYS)
+        def bookChapters = extractImportedPublications("bookChapters", params, BOOK_CHAPTER_KEYS, countImportedPublications, propertyTitle)
+        bookChapters.each{ if(!it.members) it.members = [] }
         save(bookChapters)
 
-        def dissertation = extractDissertation(new Dissertacao(), "masterDissertation", params, DISSERTATION_KEYS)
-        if (dissertation) save([dissertation])
+        def dissertation = extractImportedPublications("masterDissertation", params, DISSERTATION_KEYS, countImportedPublications, propertyTitle)
+        dissertation.each{ if(!it.members) it.members = [] }
+        save(dissertation)
 
-        def thesis = extractDissertation(new Tese(), "thesis", params, DISSERTATION_KEYS)
-        if (thesis) save([thesis])
+        def thesis = extractImportedPublications("thesis", params, DISSERTATION_KEYS, countImportedPublications, propertyTitle)
+        thesis.each{ if(!it.members) it.members = [] }
+        save(thesis)
 
-        def conferences = extractImportedPublications("conferences", params, CONFERENCE_KEYS)
+        def conferences = extractImportedPublications("conferences", params, CONFERENCE_KEYS, countImportedPublications, propertyTitle)
+        conferences.each{ if(!it.members) it.members = [] }
         save(conferences)
 
         //#if($researchLine)
-        def researchLines = extractResearchLines("researchLines", params, RESEARCH_LINE_KEYS)
+        def researchLines = extractImportedPublications("researchLines", params, RESEARCH_LINE_KEYS, countImportedElements, ".name")
+        researchLines.each{
+            it.publications = []
+            if(!it.members) it.members = []
+        }
         save(researchLines)
         //#end
 
         //#if($researchProject)
-        def researchProjects = extractResearchProjects("researchProjects", params, RESEARCH_PROJECT_KEYS)
-        saveImportedResearchProjects(researchProjects)
+        def researchProjects = extractImportedPublications("researchProjects", params, RESEARCH_PROJECT_KEYS, countImportedResearchProjects, ".projectName")
+        save(researchProjects)
         //#end
 
         //#if($Orientation)
-        def orientations = extractOrientations("orientations", params, ORIENTATION_KEYS, user)
-        saveImportedOrientations(orientations)
+        def orientations = extractImportedPublications("orientations", params, ORIENTATION_KEYS, countImportedElements, ".tituloTese")
+        orientations.each{ it.orientador = user }
+        save(orientations)
         //#end
 
         return 'default.xml.save.message'
@@ -1084,7 +1014,6 @@ class XMLService {
 
     def save(publications) {
         publications?.each{ pub ->
-            if(!pub?.members) pub?.members = []
             if(pub.id){
                 def originalPub = Publication.get(pub.id)
                 originalPub.properties = pub.properties
@@ -1096,6 +1025,7 @@ class XMLService {
         }
     }
 
+    /* Esse método deve ser chamado pelo controller para o caso de publicações importadas por telas específicas */
     def saveImportedPubsOfType(pubs, type) {
         def objects = []
         pubs?.each{ p ->
@@ -1105,50 +1035,6 @@ class XMLService {
         save(objects)
         return objects
     }
-
-    //#if($researchProject)
-    def saveImportedResearchProjects(researchProjects){
-        researchProjects?.each { rp ->
-            if(rp.id){
-                def originalRP = ResearchProject.get(rp.id)
-                originalRP.properties = rp.properties
-                originalRP.save(flush:true)
-            }
-            else{
-                rp.save(flush:true)
-            }
-        }
-    }
-    //#end
-
-    //#if($funder)
-    public def saveImportedFunders(funders, ResearchProject project){
-        funders?.each(){ f ->
-            Funder funder = Funder.findByCode(f.code)
-            if (funder) {
-                project.addToFunders(funder)
-            } else {
-                f.save(flush:true)
-                project.addToFunders(f)
-            }
-        }
-    }
-    //#end
-
-    //#if($Orientation)
-    def saveImportedOrientations(orientations){
-        orientations?.each{ orientation ->
-            if(orientation.id){
-                def originalOrientation = Orientation.get(orientation.id)
-                originalOrientation.properties = orientation.properties
-                originalOrientation.save(flush:true)
-            }
-            else{
-                orientation.save(flush:true)
-            }
-        }
-    }
-    //#end
 
     //#if($researchLine)
     private static checkContResearch(List researchLine, int i, String researchName) {
@@ -1170,5 +1056,5 @@ class XMLService {
         researchLine.name = getAttributeValueFromNode(basicData, "TITULO-DA-LINHA-DE-PESQUISA")
         return researchLine.name
     }
-    //end
+    //#end
 }
