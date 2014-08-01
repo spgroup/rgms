@@ -1,6 +1,7 @@
 import pages.ferramenta.*
 import rgms.publication.Ferramenta
 import steps.FerramentaTestDataAndOperations
+import steps.PublicationTestDataAndOperations
 import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
@@ -121,7 +122,7 @@ Then(~'^I am still on ferramenta page$') {->
 // new ferramenta filled with user data by default
 Then(~'^I see my user listed as an author member of ferramenta by default$') {->
     at FerramentaCreatePage
-    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+    assert PublicationTestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 // edit ferramenta

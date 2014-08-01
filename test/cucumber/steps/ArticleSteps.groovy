@@ -8,8 +8,8 @@ import pages.PublicationsPage
 import rgms.publication.Periodico
 import rgms.tool.TwitterTool
 import steps.ArticleTestDataAndOperations
-import steps.TestDataAndOperationsFacebook
-import steps.TestDataAndOperationsPublication
+import steps.FacebookTestDataAndOperations
+import steps.PublicationTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -247,7 +247,7 @@ Given(~'^I am at the Add Article Page$') { ->
 
 
 When(~'^I share the article entitled "([^"]*)" on facebook$') { String title ->
-    TestDataAndOperationsFacebook.ShareArticleOnFacebook(title)
+    FacebookTestDataAndOperations.ShareArticleOnFacebook(title)
 }
 
 //#end
@@ -279,7 +279,7 @@ def Login() {
  */
 Then(~'^I see my user listed as an author member of article by default$') { ->
     at ArticleCreatePage
-    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+    assert PublicationTestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 

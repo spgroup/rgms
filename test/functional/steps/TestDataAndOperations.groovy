@@ -54,7 +54,7 @@ class TestDataAndOperations {
         BibtexFile bibtexFile = bibtexFileController.transform(new File(path))
     }
 
-   /* static public def findResearchLineByName(String name) {
+   /* static public def findResearchLineByNameOrientation(String name) {
         researchLines.find { researchLine ->
             researchLine.name == name
         }
@@ -192,7 +192,7 @@ class TestDataAndOperations {
 
  /*   static public void createResearchLine(String name) {
         def cont = new ResearchLineController()
-        def research = TestDataAndOperations.findResearchLineByName(name)
+        def research = TestDataAndOperations.findResearchLineByNameOrientation(name)
         cont.params.name = research.name
         cont.params.description = research.description
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
@@ -205,7 +205,7 @@ class TestDataAndOperations {
 >>>>>>> HEAD~5
         def inserted = ResearchLine.findByName(name)
         if (!inserted) {
-            //def research = TestDataAndOperations.findResearchLineByName(name)
+            //def research = TestDataAndOperations.findResearchLineByNameOrientation(name)
             ResearchLine rl = new ResearchLine()
             rl.setName(name)
             rl.setDescription(description)

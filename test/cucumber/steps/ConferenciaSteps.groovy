@@ -5,8 +5,8 @@ import pages.LoginPage
 import pages.PublicationsPage
 import rgms.member.Member
 import rgms.publication.Conferencia
+import steps.PublicationTestDataAndOperations
 import steps.TestDataAndOperations
-import steps.TestDataAndOperationsPublication
 import steps.ConferenciaTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -101,7 +101,7 @@ Then(~'^I can remove one conferencia$') {->
 
 Then(~'^I see my user listed as an author member of conferencia by default$') {->
     at ConferenciaCreatePage
-    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+    assert PublicationTestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 Then(~'^I am back at the publications and conferencias menu$') {->

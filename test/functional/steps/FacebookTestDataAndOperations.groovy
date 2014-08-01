@@ -10,7 +10,7 @@ import rgms.publication.PublicationController
  * Time: 22:47
  * To change this template use File | Settings | File Templates.
  */
-class TestDataAndOperationsFacebook {
+class FacebookTestDataAndOperations {
 
     static public void ShareArticleOnFacebook(String title){
         def member = new Member()

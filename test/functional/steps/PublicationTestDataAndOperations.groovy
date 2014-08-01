@@ -5,7 +5,7 @@ import rgms.member.*
 import rgms.publication.PublicationController
 import rgms.publication.XMLController
 
-class TestDataAndOperationsPublication {
+class PublicationTestDataAndOperations {
 
     static public boolean containsUser(members){
         def userData = User.findByUsername('admin')?.author?.id.toString()

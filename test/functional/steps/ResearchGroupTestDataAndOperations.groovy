@@ -10,7 +10,7 @@ import rgms.member.ResearchGroupController
  * Time: 21:43
  * To change this template use File | Settings | File Templates.
  */
-class TestDataAndOperationsResearchGroup {
+class ResearchGroupTestDataAndOperations {
 
     static public void createResearchGroup(String name, description) {
         def researchGroupController = new ResearchGroupController()

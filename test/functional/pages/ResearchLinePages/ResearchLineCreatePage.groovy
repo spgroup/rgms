@@ -1,6 +1,8 @@
 package pages.ResearchLinePages
 
 import geb.Page
+import steps.ResearchGroupTestDataAndOperations
+import steps.ResearchLineTestDataAndOperations
 import steps.TestDataAndOperationsResearchLine
 
 
@@ -16,7 +18,7 @@ class ResearchLineCreatePage extends Page {
 
 	def fillResearchLineDetails() {
 		def name = "Modelo Cascata Renovado"
-		def description = TestDataAndOperationsResearchLine.findResearchLineByName(name).description
+		def description = ResearchLineTestDataAndOperations.findResearchLineByNameOrientation(name).description
 		$("form").name = name
 		$("form").description = description 
 		assert $("form").name == name  
@@ -26,7 +28,7 @@ class ResearchLineCreatePage extends Page {
 
 	def createsResearchLine(String name)
 	{
-		def research = TestDataAndOperationsResearchLine.findResearchLineByName(name)
+		def research = ResearchLineTestDataAndOperations.findResearchLineByNameOrientation(name)
 		$("form").name = research.name
 		$("form").description = research.description
         $("input", name: "create").click()

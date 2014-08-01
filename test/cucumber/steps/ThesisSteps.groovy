@@ -6,7 +6,7 @@ import pages.thesis.ThesisCreatePage
 import pages.thesis.ThesisShowPage
 import rgms.authentication.User
 import rgms.publication.Tese
-import steps.TestDataAndOperationsPublication
+import steps.PublicationTestDataAndOperations
 import steps.ThesisTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -79,7 +79,7 @@ When(~'^I select the new thesis option at the thesis page$') { ->
  */
 Then(~'^I see my user listed as an author member of thesis by default$') { ->
     at ThesisCreatePage
-    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+    assert PublicationTestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 Then(~'^I see my school name as school of thesis by default$') { ->

@@ -10,10 +10,9 @@ import rgms.publication.*
 import rgms.researchProject.ResearchProject
 import steps.ArticleTestDataAndOperations
 import steps.ConferenciaTestDataAndOperations
+import steps.PublicationTestDataAndOperations
 import steps.ResearchLineTestDataAndOperations
 import steps.ResearchProjectTestDadaAndOperations
-import steps.TestDataAndOperationsPublication
-import steps.TestDataAndOperationsResearchLine
 import steps.XMLImportTestDataAndOperations
 
 import pages.XMLImportPage
@@ -357,7 +356,7 @@ Given(~'^The system has some publications stored $'){ ->
 }
 
 When(~'^ I upload the file "([^"]*)" $') { String typeFile ->
-    TestDataAndOperationsPublication.uploadPublication(typeFile)
+    PublicationTestDataAndOperations.uploadPublication(typeFile)
     PublicationController controllerP = new PublicationController()
     status = controllerP.checkTypeFile(typeFile)
     assert status == false
