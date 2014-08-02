@@ -66,6 +66,9 @@ class Member {
     }
 
     String toString(){return this.name}
-    
+
+    boolean sendEmail(){
+        return false;
+    }
   
 }

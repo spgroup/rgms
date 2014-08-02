@@ -2,7 +2,7 @@ package steps
 
 import rgms.authentication.User
 import rgms.member.MemberController
-
+import rgms.member.Member
 /**
  * Created with IntelliJ IDEA.
  * User: jucemberg
@@ -15,7 +15,7 @@ class MemberTestDataAndOperations {
 
     //TODO member não tem username!
     static members = [
-            [name: "Rodolfo", username: "usernametest", email: "rodolfofake@gmail.com",
+            [name: "Rodolfo", username: "usernametest",  email: "rodolfofake@gmail.com",
                     status: "Graduate Student", university: "UFPE", enabled: true
             ],
             [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
@@ -25,9 +25,49 @@ class MemberTestDataAndOperations {
                     status: "Graduate Student", university: "UFPE", enabled: true
             ]]
 
-    static public def findByUsername(String username) {
+//#if ($memberListAndPageImprovement)
+
+    static newMembers = [
+            [name: "Rodolfo",  email: "rodolfofake@gmail.com",
+             status: "Graduate Student", university: "UFPE", enabled: false
+            ],
+            [name: "Rebeca Souza",  email: "rsa2fake@cin.ufpe.br",
+             status: "Graduate Student", university: "UFPE", enabled: false
+            ],
+            [name: "Rubens Lopes",  email: "rlfsfake@cin.ufpe.br",
+             status: "Graduate Student", university: "UFPE", enabled: false
+            ],
+            [name: "Alvaro Joao",  email: "ajsss@cin.ufpe.br",
+             status: "Graduate Student", university: "UFPE", enabled: false
+            ]
+            ]
+
+    static public def sendEmailToMember(String username) {
+        Member.sendEmail()
+    }
+
+    static public def orderMembers(int number,String attribute) {
+        int countMember = newMembers.sort{member ->
+            member.name.hashCode()
+        }.size()
+        assert countMember,number
+    }
+
+    static public def orderNewMembersFirst(int number) {
+      int countNewMember = newMembers.find{member ->
+            member.enabled==false
+        }.size()
+
+        assert countNewMember,number
+    }
+
+
+
+    //#end
+
+    static public def findByEmail(String email) {
         members.find { member ->
-            member.username == username
+            member.email == email
         }
     }
 
@@ -39,12 +79,12 @@ class MemberTestDataAndOperations {
         }
     }
 
-    static public void createMember(String username, String phone) {
+    static public void createMember(String email, String phone) {
         def cont = new MemberController()
         if (phone.equals("")) {
-            cont.params << findByUsername(username)
+            cont.params << findByEmail(email)
         } else {
-            cont.params << [username: username, phone: phone]
+            cont.params << [username: email, phone: phone]
         }
         cont.create()
         cont.save()
@@ -52,6 +92,7 @@ class MemberTestDataAndOperations {
     }
 
     //TODO evitar duplicação, depois de resolver toda a confusão conceitual entre user vs member
+
     static public void createMemberWithEmail(String name, String email) {
         def cont = new MemberController()
         cont.params << findByName(name) << [email: email]
@@ -78,4 +119,5 @@ class MemberTestDataAndOperations {
         }
         return false;
     }
+
 }

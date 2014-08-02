@@ -18,6 +18,21 @@ class MemberListPage extends Page {
     static content = {
     }
 
+    def clickOnUsernameOrder(){
+        $('a[href*="username"]').click()
+    }
+    def clickOnName(String id){
+        $('a[href*="show/'+id+'"]').click()
+    }
+
+    def checkLogoutLink(){
+        return $('a[href*="signOut"]').size()!=1
+    }
+
+    def returnNumberOfNewMembers(){
+
+        return $('div.list:first table tbody tr').size()
+    }
     def getMenuOption(String option) {
         $("div.nav a", text: option)
     }
@@ -25,5 +40,13 @@ class MemberListPage extends Page {
     def selectMember(String member) {
         $("a", text: member).click()
     }
+
+    //#if ($memberListAndPageImprovement)
+    def orderMemberByName() {
+        $("th", text: "Name").click()
+    }
+
+
+    //#end
 
 }

@@ -203,7 +203,7 @@ class ResearchGroupController {
     private Set refreshMemberList() {
         def members = [] as Set
 
-        if (request.post == false) {
+        if (!request.post) {
             session["groups"] = ResearchGroup.list()?.collect { it.id }
         } else {
             addOrRemoveGroupsOfSession()
@@ -233,15 +233,19 @@ class ResearchGroupController {
             def member = Member.get(memberId)
             assert member != null
             if (member.getEmail()) {
-                def email = member.getEmail()
-                def mailSender = grailsApplication.config.grails.mail.username
-                def title = message(code: 'mail.title.researchgroup.child')
-                def content = message(code: 'mail.body.researchgroup.child', args: [member.name, researchGroup.getChildOf().getName()])
-
-                EmailService emailService = new EmailService()
-                emailService.sendEmail(email, mailSender, title, content)
+                sendEmailByMemberAndResearchGroup(member, researchGroup)
             }
         }
+    }
+
+    private void sendEmailByMemberAndResearchGroup(Member member, researchGroup) {
+        def email = member.getEmail()
+        def mailSender = grailsApplication.config.grails.mail.username
+        def title = message(code: 'mail.title.researchgroup.child')
+        def content = message(code: 'mail.body.researchgroup.child', args: [member.name, researchGroup.getChildOf().getName()])
+
+        EmailService emailService = new EmailService()
+        emailService.sendEmail(email, mailSender, title, content)
     }
 
     boolean isChildOfResearchGroupChanged(researchGroupInstance, newResearchGroupChildOf) {
@@ -253,9 +257,14 @@ class ResearchGroupController {
 
     def updateNewsFromTwitter() {
         def researchGroupInstance = ResearchGroup.get(params.id)
+        newControllerByTwitterAndResearchGroup(researchGroupInstance)
+        researchGroupInstance.save()
+        redirect(action: "show", id: researchGroupInstance.id)
+    }
+
+    private static void  newControllerByTwitterAndResearchGroup(researchGroupInstance) {
         TwitterConnection twConn = new TwitterConnection()
         List<Status> timeline = twConn.getTimeLine(researchGroupInstance.twitter)
-
         timeline.each {
             def newContr = new NewsController()
             newContr.params << [description: it.getText(), date: it.getCreatedAt(), researchGroup: researchGroupInstance]
@@ -263,7 +272,5 @@ class ResearchGroupController {
             newContr.saveFromTwitter()
             newContr.response.reset()
         }
-        researchGroupInstance.save()
-        redirect(action: "show", id: researchGroupInstance.id)
     }
 }

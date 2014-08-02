@@ -1,6 +1,8 @@
 import pages.LoginPage
 import pages.RegisterPage
 import pages.member.MemberCreatePage
+import pages.member.MemberListPage
+import pages.member.MemberPage
 import pages.member.MemberViewPage
 import rgms.authentication.User
 import rgms.member.Member
@@ -8,26 +10,14 @@ import steps.MemberTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
-Given(~'^the system has no member with username "([^"]*)"$') { String username ->
-    user = User.findByUsername(username);
-    member = user?.author
-    assert member == null
-}
 
-When(~'^I create a member with username "([^"]*)"$') { String username ->
-    MemberTestDataAndOperations.createMember(username, "")
-}
+
 
 When(~'^I create a member with username, phone "([^"]*)" "([^"]*)"$') { String username, phone ->
     MemberTestDataAndOperations.createMember(username, phone)
 }
 
-Then(~'^the member with username "([^"]*)" is properly stored by the system$') { String username ->
-    user = User.findByUsername(username);
-    member = user?.author
-    //assert TestDataAndOperations.memberCompatibleTo(member, username)
-    assert member != null
-}
+
 
 Then(~'^the system has no member with a username "([^"]*)"$') { String username ->
     user = User.findByUsername(username);
@@ -35,16 +25,9 @@ Then(~'^the system has no member with a username "([^"]*)"$') { String username 
     assert member == null
 }
 
-Given(~'^I am at the login page$') { ->
-    to LoginPage
-    at LoginPage
-    //assert (page.flashmessage?.size() == 0)
-    //assert (page.flashmessage == null)
-}
 
-When(~'^I fill username and password with "([^"]*)" and "([^"]*)"$') { String login, password ->
-    page.fillLoginData(login, password)
-}
+
+
 
 Then(~'^I am still on the login page with an error message$') { ->
     at LoginPage
@@ -93,6 +76,7 @@ Then(~'^the member with "([^"]*)" doesnt exist$') { String username ->
 When(~'^I create the member with username "([^"]*)"$') { String username ->
     MemberTestDataAndOperations.createMember(username, "")
 }
+
 
 Then(~'^the member "([^"]*)" is not registered$') { String username ->
     users = User.findAllByUsername(username);
@@ -192,3 +176,124 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     //member = Member.findByEmail(email)
     //assert member.name == name
 }
+
+
+
+//#if ($memberListAndPageImprovement)
+
+
+
+
+
+
+Given(~'^I am at the member List page$'){ ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    to MemberListPage
+    at MemberListPage
+
+}
+And(~'^there is "([^"]*)" members to order by name$'){String numberOfMembers ->
+    assert Integer.parseInt(numberOfMembers)==MemberTestDataAndOperations.members.size()
+}
+
+
+When(~'^I click the attribute username of member$'){ ->
+
+    at MemberListPage
+    page.clickOnUsernameOrder()
+    at MemberListPage
+}
+
+
+Then(~'^the system will display the list of "([^"]*)" members orderned$'){String numberOfMembers ->
+    at MemberListPage
+    MemberTestDataAndOperations.orderMembers(Integer.parseInt(numberOfMembers),"username")
+
+}
+
+
+Given(~'^the system has no member with username "([^"]*)"$') { String username ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    user = User.findByUsername(username);
+    member = user?.author
+    assert member == null
+    ok = MemberTestDataAndOperations.sendEmailToMember(username)
+    assert ok== true
+}
+
+When(~'^I create a member with username "([^"]*)"$') { String username ->
+    MemberTestDataAndOperations.createMember(username, "")
+}
+
+Then(~'^the member with username "([^"]*)" is properly stored by the system$') { String username ->
+    user = User.findByUsername(username);
+    member = user?.author
+    //assert TestDataAndOperations.memberCompatibleTo(member, username)
+    assert member != null
+}
+
+And(~'^the system will send a welcoming email to the new "([^"]*)"$'){String username ->
+    ok = MemberTestDataAndOperations.sendEmailToMember(username)
+    assert ok== true
+}
+
+
+Given(~'^the administrator logs at system$'){ ->
+
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+
+}
+And(~'^there is "([^"]*)" of new not approved members$'){String numberOfMembers ->
+
+   assert Integer.parseInt(numberOfMembers)==MemberTestDataAndOperations.newMembers.size()
+}
+
+/*When(~'^I am at the member List page$'){
+    to MemberListPage
+    at MemberListPage
+}*/
+
+Then(~'^I see the "([^"]*)" new and the not approved members$'){ String number ->
+    assert Integer.parseInt(number)==page.returnNumberOfNewMembers()
+}
+
+Given(~'^I am at the login page$') { ->
+    to LoginPage
+    at LoginPage
+    //assert (page.flashmessage?.size() == 0)
+    //assert (page.flashmessage == null)
+}
+
+When(~'^I fill username and password with "([^"]*)" and "([^"]*)"$') { String login, password ->
+    page.fillLoginData(login, password)
+}
+
+Then(~'^I see a link to logout$'){
+    to MemberListPage
+    at MemberListPage
+    page.checkLogoutLink()
+}
+
+
+When(~'^I click to select the "([^"]*)"$'){ String username ->
+    to MemberListPage
+    at MemberListPage
+    user = User.findByUsername(username);
+    member = user?.author
+    page.clickOnName(String.valueOf(member.id))
+}
+
+Then(~'^the administrator access the "([^"]*)" profile'){String name->
+    to MemberPage
+    at MemberPage
+    page.compareName(name)
+}
+
+
+//#end

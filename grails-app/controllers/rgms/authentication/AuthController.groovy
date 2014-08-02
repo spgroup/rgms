@@ -15,7 +15,6 @@ import rgms.EmailService
 import java.security.SecureRandom
 
 class AuthController {
-    def shiroSecurityManager
 
     def index = {
         if(SecurityUtils.subject?.principal != null)
@@ -75,7 +74,8 @@ class AuthController {
             if (user.passwordChangeRequiredOnNextLogon) {
                 redirect(action: newPassword)
             } else {
-                render(view: "/initial")
+                redirect(uri: "/home/index")
+              //  render(view: "/initial")
 //                redirect(uri: targetUri)
             }
         }
@@ -264,20 +264,29 @@ class AuthController {
                 }
                 return
             }
-        }
 
-//        sendMail {
-//            to memberInstance.email
-//            from grailsApplication.config.grails.mail.username
-//            subject "[GRMS] Your account was successfully created!"
-//            body "Hello ${memberInstance.firstName} ${memberInstance.lastName},\n\nYour account was successfully created!\n\nHere is your username: ${username} and password: ${password}\n\n${createLink(absolute:true,uri:'/')}\n\nBest Regards,\nAdministrator of the Research Group Management System".toString()
-//        }
+        }
+            sendEmailToUser(name,userInstance.username,params.password1,emailAddress)
+
 
 //        flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
 //        redirect(action: "index", id: memberInstance.id)
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), memberInstance.name])
+        flash.message = message(code: 'default.created.message', args: [message(code: 'default.user.label', default: 'User'), memberInstance.name])
         redirect(uri: "/auth/login")
+    }
+
+    private sendEmailToUser(name,username,password,emailAddress) {
+       if (emailAddress != null) {
+            // print("Email Admin : " + emailAdmin)
+
+            def emailFrom = grailsApplication.config.grails.mail.username
+            def subject = message(code: 'mail.title.create.account')
+            def content = message(code: 'mail.body.create.account', args: [name, username,password, createLink(absolute: true, uri: '/member/list'),""])
+
+            EmailService emailService = new EmailService();
+            emailService.sendEmail(emailAddress, emailFrom, subject, content)
+        }
     }
 
     private sendRegistrationMailToAdmin(name) {
@@ -288,7 +297,7 @@ class AuthController {
 
             def emailFrom = grailsApplication.config.grails.mail.username
             def subject = message(code: 'mail.title.authenticate')
-            def content = message(code: 'mail.body.authenticade', args: [name, emailAddress, createLink(absolute: true, uri: '/member/list')])
+            def content = message(code: 'mail.body.authenticate', args: [name, emailAddress, createLink(absolute: true, uri: '/member/list')])
 
             EmailService emailService = new EmailService();
             emailService.sendEmail(emailAdmin, emailFrom, subject, content)

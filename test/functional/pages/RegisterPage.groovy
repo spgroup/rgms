@@ -30,4 +30,6 @@ class RegisterPage extends Page {
     def compareMemberUniversity(String university){
         $("form").university ==~ /${university}/
     }
+
+
 }
