@@ -27,14 +27,14 @@ class MembershipController {
             return
         }
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'membership.label', default: 'Membership'), membershipInstance.id])
+		flash.message = message(code: 'default.created.message', args: [message(code: 'default.membership.label', default: 'Membership'), membershipInstance.id])
         redirect(action: "show", id: membershipInstance.id)
     }
 
     def show = {
         def membershipInstance = Membership.get(params.id)
         if (!membershipInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'default.membership.label', default: 'Membership'), params.id])
             redirect(action: "list")
             return
         }
@@ -45,7 +45,7 @@ class MembershipController {
     def edit = {
         def membershipInstance = Membership.get(params.id)
         if (!membershipInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'default.membership.label', default: 'Membership'), params.id])
             redirect(action: "list")
             return
         }
@@ -56,7 +56,7 @@ class MembershipController {
     def update = {
         def membershipInstance = Membership.get(params.id)
         if (!membershipInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'default.membership.label', default: 'Membership'), params.id])
             redirect(action: "list")
             return
         }
@@ -65,7 +65,7 @@ class MembershipController {
             def version = params.version.toLong()
             if (membershipInstance.version > version) {
                 membershipInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'membership.label', default: 'Membership')] as Object[],
+                          [message(code: 'default.membership.label', default: 'Membership')] as Object[],
                           "Another user has updated this Membership while you were editing")
                 render(view: "edit", model: [membershipInstance: membershipInstance])
                 return
@@ -79,25 +79,25 @@ class MembershipController {
             return
         }
 
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'membership.label', default: 'Membership'), membershipInstance.id])
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'default.membership.label', default: 'Membership'), membershipInstance.id])
         redirect(action: "show", id: membershipInstance.id)
     }
 
     def delete = {
         def membershipInstance = Membership.get(params.id)
         if (!membershipInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'default.membership.label', default: 'Membership'), params.id])
             redirect(action: "list")
             return
         }
 
         try {
             membershipInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'default.membership.label', default: 'Membership'), params.id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'default.membership.label', default: 'Membership'), params.id])
             redirect(action: "show", id: params.id)
         }
     }

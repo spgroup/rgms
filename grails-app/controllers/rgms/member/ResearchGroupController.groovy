@@ -71,7 +71,7 @@ class ResearchGroupController {
     def show() {
         def researchGroupInstance = ResearchGroup.get(params.id)
         if (!verifyResearchGroupInstance(researchGroupInstance, params.id)) {
-            return false
+            return
         }
         //def cm = Membership.getCurrentMemberships(researchGroupInstance)
         [researchGroupInstance: researchGroupInstance, publicationsInstance: listPublicationByGroup(), currentMemberships: Membership.getCurrentMemberships(researchGroupInstance), currentNews: News.getCurrentNewsOrderByMostRecentDate(researchGroupInstance)]
@@ -203,7 +203,7 @@ class ResearchGroupController {
     private Set refreshMemberList() {
         def members = [] as Set
 
-        if (request.post == false) {
+        if (!request.post) {
             session["groups"] = ResearchGroup.list()?.collect { it.id }
         } else {
             addOrRemoveGroupsOfSession()
@@ -262,7 +262,7 @@ class ResearchGroupController {
         redirect(action: "show", id: researchGroupInstance.id)
     }
 
-    private void newControllerByTwitterAndResearchGroup(researchGroupInstance) {
+    private static void  newControllerByTwitterAndResearchGroup(researchGroupInstance) {
         TwitterConnection twConn = new TwitterConnection()
         List<Status> timeline = twConn.getTimeLine(researchGroupInstance.twitter)
         timeline.each {
