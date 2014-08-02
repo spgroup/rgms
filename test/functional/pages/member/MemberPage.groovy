@@ -32,6 +32,10 @@ class MemberPage extends Page {
         assert xml != null
     }
 
+    def compareName(String name){
+        assert $('td.value:first').text().equals(name)
+    }
+
     def comparePDF(String s) {
         $('form').find([title: "PDF"]).click()
         def downloadLink = "/Users/phmb/Downloads/export.pdf"

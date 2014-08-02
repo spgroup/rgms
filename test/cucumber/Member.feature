@@ -78,32 +78,32 @@ Feature: member
 
 
   Scenario: user can order the member by "any-attribute"
-    Given I am at the member List page and there is "number" members to order by name
-    When I can click the attribute name of member
-    Then the system will display the list of "number" members
-    And  the members are ordered in ascendant order with the attribute name in order
+    Given I am at the member List page
+    And there is "4" members to order by name
+    When I click the attribute username of member
+    Then the system will display the list of "number" members orderned
 
   Scenario: new member with valid mail server
     Given the system has no member with username "usernametest"
     When I create a member with username "usernametest"
     Then the member with username "usernametest" is properly stored by the system
-    And  the system will send a welcoming email to the new member
+    And  the system will send a welcoming email to the new "member"
 
   Scenario: administrator needs to know the newest members and approve them
-    Given the administrator logs at system and there is "number" of new not approved members
+    Given the administrator logs at system
+    And there is "number" of new not approved members
     When I am at the member List page
-    Then I see the "number"new and the not approved members
+    Then I see the "number" new and the not approved members
 
   Scenario: member can see his name and a link to logout
-    Given The system has any member with username "name"
-    When I am at any page
-    Then I see my "name" and a link to logout
+    Given I am at the login page
+    When I fill username and password with "admin" and "adminadmin"
+    Then I see a link to logout
 
   Scenario: administrator click on the roll of member and access the member profile
-    Given I am at the member List page and there is "number" members to order by name
-    When  I move the mouse hover the rows and click to select the "member"
-    Then  the administrator access the member profile
-
-
+    Given I am at the member List page
+    When there is "3" members to order by name
+    When  I click to select the "member"
+    Then  the administrator access the "member" profile
 
   #end
