@@ -15,10 +15,10 @@ class MemberTestDataAndOperations {
 
     //TODO member não tem username!
     static members = [
-            [name: "Rodolfo",  email: "rodolfofake@gmail.com",
+            [name: "Rodolfo", username: "usernametest",  email: "rodolfofake@gmail.com",
                     status: "Graduate Student", university: "UFPE", enabled: true
             ],
-            [name: "Rebeca Souza",  email: "rsa2fake@cin.ufpe.br",
+            [name: "Rebeca Souza", username: "rebecasouza", email: "rsa2fake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
             ],
             [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
