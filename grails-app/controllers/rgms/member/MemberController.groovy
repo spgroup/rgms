@@ -17,10 +17,10 @@ class MemberController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        userMemberList = []
+        ArrayList userMemberList = []
 //#if(memberNotApproved)
+        ArrayList userMemberListNotApproved = []
 
-        userMemberListNotApproved = []
         //#end
         def members = [];
         if (params.get("sort").equals("username")||params.get("sort").equals("enabled")){
@@ -31,26 +31,27 @@ class MemberController {
             members = Member.list(params)
         }
 
-        settingMembersAuth(members)
+
+        settingMembersAuth(members,userMemberListNotApproved,userMemberList)
 
         //#if(memberNotApproved)
-        [userMemberInstanceList: this.userMemberList, memberInstanceTotal: Member.count(),userMemberNotApprovedList:this.userMemberListNotApproved]
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count(),userMemberNotApprovedList:userMemberListNotApproved]
         //#end
     }
 
     //#ifmemberRefact
-    private void settingMembersAuth(List<Member> members) {
+    private static void  settingMembersAuth(List<Member> members,userMemberListNotApproved,userMemberList) {
         for (i in members) {
             def user = User.findByAuthor(i)
             //#if(memberNotApproved)
             if (!user.enabled) {
-                this.userMemberListNotApproved.add([user: user, member: i])
+                userMemberListNotApproved.add([user: user, member: i])
             }
             //#end
             if (user)
-                this.userMemberList.add([user: user, member: i])
+                userMemberList.add([user: user, member: i])
             else
-                this.userMemberList.add([member: i])
+                userMemberList.add([member: i])
 
             // userMemberList.sort()
         }
@@ -75,7 +76,7 @@ class MemberController {
     def save = {
 //#if($Auth)
         if (!grailsApplication.config.grails.mail.username) {
-            throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured'))
+            throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured') as Throwable)
         }
 //#end
 
@@ -114,7 +115,7 @@ class MemberController {
         EmailService emailService = new EmailService();
 
         //#if($Email)
-        //emailService.sendEmail(email, mailSender, title, content)
+        emailService.sendEmail(email, mailSender, title, content)
         //#end
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
@@ -128,8 +129,6 @@ class MemberController {
     def edit = {
         Get_MemberInstance()
     }
-    private ArrayList userMemberListNotApproved
-    private ArrayList userMemberList
 
     boolean check_version(String version, Member memberInstance) {
         if (version) {
@@ -232,7 +231,7 @@ class MemberController {
         }
     }
 
-    private void saveHistory(def memberInstance, String status) {
+    private static void  saveHistory(def memberInstance, String status) {
 
         def hist = new Record(start: new Date(), status_H: status)
         hist.save()
