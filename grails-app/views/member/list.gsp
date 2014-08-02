@@ -43,7 +43,7 @@
 
                             <td><g:link action="show" id="${userMemberInstance.member.id}">${fieldValue(bean: userMemberInstance.member, field: "id")}</g:link></td>
 
-                            <td>${fieldValue(bean: userMemberInstance.member, field: "name")}</td>
+                            <td><g:link action="show" id="${userMemberInstance.member.id}">${fieldValue(bean: userMemberInstance.member, field: "name")}</g:link></td>
 
                             <!--                            <td>{fieldValue(bean: memberInstance, field: "lastName")}</td>-->
 
@@ -97,7 +97,7 @@
                         
                             <td><g:link action="show" id="${userMemberInstance.member.id}">${fieldValue(bean: userMemberInstance.member, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: userMemberInstance.member, field: "name")}</td>
+                            <td><g:link action="show" id="${userMemberInstance.member.id}">${fieldValue(bean: userMemberInstance.member, field: "name")}</g:link></td>
 
 <!--                            <td>{fieldValue(bean: memberInstance, field: "lastName")}</td>-->
                         
