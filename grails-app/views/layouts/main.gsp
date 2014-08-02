@@ -67,6 +67,7 @@
 	</head>
 	<body>
 		<div id="grailsLogo" role="banner"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'icon.png')}" alt="Grails"/></a></div><!-- grails_logo.png -->
+
         <g:if test="${(params.controller!='auth')}">
             <label><g:link controller="auth" action="signOut">Logout</g:link></label>
         </g:if>

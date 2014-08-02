@@ -5,4 +5,5 @@ class HomeController {
     def index() {
         render(view: "/initial")
     }
+
 }
