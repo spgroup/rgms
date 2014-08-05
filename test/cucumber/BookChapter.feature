@@ -85,7 +85,7 @@ Feature: BookChapter
 
   Scenario: edit existing book chapter web
     Given I am at the book chapters page and the book chapter "Basic Concepts, Classification, and Quality Criteria" is stored in the system with the file name "chapter3.pdf"
-    When I select to view "Basic Concepts, Classification, and Quality Criteria" in resulting list
+    When I select to view the book chapter "Basic Concepts, Classification, and Quality Criteria" in resulting list
     And I change the book chapter title to "Chapter 3"
     Then I select the "Alterar" option in Book Chapter Page
     And I am at Book Chapter Page

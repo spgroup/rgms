@@ -87,7 +87,7 @@ class BookChapterPage extends Page {
     def checkOrderedByTitle(){
         def bookChapter1Columns 	= this.getBookChapterColumns(0)
         def bookChapter2Columns 	= this.getBookChapterColumns(1)
-        assert bookChapter1Columns[0].text().compareTo(bookChapter2Columns[0].text()) < 0
+        assert bookChapter1Columns[1].text().compareTo(bookChapter2Columns[1].text()) < 0
 
     }
 
@@ -97,12 +97,12 @@ class BookChapterPage extends Page {
     }
 
     def checkBookChapterFilteredByAuthor(authorName){
-        def listDiv = $('div', id: 'list-periodico')
-        def articleTable = (listDiv.find('table'))[0]
-        def articleRows = articleTable.find('tbody').find('tr')
-        for (row in articleRows) {
-            def articleColumns = row.find('td')
-            if(!articleColumns[5].text().contains(authorName))
+        def listDiv = $('div', id: 'list-bookChapter')
+        def bookChapterTable = (listDiv.find('table'))[0]
+        def bookChapterRows = bookChapterTable.find('tbody').find('tr')
+        for (row in bookChapterRows) {
+            def bookChapterColumns = row.find('td')
+            if(!bookChapterColumns[5].text().contains(authorName))
                 return false
         }
         return true

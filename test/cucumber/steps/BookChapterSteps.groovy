@@ -9,8 +9,9 @@ import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 
+
 Given(~'^the system has no book chapter entitled "([^"]*)"$') { String title ->
-    checkIfExists(title)
+    assert bookChapterNoExist(title)
 }
 
 When(~'^I create the book chapter "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
@@ -92,7 +93,7 @@ When(~'^I view the book chapter list$') { ->
 
 Then(~'my book chapter list contains "([^"]*)"$') { String title ->
     bookChapters = BookChapter.findAll()
-    assert BookChapterTestDataAndOperations.containsBookChapter(title, bookChapters)
+    assert BookChapterTestDataAndOperations.containsBookChapter(title)
 }
 
 And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$') { String title, filename ->
@@ -210,16 +211,7 @@ def checkIfExists(String title) {
  */
 
 //Upload book chapter with a file web
-Given (~'^I am at the publications menu$') { ->
-    LogInToPublication()
-}
 
-def LogInToPublication(){
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-}
 
 When (~'^I select the book chapter option at the program menu'){
     page.select("Book Chapter")
@@ -259,7 +251,7 @@ def selectNewBookChapterInBookChapterPage(){
 
 }
 
-When (~'^I select to view "([^"]*)" in resulting list$'){ String title ->
+When (~'^I select to view the book chapter "([^"]*)" in resulting list$'){ String title ->
     page.selectBookChapter(title)
     at BookChapterPage
 
@@ -338,16 +330,7 @@ Then(~'^the system has the same number of book chapters$'){
 }
 
 //Edit book chapter
-Given(~'^the book chapter "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-    bookChapter = BookChapter.findByTitle(title)
-    assert bookChapter != null
-}
 
-And(~'^the system has no book chapter entitled "([^"]*)"$'){ String title ->
-    bookChapter = BookChapter.findByTitle(title)
-    assert bookChapter == null
-
-}
 
 When (~'^I edit the book chapter title from "([^"]*)" to "([^"]*)"$'){ String oldTitle, newTitle ->
     def updateBookChapter = BookChapterTestDataAndOperations.editBookChapter(oldTitle, newTitle) //Nao tem
@@ -376,17 +359,20 @@ When(~'^The system order the book chapters stored by title$') { ->
 
 //Filter book chapters
 Given(~'^the system has some book chapters stored with author "([^"]*)"$') { String authorName ->
-    bookChapter = BookChapter.findAllByAuthors(authorName)
-    assert bookChapter != null
+    BookChapterTestDataAndOperations.createBookChapter("Chapter test", "chaptertest.pdf", null, "Larissa" )
+    BookChapterTestDataAndOperations.createBookChapter("Chapter test 2", "chaptertest2.pdf", null, "Larissa" )
+    assert (!bookChapterNoExist("Chapter test") && !bookChapterNoExist("Chapter test 2"))
 }
 
 When(~'^The system filter the book chapters stored by author "([^"]*)"$') { String authorName ->
-    bookChapters = BookChapter.findAll()
-    assert BookChapterTestDataAndOperations.isFiltered(bookChapters, authorName)
+    bookChaptersF = BookChapter.findAllByAuthors(authorName)
+    assert BookChapterTestDataAndOperations.isFiltered(bookChaptersF, authorName)
+
 }
 
 def bookChapterNoExist(String title){
     return BookChapter.findByTitle(title) == null
+
 }
 
 
