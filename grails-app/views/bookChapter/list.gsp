@@ -30,6 +30,19 @@
     </ul>
 </div>
 <!-- #end -->
+
+<!--#if($FilterArticlesByAuthor)-->
+<div class="filterByAuthor">
+    <ul>
+        <g:form controller="filterByAuthor" action="filterByAuthor" method="post">
+            <label for="authorName">${message(code: 'default.author.label', default: 'Author')}</label>
+            <input name="authorName" id="authorName" type="text">
+            <input name="buttonFilterByAuthor" class="save" type="submit" value="${message(code: 'default.button.search.label', default: 'Search')}"/>
+        </g:form>
+    </ul>
+</div>
+<!--#end-->
+
 <div id="list-bookChapter" class="content scaffold-list" role="main">
     <h1><g:message code="default.list.label" args="[entityName]"/></h1>
     <g:if test="${flash.message}">

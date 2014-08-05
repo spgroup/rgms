@@ -56,4 +56,57 @@ class BookChapterPage extends Page {
         GetPageTitle gp = new GetPageTitle()
         return gp.msg('file.already.exist.message') == $("div", class: "message", role: "status").text()
     }
+
+    def select(String e, v) {
+        if (v == 'delete') {
+            assert withConfirm(true) { $("form").find(e, class: v).click() }
+        } else {
+            $("form").find(e, class: v).click()
+        }
+    }
+
+    def edit(String novovalor, filename) {
+        $("form").title = novovalor
+        $("form").file = filename
+    }
+
+    def getBookChapterColumns(row){
+        def listDiv = $('div', id: 'list-bookChapter')
+        def bookChapterTable = (listDiv.find('table'))[0]
+        def bookChapterRows = bookChapterTable.find('tbody').find('tr')
+        def bookChapterColumns = bookChapterRows[row].find('td')
+        return bookChapterColumns
+
+    }
+
+    def checkOrderByTitle(){
+        $('a[href="/rgms/bookChapter/list?sort=title&max=10&order=asc"]').click()
+
+    }
+
+    def checkOrderedByTitle(){
+        def bookChapter1Columns 	= this.getBookChapterColumns(0)
+        def bookChapter2Columns 	= this.getBookChapterColumns(1)
+        assert bookChapter1Columns[0].text().compareTo(bookChapter2Columns[0].text()) < 0
+
+    }
+
+    def fillAndSelectFilter(authorName){
+        $("form").authorName = authorName
+        $("input", name: "buttonFilterByAuthor").click()
+    }
+
+    def checkBookChapterFilteredByAuthor(authorName){
+        def listDiv = $('div', id: 'list-periodico')
+        def articleTable = (listDiv.find('table'))[0]
+        def articleRows = articleTable.find('tbody').find('tr')
+        for (row in articleRows) {
+            def articleColumns = row.find('td')
+            if(!articleColumns[5].text().contains(authorName))
+                return false
+        }
+        return true
+    }
+
+
 }

@@ -14,6 +14,25 @@ class BookChapterController {
         params.max = Math.min(max ?: 10, 100)
         [bookChapterInstanceList: BookChapter.list(params), bookChapterInstanceTotal: BookChapter.count()]
     }
+    //#if($orderByTitle)
+    def orderByTitle(){
+        def bookChapters = BookChapter.listOrderByTitle()
+        render(view:"list", model: [bookChapterInstanceList: bookChapters, bookChapterInstanceTotal: bookChapters.size()])
+
+    }
+    //#end
+
+    //#if($filterByAuthor)
+    def filterByAuthor(){
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        def bookChapters = BookChapter.list(params)
+        def authorName = params.authorName
+        if(authorName != "")
+        bookChapters = bookChapters.findAll{it.authors.contains(authorName)}
+        render(view: "list", model: [bookChapterInstanceList: bookChapters, bookChapterInstanceTotal: bookChapters.size()])
+
+    }
+    //#end
 
     def create() {
         def bookChapterInstance = new BookChapter(params)
@@ -30,7 +49,7 @@ class BookChapterController {
         bookChapterInstance = (BookChapter) pb.extractAuthors(bookChapterInstance)
 
 
-        if (!pb.upload(bookChapterInstance) || !bookChapterInstance.save(flush: true)) {
+        if (verifyBookChapter(pb, bookChapterInstance)) {
             render(view: "create", model: [bookChapterInstance: bookChapterInstance])
             return
         }
@@ -42,6 +61,14 @@ class BookChapterController {
         //noinspection InvalidI18nProperty
         flash.message = message(code: 'default.created.message', args: [message(code: 'bookChapter.label', default: 'BookChapter'), bookChapterInstance.id])
         redirect(action: "show", id: bookChapterInstance.id)
+    }
+
+    public boolean verifyBookChapter(PublicationController pb, BookChapter bookChapterInstance) {
+        Boolean state = false
+        if(!pb.upload(bookChapterInstance) || !bookChapterInstance.save(flush: true)){
+            state = true
+        }
+        return state
     }
 
     def accessBookChapter(Long id) {
@@ -64,12 +91,17 @@ class BookChapterController {
         def bookChapterInstance = BookChapter.get(id)
         boolean isReturned = aux.check(id, bookChapterInstance, 'bookChapter.label', 'BookChapter')
         if (!isReturned) {
-            if (version != null && bookChapterInstance.version > version) {
+            if (checkVersion(version, bookChapterInstance)) {
                 outdatedVersionError((BookChapter) bookChapterInstance)
             } else {
                 saveUpdate((BookChapter) bookChapterInstance)
             }
         }
+    }
+
+    public boolean checkVersion(long version, BookChapter bookChapterInstance) {
+        version != null && bookChapterInstance.version > version
+
     }
 
     def outdatedVersionError(BookChapter bookChapterInstance) {

@@ -76,11 +76,43 @@ class BookChapterTestDataAndOperations {
         return result.contains(testarbook)
     }
 
+    static public def isOrdered(bookChapters){
+        def isOrdered = false
+        isOrdered = (bookChapters.size() < 2 || (1..<bookChapters.size()).every { (bookChapters[it - 1].title).compareTo(bookChapters[it].title) < 0})
+        return isOrdered
+
+    }
+
+    static public def isFiltered(bookChapters, authorName){
+        for(bookChapter in bookChapters){
+            if(!(bookChapter.authors).contains(authorName)){
+                return false
+            }
+        }
+        return true
+
+    }
+
+    static public BookChapter editBookChapter(oldTitle, newTitle){
+        def bookChapter = BookChapter.findByTitle(oldTitle)
+        bookChapter.setTitle(newTitle)
+        def controller = new BookChapterController()
+        controller.params << bookChapter.properties
+        controller.update()
+        def updatedBookChapter = BookChapter.findByTitle(newTitle)
+        return updatedBookChapter
+
+    }
+
     static public void ShareArticleOnFacebook(String title){
         def member = new Member()
         member.access_token =  "CAAJIlmRWCUwBAN0r1puBTUa4vDZAKxWWlR5gN4qtgZAosBDKGUOLBquyKuHYQ0zxICioiarTJ66mpdZC08U4rHJOrtvXJCB8hMBcLKlQaTdwYZCgMTJtbFnQfIBZAxi6hRIkfw2fCSyCS6DuFIrGRThI53ZCzBOLsZD"
         member.facebook_id = "100006411132660"
         PublicationController.sendPostFacebook(member, title)
+    }
+
+    static public def path(){
+        return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
     }
 
 
