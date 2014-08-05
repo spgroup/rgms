@@ -1175,4 +1175,101 @@
             <args>FacebookController,grails-app/controllers/rgms/tool/FacebookController.groovy</args>
         </transformation>
     </configuration>
+
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>BookChapterFeature,test/cucumber/BookChapter.feature</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>test/cucumber/BookChapter.feature</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>BookChapterSteps,test/cucumber/steps/BookChapterSteps.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>test/cucumber/steps/BookChapterSteps.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>BookChapterCreatePage,test/functional/pages/BookChapterCreatePage.groovy</args>
+        </transformation>
+    </configuration>
+
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>BookChapterSavePage,test/functional/pages/BookChapterSavePage.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>BookChapterPage,test/functional/pages/BookChapterPage.groovy</args>
+        </transformation>
+    </configuration>
+
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>grails-app/controllers/rgms/publication/BookChapterController.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>BookChapterController,grails-app/controllers/rgms/publication/BookChapterController.groovy</args>
+        </transformation>
+    </configuration>
+
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>BookChapter,grails-app/domain/rgms/publication/BookChapter.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>grails-app/domain/rgms/publication/BookChapter.groovy</args>
+        </transformation>
+    </configuration>
+
+    <configuration>
+        <expression>rgms</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>BookChapterTestDataAndOperation,test/functional/steps/BookChapterTestDataAndOperations.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+    <expression>rgms</expression>
+    <transformation>
+        <name>preprocessFiles</name>
+        <args>test/functional/steps/BookChapterTestDataAndOperations.groovy</args>
+    </transformation>
+    </configuration>
+
 </configurationModel>

@@ -12,7 +12,13 @@
 
     <feature min="0" max="1" name="TesePublication_Feature" type="NONE" id="TesePublication"></feature>
 
-    <feature min="0" max="1" name="BookChapter_Feature" type="NONE" id="BookChapter"></feature>
+    <feature min="0" max="1" name="BookChapter_Feature" type="NONE" id="BookChapter">
+        <featureGroup min="0" max="2" id="subBookChapter">
+            <feature min="0" max="1" name="Filter_BookChapter" type="NONE" id="Filter_BookChapter"></feature>
+            <feature min="0" max="1" name="Order_BookChapter" type="NONE" id="Order_BookChapter"></feature>
+        </featureGroup>
+    </feature>
+
 
     <feature min="0" max="1" name="ImportBibtex_Feature" type="NONE" id="ImportBibtex"></feature>
 
