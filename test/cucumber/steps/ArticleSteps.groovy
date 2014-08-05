@@ -1,10 +1,5 @@
-//#if($Article)
-import pages.ArticlePages.ArticleCreatePage
-import pages.ArticlePages.ArticleEditPage
-import pages.ArticlePages.ArticleShowPage
-import pages.ArticlePages.ArticlesPage
-import pages.LoginPage
-import pages.PublicationsPage
+import pages.ArticlePages.*
+import pages.*
 import rgms.publication.Periodico
 import rgms.tool.TwitterTool
 import steps.ArticleTestDataAndOperations
@@ -29,9 +24,7 @@ Then(~'^the article "([^"]*)" is properly stored by the system$') { String title
 When(~'^I create the article "([^"]*)" with file name "([^"]*)" with the "([^"]*)" field blank$') { String title, String filename, String field ->
     ArticleTestDataAndOperations.createArticle(title, filename)
     def article = ArticleTestDataAndOperations.findArticleByTitle(title)
-    assert article.{
-        field
-    } == null
+    assert article.{field} == null
 }
 
 Then(~'^the article "([^"]*)" is not stored by the system because it is invalid$') { String title ->
@@ -45,14 +38,15 @@ Then(~'^the article "([^"]*)" is not stored twice$') { String title ->
     // which is changed by the system during the file upload.
 }
 
-When(~'^I select the new article option at the article page$') { ->
+When(~'^I select the new article option at the article page$') {->
     selectNewArticleInArticlesPage()
 }
 
-Then(~'^I can fill the article details$') { ->
+Then(~'^I can fill the article details$') {->
     at ArticleCreatePage
     page.fillArticleDetails()
 }
+
 
 /**
  * @author Guilherme
@@ -101,7 +95,7 @@ When(~'^I edit the article title from "([^"]*)" to "([^"]*)"$') { String oldtitl
 /**
  * @author Guilherme
  */
-When(~"^I view the article list\$") { ->
+When(~"^I view the article list\$") {->
     articles = Periodico.findAll()
     assert articles != null
 }
@@ -159,7 +153,7 @@ Then(~'my resulting articles list contains "([^"]*)"$') { String title ->
  * @author Guilherme
  */
 
-When(~'I select the option to remove in show page$') { ->
+When(~'I select the option to remove in show page$') {->
     at ArticleShowPage
     page.select('input', 'delete')
 }
@@ -178,13 +172,14 @@ Then(~'^I am at Article show page$') { ->
     at ArticleShowPage
 }
 
+
 //#if( $Twitter )
 Given(~'^I am logged as "([^"]*)"$') { String userName ->
     to LoginPage
     at LoginPage
     page.fillLoginData(userName, "adminadmin")
 }
-Given(~'^I am at the Article Page$') { ->
+Given (~'^I am at the Article Page$'){->
 
     addPage()
 }
@@ -205,7 +200,7 @@ Then(~'^A tweet is added to my twitter account regarding the new article "([^"]*
     assert TwitterTool.consult(articleTitle)
 }
 
-Then(~'No tweet should be post about "([^"]*)"$') { String article ->
+Then (~'No tweet should be post about "([^"]*)"$'){ String article ->
     assert !TwitterTool.consult(null)
 }
 
@@ -213,7 +208,6 @@ Then(~'No tweet should be post about "([^"]*)"$') { String article ->
 Then(~'^No twitte should be post about "([^"]*)"$') { String articleTitle ->
     assert !TwitterTool.consult(articleTitle)
 }
-
 //#end
 
 //#if( $Facebook )
@@ -235,7 +229,7 @@ Then(~'^No facebook message was posted$') { ->
     assert true
 }
 
-Given(~'^I am at the Add Article Page$') { ->
+Given(~'^I am at the Add Article Page$') {  ->
     at PublicationsPage
     page.select("Periodico")
     to ArticlesPage
@@ -249,10 +243,9 @@ Given(~'^I am at the Add Article Page$') { ->
 When(~'^I share the article entitled "([^"]*)" on facebook$') { String title ->
     FacebookTestDataAndOperations.ShareArticleOnFacebook(title)
 }
-
 //#end
 
-def selectNewArticleInArticlesPage() {
+def selectNewArticleInArticlesPage(){
 
     at ArticlesPage
     page.selectNewArticle()
@@ -260,24 +253,20 @@ def selectNewArticleInArticlesPage() {
 
 }
 
-def periodicoNoExist(String title) {
+def periodicoNoExist(String title){
     return Periodico.findByTitle(title) == null
 }
 
-def Login() {
-
+def Login(){
     to LoginPage
     at LoginPage
-
     page.fillLoginData("admin", "adminadmin")
-
-
 }
 
 /**
  * @author carloscemb
  */
-Then(~'^I see my user listed as an author member of article by default$') { ->
+Then(~'^I see my user listed as an author member of article by default$') {->
     at ArticleCreatePage
     assert PublicationTestDataAndOperations.containsUser(page.selectedMembers())
 }
@@ -290,7 +279,7 @@ When(~'^I upload the articles of "([^"]*)"$') { String arg1 ->
     finalSize = Periodico.findAll().size()
     assert initialSize < finalSize
 }
-Then(~'^the system has all the articles of the xml file$') { ->
+Then(~'^the system has all the articles of the xml file$') {->
     assert Periodico.findByTitle("A System For Translating Executable VDM Specifications Into Lazy ML") != null
     assert Periodico.findByTitle("From VDM Specifications To Functional Prototypes") != null
     assert Periodico.findByTitle("Basic laws of ROOL: an object-oriented language") != null
@@ -315,35 +304,153 @@ Then(~'^the system has all the articles of the xml file$') { ->
     assert Periodico.findByTitle("A Theory of Software Product Line Refinement") != null
     assert Periodico.findByTitle("The Crosscutting Impact of the AOSD Brazilian Research Community (accepted)") != null
 }
-And(~'^I select the upload button at the article page$') { ->
+And(~'^I select the upload button at the article page$') {->
     at ArticlesPage
     page.uploadWithoutFile()
 }
-Then(~'^I\'m still on article page$') { ->
+Then(~'^I\'m still on article page$') {->
     at ArticlesPage
 }
-And(~'^the articles are not stored by the system$') { ->
+And(~'^the articles are not stored by the system$') {->
     at ArticlesPage
     page.checkIfArticlesListIsEmpty()
 }
-Given(~'^the system has some articles stored$') { ->
+Given(~'^the system has some articles stored$') {->
     initialSize = Periodico.findAll().size()
 }
 
+
+Given(~'^I am at the articles page$'){->
+    Login()
+    at PublicationsPage
+    page.select("Periodico")
+    at ArticlesPage
+}
+
+And(~'^the article "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+    at ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + filename, title)
+    page.selectCreateArticle()
+    assert !periodicoNoExist(title)
+}
+
 //#if($Report)
-When(~"^I view the report of articles\$") { ->
-    articles = Periodico.findAll()
+When(~'^the system reports the existing articles$') {->
+    articles = ArticleTestDataAndOperations.reportArticles()
     assert articles != null
 }
 
-Then(~'the report of articles contains "([^"]*)"$') { String title ->
-    articles = Periodico.findAll()
+Then(~'^the system report contains "([^"]*)" article$') { String title ->
+    articles = ArticleTestDataAndOperations.reportArticles()
     assert ArticleTestDataAndOperations.containsArticle(title, articles)
+}
+
+When(~'^I select to view the report of articles$') {->
+    to ArticlesPage
+    at ArticlesPage
+    page.selectViewReports()
+}
+
+Then(~'^my resulting report of articles contains "([^"]*)"$') { String title ->
+    at ArticlesReportPage
+    page.checkArticleAtReport(title,0)
 }
 //#end
 
+Given(~'^the system has article entitled "([^"]*)" with file name "([^"]*)" dated on "([^"]*)"$'){String title, filename, date->
+    ArticleTestDataAndOperations.createArticle(title, filename, date, null)
+    assert Periodico.findByTitle(title) != null
+}
+
+When(~'^the system orders the article list by title$') {->
+    articlesSorted = Periodico.listOrderByTitle(order: "asc")
+    assert ArticleTestDataAndOperations.isSorted(articlesSorted, "title")
+
+}
+
+When(~'^the system orders the article list by publication date$') {->
+    articlesSorted = Periodico.listOrderByPublicationDate(order: "asc")
+    assert ArticleTestDataAndOperations.isSorted(articlesSorted, "publication date")
+}
+
+Then(~'^the system article list content is not modified$') {->
+    assert Periodico.findAll().size() == 2
+    assert !periodicoNoExist('Modularity analysis of use case implementations')
+    assert !periodicoNoExist('A theory of software product line refinement')
+}
+
+Given(~'^the system has some articles created$'){->
+    at ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + 'MACI.pdf', 'Modularity analysis of use case implementations',"17","10","2013")
+    page.selectCreateArticle()
+    assert !periodicoNoExist('Modularity analysis of use case implementations')
+    to ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + 'TCS-1401.pdf', 'A theory of software product line refinement',"12","11","2012")
+    page.selectCreateArticle()
+    assert !periodicoNoExist('A theory of software product line refinement')
+    to ArticlesPage
+}
+
+When(~'^I select to view the list of articles$') {->
+    at ArticlesPage
+    page.selectViewArticleList()
+}
+
+And(~'^I select to order the list of articles by "([^"]*)"$') {String sortType->
+    at ArticlesPage
+    page.selectOrderBy(sortType)
+}
+
+Then(~'^my article list shows the articles ordered by "([^"]*)"$') {String sortType->
+    at ArticlesPage
+    page.checkOrderedBy(sortType);
+}
+
+Given(~'^the system has some articles authored by "([^"]*)"$'){String authorName->
+    ArticleTestDataAndOperations.createArticle('A theory of software product line refinement', 'TCSOS.pdf', null, 'Paulo Borba')
+    ArticleTestDataAndOperations.createArticle('Modularity analysis of use case implementations', 'MACI.pdf')
+    assert (!periodicoNoExist('A theory of software product line refinement') && !periodicoNoExist('Modularity analysis of use case implementations'))
+}
+
+When(~'^the system filter the articles authored by author "([^"]*)"$') {String authorName->
+    articlesFiltered = ArticleTestDataAndOperations.findAllByAuthor(authorName)
+    assert ArticleTestDataAndOperations.isFiltered(articlesFiltered,authorName)
+}
+
+And(~'^I create some articles authored by "([^"]*)"$') {String authorName->
+    at ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + 'MACI.pdf', 'Modularity analysis of use case implementations', authorName)
+    page.selectCreateArticle()
+    assert !periodicoNoExist('Modularity analysis of use case implementations')
+    to ArticlesPage
+    page.selectNewArticle()
+    at ArticleCreatePage
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + 'TCS-1401.pdf', 'A theory of software product line refinement')
+    page.selectCreateArticle()
+    assert !periodicoNoExist('A theory of software product line refinement')
+    to ArticlesPage
+}
+
+And(~'^I select to filter the list of articles by author "([^"]*)"$') {String authorName->
+    at ArticlesPage
+    page.fillAndSelectFilter(authorName)
+}
+
+Then(~'^my article list shows only the articles authored by "([^"]*)"$') {String authorName->
+    at ArticlesPage
+    assert page.checkFilteredBy(authorName);
+}
+
 //Funcoes Auxiliares
-def addPage() {
+def addPage(){
     Login()
     at PublicationsPage
     page.select("Periodico")
@@ -353,4 +460,94 @@ def addPage() {
     def f = new File(path)
     println "exist Path?" + f.exists()
 }
-//#end
+
+
+def addNewArticleWeb(title, filename){
+    selectNewArticleInArticlesPage()
+    page.fillArticleDetails(ArticleTestDataAndOperations.path() + filename, title)
+    page.selectCreateArticle()
+    assert !periodicoNoExist(title)
+    to ArticlesPage
+    at ArticlesPage
+}
+
+Given(~'^the system has 3 articles entitled "([^"]*)" with file name "([^"]*)", "([^"]*)" with file name "([^"]*)" and "([^"]*)" with file name "([^"]*)"$') {String title1, filename1, title2, filename2, title3, filename3 ->
+    ArticleTestDataAndOperations.createArticle(title1, filename1,null,null)
+    ArticleTestDataAndOperations.createArticle(title2, filename2,null,null)
+    ArticleTestDataAndOperations.createArticle(title3, filename3,null,null)
+    assert Periodico.findByTitle(title1) != null
+    assert Periodico.findByTitle(title2) != null
+    assert Periodico.findByTitle(title3) != null
+}
+
+When(~'^I remove the articles "([^"]*)" and "([^"]*)"$') { String title1, title2 ->
+
+    ArticleTestDataAndOperations.removeMultiplesArticles(title1, title2)
+
+    def testDeleteArticle1 = Periodico.findByTitle(title1)
+    def testDeleteArticle2 = Periodico.findByTitle(title2)
+    assert testDeleteArticle1 == null
+    assert testDeleteArticle2 == null
+}
+
+Then(~'^the system removes the articles "([^"]*)" and "([^"]*)"$') { String title1, title2 ->
+    assert periodicoNoExist(title1)
+    assert periodicoNoExist(title2)
+}
+
+And(~'^the system contains the "([^"]*)" article$') { String title1 ->
+    assert Periodico.findByTitle(title1) != null
+}
+
+And(~'^I create 3 articles entitled "([^"]*)" with file name "([^"]*)", "([^"]*)" with file name "([^"]*)" and "([^"]*)" with file name "([^"]*)"$') { String title1, filename1, title2, filename2, title3, filename3 ->
+    addNewArticleWeb(title1, filename1)
+    addNewArticleWeb(title2, filename2)
+    addNewArticleWeb(title3, filename3)
+}
+
+And(~'I select to remove the selected articles$') {->
+    at ArticlesPage
+    page.selectRemoveMultipleArticles()
+}
+
+Given(~'^I am at the new article page$'){->
+    Login()
+    at PublicationsPage
+    page.select("Periodico")
+    selectNewArticleInArticlesPage()
+}
+
+When(~'^I fill all article information except the title field$') {->
+    at ArticleCreatePage
+    page.fillArticleDetailsExceptTitle()
+}
+
+And(~'^I select to create the article$') {->
+    at ArticleCreatePage
+    page.selectCreateArticle()
+}
+
+When(~'^I create the article with filename "([^"]*)" and with the title field blank$') {String filename ->
+    ArticleTestDataAndOperations.createArticleWithoutTitle(filename)
+    def article = ArticleTestDataAndOperations.findArticleByFilename(filename)
+    assert article.{title} == null
+}
+
+Given(~'^the system has no article without title and with filename "([^"]*)"$') {String filename ->
+    def article = Periodico.findByFile(filename)
+    assert article == null
+}
+
+Then(~'^the article with blank title and with filename "([^"]*)" field is not stored by the system$') {String filename ->
+    def article = Periodico.findByFile(filename)
+    assert article == null
+}
+
+Then(~'^an error message is showed for the title field$') { ->
+    assert (page.readFlashMessage() != null)
+}
+
+And(~'^I mark multiple articles to be removed$') {->
+    at ArticlesPage
+    page.markArticles()
+}
