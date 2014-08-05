@@ -67,8 +67,8 @@ And(~'^I select the edit option in Conferencia Registration Page$') { String new
 
 
 
-Given(~'^I am at the conferencia registration page$') {->
-    at ConferenciaEditPage
+Given(~'^I am at the conferencia create page$') {->
+    at ConferenciaCreatePage
 }
 
 

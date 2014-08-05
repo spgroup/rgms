@@ -28,7 +28,7 @@ Feature: conferencia
     Then I can fill the conferencia details
 
   Scenario: list conferencia web
-    Given I am at the publications menu
+    Given I am at the publications
     When I select the conferencia option at the publications menu
     Then a list of conferencias stored by the system is displayed at the conferencia page by ascending alphabetic order
 
@@ -61,7 +61,7 @@ Feature: conferencia
     Then the conferencia "V Conference on Software Product Lines" is properly stored by the system
 
   Scenario: remove conferencia web
-    Given I am at the publications menu
+    Given I am at the publications
     When I select the conferencia option at the publications menu
     And a list of conferencias stored by the system is displayed at the conferencia page
     Then I can remove one conferencia
@@ -72,8 +72,8 @@ Feature: conferencia
     Then the system has all the conferencias of the xml file
 
   Scenario: upload conferencias without a file
-    Given I am at the publications menu
-    When I select the "Conferencia" option at the program menu
+    Given I am at the publications
+    When I select the conferencia option at the publications menu
     And I select the upload button at the conferencia page
     Then I'm still on conferencia page
     And the conferencias are not stored by the system
@@ -92,7 +92,7 @@ Scenario: edit existing conferencia web
     Then I am at the conferencia page
 
 Scenario: new invalid conferencia web (fields blank)
-	Given I am at the conferencia registration page
+	Given I am at the conferencia create page
 	When I create the conferencia with some field blank
 	Then the conferencia is not stored by the system because it is invalid
 
@@ -103,12 +103,12 @@ Scenario: list existing conferencia
 
 Scenario: Order conferencia web by title
     Given I am at the conferencia page
-    When I click on the column title at the conferencia list table
+    When I click on the column "title" at the conferencia list table
     Then a list of conferencias stored by the system is displayed at the conferencia page by ascending alphabetic order
 
 Scenario: Order conferencia web by conferencia data
     Given I am at the conferencia page
-    When I click on the column date at the conferencia list table
+    When I click on the column "date" at the conferencia list table
     Then a list of conferencias stored by the system is displayed at the conferencia page by publication ascending date order
 
 Scenario: Search for conferencia
