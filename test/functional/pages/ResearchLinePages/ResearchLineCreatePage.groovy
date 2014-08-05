@@ -3,7 +3,6 @@ package pages.ResearchLinePages
 import geb.Page
 import steps.ResearchGroupTestDataAndOperations
 import steps.ResearchLineTestDataAndOperations
-import steps.TestDataAndOperationsResearchLine
 
 
 class ResearchLineCreatePage extends Page {
