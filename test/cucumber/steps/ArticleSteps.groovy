@@ -8,8 +8,6 @@ import pages.PublicationsPage
 import rgms.publication.Periodico
 import rgms.tool.TwitterTool
 import steps.ArticleTestDataAndOperations
-import steps.TestDataAndOperationsFacebook
-import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 

@@ -2,7 +2,6 @@ import pages.ferramenta.*
 import rgms.publication.Ferramenta
 import steps.FerramentaTestDataAndOperations
 import steps.PublicationTestDataAndOperations
-import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 

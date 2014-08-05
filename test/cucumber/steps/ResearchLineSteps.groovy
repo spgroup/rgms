@@ -1,7 +1,6 @@
 import rgms.publication.ResearchLine
 import steps.ResearchLineTestDataAndOperations
 import steps.TestDataAndOperations
-import steps.TestDataAndOperationsResearchLine
 import pages.ResearchLinePages.ResearchLineCreatePage
 import pages.ResearchLinePages.ResearchLinePage
 import pages.LoginPage
