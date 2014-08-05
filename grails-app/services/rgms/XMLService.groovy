@@ -486,6 +486,29 @@ class XMLService {
         return status
     }
 
+    //#if($Orientation || $researchLine || $researchProject)
+    static checkItemStatus(itemDB, item){
+        def status = PUB_STATUS_DUPLICATED
+
+        def missingPropertiesDB = itemDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
+        def missingProperties = item.properties.findAll{it.key != 'id' && !it.value}.keySet()
+        if(missingPropertiesDB != missingProperties){
+            status = PUB_STATUS_TO_UPDATE
+        }
+
+        def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
+        def detailsPropertiesDB = itemDB.properties.findAll{!(it.key in missingPropertiesTotal)}
+        def detailsDB = detailsPropertiesDB.findAll{it.key!='id'}
+        def detailsProperties = item.properties.findAll{!(it.key in missingPropertiesTotal)}
+        def details = detailsProperties.findAll{it.key!='id'}
+        if(detailsDB != details){
+            status = PUB_STATUS_CONFLICTED
+        }
+
+        return status
+    }
+    //#end
+
     static Node parseReceivedFile(MultipartHttpServletRequest request) {
         MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
         MultipartFile f = (MultipartFile) mpr.getFile("file");
@@ -575,25 +598,7 @@ class XMLService {
         if(!orientation) return null
         def status = PUB_STATUS_STABLE
         def orientationDB = Orientation.findByOrientadorAndTituloTese(user, orientation.tituloTese)
-
-        if(orientationDB){
-            status = PUB_STATUS_DUPLICATED
-
-            def missingPropertiesDB = orientationDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
-            def missingProperties = orientation.properties.findAll{it.key != 'id' && !it.value}.keySet()
-            if(missingPropertiesDB != missingProperties){
-                status = PUB_STATUS_TO_UPDATE
-            }
-
-            def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
-            def detailsPropertiesDB = orientationDB.properties.findAll{!(it.key in missingPropertiesTotal)}
-            def detailsDB = detailsPropertiesDB.findAll{it.key!='id'}
-            def detailsProperties = orientation.properties.findAll{!(it.key in missingPropertiesTotal)}
-            def details = detailsProperties.findAll{it.key!='id'}
-            if(detailsDB != details){
-                status = PUB_STATUS_CONFLICTED
-            }
-        }
+        if(orientationDB) status = checkItemStatus(orientationDB, orientation)
         return [status:status, id:orientationDB?.id]
     }
 
@@ -648,25 +653,7 @@ class XMLService {
         if(!researchLine) return null
         def status = PUB_STATUS_STABLE
         def rlDB = ResearchLine.findByName(researchLine.name)
-
-        if(rlDB){
-            status = PUB_STATUS_DUPLICATED
-
-            def missingPropertiesDB = rlDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
-            def missingProperties = researchLine.properties.findAll{it.key != 'id' && !it.value}.keySet()
-            if(missingPropertiesDB != missingProperties){
-                status = PUB_STATUS_TO_UPDATE
-            }
-
-            def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
-            def detailsPropertiesDB = rlDB.properties.findAll{!(it.key in missingPropertiesTotal)}
-            def detailsDB = detailsPropertiesDB.findAll{it.key!='id'}
-            def detailsProperties = researchLine.properties.findAll{!(it.key in missingPropertiesTotal)}
-            def details = detailsProperties.findAll{it.key!='id'}
-            if(detailsDB != details){
-                status = PUB_STATUS_CONFLICTED
-            }
-        }
+        if(rlDB) status = checkItemStatus(rlDB, researchLine)
         return [status:status, id:rlDB?.id]
     }
     //#end
@@ -695,25 +682,7 @@ class XMLService {
         if(!researchProject) return null
         def status = PUB_STATUS_STABLE
         def researchProjectDB = ResearchProject.findByProjectName(researchProject.projectName)
-
-        if(researchProjectDB){
-            status = PUB_STATUS_DUPLICATED
-            def missingPropertiesDB = researchProjectDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
-            def missingProperties = researchProject.properties.findAll{it.key != 'id' && !it.value}.keySet()
-            if(missingPropertiesDB != missingProperties){
-                status = PUB_STATUS_TO_UPDATE
-            }
-
-            def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
-            def detailsPropertiesDB = researchProjectDB.properties.findAll{!(it.key in missingPropertiesTotal)}
-            def detailsDB = detailsPropertiesDB.findAll{it.key!='id'}
-            def detailsProperties = researchProject.properties.findAll{!(it.key in missingPropertiesTotal)}
-            def details = detailsProperties.findAll{it.key!='id'}
-            if(detailsDB != details){
-                status = PUB_STATUS_CONFLICTED
-            }
-        }
-
+        if(researchProjectDB) status = checkItemStatus(researchProjectDB, researchProject)
         return [status:status, id:researchProjectDB?.id]
     }
 
