@@ -166,7 +166,7 @@ class XMLImportTestDataAndOperations {
         List specificResearchs = fileName.depthFirst().findAll{ it.name() == 'TITULO-DA-LINHA-DE-PESQUISA' }
         for (research in specificResearchs) {
             if(research.equals(researchLineName)){
-                TestDataAndOperationsResearchLine.createResearchLine(researchLineName)
+                ResearchLineTestDataAndOperations.createResearchLine(researchLineName)
                 return true
             }
         }
@@ -235,25 +235,37 @@ class XMLImportTestDataAndOperations {
     //#end
 
     static getUser(){
+        def adminRole = createAdminRole()
+        createUser(adminRole)
+        return User.findByUsername('paulo')?.author?.name
+    }
+
+    private static createAdminRole(){
         def adminRole = Role.findByName("Administrator")
         if (!adminRole) {
             adminRole = new Role(name: 'Administrator')
             adminRole.addToPermissions("*:*")
             adminRole.save()
         }
+        return adminRole
+    }
 
+    private static createUser(adminRole){
         def user = new User(username: 'paulo', passwordHash: new Sha256Hash("paulo").toHex(),enabled: true)
         def member = new Member(name: "Paulo Henrique Monteiro Borba",email: "phmb@cin.ufpe.br", status: "Professor",
                 university: "UFPE")
-
         adminRole.addToUsers(user)
         adminRole.save()
-
         member.save()
-
         user.author = member
         user.save()
-        return User.findByUsername('paulo')?.author?.name
+    }
+
+    static uploadXmlFile(xmlController, path){
+        File importedFile = new File("xmlimported.xml")
+        importedFile.setText("")
+        XMLImportTestDataAndOperations.uploadPublications(xmlController,path)
+        importedFile.length()>0
     }
 
 }

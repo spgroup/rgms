@@ -32,9 +32,10 @@ int researchProjectsTotal
 
 Given(~'^the system has some publications stored$') { ->
     TestDataAndOperations.loginController(this,user)
+    publicationsTotal = Publication.findAll().size()
     XMLImportTestDataAndOperations.initializePublicationDB()
-    publicationsTotal = 4
-    assert Publication.findAll().size() == publicationsTotal
+    assert Publication.findAll().size() == publicationsTotal+4
+    publicationsTotal = Publication.findAll().size()
 }
 
 Given(~'^the system has no journal article entitled "([^"]*)" with journal "([^"]*)" authored by me$'){ pubName, journalName ->
@@ -45,12 +46,8 @@ When(~'^I upload the file "([^"]*)" that contains a journal article entitled "([
     String path = XMLImportTestDataAndOperations.configureFileName(filename)
     assert XMLImportTestDataAndOperations.fileContainsJournal(path, authorName, pubName, journalName)
 
-    File importedFile = new File("xmlimported.xml")
-    importedFile.setText("")
-    assert importedFile.length()==0
     xmlController = new XMLController()
-    XMLImportTestDataAndOperations.uploadPublications(xmlController,path)
-    assert importedFile.length()>0
+    assert XMLImportTestDataAndOperations.uploadXmlFile(xmlController, path)
 }
 
 Then(~'^no new publication is stored by the system$'){ ->
@@ -72,10 +69,8 @@ Then(~'^the previously stored publications do not change$'){ ->
     assert ArticleTestDataAndOperations.compatibleTo(journal2, journal2.title)
 
     //caso do sistema já ter um dado periodico
-    if(publicationsTotal == 5){
-        def journal3 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[6].title)
-        assert ArticleTestDataAndOperations.compatibleTo(journal3, journal3.title)
-    }
+    def journal3 = Periodico.findByTitle(ArticleTestDataAndOperations.articles[6].title)
+    if(journal3) assert ArticleTestDataAndOperations.compatibleTo(journal3, journal3.title)
 }
 
 Then(~'^the system outputs a list of imported publications that contains the journal article entitled "([^"]*)" with status "([^"]*)"$'){ pubName, status ->
@@ -88,7 +83,7 @@ Given(~'^the system has a journal article entitled "([^"]*)" with journal "([^"]
     TestDataAndOperations.loginController(this, user)
     XMLImportTestDataAndOperations.initializePublicationDB()
     XMLImportTestDataAndOperations.addJournalPublication(pubName, journalName)
-    publicationsTotal = 5
+    publicationsTotal = Publication.findAll().size()
     assert Periodico.findByTitleAndJournal(pubName, journalName).authors.contains(authorName)
 }
 
@@ -97,12 +92,8 @@ When(~'^I upload the file "([^"]*)" that contains a conference article entitled 
     assert XMLImportTestDataAndOperations.fileContainsConference(path, authorName, pubName, confName)
     assert !Conferencia.findByBooktitleAndTitle(pubName, confName)?.authors?.contains(authorName)
 
-    File importedFile = new File("xmlimported.xml")
-    importedFile.setText("")
-    assert importedFile.length()==0
     xmlController = new XMLController()
-    XMLImportTestDataAndOperations.uploadPublications(xmlController,path)
-    assert importedFile.length()>0
+    assert XMLImportTestDataAndOperations.uploadXmlFile(xmlController, path)
 }
 
 Then(~'^the system outputs a list of imported publications that contains the conference article entitled "([^"]*)" with status "([^"]*)"$'){ pubName, status ->
@@ -118,12 +109,8 @@ When(~'^I upload the file "([^"]*)" that also contains a journal article entitle
     Periodico dbPub = ArticleTestDataAndOperations.findArticleByTitleAndAuthor(pubName, authorName)
     assert ArticleTestDataAndOperations.compatibleTo(dbPub, pubName)
 
-    File importedFile = new File("xmlimported.xml")
-    importedFile.setText("")
-    assert importedFile.length()==0
     xmlController = new XMLController()
-    XMLImportTestDataAndOperations.uploadPublications(xmlController, path)
-    assert importedFile.length()>0
+    assert XMLImportTestDataAndOperations.uploadXmlFile(xmlController, path)
 }
 
 Then(~'^the system outputs a list of imported publications that does not contain the journal article entitled "([^"]*)"$'){ pubName ->
@@ -136,7 +123,7 @@ Given(~'^the system has a journal article entitled "([^"]*)" with journal "([^"]
     TestDataAndOperations.loginController(this, user)
     XMLImportTestDataAndOperations.initializePublicationDB()
     XMLImportTestDataAndOperations.addJournalPublication(pubName, journalName)
-    publicationsTotal = 5
+    publicationsTotal = Publication.findAll().size()
     def journal = Periodico.findByTitleAndJournal(pubName, journalName)
     assert journal.pages == pages
     assert journal.authors.contains(authorName)
@@ -147,12 +134,8 @@ When(~'^I upload the file "([^"]*)" that contains a journal article entitled "([
     String path = XMLImportTestDataAndOperations.configureFileName(filename)
     assert XMLImportTestDataAndOperations.fileContainsJournalWithPages(path, authorName, pubName, journalName, pages)
 
-    File importedFile = new File("xmlimported.xml")
-    importedFile.setText("")
-    assert importedFile.length()==0
     xmlController = new XMLController()
-    XMLImportTestDataAndOperations.uploadPublications(xmlController,path)
-    assert importedFile.length()>0
+    assert XMLImportTestDataAndOperations.uploadXmlFile(xmlController, path)
 }
 
 When(~'^I click on "([^"]*)" at the "([^"]*)" Page without selecting a xml file$'){ option, xmlPage ->
@@ -169,21 +152,18 @@ Then(~'^the system outputs an error message$') { ->
 //#if ($ResearchProject)
 Given(~'^the system has some research projects stored$'){ ->
     TestDataAndOperations.loginController(this, user)
+    researchProjectsTotal = ResearchProject.findAll().size()
     XMLImportTestDataAndOperations.initializeResearchProjectDB()
-    researchProjectsTotal = 2
-    assert ResearchProject.findAll().size() == researchProjectsTotal
+    assert ResearchProject.findAll().size() == researchProjectsTotal+2
+    researchProjectsTotal = ResearchProject.findAll().size()
 }
 
 When(~'^I upload the file "([^"]*)" that contains a research project named as "([^"]*)"$'){ filename, projectName ->
     String path = XMLImportTestDataAndOperations.configureFileName(filename)
     assert XMLImportTestDataAndOperations.fileContainsResearchProject(path, projectName, authorName)
 
-    File importedFile = new File("xmlimported.xml")
-    importedFile.setText("")
-    assert importedFile.length()==0
     xmlController = new XMLController()
-    XMLImportTestDataAndOperations.uploadPublications(xmlController,path)
-    assert importedFile.length()>0
+    assert XMLImportTestDataAndOperations.uploadXmlFile(xmlController, path)
 }
 
 Then(~'^no new research project is stored by the system$'){ ->
@@ -207,7 +187,7 @@ Then(~'^the system outputs a list of imported research projects that contains th
 Given(~'^the system has a research project named as "([^"]*)", among several research projects$'){ projectName ->
     TestDataAndOperations.loginController(this, user)
     XMLImportTestDataAndOperations.initializeResearchProjectDB()
-    researchProjectsTotal = 2
+    researchProjectsTotal = ResearchProject.findAll().size()
     def project = ResearchProject.findByProjectName(projectName)
     assert project.members.contains(authorName) || project.responsible==authorName
 }
@@ -217,12 +197,8 @@ When(~'^I upload the file "([^"]*)" that also contains a research project named 
         String path = XMLImportTestDataAndOperations.configureFileName(filename)
         assert XMLImportTestDataAndOperations.fileContainsResearchProject(path, projectName, authorName)
 
-        File importedFile = new File("xmlimported.xml")
-        importedFile.setText("")
-        assert importedFile.length()==0
         xmlController = new XMLController()
-        XMLImportTestDataAndOperations.uploadPublications(xmlController,path)
-        assert importedFile.length()>0
+        assert XMLImportTestDataAndOperations.uploadXmlFile(xmlController, path)
 }
 
 Then(~'^the system outputs a list of imported research projects that does not contain the one named as "([^"]*)"$'){ projectName ->
@@ -235,7 +211,7 @@ Given(~'^the system has a research project named as "([^"]*)" with status "([^"]
     projectName, projectStatus ->
         TestDataAndOperations.loginController(this, user)
         XMLImportTestDataAndOperations.initializeResearchProjectDB()
-        researchProjectsTotal = 2
+        researchProjectsTotal = ResearchProject.findAll().size()
         def project = ResearchProject.findByProjectNameAndStatus(projectName, projectStatus)
         assert project.members.contains(authorName) || project.responsible==authorName
 }
@@ -245,12 +221,8 @@ When(~'^I upload the file "([^"]*)" that also contains a research project named 
         String path = XMLImportTestDataAndOperations.configureFileName(filename)
         assert XMLImportTestDataAndOperations.fileContainsResearchProjectWithStatus(path, projectName, authorName, projectStatus)
 
-        File importedFile = new File("xmlimported.xml")
-        importedFile.setText("")
-        assert importedFile.length()==0
         xmlController = new XMLController()
-        XMLImportTestDataAndOperations.uploadPublications(xmlController,path)
-        assert importedFile.length()>0
+        assert XMLImportTestDataAndOperations.uploadXmlFile(xmlController, path)
 }
 //#end
 
