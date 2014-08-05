@@ -1,5 +1,3 @@
-package steps
-
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.UnavailableSecurityManagerException
 import pages.LoginPage
@@ -10,6 +8,8 @@ import pages.researchProject.ResearchProjectPageShowPage
 import rgms.authentication.User
 import rgms.member.Member
 import rgms.researchProject.ResearchProject
+import steps.ResearchProjectTestDadaAndOperations
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -72,6 +72,7 @@ Then(~'^the research project "([^"]*)" is not stored twice$') { String projectNa
 When(~'^I remove the research project named as "([^"]*)"$') { String projectName ->
     oldProjects = ResearchProject.findAll();
     ResearchProjectTestDadaAndOperations.deleteResearchProject(projectName);
+    TestDataAndOperations.logoutController(this);
 }
 
 Then(~'^the research project named as "([^"]*)" is properly removed by the system$') { String projectName ->
@@ -146,7 +147,7 @@ When(~'^I select the option to show my research projects$') { ->
 }
 
 Then(~'^the system shows a list with the research projects where I am a member$') { ->
-    page.checkResearchGroupHasLoggedUserAsMember();
+    page.checkResearchGroupHasLoggedUserAsMember("admin");
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -172,11 +173,7 @@ Then(~'^the system shows the research projects with the name "([^"]*)"$') { Stri
 // Scenario: remove research project that does not exist
 
 Given(~'^I am logged into the system as administrator$') { ->
-    if(!checkIfLoggedUserIsAdmin()) {
-        TestDataAndOperations.loginController(this);
-    }
-
-    assert checkIfLoggedUserIsAdmin();
+    TestDataAndOperations.loginController(this);
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -199,7 +196,7 @@ When(~'^I edit the research project "([^"]*)" in the system$') { String projectN
 
 Then(~'^the data of the research project named "([^"]*)" is updated in the system$') { String projectName ->
     newProject = ResearchProject.findByProjectName(projectName);
-    assert oldProject != newProject;
+    assert oldProjects.description != newProject.description;
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -275,6 +272,7 @@ Given(~'^the system has a research project named as "([^"]*)" created on web$') 
     ResearchProject project = ResearchProject.findByProjectName(projectName);
 
     if(!project) {
+        to ResearchProjectPageCreatePage
         page.fillResearchProject(projectName)
         page.createResearchProject()
         to ResearchProjectPage

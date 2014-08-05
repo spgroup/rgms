@@ -113,6 +113,6 @@ Feature: research project
     Then no research project stored is affected
 
   Scenario: edit existing research project
-    Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+    Given the system has a research project named as "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" created on web
     When I edit the research project "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" in the system
     Then the data of the research project named "Implementação Progressiva de Aplicações Orientadas a Objetos Complexas" is updated in the system

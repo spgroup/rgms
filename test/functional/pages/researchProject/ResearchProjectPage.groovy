@@ -56,7 +56,7 @@ class ResearchProjectPage extends FormPage {
     }
 
     def fillFilterResearchProject(projectName) {
-        $("form").filterProjectName = projectName;
+        $("form").projectName = projectName;
     }
 
     def getResearchGroupRows() {
@@ -89,13 +89,11 @@ class ResearchProjectPage extends FormPage {
         assert check
     }
 
-    def checkResearchGroupHasLoggedUserAsMember() {
+    def checkResearchGroupHasLoggedUserAsMember(String loggedUser) {
         // Procura usuário logado no Apache Shiro
         def User user;
         try {
-            if(SecurityUtils.subject?.principal!=null) {
-                user = User.findByUsername(SecurityUtils.subject.principal);
-            }
+            user = User.findByUsername(loggedUser);
         } catch(UnavailableSecurityManagerException e) {
             return false;
         }

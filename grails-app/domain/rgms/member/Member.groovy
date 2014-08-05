@@ -18,7 +18,6 @@ class Member {
     Boolean active
     String access_token
     String facebook_id
-    User user
     
    //static hasMany = [roles: Role, permissions: String, #if($History) historics: Record,#end memberships : Membership, publications: Publication]
    static hasMany = [historics: Record, memberships : Membership, publications: Publication, researchLines: ResearchLine]
