@@ -16,7 +16,11 @@ class BookChapterController {
     }
     //#if($orderByTitle)
     def orderByTitle(){
-        def bookChapters = BookChapter.listOrderByTitle()
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        def bookChapters = BookChapter.list(params)
+        if(bookChapters.size() != 0){
+            bookChapters = bookChapters.sort()
+        }
         render(view:"list", model: [bookChapterInstanceList: bookChapters, bookChapterInstanceTotal: bookChapters.size()])
 
     }
@@ -27,8 +31,10 @@ class BookChapterController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def bookChapters = BookChapter.list(params)
         def authorName = params.authorName
-        if(authorName != "")
-        bookChapters = bookChapters.findAll{it.authors.contains(authorName)}
+        if(authorName != ""){
+            bookChapters = bookChapters.findAll{it.authors.contains(authorName)}
+        }
+
         render(view: "list", model: [bookChapterInstanceList: bookChapters, bookChapterInstanceTotal: bookChapters.size()])
 
     }
