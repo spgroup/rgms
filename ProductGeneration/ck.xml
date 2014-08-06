@@ -21,6 +21,20 @@
         </transformation>
     </configuration>
     <configuration>
+        <expression>filterByAuthor</expression>
+        <transformation>
+            <name>createBuildEntries</name>
+            <args>filterByAuthor</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>orderByTitle</expression>
+        <transformation>
+            <name>createBuildEntries</name>
+            <args>orderByTitle</args>
+        </transformation>
+    </configuration>
+    <configuration>
         <expression>descricaovisita</expression>
         <transformation>
             <name>createBuildEntries</name>
