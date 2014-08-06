@@ -239,7 +239,7 @@ Given(~'^ the system has some research lines stored$'){
 Given(~'^ the system has no research line named as "([^"]*)" associated with me $') { String nameOfResearch ->
     xmlImport = new ResearchLineController()
     def autor =  xmlImport.findByActor(this)
-    List listaDeVerificacao = xmlImport.findResearchByActor(autor, nameOfResearch)
+    List listaDeVerificacao = xmlImport.findAllResearchByMember(autor, nameOfResearch)
     assert listaDeVerificacao.size() == 0
 }
 
@@ -281,7 +281,7 @@ Given(~'^ the system has some research lines stored $'){
 Given(~'^ the system has no research line named as "([^"]*)" associated with me $'){ nameOfResearch ->
     xmlImport = new ResearchLineController()
     def autor =  xmlImport.findByActor(this)
-    List listaDeVerificacao = xmlImport.findResearchByActor(autor, nameOfResearch)
+    List listaDeVerificacao = xmlImport.findAllResearchByMember(autor, nameOfResearch)
     assert listaDeVerificacao.size() == 0
 }
 
