@@ -39,7 +39,7 @@ When(~'^I remove the book chapter "([^"]*)"$') { String title ->
 }
 
 Then(~'^the book chapter "([^"]*)" is properly removed by the system$') { String title ->
-    checkIfExists(title)
+    bookChapterNoExist(title)
 }
 
 And(~'^the book chapter "([^"]*)" is still stored in the system$'){ String title ->
@@ -193,16 +193,11 @@ When(~'I select the Book Chapter option at the program menu'){ ->
 }
 
 
-def createAndCheckBookOnBrowser(String title, String filename) {
+private def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookChapterDetails(title, filename)
     page.clickSaveBookChapter()
     book = BookChapter.findByTitle(title)
     assert book != null
-}
-
-def checkIfExists(String title) {
-    bookChapter = BookChapter.findByTitle(title)
-    assert bookChapter == null
 }
 
 /**
@@ -244,7 +239,7 @@ Given (~'^I am at the book chapters page and the book chapter "([^"]*)" is store
     at BookChapterPage
 }
 
-def selectNewBookChapterInBookChapterPage(){
+private def selectNewBookChapterInBookChapterPage(){
     at BookChapterPage
     page.selectNewBookChapter()
     at BookChapterCreatePage
@@ -333,7 +328,7 @@ Then(~'^the system has the same number of book chapters$'){
 
 
 When (~'^I edit the book chapter title from "([^"]*)" to "([^"]*)"$'){ String oldTitle, newTitle ->
-    def updateBookChapter = BookChapterTestDataAndOperations.editBookChapter(oldTitle, newTitle) //Nao tem
+    def updateBookChapter = BookChapterTestDataAndOperations.editBookChapter(oldTitle, newTitle)
     assert updateBookChapter != null
 
 }
@@ -370,7 +365,7 @@ When(~'^The system filter the book chapters stored by author "([^"]*)"$') { Stri
 
 }
 
-def bookChapterNoExist(String title){
+private def bookChapterNoExist(String title){
     return BookChapter.findByTitle(title) == null
 
 }
