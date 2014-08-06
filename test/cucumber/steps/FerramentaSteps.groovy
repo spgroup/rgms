@@ -64,7 +64,7 @@ Given(~'^the system has some ferramenta stored$') {->
 When(~'^I upload a new ferramenta "([^"]*)"$') { filename ->
     inicialSize = Ferramenta.findAll().size()
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    FerramentaTestDataAndOperations.uploadFerramenta(path + filename)
+    FerramentaTestDataAndOperations.uploadFerramenta(path + filename, this)
     finalSize = Ferramenta.findAll().size()
     assert inicialSize < finalSize
     //para funcionar é necessario que tenha um FilePath válido

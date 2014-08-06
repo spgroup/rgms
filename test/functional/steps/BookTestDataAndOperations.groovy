@@ -54,13 +54,15 @@ class BookTestDataAndOperations {
         return updatedBook
     }
 
-    static public void uploadBook(String filename) {
+    static public void uploadBook(String filename, className) {
+        TestDataAndOperations.loginController(className)
         def cont = new XMLController()
         String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
         def xml = new File(path);
         def records = new XmlParser()
         cont.saveBook(records.parse(xml));
         cont.response.reset()
+        TestDataAndOperations.logoutController(className)
     }
 
     static public boolean bookCompatibleTo(book, String title) {

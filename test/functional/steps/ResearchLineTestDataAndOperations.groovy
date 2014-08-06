@@ -78,12 +78,14 @@ class ResearchLineTestDataAndOperations {
     }
 
 
-    static public void uploadResearchLine(filepath) {
+    static public void uploadResearchLine(filepath, className) {
+        TestDataAndOperations.loginController(className)
         def cont = new XMLController()
         def xml = new File((String) filepath);
         def records = new XmlParser()
         cont.saveResearchLine(records.parse(xml));
         cont.response.reset()
+        TestDataAndOperations.logoutController(className)
     }
 
     static public void createResearchLine(int position){

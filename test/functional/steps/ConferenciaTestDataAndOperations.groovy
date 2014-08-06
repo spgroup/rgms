@@ -62,12 +62,14 @@ class ConferenciaTestDataAndOperations {
         }
     }
 
-    static public void uploadConferencias(filename) {
+    static public void uploadConferencias(filename, className) {
+        TestDataAndOperations.loginController(className)
         def cont = new XMLController()
         def xml = new File(filename);
         def records = new XmlParser()
         cont.saveConferencias(records.parse(xml));
         cont.response.reset()
+        TestDataAndOperations.logoutController(className)
     }
 
 }

@@ -6,6 +6,7 @@ import pages.*
 import rgms.publication.BookChapter
 import steps.BookChapterTestDataAndOperations
 import steps.PublicationTestDataAndOperations
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -128,7 +129,7 @@ Given(~'^the system has some book chapters stored$') { ->
 When(~'^I upload the book chapters of "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     initialSize = BookChapter.findAll().size()
-    BookChapterTestDataAndOperations.uploadBookChapter(path)
+    BookChapterTestDataAndOperations.uploadBookChapter(path, this)
     finalSize = BookChapter.findAll().size()
     assert initialSize < finalSize
 }

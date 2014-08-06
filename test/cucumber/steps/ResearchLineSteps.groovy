@@ -114,10 +114,10 @@ Given(~'^the system has some research line stored$'){ ->
 
 When(~'^I upload new research lines from the file "([^"]*)"$') { filename ->
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    ResearchLineTestDataAndOperations.uploadResearchLine(path + filename)
+    ResearchLineTestDataAndOperations.uploadResearchLine(path + filename, this)
 }
 
-Then(~'^the system has more reseach lines now$'){ ->
+Then(~'^the system has more research lines now$'){ ->
     TestDataAndOperations.logoutController(this)
     finalSize = ResearchLine.findAll().size()
     assert (finalSize - initialSize) == 5 //If all researchlines was imported, we will have 5 more than before

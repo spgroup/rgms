@@ -43,12 +43,14 @@ class TestDataDissertacao
         return updatedarticle
     }
 
-    static public void uploadDissertacao(filename) {
+    static public void uploadDissertacao(filename, className) {
+        TestDataAndOperations.loginController(className)
         def cont = new XMLController()
         def xml = new File(filename);
         def records = new XmlParser()
         cont.saveDissertations(records.parse(xml));
         cont.response.reset()
+        TestDataAndOperations.logoutController(className)
     }
 
     static public void removeDissertacao(String title) {

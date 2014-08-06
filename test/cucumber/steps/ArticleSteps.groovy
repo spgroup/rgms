@@ -275,7 +275,7 @@ Then(~'^I see my user listed as an author member of article by default$') {->
 When(~'^I upload the articles of "([^"]*)"$') { String arg1 ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + arg1
     initialSize = Periodico.findAll().size()
-    ArticleTestDataAndOperations.uploadArticle(path)
+    ArticleTestDataAndOperations.uploadArticle(path, this)
     finalSize = Periodico.findAll().size()
     assert initialSize < finalSize
 }

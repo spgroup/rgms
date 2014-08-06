@@ -122,7 +122,7 @@ Given(~'^the system has some conferencias stored$') {->
 When(~'^I upload the conferencias of "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     initialSize = Conferencia.findAll().size()
-    ConferenciaTestDataAndOperations.uploadConferencias(path)
+    ConferenciaTestDataAndOperations.uploadConferencias(path, this)
     finalSize = Conferencia.findAll().size()
     assert initialSize < finalSize
 }

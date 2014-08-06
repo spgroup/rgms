@@ -17,6 +17,8 @@ Feature: Dissertation Tests
     When I create the dissertation "Dissertation without school" with file name "Dissertationwithoutschool.txt" without school
     Then the system has no dissertation entitled "Dissertation without school"
 
+  #Esse cenário não mais se aplica porque address não mais é obrigatório, já que essa informação não existe no lattes
+  @ignore
   Scenario: new dissertation without address
     Given the system has no dissertation entitled "Dissertation without address"
     When I create the dissertation "Dissertation without address" with file name "Dissertationwithoutaddress.txt" without address
