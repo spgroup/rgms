@@ -39,21 +39,24 @@ class ConferenciaCreatePage extends FormPage {
 
     def fillAuthorName(String name)
     {
-        $("form").authorName = name
+        $("form").addAuthor = name
+    }
+
+    def addAuthor()
+    {
+        $("#addAuthorButton").click()
     }
 
     def checkFirstAuthor()
     {
-      String firstAuthor = $("form").find("select#members option", value: "1").text()
+      String firstAuthor = $("#authors table td", 0).text()
       assert firstAuthor.equals("Administrador do sistema")
     }
 
     def checkLastAuthor(String authorName)
     {
-        int listLen = $("form").members.collect().size()
-        String lastPos = String.valueOf(listLen)
-
-        String lastAuthor = $("form").find("select#members option", value: lastPos).text()
+        int lastPost = $("#authors table td").allElements().size() - 1
+        String lastAuthor = $("#authors table td", lastPost).text()
         assert authorName.equals(lastAuthor)
     }
 

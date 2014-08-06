@@ -153,11 +153,11 @@ Then(~'^I see my user listed as an author member of conference by default in the
     at ConferenciaCreatePage
     page.checkFirstAuthor()
 }
-
+/*
 Given(~'^the member "([^"]*)" is registered in the system$') { String memberName ->
    member = MemberTestDataAndOperations.findByName(memberName)
    assert member != null
-}
+}*/
 
 /*
 When(~'^I select the "([^"]*)"$ option at the conference page$'){ String option ->

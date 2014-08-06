@@ -57,35 +57,16 @@
 
 <div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'pages', 'error')}">
 
-    <label for="authorList">
-        <g:message code="conferencia.authorList.label" default="Author List"/>
-    </label>
-
-    <g:if test="${conferenciaInstance?.authors != neu   ull}">
-        ${session.putAt("authors",conferenciaInstance?.authors)}
+    <g:if test="${conferenciaInstance.authors}">
+        ${session.putAt("authors",conferenciaInstance.authors)}
     </g:if>
-    <g:elseif test="${session.getAt("authors") == null}">
-        ${session.putAt("authors",ConferenciaController.authors)}
-    </g:elseif>
+    <g:else>
+        ${session.putAt("authors",ConferenciaController.defaultAuthors)}
+    </g:else>
 
-    <table id="authorList">
-
-        <g:each in="${session.getAt("authors")}" var="author" >
-            <g:if test="${ConferenciaController.getLoggedMemberName().equals(author)}">
-                <tr><td>${author}</td></tr>
-            </g:if>
-            <g:else>
-                <tr>
-                    <td>${author}</td>
-                    <td>
-                        <input id="${author}" onclick="removeFromList(this)" type="button" value="${message(code: 'conferencia.removeAuthor.label', default: 'remove author')}" />
-                    </td>
-                    <td><g:field type="hidden" name="authors" value="${author}"/></td>
-                </tr>
-            </g:else>
-        </g:each>
-
-    </table>
+    <div id="authors">
+        <g:render template="authorTab" />
+    </div>
 
 </div>
 
@@ -95,5 +76,5 @@
     </label>
 
     <g:textField name="addAuthor" size="20"/>
-    <g:submitToRemote name="addAuthorButton" url="[controller: 'conferencia', action: 'addAuthor']" update="authorList" after="clearInput()" value="${message(code: 'conferencia.addAuthor.label', default: 'Add Author')}" />
+    <input type="button" id="addAuthorButton" value="${message(code: 'conferencia.addAuthor.label', default: 'Add Author')}"/>
 </div>

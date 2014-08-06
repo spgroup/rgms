@@ -94,7 +94,18 @@
 					
 				</li>
 				</g:if>
-			
+                <!--//#if($manageAuthors) -->
+                <g:if test="${conferenciaInstance?.authors}">
+                    <li class="fieldcontain">
+                        <span id="authorList-label" class="property-label"><g:message code="conferencia.authors.label" default="Authors" /></span>
+
+                        <g:each in="${conferenciaInstance.authors}" var="author">
+                            <span class="property-value" aria-labelledby="members-label">${author}</span>
+                        </g:each>
+
+                    </li>
+                </g:if>
+			    <!--//#end-->
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

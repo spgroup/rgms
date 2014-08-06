@@ -4,8 +4,7 @@
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'conferencia.label', default: 'Conferencia')}" />
-        <g:javascript library='jquery'/>
-        <g:javascript src="conferencia-authorManager.js" />
+        <r:require modules="jquery"/>
         <link type="text/css" rel="stylesheet" href="${resource(dir: 'css', file: 'conferencia-authorManager.css')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>

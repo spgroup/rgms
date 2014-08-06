@@ -1,5 +1,8 @@
 package rgms.publication
 
+import org.hibernate.collection.PersistentSet
+import org.hibernate.validator.jtype.Generics
+
 //#if($XMLUpload && $Conferencia)
 import rgms.XMLService
 //#end
@@ -25,7 +28,6 @@ class ConferenciaController {
         PublicationController.addAuthor(conferenciaInstance)
         //#end
         [conferenciaInstance: conferenciaInstance]
-        session.removeAttribute("authors")
     }
 
     private alertMessage(String typeMessage, Conferencia conferenciaInstance){
@@ -34,8 +36,10 @@ class ConferenciaController {
     }
 
     def save() {
+        //#if($managingAuthors)
+        moveAuthorListToParams()
+        //#end
 
-        print(params)
         def conferenciaInstance = new Conferencia(params)
         PublicationController pb = new PublicationController()
         if (!pb.upload(conferenciaInstance) || !conferenciaInstance.save(flush: true)) {
@@ -43,7 +47,6 @@ class ConferenciaController {
             return
         }
         alertMessage('created',conferenciaInstance)
-        session.removeAttribute("authors")
     }
 
     private returnConferenciaInstance(){
@@ -68,7 +71,7 @@ class ConferenciaController {
                             message(code: 'default.updateError.message'))
                     render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
                     return  }  }
-            conferenciaInstance.properties = params
+
             if (!conferenciaInstance.save(flush: true)) {
                 render(view: "edit", model: [conferenciaInstance: conferenciaInstance])
                 return
@@ -86,6 +89,9 @@ class ConferenciaController {
     }
 
     def update() {
+        //#if($manageAuthors)
+        moveAuthorListToParams()
+        //#end
         returnConferenciaActualVersion();
     }
 
@@ -94,7 +100,17 @@ class ConferenciaController {
 		aux.delete(params.id, conferenciaInstance, 'conferencia.label', 'Conferencia');
 	}
 
-    // $if($managingAuthors)
+    //#if($managingAuthors)
+    private moveAuthorListToParams(){
+        params.authors = session["authors"]
+        session.removeAttribute("authors")
+
+        if ( params.id != null )
+        {
+            def conferenciaInstance = Conferencia.get(params.id)
+            conferenciaInstance.authors = params.authors
+        }
+    }
 
     def static String getLoggedMemberName()
     {
@@ -107,68 +123,53 @@ class ConferenciaController {
         return loggedMemberName
     }
 
-    def static List<String> getAuthors()
+    def static List getDefaultAuthors()
     {
         Set<Member> members = PublicationController.membersOrderByUsually()
-        ArrayList<String> memberAuthors = new ArrayList<String>()
+        Collection defaultAuthors = new ArrayList()
 
-        for ( Member member : members )
-            memberAuthors.add(member.name)
+        for (Member m : members.iterator())
+           defaultAuthors.add(m.name)
 
-        return memberAuthors
-    }
-
-    def updateAuthorList()
-    {
-        List<String> authorList = (List<String>) session["authors"]
-        String loggedMemberName = getLoggedMemberName()
-
-        render("<table>")
-        for ( String authorName : authorList )
-        {
-            if ( loggedMemberName.equals(authorName) )
-                render("<tr><td>" + authorName + "</td></tr>")
-            else
-            {
-                render("<tr><td>" + authorName + "</td>")
-                render("<td><input id=\"${authorName}\" onclick=\"removeFromList(this)\" type=\"button\" value=\"${message(code: 'conferencia.removeAuthor.label', default: 'remove author')}\" /></td></tr>")
-                render( "<td><g:field type=\"hidden\" name=\"authors\" value=\""+ authorName +"\"/></td></tr>" )
-            }
-        }
-        render("</table>")
+        return defaultAuthors
     }
 
     def addAuthor()
     {
-      List<String> authorList = (List<String>) session["authors"]
+      Collection authors = (Collection) session["authors"]
       String addedAuthor = params.addAuthor
 
-      if ( authorList == null )
-      {
-          Set<Member> members = PublicationController.membersOrderByUsually()
-          authorList = new ArrayList<String>()
+      if ( authors == null )
+          authors = defaultAuthors
 
-          for ( Member member : members )
-            authorList.add( member.name )
-      }
+      if ( addedAuthor.length() > 0 && !authors.contains(addedAuthor) )
+          authors.add(addedAuthor)
 
-      if ( addedAuthor.length() > 0 )
-        authorList.add(addedAuthor)
-
-      session["authors"] = authorList
-      updateAuthorList()
+      session["authors"] = authors
+      render(template: "authorTab")
     }
 
     def removeAuthor()
     {
-        List<String> authorList = (List<String>) session["authors"]
-        String selectedAuthor = params.selectedAuthor
+        Collection authors = (Collection) session["authors"]
+        String removeAuthor = params.removeAuthor
 
-        if (authorList != null && !selectedAuthor.equals(loggedMemberName))
-        {
-            authorList.remove(selectedAuthor)
-            session["authors"] = authorList
-            updateAuthorList()
+        if (authors != null && !removeAuthor.equals(loggedMemberName)) {
+            authors.remove(removeAuthor)
+            session["authors"] = authors
+            render(template: "authorTab")
+        }
+    }
+
+    def findMemberByName()
+    {
+        String input = params.addAuthor
+
+        if ( input.length() > 0 ){
+             Member member = Member.findByNameIlike('%'+input+'%')
+
+            if (member != null && !member.name.equals(input))
+                render(member.name)
         }
     }
     //#end

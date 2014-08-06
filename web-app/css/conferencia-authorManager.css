@@ -1,9 +1,9 @@
-#authorList {
+#authors {
     margin: 0 auto;
-    width: inherit !important;
+    width: 70% !important;
 }
 
-#authorList tr td {
+#authors {
     overflow: hidden;
 }
 
