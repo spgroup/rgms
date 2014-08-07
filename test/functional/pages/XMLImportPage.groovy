@@ -33,12 +33,13 @@ class XMLImportPage extends Page {
         return gp.msg('default.xml.parserror.message') == $("div", class: "message", role: "status").text()
     }
 
-    def uploadFile(File file){
+    def uploadFile(file){
         GetPageTitle gp = new GetPageTitle()
-        if((file.canRead())&&(file.hasProperty(".xml"))){
-            $('input.save').click()
-        }else{
-            gp.getMessage("não é possível transferir arquivos deste tipo")
+        if(file.hasProperty("xml")){
+            $('input[type=file]').value(file)
+            $('input[type=submit]').click()
+            gp.msg('default.xml.save.message') == $("div", class: "message", role: "status").text()
         }
+        gp.msg('default.xml.saveerror.message') == $("div", class: "message", role: "status").text()
     }
 }

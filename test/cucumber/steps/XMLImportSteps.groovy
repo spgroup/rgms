@@ -288,33 +288,33 @@ Given(~'^ the system has no research line named as "([^"]*)" associated with me 
 Given(~'^the file "([^"]*)", which contains a research line named as "([^"]*)", is uploaded $'){ String theFile, researchLineName ->
     TestDataAndOperations.uploadPublications(theFile)
     status = XMLImportTestDataAndOperations.extractSpecificResearchLineFromFile(theFile, researchLineName)
-    assert status == true
+    assert status
 }
 
 When(~'^ I confirm the import of the research line named as "([^"]*)" with status "([^"]*)" $'){ String nameOfResearch, status ->
     ResearchLineController controller = new ResearchLineController()
     statusController =  controller.checkSavedResearchByDescription(nameOfResearch, status)
-    assert statusController == true
+    assert statusController
 
 }
 Then(~'^ the research line named as "([^"]*)" is stored by the system $'){ String research ->
     list = ResearchLine.findAll()
     ResearchLineController controller = new ResearchLineController()
     statusSave = controller.checkIfResearchLineExists(research,list)
-    assert statusSave == true
+    assert statusSave
 }
 
 Then(~'^ the research line named as "([^"]*)" with status "([^"]*)" is removed from the list of imported research lines $'){ String nameOfResearch, status ->
     ResearchLineController cont = new ResearchLineController()
     check = cont.checkDeletedResearchByDescription(nameOfResearch, status)
-    assert check == true
+    assert check
 
 }
 Then(~'^ the previously stored research lines do not change $'){
     ResearchLineController controller = new XMLController()
     def lista = ResearchLine.findAll()
     status = controller.statusChanged(lista)
-    assert status == false
+    assert !status
 }
 //#end
 
@@ -330,7 +330,7 @@ When(~'^ I upload the file "([^"]*)" $') { String typeFile ->
     PublicationTestDataAndOperations.uploadPublication(typeFile)
     PublicationController controllerP = new PublicationController()
     status = controllerP.checkTypeFile(typeFile)
-    assert status == false
+    assert !status
 }
 
 Then(~'^ no publication is stored by the system $') { ->
@@ -341,8 +341,8 @@ Then(~'^ no publication is stored by the system $') { ->
 Then(~'^ And previusly stored publications do not change  $'){->
     PublicationController contr = new PublicationController()
     def lista = Publication.findAll()
-    result = contr.statusChanged(lista)
-    assert result == false
+    resultChanged = contr.statusChanged(lista)
+    assert !resultChanged
     TestDataAndOperations.logoutController(this)
 }
 
@@ -350,7 +350,7 @@ Then(~'^ And previusly stored publications do not change  $'){->
 Given(~'^I am at the "Import XML File" page$'){ ->
     to LoginPage
     at LoginPage
-    page.add("admin", "adminadmin")
+    page.fillLoginDataOnly("admin", "adminadmin")
     to XMLImportPage
 }
 
@@ -366,7 +366,7 @@ When(~' I upload the file "([^"]*)"$'){ String file ->
 
 Then(~'^ the system outputs an error message$'){ ->
     at XMLImportPage
-    assert page.invalidXML()
+    assert page.hasErrorUploadFile()
 }
 
 Then(~'^ no new publication is stored by the system$'){ ->
@@ -398,4 +398,5 @@ Then(~'^ no new publication is stored by the system$'){ ->
 Then(~'^ the previously stored publications do not change$'){
     to XMLImportPage
     at XMLImportPage
+    assert page.uploadFile(new File('/test/files/cv.pdf'))
 }
