@@ -41,10 +41,4 @@ class XMLImportPage extends Page {
             gp.getMessage("não é possível transferir arquivos deste tipo")
         }
     }
-
-    def invalidXML(){
-        GetPageTitle gp = new GetPageTitle()
-        return gp.msg('default.xml.parserror.message') == $("div", class: "message", role: "status").text()
-
-    }
 }

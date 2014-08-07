@@ -311,10 +311,9 @@ Then(~'^ the research line named as "([^"]*)" with status "([^"]*)" is removed f
 
 }
 Then(~'^ the previously stored research lines do not change $'){
-
     ResearchLineController controller = new XMLController()
     def lista = ResearchLine.findAll()
-    status = controller.statusChanged(lista) //se true é porque modificou, se false é porque nada foi modificado
+    status = controller.statusChanged(lista)
     assert status == false
 }
 //#end
