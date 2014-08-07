@@ -268,10 +268,8 @@ Then(~'^ the previously stored research lines do not change $'){
     ResearchLineController controller = new XMLController()
     def lista = ResearchLine.findAll()
     status = controller.statusChanged(lista) //se true é porque modificou, se false é porque nada foi modificado
-    assert status == false
+    assert !status
 }
-//#end
-
 
 Given(~'^ the system has some research lines stored $'){
     ResearchLineTestDataAndOperations.createResearchLine(0)

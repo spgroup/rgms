@@ -23,6 +23,7 @@ class XMLImportTestDataAndOperations {
 
     static configureFileName(filename){
         String path = "test" + File.separator + "files" + File.separator + filename
+        return path
     }
 
     static addJournalPublication(pubName, journalName){
