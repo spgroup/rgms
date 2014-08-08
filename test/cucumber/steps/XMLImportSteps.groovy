@@ -236,11 +236,10 @@ Given(~'^ the system has some research lines stored $'){
 }
 
 Given(~'^ the system has no research line named as "([^"]*)" associated with me $'){ nameOfResearch ->
-    /*PublicationController publicationController = new PublicationController()
-    def research = ResearchLine.findByName(nameOfResearch)*/
-    def puclicationMember = publicationController.getLoggedMember()
-    def publi = Publication.findByResearchLineAndMembers(research, puclicationMember)
-    assert publi == null
+
+    def puclicationMember = ResearchLineTestDataAndOperations.findResearchLineByNameOrientation(user)
+    assert ResearchLineTestDataAndOperations.researchLineCompatibleTo(puclicationMember, nameOfResearch)
+
 }
 
 Given(~'^the file "([^"]*)", which contains a research line named as "([^"]*)", is uploaded $'){ String theFile, researchLineName ->
