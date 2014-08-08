@@ -161,20 +161,4 @@ class PublicationController {
 //      return statusLine.getStatusCode();
     }
     //#end
-
-    def static checkTypeFile(file){
-       file.hasProperty(".xml")
-    }
-
-    def statusChanged(def lista){
-        def sizeList = Publication.findAll()
-        def sizeI = sizeList.size()
-        def sizeF = lista.size()
-
-        def resultado = Math.max(sizeI, sizeF)
-        if(sizeF.compareTo(resultado)){
-           return true
-        }
-       return false
-    }
 }

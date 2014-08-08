@@ -283,18 +283,6 @@ class ResearchLineController {
             return false
     }
 
-    def statusChanged(def lista){
-           def sizeList = findAllResearchLine()
-           def sizeI = sizeList.size()
-           def sizeF = lista.size()
-
-        def resultado = Math.max(sizeI, sizeF)
-        if(sizeF.compareTo(resultado)){
-            return true
-        }
-        return false
-    }
-
     def checkSavedResearchByDescription(nameOfResearch, status){
         HashMap<String,String> lista = findAllResearchLine()
         for(int i; i< lista.size(); i++){
