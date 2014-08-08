@@ -5,12 +5,15 @@ import pages.DissertationPage
 import pages.LoginPage
 import pages.OrientationPages.OrientationsPage
 import pages.ResearchLinePages.ResearchLinePage
+import rgms.XMLService
 import rgms.authentication.User
+import rgms.member.Member
 import rgms.publication.*
 import rgms.researchProject.ResearchProject
 import steps.ArticleTestDataAndOperations
 import steps.ConferenciaTestDataAndOperations
 import steps.PublicationTestDataAndOperations
+import steps.ResearchGroupTestDataAndOperations
 import steps.ResearchLineTestDataAndOperations
 import steps.ResearchProjectTestDadaAndOperations
 import steps.XMLImportTestDataAndOperations
@@ -227,66 +230,24 @@ When(~'^I upload the file "([^"]*)" that also contains a research project named 
 //#end
 
 
-// #if($ResearchLine)
-Given(~'^ the system has some research lines stored$'){
-    TestDataAndOperations.loginController(this)
-    ResearchLineTestDataAndOperations.createResearchLine(0)
-    ResearchLineTestDataAndOperations.createResearchLine(1)
-    ResearchLineTestDataAndOperations.createResearchLine(2)
-    initialSize = ResearchLine.findAll().size()
-}
-
-Given(~'^ the system has no research line named as "([^"]*)" associated with me $') { String nameOfResearch ->
-    xmlImport = new ResearchLineController()
-    def autor =  xmlImport.findByActor(this)
-    List listaDeVerificacao = xmlImport.findAllResearchByMember(autor, nameOfResearch)
-    assert listaDeVerificacao.size() == 0
-}
-
-When(~'^I upload the file "([^"]*)" which contains a research line named as "([^"]*)" $'){ String research, file ->
-    TestDataAndOperations.uploadPublications(file)
-    String path = "test" + File.separator + "files" + File.separator + file
-    xmlImport2 = XMLImportTestDataAndOperations.checkResearchLineFromFile(file, research)
-    assert xmlImport2 != 0
-}
-
-Then(~'^the system outputs a list of imported research lines which contains the one named as "([^"]*)" with status "([^"]*)" $'){ String researchOfLine, status ->
-
-    xmlImport2 = new ResearchLineController()
-    //O metodo retorna todos as research que estao com status stable
-    lista = xmlImport2.findAllResearchLine()
-    assert xmlImport2.checkIfResearchLineExists(researchOfLine,lista)
-}
-
-Then(~'^ no new research line is stored by the system $'){
-    finalSize = ResearchLine.findAll().size()
-    assert initialSize == finalSize
-
-}
-
-Then(~'^ the previously stored research lines do not change $'){
-    ResearchLineController controller = new XMLController()
-    def lista = ResearchLine.findAll()
-    status = controller.statusChanged(lista) //se true é porque modificou, se false é porque nada foi modificado
-    assert !status
-}
-
 Given(~'^ the system has some research lines stored $'){
     ResearchLineTestDataAndOperations.createResearchLine(0)
     ResearchLineTestDataAndOperations.createResearchLine(1)
-    initialSize = ResearchLine.findAll().size()
 }
+
 Given(~'^ the system has no research line named as "([^"]*)" associated with me $'){ nameOfResearch ->
-    xmlImport = new ResearchLineController()
-    def autor =  xmlImport.findByActor(this)
-    List listaDeVerificacao = xmlImport.findAllResearchByMember(autor, nameOfResearch)
-    assert listaDeVerificacao.size() == 0
+    /*PublicationController publicationController = new PublicationController()
+    def research = ResearchLine.findByName(nameOfResearch)*/
+    def puclicationMember = publicationController.getLoggedMember()
+    def publi = Publication.findByResearchLineAndMembers(research, puclicationMember)
+    assert publi == null
 }
 
 Given(~'^the file "([^"]*)", which contains a research line named as "([^"]*)", is uploaded $'){ String theFile, researchLineName ->
-    TestDataAndOperations.uploadPublications(theFile)
-    status = XMLImportTestDataAndOperations.extractSpecificResearchLineFromFile(theFile, researchLineName)
-    assert status
+    file = XMLImportTestDataAndOperations.configureFileName(theFile)
+    def findPubli = ResearchLine.findByName(researchLineName)
+    TestDataAndOperations.uploadPublications(file)
+    assert Publication.findByFileAndResearchLine(file, findPubli) != null
 }
 
 When(~'^ I confirm the import of the research line named as "([^"]*)" with status "([^"]*)" $'){ String nameOfResearch, status ->
@@ -303,16 +264,14 @@ Then(~'^ the research line named as "([^"]*)" is stored by the system $'){ Strin
 }
 
 Then(~'^ the research line named as "([^"]*)" with status "([^"]*)" is removed from the list of imported research lines $'){ String nameOfResearch, status ->
-    ResearchLineController cont = new ResearchLineController()
-    check = cont.checkDeletedResearchByDescription(nameOfResearch, status)
-    assert check
-
+    def research = ResearchLine.findByNameAndDescription(nameOfResearch, status)
+    ResearchLineTestDataAndOperations.deleteResearchLine(research.id)
 }
+
 Then(~'^ the previously stored research lines do not change $'){
-    ResearchLineController controller = new XMLController()
-    def lista = ResearchLine.findAll()
-    status = controller.statusChanged(lista)
-    assert !status
+    def researchs = ResearchLine.findAll()
+    def lista = Publication.findAllByResearchLineInList(researchs)
+    assert statusChanged(lista)
 }
 //#end
 
@@ -326,9 +285,8 @@ Given(~'^The system has some publications stored $'){ ->
 
 When(~'^ I upload the file "([^"]*)" $') { String typeFile ->
     PublicationTestDataAndOperations.uploadPublication(typeFile)
-    PublicationController controllerP = new PublicationController()
-    status = controllerP.checkTypeFile(typeFile)
-    assert !status
+    def statusFile = checkTypeFile(typeFile)
+    assert !statusFile
 }
 
 Then(~'^ no publication is stored by the system $') { ->
@@ -343,7 +301,6 @@ Then(~'^ And previusly stored publications do not change  $'){->
     assert !resultChanged
     TestDataAndOperations.logoutController(this)
 }
-
 
 Given(~'^I am at the "Import XML File" page$'){ ->
     to LoginPage
@@ -397,4 +354,22 @@ Then(~'^ the previously stored publications do not change$'){
     to XMLImportPage
     at XMLImportPage
     assert page.uploadFile(new File('/test/files/cv.pdf'))
+}
+
+
+//Auxiliares
+def statusChanged(def lista){
+    def sizeList = Publication.findAll()
+    def sizeI = sizeList.size()
+    def sizeF = lista.size()
+
+    def resultado = Math.max(sizeI, sizeF)
+    if(sizeF.compareTo(resultado)){
+        return true
+    }
+    return false
+}
+
+def static checkTypeFile(file){
+    file.hasProperty("xml")
 }
