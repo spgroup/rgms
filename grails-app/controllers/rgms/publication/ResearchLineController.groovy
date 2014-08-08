@@ -270,7 +270,7 @@ class ResearchLineController {
                 listagem.put(member, research)
             }
         }
-        return listagem.size()
+        return listagem
     }
 
     def checkIfResearchLineExists(researchName, list){
