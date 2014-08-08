@@ -249,7 +249,7 @@ class ResearchLineController {
         [researchLineInstanceList: lista]
     }
 
-    def findByActor(member){
+    def findResearchByMember(member){
         ArrayList<String> lista = new ArrayList<String>()
         Member actor = new Member()
         for(research in ResearchLine.getAll())
