@@ -8,6 +8,7 @@ import pages.ResearchLinePages.ResearchLinePage
 import rgms.XMLService
 import rgms.authentication.User
 import rgms.member.Member
+import rgms.member.MemberController
 import rgms.publication.*
 import rgms.researchProject.ResearchProject
 import steps.ArticleTestDataAndOperations
@@ -229,24 +230,22 @@ When(~'^I upload the file "([^"]*)" that also contains a research project named 
 }
 //#end
 
-
+// #if($ResearchLine)
 Given(~'^ the system has some research lines stored $'){
     ResearchLineTestDataAndOperations.createResearchLine(0)
     ResearchLineTestDataAndOperations.createResearchLine(1)
 }
 
-Given(~'^ the system has no research line named as "([^"]*)" associated with me $'){ nameOfResearch ->
-
-    def puclicationMember = ResearchLineTestDataAndOperations.findResearchLineByNameOrientation(user)
-    assert ResearchLineTestDataAndOperations.researchLineCompatibleTo(puclicationMember, nameOfResearch)
-
+Given(~'^ the system has no research line named as "([^"]*)" associated with me $'){ String nameOfResearch ->
+    def member = Member.findByName(user)
+    assert ResearchLineTestDataAndOperations.checkSpecificResearchForMember(member, nameOfResearch)
 }
 
 Given(~'^the file "([^"]*)", which contains a research line named as "([^"]*)", is uploaded $'){ String theFile, researchLineName ->
-    file = XMLImportTestDataAndOperations.configureFileName(theFile)
-    def findPubli = ResearchLine.findByName(researchLineName)
-    TestDataAndOperations.uploadPublications(file)
-    assert Publication.findByFileAndResearchLine(file, findPubli) != null
+    def file = XMLImportTestDataAndOperations.configureFileName(theFile)
+    XMLImportTestDataAndOperations.uploadXmlFile(new XMLController(), file)
+    def find = ResearchLine.findByName(researchLineName)
+    assert Publication.findByFileAndResearchLine(file, find) != null
 }
 
 When(~'^ I confirm the import of the research line named as "([^"]*)" with status "([^"]*)" $'){ String nameOfResearch, status ->
@@ -272,7 +271,7 @@ Then(~'^ the previously stored research lines do not change $'){
     def lista = Publication.findAllByResearchLineInList(researchs)
     assert statusChanged(lista)
 }
-//#end
+
 
 
 Given(~'^The system has some publications stored $'){ ->
@@ -294,10 +293,8 @@ Then(~'^ no publication is stored by the system $') { ->
 }
 
 Then(~'^ And previusly stored publications do not change  $'){->
-    PublicationController contr = new PublicationController()
     def lista = Publication.findAll()
-    resultChanged = contr.statusChanged(lista)
-    assert !resultChanged
+    assert statusChanged(lista)
     TestDataAndOperations.logoutController(this)
 }
 

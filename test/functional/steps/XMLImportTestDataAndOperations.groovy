@@ -158,16 +158,15 @@ class XMLImportTestDataAndOperations {
             newResearch = XMLService.checkContResearch(researchLine, i, researchName)
             researchs.add(newResearch)
         }
-
         return researchs.size()
     }
 
-    static extractSpecificResearchLineFromFile(fileName, researchLineName){
+    static extractSpecificResearchLineFromFile(fileName,researchLineName){
         getRootNode(fileName)
         List specificResearchs = fileName.depthFirst().findAll{ it.name() == 'TITULO-DA-LINHA-DE-PESQUISA' }
         for (research in specificResearchs) {
             if(research.equals(researchLineName)){
-                ResearchLineTestDataAndOperations.createResearchLine(researchLineName)
+                ResearchLineTestDataAndOperations.createResearchLine(researchLineName.name)
                 return true
             }
         }

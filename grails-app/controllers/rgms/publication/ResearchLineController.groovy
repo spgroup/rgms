@@ -266,7 +266,7 @@ class ResearchLineController {
     def findAllResearchByMember(member, research){
         HashMap<String, String> listagem = new  HashMap<String, String>()
         for(researchL in ResearchLine.getAll()){
-            if((researchL.equals(research)) && (researchL.getMembers().contains(member))){
+            if((researchL.getName().equals(research)) && (researchL.getMembers().contains(member))){
                 listagem.put(member, research)
             }
         }
@@ -274,9 +274,8 @@ class ResearchLineController {
     }
 
     def checkIfResearchLineExists(researchName, list){
-       List listCheck = list
             for (research in list) {
-                if (research.equals(researchName)) {
+                if (research.getName().equals(researchName)) {
                     return true
                 }
             }

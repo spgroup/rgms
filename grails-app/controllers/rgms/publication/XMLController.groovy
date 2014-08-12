@@ -199,5 +199,4 @@ class XMLController {
         flash.message = message(code: msg)
         redirect(uri: '/')
     }
-
 }

@@ -1,5 +1,6 @@
 package steps
 
+import rgms.member.Member
 import rgms.publication.ResearchLine
 import rgms.publication.ResearchLineController
 import rgms.publication.XMLController
@@ -31,7 +32,6 @@ class ResearchLineTestDataAndOperations {
             rl.setDescription(description)
             rl.save()
         }
-
     }
 
     static public def findResearchLineByName(String name) {
@@ -115,5 +115,16 @@ class ResearchLineTestDataAndOperations {
             }
         }
         return compatible
+    }
+
+    static public boolean checkSpecificResearchForMember(Member member, String nameResearch){
+        def researchController = new ResearchLineController()
+        def researchL = researchController.findAllResearchByMember(member, nameResearch)
+            for (eachResearch in researchL){
+                if((eachResearch.getValue().equals(nameResearch)) && (eachResearch.getKey().equals(member.getName()))){
+                    return true
+                }
+            }
+        return false
     }
 }
