@@ -8,10 +8,12 @@ Feature: Thesis Tests
     When  I create the thesis "Thesis duplicated" with file name "Thesisduplicated2.txt" and school "UFPE"
     Then  The thesis "Thesis duplicated" is not stored twice
 
-  Scenario: new thesis
-    Given The system has no thesis entitled "New thesis"
-    When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
-    Then  The thesis "New thesis" is properly stored by the system
+	#if($thesis)
+	Scenario: new thesis
+		Given The system has no thesis entitled "New thesis"
+		When  I create the thesis "New thesis" with file name "Newthesis" according to the possible formats and school "UFPE"
+		Then  The thesis "New thesis" is properly stored by the system
+	#end
 
   Scenario: remove existing thesis
     Given   the system has thesis entitled "New thesis2"
@@ -88,18 +90,20 @@ Feature: Thesis Tests
     When I change the title from "My Thesis" to ""
     Then the existing thesis are not changed by the system
 
-  @ignore
-  Scenario: search a thesis
-    Given the system has one thesis entitled "My Thesis"
-    When I search for thesis entitled "My Thesis"
-    Then the existing thesis are not changed by the system
+	#if($search)
+	Scenario: search a thesis
+		Given the system has one thesis entitled "My Thesis"
+		When I search for thesis entitled "My Thesis"
+		Then the existing thesis is returned by the system ( are not changed by the system)
+	#end
 
-  @ignore
-  Scenario: upload thesis with a file
-    Given The system has no thesis entitled "My Thesis"
-    When I upload the file "My Thesis.xml"
-    Then the existing thesis are not changed by the system
-    And the system stores properly the thesis entitled "My Thesis"
+	#if($fileThesis)
+	Scenario: upload existing thesis with a file
+		Given The system has thesis entitled "My Thesis"
+		When I upload the file "My Thesis.xml" to "My thesis"
+		Then the file associated with the existing thesis "My thesis" is replaced by the uploaded file
+	#end
+	
 # editar dados de uma tese, ordenar lista de teses, filtrar lista de teses,
 # criar tese com dados inválidos, a chave é mesmo o título da tese?, tamanho
 # dos campos, o dia e o arquivo deveriam ser opcional, deveria poder adicionar

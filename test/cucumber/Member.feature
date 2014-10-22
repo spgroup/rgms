@@ -76,3 +76,16 @@ Feature: member
     Given I am at the register page
     Then I see default data filled on register form
 #end
+
+#if($memberInfo)
+Scenario: editing member information
+	Given the system has member with "Victor","Monteiro", "12345", "vddm@cin.ufpe.br", "UFPE"
+	When I edit one of the member's information
+	Then the member information is updated and saved in the system
+
+Scenario: editing member
+	Given I am at the editing user page
+	When I fill the user details with a new name, username, passoword1, password2, email, university or status 
+	Then I am redirected to the Profile Page
+	And A message indicating the user was successfully edited is displayed
+#end

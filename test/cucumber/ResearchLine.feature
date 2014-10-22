@@ -47,11 +47,12 @@ Feature: research line
     Then I can change the research line "Teoria da informacao - Complexidade no espaco" details
 
   #if ($XMLImport)
-  @ignore
-  Scenario: upload research lines with a file
-    Given the system has some research line stored
-    When I upload new research lines from the file "testelattes2.xml"
-    Then the system has more research lines now
+  #if($upload)
+	Scenario: upload research lines with a file
+		Given the system has some research line stored
+		When I upload new research lines from file
+		Then the system has more research lines now
+  #end
 
   Scenario: upload research lines without a file
     Given I am at the publications menu
@@ -60,3 +61,5 @@ Feature: research line
     Then I'm still on the research line page
     And an error message is showed at the research line page
   #end
+  
+  
