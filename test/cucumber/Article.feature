@@ -1,4 +1,4 @@
-@i9nLucasAlbuquerque
+@i9n
 Feature: journal article
   As a member of a research group
   I want to add, remove and modify journal articles I have published
