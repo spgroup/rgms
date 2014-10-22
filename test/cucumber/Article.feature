@@ -6,7 +6,7 @@ Feature: journal article
 
   Scenario: new article
     Given the system has no article entitled "A theory of software product line refinement"
-    When I create the article "A theory of software product line refinement" with file name "TCS.pdf"
+    When I create the article "A theory of software product line refinement" with file name "BAnanas.pdf"
     Then the article "A theory of software product line refinement" is properly stored by the system
 
   Scenario: new invalid article (number field blank)
