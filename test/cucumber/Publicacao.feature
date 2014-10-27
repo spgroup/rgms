@@ -1,4 +1,4 @@
-Feature: Publication
+Feature: "Publicacao"
   As a member of a research group
   I want to add, remove and modify where my publications were published
   
