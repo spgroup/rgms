@@ -30,8 +30,7 @@ Feature: Thesis Tests
     Then  I am still on the create thesis page with the error message
 
   Scenario: remove existing thesis web
-    Given I am at the thesis page
-    And the thesis "Software Enginnering2" is stored in the system
+    Given I am at the thesis page and the thesis "Software Enginnering2" is stored in the system
     When I select to view thesis "Software Enginnering2" in resulting list
     And I select the remover option at the thesis show page
     Then the thesis "Software Enginnering2" is removed from the system
@@ -50,6 +49,20 @@ Feature: Thesis Tests
     And I am at the thesis list page
     When I click in order thesis by date
     Then the returned thesis list has the same items but it is sorted by date
+
+    #if($Thesis Tests)
+      Scenario: order thesis list by name
+        Given at least one thesis is stored in the system
+        And I am at the thesis list page
+        When I click in order thesis by name
+        Then the returned thesis list has the same items but it is sorted by name
+
+    Scenario: order thesis list by author
+      Given at least one thesis is stored in the system
+      And I am at the thesis list page
+      When I click in order thesis by author
+      Then the returned thesis list has the same items but it is sorted by author
+    #end
 
   Scenario: search an existing thesis
     Given the system has one thesis entitled "Software Engineering" with author name "Pressman", year of publication "1998" and university "UFPE"
@@ -101,6 +114,7 @@ Feature: Thesis Tests
     When I upload the file "My Thesis.xml"
     Then the existing thesis are not changed by the system
     And the system stores properly the thesis entitled "My Thesis"
+    
 # editar dados de uma tese, ordenar lista de teses, filtrar lista de teses,
 # criar tese com dados inválidos, a chave é mesmo o título da tese?, tamanho
 # dos campos, o dia e o arquivo deveriam ser opcional, deveria poder adicionar
