@@ -82,6 +82,12 @@ Feature: Dissertation Tests
     When I upload a new dissertation "curriculo2.xml" with title "New dissertation"
     Then the system has more dissertations now
     
+  Scenario: seek a dissertation through keywords
+    Given there is a dissertation called "curriculo2" with the word "redes neurais" in it is stored.
+    When I select the option "search with keywords"
+    And I write "redes neurais" in it
+    Then a list with "curriculo2" is displayed
+    
 #if ($contextualInformation)
 
   Scenario: create a new dissertation with user data already filled by default
