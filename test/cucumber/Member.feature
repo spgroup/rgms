@@ -101,7 +101,6 @@ Scenario: new member with invalid phone
     Then I see default data filled on register form
 #end
 
-<<<<<<< HEAD
 #if($memberInfo)
 Scenario: editing member information
 	Given the system has member with "Victor","Monteiro", "12345", "vddm@cin.ufpe.br", "UFPE"
@@ -114,7 +113,7 @@ Scenario: editing member
 	Then I am redirected to the Profile Page
 	And A message indicating the user was successfully edited is displayed
 #end
-=======
+
 #if($loginfacebook)
   Scenario: new member with facebook account
     Given I am at the create member page
@@ -122,5 +121,4 @@ Scenario: editing member
 	When I click on "register with facebook"
 	Then the member "Camila Souto" is properly stored by the system
 #end
-  
->>>>>>> origin/cscbb
+
