@@ -30,6 +30,9 @@ Feature: Book
     Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
     When I edit the book title from "SPL Development" to "New Title"
     Then the book "New Title" is properly updated by the system
+  #if($book)
+    And the message "The edition has been successful" is displayed
+  #end
 #if($book)
   Scenario: edit existing book with duplicate title
     Given the book "Book 1" is stored in the system with file name "B1.pdf"
