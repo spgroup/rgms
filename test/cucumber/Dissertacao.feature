@@ -94,14 +94,9 @@ Feature: Dissertation Tests
     And I select the new dissertation option at the dissertation page
     And I add the dissertation with "curriculo4.png"
     Then the system has no new dissertation
+    And the system opens a window tellng me that it isnt the appropiate file type
     And I am back at the publications menu
-    
-  Scenario: upload a dissertation with a incorrect file type
-    Given I am at the publications menu
-    When I select the "Dissertacao" option at the program menu
-    And I select the new dissertation option at the dissertation page
-    And I add the dissertation with "curriculo4.png"
-    Then the system opens a window telling me that it isnt the appropriate file type
+
     
 #if ($contextualInformation)
 
