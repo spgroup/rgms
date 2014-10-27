@@ -6,13 +6,17 @@ Scenario: Login with user that doesn't exist fail message
   Given I am at the Login Page
   When I try to login with an user that does not exist
   Then I am redirected to the Login Page
-  And A login failure message is displayed
+#if($Authentication Process)
+  And The login failure message "User doesn't exist!" is displayed
+#end
 
 Scenario: Login with user's wrong password fail message
   Given I am at the Login Page
   When I try to login with an existent user, though with wrong password
   Then I am redirected to the Login Page
-  And A login failure message is displayed
+#if($Authentication Process)
+  And The login failure message "Invalid password!" is displayed
+#end
 
 Scenario:New user register success message
   Given I am at the User Register Page
