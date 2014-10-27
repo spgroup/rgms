@@ -11,7 +11,7 @@ Feature: Thesis Tests
   Scenario: new thesis
     Given The system has no thesis entitled "New thesis"
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
-    And   Publication year "1998" and author name "Pressman" 
+    And   With publication date "10", "08", Publication year "1998" and author name "Pressman" 
     Then  The thesis "New thesis" is properly stored by the system
 
   Scenario: remove existing thesis
