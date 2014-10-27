@@ -21,7 +21,7 @@ Feature: Thesis Tests
 
   Scenario: create thesis web
     Given I am at the create thesis page
-    When  I fill the thesis details with "Software Engineering", "10", "8", "1998", "UFPE" and "Recife"
+    When  I fill the thesis details with "Software Engineering", "10", "8", "1998", "Pressman", "UFPE" and "Recife"
     Then  I am on the thesis show page
     And   The thesis "Software Engineering" is properly stored by the system
 
