@@ -49,3 +49,6 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf" and author name "James"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
+  #if($book)
+    And the message "the book was sucessful stored" is displayed
+  #end
