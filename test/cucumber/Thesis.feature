@@ -40,6 +40,12 @@ Feature: Thesis Tests
   	And I am at the thesis list page
   	When I select to filter by the publication year "1998"
   	Then The returned thesis list shows only the thesis with publication year "1998" 
+  	
+  Scenario: filter thesis list by author name
+  	Given At least on thesis is stored in the system
+  	And I am at the thesis list page
+  	When I select to filter by the author name "Pressman"
+  	Then The returned thesis list shows only the thesis with author name "Pressman" 
 
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default
