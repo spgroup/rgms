@@ -91,3 +91,9 @@ Feature: Dissertation Tests
     Then I see my user listed as an author member of dissertation by default
     And I see my school name as school of dissertation by default
 #end
+
+  Scenario: download a dissertation
+    Given I am at the publications menu
+    And the system has a Dissertacao with file named "dissertation.txt"
+    When I select the download button
+    Then I can download the file named "dissertation.txt"
