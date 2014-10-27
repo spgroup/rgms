@@ -89,3 +89,12 @@ Feature: BookChapter
     Then I am at Book Chapter show page
     And My resulting book chapter list contains "Next Generation Software Product Line Engineering REVIEWED"
   #end
+
+#if ($listBookChaptersWeb)
+Scenario: list all existing book chapters web
+   Given that I'm at the book chapter page
+   And there are book chapters in the system
+   When	I click to list the book chapters
+   Then the book chapters list will be shown
+#end
+
