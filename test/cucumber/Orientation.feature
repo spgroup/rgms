@@ -78,3 +78,10 @@ Feature: orientations
     Then I'm still on orientations page
     And the orientations are not stored by the system
   #end
+
+  Scenario: list existing orientations ordered by descending Ano Publicacao
+    Given I am at the publications menu
+    And the system has orientations o created
+    When I select to view the list of orientations
+    And I select to order the list of news by "Ano Publicacao"
+    Then my orientations menu shows the news ordered by "Ano Publicacao"
