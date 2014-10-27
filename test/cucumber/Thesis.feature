@@ -34,6 +34,12 @@ Feature: Thesis Tests
     When I select to view thesis "Software Enginnering2" in resulting list
     And I select the remover option at the thesis show page
     Then the thesis "Software Enginnering2" is removed from the system
+    
+  Scenario: filter thesis list by publication year
+  	Given At least on thesis is stored in the system
+  	And I am at the thesis list page
+  	When I select to filter by the publication year "1998"
+  	Then The returned thesis list shows only the thesis with publication year "1998" 
 
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default
