@@ -24,6 +24,12 @@ Feature: Book
     When I edit the book title from "SPL Development" to "New Title"
     Then the book "New Title" is properly updated by the system
 
+  Scenario: edit existing book with a invalid name
+    Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
+    When I edit the book title from "SPL Development" to "ESS Book"
+    And there is already a stored book named "ESS Book"
+    Then the book "SPL Development" will not be modified
+
   Scenario: upload book with a file
     Given the system has no books stored
     When I upload the books of "curriculo.xml"
@@ -35,3 +41,10 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
+
+  Scenario: remove existing book web
+    Given I am at the book page
+    When I select the book "BookTest"
+    And "BookTest" is stored in the system
+    And I select the option to remove in book page
+    Then the book "BookTest" is properly removed by the system
