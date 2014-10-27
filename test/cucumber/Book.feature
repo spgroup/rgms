@@ -13,11 +13,13 @@ Feature: Book
     Given the book "SPL Development" is stored in the system with file name "NGSPL-2.pdf"
     When I remove the book "SPL Development"
     Then the book "SPL Development" is properly removed by the system
-    
+   
+#if($book)     
   Scenario: list book
     Given the book "SPL Development" is stored in the system with file name "NGSPL-2.pdf"
     When I create the book "Next Generation Software Product Line Engineering" with file name "NGSPLE.pdf"
     Then The system list "SPL Development" and "Next Generation Software Product Line Engineering" 
+#end
 
   Scenario: duplicate book
     Given the book "SPL Development" is stored in the system with file name "NGSPL-0.pdf"

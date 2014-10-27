@@ -13,11 +13,13 @@ Feature: Thesis Tests
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
     And   With publication date "10", "08", Publication year "1998" and author name "Pressman" 
     Then  The thesis "New thesis" is properly stored by the system
-    
+   
+#if($thesis)     
   Scenario: list thesis
     Given the thesis "New thesis" is stored in the system with file name "Newthesis.txt" and all of the details
     When I create the thesis "New thesis2" with file name "Newthesis2.txt" and all of the details
     Then The system list "New thesis" and "New thesis 2" 
+#end
     
   Scenario: remove existing thesis
     Given   the system has thesis entitled "New thesis2"
@@ -40,18 +42,22 @@ Feature: Thesis Tests
     When I select to view thesis "Software Enginnering2" in resulting list
     And I select the remover option at the thesis show page
     Then the thesis "Software Enginnering2" is removed from the system
-    
+
+#if($publicationYear)     
   Scenario: filter thesis list by publication year web
   	Given At least on thesis is stored in the system
   	And I am at the thesis list page
   	When I select to filter by the publication year "1998"
   	Then The returned thesis list shows only the thesis with publication year "1998" 
-  	
+#end
+ 
+#if($authorName)  
   Scenario: filter thesis list by author name web
   	Given At least on thesis is stored in the system
   	And I am at the thesis list page
   	When I select to filter by the author name "Pressman"
   	Then The returned thesis list shows only the thesis with author name "Pressman" 
+#end
 
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default
