@@ -15,7 +15,6 @@ class News {
         researchGroup nullable: false
     }
 
-
     static List getCurrentNews(researchGroup) {
         def list
         list = News.findAllByResearchGroup(researchGroup)

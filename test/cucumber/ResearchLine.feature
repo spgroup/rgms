@@ -29,13 +29,13 @@ Feature: research line
     And I select the new research line option at the research line page
     Then I can fill the research line details
 
-  Scenario: visualize research line web
-    Given I am logged as admin
+  Scenario: show research line web
+    Given I am at the publications menu
     And the system has a research line named as "Teoria da informacao - Complexidade no espaco"
-    And I am at the publications menu
     When I select the "Linha de pesquisa" option at the publications menu
     And I click the research line "Teoria da informacao - Complexidade no espaco" at the research line list
     Then I can visualize the research line "Teoria da informacao - Complexidade no espaco" details
+
 
   Scenario: edit research line web
     Given I am logged as admin
