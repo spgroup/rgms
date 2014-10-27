@@ -30,7 +30,8 @@ Feature: member
 
   Scenario: login with incorrect password
     Given I am at the login page
-    When I fill username and password with "admin" and "incorrectpassword"
+    When I fill username with "admin"
+    And I fill password with "incorrectpassword"
     Then I am still on the login page with an error message
 
   Scenario: user registration
