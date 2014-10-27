@@ -35,3 +35,15 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
+  
+  Scenario: download book file
+    Given I am at the books page
+    And the system has a book with file named "NGSPL-0.pdf"
+    When I select the download button
+    Then I can download the file named "NGSPL-0.pdf"
+
+Scenario: new book web
+    Given I am at the publications menu
+    When I select the "Book" option at the publications menu
+    And I select the new book option at the book page
+    Then I can fill the book details
