@@ -44,7 +44,8 @@ Feature: orientations
   #3
   Scenario: create orientation web with invalid year
     Given I am at the create orientation page
-    When I fill the orientation title with "The Book is on the table" and the year with -1
+    When I fill the orientation title with "The Book is on the table"
+    And I fill the year with -1
     Then I am still on the create orientation page with an error message
 
   #5
