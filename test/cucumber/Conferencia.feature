@@ -74,8 +74,15 @@ Feature: conferencia
     Given I am at the publications menu
     When I select the "Conferencia" option at the program menu
     And I select the upload button at the conferencia page
-    Then I'm still on conferencia page
+    Then I'm still at the publications menu
+    And "Conferencia" is selected
     And the conferencias are not stored by the system
+    
+  Scenario: upload conferencias without a file
+    Given I am at the publications menu
+    When I select the "Conferencia" option at the program menu
+    And I select the upload button at the conferencia page
+    Then a window opens with "You must select a file" appears
 
   @ignore
   Scenario: edit existing conference

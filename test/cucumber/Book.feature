@@ -18,6 +18,7 @@ Feature: Book
     Given the book "SPL Development" is stored in the system with file name "NGSPL-0.pdf"
     When I create the book "SPL Development" with file name "NGSPL-0.pdf"
     Then the book "SPL Development" is not stored twice
+    And an error message is displayed
 
   Scenario: edit existing book
     Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
@@ -28,6 +29,13 @@ Feature: Book
     Given the system has no books stored
     When I upload the books of "curriculo.xml"
     Then the system has all the books of the xml file
+    
+    Scenario: upload book without a file
+      Given the system has no books stored
+      When I create a book "SPL Development"
+      And I upload no file
+      Then the system has no book called "SPL Development"
+      And an error message is displayed
 
   Scenario: new book web
     Given I am at the book page

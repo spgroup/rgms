@@ -82,6 +82,27 @@ Feature: Dissertation Tests
     When I upload a new dissertation "curriculo2.xml" with title "New dissertation"
     Then the system has more dissertations now
     
+  Scenario: seek a dissertation through keywords
+    Given there is a dissertation called "curriculo2" with the word "redes neurais" in it is stored.
+    When I select the option "search with keywords"
+    And I write "redes neurais" in it
+    Then a list with "curriculo2" is displayed
+    
+  Scenario: upload a dissertation with a incorrect file type
+    Given I am at the publications menu
+    When I select the "Dissertacao" option at the program menu
+    And I select the new dissertation option at the dissertation page
+    And I add the dissertation with "curriculo4.png"
+    Then the system has no new dissertation
+    And I am back at the publications menu
+    
+  Scenario: upload a dissertation with a incorrect file type
+    Given I am at the publications menu
+    When I select the "Dissertacao" option at the program menu
+    And I select the new dissertation option at the dissertation page
+    And I add the dissertation with "curriculo4.png"
+    Then the system opens a window telling me that it isnt the appropriate file type
+    
 #if ($contextualInformation)
 
   Scenario: create a new dissertation with user data already filled by default

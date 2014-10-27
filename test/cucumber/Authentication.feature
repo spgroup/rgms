@@ -29,11 +29,13 @@ Scenario: Try to access Member List Page without being logged in
   Given I am not logged
   When I directly access the Member List Page
   Then I am redirected to the Login Page
+  And a message indicating that the user must be logged to see the page is displayed
 
 Scenario: Try to access root page without being logged in
   Given I am not logged
   When I access the Root Page
   Then I am redirected to the Login Page
+   And a message indicating that the user must be logged to see the page is displayed
 
 #if ($contextualInformation)
 Scenario: Field University filled with "Federal University of Pernambuco"
