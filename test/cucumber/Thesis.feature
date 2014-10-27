@@ -30,7 +30,8 @@ Feature: Thesis Tests
     Then  I am still on the create thesis page with the error message
 
   Scenario: remove existing thesis web
-    Given I am at the thesis page and the thesis "Software Enginnering2" is stored in the system
+    Given I am at the thesis page
+    And the thesis "Software Enginnering2" is stored in the system
     When I select to view thesis "Software Enginnering2" in resulting list
     And I select the remover option at the thesis show page
     Then the thesis "Software Enginnering2" is removed from the system
