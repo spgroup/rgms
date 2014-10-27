@@ -25,6 +25,14 @@ Feature: journal article
     And I create the article "A theory of software product line refinement" with file name "TCS-3"
     Then the article "A theory of software product line refinement" is not stored twice
 
+#if ($publicationInformationController)
+Scenario: new article web
+	Given I am at the publications menu
+    And I want to add a new article 
+    Then I can fill the article details
+    And It includes the "publicacao" information	
+#end
+
 #if ($publicationInformation)
 Scenario: new article web
     Given I am at the publications menu
