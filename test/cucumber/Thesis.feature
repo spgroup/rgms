@@ -11,6 +11,7 @@ Feature: Thesis Tests
   Scenario: new thesis
     Given The system has no thesis entitled "New thesis"
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
+    And   Publication year "1998" and author name "Pressman" 
     Then  The thesis "New thesis" is properly stored by the system
 
   Scenario: remove existing thesis
@@ -35,13 +36,13 @@ Feature: Thesis Tests
     And I select the remover option at the thesis show page
     Then the thesis "Software Enginnering2" is removed from the system
     
-  Scenario: filter thesis list by publication year
+  Scenario: filter thesis list by publication year web
   	Given At least on thesis is stored in the system
   	And I am at the thesis list page
   	When I select to filter by the publication year "1998"
   	Then The returned thesis list shows only the thesis with publication year "1998" 
   	
-  Scenario: filter thesis list by author name
+  Scenario: filter thesis list by author name web
   	Given At least on thesis is stored in the system
   	And I am at the thesis list page
   	When I select to filter by the author name "Pressman"
