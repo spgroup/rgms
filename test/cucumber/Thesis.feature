@@ -17,8 +17,8 @@ Feature: Thesis Tests
   Scenario: list thesis
     Given the thesis "New thesis" is stored in the system with file name "Newthesis.txt" and all of the details
     When I create the thesis "New thesis2" with file name "Newthesis2.txt" and all of the details
-    Then The system list "New thesis" and "New thesis 2"    
-
+    Then The system list "New thesis" and "New thesis 2" 
+    
   Scenario: remove existing thesis
     Given   the system has thesis entitled "New thesis2"
     When    I delete the thesis "New thesis2"
