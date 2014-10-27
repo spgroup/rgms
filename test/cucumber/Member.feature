@@ -56,6 +56,12 @@ Feature: member
     When I fill the user details with "jose" "josesilva" "jose@com" "UFPE"
     Then I am still on the create member page with the error message
 
+  Scenario: search for an existing member
+    Given the system has the member named "Paulo Borba"
+    And I am at the member search page
+    When I search for "Paulo Borba"
+    Then my member list contains the mamber named "Paulo Borba"
+
 
 #Scenario: register member invalid aditional info
 #   Given  I am at the create member page
