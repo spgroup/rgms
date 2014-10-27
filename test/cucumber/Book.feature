@@ -6,7 +6,7 @@ Feature: Book
 
   Scenario: new book
     Given the system has no book entitled "SPL Development"
-    When  I create the book "SPL Development" with file name "HSPLE.pdf"
+    When  I create the book "SPL Development" with file name "HSPLE.pdf" and author name "James"
     Then  the book "SPL Development" is properly stored by the system
 
   Scenario: remove book
@@ -33,5 +33,5 @@ Feature: Book
     Given I am at the book page
     And the system has no book entitled "Next Generation Software Product Line Engineering"
     When I go to new book page
-    And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
+    And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf" and author name "James"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
