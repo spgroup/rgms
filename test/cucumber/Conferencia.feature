@@ -145,3 +145,9 @@ Feature: conferencia
     Then a list of all conferences containing that date will be presented in the conference screen
 
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
+
+  Scenario: download a conference file
+    Given I am at the Seach Conference page
+    And the system has conference entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
+    When I select the download button
+    Then I can download the file named "SPLC.pdf"
