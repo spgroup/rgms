@@ -30,6 +30,13 @@ Feature: Book
     Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
     When I edit the book title from "SPL Development" to "New Title"
     Then the book "New Title" is properly updated by the system
+#if($book)
+  Scenario: edit existing book with duplicate title
+    Given the book "Book 1" is stored in the system with file name "B1.pdf"
+    And the book "Book 2" is stored in the system with file name "B2.pdf"
+    When I edit the book title from "Book 1" to "Book 2"
+    Then the book "Book 2" is not updated by the system
+#end
 
   Scenario: upload book with a file
     Given the system has no books stored
