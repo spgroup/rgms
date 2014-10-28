@@ -25,22 +25,33 @@ Feature: journal article
     And I create the article "A theory of software product line refinement" with file name "TCS-3"
     Then the article "A theory of software product line refinement" is not stored twice
 
-#if ($publicationInformationController)
-Scenario: new article web
-	Given I am at the publications menu
+  Scenario: new article web
+    Given I am at the publications menu
+    And I want to add a new article 
+    Then I can fill the article details
+    
+  Scenario: new article web
+  Given I am at the publications menu
+    When I select the "Periodico" option at the publications menu
+    And I select the new article option at the article page
+    Then I can fill the article details
+
+  #if ($publicationInformationController)
+  Scenario: new article web with publication
+    Given I am at the publications menu
     And I want to add a new article 
     Then I can fill the article details
     And It includes the "publicacao" information	
-#end
+  #end
 
-#if ($publicationInformation)
-Scenario: new article web
+   #if ($publicationInformation)
+   Scenario: new article web with publication
     Given I am at the publications menu
     When I select the "Periodico" option at the publications menu
     And I select the new article option at the article page
     Then I can fill the article details
-    And It includes the "publicacao" information
-#end
+    And It includes the option of "publicacao" information
+   #end
 
   Scenario: remove existing article
     Given the system has article entitled "A theory of software product line refinement" with file name "TCS-44.pdf"
@@ -112,7 +123,24 @@ Scenario: new article web
     When    I share the article entitled "A theory of software product line refinement" on facebook
     Then    A facebook message was posted
 
-  Scenario: Post an existing article on facebook web
+#if ($postPublicationInformation)
+  Scenario: Post an existing article publication on facebook web
+    Given   I am at the articles page and the article "A theory of software product line refinement 3" is stored in the system with file name "TCS-04.pdf"
+    When    I select to view "A theory of software product line refinement 3" in resulting list
+    And     I choose to share the "Publicacao" of this article on Facebook
+    And     I click on 'Share publicacao' on Facebook
+    Then    A facebook message is posted
+ #end
+     
+#if ($postPublicationInformationController)
+  Scenario: Post an existing article publication on facebook web
+    Given   I am at the articles page and the article "A theory of software product line refinement 3" is stored in the system with file name "TCS-04.pdf"
+    When    I choose to share the "Publicacao" of this article on Facebook
+    And     I go to this section in the page and click on share
+    Then    A facebook message is posted
+ #end
+    
+    Scenario: Post an existing article on facebook web
     Given   I am at the articles page and the article "A theory of software product line refinement 3" is stored in the system with file name "TCS-04.pdf"
     When    I select to view "A theory of software product line refinement 3" in resulting list
     And     I click on Share on Facebook
