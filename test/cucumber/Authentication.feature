@@ -7,7 +7,7 @@ Scenario: Login with user that doesn't exist fail message
   When I try to login with an user that does not exist
   Then I am redirected to the Login Page
 #if($Authentication Process)
-  And The login failure message "User doesn't exist!" is displayed
+  And The login failure message "User doesn't exist!" is shown.
 #end
 
 Scenario: Login with user's wrong password fail message
@@ -15,31 +15,31 @@ Scenario: Login with user's wrong password fail message
   When I try to login with an existent user, though with wrong password
   Then I am redirected to the Login Page
 #if($Authentication Process)
-  And The login failure message "Invalid password!" is displayed
+  And The login failure message "Invalid password!" is shown.
 #end
 
 Scenario:New user register success message
   Given I am at the User Register Page
   When I register a user with success
   Then I am redirected to the Login Page
-  And A message indicating the user was successfully registered is displayed
+  And the message "User logged in successfully." is shown.
 
 Scenario: New user register with invalid email fail message
   Given I am at the Login Page
   When I try to create a "newuser" username with the "invalid email abcde" email
-  Then A message indicating the email is invalid is displayed
+  Then the message "Invalid e-mail!" is shown.
 
 Scenario: Try to access Member List Page without being logged in
   Given I am not logged
   When I directly access the Member List Page
   Then I am redirected to the Login Page
-  And a message indicating that the user must be logged to see the page is displayed
+  And the message "Only logged users can access this page." is shown.
 
 Scenario: Try to access root page without being logged in
   Given I am not logged
   When I access the Root Page
   Then I am redirected to the Login Page
-   And a message indicating that the user must be logged to see the page is displayed
+  And the message "Only logged users can access this page." is shown.
 
 #if ($contextualInformation)
 Scenario: Field University filled with "Federal University of Pernambuco"
