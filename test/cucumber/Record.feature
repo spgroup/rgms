@@ -10,14 +10,15 @@ Feature: record
     When I remove the record with status "Graduate Student"
     Then the record with status "Graduate Student" is properly removed by the system
 
-#if($Record)
+
   Scenario: Delete record with dependency
     Given the system has only one record with status "MSc Student"
     And the record with status "MSc Student" is associated to a member
     When I remove the record with status "MSc Student"
     Then the record with status "MSc Student" is not removed by the system
+  #if($Record)
     And the system output the message error "Cannot remove an associated member!"
-#end
+  #end
 
   Scenario: Update record
     Given the system has only one record with status "MSc Student" and this record has a null end date
