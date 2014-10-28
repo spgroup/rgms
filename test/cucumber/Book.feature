@@ -42,31 +42,39 @@ Feature: Book
     Then the book "Book 2" is not updated by the system
 #end
 
+
   Scenario: upload book with a file
     Given the system has no books stored
     When I upload the books of "curriculo.xml"
     Then the system has all the books of the xml file
-    
+
+  
+    #if ($book)
    Scenario: upload book without a file
      Given the system has no books stored
       When I create a book "SPL Development"
       And I upload no file
       Then the system has no book called "SPL Development"
       And an error message is displayed
+    #end
 
+    #if ($book) 
   Scenario: search book by tags
     Given the book "Redes Neurais" is stored in the system with tag "Inteligencia Artificial"
     And I am in the books menu
     When I click search button
     And I write "Inteligencia Artificial" in the bar
     Then a list containing "Redes Neurais" is displayed
+    #end
     
+    #if ($book)
   Scenario: mouse over information
     Given I am on the books menu
     When I put the mouse over a book
     And I wait 1 second
     Then a window with information about the book is displayed until I remove the mouse from over the book
-    
+    #end
+  
  #if($book)
   Scenario: new book web
     Given I am at the book page
