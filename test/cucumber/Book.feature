@@ -28,6 +28,12 @@ Feature: Book
     Then the book "SPL Development" is properly updated by the system
 #end
 
+  Scenario: edit existing book with a invalid name
+    Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
+    When I edit the book title from "SPL Development" to "ESS Book"
+    And there is already a stored book named "ESS Book"
+    Then the book "SPL Development" will not be modified
+
   Scenario: upload book with a file
     Given the system has no books stored
     When I upload the books of "curriculo.xml"
@@ -84,3 +90,4 @@ Scenario: remove book web
    And I select the option to remove the book
    Then the book "SP Development" is properly removed by the system
 #end
+
