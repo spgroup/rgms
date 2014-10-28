@@ -121,3 +121,8 @@ Feature: Thesis Tests
 # o arquivo depois, address deveria ser opcional, deveria ter universidade e
 # centro/departamento, deveria ter apenas um autor e a possibilidade de um
 # orientador e co-orientador
+
+  Scenario: download thesis list file
+    Given I am the thesis list page and the system has thesis
+    When I select the thesis list download button
+    Then I can download the file named "TL-0.pdf" that contains the thesis list

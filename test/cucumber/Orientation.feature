@@ -70,7 +70,7 @@ Feature: orientations
   Scenario: upload orientation with a file
     Given the system has some orientations stored
     When I upload a new orientation "testelattes.xml"
-    Then the system has more orientations now
+    Then the orientation is properly stored by the system
 
   Scenario: upload orientations without a file
     Given I am at the publications menu
