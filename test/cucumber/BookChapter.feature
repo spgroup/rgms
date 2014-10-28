@@ -18,6 +18,19 @@ Feature: BookChapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
     When I remove the book chapter "Next Generation Software Product Line Engineering"
     * the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
+    
+  #if($BookChapter)
+  Scenario: edit book chapter's title
+    Given the book chapter entitled "SPL Development" is stored in the system with file name "NGSPL-0.pdf"
+    When I change the book chapter's title from "SPL Development" to "New Title"
+    Then the book chapter's name is properly updated to "New Title" by the system
+    
+  Scenario: edit inexistent book chapter's title
+    Given no book chapter entitled "SPL Development" is stored in the system
+    When I change the book chapter's title from "SPL Development" to "New Title"
+    Then an error message is shown
+    And no changes are made by the system
+  #end
 
   Scenario: register book chapter with invalid data
     Given I am at the book chapter page
