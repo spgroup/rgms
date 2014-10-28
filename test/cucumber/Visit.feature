@@ -50,11 +50,13 @@ Feature: Visit
     Then the visit details are showed and I can select the option to remove
     And the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is properly removed by the system
 
+  #if($Visit)
   Scenario: edit existing visit
-    Given the system has visitor named "Person"
-    And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
+    Given the system has a visitor named "Person"
+    And the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is stored in the system
     When I edit the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" to the visitor named "Person Updated"
     Then the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is properly updated by the system
+  #end
 
   Scenario: edit existing visit web
     Given I am logged as "admin" and at the visits page
