@@ -100,7 +100,7 @@ Feature: Thesis Tests
 	#if($fileThesis)
 	Scenario: upload existing thesis with a file
 		Given The system has thesis entitled "My Thesis"
-		When I upload the file "My Thesis.xml" to "My thesis"
+		When I upload a file in a properly format to "My thesis"
 		Then the file associated with the existing thesis "My thesis" is replaced by the uploaded file
 	#end
 	
