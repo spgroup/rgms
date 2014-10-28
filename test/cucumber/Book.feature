@@ -54,3 +54,10 @@ Scenario: new book web
     When I select the "Book" option at the publications menu
     And I select the new book option at the book page
     Then I can fill the book details
+
+  Scenario: list existing books ordered by volume in ascending order
+    Given I am at the books page
+    And the system has some books created
+    When I select to view the list of books
+    And I select to order the list of books by "volume"
+    Then my book list shows the books ordered by "volume"
