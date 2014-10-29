@@ -10,10 +10,12 @@ Feature: Ferramenta
         When I create the ferramenta "Target" with file name "target.pdf" without its website
         Then the ferramenta "Target" is not stored
 
+#if($newFerramentaWithWebsite)
     Scenario: new ferramenta with website
         Given the system has no ferramenta entitled "TargetWeb"
         When I create the ferramenta "TargetWeb" with file name "targetweb.pdf" with its website
         Then the ferramenta "TargetWeb" is stored
+#end
 
     Scenario: duplicate ferramenta
         Given the ferramenta "Emergo" is stored in the system with file name "emergo.pdf"
@@ -48,11 +50,13 @@ Feature: Ferramenta
         And I select the new ferramenta option at the ferramenta page
         Then I can create a ferramenta filling the details
 
+#if($createFerramentaWithoutAnyInformation)
     Scenario: create ferramenta without any information
         Given I am at the ferramenta page
         And I click on Criar button
         Then I am still on create new ferramenta page
         And the ferramenta is not displayed in the ferramentas list page
+#end
 
     Scenario: upload dissertation without a file
         Given I am at the publications menu

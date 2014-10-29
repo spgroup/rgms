@@ -12,10 +12,12 @@ Feature: Dissertation Tests
     And I delete "New dissertation"
     Then the system has no dissertation stored
 
+#if($newDissertationWithoutSchool)
   Scenario: new dissertation without school
     Given the system has no dissertation entitled "Dissertation without school"
     When I create the dissertation "Dissertation without school" with file name "Dissertationwithoutschool.txt" without school
     Then the dissertation "Dissertation without school" is not properly stored by the system
+#end
 
   Scenario: new dissertation without address
     Given the system has no dissertation entitled "Dissertation without address"
