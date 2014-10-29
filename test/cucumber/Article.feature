@@ -149,10 +149,12 @@ Feature: journal article
 	When I create the article with filename "TCS-01.pdf" and with the title field blank
 	Then the article with blank title and with filename "TCS-01.pdf" field is not stored by the system
 
+  #if($filterExistingArticlesByAuthor)
   Scenario: filter existing articles by author
 	Given the system has some articles authored by "Paulo Borba"
 	When the system filter the articles authored by author "Paulo Borba"
-	Then the system article list content is not modified
+    Then the system article list content only lists articles authored by "Paulo Borba"
+  #end
 
   Scenario: remove multiple articles
 	Given the system has 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf" and "Modularity analysis of use case implementations" with file name "MACI-03.pdf"
