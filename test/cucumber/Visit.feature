@@ -4,17 +4,20 @@ Feature: Visit
   I want to add, remove and modify visits of external members to the group
   so that I can store the visits that external member perform to the group, so do as the visitor
 
+#if($visitOfADayForANonStoredVisitor)
   Scenario: visit of a day for a non stored visitor
     Given the system has no visitor named "Person"
-    When I create the visit for the visitor "Person" with initial date "11/11/2000"
+    When I create the one-day visit for the visitor "Person" with initial date "11/11/2000"
     Then the visitor named "Person" is properly stored by the system
     And the visit for the visitor "Person" with initial and final date equal to "11/11/2000" is properly stored by the system
-
+#end
+#if($visitOfAPeriodForANonStoredVisitor)
   Scenario: visit of a period for a non stored visitor
     Given the system has no visitor named "Person"
-    When I create the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
+    When I create the period visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
     Then the visitor named "Person" is properly stored by the system
     And the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" is properly stored by the system
+#end
 
   Scenario: visit of a day for a stored visitor
     Given the system has visitor named "Person"

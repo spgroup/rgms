@@ -9,6 +9,13 @@ Feature: orientations
     When I create a new orientation entitled "The Book is on the table"
     Then the orientation "The Book is on the table" is properly stored by the system
 
+#if($duplicateOrientation)
+  Scenario: duplicate orientation
+    Given the system has an orientation entitled "The Book is on the table"
+    When I create a new orientation entitled "The Book is on the table"
+    Then the duplicate orientation is not properly stored by the system
+#end
+
   Scenario: remove existing orientation
     Given   the system has an orientation entitled "The Book is on the table" supervised by someone
     When    I delete the orientation for "The Book is on the table"
