@@ -33,6 +33,14 @@ Feature: member
     When I try to create the member "Rebeca Souza" with email "memberEmail@ufpe.br"
     Then the member named "Rebeca Souza" is not registered
 
+    # User
+
+  Scenario: login with correct password
+    Given I am at the login page
+    When I fill username and password with "admin" and "correctpassword"
+    Then I am redirected to the corresponding page
+    And A message indicating the user was successfully logged on is displayed
+
   Scenario: login with incorrect password
     Given I am at the login page
     When I fill username and password with "admin" and "incorrectpassword"
