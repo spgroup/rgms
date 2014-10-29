@@ -5,7 +5,7 @@ Feature: member
 
   Scenario: new member with valid mail server
     Given the system has no member with username "usernametest"
-    When I create a member with username "usernametest"
+    When I create a member with username "usernametest" with valid mail server
     Then the member with username "usernametest" is properly stored by the system
 
   Scenario: new member without valid mail server
