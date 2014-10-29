@@ -48,7 +48,14 @@ Feature: news
     When I select the "News" option at the publications menu
     And I select the "new news" option at the news page
     Then I can fill the news details
-+#end
+#end
+
+#if($newInvalidNewsInvalidResearchGroup)
+  Scenario: new invalid news (Invalid research group)
+    Given the system has no news with description "noticiaTeste" and date "01-01-2014" for "" research group
+    When I create a news with description "noticiaTeste" and date "01-01-2014" for "" research group
+    Then the news with description "noticiaTeste", date "01-01-2014" and "" research group is not stored by the system because it is invalid
+#end
 
   Scenario: edit existing news
     Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group

@@ -17,6 +17,7 @@ Feature: Visit
     When I create the period visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
     Then the visitor named "Person" is properly stored by the system
     And the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" is properly stored by the system
++#end
 
   Scenario: visit of a day for a stored visitor
     Given the system has visitor named "Person"
