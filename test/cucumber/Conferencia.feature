@@ -9,12 +9,10 @@ Feature: conferencia
     When I create the conferencia "IV Conference on Software Product Lines" with file name "SPLC.pdf"
     Then the conferencia "IV Conference on Software Product Lines" is properly stored by the system
 
-  #if($duplicateConferencia)
   Scenario: duplicate conferencia
     Given the conferencia "I International Conference on Software Engineering" is stored in the system with file name "IICSE-0.pdf"
-    When I create the conferencia "I International Conference on Software Engineering" with file name "IICSE-0_1.pdf"
-    Then the conferencia "I International Conference on Software Engineering" is stored twice
-    #end
+    When I create the conferencia "I International Conference on Software Engineering" with file name "IICSE-0.pdf"
+    Then the conferencia "I International Conference on Software Engineering" is not stored twice
 
 
   Scenario: remove conferencia
