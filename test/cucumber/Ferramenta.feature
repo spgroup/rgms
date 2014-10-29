@@ -20,10 +20,12 @@ Feature: Ferramenta
         When I edit the ferramenta title from "CCFinder" to "CCFinder REVIEWED"
         Then the ferramenta "CCFinder REVIEWED" is properly updated by the system
 
-    Scenario: list ferramentas
-        Given the ferramenta "Tool" is stored in the system with file name "tool.pdf"
-        When I create the ferramenta "New" with file name "new.pdf"
-        Then The system list "Tool" and "New" ferramentas
+     #if ($listFerramentas)
+     Scenario: list ferramentas
+     Given the system has ferramenta entitled "CCFinder" with file name "ccfinder.pdf"
+     When I view the ferramenta list
+      Then my ferramenta list contains "CCFinder"
+     #end
 
     Scenario: upload dissertation with a file
         Given the system has some ferramenta stored
