@@ -107,14 +107,14 @@ Feature: Thesis Tests
 # centro/departamento, deveria ter apenas um autor e a possibilidade de um
 # orientador e co-orientador
 
-#if($addDisertacao)
+#if($addThesis)
 
-  Scenario: add "Dissertacao"'s Supervisor
-    Given I am at the "Dissetação" page
-    And the system has no dissertation entitled "New dissertation"
-    When I create the dissertation "New dissertation" with file name "Newdissertation.txt" 
+  Scenario: add Thesis' Supervisor
+    Given I am at the "Thesis" page
+    And the system has no dissertation entitled "New thesis"
+    When I create the dissertation "New thesis" with file name "Newthesis.txt" 
     And school "UFPE"
     And the supervisor's name 
-    Then the dissertation "New dissertation" is properly stored by the system
+    Then the dissertation "New thesis" is properly stored by the system
     
 #end
