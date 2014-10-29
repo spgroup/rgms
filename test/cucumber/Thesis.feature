@@ -14,12 +14,20 @@ Feature: Thesis Tests
     Then  The thesis "New thesis" is properly stored by the system
 
 #if ($editExistingThesis)
-   Cenario: edit existing thesis
+   Scenario: edit existing thesis
     Given I am at the "Software Engineering" edit page
     When  I modify the field 'School' to "UFPE"
-    And   I click 'Confirm'
+    And   I select 'Confirm'
     Then  I am at the thesis show page
     And   The thesis "Software Engineering" now has "UFPE" in the 'school' field.
+#end
+
+#if ($filterThesisList)
+   Scenario: filter thesis list
+    Given I am at the thesis show page
+    When  I select 'Filter Thesis'
+    And   I fill the field 'school' with "UFPE"
+    Then  I only see the thesis with the field 'school' equal to "UFPE"
 #end
 
   Scenario: remove existing thesis
