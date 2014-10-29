@@ -9,14 +9,14 @@ Feature: member
     Then the member with username "usernametest" is properly stored by the system
 
   Scenario: list existing member
-    Given   the system has member with username "usernametest"
-    When    I view the member list
-    Then    my list members contains member "usernametest"
+    Given   the system has a member with username "usernametest"
+    When    the list members is displayed
+    Then    the list members contains member "usernametest"
 
   Scenario: delete member
-    Given the system has member with username "usernametest"
+    Given the system has a member stored with username "usernametest"
     When I delete a member with username "usernametest"
-    Then the member with "usernametest" doesnt exist
+    Then the member with "usernametest" is removed from the system storage
 
   Scenario: new member with existing username
     Given the system has member with username "usernametest"
@@ -76,3 +76,13 @@ Feature: member
     Given I am at the register page
     Then I see default data filled on register form
 #end
+
+  Scenario: Phone field in blank should not impede the user creation
+    Given I am at the Create Page
+    And I have filled the fields "Name", "Username", "Email" and "University" with "userTest", "user1", "user1@ufpe.br" and "Federal University of Pernambuco"
+    Then The User should be stored by the system
+
+  Scenario: Website field in blank should not impede the user creation
+    Given I am at the Create Page
+    And I have filled the fields "Name", "Username", "Email" and "University" with "userTest", "user1", "user1@ufpe.br" and "Federal University of Pernambuco"
+    Then The User should be stored by the system
