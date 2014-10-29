@@ -58,18 +58,16 @@ Feature: Dissertation Tests
     Then    the dissertation "Edit dissertation" is properly updated by the system
 
   Scenario: delete dissertation
-    Given the dissertation "Delete dissertation" is stored in the system with file name "Deletedissertation.txt"
-    Given I am at the publications menu
-    When I select the "Dissertacao" option at the program menu
-    And I select "Delete dissertation" at the dissertation page
-    And I delete "Delete dissertation"
-    Then the system has no dissertation entitled "Delete dissertation"
+    Given I am at the dissertation page
+    And  the dissertation named "Dissertation One" is stored in the system
+    When I select "Dissertation One" at the dissertation list
+    And I press to remove "Delete dissertation" at the dissertation show page
+    Then the system has no dissertation entitled "Dissertation One"
 
   Scenario: upload dissertation without a file
-    Given I am at the publications menu
-    When I select the "Dissertacao" option at the program menu
-    And I select the upload button at the dissertation page
-    Then I'm still on dissertation page
+    Given I am at the dissertation page
+    And I select the upload button with no file selected
+    Then I stay on dissertation page with an error message
 
   Scenario: upload dissertation with a file
     Given the system has some dissertation stored
