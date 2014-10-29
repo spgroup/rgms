@@ -6,7 +6,7 @@ Feature: Visit
 
   Scenario: visit of a day for a non stored visitor
     Given the system has no visitor named "Person"
-    When I create the visit for the visitor "Person" with initial date "11/11/2000"
+    When I create the visit for the visitor "Person" with initial date "11/11/2000" and final date "11/11/2000"
     Then the visitor named "Person" is properly stored by the system
     And the visit for the visitor "Person" with initial and final date equal to "11/11/2000" is properly stored by the system
 

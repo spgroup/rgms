@@ -17,7 +17,7 @@ Feature: BookChapter
   Scenario: remove book chapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
     When I remove the book chapter "Next Generation Software Product Line Engineering"
-    * the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
+    Then the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
 
   Scenario: register book chapter with invalid data
     Given I am at the book chapter page
