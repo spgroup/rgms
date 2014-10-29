@@ -8,6 +8,11 @@ Feature: member
     When I create a member with username "usernametest"
     Then the member with username "usernametest" is properly stored by the system
 
+  Scenario: new member without valid mail server
+    Given the system has no member with username "usernametest"
+    When I create a member with username "usernametest" without a valid mail server
+    Then the member with username "usernametest" is not properly stored by the system
+
   Scenario: list existing member
     Given   the system has member with username "usernametest"
     When    I view the member list

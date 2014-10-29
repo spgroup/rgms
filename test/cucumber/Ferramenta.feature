@@ -30,7 +30,7 @@ Feature: Ferramenta
         When I create the ferramenta "New" with file name "new.pdf"
         Then The system list "Tool" and "New" ferramentas
 
-    Scenario: upload dissertation with a file
+    Scenario: upload ferramenta with a file
         Given the system has some ferramenta stored
         When I upload a new ferramenta "testelattes.xml"
         Then the system has more ferramenta now
