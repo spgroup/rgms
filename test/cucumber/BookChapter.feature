@@ -4,6 +4,19 @@ Feature: BookChapter
   I want to add, remove and modify book chapters I have published
   so that I can generate web pages and reports containing these book chapters
 
+#if($editExistingBookChapter)
+  Scenario: edit existing Book Chapter
+    Given the book chapter "Chapter One" is stored on the system with file name "one.pdf"
+    When I update the existing chapter with a book chapter "Chapter One" with file name "two.pdf"
+    Then the book chapter "Chapter One" is updated in the system
+#end
+#if($bookChapterDoesNotExistTitle)
+  Scenario: book chapter does not exist (Title)
+    Given the book chapter "Chapter Zero" is not stored on the system
+    When I try to access the book chapter "Chapter Zero"
+    Then I receive an error message and there is no book chapter entitled "Chapter Zero" on the system
+#end
+
   Scenario: new book chapter
     Given the system has no book chapter entitled "SPL Development"
     When  I create the book chapter "SPL Development" with file name "HSPLE.pdf"
