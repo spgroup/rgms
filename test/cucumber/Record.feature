@@ -39,6 +39,14 @@ Feature: record
     When I click the create record option
     Then I can fill the record details
 
+#if(remove record web)
+  Scenario: remove record web
+    Given I am logged
+    And I am at record list
+    When I click the "remove record" option with status "MSc Student"
+    Then the system has no record with status "MSc Student" in the list
+#end
+	
   Scenario: update record with status empty web
     Given I am logged
     And I am at record list
@@ -55,3 +63,22 @@ Feature: record
     And the record with status "MSc Student" is associated to a member
     When I click to remove the record
     Then I am still at the visualize page of the record with status "MSc Student"
+	
+#if($successfullyEditAStatus)
+  Scenario: successfully edit a status
+	Given I am a member who wants to edit my status
+	And I am logged
+	And I am in my profile page,
+	When I fill the field of status with my new status,
+	Then my old status will be thrown away
+	And my profile will now show my new status.
+#end
+	
+#if($cancelTheEditOfAStatus)
+  Scenario: Cancel the edit of a status
+	Given a field of status filled with the new status of a member,
+	When the member decides to not post that status
+	And press the button 'cancel',
+	Then the new status will be erased
+	And nothing will be posted.
+#end

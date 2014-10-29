@@ -4,6 +4,19 @@ Feature: BookChapter
   I want to add, remove and modify book chapters I have published
   so that I can generate web pages and reports containing these book chapters
 
+#if($editExistingBookChapter)
+  Scenario: edit existing Book Chapter
+    Given the book chapter "Chapter One" is stored on the system with file name "one.pdf"
+    When I update the existing chapter with a book chapter "Chapter One" with file name "two.pdf"
+    Then the book chapter "Chapter One" is updated in the system
+#end
+#if($bookChapterDoesNotExistTitle)
+  Scenario: book chapter does not exist (Title)
+    Given the book chapter "Chapter Zero" is not stored on the system
+    When I try to access the book chapter "Chapter Zero"
+    Then I receive an error message and there is no book chapter entitled "Chapter Zero" on the system
+#end
+
   Scenario: new book chapter
     Given the system has no book chapter entitled "SPL Development"
     When  I create the book chapter "SPL Development" with file name "HSPLE.pdf"
@@ -14,10 +27,12 @@ Feature: BookChapter
     When I create the book chapter "Next Generation Software Product Line Engineering" with file name "NGSPL-0.pdf"
     Then the book chapter "Next Generation Software Product Line Engineering" is not stored twice
 
+#if($removeBookChapter)
   Scenario: remove book chapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
     When I remove the book chapter "Next Generation Software Product Line Engineering"
-    * the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
+    Then the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
+#end
 
   Scenario: register book chapter with invalid data
     Given I am at the book chapter page
