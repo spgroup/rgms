@@ -182,6 +182,15 @@ Scenario: list existing articles in alphabetical order of title web
 	And I select to order the list of articles by "publication date"
 	Then my article list shows the articles ordered by "publication date"
 
+ #if($listExistingArticlesOrderedByJournal)
+  Scenario: list existing articles ordered by journal
+      Given I am at the articles page
+      And the system has some articles created
+      When I select to view the list of articles
+      And I select to order the list of articles by "journal"
+      Then my article list shows the articles ordered by "journal"
+ #end
+
   Scenario: new invalid article web (title field blank)
 	Given I am at the new article page
 	When I fill all article information except the title field
