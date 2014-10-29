@@ -232,6 +232,14 @@ Scenario: list existing articles in alphabetical order of title web
     Then the articles "A theory of software product line refinement" and "Algebraic reasoning for object-oriented programming" are properly removed by the system.
   #end
 
+  #if(Add a new article and try to post it in the facebook)
+  Scenario: Add a new article and try to post it in the facebook
+    Given I am at the Add Article Page
+    When  I try to create an article named as "A theory of software product line refinement 2" with filename "TCS-01.pdf"
+    And   I click on Share on Facebook
+    Then  A facebook message ask for login with a facebook acont
+  #end
+
   Scenario: remove multiple articles web
 	Given I am at the articles page 
 	And I create 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Modularity analysis of use case implementations" with file name "MACI-03.pdf" and "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf"
