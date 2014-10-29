@@ -162,6 +162,15 @@ Feature: journal article
 	Then the system removes the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 	And the system contains the "Algebraic reasoning for object-oriented programming" article
 
+  #if($listExistingArticlesOrderedByAuthor)
+  Scenario: list existing articles ordered by author
+     Given I am at the articles page
+     And the system has some articles created
+     When I select to view the list of articles
+     And I select to order the list of articles by "author"
+     Then my article list shows the articles ordered by "author"
+ #end
+
 #if($Report)  
   Scenario:	report existing article web
 	Given I am at the articles page
