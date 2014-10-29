@@ -225,6 +225,13 @@ Scenario: list existing articles in alphabetical order of title web
     Then the system removes the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations".
   #end
 
+  #if($remove multiple existing articles)
+  Scenario: remove multiple existing articles
+    Given the system has articles entitled "A theory of software product line refinement" with file name "TCS-44.pdf" and "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf"
+    When I delete the articles "A theory of software product line refinement" and "Algebraic reasoning for object-oriented programming"
+    Then the articles "A theory of software product line refinement" and "Algebraic reasoning for object-oriented programming" are properly removed by the system.
+  #end
+
   Scenario: remove multiple articles web
 	Given I am at the articles page 
 	And I create 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Modularity analysis of use case implementations" with file name "MACI-03.pdf" and "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf"
