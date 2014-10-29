@@ -22,15 +22,17 @@ Feature: Ferramenta
 
      #if ($listFerramentas)
      Scenario: list ferramentas
-     Given the system has ferramenta entitled "CCFinder" with file name "ccfinder.pdf"
-     When I view the ferramenta list
-      Then my ferramenta list contains "CCFinder"
+        Given the system has ferramenta entitled "CCFinder" with file name "ccfinder.pdf"
+        When I view the ferramenta list
+        Then my ferramenta list contains "CCFinder"
      #end
 
-    Scenario: upload dissertation with a file
-        Given the system has some ferramenta stored
-        When I upload a new ferramenta "testelattes.xml"
-        Then the system has more ferramenta now
+    #if ($newFerramentaWithWebsite)
+    Scenario: new ferramenta with website
+        Given the system has no ferramenta entitled "CCFinder"
+        When I create the ferramenta "CCFinder" with file name "CCFinder.pdf" with its website
+        Then the ferramenta is properly stored by the system
+    #end
 
     Scenario: remove existing ferramenta
         Given the system has a ferramenta entitled "ToolDelete" with file name "tooldelete.pdf"
