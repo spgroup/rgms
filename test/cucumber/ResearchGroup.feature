@@ -37,7 +37,14 @@ Feature: research group
     When I modify the name of research group entitled "modcs-3" to none
     Then the research group is not stored in the system because it has no name
 
-
+#if($edit research group)
+	Scenario:edit research group
+		Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
+		When I modify the research group entitled "modcs" to "modcs 123"
+		And its description to "modcs research group 1234"
+		Then the edited research group "modcs 123" with description "modcs research group 1234" is properly stored in the system
+#end
+	
     Scenario:edit research group
     Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
     When I modify the research group entitled "modcs" to "modcs 123" and its description to "modcs research group 1234"
