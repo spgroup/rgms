@@ -29,7 +29,7 @@ Feature: Dissertation Tests
 
   Scenario: new dissertation duplicated
     Given the dissertation "Dissertation duplicated" is stored in the system with file name "Dissertationduplicated.txt"
-    When I create the dissertation "Dissertation duplicated" with file name "Dissertationduplicated2.txt" and school "UFPE"
+    When I create the dissertation "Dissertation duplicated" with file name "Dissertationduplicated2.txt"
     Then the dissertation "Dissertation duplicated" is not stored twice
 
   Scenario: new dissertation without file
@@ -39,12 +39,7 @@ Feature: Dissertation Tests
     And I cant add the dissertation without a file
     Then the system has no dissertation entitled "Dissertacao sem arquivo"
 
-  Scenario: upload a dissertation and system has no dissertation stored
-    Given the system has no dissertation entitled "New dissertation"
-    When I upload a new dissertation "curriculo4.xml" with title "New dissertation"
-    Then the system has more dissertations now
-
-  Scenario: new dissertation with file
+    Scenario: new dissertation with file
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
     And I select the new dissertation option at the dissertation page

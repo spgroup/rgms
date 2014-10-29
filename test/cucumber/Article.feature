@@ -47,15 +47,13 @@ Feature: journal article
     Then the article "A theory of software product line refinement" is properly updated by the system
 
   Scenario: remove existing article web
-    Given I am at the articles page
-    And the article "A theory of software product line refinement" is stored in the system with file name "TCS-77.pdf"
+    Given I am at the articles page and the article "A theory of software product line refinement" is stored in the system with file name "TCS-77.pdf"
     When I select to view "A theory of software product line refinement" in resulting list
     And I select the option to remove in show page
     Then the article "A theory of software product line refinement" is properly removed by the system
 
   Scenario: list existing article web
-    Given I am at the articles page
-    And the article "A theory of software product line refinement" is stored in the system with file name "TCS-88.pdf"
+    Given I am at the articles page and the article "A theory of software product line refinement" is stored in the system with file name "TCS-88.pdf"
     Then my resulting articles list contains "A theory of software product line refinement"
 
   Scenario: edit existing article web
