@@ -215,6 +215,16 @@ Scenario: list existing articles in alphabetical order of title web
 	And I select to filter the list of articles by author "Paulo Borba"
 	Then my article list shows only the articles authored by "Paulo Borba"
 
+
+  #if($remove multiple articles)
+  Scenario: remove multiple articles
+    Given I select to view the list of articles
+    And I see 3 articles entitled "A theory of software product line refinement", "Modularity analysis of use case implementations" and "Algebraic reasoning for object-oriented programming"
+    When I mark to be removed "A theory of software product line refinement" and "Modularity analysis of use case implementations"
+    And I select to remove the selected articles
+    Then the system removes the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations".
+  #end
+
   Scenario: remove multiple articles web
 	Given I am at the articles page 
 	And I create 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Modularity analysis of use case implementations" with file name "MACI-03.pdf" and "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf"
