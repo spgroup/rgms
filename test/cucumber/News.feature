@@ -71,3 +71,18 @@ Feature: news
     Given the system has no news with description "teste" and date "31-02-2013" for "SPG" research group
     When I try to create a news with description "teste" and date "31-02-2013" for "SPG" research group
     Then the news with description "teste", date "31-02-2013" and "SPG" research group is not stored by the system because it is invalid
+
+  #if($listNews)
+  Scenario: list news
+    Given the system has two news with descriptions "noticia1" and "noticia2"
+    When the system list the news
+    Then the system has a list with two news with descriptions "noticia1" and "noticia2"
+    #end
+
+  #if($listNewsWeb)
+  Scenario: list news web
+    Given I am at  the publications menu
+    And  the system has two news with descriptions "noticia1" and "noticia2"
+    When I select the list page
+    Then I can see a list with two news with descriptions "noticia1" and "noticia2"
+    #end
