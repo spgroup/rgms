@@ -106,3 +106,15 @@ Feature: Thesis Tests
 # o arquivo depois, address deveria ser opcional, deveria ter universidade e
 # centro/departamento, deveria ter apenas um autor e a possibilidade de um
 # orientador e co-orientador
+
+#if($addDisertacao)
+
+  Scenario: add "Dissertacao"'s Supervisor
+    Given I am at the "Dissetação" page
+    And the system has no dissertation entitled "New dissertation"
+    When I create the dissertation "New dissertation" with file name "Newdissertation.txt" 
+    And school "UFPE"
+    And the supervisor's name 
+    Then the dissertation "New dissertation" is properly stored by the system
+    
+#end
