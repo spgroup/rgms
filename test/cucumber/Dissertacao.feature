@@ -102,3 +102,7 @@ Feature: Dissertation Tests
     And the supervisor "Silvio Melo"
     Then the dissertation "New dissertation" is properly stored by the system
 #end
+
+#Issue - vml
+#A unificação da linguagem do formulário é bastante útil
+#pois padroniza o uso do software e evita possíveis ambiguidades e erros
