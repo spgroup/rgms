@@ -40,20 +40,12 @@ Feature: news
     When  I request to update the news from Twitter to research group "SPG"
     Then  there is no duplicated news in Twitter account associated with research group "SPG"
 
-
   Scenario: new news web
     Given I am at the publications menu
     And I create a research group because it is necessary
     When I select the "News" option at the publications menu
     And I select the novo noticias option at the news page
     Then I can fill the news details
-
-
-  Scenario: new invalid news (Description blank)
-    Given the system has no news with description "" and date "17-12-2013" for "SPG" research group
-    When I create a news with description "" and date "17-12-2013" for "SPG" research group
-    Then the news with description "", date "17-12-2013" and "SPG" research group is not stored by the system because it is invalid
-
 
   Scenario: edit existing news
     Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group
@@ -67,7 +59,7 @@ Feature: news
     And I select the option to remove in news show page
     Then the news "Noticia1" is properly removed by the system
 
-  Scenario: new invalid news (invalid date)
-    Given the system has no news with description "teste" and date "31-02-2013" for "SPG" research group
-    When I try to create a news with description "teste" and date "31-02-2013" for "SPG" research group
-    Then the news with description "teste", date "31-02-2013" and "SPG" research group is not stored by the system because it is invalid
+  Scenario: new invalid news
+    Given the system has some news stored
+    When I try to create a news with invalid fields
+    Then the news is not stored by the system
