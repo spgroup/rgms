@@ -73,11 +73,14 @@ Feature: Dissertation Tests
     And I select the upload button at the dissertation page
     Then I'm still on dissertation page
 
+#if($uploadDissertationWithAFile)
   Scenario: upload dissertation with a file
     Given the system has some dissertation stored
-    Given the system has no dissertation entitled "New dissertation"
+    And the system has no dissertation entitled "New dissertation"
     When I upload a new dissertation "curriculo3.xml" with title "New dissertation"
-    Then the system has more dissertations now
+    Then the system will store "New dissertation"
+	And the file "curriculo3.xml"
+#end
     
   Scenario: upload a dissertation and system has no dissertation stored
     Given the system has no dissertation entitled "New dissertation"
