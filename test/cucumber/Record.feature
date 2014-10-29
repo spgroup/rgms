@@ -38,6 +38,14 @@ Feature: record
     And I am at record list
     When I click the create record option
     Then I can fill the record details
+	
+#if(remove record web)
+  Scenario: remove record web
+    Given I am logged
+    And I am at record list
+    When I click the "remove record" option with status "MSc Student"
+    Then the system has no record with status "MSc Student" in the list
+#end
 
   Scenario: update record with status empty web
     Given I am logged
