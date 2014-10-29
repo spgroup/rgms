@@ -240,6 +240,13 @@ Scenario: list existing articles in alphabetical order of title web
     Then  A facebook message ask for login with a facebook acont
   #end
 
+  #if(Filter existing articles by conference)
+  Scenario: filter existing articles by conference
+    Given the system has some articles in the conference "I International Conference on Software Engineering"
+    When the system filter the articles conference by "I International Conference on Software Engineering"
+    Then the system article list content is not modified
+  #end
+
   Scenario: remove multiple articles web
 	Given I am at the articles page 
 	And I create 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Modularity analysis of use case implementations" with file name "MACI-03.pdf" and "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf"
