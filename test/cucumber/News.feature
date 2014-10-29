@@ -40,12 +40,15 @@ Feature: news
     When  I request to update the news from Twitter to research group "SPG"
     Then  there is no duplicated news in Twitter account associated with research group "SPG"
 
+
++#if( $new news web)
   Scenario: new news web
     Given I am at the publications menu
-    And I create a research group because it is necessary
+    And I create a research group
     When I select the "News" option at the publications menu
-    And I select the novo noticias option at the news page
+    And I select the "new news" option at the news page
     Then I can fill the news details
++#end
 
   Scenario: edit existing news
     Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group
