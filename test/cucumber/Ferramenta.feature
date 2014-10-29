@@ -55,11 +55,13 @@ Feature: Ferramenta
         Then I am still on create new ferramenta page
         And the ferramenta is not displayed in the ferramentas list page
 
-    Scenario: upload dissertation without a file
+    #if ($uploadFerramentaWithoutAFile)
+    Scenario: upload ferramenta without a file
         Given I am at the publications menu
         When I select the "Ferramenta" option at the program menu
         And I select the upload button at the ferramenta page
         Then I am still on ferramenta page
+    #end
 
     #if ($contextualInformation)
     Scenario: new ferramenta filled with user data by default
