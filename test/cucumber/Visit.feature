@@ -78,6 +78,20 @@ Feature: Visit
     When I try to edit the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" changing the final date to "10/11/2000"
     Then the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is not properly updated by the system because it is invalid
 
+  Scenario: duplicate visit instance
+    Given the system has a visitor named "Person"
+    And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
+    When I create the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
+    Then the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" is not stored twice
+
+  Scenario: duplicate vist instance web
+    Given I am logged as "admin" and at the visits page
+    And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" is stored on the system
+    When I try to create the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" 
+    And I confirm the details by clicking on the confirm button
+    Then no new vist is stored by the system
+    And I get an error message
+
   @ignore
   Scenario: list existing visits and periods
     Given the system has visits with initial or final date greater than or equal "01/01/2011"
