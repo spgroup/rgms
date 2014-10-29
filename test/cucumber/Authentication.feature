@@ -4,13 +4,13 @@ Feature: Authentication Process
 
 Scenario: Login with user that doesn't exist fail message
   Given I am at the Login Page
-  When I try to login with an user that does not exist
+  When I try to login with "usuarioInvalido" user that does not exist
   Then I am redirected to the Login Page
   And A login failure message is displayed
 
 Scenario: Login with user's wrong password fail message
   Given I am at the Login Page
-  When I try to login with an existent user, though with wrong password
+  When I try to login with the existent user "usuarioValido" and the not corresponding password "senhaInvalida"
   Then I am redirected to the Login Page
   And A login failure message is displayed
 

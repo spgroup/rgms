@@ -45,10 +45,9 @@ Feature: Dissertation Tests
     Then the system has more dissertations now
 
   Scenario: new dissertation with file
-    Given I am at the publications menu
-    When I select the "Dissertacao" option at the program menu
+    Given I am at the "Dissertacao" option at the program menu
     And I select the new dissertation option at the dissertation page
-    And I can add the dissertation with a file "Modularity.pdf"
+    When I add the dissertation with a file "Modularity.pdf"
     Then the system has a dissertation entitled "Dissertacao Teste 1"
 
   Scenario: edit dissertation
@@ -73,7 +72,7 @@ Feature: Dissertation Tests
 
   Scenario: upload dissertation with a file
     Given the system has some dissertation stored
-    Given the system has no dissertation entitled "New dissertation"
+    And the system has no dissertation entitled "New dissertation"
     When I upload a new dissertation "curriculo3.xml" with title "New dissertation"
     Then the system has more dissertations now
     
@@ -91,3 +90,20 @@ Feature: Dissertation Tests
     Then I see my user listed as an author member of dissertation by default
     And I see my school name as school of dissertation by default
 #end
+
+#if($listDissertationsAlphabetical)
+  Scenario:	list existing dissertation in alphabetical order of title
+    Given the system has dissertation entitled "dissertacao"
+    And the system has other dissertation entitled "teste
+    When the system orders the dissertation list by title
+    Then the system dissertation list contains first the "dissertacao" dissertation after "teste" dissertation.
+    #end
+
+  #if($listDissertationsAlphabeticalWeb)
+  Scenario:	list existing dissertation in alphabetical order of title web
+    Given I am at the "Dissertacao" option at the program menu
+    And the system has dissertation entitled
+    And the system has other dissertation entitled "teste"
+    When I click to the alphabetical ordenation option
+    Then I can see a list contains first the "dissertacao" dissertation after "teste" dissertation.
+  #end

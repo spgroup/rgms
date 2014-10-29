@@ -46,6 +46,7 @@ grails.project.dependency.resolution = {
         compile('lib:itext-pdfa:5.4.0')
         compile('lib:itext-xtra:5.4.0')
         compile('lib:twitter4j-core:4.0.1')
+        compile('commons-codec:commons-codec:1.6')
 
         compile(group: 'org.apache.poi', name: 'poi', version: '3.7') {
             excludes 'xmlbeans'
