@@ -36,22 +36,22 @@ Feature: journal article
     And I select the new article option at the article page
     Then I can fill the article details
 
-  #if ($publicationInformationController)
+#if ($publicationInformationController)
   Scenario: new article web with publication
-    Given I am at the publications menu
+    Given I am at the article page
     And I want to add a new article 
     Then I can fill the article details
-    And It includes the "publicacao" information	
-  #end
+    And It may include the "publication" information	
+#end
 
-   #if ($publicationInformation)
+#if ($publicationInformation)
    Scenario: new article web with publication
-    Given I am at the publications menu
-    When I select the "Periodico" option at the publications menu
-    And I select the new article option at the article page
+    Given I am at the article page
+    When I select the "Periodico" option
+    And I select the 'new article' option
     Then I can fill the article details
-    And It includes the option of "publicacao" information
-   #end
+    And It may include the option "publication" information
+#end
 
   Scenario: remove existing article
     Given the system has article entitled "A theory of software product line refinement" with file name "TCS-44.pdf"
