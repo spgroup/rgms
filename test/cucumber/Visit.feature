@@ -4,20 +4,20 @@ Feature: Visit
   I want to add, remove and modify visits of external members to the group
   so that I can store the visits that external member perform to the group, so do as the visitor
 
-+#if($visitOfADayForANonStoredVisitor)
+#if($visitOfADayForANonStoredVisitor)
   Scenario: visit of a day for a non stored visitor
     Given the system has no visitor named "Person"
     When I create the one-day visit for the visitor "Person" with initial date "11/11/2000"
     Then the visitor named "Person" is properly stored by the system
     And the visit for the visitor "Person" with initial and final date equal to "11/11/2000" is properly stored by the system
-+#end
-+#if($visitOfAPeriodForANonStoredVisitor)
+#end
+#if($visitOfAPeriodForANonStoredVisitor)
   Scenario: visit of a period for a non stored visitor
     Given the system has no visitor named "Person"
     When I create the period visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
     Then the visitor named "Person" is properly stored by the system
     And the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" is properly stored by the system
-+#end
+#end
 
   Scenario: visit of a day for a stored visitor
     Given the system has visitor named "Person"
@@ -77,20 +77,6 @@ Feature: Visit
     And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
     When I try to edit the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" changing the final date to "10/11/2000"
     Then the visit of the visitor named "Person" with initial date "11/11/2000" and final date "12/11/2000" is not properly updated by the system because it is invalid
-
-  Scenario: duplicate visit instance
-    Given the system has a visitor named "Person"
-    And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
-    When I create the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000"
-    Then the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" is not stored twice
-
-  Scenario: duplicate vist instance web
-    Given I am logged as "admin" and at the visits page
-    And a visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" is stored on the system
-    When I try to create the visit for the visitor "Person" with initial date "11/11/2000" and final date "12/11/2000" 
-    And I confirm the details by clicking on the confirm button
-    Then no new vist is stored by the system
-    And I get an error message
 
   @ignore
   Scenario: list existing visits and periods

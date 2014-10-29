@@ -41,7 +41,7 @@ Feature: news
     Then  there is no duplicated news in Twitter account associated with research group "SPG"
 
 
-+#if( $new news web)
+#if( $new news web)
   Scenario: new news web
     Given I am at the publications menu
     And I create a research group
@@ -57,6 +57,12 @@ Feature: news
     Then the news with description "noticiaTeste", date "01-01-2014" and "" research group is not stored by the system because it is invalid
 #end
 
+  Scenario: new invalid news (Description blank)
+    Given the system has no news with description "" and date "17-12-2013" for "SPG" research group
+    When I create a news with description "" and date "17-12-2013" for "SPG" research group
+    Then the news with description "", date "17-12-2013" and "SPG" research group is not stored by the system because it is invalid
+
+
   Scenario: edit existing news
     Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group
     When I edit the news with description "noticiaTeste" to "newDescription", date "07-04-2012" and "SPG" research group
@@ -69,7 +75,7 @@ Feature: news
     And I select the option to remove in news show page
     Then the news "Noticia1" is properly removed by the system
 
-  Scenario: new invalid news
-    Given the system has some news stored
-    When I try to create a news with invalid fields
-    Then the news is not stored by the system
+  Scenario: new invalid news (invalid date)
+    Given the system has no news with description "teste" and date "31-02-2013" for "SPG" research group
+    When I try to create a news with description "teste" and date "31-02-2013" for "SPG" research group
+    Then the news with description "teste", date "31-02-2013" and "SPG" research group is not stored by the system because it is invalid
