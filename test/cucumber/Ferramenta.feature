@@ -10,6 +10,11 @@ Feature: Ferramenta
         When I create the ferramenta "Target" with file name "target.pdf" without its website
         Then the ferramenta "Target" is not stored
 
+    Scenario: new ferramenta with website
+        Given the system has no ferramenta entitled "TargetWeb"
+        When I create the ferramenta "TargetWeb" with file name "targetweb.pdf" with its website
+        Then the ferramenta "TargetWeb" is stored
+
     Scenario: duplicate ferramenta
         Given the ferramenta "Emergo" is stored in the system with file name "emergo.pdf"
         When I create the ferramenta "Emergo" with file name "emergo.pdf"
