@@ -13,6 +13,15 @@ Feature: Thesis Tests
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
     Then  The thesis "New thesis" is properly stored by the system
 
+#if ($editExistingThesis)
+   Cenario: edit existing thesis
+    Given I am at the "Software Engineering" edit page
+    When  I modify the field 'School' to "UFPE"
+    And   I click 'Confirm'
+    Then  I am at the thesis show page
+    And   The thesis "Software Engineering" now has "UFPE" in the 'school' field.
+#end
+
   Scenario: remove existing thesis
     Given   the system has thesis entitled "New thesis2"
     When    I delete the thesis "New thesis2"
