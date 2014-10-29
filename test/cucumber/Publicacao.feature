@@ -25,7 +25,7 @@ Scenario: new publication spot in magazine
 #Nesses dois próximos cenários é garantindo que existe um JavaScript que ajuda
 Scenario: edit publication spot in magazine
    Given I have all the information of an article published in a magazine 
-   And I want to correct any of the fields 
+   And I want to correct any of the fields
    When I am at Article Page
    Then I can edit any information
    And I store it
@@ -38,3 +38,20 @@ Scenario: edit publication spot in magazine
    Then I have all the fields filled in 
    And I can edit anything
    And I store it 
+
+####vml#####
+
+#if($uploadPublicacao)
+Scenario: make the upload of the PDF presentation in "Publicacao"
+   Given I am at Article Page
+   And I want to upload the "Publicacao.pdf" file 
+   When I choose the file by browsing it	 
+   Then I click on the "upload" button
+#end
+
+#if($uploadPublicacao)
+Scenario: make the upload of the PDF presentation in "Publicacao"
+   Given I want to upload the PDF presentation "Publicacao.pdf"
+   When I	choose "Publicacao.pdf" file
+   Then I see it on the list
+#end
