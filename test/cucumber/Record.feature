@@ -39,6 +39,15 @@ Feature: record
     When I click the create record option
     Then I can fill the record details
 
+  #if($removeRecordWeb)
+  Scenario: remove record web
+    Given I am logged
+    And I am at record list
+    When I click the "remove record" option
+    Then the system removes the record list
+  #end
+
+
   Scenario: update record with status empty web
     Given I am logged
     And I am at record list
