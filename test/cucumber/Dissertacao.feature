@@ -3,14 +3,14 @@ Feature: Dissertation Tests
   As a member of a research group
   I want to add, remove and modify dissertations I have added
 
-  Scenario:  first dissertation and delete
+#if($firstDissertationStored)
+  Scenario:  first dissertation stored
     Given the system has no dissertation stored
     When I create the dissertation "New dissertation" with file name "dissertation.txt" and school "federal"
-    And I am at the publications menu
     And I select the "Dissertacao" option at the program menu
-    And I select "Delete dissertation" at the dissertation page
-    And I delete "New dissertation"
-    Then the system has no dissertation stored
+    And I select "Upload dissertation" at the dissertation page
+    Then the system will insert it's first dissertation.
+#end
 
 #if($newDissertationWithoutSchool)
   Scenario: new dissertation without school
