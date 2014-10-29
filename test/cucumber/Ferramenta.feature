@@ -48,10 +48,8 @@ Feature: Ferramenta
         And I select the new ferramenta option at the ferramenta page
         Then I can create a ferramenta filling the details
 
-    Scenario: new ferramenta without any information
-        Given I am at the publications menu
-        When I select the "Ferramenta" option at the program menu
-        And I select the new ferramenta option at the ferramenta page
+    Scenario: create ferramenta without any information
+        Given I am at the ferramenta page
         And I click on Criar button
         Then I am still on create new ferramenta page
         And the ferramenta is not displayed in the ferramentas list page
