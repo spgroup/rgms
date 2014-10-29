@@ -53,11 +53,13 @@ Feature: Dissertation Tests
     And I can add the dissertation with a file "Modularity.pdf"
     Then the system has a dissertation entitled "Dissertacao Teste 1"
 
-  Scenario: edit dissertation
+#if($editDissertationTitle)
+  Scenario: edit dissertation title
     Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt"
-    Given the system has no dissertation entitled "Edit dissertation reviewed"
-    When    I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
-    Then    the dissertation "Edit dissertation" is properly updated by the system
+    And the system has no dissertation entitled "Edit dissertation reviewed"
+    When I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
+    Then the dissertation "Edit dissertation" is properly updated by the system to "Edit dissertation reviewed"
+#end
 
   Scenario: delete dissertation
     Given the dissertation "Delete dissertation" is stored in the system with file name "Deletedissertation.txt"
