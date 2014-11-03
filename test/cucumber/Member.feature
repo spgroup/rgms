@@ -104,7 +104,7 @@ Scenario: new member with invalid phone
 #if($memberInfo)
 Scenario: editing member information
 	Given the system has member with "Victor","Monteiro", "12345", "vddm@cin.ufpe.br", "UFPE"
-	When I edit one of the member's information
+	When I edit the member's "email" for "vddz@cin.ufpe.br"
 	Then the member information is updated and saved in the system
 
 Scenario: editing member
