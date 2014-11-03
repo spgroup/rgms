@@ -48,10 +48,10 @@ Feature: research line
 
   #if ($XMLImport)
   #if($upload)
-	Scenario: upload research lines with a file
-		Given the system has some research line stored
-		When I upload new research lines from file
-		Then the system has more research lines now
+  Scenario: upload research lines with a file
+	Given the system has some research line stored
+	When I upload new research lines from the file "testelattes2.xml"
+	Then the system keep the old reserch lines and has more research lines now
   #end
 
   Scenario: upload research lines without a file
