@@ -67,6 +67,13 @@ Feature: Thesis Tests
     When I click in order thesis by date
     Then the returned thesis list has the same items but it is sorted by date
 
+#if ($SortThesisListInAlphabeticalOrder)
+   Scenario: sort thesis list in alphabetical order
+    Given The system has a thesis entitled "Augmented Reality" stored
+    When  The user adds a thesis entitled "Software Engineering"
+    Then  The thesis "Software Engineering" is properly stored after "Augmented Reality"
+#end 
+    
   Scenario: search an existing thesis
     Given the system has one thesis entitled "Software Engineering" with author name "Pressman", year of publication "1998" and university "UFPE"
     And I am at the thesis search page
