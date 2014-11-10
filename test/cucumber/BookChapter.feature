@@ -13,8 +13,8 @@ Feature: BookChapter
 #if($bookChapterDoesNotExistTitle)
   Scenario: book chapter does not exist (Title)
     Given the book chapter "Chapter Zero" is not stored on the system
-    When I try to access the book chapter "Chapter Zero"
-    Then I receive an error message and there is no book chapter entitled "Chapter Zero" on the system
+    When I try to directly access the book chapter "Chapter Zero"
+    Then there is no book chapter entitled "Chapter Zero" on the system
 #end
 
   Scenario: new book chapter
