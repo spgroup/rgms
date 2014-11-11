@@ -10,7 +10,7 @@ abstract class Publication {
     ResearchLine researchLine
 
     static belongsTo = Member
-    static hasMany = [members: Member, authors: String]
+    static hasMany = [members: Member, authors: String, magazinePublication: MagazinePublication]
 
     static constraints = {
         title nullable: false, blank: false, size: 1..200
