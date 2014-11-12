@@ -103,6 +103,57 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
+
+Given(~'^I am at the book page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to BookPage
+}
+
+And(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    book = Book.findByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+
+When(~'^I choose to view "([^"]*)" in book list$') { String title ->
+    page.selectViewBook(title)
+    at BookShowPage
+}
+
+And(~'^I press to remove at the book show page$') {->
+    at BookShowPage
+    page.select('input', 'delete')
+}
+
+Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
+    assert checkIfExists(title)
+}
+
+
+Given(~'^I am at the book page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to BookPage
+}
+
+And(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    book = Book.findByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+
+Then(~'^the book list contains" ([^"]*)"$') { String title ->
+    at BookPage
+    page.checkArticleAtList(title, 0)
+}
+
+
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
