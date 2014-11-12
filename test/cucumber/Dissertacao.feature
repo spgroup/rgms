@@ -99,7 +99,6 @@ Feature: Dissertation Tests
     And I select the new dissertation option at the dissertation page
     And I add the dissertation with "curriculo4.png"
     Then the system has no new dissertation
-    And the system opens a window tellng me that it isnt the appropiate file type
     And I am back at the publications menu
 
     
