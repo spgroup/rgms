@@ -23,9 +23,9 @@ Given(~'^The thesis "([^"]*)" is stored in the system with file name "([^"]*)"$'
         assert article != null
 }
 
-When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') {
-    String title, filename, school ->
-        ThesisTestDataAndOperations.createTese(title, filename, school)
+When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)" and supervisor "([^"]*)"$') {
+    String title, filename, school, supervisor ->
+        ThesisTestDataAndOperations.createTese(title, filename, school, supervisor)
 }
 
 Then(~'^The thesis "([^"]*)" is not stored twice$') { String title ->
@@ -268,6 +268,8 @@ When(~'^I upload the file "([^"]*)"$') { file ->
 And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
 
 }
+
+Given (~'^I want to add a "New thesis"') { 
 
 //FUNÇÔES AUXILIARES
 def thesisDoNotExists(title) {
