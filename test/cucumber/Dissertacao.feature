@@ -77,11 +77,9 @@ Feature: Dissertation Tests
 
 #if($uploadDissertationWithAFile)
   Scenario: upload dissertation with a file
-    Given the system has some dissertation stored
-    And the system has no dissertation entitled "New dissertation"
+    Given the system has no dissertation entitled "New dissertation" stored
     When I upload a new dissertation "curriculo3.xml" with title "New dissertation"
-    Then the system will store "New dissertation"
-	And the file "curriculo3.xml"
+    Then the system will store "New dissertation" with the file "curriculo3.xml"
 #end
     
   Scenario: upload a dissertation and system has no dissertation stored
