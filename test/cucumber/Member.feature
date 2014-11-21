@@ -20,8 +20,7 @@ Feature: member
   Scenario: new member with a blank username
 	Given the system may have some members,
 	When I create a member with username "",
-	Then the register will fail
-	And the new member won't be inserted.
+	Then the new member won't be inserted.
 #end
 
 #if($deleteInexistentMember)
