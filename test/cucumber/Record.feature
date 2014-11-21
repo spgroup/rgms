@@ -76,8 +76,7 @@ Feature: record
 #if($cancelTheEditOfAStatus)
   Scenario: Cancel the edit of a status
 	Given a field of status filled with "new status",
-	When the member decides to not post that status
-	And press the button 'cancel',
+	When the member press the button 'cancel',
 	Then the new status will be erased
 	And nothing will be posted.
 #end
