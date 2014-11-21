@@ -66,17 +66,16 @@ Feature: record
 	
 #if($successfullyEditAStatus)
   Scenario: successfully edit a status
-	Given I am a member who wants to edit my status
-	And I am logged
+	Given I am logged
 	And I am in my profile page,
-	When I fill the field of status with my new status,
+	When I fill the field of status with "new status",
 	Then my old status will be thrown away
 	And my profile will now show my new status.
 #end
 	
 #if($cancelTheEditOfAStatus)
   Scenario: Cancel the edit of a status
-	Given a field of status filled with the new status of a member,
+	Given a field of status filled with "new status",
 	When the member decides to not post that status
 	And press the button 'cancel',
 	Then the new status will be erased
