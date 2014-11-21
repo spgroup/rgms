@@ -63,8 +63,7 @@ Feature: Ferramenta
         Given I am at the publications menu
         When I select the "Ferramenta" option at the program menu
         And I select the upload button at the ferramenta page without attaching a file
-        Then I am still on ferramenta page
-		And the ferramenta won't be inserted into the system.
+        Then the ferramenta won't be inserted into the system.
 #end
 
     #if ($contextualInformation)
