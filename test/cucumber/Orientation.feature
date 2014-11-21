@@ -6,7 +6,7 @@ Feature: orientations
 
   Scenario: new orientation
     Given the system has no orientations entitled "The Book is on the table"
-    When I create a new orientation entitled "The Book is on the table"
+    When I create a new orientation entitled "The Book is on the table" and with type of "Mestrado"
     Then the orientation "The Book is on the table" is properly stored by the system
 
   Scenario: remove existing orientation
@@ -78,3 +78,27 @@ Feature: orientations
     Then I'm still on orientations page
     And the orientations are not stored by the system
   #end
+
+  Scenario: filter existing orientation by type
+    Given the system has some orientation with type "Mestrado"
+    When the system filter the orientation with type "Mestrado"
+    Then the system orientation list content is not modified
+
+  Scenario: filter existing orientation by type web
+    Given I am at the orientation page
+    And I create some orientation with type "Mestrado"
+    When I select to view the list of orientation
+    And I select to filter the list of orientation by type "Mestrado"
+    Then my orientation list shows only the orientation type by "Mestrado"
+
+  Scenario: filter existing articles by leader
+    Given the system has some articles supervised by "Rodolfo Jose"
+    When the system filter the articles supervised by leader "Rodolfo Jose"
+    Then the system article list content is not modified
+
+  Scenario: filter existing orientation by leader web
+    Given I am at the orientation page
+    And I create some orientation supervised by "Rodolfo Jose"
+    When I select to view the list of orientation
+    And I select to filter the list of orientation by leader "Rodolfo Jose"
+    Then my orientation list shows only the orientation supervised by "Rodolfo Jose"
