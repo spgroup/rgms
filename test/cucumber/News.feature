@@ -74,15 +74,20 @@ Feature: news
 
   #if($listNews)
   Scenario: list news
-    Given the system has two news with descriptions "noticia1" and "noticia2"
+    Given the system has one new with description "noticia1"
+    And the system has one new with description "noticia2"
     When the system list the news
-    Then the system has a list with two news with descriptions "noticia1" and "noticia2"
-    #end
+    Then the list has a new with description "noticia1"
+    And the list has a new with description "noticia2"
+       #end
 
   #if($listNewsWeb)
   Scenario: list news web
-    Given I am at  the publications menu
-    And  the system has two news with descriptions "noticia1" and "noticia2"
-    When I select the list page
-    Then I can see a list with two news with descriptions "noticia1" and "noticia2"
+    Given I am at the publications menu
+    And I create a research group because it is necessary
+    And  I create a new with description "noticia1"
+    And  I create a new with description "noticia2"
+    When I select the News option at the publications menu
+    Then I can see the new with description "noticia1" in the list
+    And I can see the new with description "noticia2" in the list
     #end

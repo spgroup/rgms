@@ -77,8 +77,8 @@ When (~'I submit the form') { ->
     assert( page.submitForm() != null )
 }
 
-When(~'I try to login with an user that does not exist'){ ->
-    page.fillLoginData('NonExistentUser','NonExistentUserPass')
+When(~'^I try to login with "([^"]*)" user that does not exist$') { String login ->
+    page.fillLoginData(login, 'senhaqualquer')
 }
 When (~'I try to login with an existent user, though with wrong password') {->
     page.fillLoginData("admin","123")
@@ -208,14 +208,6 @@ When (~'The login procedure is successful') { ->
 
 
 
-
-
-
-
-When(~'I try loggin with "([^"]*)"'){ username ->
-    page.fillLoginData(username, "senha")
-}
-
 Then(~'Inform the user that don`t have permission to loggin yet'){ ->
     to UnauthorizedPage
     at UnauthorizedPage
@@ -230,4 +222,9 @@ Given(~'I am at Register Page registering myself'){ ->
     page.email.value(user.email)
     page.university.value(user.university)
     page.status.value(user.status)
+}
+
+
+When(~'^I try to login with an existent user "([^"]*)" with the wrong password "([^"]*)"$') { String username, String senha->
+    page.fillLoginData(username, senha)
 }
