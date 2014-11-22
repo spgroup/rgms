@@ -44,8 +44,8 @@ Feature: Book
     Then my book list shows the books ordered by "publication date"
 
   Scenario: download book file
-    Given I am at the books page
-    And the system has a book with file named "NGSPL-0.pdf"
+    Given the book "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-0.pdf"
+    And I am at the book page
     When I select the download button
     Then I can download the file named "NGSPL-0.pdf"
 
