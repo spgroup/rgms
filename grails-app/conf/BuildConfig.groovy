@@ -61,6 +61,7 @@ grails.project.dependency.resolution = {
         compile ":remote-control:1.4"
         compile ":codenarc:0.20"
         compile ":gmetrics:0.3.1"
+        compile "commons-codec:commons-codec:1.6" //adicionado gml
 
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.7.1"
