@@ -251,3 +251,26 @@ And(~'^I create a research group because it is necessary$') {->
     to PublicationsPage
     at PublicationsPage
 }
+
+
+#if($convertToPdf)
+Given(~'^the news "([^"]*) is stored by the system"$'){String description ->
+	
+	news = News.findByDescription(description)
+	assert news.size() == 1
+
+}
+
+
+When(~'^the system creates a pdf file containing the description, date and research group of this news$'){String description->
+	cont = new NewsController()
+	cont.convertPDF(description)
+
+}
+Then(~'^the system send this file for the client$'){String description ->
+	cont.download(description)
+}
+
+
+
+#end
