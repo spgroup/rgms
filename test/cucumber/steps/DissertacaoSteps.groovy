@@ -166,5 +166,7 @@ Then(~'^I stay on dissertation page with an error message$') { ->
 }
 
 
-
+When(~'^I press to remove "([^"]*)" at the dissertation show page$'){ String title->
+	page.select('input', 'delete')
+}
 
