@@ -21,6 +21,14 @@ class DissertationCreate extends FormPage {
         // Could parametrize, obtaining data from class TestDataAndOperations
     }
 
+    def fillDissertationDetailsWithFile(title, filename) {
+        $("form").title = title
+        $("form").file = filename
+        $("form").school = "WebSite"
+        $("form").address = "Description"
+        $("form").create().click()
+    }
+
     def fillDissertationDetailsWithFile(filename) {
         $("form").title = "Dissertacao Teste 1"
         $("form").file = filename

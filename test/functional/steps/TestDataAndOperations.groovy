@@ -240,7 +240,7 @@ class TestDataAndOperations {
 
     static public ResearchGroup createAndGetResearchGroupByNameWithTwitter(String name, String twitter) {
         def researchGroupController = new ResearchGroupController()
-        researchGroupController.params << findResearchGroupByGroupName(name)
+        researchGroupController.params << [name: name, description: "descricao"]
         if(twitter != null)
             researchGroupController.params << [twitter: twitter]
         researchGroupController.create()

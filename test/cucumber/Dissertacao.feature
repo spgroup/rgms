@@ -45,9 +45,10 @@ Feature: Dissertation Tests
     Then the system has more dissertations now
 
   Scenario: new dissertation with file
-    Given I am at the "Dissertacao" option at the program menu
+    Given I am at the publications menu
+    When I select the "Dissertacao" option at the program menu
     And I select the new dissertation option at the dissertation page
-    When I add the dissertation with a file "Modularity.pdf"
+    And I can add the dissertation with a file "Modularity.pdf"
     Then the system has a dissertation entitled "Dissertacao Teste 1"
 
   Scenario: edit dissertation
@@ -64,26 +65,23 @@ Feature: Dissertation Tests
     And I delete "Delete dissertation"
     Then the system has no dissertation entitled "Delete dissertation"
 
-  Scenario: new dissertation with file
+  Scenario: upload dissertation without a file
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
-    And I select the new dissertation option at the dissertation page
-    And I can add the dissertation with a file "Modularity.pdf"
-    Then the system has show me the message "Modularity.pdf has been stored with success!" 
+    And I select the upload button at the dissertation page
+    Then I'm still on dissertation page
 
   Scenario: upload dissertation with a file
     Given the system has some dissertation stored
     And the system has no dissertation entitled "New dissertation"
-    When I click the upload a new dissertation button with title "New dissertation"
+    When I upload a new dissertation "curriculo3.xml" with title "New dissertation"
     Then the system has more dissertations now
-    
+
   Scenario: upload a dissertation and system has no dissertation stored
     Given the system has no dissertation entitled "New dissertation"
-    And I am logged into the system
-    when I click on the upload new dissertantion buton 
-    And name the new dissertation as "curriculo2.xml"
+    When I upload a new dissertation "curriculo2.xml" with title "New dissertation"
     Then the system has more dissertations now
-    
+
 #if ($contextualInformation)
 
   Scenario: create a new dissertation with user data already filled by default
@@ -97,16 +95,17 @@ Feature: Dissertation Tests
 #if($listDissertationsAlphabetical)
   Scenario:	list existing dissertation in alphabetical order of title
     Given the system has dissertation entitled "dissertacao"
-    And the system has other dissertation entitled "teste
+    And the system has other dissertation entitled "teste"
     When the system orders the dissertation list by title
     Then the system dissertation list contains first the "dissertacao" dissertation after "teste" dissertation.
     #end
 
-  #if($listDissertationsAlphabeticalWeb)
+
+ # if($listDissertationsAlphabeticalWeb)
   Scenario:	list existing dissertation in alphabetical order of title web
-    Given I am at the "Dissertacao" option at the program menu
-    And the system has dissertation entitled
-    And the system has other dissertation entitled "teste"
-    When I click to the alphabetical ordenation option
-    Then I can see a list contains first the "dissertacao" dissertation after "teste" dissertation.
-  #end
+    Given I am at the dissertation option at the program menu
+    And I create one dissertation entitled "dissertacao"
+    And I create one dissertation entitled "teste"
+    When I click to the title ordenation option
+    Then I can see a list of the dissertations ordered by title.
+ # end
