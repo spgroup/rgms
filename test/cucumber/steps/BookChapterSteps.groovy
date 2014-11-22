@@ -22,10 +22,36 @@ Then(~'^the book chapter "([^"]*)" is properly stored by the system$') { String 
     assert BookChapterTestDataAndOperations.bookChapterCompatibleTo(bookChapter, title)
 }
 
+//if($editExistingBookChapter)
 Given(~'^the book chapter "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     BookChapterTestDataAndOperations.createBookChapter(title, filename)
     bookChapter = BookChapter.findByTitle(title)
     assert bookChapter != null
+}
+
+When(~'^I update the file with a book chapter "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+    BookChapterTestDataAndOperations.removeBookChapter(title)
+    BookChapterTestDataAndOperations.createBookChapter(title, filename)
+}
+
+Then(~'^the book chapter "([^"]*)" is updated on the system$'){ String title ->
+    bookChapters = BookChapter.findAllByTitle(title)
+    assert bookChapters.size() == 1
+}
+//end
+//if($bookChapterDoesNotExistTitle)
+Given(~'^the book chapter "([^"]*)" is not stored on the system$') { String title ->
+    bookChapters = BookChapter.findAllByTitle(title)
+    assert bookChapters.size() == 0
+}
+
+When(~'^I try to directly access the book chapter "([^"]*)"$') { String title ->
+    checkIfExists(title)
+}
+
+Then(~'there is no book chapter entitled "([^"]*)" on the system$') { String title ->
+    bookChapters = BookChapter.findByTitle(title)
+    assert bookChapters.size() == 0
 }
 
 Then(~'^the book chapter "([^"]*)" is not stored twice$') { String title ->
