@@ -16,8 +16,8 @@ Feature: Thesis Tests
    
 #if($thesis)     
   Scenario: list thesis
-    Given the thesis "New thesis" is stored in the system with file name "Newthesis.txt" and all of the details
-    When I create the thesis "New thesis2" with file name "Newthesis2.txt" and all of the details
+    Given the thesis "New thesis" is stored in the system with file name "Newthesis.txt"
+    When I create the thesis "New thesis2" with file name "Newthesis2.txt"
     Then The system list "New thesis" and "New thesis 2" 
 #end
     
@@ -45,7 +45,7 @@ Feature: Thesis Tests
 
 #if($publicationYear)     
   Scenario: filter thesis list by publication year web
-  	Given At least on thesis is stored in the system
+  	Given At least one thesis is stored in the system
   	And I am at the thesis list page
   	When I select to filter by the publication year "1998"
   	Then The returned thesis list shows only the thesis with publication year "1998" 
@@ -53,7 +53,7 @@ Feature: Thesis Tests
  
 #if($authorName)  
   Scenario: filter thesis list by author name web
-  	Given At least on thesis is stored in the system
+  	Given At least one thesis is stored in the system
   	And I am at the thesis list page
   	When I select to filter by the author name "Pressman"
   	Then The returned thesis list shows only the thesis with author name "Pressman" 
