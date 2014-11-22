@@ -114,38 +114,6 @@ Feature: Thesis Tests
     When I upload the file "My Thesis.xml"
     Then the existing thesis are not changed by the system
     And the system stores properly the thesis entitled "My Thesis"
-    
-  Given(~'^the system has thesis with file name "([^"]*)" and school "([^"]*)"$'){String filename, school->
-	  ThesisTestDataAndOperations.createThesis(filename, school, null)
-	  assert Thesis.findByName(name) != null
-  }
-  
-  When(~'^the system orders the thesis list by name$') {->
-	  thesisSorted = Thesis.listOrderByName(order: "asc")
-	  assert ThesisTestDataAndOperations.isSorted(ThesisSorted, "name")
-  }
-
-  Then(~'^the system thesis list content is not modified$') {->
-	  assert Thesis.findAll().size() == 2
-	  assert !ThesisNoExist('TCS-1401.pdf')
-	  assert !ThesisNoExist('MACI.pdf')
-  }
-  
-  Given(~'^the system has thesis entitled "([^"]*)" with file title "([^"]*)" school "([^"]*)"$'){String title, filename, school->
-	  ThesisTestDataAndOperations.createThesis(filename, school, null)
-	  assert Thesis.findBySchool(school) != null
-  }
-  
-  When(~'^the system orders the thesis list by school$') {->
-	  thesisSorted = Thesis.listOrderBySchool(order: "asc")
-	  assert ThesisTestDataAndOperations.isSorted(ThesisSorted, "school")
-  }
-
-  Then(~'^the system thesis list content is not modified$') {->
-	  assert Thesis.findAll().size() == 2
-	  assert !ThesisNoExist('TCS-1401.pdf')
-	  assert !ThesisNoExist('MACI.pdf')
-  }
 
     
 # editar dados de uma tese, ordenar lista de teses, filtrar lista de teses,
