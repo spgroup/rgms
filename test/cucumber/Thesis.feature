@@ -15,19 +15,19 @@ Feature: Thesis Tests
 
 #if ($editExistingThesis)
    Scenario: edit existing thesis
-    Given I am at the "Software Engineering" edit page
-    When  I modify the field 'School' to "UFPE"
-    And   I select 'Confirm'
+    Given I am at the thesis page and the thesis "Software Engineering" is stored in the system
+    When  I modify the field School to "UFPE"
+    And   I select Confirm
     Then  I am at the thesis show page
-    And   The thesis "Software Engineering" now has "UFPE" in the 'school' field.
+    And   The thesis "Software Engineering" now has "UFPE" in the school field
 #end
 
 #if ($filterThesisList)
    Scenario: filter thesis list
     Given I am at the thesis show page
-    When  I select 'Filter Thesis'
-    And   I fill the field 'school' with "UFPE"
-    Then  I only see the thesis with the field 'school' equal to "UFPE"
+    When  I select Filter Thesis
+    And   I fill the field School with "UFPE"
+    Then  I only see the thesis with the field School equal to "UFPE"
 #end
 
   Scenario: remove existing thesis
@@ -47,8 +47,7 @@ Feature: Thesis Tests
     Then  I am still on the create thesis page with the error message
 
   Scenario: remove existing thesis web
-    Given I am at the thesis page
-    And the thesis "Software Enginnering2" is stored in the system
+    Given I am at the thesis page and the thesis "Software Enginnering2" is stored in the system
     When I select to view thesis "Software Enginnering2" in resulting list
     And I select the remover option at the thesis show page
     Then the thesis "Software Enginnering2" is removed from the system
@@ -56,7 +55,7 @@ Feature: Thesis Tests
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default
     Given I am at the publications menu
-    When I select the "Tese" option at the publications menu
+    When I select the Tese option at the publications menu
     And I select the new thesis option at the thesis page
     Then I see my user listed as an author member of thesis by default
     And I see my school name as school of thesis by default
@@ -70,7 +69,7 @@ Feature: Thesis Tests
 
 #if ($SortThesisListInAlphabeticalOrder)
    Scenario: sort thesis list in alphabetical order
-    Given The system has a thesis entitled "Augmented Reality" stored
+    Given I am at the thesis page and the thesis "Augmented Reality" is stored in the system
     When  The user adds a thesis entitled "Software Engineering"
     Then  The thesis "Software Engineering" is properly stored after "Augmented Reality"
 #end 
