@@ -9,7 +9,7 @@ Feature: Dissertation Tests
     When I create the dissertation "New dissertation" with file name "dissertation.txt" and school "federal"
     And I select the "Dissertacao" option at the program menu
     And I select "Upload dissertation" at the dissertation page
-    Then the system will insert it's first dissertation.
+    Then the dissertation "New dissertation" is properly stored by the system
 #end
 
 #if($newDissertationWithoutSchool)
