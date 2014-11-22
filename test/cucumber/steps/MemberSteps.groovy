@@ -192,3 +192,24 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     //member = Member.findByEmail(email)
     //assert member.name == name
 }
+
+Given(~'^The system has a member named "([^"]*)"$') { String name ->
+    user = User.findByName(name);
+    member = user?.author
+    assert member != null
+}
+
+And(~'^I am at the member search page$') { ->
+    at MemberSearchPage
+}
+
+When(~'^I search for "([^"]*)"$') { String name ->
+    at MemberSearchPage
+    page.fillSearchBox(name)
+    page.clickSearchButton()
+}
+
+Then(~'My member list contains the member named "([^"]*)"$') { String name ->
+    at MemberSearchPage
+    assert page.resultsListContains(username)
+}
