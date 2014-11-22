@@ -1,6 +1,7 @@
 import pages.LoginPage
 import pages.RegisterPage
 import pages.member.MemberCreatePage
+import pages.member.MemberPage
 import pages.member.MemberViewPage
 import rgms.authentication.User
 import rgms.member.Member
@@ -191,4 +192,22 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     MemberTestDataAndOperations.createMemberWithEmail(name, email)
     //member = Member.findByEmail(email)
     //assert member.name == name
+}
+
+Given(~'^I am at the members page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to MemberPage
+}
+
++When(~'^I select the download button$') { ->
+    at MemberPage
+    page.selectDownloadFunder()
+}
+
+Then(~'^I can download the file named "([^"]*)"$') { String name->
+    at MemberPage
+    assert page.clickDownloadLink(name)
 }
