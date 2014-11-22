@@ -54,7 +54,6 @@ Then(~'^I fill the funder code with "([^"]*)"$'){ String code ->
 
 }
 
-
 private void checkIfFunderExists(String code){
     funder = Funder.findByCode(code)
     assert funder != null
