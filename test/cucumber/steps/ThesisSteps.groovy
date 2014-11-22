@@ -28,6 +28,35 @@ When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]
         ThesisTestDataAndOperations.createTese(title, filename, school)
 }
 
+/**
+ * @author rff2
+ * edit existing thesis test
+ * BEGIN
+ */
+When(~'^I modify the field School to "UFPE"$') {
+    page.fillSchool("UFPE")
+}
+
+And(~'^I select Confirm$') {
+    page.selectConfirm()
+}
+
+Then(~'^I am at the thesis show page~') {
+    to ThesisPage
+}
+
+And(~'^The thesis "([^"]*)" now has "UFPE" in the school field$') {
+    String title ->
+        tese = Tese.findByTitle(title)
+        assert tese.school == "UFPE"
+}
+/**
+ * @author rff2
+ * edit existing thesis test
+ * END
+ */
+
+
 Then(~'^The thesis "([^"]*)" is not stored twice$') { String title ->
     theses = Tese.findAllByTitle(title)
     assert theses.size() == 1
