@@ -82,15 +82,10 @@ Feature: orientations
 
   
 	  
-	Scenario: list existing orientations ordered by descending Ano Publicacao
-		Given I am at the publications menu
-		And the system has some orientations created
-		When I select to view the list of orientations
-		And I select the "order by ano publicacao" option at the program menu
-		Then the system orders the orientations list by ano plubicacao
-		
-	Scenario: download a dissertation
-		Given I am at the publications menu
-		And the dissertation "Teste" is stored in the system with file name "teste.txt"
-		When I select the download button
-		Then I can download the file named "dissertation.txt		
+Scenario: list existing orientations ordered by descending Ano Publicacao
+	Given I am at the publications menu
+	And the system has some orientations created
+	When I select to view the list of orientations
+	And I select the "order by ano publicacao" option at the program menu
+	Then the system orders the orientations list by ano plubicacao
+
