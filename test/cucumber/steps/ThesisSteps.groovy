@@ -28,6 +28,12 @@ When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]
         ThesisTestDataAndOperations.createTese(title, filename, school)
 }
 
+//And   With publication date "10", "08", Publication year "1998" and author name "Pressman"
+And (~'^With publication date "([^"]*)", "([^"]*)", Publication year "([^"]*)", and author name "([^"]*)"$') {
+	pub_day, pub_month, pub_year, author ->
+		page.fillSomeThesisDetails(pub_day, pub_month, pub_year, author)
+}
+
 Then(~'^The thesis "([^"]*)" is not stored twice$') { String title ->
     theses = Tese.findAllByTitle(title)
     assert theses.size() == 1
@@ -57,13 +63,6 @@ When(~'^I fill some thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*
     title, pub_day, pub_month, pub_year, school, address ->
         page.fillSomeThesisDetails(title, pub_day, pub_month, pub_year, school, address)
 }
-
-//And   With publication date "10", "08", Publication year "1998" and author name "Pressman" 
-And (~'^With publication date "([^"]*)", "([^"]*)", Publication year "([^"]*)", and author name "([^"]*)"$') {
-	pub_day, pub_month, pub_year, author ->
-		page.fillSomeThesisDetails(pub_day, pub_month, pub_year, author)
-}
-
 
 Then(~'^I am on the thesis show page$') { ->
     at ThesisShowPage
