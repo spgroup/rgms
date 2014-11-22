@@ -54,6 +54,24 @@ Then(~'^I fill the funder code with "([^"]*)"$'){ String code ->
 
 }
 
+//remove funder web
+Given(~'^I am at the remove funder page$'){
+    goToFunderCreatePage()
+}
+When(~'^I fill the funder code with "([^"]*)"$'){String code ->
+    funder = Funder.findByCode(code)
+    if(!funder){
+        FunderTestDataAndOperations.createFunderWithCode(code)
+        funder = Funder.findByCode(code)
+    }
+    assert funder != null
+}
+Then(~'^the funder with code "([^"]*)" is properly removed by the system$') { String code ->
+    funder = Funder.findByCode(code)
+    funder.delete()
+}
+//----------------------------------------
+
 private void checkIfFunderExists(String code){
     funder = Funder.findByCode(code)
     assert funder != null
