@@ -54,6 +54,24 @@ Then(~'^I fill the funder code with "([^"]*)"$'){ String code ->
 
 }
 
+Given(~'^I am at the funders page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to FunderPage
+}
+
++When(~'^I select the download button$') { ->
+        at FunderPage
+        page.selectDownloadFunder()
+}
+
+Then(~'^I can download the file named "([^"]*)"$') { String funder->
+        at FunderPage
+        assert page.clickDownloadLink(funder)
+}
+
 private void checkIfFunderExists(String code){
     funder = Funder.findByCode(code)
     assert funder != null
