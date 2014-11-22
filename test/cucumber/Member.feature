@@ -71,8 +71,9 @@ Feature: member
     Given I am at the register page
     Then I see default data filled on register form
 #end
-
+  #if ($downloadMemberListFile)
   Scenario: download member list file
     Given I am the member list page and the system has members
     When I select the member list download button
     Then I can download the file named "ML-0.pdf" that contains the member list
+  #end
