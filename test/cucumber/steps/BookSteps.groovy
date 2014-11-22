@@ -114,3 +114,26 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     book = Book.findByTitle(title)
     assert book != null
 }
+
+
+
+#if(editBookTitleToExistingTitle)
+Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$'){String title1, String filename1 ->
+	BookTestDataAndOperations.createBook(title1, filename1)
+	book = Book.findByTitle(title1)
+	assert BookTestDataAndOperations.bookCompatibleTo(book, title1)
+
+}
+And(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$'){String title2, String filename2 ->
+	BookTestDataAndOperations.createBook(title2, filename2)
+	book2 = Book.findByTitle(title2)
+	assert BookTestDataAndOperations.bookCompatibleTo(book, title2)
+}
+When(~'^I edit the book with old title "([^"]*)" to the new title "([^"]*)"$'){String title1, String title2 ->
+	def updatedBook = BookTestDataAndOperations.editBook(title1, title2)
+	assert updatedBook = null
+}
+Then(~'^the book with old title "([^"]*)" is not updated by the system"$'){String title1 ->
+	checkIfExists(title)
+}
+#end
