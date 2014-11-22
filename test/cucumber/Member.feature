@@ -76,3 +76,9 @@ Feature: member
     Given I am the member list page and the system has members
     When I select the member list download button
     Then I can download the file named "ML-0.pdf" that contains the member list
+  
+  Scenario: search for an existing member
+    Given the system has the member named "Rodolfo"
+    And I am at the member search page
+    When I search for "Rodolfo"
+    Then my member list contains the member named "Rodolfo"
