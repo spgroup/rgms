@@ -8,6 +8,8 @@ import rgms.publication.Conferencia
 import steps.TestDataAndOperations
 import steps.TestDataAndOperationsPublication
 import steps.ConferenciaTestDataAndOperations
+import rgms.tool.TwitterTool
+import pages.visit.ConferenciaShowPage
 
 import static cucumber.api.groovy.EN.*
 
@@ -147,7 +149,6 @@ And(~'^the conferencias are not stored by the system$') {->
 }
 
 
-
 And(~'^the conferencia "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     TestDataConferencia.createConferencia(title, filename, "UFPE")
     conferencia = Conferencia.findByTitle(title)
@@ -162,4 +163,32 @@ When(~'^I select the download button$') { ->
 Then(~'^I can download the file named "([^"]*)"$') { String filename ->
     at ConferenciaPage
     assert page.clickDownloadLink(conferencia, filename)
+}
+
+Given(~'^I am logged as "([^"]*)" and at the Add Conference Page$') { String userName ->
+	to LoginPage
+	at LoginPage
+	page.fillLoginData(userName, "adminadmin")
+	to VisitPage
+}
+
+When(~'^I try to create an conference$') { ->
+	at ConfereciaPage
+	page.selectNewConferencia()
+	at ConferenciaCreatePage
+	page.fillConferenciaDetails()
+}
+
+When(~'^I share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+	at ConferenciaShowPage
+	page.clickOnTwitteIt(twitterLogin, twitterPw)
+}
+
+Then(~'^A tweet is added to my twitter account regarding the new conferencia "([^"]*)"$') { String visit ->
+	page.addTwitter(conferencia)
+	assert TwitterTool.consult(conferencia)
+}
+
+Then(~'^The conferencia "([^"]*)" is created but no tweet should be post$') {String visit ->
+	assert !TwitterTool.consult(null)
 }
