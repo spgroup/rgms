@@ -34,6 +34,15 @@ class BookCreatePage extends FormPage {
         $("form").pages = "20"
         $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     }
+	
+	def fillBookDetails(title, filename, author) {
+		fillTitle(title)
+		$("form").publisher = "Person"
+		$("form").volume = 1
+		$("form").pages = "20"
+		$("form").author = author
+		$("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+	}
 
     def clickSaveBook() {
         $("form").create().click()

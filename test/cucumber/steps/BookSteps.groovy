@@ -19,7 +19,8 @@ Given(~'^the system has no book entitled "([^"]*)"$') { String title ->
     checkIfExists(title)
 }
 
-When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+//Author is not being used right now
+When(~'^I create the book "([^"]*)" with file name "([^"]*)" and author name "([^"]*)"$') { String title, filename, author ->
     BookTestDataAndOperations.createBook(title, filename)
 }
 
@@ -89,9 +90,9 @@ When(~'^I go to new book page$') { ->
     page.selectNewBook()
 }
 
-And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)" and author name "([^"]*)"$') { String title, filename, author ->
     at BookCreatePage
-    createAndCheckBookOnBrowser(title, filename)
+    createAndCheckBookOnBrowser(title, filename, author)
     to BookPage
     at BookPage
 }
@@ -113,4 +114,11 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     page.clickSaveBook()
     book = Book.findByTitle(title)
     assert book != null
+}
+
+def createAndCheckBookOnBrowser(String title, String filename, String author) {
+	page.fillBookDetails(title, filename, author)
+	page.clickSaveBook()
+	book = Book.findByTitle(title)
+	assert book != null
 }
