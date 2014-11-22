@@ -72,6 +72,7 @@ Feature: news
     When I try to create a news with description "teste" and date "31-02-2013" for "SPG" research group
     Then the news with description "teste", date "31-02-2013" and "SPG" research group is not stored by the system because it is invalid
 
+<<<<<<< HEAD
   Scenario: list existing news ordered by descending date
     Given I am at the publications menu
     And the system has some news created
@@ -83,3 +84,10 @@ Feature: news
     And I select the "order by date" option in the program menu
     Then the system orders the publications list by date
 >>>>>>> origin/mras
+=======
+Given I am at the publications menu
+	And the system has some news created
+	When I select to view the list of news
+	And I select the "order by date" option in the program menu
+	Then the system orders the publications list by date
+>>>>>>> 34648a067af3b2180647c57070cc04bcb8e4589a

@@ -83,6 +83,7 @@ Feature: orientations
   Scenario: list existing orientations ordered by descending Ano Publicacao
     Given I am at the publications menu
 <<<<<<< HEAD
+<<<<<<< HEAD
     And the system has orientations o created
     When I select to view the list of orientations
     And I select to order the list of news by "Ano Publicacao"
@@ -94,3 +95,9 @@ Feature: orientations
     Then the system orders the orientations list by ano plubicacao
 
 >>>>>>> origin/mras
+=======
+    And the system has some orientations created
+    When I select to view the list of orientations
+	And I select the "order by ano publicacao" option at the program menu
+	Then the system orders the orientations list by ano plubicacao
+>>>>>>> 34648a067af3b2180647c57070cc04bcb8e4589a

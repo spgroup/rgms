@@ -93,6 +93,7 @@ Feature: Dissertation Tests
 #end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   Scenario: download a dissertation
     Given I am at the publications menu
     And the system has a Dissertacao with file named "dissertation.txt"
@@ -105,3 +106,10 @@ Scenario: download a dissertation
   When I select the download button
   Then I can download the file named "dissertation.txt
 >>>>>>> origin/mras
+=======
+Scenario: download a dissertation
+	Given I am at the publications menu
+	And the dissertation "Teste" is stored in the system with file name "teste.txt"
+	When I select the download button
+	Then I can download the file named "dissertation.txt
+>>>>>>> 34648a067af3b2180647c57070cc04bcb8e4589a

@@ -160,6 +160,7 @@ Feature: conferencia
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   Scenario: download a conference file
     Given I am at the Seach Conference page
     And the system has conference entitled "IV Conference on Software Product Lines" with file name "SPLC.pdf"
@@ -172,3 +173,10 @@ Scenario: download a conference file
   When I select the download button
   Then I can download the file named "testeConferencia.txt"
 >>>>>>> origin/mras
+=======
+Scenario: download a conference file
+	Given I am at the conferencias page
+	And the conferencia "TesteConferencia" is stored in the system with file name "testeConferencia.txt"
+	When I select the download button
+	Then I can download the file named "testeConferencia.txt"
+>>>>>>> 34648a067af3b2180647c57070cc04bcb8e4589a
