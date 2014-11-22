@@ -86,13 +86,13 @@ Feature: orientations
 
   Scenario: filter existing orientation by type web
     Given I am at the orientation page
-    And I create some orientation with type "Mestrado"
+    And I create some orientation with type of "Mestrado"
     When I select to view the list of orientation
-    And I select to filter the list of orientation by type "Mestrado"
-    Then my orientation list shows only the orientation type by "Mestrado"
+    And I select to filter the list of orientation by type of "Mestrado"
+    Then my orientation list shows only the orientation type of by "Mestrado"
 
-  Scenario: filter existing articles by leader
-    Given the system has some articles supervised by "Rodolfo Jose"
+  Scenario: filter existing orientation by leader
+    Given the system has some orientation supervised by "Rodolfo Jose"
     When the system filter the articles supervised by leader "Rodolfo Jose"
     Then the system article list content is not modified
 
