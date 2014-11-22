@@ -269,6 +269,23 @@ And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
 
 }
 
+Given(~'^I am at the thesis page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to ThesisPage
+}
+
++When(~'^I select the download button$') { ->
+    at ThesisPage
+    page.selectDownloadThesis()
+}
+
+Then(~'^I can download the file named "([^"]*)"$') { String name->
+    at ThesisPage
+    assert page.clickDownloadLink(name)
+}
 //FUNÇÔES AUXILIARES
 def thesisDoNotExists(title) {
     tese = Tese.findByTitle(title)

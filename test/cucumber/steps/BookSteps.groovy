@@ -103,6 +103,21 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
+When(~'^I select to view the list of books$') {->
+    at BooksPage
+    page.selectViewBookList()
+}
+
+And(~'^I select to order the list of books by "([^"]*)"$') {String sortType->
+    at BookPage
+    page.selectOrderBy(sortType)
+}
+
+Then(~'^my article list shows the articles ordered by "([^"]*)"$') { String sortType ->
+    at BookPage
+    page.checkOrderedBy(sortType);
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null

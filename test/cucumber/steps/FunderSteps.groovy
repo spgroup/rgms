@@ -54,6 +54,22 @@ Then(~'^I fill the funder code with "([^"]*)"$'){ String code ->
 
 }
 
+Given(~'^I am at the create funder page$'){ ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to FunderPage
+}
+
+When(~'I select to view the list of funders with name "([^"]*)"$ '){String name ->
+    assert page.clickListOfFunder(name)
+}
+
+Then(~'My article list show only the funders named'){
+
+}
+
 private void checkIfFunderExists(String code){
     funder = Funder.findByCode(code)
     assert funder != null
