@@ -114,3 +114,13 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     book = Book.findByTitle(title)
     assert book != null
 }
+
+When(~'^I select the download button$') { ->
+    at BookPage
+    page.selectDownloadBook()
+}
+
+Then(~'^I can download the file named "([^"]*)"$') { String filename ->
+    at BookPage
+    assert page.clickDownloadLink(book, title)
+}
