@@ -76,5 +76,10 @@ Feature: news
     Given I am at the publications menu
     And the system has some news created
     When I select to view the list of news
+<<<<<<< HEAD
     And I select to order the list of news by "date"
     Then my publications menu shows the news ordered by "date"
+=======
+    And I select the "order by date" option in the program menu
+    Then the system orders the publications list by date
+>>>>>>> origin/mras

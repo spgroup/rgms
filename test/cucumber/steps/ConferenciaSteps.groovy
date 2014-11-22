@@ -145,3 +145,21 @@ And(~'^the conferencias are not stored by the system$') {->
     page.checkIfConferenciaListIsEmpty()
 
 }
+
+
+
+And(~'^the conferencia "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+    TestDataConferencia.createConferencia(title, filename, "UFPE")
+    conferencia = Conferencia.findByTitle(title)
+    assert conferencia != null
+}
+
+When(~'^I select the download button$') { ->
+    at ConferenciaPage
+    page.selectDownloadBook()
+}
+
+Then(~'^I can download the file named "([^"]*)"$') { String filename ->
+    at ConferenciaPage
+    assert page.clickDownloadLink(conferencia, filename)
+}

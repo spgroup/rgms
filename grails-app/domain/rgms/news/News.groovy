@@ -14,6 +14,10 @@ class News {
         date(blank: false)
         researchGroup nullable: false
     }
+<<<<<<< HEAD
+=======
+//penis
+>>>>>>> origin/mras
 
     static List getCurrentNews(researchGroup) {
         def list

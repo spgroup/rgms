@@ -92,8 +92,16 @@ Feature: Dissertation Tests
     And I see my school name as school of dissertation by default
 #end
 
+<<<<<<< HEAD
   Scenario: download a dissertation
     Given I am at the publications menu
     And the system has a Dissertacao with file named "dissertation.txt"
     When I select the download button
     Then I can download the file named "dissertation.txt"
+=======
+Scenario: download a dissertation
+  Given I am at the publications menu
+  And the dissertation "Teste" is stored in the system with file name "teste.txt"
+  When I select the download button
+  Then I can download the file named "dissertation.txt
+>>>>>>> origin/mras

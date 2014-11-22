@@ -235,3 +235,23 @@ private void goToOrientationCreatePage() {
 
     at OrientationCreatePage
 }
+
+
+And(~'^the system has some orientations created$') { ->
+ assert Orientations.count() > 0
+}
+
+When(~"^I select to view the list of orientations\$") {->
+    orientations = Orientations.findAll()
+    assert orientations != null
+}
+
+
+And(~'^I select the "([^"]*)" option at the program menu$') { String option ->
+    page.select(option)
+}
+
+Then(~'^the system orders the orientations list by ano plubicacao$') {->
+    orientationsSorted = Orientation.listOrderByAnoPublicacao(order: "asc")
+    assert NewsTestDataAndOperations.isSorted(newsSorted, "anoPublicacao")
+}
