@@ -24,6 +24,7 @@ class UserRegisterPage extends Page {
         registerButton { $("form input", value: "register") }
         readFlashMessage(){ $("div .message").text() }
         readErrorsMessage(){ $("div .errors").text()}
+        loginWithFacebookLabel {$("form p", id: "loginWithFacebookLabel").text()}
     }
 
 

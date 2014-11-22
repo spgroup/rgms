@@ -77,11 +77,17 @@ When (~'I submit the form') { ->
     assert( page.submitForm() != null )
 }
 
-When(~'I try to login with an user that does not exist'){ ->
-    page.fillLoginData('NonExistentUser','NonExistentUserPass')
+When(~'I try to login with "([^"]*)" user that does not exist'){ String name ->
+    page.fillLoginData(name,'NonExistentUserPass')
 }
-When (~'I try to login with an existent user, though with wrong password') {->
-    page.fillLoginData("admin","123")
+When (~'I try to login with an existent user') {->
+    page.fillLoginName("admin")
+
+}
+And (~'I fill the password field with a wrong password') {->
+    page.fillLoginPassword("123")
+    page.loginButtonClick()
+
 }
 Then(~'A login failure message is displayed'){ ->
     assert ( page.readFlashMessage() != null )
@@ -221,7 +227,7 @@ Then(~'Inform the user that don`t have permission to loggin yet'){ ->
     at UnauthorizedPage
 }
 
-Given(~'I am at Register Page registering myself'){ ->
+Given(~'I am at Register Page registering a New User'){ ->
     to UserRegisterPage
     at UserRegisterPage
     def user = TestDataAuthentication.findByUsername("user186")
@@ -230,4 +236,43 @@ Given(~'I am at Register Page registering myself'){ ->
     page.email.value(user.email)
     page.university.value(user.university)
     page.status.value(user.status)
+}
+
+And(~'^I fill the field Name with "([^"]*)"$') {String name->
+    at UserRegisterPage
+    page.name.value(name)
+}
+
+And(~'^I have the others fields filled correctly') {->
+    at UserRegisterPage
+    page.username.value("username1")
+    page.password1.value("pass1")
+    page.password2.value("pass1")
+    page.email.value("username@email.com")
+    page.university.value("Federal University of Pernambuco")
+    page.status.value("Graduate Student")
+}
+
+When (~'I press the Register Button') { ->
+    at UserRegisterPage
+    page.submitForm()
+}
+
+And(~'^The message User "([^"]*)" was created should be displayed') {String name->
+    at LoginPage
+    assert (page.readFlashMessage() == "User "+name+" was created")
+}
+
+Given(~'I want to create a new user'){ ->
+    to UserRegisterPage
+    at UserRegisterPage
+}
+
+When(~'I am at the Register Page'){ ->
+    at UserRegisterPage
+}
+
+Then(~'^The text "([^"]*)" above the login button should be displayed') {String text->
+    at UserRegisterPage
+    assert (page.loginWithFacebookLabel == text)
 }

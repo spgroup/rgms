@@ -32,4 +32,17 @@ class LoginPage extends Page {
         $("form").signIn().click()
     }
 
+    def fillLoginName(String l) {
+        $("form").username = l
+    }
+
+    def fillLoginPassword(String p) {
+        $("form").password = p
+    }
+
+    def loginButtonClick() {
+        $("form").signIn().click()
+    }
+
+
 }

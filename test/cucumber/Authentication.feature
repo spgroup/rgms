@@ -11,7 +11,7 @@ Scenario: Login with user that doesn't exist fail message
 Scenario: Login with user's wrong password fail message
   Given I am at the Login Page
   When I try to login with an existent user
-  And I fill the field "Password" with a wrong password
+  And I fill the password field with a wrong password
   Then I am redirected to the Login Page
   And A login failure message is displayed
 
@@ -97,14 +97,14 @@ Scenario:
   Then I am redirected to the Login Page
 
   Scenario: Display user register success message in english
-    Given I am at the Register Page
-    And I fill the field "Name" with "User1"
+    Given I am at the User Register Page
+    And I fill the field Name with "User1"
     And I have the others fields filled correctly
-    When I press the button "register"
-    Then I am redirected to the Login page
-    And The message "User User1 was created" should be displayed
+    When I press the Register Button
+    Then I am redirected to the Login Page
+    And The message User "User1" was created should be displayed
 
   Scenario: Display the text to login with facebook in english
     Given I want to create a new user
     When I am at the Register Page
-    Then The text "Login with Facebook" above the button "Login" should be displayed
+    Then The text "Login with Facebook:" above the login button should be displayed

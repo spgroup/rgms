@@ -66,7 +66,14 @@ Then(~'^I am still on the register page with the message user created$') { ->
 }
 
 
-Given(~'^the system has member with username "([^"]*)"$') { String username ->
+Given(~'^the system has a member with username "([^"]*)"$') { String username ->
+    MemberTestDataAndOperations.createMember(username, "")
+    user = User.findByUsername(username);
+    member = user?.author
+    assert member != null
+}
+
+Given(~'^the system has a member stored with username "([^"]*)"$') { String username ->
     MemberTestDataAndOperations.createMember(username, "")
     user = User.findByUsername(username);
     member = user?.author
@@ -77,7 +84,7 @@ When(~'^I delete a member with username "([^"]*)"$') { String username ->
     MemberTestDataAndOperations.deleteMember(username)
 }
 
-Then(~'^the member with "([^"]*)" doesnt exist$') { String username ->
+Then(~'^the member with "([^"]*)" is removed from the system storage$') { String username ->
     user = User.findByUsername(username);
     member = user?.author
     assert member == null
@@ -151,12 +158,12 @@ When(~'^I fill user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { St
     page.fillSomeMemberDetails(name, username, email, university)
 }
 
-When(~"^I view the member list\$") { ->
+When(~"^the list members is displayed\$") { ->
     members = Member.findAll()
     assert members != null
 }
 
-Then(~'my list members contains member "([^"]*)"$') { String username ->
+Then(~'the list members contains member "([^"]*)"$') { String username ->
     members = Member.findAll()
     assert MemberTestDataAndOperations.containsMember(username)
 }
@@ -191,4 +198,23 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     MemberTestDataAndOperations.createMemberWithEmail(name, email)
     //member = Member.findByEmail(email)
     //assert member.name == name
+}
+
+Given(~'^I\'m creating a new user$') {->
+
+}
+
+When(~'^I create a user with Name, Username, Email, University, Country and Website equals to "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') { String name, String username, String email, String university, String country, String website ->
+
+    MemberTestDataAndOperations.createMemberWithoutPhone(name, username, email, university, country, website)
+}
+
+Then(~'^The User with username "([^"]*)" should be stored by the system$') { String username->
+
+    assert MemberTestDataAndOperations.containsMember(username)
+}
+
+When(~'^I create a user with Name, Username, Email, University, Country and Phone equals to "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') { String name, String username, String email, String university, String country, String phone ->
+
+    MemberTestDataAndOperations.createMemberWithoutWebsite(name, username, email, university, country, phone)
 }
