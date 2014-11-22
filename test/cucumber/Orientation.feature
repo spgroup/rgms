@@ -80,24 +80,17 @@ Feature: orientations
     And the orientations are not stored by the system
   #end
 
-  Scenario: list existing orientations ordered by descending Ano Publicacao
-    Given I am at the publications menu
-<<<<<<< HEAD
-<<<<<<< HEAD
-    And the system has orientations o created
-    When I select to view the list of orientations
-    And I select to order the list of news by "Ano Publicacao"
-    Then my orientations menu shows the news ordered by "Ano Publicacao"
-=======
-    And the system has some orientations created
-    When I select to view the list of orientations
-    And I select the "order by ano publicacao" option at the program menu
-    Then the system orders the orientations list by ano plubicacao
-
->>>>>>> origin/mras
-=======
-    And the system has some orientations created
-    When I select to view the list of orientations
-	And I select the "order by ano publicacao" option at the program menu
-	Then the system orders the orientations list by ano plubicacao
->>>>>>> 34648a067af3b2180647c57070cc04bcb8e4589a
+  
+	  
+	Scenario: list existing orientations ordered by descending Ano Publicacao
+		Given I am at the publications menu
+		And the system has some orientations created
+		When I select to view the list of orientations
+		And I select the "order by ano publicacao" option at the program menu
+		Then the system orders the orientations list by ano plubicacao
+		
+	Scenario: download a dissertation
+		Given I am at the publications menu
+		And the dissertation "Teste" is stored in the system with file name "teste.txt"
+		When I select the download button
+		Then I can download the file named "dissertation.txt		
