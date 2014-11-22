@@ -149,16 +149,27 @@ Feature: journal article
 	When I create the article with filename "TCS-01.pdf" and with the title field blank
 	Then the article with blank title and with filename "TCS-01.pdf" field is not stored by the system
 
+  #if($filterExistingArticlesByAuthor)
   Scenario: filter existing articles by author
 	Given the system has some articles authored by "Paulo Borba"
 	When the system filter the articles authored by author "Paulo Borba"
-	Then the system article list content is not modified
+    Then the system article list content only lists articles authored by "Paulo Borba"
+  #end
 
   Scenario: remove multiple articles
 	Given the system has 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf" and "Modularity analysis of use case implementations" with file name "MACI-03.pdf"
 	When I remove the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 	Then the system removes the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 	And the system contains the "Algebraic reasoning for object-oriented programming" article
+
+  #if($listExistingArticlesOrderedByAuthor)
+  Scenario: list existing articles ordered by author
+     Given I am at the articles page
+     And the system has some articles created
+     When I select to view the list of articles
+     And I select to order the list of articles by "author"
+     Then my article list shows the articles ordered by "author"
+ #end
 
 #if($Report)  
   Scenario:	report existing article web
@@ -182,6 +193,15 @@ Scenario: list existing articles in alphabetical order of title web
 	And I select to order the list of articles by "publication date"
 	Then my article list shows the articles ordered by "publication date"
 
+ #if($listExistingArticlesOrderedByJournal)
+  Scenario: list existing articles ordered by journal
+      Given I am at the articles page
+      And the system has some articles created
+      When I select to view the list of articles
+      And I select to order the list of articles by "journal"
+      Then my article list shows the articles ordered by "journal"
+ #end
+
   Scenario: new invalid article web (title field blank)
 	Given I am at the new article page
 	When I fill all article information except the title field
@@ -194,6 +214,38 @@ Scenario: list existing articles in alphabetical order of title web
 	When I select to view the list of articles
 	And I select to filter the list of articles by author "Paulo Borba"
 	Then my article list shows only the articles authored by "Paulo Borba"
+
+
+  #if($remove multiple articles)
+  Scenario: remove multiple articles
+    Given I select to view the list of articles
+    And I see 3 articles entitled "A theory of software product line refinement", "Modularity analysis of use case implementations" and "Algebraic reasoning for object-oriented programming"
+    When I mark to be removed "A theory of software product line refinement" and "Modularity analysis of use case implementations"
+    And I select to remove the selected articles
+    Then the system removes the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations".
+  #end
+
+  #if($remove multiple existing articles)
+  Scenario: remove multiple existing articles
+    Given the system has articles entitled "A theory of software product line refinement" with file name "TCS-44.pdf" and "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf"
+    When I delete the articles "A theory of software product line refinement" and "Algebraic reasoning for object-oriented programming"
+    Then the articles "A theory of software product line refinement" and "Algebraic reasoning for object-oriented programming" are properly removed by the system.
+  #end
+
+  #if(Add a new article and try to post it in the facebook)
+  Scenario: Add a new article and try to post it in the facebook
+    Given I am at the Add Article Page
+    When  I try to create an article named as "A theory of software product line refinement 2" with filename "TCS-01.pdf"
+    And   I click on Share on Facebook
+    Then  A facebook message ask for login with a facebook acont
+  #end
+
+  #if(Filter existing articles by conference)
+  Scenario: filter existing articles by conference
+    Given the system has some articles in the conference "I International Conference on Software Engineering"
+    When the system filter the articles conference by "I International Conference on Software Engineering"
+    Then the system article list content is not modified
+  #end
 
   Scenario: remove multiple articles web
 	Given I am at the articles page 

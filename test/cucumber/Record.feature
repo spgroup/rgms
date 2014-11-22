@@ -33,11 +33,22 @@ Feature: record
     When I click the record with status "MSc Student" at the record list
     Then I am still at the visualize page of the record with status "MSc Student"
 
+  #if($newRecordWeb)
   Scenario: new record web
     Given I am logged
     And I am at record list
-    When I click the create record option
+    When I click the "create record" option
     Then I can fill the record details
+  #end
+
+  #if($removeRecordWeb)
+  Scenario: remove record web
+    Given I am logged
+    And I am at record list
+    When I click the "remove record" option
+    Then the system removes the record list
+  #end
+
 
   Scenario: update record with status empty web
     Given I am logged
