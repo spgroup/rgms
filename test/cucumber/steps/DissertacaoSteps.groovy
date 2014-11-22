@@ -149,17 +149,6 @@ Given(~'^the system has some dissertation stored$'){->
 
 }
 
-
-When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
-    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = Dissertacao.findAll().size()
-    TestDataDissertacao.uploadDissertacao(path)
-    finalSize = Dissertacao.findAll().size()
-    assert inicialSize<finalSize
-    //para funcionar é necessario que tenha um FilePath válido
-    // não consegui fazer de uma maneira que todos os passos sejam independentes
-}
-
 Then(~'^I see my user listed as an author member of dissertation by default$') {->
     at DissertationCreate
     assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())

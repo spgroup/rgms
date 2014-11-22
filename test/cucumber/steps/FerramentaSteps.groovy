@@ -131,11 +131,6 @@ Given(~'^I am at publications menu$'){->
     at PublicationsPage
 }
 
-When(~'^I select the "([^"]*)" option at the program menu$'){String ferr ->
-    to Menu
-    page.selectFerramenta(ferr)
-}
-
 When(~'^I select the upload button at the ferramenta page without attaching a file$'){->
     to FerramentaPage
     at FerramentaPage
@@ -151,9 +146,7 @@ Then(~'^the ferramenta wont be inserted into the system$') {->
 And(~'^I select the upload button at the ferramenta page$') {->
 
 }
-And(~'^I select the upload button at the ferramenta page without attaching a file$') {->
 
-}
 Then(~'^I am still on ferramenta page$') {->
     at FerramentaPage
 }

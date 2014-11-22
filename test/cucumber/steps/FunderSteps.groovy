@@ -48,12 +48,6 @@ Given(~'^I am at the create funder page$'){ ->
     goToFunderCreatePage()
 }
 
-Then(~'^I fill the funder code with "([^"]*)"$'){ String code ->
-    fillCodefield(code)
-    clickSave()
-
-}
-
 //remove funder web
 Given(~'^I am at the remove funder page$'){
     goToFunderCreatePage()
