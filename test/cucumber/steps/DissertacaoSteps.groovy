@@ -71,10 +71,22 @@ When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" and school 
     TestDataDissertacao.createDissertacao(title, filename, school)
 }
 
+Then(~'^the system will store "([^"]*)" with the file "([^"]*)"$'){ String title, fileName ->
+    dissertation = Dissertacao.findByTitle(title)
+    dissertation2 = Dissertacao.findByFile(fileName)
+    assert dissertation != null
+    assert dissertation == dissertation2
+}
+
 
 Then(~'^the dissertation "([^"]*)" is properly stored by the system$') { String title ->
     dissertation = Dissertacao.findByTitle(title)
     assert dissertation != null
+}
+
+Then(~'^the dissertation "([^"]*)" is not properly stored by the system$') { String title ->
+    dissertation = Dissertacao.findByTitle(title)
+    assert dissertation == null
 }
 
 Then(~'^the dissertation "([^"]*)" is not stored twice$') { String title ->
@@ -99,6 +111,13 @@ When(~'^I edit the dissertation title from "([^"]*)" to "([^"]*)"$') { String ol
 Then(~'^the dissertation "([^"]*)" is properly updated by the system$') { String title ->
     def article = Dissertacao.findByTitle(title)
     assert article == null
+}
+
+Then(~'^the dissertation "([^"]*)" is properly updated by the system to "([^"]*)"$') { String title, newTitle ->
+    def article = Dissertacao.findByTitle(title)
+    def article2 = Dissertacao.findByTitle(newTitle)
+    assert article == null
+    assert article2 != nullI
 }
 
 When(~'^I select the upload button at the dissertation page$') {->
