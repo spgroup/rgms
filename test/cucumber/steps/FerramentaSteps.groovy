@@ -1,7 +1,10 @@
+import pages.PublicationsPage
 import pages.ferramenta.*
 import rgms.publication.Ferramenta
 import steps.FerramentaTestDataAndOperations
 import steps.TestDataAndOperationsPublication
+
+import java.awt.Menu
 
 import static cucumber.api.groovy.EN.*
 
@@ -121,7 +124,30 @@ And(~'^the ferramenta is not displayed in the ferramentas list page$') {->
     page.checkAnyFerramentaAtList()
 }
 
-// upload dissertation without a file
+// upload ferramenta without a file
+// #if($UploadFerramentaWithoutAFile)
+Given(~'^I am at publications menu$'){->
+    to PublicationsPage
+    at PublicationsPage
+}
+
+When(~'^I select the "([^"]*)" option at the program menu$'){String ferr ->
+    to Menu
+    page.selectFerramenta(ferr)
+}
+
+When(~'^I select the upload button at the ferramenta page without attaching a file$'){->
+    to FerramentaPage
+    at FerramentaPage
+    page.click("Upload")
+}
+
+Then(~'^the ferramenta wont be inserted into the system$') {->
+    to FerramentaPage
+    at FerramentaPage
+}
+// #end
+
 And(~'^I select the upload button at the ferramenta page$') {->
 
 }

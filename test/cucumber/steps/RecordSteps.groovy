@@ -118,3 +118,37 @@ When(~'^I click to remove the record$') {->
 	at RecordVisualizePage
 	page.removeRecord()
 }
+
+// #if($SuccessfullyEditAStatus)
+Given(~'^I am logged at my profile page$'){->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    to ProfilePage
+    at ProfilePage
+}
+When(~'^I fill the field of status with "([^"]*)"$'){String status->
+    page.fillRecordDetails(status)
+}
+
+Then(~'^my profile will now show my new status$'){->
+    to ProfilePage
+}
+// #end
+
+// #if($CancelTheEditOfAStatus)
+Given(~'^a field of status filled with "([^"]*)"$') {String status ->
+    to ProfilePage
+    at ProfilePage
+    page.fillRecordDetails(status)
+}
+
+When(~'^the member press the button cancel$') {->
+    page.click("Cancel")
+}
+
+Then(~'^nothing will be posted$') {->
+    to ProfilePage
+    at ProfilePage
+}
+// #end
