@@ -35,3 +35,14 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
+
+  # @author droa
+  # BEGIN
+
+  Scenario: remove book web
+    Given I am at the book page
+    When I go to the page of the "Next Generation Software Product Line Engineering" book
+    And I follow the delete button confirming with OK
+    Then the book "Next Generation Software Product Line Engineering" is properly removed by the system
+
+  # END #

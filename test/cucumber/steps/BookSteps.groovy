@@ -8,6 +8,7 @@
 
 import pages.BookCreatePage
 import pages.BookPage
+import pages.BookShowPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
@@ -37,6 +38,23 @@ Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') 
 When(~'^I remove the book "([^"]*)"$') { String title ->
     BookTestDataAndOperations.removeBook(title)
 }
+
+/*
+ * @author droa
+ * BEGIN
+ */
+
+When(~'I go to the page of the "([^"]*)" book$') { String title ->
+    to BookPage
+    page.selectBook(title)
+}
+
+And(~'I follow the delete button confirming with OK$') { ->
+    at BookShowPage
+    page.select('input', 'delete')
+}
+
+/* END */
 
 Then(~'^the book "([^"]*)" is properly removed by the system$') { String title ->
     checkIfExists(title)

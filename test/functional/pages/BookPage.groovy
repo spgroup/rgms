@@ -22,11 +22,22 @@ class BookPage extends Page {
         title ==~ currentTitle
     }
 
-    static content = {
-
-    }
+    /**
+     * @author droa
+     * BEGIN
+     */
 
     def selectNewBook() {
         $('a.create').click()
     }
+
+    def selectBook(String title) {
+        def listDiv = $('div', id: 'list-book')
+        def articleTable = (listDiv.find('table'))[0]
+        def articleRow = articleTable.find('tbody').find('tr')
+        def showLink = articleRow.find('td').find([text: title])
+        showLink.click()
+    }
+
+    /* END */
 }
