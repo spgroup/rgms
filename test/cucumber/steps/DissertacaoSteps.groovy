@@ -127,8 +127,8 @@ When(~'^I select the upload button at the dissertation page$') {->
 Then(~'^I\'m still on dissertation page$') {->
     at DissertationPage
 }
-
-When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
+// #if($UploadDissertationWithAFile)
+When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') { filename ->
     String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
     TestDataDissertacao.uploadDissertacao(path)
@@ -137,10 +137,11 @@ When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
     //para funcionar é necessario que tenha um FilePath válido
     // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
-Then(~'the system has more dissertations now$') {->
-    finalSize = Dissertacao.findAll().size()
 
+Then(~'the system will store "([^"]*)" with the file "([^"]*)"$') {String filename, title->
+    TestDataDissertacao.createDissertacao(title, filename, "UFPE")
 }
+// #end
 
 Given(~'^the system has some dissertation stored$'){->
     size = Dissertacao.findAll().size()
