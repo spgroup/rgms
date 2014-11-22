@@ -51,17 +51,19 @@ Feature: Thesis Tests
     Then the returned thesis list has the same items but it is sorted by date
 
     #if($Thesis Tests)
-      Scenario: order thesis list by name
-        Given at least one thesis is stored in the system
-        And I am at the thesis list page
-        When I click in order thesis by name
-        Then the returned thesis list has the same items but it is sorted by name
+      Scenario :list existing articles in alphabetical order of name
 
-    Scenario: order thesis list by author
-      Given at least one thesis is stored in the system
-      And I am at the thesis list page
-      When I click in order thesis by author
-      Then the returned thesis list has the same items but it is sorted by author
+        Given the system has thesis with file name "TCS-1401.pdf" and school"UFPB"
+        And the system has article with file name "MACI.pdf" and school "UFPE"
+        When the system orders the article list by name
+        Then the system article list content is not modified
+        
+        Scenario :list existing articles in alphabetical order of school
+        
+        Given the system has thesis with file name "TCS-1401.pdf" and school"UFPB"
+        And the system has article with file name "MACI.pdf" and school "UFPE"
+        When the system orders the article list by name
+        Then the system article list content is not modified
     #end
 
   Scenario: search an existing thesis
