@@ -17,6 +17,14 @@ Then(~'^the ferramenta "([^"]*)" is not stored$') { String title ->
     def tool = Ferramenta.findByTitle(title)
     assert tool == null
 }
+Then(~'^the ferramenta "([^"]*)" is stored$') { String title ->
+    def tool = Ferramenta.findByTitle(title)
+    assert tool != null
+}
+
+When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" with its website$') { String title, String filename ->
+    FerramentaTestDataAndOperations.createFerramenta(title, filename)
+}
 
 // duplicate ferramenta
 Given(~'^the ferramenta "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
@@ -101,6 +109,9 @@ And(~'^I click on Criar button$') {->
     at FerramentaCreatePage
     page.clickCreateFerramenta()
 }
+Then(~'^I am at the ferramenta page$') {->
+    at FerramentaPage
+}
 Then(~'^I am still on create new ferramenta page$') {->
     at FerramentaCreatePage
 }
@@ -112,7 +123,10 @@ And(~'^the ferramenta is not displayed in the ferramentas list page$') {->
 
 // upload dissertation without a file
 And(~'^I select the upload button at the ferramenta page$') {->
-    // Express the Regexp above with the code you wish you had
+
+}
+And(~'^I select the upload button at the ferramenta page without attaching a file$') {->
+
 }
 Then(~'^I am still on ferramenta page$') {->
     at FerramentaPage
