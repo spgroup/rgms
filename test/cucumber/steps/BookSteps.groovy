@@ -88,20 +88,40 @@ When(~'^I go to new book page$') { ->
     to BookPage
     page.selectNewBook()
 }
-
 And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     at BookCreatePage
     createAndCheckBookOnBrowser(title, filename)
     to BookPage
     at BookPage
 }
-
 Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     book = Book.findByTitle(title)
     assert book != null
     to BookPage
     at BookPage
 }
+
+
+When(~'^I choose to view "([^"]*)" in book list$') { String title ->
+    page.selectViewBook(title)
+    at BookShowPage
+}
+And(~'^I press to remove at the book show page$') {->
+    at BookShowPage
+    page.select('input', 'delete')
+}
+Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
+    assert checkIfExists(title)
+}
+
+
+
+Then(~'^the book list contains" ([^"]*)"$') { String title ->
+    at BookPage
+    page.checkArticleAtList(title, 0)
+}
+
+
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
