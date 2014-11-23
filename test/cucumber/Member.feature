@@ -63,7 +63,7 @@ Feature: member
     Given I am at the create member page
     When I fill the username with "josedmskejfjsdifejfje"
     Then I am still on the create member page
-	And	a long username error message is displayed
+	#And	a long username error message is displayed
 #end
 
 #if($invalidEmail)
@@ -102,16 +102,19 @@ Scenario: new member with invalid phone
 #end
 
 #if($memberInfo)
+@vddm
 Scenario: editing member information
-	Given the system has member with "Victor","Monteiro", "12345", "vddm@cin.ufpe.br", "UFPE"
-	When I edit one of the member's information
-	Then the member information is updated and saved in the system
+	Given the system has member with "Victor Monteiro","rgmsTest", "rgmsTest@gmail.com", "UFPE", "12345", "www.g.com.br", "Brazil", "Graduate Student"
+	When I edit the "rgmsTest@gmail.com"'s "email" for "rgms@gmail.com"
+	Then "rgms@gmail.com"'s information is updated and saved in the system
 
+@vddm
 Scenario: editing member
-	Given I am at the editing user page
-	When I fill the user details with a new name, username, passoword1, password2, email, university or status 
-	Then I am redirected to the Profile Page
-	And A message indicating the user was successfully edited is displayed
+	Given I am at the member page
+	When I click the first member id
+    And I Click the option "edit" on Member Edition Page
+    And I change the member's "name" by "Victor Monteiro"
+	Then I can see the member's name is now "Victor Monteiro"
 #end
 
 #if($loginfacebook)

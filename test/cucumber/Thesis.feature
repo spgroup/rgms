@@ -5,14 +5,15 @@ Feature: Thesis Tests
 
   Scenario: new thesis duplicated
     Given The thesis "Thesis duplicated" is stored in the system with file name "Thesisduplicated.txt"
-    When  I create the thesis "Thesis duplicated" with file name "Thesisduplicated2.txt" and school "UFPE"
+    When  I create the thesis "Thesis duplicated" with file name "Thesisduplicated2.txt"
     Then  The thesis "Thesis duplicated" is not stored twice
 
 	#if($thesis)
+    @vddm
 	Scenario: new thesis
 		Given The system has no thesis entitled "New thesis"
-		When  I create the thesis "New thesis" with file name "Newthesis" according to the possible formats and school "UFPE"
-		Then  The thesis "New thesis" is properly stored by the system
+		When  I create the thesis "New thesis" with file name "NewthesisGUI.txt" and the thesis "New thesis2" with file name "Newthesis.pdf"
+		Then  The thesis "New thesis" not is properly stored by the system, but "New thesis2" is
 	#end
 
   Scenario: remove existing thesis
@@ -91,17 +92,19 @@ Feature: Thesis Tests
     Then the existing thesis are not changed by the system
 
 	#if($search)
+    @vddm
 	Scenario: search a thesis
 		Given the system has one thesis entitled "My Thesis"
 		When I search for thesis entitled "My Thesis"
-		Then the existing thesis is returned by the system ( are not changed by the system)
+		Then the "My Thesis" thesis is returned by the system
 	#end
 
 	#if($fileThesis)
+    @vddm
 	Scenario: upload existing thesis with a file
-		Given The system has thesis entitled "My Thesis"
-		When I upload the file "My Thesis.xml" to "My thesis"
-		Then the file associated with the existing thesis "My thesis" is replaced by the uploaded file
+		Given The thesis "New thesis" is stored in the system with file name "Joee.pdf"
+		When I upload the file "Newthesis.pdf" to "New thesis"
+		Then the file "Joee.pdf" associated with the existing thesis "New thesis" is replaced by "Newthesis.pdf"
 	#end
 	
 # editar dados de uma tese, ordenar lista de teses, filtrar lista de teses,

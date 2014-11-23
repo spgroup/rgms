@@ -18,6 +18,12 @@ class MemberEditionPage extends Page {
         searchSubmitButton { memberform.find(".buttons.button.save")}
     }
 
+    def editMemberInformation(String type, String value){
+        if(type == 'name')
+            $('form').name = value
+        $('input', type: 'submit', class: 'save').click()
+    }
+
     def editEnableUser(String userName){
 
         def member = TestDataAndOperations.findByUsername(userName)

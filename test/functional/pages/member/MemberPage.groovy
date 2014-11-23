@@ -17,6 +17,15 @@ class MemberPage extends Page {
     static content = {
     }
 
+    def select(String option){
+        $('input.' + option).click()
+    }
+
+    def checkName(String value){
+        def name = $('td.value')[0].text()
+        assert value == name
+    }
+
     def checkPdf() {
         def pdf = $('form').find([title: "PDF"])
         assert pdf != null
