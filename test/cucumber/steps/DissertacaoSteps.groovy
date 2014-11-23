@@ -67,8 +67,8 @@ Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"
 }
 
 
-When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') { String title, filename, school ->
-    TestDataDissertacao.createDissertacao(title, filename, school)
+When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)", school "([^"]*)" and supervisor "([^"]*)"$') { String title, filename, school, supervisor ->
+    TestDataDissertacao.createDissertacao(title, filename, school, supervisor)
 }
 
 

@@ -84,3 +84,18 @@ Feature: Dissertation Tests
     Then I see my user listed as an author member of dissertation by default
     And I see my school name as school of dissertation by default
 #end
+
+#if($addDisertacao)
+
+  Scenario: add "Dissertacao"'s Supervisor
+    Given I am at the "Dissetação" page
+    And the system has no dissertation entitled "New dissertation"
+    When I create the dissertation "New dissertation" with file name "Newdissertation.txt" 
+    And school "UFPE"
+    And the supervisor "Silvio Melo"
+    Then the dissertation "New dissertation" is properly stored by the system
+#end
+
+#Issue - vml
+#A unificação da linguagem do formulário é bastante útil
+#pois padroniza o uso do software e evita possíveis ambiguidades e erros
