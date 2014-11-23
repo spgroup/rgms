@@ -83,15 +83,16 @@ Feature: Ferramenta
         And fill the others fields with valid values without Titulo
         Then I am still on create new ferramenta page
         And the ferramenta is not displayed in the ferramentas list page
+
 	#if($ferramentaWithWebsite)
-  @vddm
+    @vddm
 	Scenario: new ferramenta with website
 			Given the system has no ferramenta entitled "Target"
 			When I create the ferramenta "Target" with file name "target.pdf"  with "www.targed.com" as its  website
 			Then the ferramenta "Target" is stored
 
     #if($list)
-  @vddm
+    @vddm
     Scenario: list ferramenta web
       Given I am at the publications menu
       When I select the "Ferramenta" option at the publications menu

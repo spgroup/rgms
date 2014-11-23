@@ -53,6 +53,7 @@ Feature: research line
 		Given the system has some research line stored
 		When I upload new research lines from the file "testelattes2.xml"
 		Then the system keep the old reserch lines and has more research lines now
+
   #end
 
   Scenario: upload research lines without a file
