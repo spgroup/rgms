@@ -72,12 +72,3 @@ Feature: BookChapter
     And I select the upload button at the book chapter page
     Then I'm still on book chapter page
     And the book chapters are not stored by the system
-
-
-#if ($listBookChaptersWeb)
-Scenario: list all existing book chapters web
-   Given that I'm at the book chapter page
-   And there are book chapters in the system
-   When	I click to list the book chapters
-   Then the book chapters list will be shown
-#end
