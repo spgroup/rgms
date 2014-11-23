@@ -23,9 +23,9 @@ Given(~'^The thesis "([^"]*)" is stored in the system with file name "([^"]*)"$'
         assert article != null
 }
 
-When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') {
-    String title, filename, school ->
-        ThesisTestDataAndOperations.createTese(title, filename, school)
+When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)" and supervisor "([^"]*)"$') {
+    String title, filename, school, supervisor ->
+        ThesisTestDataAndOperations.createTese(title, filename, school, supervisor)
 }
 
 Then(~'^The thesis "([^"]*)" is not stored twice$') { String title ->
@@ -46,16 +46,16 @@ Given(~'^I am at the create thesis page$') { ->
     at ThesisCreatePage
 }
 
-When(~'^I fill the thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') {
-    title, pub_day, pub_month, pub_year, school, address ->
+When(~'^I fill the thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') {
+    title, pub_day, pub_month, pub_year, school, address, supervisor ->
         def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/NewthesisGUI.txt")
         absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
-        page.fillThesisDetails(title, pub_day, pub_month, pub_year, school, address, absolutePath)
+        page.fillThesisDetails(title, pub_day, pub_month, pub_year, school, address, supervisor, absolutePath)
 }
 
-When(~'^I fill some thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') {
-    title, pub_day, pub_month, pub_year, school, address ->
-        page.fillSomeThesisDetails(title, pub_day, pub_month, pub_year, school, address)
+When(~'^I fill some thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') {
+    title, pub_day, pub_month, pub_year, school, address, supervisor ->
+        page.fillSomeThesisDetails(title, pub_day, pub_month, pub_year, school, address, supervisor)
 }
 
 Then(~'^I am on the thesis show page$') { ->
@@ -170,7 +170,7 @@ Then(~'^the returned thesis list has the same items but it is sorted by date$') 
 }
 
 //Scenario: search an existing thesis
-Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)", year of publication "([^"]*)" and university "([^"]*)"$') { title, author, year, university ->
+Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)", year of publication "([^"]*)", university "([^"]*)" and supervisor "([^"]*)"$') { title, author, year, university, supervisor ->
 
 }
 
@@ -193,7 +193,7 @@ Then(~'^the thesis "([^"]*)" by "([^"]*)" appears in the thesis view page$') { t
 //Scenario: create thesis web without a file
 
 
-When(~'^I fill the thesis fields with "([^"]*)", "([^"]*)", "([^"]*)","([^"]*)", "([^"]*)","([^"]*)"$') { title, date, university, address, author, advisor ->
+When(~'^I fill the thesis fields with "([^"]*)", "([^"]*)", "([^"]*)","([^"]*)", "([^"]*)","([^"]*)", "([^"]*)"$') { title, date, university, address, author, advisor, supervisor ->
 
 }
 
@@ -268,6 +268,8 @@ When(~'^I upload the file "([^"]*)"$') { file ->
 And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
 
 }
+
+Given (~'^I want to add a "New thesis"') { 
 
 //FUNÇÔES AUXILIARES
 def thesisDoNotExists(title) {

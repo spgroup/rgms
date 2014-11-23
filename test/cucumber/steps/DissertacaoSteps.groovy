@@ -67,8 +67,8 @@ Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"
 }
 
 
-When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') { String title, filename, school ->
-    TestDataDissertacao.createDissertacao(title, filename, school)
+When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)", school "([^"]*)" and supervisor "([^"]*)"$') { String title, filename, school, supervisor ->
+    TestDataDissertacao.createDissertacao(title, filename, school, supervisor)
 }
 
 
@@ -101,13 +101,6 @@ Then(~'^the dissertation "([^"]*)" is properly updated by the system$') { String
     assert article == null
 }
 
-When(~'^I select the upload button at the dissertation page$') {->
-    at DissertationPage
-    page.uploadWithoutFile()
-}
-Then(~'^I\'m still on dissertation page$') {->
-    at DissertationPage
-}
 
 When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
     String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
@@ -156,4 +149,24 @@ Given(~'^the system has no dissertation stored$')   {->
     assert intialSize == 0
 }
 
+
+Given(~'^I am at the dissertation page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to DissertationPage
+}
+When(~'^I select the upload button with no file selected$') {->
+    page.uploadWithoutFile()
+}
+Then(~'^I stay on dissertation page with an error message$') { ->
+    at DissertationPage
+	assert page.readFlashMessage() != null
+}
+
+
+When(~'^I press to remove "([^"]*)" at the dissertation show page$'){ String title->
+	page.select('input', 'delete')
+}
 

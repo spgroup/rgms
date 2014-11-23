@@ -5,6 +5,7 @@ import pages.PublicationsPage
 import pages.*
 import rgms.publication.BookChapter
 import steps.BookChapterTestDataAndOperations
+import steps.OrientationTestDataAndOperations
 import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
@@ -14,6 +15,10 @@ Given(~'^the system has no book chapter entitled "([^"]*)"$') { String title ->
 }
 
 When(~'^I create the book chapter "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+    BookChapterTestDataAndOperations.createBookChapter(title, filename)
+}
+
+When(~'^I create the book chapter "([^"]*)" with file name "([^"]*)" and publication date "([^"]*)"$') { String title, filename, date ->
     BookChapterTestDataAndOperations.createBookChapter(title, filename)
 }
 
@@ -54,6 +59,23 @@ Given(~'^I am at the book chapter page$') { ->
     to BookChapterPage
     at BookChapterPage
 }
+
+And(~'^I create some book chapter entitled by "([^"]*)"$'){String title ->
+    at BookChapterPage
+    page.selectNewBookChapter()
+    at BookChapterCreatePage
+    page.fillArticleDetails(BookChapterTestDataAndOperations.path() + 'A.pdf', title)
+    page.selectCreateBookChapter()
+    assert !bookChapterNoExist(title)
+    to BookChapterPage
+    page.selectNewBookChapter()
+    at BookChapterCreatePage
+    page.fillArticleDetails(BookChapterTestDataAndOperations.path() + 'A.pdf', 'Refinement of Concurrent Object Oriented Programs')
+    page.selectCreateBookChapter()
+    assert !bookChapterNoExist('Refinement of Concurrent Object Oriented Programs')
+    to BookChapterPage
+}
+
 
 And(~'^I fill only the title field with the value "([^"]*)"$') { String title ->
     at BookChapterCreatePage
@@ -174,6 +196,43 @@ And(~'^the system shows an error message$') { ->
 
 When(~'I select the Book Chapter option at the program menu'){ ->
     page.select("Book Chapter")
+}
+
+Given(~'^the system has some book chapter entitled by "([^"]*)"$'){ String title ->
+    BookChapterTestDataAndOperations.createBookChapter(title, "A.pdf")
+    BookChapterTestDataAndOperations.createBookChapter('Refinement of Concurrent Object Oriented Programs', "B.pdf")
+
+    assert (!bookChapterNoExist(title) && !bookChapterNoExist('Refinement of Concurrent Object Oriented Programs'))
+}
+
+When(~'^the system filter the book chapter entitled by title "([^"]*)"$') { String title ->
+    bookChapterFilter = BookChapterTestDataAndOperations.findBookChapterByTitle(title)
+    BookChapterTestDataAndOperations.isFiltered(bookChapterFilter, title)
+}
+
+Then(~'^the system book chapter list content is not modified$'){->
+    assert BookChapter.findAll().size() == 2
+    assert !bookChapterNoExist('Next Generation Software Product Line Engineering')
+    assert !bookChapterNoExist('Refinement of Concurrent Object Oriented Programs')
+}
+
+When(~'^I select to view the list of book chapters$'){->
+    at BookChapterPage
+    page.selectViewBookChapter()
+}
+
+And(~'^I select to filter the list of book chapter by title "([^"]*)"$'){ String title ->
+    at BookChapterPage
+    page.fillAndSelectFilter(title)
+}
+
+Then(~'^my book chapter list shows only the book chapters entitled by "([^"]*)"$') { String title ->
+    at BookChapterPage
+    assert page.checkFilteredBy(title)
+}
+
+def bookChapterNoExist(String title){
+    return BookChapterTestDataAndOperations.findBookChapterByTitle(title) == null
 }
 
 

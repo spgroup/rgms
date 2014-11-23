@@ -6,7 +6,7 @@ Feature: BookChapter
 
   Scenario: new book chapter
     Given the system has no book chapter entitled "SPL Development"
-    When  I create the book chapter "SPL Development" with file name "HSPLE.pdf"
+    When  I create the book chapter "SPL Development" with file name "HSPLE.pdf" and publication date "21/11/2014"
     Then  the book chapter "SPL Development" is properly stored by the system
 
   Scenario: duplicate book chapter
@@ -72,3 +72,15 @@ Feature: BookChapter
     And I select the upload button at the book chapter page
     Then I'm still on book chapter page
     And the book chapters are not stored by the system
+
+  Scenario: filter existing book chapter by title
+    Given the system has some book chapter entitled by "Next Generation Software Product Line Engineering"
+    When the system filter the book chapter entitled by title "Next Generation Software Product Line Engineering"
+    Then the system book chapter list content is not modified
+
+  Scenario: filter existing book chapter by title web
+    Given I am at the book chapter page
+    And I create some book chapter entitled by "Next Generation Software Product Line Engineering"
+    When I select to view the list of book chapters
+    And I select to filter the list of book chapter by title "Next Generation Software Product Line Engineering"
+    Then my book chapter list shows only the book chapters entitled by "Next Generation Software Product Line Engineering"
