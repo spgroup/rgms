@@ -30,6 +30,22 @@ class Orientation {
         
     }
 
+    static public def isFiltered(orientations,typeof) {
+        for (orientation in orientations) {
+            if(!(orientation.tipo).contains(typeof))
+                return false
+        }
+        return true
+    }
+
+    static public def isFiltered(orientations,supervised, tipo) {
+        for (orientation in orientations) {
+            if(!(orientation.orientador).contains(supervised))
+                return false
+        }
+        return true
+    }
+
     String toString() {
         return "Titulo = " + this.tituloTese + "; Orientador = " + this.orientador + "; Orientando: " + this.orientando
     }

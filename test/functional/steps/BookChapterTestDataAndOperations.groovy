@@ -61,6 +61,18 @@ class BookChapterTestDataAndOperations {
         cont.response.reset()
     }
 
+    static public def path(){
+        return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    }
+
+    static public def isFiltered(bookChapters,title) {
+        for (bookChapter in bookChapters) {
+            if(!(bookChapter.title).contains(title))
+                return false
+        }
+        return true
+    }
+
     static public void removeBookChapter(String title) {
         def testBookChapter = BookChapter.findByTitle(title)
         def cont = new BookChapterController()
