@@ -37,7 +37,7 @@ Feature: Book
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
   
   Scenario: list existing books ordered by publication date
-    Given I am at the books page 
+    Given I am at the book page 
     And the system has some books created
     When I select to view the list of books 
     And I select to order the list of books by "publication date"
