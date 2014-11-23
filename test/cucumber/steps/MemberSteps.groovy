@@ -118,6 +118,10 @@ Given(~'^I am at the create member page$') { ->
     at MemberCreatePage
 }
 
+When (~'^I fill the member details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') {String name, username, email, phone, websise ->
+    page.fillSomeMemberDetails(name, username, email, phone, website)
+}
+
 When(~'^I fill the user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
     page.fillMemberDetails(name, username, email, university, "")
 }
