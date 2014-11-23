@@ -139,3 +139,23 @@ Then(~'^I can download the file named "([^"]*)"$') { String filename ->
     at BookPage
     assert page.clickDownloadLink(filename)
 }
+
+And(~'^I select the new book option at the book page$') {
+    at BookPage
+    to BookCreatePage
+}
+
+Then(~'^I can fill the book details$') {->
+    at BookCreatePage
+    page.fillBookDetails()
+}
+
+And(~'^the system has some books created$') {
+    initialSize = Book.findAll().size()
+    assert initialSize > 1
+}
+
+Then(~'^my book list shows the articles ordered by "([^"]*)"$') { String sortType ->
+    at BookPage
+    page.checkOrderedBy(sortType);
+}
