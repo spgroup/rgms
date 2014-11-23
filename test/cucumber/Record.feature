@@ -17,7 +17,7 @@ Feature: record
     When I remove the record with status "MSc Student"
     Then the record with status "MSc Student" is not removed by the system
   #if($Record)
-    And the system output the message error "Cannot remove an associated member!"
+    And the system outputs the error message "Cannot remove an associated member!"
   #end
 
   Scenario: Update record
