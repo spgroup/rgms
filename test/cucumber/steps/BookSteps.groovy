@@ -170,3 +170,57 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     book = Book.findByTitle(title)
     assert book != null
 }
+
+
+
+Given(~'^I am at the book page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to BookPage
+}
+
+And(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    book = Book.findByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+
+When(~'^I go to remove book page$') { ->
+    to BookPage
+    page.selectRemoveBook()
+}
+
+And(~'^I remove the book "([^"]*)"$') { String title ->
+    BookTestDataAndOperations.removeBook(title)
+}
+
+Then(~'^the book "([^"]*)" is properly removed by the system$') { String title ->
+    checkIfExists(title)
+}
+
+
+
+
+Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    book = Book.findByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+
+When(~'^I edit the book title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
+    def updatedBook = BookTestDataAndOperations.editBook(oldtitle, newtitle)
+    assert updatedBook != null
+}
+
+And(~'^there is already a stored named "([^"]*)"$') { String name ->
+        name = BookChapter.findByName(titlle)
+assert name != null
+}
+
+Then(~'^the book "([^"]*)" will not be modified$') { String title ->
+    assert Book.findByTitle(title) == null
+}
+
+
