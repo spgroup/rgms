@@ -35,7 +35,7 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
-
+#if($bookOperations)
   Scenario: remove existing book web
     Given I am at the book page
     And the system has the book entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
@@ -47,5 +47,4 @@ Feature: Book
     Given I am at the book page
     And the system has the book entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book list contains "Next Generation Software Product Line Engineering"
-
-
+#end
