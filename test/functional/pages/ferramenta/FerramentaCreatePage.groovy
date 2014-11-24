@@ -34,6 +34,7 @@ class FerramentaCreatePage extends FormPage {
         fillFerramentaTitle(title)
         fillFerramentaDescription("Description")
         fillFerramentaWebsite("website")
+        fillFerramentaFile(title)
         clickCreateFerramenta()
     }
 

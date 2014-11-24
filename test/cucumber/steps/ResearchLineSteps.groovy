@@ -118,7 +118,7 @@ When(~'^I upload new research lines from the file "([^"]*)"$') { filename ->
     ResearchLineTestDataAndOperations.uploadResearchLine(path + filename)
 }
 
-Then(~'^the system has more reseach lines now$'){ ->
+Then(~'^the system keep the old reserch lines and has more research lines now$'){ ->
     TestDataAndOperations.logoutController(this)
     finalSize = ResearchLine.findAll().size()
     assert (finalSize - initialSize) == 5 //If all researchlines was imported, we will have 5 more than before

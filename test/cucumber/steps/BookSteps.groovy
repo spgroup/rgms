@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created with IntelliJ IDEA.
  * User: dyego
  * Date: 22/02/14
@@ -19,8 +19,8 @@ Given(~'^the system has no book entitled "([^"]*)"$') { String title ->
     checkIfExists(title)
 }
 
-When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-    BookTestDataAndOperations.createBook(title, filename)
+When(~'^I create the book "([^"]*)" with file name "([^"]*)" and description "([^"]*)"$') { String title, description, filename ->
+    BookTestDataAndOperations.createBook(title, description, filename)
 }
 
 Then(~'^the book "([^"]*)" is properly stored by the system$') { String title ->
@@ -47,9 +47,10 @@ Then(~'^the book "([^"]*)" is not stored twice$') { String title ->
     assert books.size() == 1
 }
 
-When(~'^I edit the book title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
-    def updatedBook = BookTestDataAndOperations.editBook(oldtitle, newtitle)
+When(~'^I edit the book title from "([^"]*)" to "([^"]*)" and description from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle, olddescription, newdescription ->
+    def updatedBook = BookTestDataAndOperations.editBook(oldtitle, newtitle, olddescription, newdescription)
     assert updatedBook != null
+    assert newdescription = null
 }
 
 Then(~'^the book "([^"]*)" is properly updated by the system$') { String title ->
@@ -89,9 +90,9 @@ When(~'^I go to new book page$') { ->
     page.selectNewBook()
 }
 
-And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)" and description "([^"]*)"$') { String title, description, filename ->
     at BookCreatePage
-    createAndCheckBookOnBrowser(title, filename)
+    createAndCheckBookOnBrowser(title, description, filename)
     to BookPage
     at BookPage
 }
@@ -102,6 +103,61 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     to BookPage
     at BookPage
 }
+
+When(~'I select the option to remove the book "([^"]*)"$') {->
+	at BookPage
+	page.select('input', 'delete')
+}
+
+Then(~'^the system removes the book "([^"]*)"$') { String title ->
+	assert bookNoExist(title)
+}
+
+When(~'^I view the book list$') { ->
+    to BookPage
+}
+
+Then(~'my book list contains "([^"]*)"$') { String title ->
+    at BookPage
+    bookList = Book.findAll()
+    assert BookTestDataAndOperations.containsBook(title)
+}
+And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$') { String title, filename ->
+    page.selectNewBook()
+    to BookCreatePage
+    at BookCreatePage
+    createAndCheckBookOnBrowser(title, filename)
+    to BookPage
+    at BookPage
+}
+
+Then(~'My resulting book list contains "([^"]*)"$') { String title ->
+    checkIfBookIsOnListAtBookPage(title)
+}
+
+Given(~'^the book "([^"]*)" has comments$') { String title, comment ->
+    checkIfExists(title)
+    checkIfCommentsExist(comment)
+}
+
+When(~'^I view the book "([^"]*)" information$') { title ->
+    BookTestDataAndOperations.viewInformation(title)
+}
+
+Then(~'the system will show the comments about "([^"]*)"$') { String title ->
+    showBookComments(title)
+}
+
+When(~'^I click on the book comment option from the "([^"]*)" page$') { String title ->
+    page.selectBook()
+    to BookPage
+    at BookPage
+}
+
+Then(~'the comments about "([^"]*)" will be show in the book "([^"]*)" page$') { String title ->
+    showComments(title)
+}
+
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
@@ -114,3 +170,57 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     book = Book.findByTitle(title)
     assert book != null
 }
+
+
+
+Given(~'^I am at the book page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to BookPage
+}
+
+And(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    book = Book.findByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+
+When(~'^I go to remove book page$') { ->
+    to BookPage
+    page.selectRemoveBook()
+}
+
+And(~'^I remove the book "([^"]*)"$') { String title ->
+    BookTestDataAndOperations.removeBook(title)
+}
+
+Then(~'^the book "([^"]*)" is properly removed by the system$') { String title ->
+    checkIfExists(title)
+}
+
+
+
+
+Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    book = Book.findByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+
+When(~'^I edit the book title from "([^"]*)" to "([^"]*)"$') { String oldtitle, newtitle ->
+    def updatedBook = BookTestDataAndOperations.editBook(oldtitle, newtitle)
+    assert updatedBook != null
+}
+
+And(~'^there is already a stored named "([^"]*)"$') { String name ->
+        name = BookChapter.findByName(titlle)
+assert name != null
+}
+
+Then(~'^the book "([^"]*)" will not be modified$') { String title ->
+    assert Book.findByTitle(title) == null
+}
+
+

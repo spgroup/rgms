@@ -14,7 +14,11 @@ class TeseController extends ThesisOrDissertationController {
     }
 
     def save() {
-        saveThesisOrDissertation("Tese", params)
+        String file = params['file']
+        def format = file.substring(file.indexOf('.')+1,file.size())
+        if(format == 'doc' || format == 'pdf') {
+            saveThesisOrDissertation("Tese", params)
+        }
     }
     
     def show() {

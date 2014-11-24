@@ -1,6 +1,7 @@
 package steps
 
 import rgms.authentication.User
+import rgms.member.Member
 import rgms.member.MemberController
 
 /**
@@ -38,14 +39,19 @@ class MemberTestDataAndOperations {
             member.name == name
         }
     }
+	
+	static public void createDefaultMember(String name = "name",String username = "username", String email = "email@gmail.com", String phone = "3333-3333", String university = "UFPE", String website = null, String country = "Brasil", String status = null) {
+		def cont = new MemberController()
+        cont.params << [name: name] << [username: username] << [email: email] << [university: university] << [phone: phone] << [website: website] << [country: country] << [status: status]
+        cont.create()
+        cont.save()
+        cont.response.reset()
+	}
 
-    static public void createMember(String username, String phone) {
+    static public void createMember(String name = null,String username = null, String email = null, String phone = null, String university = null,
+                                    String website = null, String country = null, String status = null) {
         def cont = new MemberController()
-        if (phone.equals("")) {
-            cont.params << findByUsername(username)
-        } else {
-            cont.params << [username: username, phone: phone]
-        }
+        cont.params << [name: name] << [username: username] << [email: email] << [university: university] << [phone: phone] << [website: website] << [country: country] << [status: status]
         cont.create()
         cont.save()
         cont.response.reset()
@@ -77,5 +83,34 @@ class MemberTestDataAndOperations {
                 return true;
         }
         return false;
+    }
+
+    static public Member editMember(String emailKey, String option, String value){
+        def cont = new MemberController()
+        def member = Member.findByEmail(emailKey)
+        if(option == "name")
+            member.name = value
+        else if(option == "email")
+            member.email = value
+        else if(option == "phone")
+            member.phone = value
+        else if(option == "university")
+            member.university = value
+        else if(option == "website")
+            member.website = value
+        else if(option == "country")
+            member.country = value
+        else if(option == "additionalInfo")
+            member.additionalInfo = value
+        else if(option == "city")
+            member.city = value
+        else if(option == "status")
+            member.status = value
+        else if(option == "active")
+            member.active = (boolean)value
+        cont.params << member.properties
+        cont.update()
+
+        return member
     }
 }

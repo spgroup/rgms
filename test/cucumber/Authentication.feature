@@ -25,6 +25,11 @@ Scenario: New user register with invalid email fail message
   When I try to create a "newuser" username with the "invalid email abcde" email
   Then A message indicating the email is invalid is displayed
 
+Scenario: New user register with a small password
+   Given I am at the Login Page
+   When I try to create a "newuser" username with a password less than 5 characters
+   Then A message indicating the password is too small
+
 Scenario: Try to access Member List Page without being logged in
   Given I am not logged
   When I directly access the Member List Page

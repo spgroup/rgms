@@ -1,6 +1,10 @@
 import pages.LoginPage
+import pages.PublicationsPage
 import pages.RegisterPage
 import pages.member.MemberCreatePage
+import pages.member.MemberEditionPage
+import pages.member.MemberListPage
+import pages.member.MemberPage
 import pages.member.MemberViewPage
 import rgms.authentication.User
 import rgms.member.Member
@@ -38,8 +42,6 @@ Then(~'^the system has no member with a username "([^"]*)"$') { String username 
 Given(~'^I am at the login page$') { ->
     to LoginPage
     at LoginPage
-    //assert (page.flashmessage?.size() == 0)
-    //assert (page.flashmessage == null)
 }
 
 When(~'^I fill username and password with "([^"]*)" and "([^"]*)"$') { String login, password ->
@@ -112,6 +114,14 @@ Given(~'^I am at the create member page$') { ->
     page.fillLoginData("admin", "adminadmin")
     to MemberCreatePage
     at MemberCreatePage
+}
+
+When(~'^I fill the username with ([^"]*)"$') { String username ->
+	page.fillSomeMemberDetails(username)
+}
+
+When (~'^I fill the member details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') {String name, username, email, phone, websise ->
+    page.fillSomeMemberDetails(name, username, email, phone, website)
 }
 
 When(~'^I fill the user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
@@ -191,4 +201,43 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     MemberTestDataAndOperations.createMemberWithEmail(name, email)
     //member = Member.findByEmail(email)
     //assert member.name == name
+}
+
+//Edit editing member information
+//By VDDM
+Given(~'^the system has member with "([^"]*)","([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)"$'){String name, String username, String email, String IES, String phone, String website, String country, String status->
+    MemberTestDataAndOperations.createMember(name,username,email,phone,IES,website,country,status)
+}
+When (~'^I edit the "([^"]*)"\'s "([^"]*)" for "([^"]*)"$'){ String emailKey, String option, String value ->
+    def newMember = MemberTestDataAndOperations.editMember(emailKey,option,value)
+    assert newMember != null
+}
+Then (~'^"([^"]*)"\'s information is updated and saved in the system$'){ String emailKey ->
+    def newMember = Member.findByEmail(emailKey)
+    assert newMember != null
+}
+// editing member
+//BY VDDM
+Given(~'^I am at the member page$'){->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    page.select("Member")
+}
+When(~'^I click the first member id$'){->
+    at MemberListPage
+    page.selectFirstMember()
+}
+And(~'^I Click the option "([^"]*)" on Member Edition Page$'){String option->
+    at MemberPage
+    page.select(option)
+}
+And(~'^I change the member\'s "([^"]*)" by "([^"]*)"$'){String option, String value->
+    at MemberEditionPage
+    page.editMemberInformation(option,value)
+}
+Then(~'^I can see the member\'s name is now "([^"]*)"$'){String name->
+    at MemberPage
+    page.checkName(name)
 }

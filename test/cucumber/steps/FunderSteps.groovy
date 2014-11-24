@@ -36,12 +36,19 @@ When(~'^I remove a funder with code "([^"]*)"$'){ String code ->
     funder.delete()
 }
 
-
 //duplicate funder
 Then(~'^there is only one funder with code "([^"]*)" in the system$') { String code ->
     assert Funder.findAllByCode(code).size() == 1
 }
 
+Given(~'^the system has a funder with code "([^"]*)"$') { String code ->
+	fillCodefield(code)
+	clickSave()
+}
+
+Then(~'^the list funders contains funder with code "([^"]*)"$') { String code ->
+	checkIfFunderExists(code)
+}
 
 //new funder web
 Given(~'^I am at the create funder page$'){ ->
@@ -52,6 +59,21 @@ Then(~'^I fill the funder code with "([^"]*)"$'){ String code ->
     fillCodefield(code)
     clickSave()
 
+}
+
+Then(~'^I fill the funder code with "([^"]*)" and name "([^"]*)"$'){ String code, String name ->
+    fillCodefield(code, name)
+    clickSave()
+}
+
+Then(~'^I am still on the create funder page with the error message$') { ->
+    at FunderCreatePage
+    def error = $('ul.errors')
+    assert error != null
+}
+Given(~'^I go to create funder page$'){ ->
+    to FunderCreatePage
+    at FunderCreatePage
 }
 
 private void checkIfFunderExists(String code){
@@ -69,9 +91,9 @@ private void goToFunderCreatePage() {
     page.selectNewFunder()
 }
 
-private void fillCodefield(String code){
+private void fillCodefield(String code, String name = "CNPQ"){
     at FunderCreatePage
-    page.fillFunderCode(code)
+    page.fillFunderCode(code, name)
 }
 
 private void clickSave(){

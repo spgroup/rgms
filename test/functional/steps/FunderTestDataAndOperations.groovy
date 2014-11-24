@@ -13,9 +13,9 @@ class FunderTestDataAndOperations {
             [name: "Conselho Nacional de Desenvolvimento Cientifico e Tecnologico", code: "002200000000", nature: "BOLSA"]
     ]
 
-    static public void createFunderWithCode(String codigo){
+    static public void createFunderWithCode(String codigo, String name = "Test Funder"){
         def cont = new FunderController()
-        createFunderAux (cont, codigo, "Test Funder", "BOLSA")
+        createFunderAux (cont, codigo, name, "BOLSA")
     }
 
     static public void createFunder(){

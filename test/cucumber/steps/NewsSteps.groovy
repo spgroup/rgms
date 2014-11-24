@@ -251,3 +251,23 @@ And(~'^I create a research group because it is necessary$') {->
     to PublicationsPage
     at PublicationsPage
 }
+
+
+Given(~'^the research group "([^"]*)" in the system has a Twitter account associated$') { String groupName ->
+    TestDataAndOperations.createResearchGroup(groupName)
+    researchGroup = ResearchGroup.findByName(groupName)
+    assert researchGroup != null
+    assert researchGroup.twitter == null
+}
+
+When(~'^I disassociate the account "([^"]*)" to "([^"]*)" group$') { String twitter, String groupName ->
+    researchGroup = ResearchGroup.findByName(groupName)
+    TestDataAndOperations.editResearchGroupTwitterAcount(researchGroup, twitter)
+
+    assert researchGroup.getTwitter() == null
+}
+
+Then(~'^"([^"]*)" research group has a twitter account "([^"]*)" registered$') { String groupName, String twitter ->
+    researchGroup = ResearchGroup.findByName(groupName)
+    assert researchGroup.getTwitter() == null
+}
