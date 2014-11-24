@@ -19,11 +19,12 @@ Feature: BookChapter
     When I remove the book chapter "Next Generation Software Product Line Engineering"
     * the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
 
-  #if ($BookChapter) 
+  #if ($BookChapter)
+  @mjgfl
   Scenario: modify existing book chapter
     Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
     When I edit the book chapter title from "Next Generation Software Product Line Engineering" to "Next Generation Software Product Line Engineering REVIEWED"
-    Then the book chapter "Next Generation Software Product Line Engineering" is properly updated by the system
+    Then the book chapter "Next Generation Software Product Line Engineering REVIEWED" is properly updated by the system
   #end
 
   Scenario: register book chapter with invalid data
@@ -84,7 +85,7 @@ Feature: BookChapter
 Scenario: list all existing book chapters web
    Given that I'm at the book chapter page
    And there are book chapters in the system
-   When	I click to list the book chapters
+   When I click to list the book chapters
    Then the book chapters list will be shown
 #end
 

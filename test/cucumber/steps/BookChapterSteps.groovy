@@ -28,6 +28,17 @@ Given(~'^the book chapter "([^"]*)" is stored in the system with file name "([^"
     assert bookChapter != null
 }
 
+When(~'^I edit the book chapter title from "([^"]*)" to "([^"]*)"$') { String title, newtitle ->
+    BookChapterTestDataAndOperations.editBookChapterTitle(title, newtitle)
+}
+
+Then(~'^the book chapter "([^"]*)" is properly updated by the system$'){String title ->
+    def book = BookChapter.findByTitle(title)
+    assert book != null
+
+
+}
+
 Then(~'^the book chapter "([^"]*)" is not stored twice$') { String title ->
     bookChapters = BookChapter.findAllByTitle(title)
     assert bookChapters.size() == 1
