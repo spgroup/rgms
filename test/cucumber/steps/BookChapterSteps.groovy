@@ -176,6 +176,37 @@ When(~'I select the Book Chapter option at the program menu'){ ->
     page.select("Book Chapter")
 }
 
+#if($BookChapter)
+Given(~'^the book chapter entitled "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+    BookChapter bc = BookChapter.findByTitle(title)
+    assert bc != null
+}
+
+When(~'^I change the book chapter\'s title from "([^"]*)" to "([^"]*)"$') {String oldTitle, newTitle ->
+    BookChapter bc = BookChapter.findByTitle(title)
+    assert bc?.getTitle() == oldTitle
+    bc?.setTitle(newTitle)
+}
+
+Then(~'^the book chapter\'s name is properly updated to "([^"]*)" by the system$') {String newTitle ->
+    BookChapter bc = BookChapter.findByTitle(title)
+    assert bc?.getTitle() == newTitle
+}
+
+Given(~'^no book chapter entitled "([^"]*)" is stored in the system$') { String title ->
+    checkIfExists(title)
+}
+
+Then(~'^an error message is shown$') { ->
+    throw new NoSuchBookChapterException("Capítulo inexistente!")
+}
+
+And(~'^no changes are made by the system$'){->
+    at BookChapterPage
+    assert page.hasErrorUploadFile()
+}
+#end
+
 
 def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookChapterDetails(title, filename)
