@@ -19,11 +19,12 @@ Feature: Funder
     Then there is only one funder with code "12345" in the system
 	
   #if($listFunders)
+  @cscbb
   Scenario: list existing funder
     Given I am at the funder page
     And the system has a funder with code "12345"
 	When I view the funder list
-	Then my list funders contains funder "12345"
+	Then the list funders contains funder with code "12345"
   #end
 
   Scenario: new funder web

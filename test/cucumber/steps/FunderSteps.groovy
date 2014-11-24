@@ -41,6 +41,14 @@ Then(~'^there is only one funder with code "([^"]*)" in the system$') { String c
     assert Funder.findAllByCode(code).size() == 1
 }
 
+Given(~'^the system has a funder with code "([^"]*)"$') { String code ->
+	fillCodefield(code)
+	clickSave()
+}
+
+Then(~'^the list funders contains funder with code "([^"]*)"$') { String code ->
+	checkIfFunderExists(code)
+}
 
 //new funder web
 Given(~'^I am at the create funder page$'){ ->
@@ -56,10 +64,6 @@ Then(~'^I fill the funder code with "([^"]*)"$'){ String code ->
 Then(~'^I fill the funder code with "([^"]*)" and name "([^"]*)"$'){ String code, String name ->
     fillCodefield(code, name)
     clickSave()
-}
-
-And(~'There is no funder with name "([^"]*)"$'){String name ->
-
 }
 
 Then(~'^I am still on the create funder page with the error message$') { ->

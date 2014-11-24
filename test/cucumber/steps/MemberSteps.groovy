@@ -42,8 +42,6 @@ Then(~'^the system has no member with a username "([^"]*)"$') { String username 
 Given(~'^I am at the login page$') { ->
     to LoginPage
     at LoginPage
-    //assert (page.flashmessage?.size() == 0)
-    //assert (page.flashmessage == null)
 }
 
 When(~'^I fill username and password with "([^"]*)" and "([^"]*)"$') { String login, password ->
@@ -116,6 +114,10 @@ Given(~'^I am at the create member page$') { ->
     page.fillLoginData("admin", "adminadmin")
     to MemberCreatePage
     at MemberCreatePage
+}
+
+When(~'^I fill the username with ([^"]*)"$') { String username ->
+	page.fillSomeMemberDetails(username)
 }
 
 When (~'^I fill the member details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') {String name, username, email, phone, websise ->
