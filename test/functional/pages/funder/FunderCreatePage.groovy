@@ -18,9 +18,9 @@ class FunderCreatePage extends FormPage {
         title ==~ currentTitle
     }
 
-    def fillFunderCode(String code){
+    def fillFunderCode(String code, String name){
         $("form").code = code
-        $("form").name = "CNPQ"
+        $("form").name = name
     }
     def selectSave(){
         $(class: 'save').click()

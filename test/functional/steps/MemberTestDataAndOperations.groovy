@@ -39,6 +39,14 @@ class MemberTestDataAndOperations {
             member.name == name
         }
     }
+	
+	static public void createDefaultMember(String name = "name",String username = "username", String email = "email@gmail.com", String phone = "3333-3333", String university = "UFPE", String website = null, String country = "Brasil", String status = null) {
+		def cont = new MemberController()
+        cont.params << [name: name] << [username: username] << [email: email] << [university: university] << [phone: phone] << [website: website] << [country: country] << [status: status]
+        cont.create()
+        cont.save()
+        cont.response.reset()
+	}
 
     static public void createMember(String name = null,String username = null, String email = null, String phone = null, String university = null,
                                     String website = null, String country = null, String status = null) {

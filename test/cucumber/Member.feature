@@ -34,6 +34,7 @@ Feature: member
     Then I am still on the login page with an error message
 	
 #if($nonexisting)
+	@cscbb
   Scenario: login with nonexisting username
     Given I am at the login page
 	When I fill username and password with "nonexistingusername" and "password"
@@ -62,8 +63,7 @@ Feature: member
   Scenario: register user with long username
     Given I am at the create member page
     When I fill the username with "josedmskejfjsdifejfje"
-    Then I am still on the create member page
-	#And	a long username error message is displayed
+    Then I am still on the create member page with the error message
 #end
 
 #if($invalidEmail)
