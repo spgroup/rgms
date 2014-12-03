@@ -41,6 +41,29 @@ Feature: Book
     Then I have the book entitled "SPL Development" with file name "newHSPLE.pdf" stored on the system
 #end
 
+#if($newBookWithoutFile)
+  Scenario: new book without file
+    Given the system has no book entitled "SPL Development"
+    When I try to create the book "SPL Development" without file
+    Then the book is not created by the system
+#end
+
+#if($newBookWithoutFile)
+  Scenario: new book without file
+    Given the system has no book entitled "SPL Development"
+    When I try to create the book "SPL Development" without file
+    Then the book is not created by the system
+#end
+
+#if($newBookWithoutFileWeb)
+  Scenario: new book without file web
+    Given I am at the book page
+    And the system has no book entitled "SPL Development"
+    When I go to new book page
+    And I try to create the book "SPL Development" without file
+    Then the system shows a warning message "Book without file, it is mandatory"
+#end
+
   Scenario: upload book with a file
     Given the system has no books stored
     When I upload the books of "curriculo.xml"
