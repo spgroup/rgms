@@ -24,7 +24,7 @@ When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, 
 }
 
 Then(~'^the book "([^"]*)" is properly stored by the system$') { String title ->
-    book = Book.findByTitle(title)
+    book = BookTestDataAndOperations.findBookByTitle(title)
     assert BookTestDataAndOperations.bookCompatibleTo(book, title)
 }
 
@@ -110,10 +110,6 @@ And(~'^I press to remove at the book show page$') {->
     at BookShowPage
     page.select('input', 'delete')
 }
-Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
-    assert checkIfExists(title)
-}
-
 
 
 Then(~'^the book list contains" ([^"]*)"$') { String title ->
@@ -121,7 +117,32 @@ Then(~'^the book list contains" ([^"]*)"$') { String title ->
     page.checkArticleAtList(title, 0)
 }
 
+And (~'^the book entitled "([^"]*)" is stored in the system with file name "([^"]*)"'){String title, String filename ->
+    checkIfExists(title)
+}
 
+When(~'^I upload the file in the system with name "([^"]*)"$') { String fileName ->
+    BookTestDataAndOperations.uploadBook(fileName)
+}
+
+Then(~'^the book "([^"]*)" has the archive file "([^"]*)" updated by the system$') { String title, String filename ->
+    checkIfExists(title)
+    book = Book.findBookByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+
+Then(~'^I have the book entitled "([^"]*)" with file name "([^"]*)" stored on the system$') { String arg1, String arg2 ->
+    book = BookTestDataAndOperations.findBookByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+
+When(~'^I try to create the book "([^"]*)" without file$') { String title ->
+    BookTestDataAndOperations.createBook(title, null)
+}
+
+Then(~'^the book "([^"]*)" is not created by the system$') {String title ->
+    !checkIfExists(title)
+}
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
