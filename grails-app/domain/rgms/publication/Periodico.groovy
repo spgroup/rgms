@@ -7,14 +7,12 @@ class Periodico extends Publication {
     int volume
     int number
     String pages
-    MagazinePublication magPublication
 
     static constraints = {
         journal nullable: false, blank: false
         volume nullable: false, blank: false, min: 1
         number nullable: false, blank: false, min: 1
         pages nullable: false, blank: false
-        magPublication nullable: true, blank: true
     }
 
     //#if($Bibtex)
