@@ -113,7 +113,7 @@ And(~'^I select to order the list of books by "([^"]*)"$') {String sortType->
     page.selectOrderBy(sortType)
 }
 
-Then(~'^my article list shows the articles ordered by "([^"]*)"$') { String sortType ->
+Then(~'^my book list shows the books ordered by "([^"]*)"$') { String sortType ->
     at BookPage
     page.checkOrderedBy(sortType);
 }
