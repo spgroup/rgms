@@ -9,7 +9,7 @@ import steps.TestDataAndOperations
 import steps.TestDataAndOperationsPublication
 import steps.ConferenciaTestDataAndOperations
 import rgms.tool.TwitterTool
-import pages.visit.ConferenciaShowPage
+
 
 import static cucumber.api.groovy.EN.*
 
