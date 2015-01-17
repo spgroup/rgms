@@ -148,19 +148,24 @@ And(~'^the conferencias are not stored by the system$') {->
 
 }
 
+Given(~'^I am at the conferencia webpage$') {->
+    LogInToPublication()
+    page.select("Conferencia")
+    at ConferenciaPage
+}
 
-And(~'^the conferencia "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+And(~'^the conferencia data "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     TestDataConferencia.createConferencia(title, filename, "UFPE")
     conferencia = Conferencia.findByTitle(title)
     assert conferencia != null
 }
 
-When(~'^I select the download button$') { ->
+When(~'^I select the download button for conference$') { ->
     at ConferenciaPage
     page.selectDownloadBook()
 }
 
-Then(~'^I can download the file named "([^"]*)"$') { String filename ->
+Then(~'^I can download the file named "([^"]*)" for conference$') { String filename ->
     at ConferenciaPage
     assert page.clickDownloadLink(conferencia, filename)
 }
@@ -179,7 +184,7 @@ When(~'^I try to create an conference$') { ->
 	page.fillConferenciaDetails()
 }
 
-When(~'^I share it in Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+When(~'^I share it in Twitter page with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
 	at ConferenciaShowPage
 	page.clickOnTwitteIt(twitterLogin, twitterPw)
 }

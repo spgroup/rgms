@@ -148,7 +148,7 @@ Feature: conferencia
   Scenario: Add a new Conferencia twitting it
     Given I am logged as "admin" and at the Add Conferencia
     When I try to create an Conferencia
-    And I share it in Twitter with "rgms_ufpe" and "rgmsadmin2013"
+    And I share it in Twitter page with "rgms_ufpe" and "rgmsadmin2013"
     Then A tweet is added to my twitter account regarding the new Conferencia "ACM CHI Conference on Human Factors in Computing Systems"
 
   Scenario: Add a new Conferencia with twitter, but don't tweet it
@@ -160,7 +160,7 @@ Feature: conferencia
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
 
 	Scenario: download a conference file
-		Given I am at the conferencias page
-		And the conferencia "TesteConferencia" is stored in the system with file name "testeConferencia.txt"
-		When I select the download button
-		Then I can download the file named "testeConferencia.txt"
+		Given I am at the conferencia webpage
+		And the conferencia data "TesteConferencia" is stored in the system with file name "testeConferencia.txt"
+		When I select the download button for conference
+		Then I can download the file named "testeConferencia.txt" for conference

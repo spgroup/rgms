@@ -51,14 +51,14 @@ Feature: Thesis Tests
     Then the returned thesis list has the same items but it is sorted by date
 
     #if($Thesis Tests)
-      Scenario :list existing articles in alphabetical order of name
+      Scenario: list existing articles in alphabetical order of name
 
         Given the system has thesis with file name "TCS-1401.pdf" and school"UFPB"
         And the system has article with file name "MACI.pdf" and school "UFPE"
         When the system orders the article list by name
         Then the system article list content is not modified
         
-        Scenario :list existing articles in alphabetical order of school
+        Scenario: list existing articles in alphabetical order of school
         
         Given the system has thesis with file name "TCS-1401.pdf" and school"UFPB"
         And the system has article with file name "MACI.pdf" and school "UFPE"
@@ -127,6 +127,6 @@ Feature: Thesis Tests
   #if(downloadThesisListFile)
   Scenario: download thesis list file
     Given I am the thesis list page and the system has thesis
-    When I select the thesis list download button
+    When I select the thesis list download button for thesis
     Then I can download the file named "TL-0.pdf" that contains the thesis list
   #end

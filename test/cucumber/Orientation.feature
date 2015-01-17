@@ -74,7 +74,7 @@ Feature: orientations
 
   Scenario: upload orientations without a file
     Given I am at the publications menu
-    When I select the "Orientation" option at the program menu
+    When I select the "Orientation" option at the program orientation menu
     And I select the upload button at the orientations page
     Then I'm still on orientations page
     And the orientations are not stored by the system

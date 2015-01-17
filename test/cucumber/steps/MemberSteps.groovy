@@ -223,12 +223,12 @@ Given(~'^I am at the members page$') { ->
     to MemberPage
 }
 
-+When(~'^I select the download member button$') { ->
+When(~'^I select the download member button$') { ->
     at MemberPage
     page.selectDownloadFunder()
 }
 
-Then(~'^I can download the file named "([^"]*)"$') { String name->
+Then(~'^I can download the data file named "([^"]*)"$') { String name->
     at MemberPage
     assert page.clickDownloadLink(name)
 }

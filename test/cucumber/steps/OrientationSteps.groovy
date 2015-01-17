@@ -247,7 +247,7 @@ When(~"^I select to view the list of orientations\$") {->
 }
 
 
-And(~'^I select the "([^"]*)" option at the program menu$') { String option ->
+And(~'^I select the "([^"]*)" option at the program orientation menu$') { String option ->
     page.select(option)
 }
 

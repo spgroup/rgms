@@ -267,7 +267,7 @@ When(~"^I select to view the list of news\$") {->
     assert news != null
 }
 
-And(~'^I select the "([^"]*)" option at the program menu$') { String option ->
+And(~'^I select the "([^"]*)" option at the program menu page$') { String option ->
     page.select(option)
 }
 

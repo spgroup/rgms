@@ -158,7 +158,7 @@ Given(~'^the system has no dissertation stored$')   {->
 
 
 
-And(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+And(~'^the dissertation which name "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     TestDataDissertacao.createDissertacao(title, filename, "UFPE")
     dissertacao = Dissertacao.findByTitle(title)
     assert dissertacao != null
@@ -169,7 +169,7 @@ When(~'^I select the download button$') { ->
     page.selectDownloadBook()
 }
 
-Then(~'^I can download the file named "([^"]*)"$') { String filename ->
+Then(~'^I can download the file named "([^"]*) for dissertation"$') { String filename ->
     at DissertationPage
     assert page.clickDownloadLink(dissertation, filename)
 }

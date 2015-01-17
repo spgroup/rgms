@@ -277,12 +277,12 @@ Given(~'^I am at the thesis page$') { ->
     to ThesisPage
 }
 
-+When(~'^I select the download button$') { ->
+When(~'^I select the download button for thesis$') { ->
     at ThesisPage
     page.selectDownloadThesis()
 }
 
-Then(~'^I can download the file named "([^"]*)"$') { String name->
+Then(~'^I can download the file named "([^"]*)" that contains the thesis list$') { String name->
     at ThesisPage
     assert page.clickDownloadLink(name)
 }
@@ -313,7 +313,7 @@ Given(~'^the system has thesis with file name "([^"]*)" and school "([^"]*)"$'){
 	  assert ThesisTestDataAndOperations.isSorted(ThesisSorted, "school")
   }
 
-  Then(~'^the system thesis list content is not modified$') {->
+  Then(~'^the system thesis list content is not modified $') {->
 	  assert Thesis.findAll().size() == 2
 	  assert !ThesisNoExist('TCS-1401.pdf')
 	  assert !ThesisNoExist('MACI.pdf')
