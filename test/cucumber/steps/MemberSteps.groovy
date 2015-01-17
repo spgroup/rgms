@@ -194,7 +194,6 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     //assert member.name == name
 }
 
-<<<<<<< HEAD
 Given(~'^The system has a member named "([^"]*)"$') { String name ->
     user = User.findByName(name);
     member = user?.author
@@ -214,7 +213,8 @@ When(~'^I search for "([^"]*)"$') { String name ->
 Then(~'My member list contains the member named "([^"]*)"$') { String name ->
     at MemberSearchPage
     assert page.resultsListContains(username)
-=======
+}
+
 Given(~'^I am at the members page$') { ->
     to LoginPage
     at LoginPage
@@ -223,7 +223,7 @@ Given(~'^I am at the members page$') { ->
     to MemberPage
 }
 
-+When(~'^I select the download button$') { ->
++When(~'^I select the download member button$') { ->
     at MemberPage
     page.selectDownloadFunder()
 }
@@ -231,5 +231,4 @@ Given(~'^I am at the members page$') { ->
 Then(~'^I can download the file named "([^"]*)"$') { String name->
     at MemberPage
     assert page.clickDownloadLink(name)
->>>>>>> spm2
 }
