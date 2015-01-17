@@ -130,7 +130,7 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     assert book != null
 }
 
-When(~'^I select the download button$') { ->
+When(~'^I select the download book button$') { ->
     at BookPage
     page.selectDownloadBook()
 }
