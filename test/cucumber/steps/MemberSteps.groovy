@@ -3,6 +3,7 @@ import pages.RegisterPage
 import pages.member.MemberCreatePage
 import pages.member.MemberPage
 import pages.member.MemberViewPage
+import pages.member.MemberSearchPage
 import rgms.authentication.User
 import rgms.member.Member
 import steps.MemberTestDataAndOperations
@@ -201,17 +202,16 @@ Given(~'^The system has a member named "([^"]*)"$') { String name ->
 }
 
 And(~'^I am at the member search page$') { ->
+    to MemberSearchPage
     at MemberSearchPage
 }
 
 When(~'^I search for "([^"]*)"$') { String name ->
-    at MemberSearchPage
     page.fillSearchBox(name)
     page.clickSearchButton()
 }
 
 Then(~'My member list contains the member named "([^"]*)"$') { String name ->
-    at MemberSearchPage
     assert page.resultsListContains(username)
 }
 
@@ -231,4 +231,10 @@ When(~'^I select the download member button$') { ->
 Then(~'^I can download the data file named "([^"]*)"$') { String name->
     at MemberPage
     assert page.clickDownloadLink(name)
+}
+
+Given(~'^the system has a member named "([^"]*)"$') { String name ->
+	MemberTestDataAndOperations.createMemberWithName(name)
+    member = Member.findByName(name)
+    assert member != null
 }
