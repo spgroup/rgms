@@ -90,6 +90,22 @@ class MemberController {
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
     }
+    
+    def search = {
+        def userMemberList = []
+        if(params.name){
+            def members = Member.findAllByName(params.name)
+            for (i in members) {
+                def user = User.findByAuthor(i)
+                if (user)
+                    userMemberList.add([user: user, member: i])
+                else
+                    userMemberList.add([member: i])
+            }
+        }
+        
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+    }
 
 
     def show = {
