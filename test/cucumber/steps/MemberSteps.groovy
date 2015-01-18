@@ -15,22 +15,11 @@ Given(~'^the system has no member with username "([^"]*)"$') { String username -
 }
 
 When(~'^I create a member with username "([^"]*)"$') { String username ->
-    MemberTestDataAndOperations.createMember(username, "", "")
+    MemberTestDataAndOperations.createMember(username, "")
 }
 
 When(~'^I create a member with username, phone "([^"]*)" "([^"]*)"$') { String username, phone ->
-    MemberTestDataAndOperations.createMember(username, phone, "")
-}
-
-Then(~'^the member "([^"]*)" is not stored by the system$') { username ->
-    user = User.findByUsername(username);
-    member = user?.author
-    assert member == null
-}
-
-
-When(~'^I create a member with username, university "([^"]*)" "([^"]*)"$') { String username, String university ->
-    MemberTestDataAndOperations.createMember(username, "", university)
+    MemberTestDataAndOperations.createMember(username, phone)
 }
 
 Then(~'^the member with username "([^"]*)" is properly stored by the system$') { String username ->
@@ -149,7 +138,7 @@ Then(~'^I am on the member show page$') { ->
 
 //TODO verificação teria que ser específica, bem menos parcial do que a abaixo
 Then(~'^I am still on the create member page with the error message$') { ->
-     at MemberCreatePage
+    at MemberCreatePage
     //assert mensagem != null
 
 }

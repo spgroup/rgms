@@ -19,7 +19,7 @@ Feature: member
     Then the member with "usernametest" is removed from the system storage
 
   Scenario: new member with existing username
-    Given the system has member with username "usernametest"
+    Given the system has a member with username "usernametest"
     When I create the member with username "usernametest"
     Then the member "usernametest" is not registered
 
@@ -84,12 +84,12 @@ Scenario: new member with invalid phone
     Then I see default data filled on register form
 #end
 
-  Scenario: Phone field in blank should not impede the user creation
-    Given I am at the Create Page
-    And I have filled the fields "Name", "Username", "Email" and "University" with "userTest", "user1", "user1@ufpe.br" and "Federal University of Pernambuco"
-    Then The User should be stored by the system
+  Scenario: Phone param in blank should not impede the user creation
+    Given I'm creating a new user
+    When I create a user with Name, Username, Email, University, Country and Website equals to "userTest", "user1", "user1@ufpe.br", "Federal University of Pernambuco", "Brazil" and "http://www.google.com"
+    Then The User with username "user1" should be stored by the system
 
-  Scenario: Website field in blank should not impede the user creation
-    Given I am at the Create Page
-    And I have filled the fields "Name", "Username", "Email" and "University" with "userTest", "user1", "user1@ufpe.br" and "Federal University of Pernambuco"
-    Then The User should be stored by the system
+  Scenario: Website param in blank should not impede the user creation
+    Given I'm creating a new user
+    When I create a user with Name, Username, Email, University, Country and Phone equals to "userTest", "user2", "user2@ufpe.br", "Federal University of Pernambuco", "Brazil" and "99887766"
+    Then The User with username "user2" should be stored by the system

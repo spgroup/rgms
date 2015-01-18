@@ -86,4 +86,23 @@ class MemberTestDataAndOperations {
         }
         return false;
     }
+
+    static public void createMemberWithoutPhone(String name, String username, String email, String university, String country, String website) {
+        def cont = new MemberController()
+
+        cont.params << [name:name, username: username, email: email, university: university, country:country, website: website]
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
+    static public void createMemberWithoutWebsite(String name, String username, String email, String university, String country, String phone) {
+        def cont = new MemberController()
+
+        cont.params << [name:name, username: username, email: email, university: university, country:country, phone: phone]
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
 }
