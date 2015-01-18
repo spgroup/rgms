@@ -158,13 +158,12 @@ Then(~'^I can download the file named "([^"]*)"$') { String filename ->
 }
 
 And(~'^I select the new book option at the book page$') {
-    at BookPage
+    page.selectNewBook();
     to BookCreatePage
 }
 
 Then(~'^I can fill the book details$') {->
-    at BookCreatePage
-    page.fillBookDetails()
+    page.fillBookDetails("Next Generation Software Product Line Engineering","NGS.pdf");
 }
 
 And(~'^the system has some books created$') {
