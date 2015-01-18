@@ -157,7 +157,7 @@ Then(~'^I can download the file named "([^"]*)"$') { String filename ->
     assert page.clickDownloadLink(filename)
 }
 
-And(~'^I select the new book option at the book page$') {
+And(~'^I select the new book option at the book page$') { ->
     page.selectNewBook();
     to BookCreatePage
 }
