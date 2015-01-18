@@ -52,6 +52,8 @@ class MemberController {
         }
 //#end
 
+
+
         def memberInstance = new Member(params)
         def userInstance = new User(params)
 

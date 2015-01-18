@@ -39,12 +39,20 @@ class MemberTestDataAndOperations {
         }
     }
 
-    static public void createMember(String username, String phone) {
+    static public void createMember(String username, String phone, String university) {
         def cont = new MemberController()
-        if (phone.equals("")) {
+        if (phone.equals("") && university.equals("")) {
             cont.params << findByUsername(username)
-        } else {
-            cont.params << [username: username, phone: phone]
+        } else if(university.equals("")){
+            cont.params << [name: "Rodolfo", username: username, email: "rodolfofake@gmail.com",
+                             status: "Graduate Student", university: "UFPE", enabled: true, phone: phone
+                            ]
+        }
+        else
+        {
+            cont.params << [name: "Rodolfo", username: username, email: "rodolfofake@gmail.com",
+                            status: "Graduate Student", university: university, enabled: true, phone: "123456"
+            ]
         }
         cont.create()
         cont.save()

@@ -62,10 +62,17 @@ Feature: member
 #   When   I fill many user details with "berg" "bergU" "jus@cin.ufpe.br" "UFPE" "ajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 #   Then   I am still on the create member page with the error message
 
-#Scenario: new member with invalid phone
-#   Given the system has no member with username "userwithinvalidphone"
-#   When I create a member with username "userwithinvalidphone"
-#   Then I am still on the create member page with the error message
+Scenario: new member with invalid phone
+   Given the system has no member with username "userwithinvalidphone"
+   When I create a member with username, phone "userwithinvalidphone" "telefone Invalido"
+   Then the member "userwithinvalidphone" is not stored by the system
+
+
+  Scenario: new member with invalid University
+    Given the system has no member with username "userwithinvaliduniversity"
+    When I create a member with username, university "userwithinvalidphone" "123456"
+    Then the member "userwithinvaliduniversity" is not stored by the system
+
 
 #if ($contextualInformation)
   Scenario: new member filled with default data
