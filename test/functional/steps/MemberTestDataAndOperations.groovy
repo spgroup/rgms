@@ -78,4 +78,12 @@ class MemberTestDataAndOperations {
         }
         return false;
     }
+    
+    static public void createMemberWithName(String name) {
+        def cont = new MemberController()
+        cont.params << findByName(name)
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
 }
