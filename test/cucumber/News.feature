@@ -72,9 +72,10 @@ Feature: news
     When I try to create a news with description "teste" and date "31-02-2013" for "SPG" research group
     Then the news with description "teste", date "31-02-2013" and "SPG" research group is not stored by the system because it is invalid
 
+  Scenario: list existing news ordered by descending date
 	Given I am at the publications menu
-		And the system has some news created
-		When I select to view the list of news
-		And I select the order option in the program menu page
-		And I select the "order by date" option in the program menu
-		Then the system orders the publications list by date
+	And the system has some news created
+	When I select to view the list of news
+	And I select the order option in the program menu page
+	And I select the "order by date" option in the program menu
+	Then the system orders the publications list by date

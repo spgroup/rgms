@@ -5,6 +5,28 @@ import rgms.publication.*
 
 class TestDataDissertacao
 {
+    static dissertacoes = [
+            [title: "Micro Development", publicationDate: (new Date("12 October 2012")),
+             publisher: "Carl", volume: 1, pages: "20"],
+            [title: "SQL Development", publicationDate: (new Date("12 October 2012")),
+             publisher: "Ian", volume: 2, pages: "541"],
+            [title: "Data Base", publicationDate: (new Date("25 July 2012")),
+             publisher: "John", volume: 3, pages: "272"]
+    ]
+
+    static public def findByTitle(String title) {
+        dissertacoes.find { dissertacao ->
+            dissertacao.title == title
+        }
+    }
+
+    static public def canDownloadFile(String filename){
+        if(filename == null || filename.isEmpty()) assert false
+        int p = filename.lastIndexOf('.')
+        assert (p != (filename.length()-1) )
+    }
+
+
 
     static public void createDissertacao(String title, filename, school) {
         def cont = new DissertacaoController()

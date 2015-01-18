@@ -17,4 +17,9 @@ class Book extends Publication {
         return new BibtexExport().generateBibtexBook(this)
     }
     //#end
+
+    Book findByTitle(){
+        return null;
+    }
+
 }

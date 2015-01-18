@@ -263,8 +263,8 @@ And(~'^the system has some news created$') { ->
 }
 
 When(~"^I select to view the list of news\$") {->
-    news = News.findAll()
-    assert news != null
+    newsList NewsTestDataAndOperations.findAll()
+    assert newsList != null
 }
 
 And(~'^I select the "([^"]*)" option at the program menu page$') { String option ->

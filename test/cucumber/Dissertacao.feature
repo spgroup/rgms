@@ -94,6 +94,6 @@ Feature: Dissertation Tests
 
 	Scenario: download a dissertation
 		Given I am at the publications menu
-		And the dissertation which name "Teste" is stored in the system with file name "teste.txt"
+		And the dissertation which name "SQL Development" is stored in the system with file name "teste.txt"
 		When I select the download button
-		Then I can download the file named "dissertation.txt for dissertation
+		Then I can download the file named "dissertation.txt" for dissertation

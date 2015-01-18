@@ -25,11 +25,12 @@ class BookTestDataAndOperations {
         books.find { book ->
             book.title == title
         }
+
     }
 
     static public void createBook(String title, String filename) {
         def cont = new BookController()
-        cont.params << findBookByTitle(title) << [file: filename]
+      //  cont.params << findBookByTitle(title) << [file: filename]
         cont.request.setContent(new byte[1000])
         cont.create()
         cont.save()

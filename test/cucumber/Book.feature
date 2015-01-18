@@ -63,3 +63,8 @@ Scenario: new book web
     And I select to order the list of books by "volume"
     Then my book list shows the books ordered by "volume"
   #end
+  Scenario: Create invalid book
+    Given I am at the book page
+    And the system has no book with empty title
+    When I create the book with empty title
+    Then the book with empty title is not stored

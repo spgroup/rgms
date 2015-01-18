@@ -84,6 +84,23 @@ Given(~'^I am at the book page$') { ->
     to BookPage
 }
 
+And(~'^the system has no book with empty title$'){ ->
+    bookList = BookTestDataAndOperations.findBookByTitle("")
+    assert bookList == null
+
+
+}
+
+When(~'^I create the book with empty title$') {->
+    BookTestDataAndOperations.createBook("","Test")
+}
+
+Then(~'^the book with empty title is not stored$'){->
+    bookList = BookTestDataAndOperations.findBookByTitle("")
+    assert bookList == null
+    //assert bookList == null
+}
+
 When(~'^I go to new book page$') { ->
     to BookPage
     page.selectNewBook()
@@ -158,4 +175,10 @@ And(~'^the system has some books created$') {
 Then(~'^my book list shows the articles ordered by "([^"]*)"$') { String sortType ->
     at BookPage
     page.checkOrderedBy(sortType);
+}
+
+def Login(){
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
 }
