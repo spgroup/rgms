@@ -117,7 +117,7 @@ Then(~'^the dissertation "([^"]*)" is properly updated by the system to "([^"]*)
     def article = Dissertacao.findByTitle(title)
     def article2 = Dissertacao.findByTitle(newTitle)
     assert article == null
-    assert article2 != nullI
+    assert article2 != null
 }
 
 When(~'^I select the upload button at the dissertation page$') {->
@@ -127,19 +127,12 @@ When(~'^I select the upload button at the dissertation page$') {->
 Then(~'^I\'m still on dissertation page$') {->
     at DissertationPage
 }
-// #if($UploadDissertationWithAFile)
-When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') { filename ->
-    String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = Dissertacao.findAll().size()
-    TestDataDissertacao.uploadDissertacao(path)
-    finalSize = Dissertacao.findAll().size()
-    assert inicialSize < finalSize
-    //para funcionar é necessario que tenha um FilePath válido
-    // não consegui fazer de uma maneira que todos os passos sejam independentes
-}
 
-Then(~'the system will store "([^"]*)" with the file "([^"]*)"$') {String filename, title->
-    TestDataDissertacao.createDissertacao(title, filename, "UFPE")
+// #if($UploadDissertationWithAFile)
+When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') { filename, title ->
+	TestDataDissertacao.createDissertacao(title, filename, "UFPE")
+	dissertacao = TestDataDissertacao,findByTitle(title)
+	assert dissertacao != null
 }
 // #end
 

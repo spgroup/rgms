@@ -6,6 +6,12 @@ import rgms.publication.*
 class TestDataDissertacao
 {
 
+	static public def findByTitle(String title){
+		dissertacoes.find { dissertacao ->
+            dissertacao.title == title
+        }
+	}
+
     static public void createDissertacao(String title, filename, school) {
         def cont = new DissertacaoController()
         ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title,filename,school,cont)
