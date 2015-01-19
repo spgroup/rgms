@@ -120,41 +120,34 @@ When(~'^I click to remove the record$') {->
 }
 
 // #if($SuccessfullyEditAStatus)
-Given(~'^I am logged at my profile page$'){->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
+Given(~'^Given a record with status "([^"]*)"$') {status ->
     to ProfilePage
     at ProfilePage
+    record = RecordTestDataAndOperations.findRecordByStatus(status)
+	assert record != null
 }
 
-When(~'^I fill the field of status with "([^"]*)"$'){String status ->
-    TestDataAndOperations.fillRecordDetails(status)
+When(~'^I fill the field of status with "([^"]*)"$'){status ->
+    RecordTestDataAndOperations.updateRecord(status, Date.getTimeString())
 }
 
-Then(~'^my profile will now show my new status$'){->
-// Then(~'^my profile will now show "([^"]*)"$'){String string ->
-	to ProfilePage
-	at ProfilePage
-    status = TestDataAndOperations.getRecordDetails()
-	assert status != null
-	// assert status != string
+When(~'^confirm the edit$') {->
+    page.select("Confirm")
+}
+
+Then(~'^the record will now show "([^"]*)"$'){status ->
+    record = RecordTestDataAndOperations.findRecordByStatus(status)
+	assert record != null
 }
 // #end
 
 // #if($CancelTheEditOfAStatus)
-Given(~'^a field of status filled with "([^"]*)"$') {String status ->
-    to ProfilePage
-    at ProfilePage
-    TestDataAndOperations.fillRecordDetails(status)
-}
-
 When(~'^the member press the button cancel$') {->
     page.select("Cancel")
 }
 
-Then(~'^nothing will be posted$') {->
-	status = TestDataAndOperations.getRecordDetails()
-	assert status == null
+Then(~'^the record won't save the "([^"]*)"$') {status ->
+	record = RecordTestDataAndOperations.findRecordByStatus(status)
+	assert record == null
 }
 // #end
