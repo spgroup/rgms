@@ -127,12 +127,18 @@ Given(~'^I am logged at my profile page$'){->
     to ProfilePage
     at ProfilePage
 }
-When(~'^I fill the field of status with "([^"]*)"$'){String status->
-    page.fillRecordDetails(status)
+
+When(~'^I fill the field of status with "([^"]*)"$'){String status ->
+    TestDataAndOperations.fillRecordDetails(status)
 }
 
 Then(~'^my profile will now show my new status$'){->
-    to ProfilePage
+// Then(~'^my profile will now show "([^"]*)"$'){String string ->
+	to ProfilePage
+	at ProfilePage
+    status = TestDataAndOperations.getRecordDetails()
+	assert status != null
+	// assert status != string
 }
 // #end
 
@@ -140,15 +146,15 @@ Then(~'^my profile will now show my new status$'){->
 Given(~'^a field of status filled with "([^"]*)"$') {String status ->
     to ProfilePage
     at ProfilePage
-    page.fillRecordDetails(status)
+    TestDataAndOperations.fillRecordDetails(status)
 }
 
 When(~'^the member press the button cancel$') {->
-    page.click("Cancel")
+    page.select("Cancel")
 }
 
 Then(~'^nothing will be posted$') {->
-    to ProfilePage
-    at ProfilePage
+	status = TestDataAndOperations.getRecordDetails()
+	assert status == null
 }
 // #end
