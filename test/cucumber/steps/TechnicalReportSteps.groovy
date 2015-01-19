@@ -87,14 +87,6 @@ Then(~'The technical report "([^"]*)" is saved on the system'){String tittle
 
 // edit existing technical report with invalid title web
 
-Given (~'I am at the technical report page'){->
-	to LoginPage
-	at Login Page
-	page.add("admin", "adminadmin")
-	at PublicationPage
-	page.select("Technical Report")
-	at TechinicalReportPage
-}
 And (~'The technical report "([^"]*)" is stored in the system with the file name "([^"]*)"'){String title, filename
 	page.selectTechincalReport()
 	at TechnicalReportPage
