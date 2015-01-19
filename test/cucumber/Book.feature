@@ -35,9 +35,7 @@ Feature: Book
    Scenario: update existing book web
     Given I am at the book page
     And the book entitled "SPL Development" is stored in the system with file name "HSPLE.pdf"
-    When I click on "Edit book"
-    And I click on "Upload file"
-    And I choose "newHSPLE.pdf"
+    When I edit the book file name from "HSPLE.pdf" to "newHSPLE.pdf"
     Then I have the book entitled "SPL Development" with file name "newHSPLE.pdf" stored on the system
 #end
 
@@ -52,16 +50,16 @@ Feature: Book
   Scenario: new book without file
     Given the system has no book entitled "SPL Development"
     When I try to create the book "SPL Development" without file
-    Then this book "SPL Development" is not stored by the system
+    Then the book "SPL Development" is not created by the system
 #end
 
 #if($newBookWithoutFileWeb)
   Scenario: new book without file web
     Given I am at the book page
     And the system has no book entitled "SPL Development"
-    When I select new book page
+    When I go to new book page
     And I try to create the book "SPL Development" without file
-    Then the system shows a warning message "Book without file, it is mandatory"
+    Then I should see an error message containing "Book without file, it is mandatory"
 #end
 
   Scenario: upload book with a file

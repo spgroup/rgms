@@ -94,13 +94,13 @@ And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$'
     to BookPage
     at BookPage
 }
+
 Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     book = Book.findByTitle(title)
     assert book != null
     to BookPage
     at BookPage
 }
-
 
 When(~'^I choose to view "([^"]*)" in book list$') { String title ->
     page.selectViewBook(title)
@@ -117,7 +117,7 @@ Then(~'^the book list contains" ([^"]*)"$') { String title ->
     page.checkArticleAtList(title, 0)
 }
 
-And (~'^the book entitled "([^"]*)" is stored in the system with file name "([^"]*)"'){String title, String filename ->
+And (~'^the book entitled "([^"]*)" is stored in the system with file name "([^"]*)$"'){String title, String filename ->
     checkIfExists(title)
 }
 
@@ -137,11 +137,19 @@ Then(~'^I have the book entitled "([^"]*)" with file name "([^"]*)" stored on th
 }
 
 When(~'^I try to create the book "([^"]*)" without file$') { String title ->
-    BookTestDataAndOperations.createBook(title, null)
+    !checkIfExists(title)
 }
 
 Then(~'^the book "([^"]*)" is not created by the system$') {String title ->
     !checkIfExists(title)
+}
+
+When (~'^I edit the book file name from "([^"]*)" to "([^"]*)$"') {String fileName ->
+    BookTestDataAndOperations.uploadBook(fileName)
+}
+
+Then (~'I should see an error message containing "([^"]*)"$') {
+    assert !(page.readFlashMessage() == null)
 }
 
 def checkIfExists(String title) {
