@@ -8,6 +8,12 @@ Feature: member
     When I create a member with username "usernametest"
     Then the member with username "usernametest" is properly stored by the system
 
+  Scenario: new member with invalid username
+    Given I am at the member page
+    And  the system has no member with empty username
+    When I create the book with empty username
+    Then the member with empty name is not stored
+
   Scenario: list existing member
     Given   the system has member with username "usernametest"
     When    I view the member list

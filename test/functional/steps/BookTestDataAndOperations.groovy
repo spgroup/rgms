@@ -30,7 +30,9 @@ class BookTestDataAndOperations {
 
     static public void createBook(String title, String filename) {
         def cont = new BookController()
-        cont.params << findBookByTitle(title) << [file: filename]
+        if( validateDataBook(findBookByTitle(title)) ){
+            cont.params << findBookByTitle(title) << [file: filename]
+        }
         cont.request.setContent(new byte[1000])
         cont.create()
         cont.save()
@@ -77,4 +79,11 @@ class BookTestDataAndOperations {
         }
         return compatible
     }
+
+
+    public static boolean validateDataBook(book){
+        if(book == null ) return false
+        else return true
+    }
+
 }

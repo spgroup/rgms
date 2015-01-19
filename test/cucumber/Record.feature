@@ -55,3 +55,4 @@ Feature: record
     And the record with status "MSc Student" is associated to a member
     When I click to remove the record
     Then I am still at the visualize page of the record with status "MSc Student"
+

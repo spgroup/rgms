@@ -223,6 +223,21 @@ Given(~'^I am at the members page$') { ->
     to MemberPage
 }
 
+And(~'^the system has no member with empty username$') { ->
+    memberList = MemberTestDataAndOperations.findByName("")
+    assert bookList == null
+}
+
+When(~'^I create the book with empty username$') { ->
+    MemberTestDataAndOperations.createMember("","1234-5678")
+}
+
+Then(~'^the member with empty name is not stored$') { ->
+    memberList = MemberTestDataAndOperations.findByName("")
+    assert memberList == null
+}
+
+
 When(~'^I select the download member button$') { ->
     at MemberPage
     page.selectDownloadFunder()
@@ -233,8 +248,11 @@ Then(~'^I can download the data file named "([^"]*)"$') { String name->
     assert page.clickDownloadLink(name)
 }
 
+
 Given(~'^the system has a member named "([^"]*)"$') { String name ->
 	MemberTestDataAndOperations.createMemberWithName(name)
     member = Member.findByName(name)
     assert member != null
 }
+
+

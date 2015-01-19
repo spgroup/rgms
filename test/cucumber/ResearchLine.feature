@@ -60,3 +60,8 @@ Feature: research line
     Then I'm still on the research line page
     And an error message is showed at the research line page
   #end
+
+  Scenario: duplicate research lines
+    Given the system has a research lines named "Mendoin" with a description "Good"
+    When I create the research lines "Mendoin" with a description "Good"
+    Then the research line "Mendoin" is not stored twice

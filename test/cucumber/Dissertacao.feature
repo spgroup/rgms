@@ -97,3 +97,15 @@ Feature: Dissertation Tests
 		And the dissertation which name "SQL Development" is stored in the system with file name "teste.txt"
 		When I select the download button
 		Then I can download the file named "dissertation.txt" for dissertation
+
+
+    Scenario: new dissertation with invalid title
+      Given I am at the publications menu
+      And  the system has no dissertation with empty title
+      When I create the dissertation with empty title
+      Then the dissertation with empty title is not stored
+
+    Scenario: duplicate dissertation
+      Given the dissertation "Mendoin" is stored in the system with file name "mendoin.pdf"
+      When I create the dissertation "Mendoin" with file name "Mendoin.pdf"
+      Then the dissertation "Mendoin" is not stored twice

@@ -25,6 +25,7 @@ When(~'^I can add the dissertation with a file "([^"]*)"$'){ String filename->
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + filename
     page.fillDissertationDetailsWithFile(path)
 }
+
 Then((~'^the system has a dissertation entitled "([^"]*)"$')){ String title->
     article = Dissertacao.findByTitle(title)
     assert article != null
@@ -174,4 +175,18 @@ Then(~'^I can download the file named "([^"]*)" for dissertation$') { String fil
     DissertationPage.clickDownloadButton(filename)
 }
 
+
+And(~'^the system has no dissertation with empty title$') { ->
+    memberList = TestDataDissertacao.findByTitle("")
+    assert memberList == null
+}
+
+When(~'^I create the dissertation with empty title$') { ->
+    TestDataDissertacao.createDissertacao("", "teste.pdf", "Colubmia")
+}
+
+Then(~'^the dissertation with empty title is not stored$') { ->
+    memberList = TestDataDissertacao.findByTitle("")
+    assert memberList == null
+}
 

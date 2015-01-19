@@ -26,6 +26,11 @@ class TestDataDissertacao
         assert (p != (filename.length()-1) )
     }
 
+    static public def findAllByTitle(title){
+        dissertacoes.findAll { dissertacao ->
+            dissertacao.title == title
+        }
+    }
 
 
     static public void createDissertacao(String title, filename, school) {

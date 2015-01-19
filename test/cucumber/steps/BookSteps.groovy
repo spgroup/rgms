@@ -87,12 +87,10 @@ Given(~'^I am at the book page$') { ->
 And(~'^the system has no book with empty title$'){ ->
     bookList = BookTestDataAndOperations.findBookByTitle("")
     assert bookList == null
-
-
 }
 
 When(~'^I create the book with empty title$') {->
-    BookTestDataAndOperations.createBook("","Test")
+    BookTestDataAndOperations.createBook("","oi")
 }
 
 Then(~'^the book with empty title is not stored$'){->
