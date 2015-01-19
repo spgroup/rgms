@@ -212,7 +212,7 @@ When(~'^I search for "([^"]*)"$') { String name ->
 }
 
 Then(~'My member list contains the member named "([^"]*)"$') { String name ->
-    assert page.resultsListContains(username)
+    assert page.resultsListContains(name)
 }
 
 Given(~'^I am at the members page$') { ->
