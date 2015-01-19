@@ -35,9 +35,7 @@ Feature: Book
    Scenario: update existing book web
     Given I am at the book page
     And the book entitled "SPL Development" is stored in the system with file name "HSPLE.pdf"
-    When I click on "Edit book"
-    And I click on "Upload file"
-    And I choose "newHSPLE.pdf"
+    When I edit the book file name from "HSPLE.pdf" to "newHSPLE.pdf"
     Then I have the book entitled "SPL Development" with file name "newHSPLE.pdf" stored on the system
 #end
 
