@@ -124,25 +124,7 @@ And(~'^the ferramenta is not displayed in the ferramentas list page$') {->
     page.checkAnyFerramentaAtList()
 }
 
-// upload ferramenta without a file
-// #if($UploadFerramentaWithoutAFile)
-Given(~'^I am at publications menu$'){->
-    to PublicationsPage
-    at PublicationsPage
-}
-
-When(~'^I select the upload button at the ferramenta page without attaching a file$'){->
-    to FerramentaPage
-    at FerramentaPage
-    page.click("Upload")
-}
-
-Then(~'^the ferramenta wont be inserted into the system$') {->
-    to FerramentaPage
-    at FerramentaPage
-}
-// #end
-
+// upload ferramenta without a file <- Cenário impossível
 And(~'^I select the upload button at the ferramenta page$') {->
 
 }
