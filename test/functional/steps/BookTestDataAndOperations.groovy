@@ -27,6 +27,12 @@ class BookTestDataAndOperations {
         }
     }
 
+    static public def findBookByFile(String file) {
+        books.find { book ->
+            book.file == file
+        }
+    }
+
     static public void createBook(String title, String filename) {
         def cont = new BookController()
         cont.params << findBookByTitle(title) << [file: filename]
@@ -51,6 +57,18 @@ class BookTestDataAndOperations {
         cont.update()
 
         def updatedBook = Book.findByTitle(newtitle)
+        return updatedBook
+    }
+
+    //created/modified by @gml
+    static public Book editFile(oldFile, newFile) {
+        def book = Book.findByFile(oldFile)
+        book.setFile(newFile)
+        def cont = new BookController()
+        cont.params << book.properties
+        cont.update()
+
+        def updatedBook = Book.findByFile(newFile)
         return updatedBook
     }
 

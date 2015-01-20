@@ -34,6 +34,17 @@ Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') 
     assert BookTestDataAndOperations.bookCompatibleTo(book, title)
 }
 
+When (~'^I edit the book file name from "([^"]*)" to "([^"]*)"$') { String oldFile, newFile ->
+    at BookPage
+    page.selectViewBook()
+    BookTestDataAndOperations.editFile(oldFile, newFile)
+    page.clickSaveBook()
+}
+
+Then(~'^I have the book entitled "([^"]*)" with file name "([^"]*)" stored on the system$') { String title, String filename ->
+    book.getFile().equals(filename)
+}
+
 When(~'^I remove the book "([^"]*)"$') { String title ->
     BookTestDataAndOperations.removeBook(title)
 }
@@ -106,46 +117,32 @@ When(~'^I choose to view "([^"]*)" in book list$') { String title ->
     page.selectViewBook(title)
     at BookShowPage
 }
+
 And(~'^I press to remove at the book show page$') {->
     at BookShowPage
     page.select('input', 'delete')
 }
-
 
 Then(~'^the book list contains" ([^"]*)"$') { String title ->
     at BookPage
     page.checkArticleAtList(title, 0)
 }
 
-And (~'^the book entitled "([^"]*)" is stored in the system with file name "([^"]*)$"'){String title, String filename ->
-    checkIfExists(title)
-}
-
 When(~'^I upload the file in the system with name "([^"]*)"$') { String fileName ->
-    BookTestDataAndOperations.uploadBook(fileName)
+    book.setFile(fileName)
+    assert Book.findByFile(fileName)
 }
 
 Then(~'^the book "([^"]*)" has the archive file "([^"]*)" updated by the system$') { String title, String filename ->
-    checkIfExists(title)
-    book = Book.findBookByTitle(title)
-    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
-}
-
-Then(~'^I have the book entitled "([^"]*)" with file name "([^"]*)" stored on the system$') { String arg1, String arg2 ->
-    book = BookTestDataAndOperations.findBookByTitle(title)
-    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+    book.getFile().equals(filename)
 }
 
 When(~'^I try to create the book "([^"]*)" without file$') { String title ->
     !checkIfExists(title)
 }
 
-Then(~'^the book "([^"]*)" is not created by the system$') {String title ->
+Then(~'^the book "([^"]*)" is not stored by the system$') {String title ->
     !checkIfExists(title)
-}
-
-When (~'^I edit the book file name from "([^"]*)" to "([^"]*)$"') {String fileName ->
-    BookTestDataAndOperations.uploadBook(fileName)
 }
 
 Then (~'I should see an error message containing "([^"]*)"$') {
