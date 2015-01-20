@@ -11,7 +11,9 @@ class TestDataDissertacao
             [title: "SQL Development", publicationDate: (new Date("12 October 2012")),
              publisher: "Ian", volume: 2, pages: "541"],
             [title: "Data Base", publicationDate: (new Date("25 July 2012")),
-             publisher: "John", volume: 3, pages: "272"]
+             publisher: "John", volume: 3, pages: "272"],
+            [title: "Mendoin", publicationDate: (new Date("25 July 2012")),
+             publisher: "Karl", volume: 3, pages: "272"],
     ]
 
     static public def findByTitle(String title) {

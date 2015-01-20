@@ -63,13 +63,17 @@ Given(~'^the system has no dissertation entitled "([^"]*)"$') { String title ->
 
 Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     TestDataDissertacao.createDissertacao(title, filename, "UFPE")
-    article = Dissertacao.findByTitle(title)
+    article = TestDataDissertacao.findByTitle(title)
     assert article != null
 }
 
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') { String title, filename, school ->
     TestDataDissertacao.createDissertacao(title, filename, school)
+}
+
+When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+    TestDataDissertacao.createDissertacao(title, filename, "UFPE")
 }
 
 

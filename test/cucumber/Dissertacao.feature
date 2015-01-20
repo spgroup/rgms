@@ -27,6 +27,7 @@ Feature: Dissertation Tests
     When I create the dissertation "New dissertation" with file name "Newdissertation.txt" and school "UFPE"
     Then the dissertation "New dissertation" is properly stored by the system
 
+@ignore
   Scenario: new dissertation duplicated
     Given the dissertation "Dissertation duplicated" is stored in the system with file name "Dissertationduplicated.txt"
     When I create the dissertation "Dissertation duplicated" with file name "Dissertationduplicated2.txt" and school "UFPE"
