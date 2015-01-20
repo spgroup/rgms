@@ -69,7 +69,7 @@ Feature: record
 	Given a record with status "status"
 	When I fill the field of status with "new status"
 	And confirm the edit
-	Then the record will now show "new status".
+	Then the record will now show "new status"
 #end
 	
 #if($cancelTheEditOfAStatus)
@@ -77,5 +77,5 @@ Feature: record
 	Given a record with status "status"
 	When I fill the field of status with "new status"
 	And the member press the button cancel
-	Then the record won't save the "new status".
+	Then the record wont save the "new status"
 #end

@@ -5,6 +5,7 @@ import rgms.publication.*
 
 class TestDataDissertacao
 {
+	static dissertacoes = []
 
 	static public def findByTitle(String title){
 		dissertacoes.find { dissertacao ->
