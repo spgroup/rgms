@@ -152,7 +152,7 @@ When(~'^I select the download book button$') { ->
 
 Then(~'^I can download the file named "([^"]*)"$') { String filename ->
     at BookPage
-    assert page.clickDownloadLink(filename)
+    assert page.checkDownloadLink(filename)
 }
 
 And(~'^I select the new book option at the book page$') { ->
