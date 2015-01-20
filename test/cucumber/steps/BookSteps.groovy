@@ -164,9 +164,9 @@ Then(~'^I can fill the book details$') {->
     page.fillBookDetails("Next Generation Software Product Line Engineering","NGS.pdf");
 }
 
-And(~'^the system has some books created$') {
-    initialSize = Book.findAll().size()
-    assert initialSize > 1
+And(~'^the system has some books stored$') { ->
+    BookTestDataAndOperations.createBook("SPL Development", "SPL.pdf")
+    BookTestDataAndOperations.createBook("Software Engineering", "SE.pdf")
 }
 
 Then(~'^my book list shows the articles ordered by "([^"]*)"$') { String sortType ->
