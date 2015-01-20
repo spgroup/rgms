@@ -18,15 +18,15 @@ Feature: member
 
 #if($newMemberWithABlankUsername)
   Scenario: new member with a blank username
-	Given the system may have some members,
-	When I create a member with username "",
+	Given the system without a member ""
+	When I create a member with username ""
 	Then the new member won't be inserted.
 #end
 
 #if($deleteInexistentMember)
   Scenario: delete inexistent member
-	Given the system without a member "username",
-	When I delete a member with username "username",
+	Given the system without a member "username"
+	When I delete a member with username "username"
 	Then the system will throw a message with an error "cannot find 'username'".
 #end
 

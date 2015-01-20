@@ -194,17 +194,17 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
 }
 
 // #if($NewMemberWithABlankUsername)
-Given(~'^the system may have some members$'){->
-    membersSize = Member.findAll().size()
-    assert membersSize >= 0
+Given(~'^the system without the member "([^*])"$'){String blank->
+    member = MemberTestDataAndOperations.findByUsername("")
+    assert member == null
 }
 
-When(~'^I create a member with no username and phone "([^"]*)"$') {String phone->
+When(~'^I create a member with no username and phone "([^"]*)"$') {String phone ->
     MemberTestDataAndOperations.createMember("", phone)
 }
 
 Then(~'^the new member wont be inserted$'){->
-    member = Member.findByName("")
+    member = Member.findByUsername("")
 
     if(member != null) {
         MemberTestDataAndOperations.deleteMember("")
@@ -213,11 +213,6 @@ Then(~'^the new member wont be inserted$'){->
 // #end
 
 // #if($DeleteInexistentMember)
-Given(~'^the system without a member "([^"]*)"$'){String name ->
-    member = Member.findByName(name)
-    assert member == null
-}
-
 Then(~'^the system will throw a message error "([^"]*)"$'){String error ->
     page.throwError(error)
 }
