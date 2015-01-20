@@ -83,9 +83,8 @@ Then(~'^the dissertation "([^"]*)" is properly stored by the system$') { String 
 }
 
 Then(~'^the dissertation "([^"]*)" is not stored twice$') { String title ->
-    dissertations = Dissertacao.findAllByTitle(title)
+    dissertations = TestDataDissertacao.findAllByTitle(title)
     assert dissertations.size() == 1
-    //A propriedade title de publication deveria estar unique:true, mas como n�o est�, este teste vai falhar
 }
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without school$') { String title, filename ->
