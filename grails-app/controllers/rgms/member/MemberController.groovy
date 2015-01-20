@@ -1,5 +1,6 @@
 package rgms.member
 
+import grails.converters.JSON
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.EmailService
@@ -9,13 +10,33 @@ import java.security.SecureRandom
 
 class MemberController {
 
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
+    static minhaLista = [1,2]
+
+    def methodMarlon(){
+        throw new Exception("Funcionou")
+        minhaLista.add(3)
+        render "xxxxo'"
+    }
+
+    static int retorne() {
+        minhaLista.add(3)
+        return minhaLista.size()
+    }
+
+    def listas = {
+        [callMe:methodMarlon]
+    }
+
 
     def index = {
         redirect(action: "list", params: params)
     }
 
     def list = {
+
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def userMemberList = []
         def members = Member.list(params)
@@ -95,12 +116,13 @@ class MemberController {
         def userMemberList = []
         if(params.name){
             def members = Member.findAllByName(params.name)
+
             for (i in members) {
-                def user = User.findByAuthor(i)
-                if (user)
-                    userMemberList.add([user: user, member: i])
-                else
-                    userMemberList.add([member: i])
+                    def user = User.findByAuthor(i)
+                    if (user)
+                        userMemberList.add([user: user, member: i])
+                    else
+                        userMemberList.add([member: i])
             }
         }
         
@@ -191,6 +213,9 @@ class MemberController {
     }
 
     def delete = {
+        Member.class
+        Member.deleteAll();
+        Member.dele
         def memberInstance = Member.get(params.id)
         def userInstance = User.findByAuthor(memberInstance)
         if (!memberInstance) {
@@ -215,6 +240,23 @@ class MemberController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'member.label', default: 'Member'), params.id])
             redirect(action: "show", id: params.id)
         }
+    }
+
+    def remove = {
+        def userMemberList = []
+        if(params.name){
+            def members = Member.findAllByEmail(params.name)
+
+            for (i in members) {
+                def user = User.findByAuthor(i)
+                if (user)
+                    userMemberList.add([user: user, member: i])
+                else
+                    userMemberList.add([member: i])
+            }
+        }
+
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
 
     private void saveHistory(def memberInstance, String status) {

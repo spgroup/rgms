@@ -12,6 +12,19 @@
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="search" action="search"><g:message code="default.search.label" args="[entityName]" /></g:link></span>
+            <span class="a">
+               <a class="sam" id="myLink">
+                    alo alo
+
+               </a>
+                <div>
+                    BORA BOAR BRA
+
+                    <button onclick="<g:remoteFunction controller="member" udpate="myLink" action="search"/>">aperta</button>
+                </div>
+
+            </span>
+
         </div>
         <div class="body">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
@@ -68,5 +81,16 @@
                 <g:paginate total="${memberInstanceTotal}" />
             </div>
         </div>
+
+    <script>
+        $('.sam').click(function(){
+            $('.odd').hide();
+            $('.even').hide();
+
+        });
+
+    </script>
+
+
     </body>
 </html>
