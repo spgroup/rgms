@@ -6,7 +6,7 @@ import geb.Page
  * Created by droa on 22/11/2014.
  */
 class BookShowPage extends Page {
-    static url = "book/show"
+    static url = "book/show/1"
 
     static at = {
 

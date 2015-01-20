@@ -46,10 +46,9 @@ Feature: Book
     Then the book "Next Generation Software Product Line Engineering" is properly removed by the system
 
   Scenario: Add a new book and tweet it
-    Given I am logged in as admin
-    And I am at the Book Page
-    When I try to create a book named "Next Generation Software Product Line Engineering" with filename "Ngs.pdf"
+    Given I am at the Book Page
+    When I try to create a book named "Next Generation Software Product Line Engineering" with filename "NGS.pdf"
     And I click on Share to share the book on Twitter with "rgms_ufpe" and "rgmsadmin2013"
-    Then a tweet is added to my twitter account regarding the new book "Next Generation Software Product Line Engineering"
+    Then a pop-up window with a tweet regarding the new book "Next Generation Software Product Line Engineering" is shown
 
   # END #

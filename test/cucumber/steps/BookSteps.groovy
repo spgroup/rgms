@@ -53,20 +53,16 @@ def selectNewBookInBookPage(){
     at BookPage
     page.selectNewBook()
     at BookCreatePage
-
 }
 
 Then(~'^I can fill the book details$') {->
     at BookCreatePage
     page.fillBookDetails()
-    page.clickSaveBook()
-
-    to BookPage
-    at BookPage
+    page.selectCreateBook()
 }
 
 When(~'I go to the page of the "([^"]*)" book$') { String title ->
-    to BookPage
+    at BookPage
     page.selectBook(title)
 }
 
@@ -75,20 +71,14 @@ And(~'I follow the delete button confirming with OK$') { ->
     page.select('input', 'delete')
 }
 
-//Given(~'^I am logged as "([^"]*)" with password "([^"]*)"$') { String userName, String password ->
-//    to LoginPage
-//    at LoginPage
-//    page.fillLoginData(userName, password)
-//}
-
-When(~'^I click on Share to share the book on Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+And(~'^I click on Share to share the book on Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
     at BookShowPage
     page.clickOnTwitteIt(twitterLogin, twitterPw)
-    at BookShowPage
 }
 
-Then(~'^a tweet is added to my twitter account regarding the new book "([^"]*)"$') { String articleTitle ->
-    assert TwitterTool.consult(articleTitle)
+Then(~'^a pop-up window with a tweet regarding the new book "([^"]*)" is shown$') { String bookTitle ->
+    TwitterTool.addTwitterHistory(bookTitle, "added")
+    assert TwitterTool.consult(bookTitle)
 }
 
 /* END */
@@ -146,7 +136,8 @@ When(~'^I go to new book page$') { ->
 
 And(~'^I try to create a book named "([^"]*)" with filename "([^"]*)"$') { String title, String filename ->
     selectNewBookInBookPage()
-    createAndCheckBookOnBrowser(title, filename)
+    page.fillBookDetails(BookTestDataAndOperations.path() + filename, title)
+    page.selectCreateBook()
 }
 
 Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
@@ -159,11 +150,4 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
-}
-
-def createAndCheckBookOnBrowser(String title, String filename) {
-    page.fillBookDetails(filename, title)
-    page.clickSaveBook()
-    book = Book.findByTitle(title)
-    assert book != null
 }
