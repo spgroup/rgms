@@ -68,6 +68,12 @@ Feature: member
    When I create a member with invalid phone
    Then I am still on the create member page with a "Invalid Phone" error message
 
+  Scenario: search for an existing member by email
+    Given the system has a member which email is "rene@cin.ufpe.br"
+    And I am at the member search page by email
+    When I search the members which email is "rene@cin.ufpe.br"
+    Then the member list contains the member which email is "rene@cin.ufpe.br"
+
 #if ($contextualInformation)
   Scenario: new member filled with default data
     Given I am at the create member page
@@ -91,4 +97,12 @@ Feature: member
     Then My member list contains the member named "Rodolfo"
 
   #end
+
+  Scenario: search for an existing member by university
+    Given the system has a member which university is "UFPE"
+    And I am at the member search page by university
+     When I search the members which university is "UFPE"
+    Then the member list contains the member which university is "UFPE"
+
+
 

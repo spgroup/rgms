@@ -12,18 +12,8 @@
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="search" action="search"><g:message code="default.search.label" args="[entityName]" /></g:link></span>
-            <span class="a">
-               <a class="sam" id="myLink">
-                    alo alo
-
-               </a>
-                <div>
-                    BORA BOAR BRA
-
-                    <button onclick="<g:remoteFunction controller="member" udpate="myLink" action="search"/>">aperta</button>
-                </div>
-
-            </span>
+            <span class="menuButton"><g:link class="search" action="searchByUniversity"><g:message code="default.search.label" args="[entityName]" /> por universidade</g:link></span>
+            <span class="menuButton"><g:link class="search" action="searchByEmail"><g:message code="default.search.label" args="[entityName]" /> por email</g:link></span>
 
         </div>
         <div class="body">
@@ -45,11 +35,14 @@
                             <g:sortableColumn property="enabled" title="${message(code: 'member.enabled.label', default: 'Enabled')}" />
                         
                             <g:sortableColumn property="email" title="${message(code: 'member.email.label', default: 'Email')}" />
-                        
+
+
                             <th>${message(code: 'member.roles.label', default: 'Roles')}</th>
                         
                             <th>${message(code: 'member.permissions.label', default: 'Permissions')}</th>
-                        
+
+                            <th>${message(code: 'member.university.label', default: 'University')}</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -71,7 +64,9 @@
 							<td>${fieldValue(bean: userMemberInstance?.user, field: "roles")}</td>
 							
 							<td>${fieldValue(bean: userMemberInstance?.user, field: "permissions")}</td>
-                        
+
+                            <td>${fieldValue(bean: userMemberInstance?.user, field: "author.university")}</td>
+
                         </tr>
                     </g:each>
                     </tbody>

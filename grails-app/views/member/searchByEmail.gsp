@@ -5,17 +5,20 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="layout" content="main" />
     <g:set var="entityName" value="${message(code: 'member.label', default: 'Member')}" />
-    <title><g:message code="default.search.label" args="[entityName]" /></title>
+    <title><g:message code="default.searchByTitle.label"  /></title>
 </head>
 <body>
 <div class="nav">
     <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
     <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+    <span class="menuButton">
+        <a href="./" > Voltar </a>
+    </span>
 
-    <g:form controller="member" action="remove">
+    <g:form controller="member" action="searchByEmail">
         <div>
-            <label for="name">Buscar membro por email:</label>
-            <input type="text" name="name" />
+            <label for="name" >Procurar por email:</label>
+            <input class="inputEmail" type="text" name="name" />
         </div>
 
         <input type="submit" class="search" value="<g:message code="default.search.label"/>">

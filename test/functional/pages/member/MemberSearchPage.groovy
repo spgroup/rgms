@@ -7,7 +7,7 @@ class MemberSearchPage extends Page {
     static url = "member/search"
 
     static at = {
-        
+
         GetPageTitle gp = new GetPageTitle()
         def memberLabel = gp.msg("member.label")
         def listLabel = gp.msg("default.search.label", [memberLabel])

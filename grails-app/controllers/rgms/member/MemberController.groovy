@@ -13,23 +13,6 @@ class MemberController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    static minhaLista = [1,2]
-
-    def methodMarlon(){
-        throw new Exception("Funcionou")
-        minhaLista.add(3)
-        render "xxxxo'"
-    }
-
-    static int retorne() {
-        minhaLista.add(3)
-        return minhaLista.size()
-    }
-
-    def listas = {
-        [callMe:methodMarlon]
-    }
-
 
     def index = {
         redirect(action: "list", params: params)
@@ -62,7 +45,6 @@ class MemberController {
         member.setUniversity(params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity") as String);
         member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity") as String);
 //#end
-
         [userMemberInstanceList: [memberInstance: member, userInstance: user]]
     }
 
@@ -128,6 +110,10 @@ class MemberController {
         
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
+
+
+
+
 
 
     def show = {
@@ -245,7 +231,11 @@ class MemberController {
     def remove = {
         def userMemberList = []
         if(params.name){
-            def members = Member.findAllByEmail(params.name)
+            def members = Member.findAllByUniversity(params.name)
+
+           
+
+
 
             for (i in members) {
                 def user = User.findByAuthor(i)
@@ -255,9 +245,26 @@ class MemberController {
                     userMemberList.add([member: i])
             }
         }
-
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
+
+    def searchByUniversity = {
+        def userMemberList = []
+        if(params.name){
+            def members = Member.findAllByUniversity(params.name)
+
+
+            for (i in members) {
+                def user = User.findByAuthor(i)
+                if (user)
+                    userMemberList.add([user: user, member: i])
+                else
+                    userMemberList.add([member: i])
+            }
+        }
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+    }
+
 
     private void saveHistory(def memberInstance, String status) {
 
@@ -278,4 +285,24 @@ class MemberController {
         def user = User.findByAuthor(memberInstance)
         [userMemberInstanceList: [memberInstance: memberInstance, userInstance: user]]
     }
+
+
+    def searchByEmail = {
+        def userMemberList = []
+        if(params.name){
+            def members = Member.findAllByEmail(params.name)
+
+
+            for (i in members) {
+                def user = User.findByAuthor(i)
+                if (user)
+                    userMemberList.add([user: user, member: i])
+                else
+                    userMemberList.add([member: i])
+            }
+        }
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+    }
+
+
 }

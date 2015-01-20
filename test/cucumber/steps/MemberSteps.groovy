@@ -1,5 +1,6 @@
 import pages.LoginPage
 import pages.RegisterPage
+import pages.member.MemberSearchByUniversityPage
 import pages.member.MemberCreatePage
 import pages.member.MemberPage
 import pages.member.MemberViewPage
@@ -7,6 +8,8 @@ import pages.member.MemberSearchPage
 import rgms.authentication.User
 import rgms.member.Member
 import steps.MemberTestDataAndOperations
+import pages.member.MemberSearchByEmailPage
+
 
 import static cucumber.api.groovy.EN.*
 
@@ -255,4 +258,44 @@ Given(~'^the system has a member named "([^"]*)"$') { String name ->
     assert member != null
 }
 
+Given(~'^the system has a member which university is "([^"]*)"$'){ String university->
+    member = MemberTestDataAndOperations.findByUniversity(university)
+    assert member != null
+}
 
+And(~'^I am at the member search page by university$'){->
+
+    to MemberSearchByUniversityPage
+    at MemberSearchByUniversityPage
+
+}
+
+When(~'^I search the members which university is "([^"]*)"$'){ String university->
+    page.fillSearchBox(university)
+    page.selectSearchByUniversityButton()
+}
+
+Then(~'^the member list contains the member which university is "([^"]*)"$'){ String university->
+    page.resultsListContains(university)
+}
+
+
+Given(~'^the system has a member which email is "([^"]*)"$'){ String email->
+    member = MemberTestDataAndOperations.findByEmail(email)
+    assert member != null
+}
+
+And(~'^I am at the member search page by email'){->
+    to MemberSearchByEmailPage
+    at MemberSearchByEmailPage
+
+}
+
+When(~'^I search the members which email is "([^"]*)"$'){ String email->
+    page.fillSearchBox(email)
+    page.selectSearchByUniversityButton()
+}
+
+Then(~'^the member list contains the member which email is "([^"]*)"$'){ String email->
+    page.resultsListContains(email)
+}

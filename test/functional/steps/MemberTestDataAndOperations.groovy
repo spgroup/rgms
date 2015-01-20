@@ -23,11 +23,21 @@ class MemberTestDataAndOperations {
             ],
             [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
-            ]]
+            ],
+            [name: "Rene Leite", username: "reneheaven", email: "rene@cin.ufpe.br",
+             status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            ]
 
     static public def findByUsername(String username) {
         members.find { member ->
             member.username == username
+        }
+    }
+
+    static public def findByUniversity(String university){
+        members.find{ member ->
+            member.university == university
         }
     }
 
@@ -58,6 +68,12 @@ class MemberTestDataAndOperations {
         cont.create()
         cont.save()
         cont.response.reset()
+    }
+
+    static public def findByEmail(String email){
+        members.find{ member ->
+            member.email == email
+        }
     }
 
     static public void deleteMember(String username) {
