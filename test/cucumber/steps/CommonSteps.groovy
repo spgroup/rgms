@@ -5,6 +5,13 @@ import static cucumber.api.groovy.EN.And
 import static cucumber.api.groovy.EN.Given
 import static cucumber.api.groovy.EN.When
 
+Given(~'I am logged in as admin$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+}
+
 Given(~'^I am at the publications menu$') {->
     to LoginPage
     at LoginPage

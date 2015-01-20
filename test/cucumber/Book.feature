@@ -29,20 +29,27 @@ Feature: Book
     When I upload the books of "curriculo.xml"
     Then the system has all the books of the xml file
 
-  Scenario: new book web
-    Given I am at the book page
-    And the system has no book entitled "Next Generation Software Product Line Engineering"
-    When I go to new book page
-    And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
-    Then the book "Next Generation Software Product Line Engineering" was stored by the system
-
   # @author droa
   # BEGIN
 
+  #MODIFIED
+  Scenario: new book web
+    Given I am at the publications menu
+    When I select the "Book" option at the publications menu
+    And I select the new book option at the book page
+    Then I can fill the book details
+
   Scenario: remove book web
-    Given I am at the book page
+    Given I am at the Book Page
     When I go to the page of the "Next Generation Software Product Line Engineering" book
     And I follow the delete button confirming with OK
     Then the book "Next Generation Software Product Line Engineering" is properly removed by the system
+
+  Scenario: Add a new book and tweet it
+    Given I am logged in as admin
+    And I am at the Book Page
+    When I try to create a book named "Next Generation Software Product Line Engineering" with filename "Ngs.pdf"
+    And I click on Share to share the book on Twitter with "rgms_ufpe" and "rgmsadmin2013"
+    Then a tweet is added to my twitter account regarding the new book "Next Generation Software Product Line Engineering"
 
   # END #

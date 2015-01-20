@@ -2,7 +2,7 @@ package rgms.publication
 
 class BookController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST", share: "POST"]
     AuxiliarController aux = new AuxiliarController()
 
     def index() {

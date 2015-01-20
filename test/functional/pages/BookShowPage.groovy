@@ -24,4 +24,8 @@ class BookShowPage extends Page {
             $("form").find(e, class: v).click()
         }
     }
+
+    def clickOnTwitteIt(String login, pw) {
+        $("#button_twitter").click()
+    }
 }

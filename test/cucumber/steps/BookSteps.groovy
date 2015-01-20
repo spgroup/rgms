@@ -12,6 +12,7 @@ import pages.BookShowPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
+import rgms.tool.TwitterTool
 import steps.BookTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -44,6 +45,26 @@ When(~'^I remove the book "([^"]*)"$') { String title ->
  * BEGIN
  */
 
+When(~'^I select the new book option at the book page$') {->
+    selectNewBookInBookPage()
+}
+
+def selectNewBookInBookPage(){
+    at BookPage
+    page.selectNewBook()
+    at BookCreatePage
+
+}
+
+Then(~'^I can fill the book details$') {->
+    at BookCreatePage
+    page.fillBookDetails()
+    page.clickSaveBook()
+
+    to BookPage
+    at BookPage
+}
+
 When(~'I go to the page of the "([^"]*)" book$') { String title ->
     to BookPage
     page.selectBook(title)
@@ -52,6 +73,22 @@ When(~'I go to the page of the "([^"]*)" book$') { String title ->
 And(~'I follow the delete button confirming with OK$') { ->
     at BookShowPage
     page.select('input', 'delete')
+}
+
+//Given(~'^I am logged as "([^"]*)" with password "([^"]*)"$') { String userName, String password ->
+//    to LoginPage
+//    at LoginPage
+//    page.fillLoginData(userName, password)
+//}
+
+When(~'^I click on Share to share the book on Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+    at BookShowPage
+    page.clickOnTwitteIt(twitterLogin, twitterPw)
+    at BookShowPage
+}
+
+Then(~'^a tweet is added to my twitter account regarding the new book "([^"]*)"$') { String articleTitle ->
+    assert TwitterTool.consult(articleTitle)
 }
 
 /* END */
@@ -94,7 +131,7 @@ Then(~'^the system has all the books of the xml file$') { ->
     assert Book.findByTitle("AOSD 2011 Proceedings and Companion Material") != null
 }
 
-Given(~'^I am at the book page$') { ->
+Given(~'^I am at the Book Page$') { ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -107,11 +144,9 @@ When(~'^I go to new book page$') { ->
     page.selectNewBook()
 }
 
-And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-    at BookCreatePage
+And(~'^I try to create a book named "([^"]*)" with filename "([^"]*)"$') { String title, String filename ->
+    selectNewBookInBookPage()
     createAndCheckBookOnBrowser(title, filename)
-    to BookPage
-    at BookPage
 }
 
 Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
@@ -127,7 +162,7 @@ def checkIfExists(String title) {
 }
 
 def createAndCheckBookOnBrowser(String title, String filename) {
-    page.fillBookDetails(title, filename)
+    page.fillBookDetails(filename, title)
     page.clickSaveBook()
     book = Book.findByTitle(title)
     assert book != null
