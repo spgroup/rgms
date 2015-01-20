@@ -29,4 +29,8 @@ class BookPage extends Page {
     def selectNewBook() {
         $('a.create').click()
     }
+    
+    def checkDownloadLink(String filename){
+        return $('a', text:filename) != null
+    }
 }
