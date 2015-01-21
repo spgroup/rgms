@@ -6,7 +6,8 @@ import rgms.authentication.User
 import rgms.publication.Dissertacao
 import steps.TestDataDissertacao
 import steps.TestDataAndOperationsPublication
-
+import pages.LoginPage
+import pages.PublicationsPage
 import static cucumber.api.groovy.EN.*
 
 
@@ -167,6 +168,23 @@ Then(~'^I stay on dissertation page with an error message$') { ->
 
 
 When(~'^I press to remove "([^"]*)" at the dissertation show page$'){ String title->
+    at DissertationShowPage
 	page.select('input', 'delete')
+}
+
+When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+    TestDataDissertacao.createDissertacao(title, filename, "UFPE")
+    dissertation = Dissertacao.findByTitle(title)
+    assert dissertation != null
+}
+
+Given(~'^the dissertation named "([^"]*)" is stored in the system$') { String title ->
+    TestDataDissertacao.createDissertacao(title, "testDissertation.pdf", "UFPE")
+    dissertation = Dissertacao.findByTitle(title)
+    assert dissertation != null
+}
+
+When(~'^I select "([^"]*)" at the dissertation list$') { String title ->
+    page.selectDissertation(title)
 }
 
