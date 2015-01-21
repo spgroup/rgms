@@ -121,14 +121,14 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
-Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+Given(~'^I am at the book page'){->
+        to BookPage
+        at BookPage
+}
+And(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     BookTestDataAndOperations.createBook(title, filename)
     book = Book.findByTitle(title)
     assert BookTestDataAndOperations.bookCompatibleTo(book, title)
-}
-And(~'^I am at the book page'){->
-    to BookPage
-    at BookPage
 }
 When(~'^I select the download button$') { ->
     at BookPage
