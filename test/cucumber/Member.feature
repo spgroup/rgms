@@ -89,14 +89,15 @@ Feature: member
     When I select the member list download button
     Then I can download the data file named "ML-0.pdf" that contains the member list
 
+  #end
   
-  Scenario: search for an existing member
+  Scenario: search for an existing member by name
     Given the system has a member named "Rodolfo"
     And I am at the member search page
     When I search for "Rodolfo"
     Then My member list contains the member named "Rodolfo"
 
-  #end
+ 
 
   Scenario: search for an existing member by university
     Given the system has a member which university is "UFPE"
