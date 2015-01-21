@@ -170,25 +170,25 @@ Then(~'^the returned thesis list has the same items but it is sorted by date$') 
 }
 
 //Scenario: search an existing thesis
-Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)", year of publication "([^"]*)" and university "([^"]*)"$') { title, author, year, university ->
+Given(~'^the system has a thesis entitled "([^"]*)"$'){ String title->
+    tese = ThesisOrDissertationTestDataAndOperations.findByTitle(title)
+    assert tese != null
+}
+
+And(~'^I am at the thesis search page$'){->
+
+    to TeseSearchByTitlePage
+    at TeseSearchByTitlePage
 
 }
 
-And(~'^I am at the thesis search page$') { ->
-
+When(~'^I search for "([^"]*)"$'){ String title->
+    page.fillSearchBox(title)
+    page.selectSearchByTitleButton()
 }
 
-When(~'^I search for "([^"]*)" by "([^"]*)"$') { title, author ->
-
-}
-
-And(~'^I select to view the entry that has university "([^"]*)" and publication year "([^"]*)"$') { university, year ->
-
-}
-
-Then(~'^the thesis "([^"]*)" by "([^"]*)" appears in the thesis view page$') { title, year ->
-
-}
+Then(~'^My thesis list contains the thesis entitled "([^"]*)"$'){ String title->
+    page.resultsListContains(title)
 
 //Scenario: create thesis web without a file
 
