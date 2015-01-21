@@ -26,8 +26,7 @@ Feature: Funder
 #if(remove funder web)
   Scenario: remove funder web
     Given I am the funder page
-    And has one or more funder in the list
+    And has funder in the list with code "12345"
     When I select the funder with code "12345"
-    Then I click the 'remove' button
-    And the funder with code "12345" is properly removed by the system
+    Then the funder with code "12345" is properly removed by the click on "remove" button
 #end

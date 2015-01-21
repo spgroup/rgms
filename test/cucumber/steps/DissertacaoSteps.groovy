@@ -133,7 +133,7 @@ Then(~'^I\'m still on dissertation page$') {->
 // #if($UploadDissertationWithAFile)
 When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') { filename, title ->
 	TestDataDissertacao.createDissertacao(title, filename, "UFPE")
-	dissertacao = TestDataDissertacao,findByTitle(title)
+	dissertacao = TestDataDissertacao.findByTitle(title)
 	assert dissertacao != null
 }
 // #end
