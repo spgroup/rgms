@@ -25,8 +25,8 @@ Then(~'^the ferramenta "([^"]*)" is stored$') { String title ->
     assert tool != null
 }
 
-When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" with its website$') { String title, String filename ->
-    FerramentaTestDataAndOperations.createFerramenta(title, filename)
+When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" with the website "([^"]*)"$') { String title, String filename, String website ->
+    FerramentaTestDataAndOperations.createFerramentaWeb(title, filename, website)
 }
 
 // duplicate ferramenta
@@ -112,16 +112,19 @@ And(~'^I click on Criar button$') {->
     at FerramentaCreatePage
     page.clickCreateFerramenta()
 }
-Then(~'^I am at the ferramenta page$') {->
+
+Given(~'^I am at the ferramenta page$') {->
+    to FerramentaPage
     at FerramentaPage
 }
+
 Then(~'^I am still on create new ferramenta page$') {->
     at FerramentaCreatePage
 }
+
 And(~'^the ferramenta is not displayed in the ferramentas list page$') {->
     to FerramentaPage
     at FerramentaPage
-    page.checkAnyFerramentaAtList()
 }
 
 // upload ferramenta without a file <- Cenário impossível

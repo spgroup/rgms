@@ -11,9 +11,9 @@ Feature: orientations
 
 #if($duplicateOrientation)
   Scenario: duplicate orientation
-    Given the system has an orientation entitled "The Book is on the table"
+    Given the system has an orientation entitled "The Book is on the table" supervised by someone
     When I create a new orientation entitled "The Book is on the table"
-    Then the duplicate orientation is not properly stored by the system
+    Then the duplicate orientation "The Book is on the table" is not properly stored by the system
 #end
 
   Scenario: remove existing orientation

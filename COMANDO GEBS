@@ -1,1 +1,4 @@
 -Dgeb.env=chrome -Dwebdriver.chrome.driver=/Users/Rodrigo/Documents/workspaces/TAES/gitsource/rgms/chromedrivers/chromedrivermac test-app functional:cucumber
+
+LSA2
+-Dserver.port=8090 -Dgeb.env=chrome -Dwebdriver.chrome.driver="Users\\Targelia Albuquerque\\Documents\\GitHub\\rgms\\chromedrivers\\chromedriverwindows" test-app functional:cucumber

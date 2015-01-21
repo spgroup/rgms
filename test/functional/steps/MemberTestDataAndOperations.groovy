@@ -51,10 +51,9 @@ class MemberTestDataAndOperations {
         cont.response.reset()
     }
 
-    //TODO evitar duplicação, depois de resolver toda a confusão conceitual entre user vs member
-    static public void createMemberWithEmail(String name, String email) {
+    static public void createMemberWithEmail(String name, String mail) {
         def cont = new MemberController()
-        cont.params << findByName(name) << [email: email]
+        cont.params << [username: name, email: mail]
         cont.create()
         cont.save()
         cont.response.reset()
