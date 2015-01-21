@@ -6,7 +6,11 @@ class DissertationPage extends Page {
     static url = "dissertacao/list"
 
     static at = {
-        title ==~ /Dissertacao Listagem/
+        GetPageTitle gp = new GetPageTitle()
+        def currentDissertation = gp.msg("default.periodico.label")
+        def currentTitle = gp.msg("default.list.label", [currentDissertation])
+
+        title ==~ currentTitle
     }
 
     static content = {
@@ -23,6 +27,14 @@ class DissertationPage extends Page {
         $('input.save').click()
     }
 
+    def selectViewDissertation(title) {
+        def listDiv = $('div', id: 'list-dissertacao')
+        def dissertationTable = (listDiv.find('table'))[0]
+        def dissertationRow = dissertationTable.find('tbody').find('tr')
+        def showLink = dissertationRow.find('td').find([text: title])
+        showLink.click()
+    }
+
     def checkIfDissertationListIsEmpty(){
         def listDiv = $('div', id: 'list-dissertacao')
         def dissertationTable = (listDiv.find('table'))[0]
@@ -31,4 +43,5 @@ class DissertationPage extends Page {
 
         assert dissertationColumns.size() < 6
     }
+
 }

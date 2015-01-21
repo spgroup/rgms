@@ -7,6 +7,7 @@
  */
 
 import pages.BookCreatePage
+import pages.BookShowPage
 import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
@@ -110,9 +111,7 @@ And(~'^I press to remove at the book show page$') {->
     at BookShowPage
     page.select('input', 'delete')
 }
-Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
-    assert checkIfExists(title)
-}
+
 
 
 
@@ -120,6 +119,8 @@ Then(~'^the book list contains" ([^"]*)"$') { String title ->
     at BookPage
     page.checkArticleAtList(title, 0)
 }
+
+
 
 
 
@@ -131,6 +132,22 @@ def checkIfExists(String title) {
 def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookDetails(title, filename)
     page.clickSaveBook()
+    book = Book.findByTitle(title)
+    assert book != null
+}
+
+
+Given(~'^the system has the book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String file ->
+    book = Book.findByTitleAndFile(title, file)
+    assert book != null
+}
+
+Then(~'^the book "([^"]*)" is removed from the system$') { String title ->
+    book = Book.findByTitle(title)
+    assert book == null
+}
+
+Then(~'^the book list contains "([^"]*)"$') { String title ->
     book = Book.findByTitle(title)
     assert book != null
 }

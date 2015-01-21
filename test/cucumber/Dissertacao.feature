@@ -39,7 +39,7 @@ Feature: Dissertation Tests
     And I cant add the dissertation without a file
     Then the system has no dissertation entitled "Dissertacao sem arquivo"
 
-    Scenario: new dissertation with file
+  Scenario: new dissertation with file
     Given I am at the publications menu
     When I select the "Dissertacao" option at the program menu
     And I select the new dissertation option at the dissertation page
