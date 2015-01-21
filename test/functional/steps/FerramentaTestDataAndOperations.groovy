@@ -62,6 +62,16 @@ class FerramentaTestDataAndOperations {
         cont.response.reset()
     }
 
+    static public void createFerramentaWeb(String title, filename, page) {
+        def cont = new FerramentaController()
+        def date = new Date()
+        cont.params << findFerramentaByTitle(title) << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
     static public void uploadFerramenta(filepath) {
         def cont = new XMLController()
         def xml = new File((String) filepath);

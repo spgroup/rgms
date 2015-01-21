@@ -12,9 +12,9 @@ Feature: Ferramenta
 
 #if($newFerramentaWithWebsite)
     Scenario: new ferramenta with website
-        Given the system has no ferramenta entitled "TargetWeb"
-        When I create the ferramenta "TargetWeb" with file name "targetweb.pdf" with its website
-        Then the ferramenta "TargetWeb" is stored
+        Given the system has no ferramenta entitled "WebTarget"
+        When I create the ferramenta "WebTarget" with file name "target.pdf" with website "www.facebook.com"
+        Then the ferramenta "WebTarget" is stored
 #end
 
     Scenario: duplicate ferramenta

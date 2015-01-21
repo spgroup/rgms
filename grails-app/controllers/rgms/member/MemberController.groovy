@@ -74,7 +74,7 @@ class MemberController {
             userInstance.errors.each {
                 println it
             }
-            memberInstance.delete(flush: true)
+            memberInstance.delete()
             render(view: "create", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
             return
         }

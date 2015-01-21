@@ -2,17 +2,17 @@
 Feature: member
   As an administrator of the RGMS system
   I want to add, remove and modify users in the system.
-
 #if($newMemberWithValidMailServer)
   Scenario: new member with valid mail server
     Given the system has no member with username "usernametest"
     When I create a member with username "usernametest" with valid mail server
     Then the member with username "usernametest" is properly stored by the system
 #end
+
 #if($newMemberWithoutValidMailServer)
   Scenario: new member without valid mail server
     Given the system has no member with username "usernametest"
-    When I create a member with username "usernametest" without a valid mail server
+    When I create a member with username "usernametest" with a invalid mail server "notReal"
     Then the member with username "usernametest" is not properly stored by the system
 #end
 
@@ -55,15 +55,13 @@ Feature: member
 #if($loginWithCorrectPassword)
   Scenario: login with correct password
     Given I am at the login page
-    When I fill username and password with "admin" and "correctpassword"
-    Then I am redirected to the corresponding page
-    And A message indicating the user was successfully logged on is displayed
+    When I fill username and password with "admin" and "adminadmin"
+    Then I am at the main page logged in
 #end
 
   Scenario: login with incorrect password
     Given I am at the login page
     When I fill username and password with "admin" and "incorrectpassword"
-    Then I am still on the login page with an error message
 
 #if($validUserRegistration)
   Scenario: valid user registration

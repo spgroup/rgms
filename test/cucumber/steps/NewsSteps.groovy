@@ -154,6 +154,11 @@ Given(~'^the system has no stored news$') { ->
     assert News.count() == 0
 }
 
+Given(~'^the system has some stored news$') { ->
+    News.withTransaction { status -> News.findAll().each { n -> n.delete() } }
+    assert News.count() > 0
+}
+
 //#if ($Report && $HTML)
 And (~'^I select the option Export to HTML at the News list page$'){ ->
     at NewsPage

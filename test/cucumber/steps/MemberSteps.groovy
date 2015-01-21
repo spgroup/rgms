@@ -22,11 +22,22 @@ When(~'^I create a member with username, phone "([^"]*)" "([^"]*)"$') { String u
     MemberTestDataAndOperations.createMember(username, phone)
 }
 
+When(~'^I create a member with username "([^"]*)" with a invalid mail server "([^"]*)"$') { String username, mail ->
+    MemberTestDataAndOperations.createMemberWithEmail(username, mail)
+}
+
 Then(~'^the member with username "([^"]*)" is properly stored by the system$') { String username ->
     user = User.findByUsername(username);
     member = user?.author
     //assert TestDataAndOperations.memberCompatibleTo(member, username)
     assert member != null
+}
+
+Then(~'^the member with username "([^"]*)" is not properly stored by the system$') { String username ->
+    user = User.findByUsername(username);
+    member = user?.author
+    //assert TestDataAndOperations.memberCompatibleTo(member, username)
+    assert member == null
 }
 
 Then(~'^the system has no member with a username "([^"]*)"$') { String username ->
