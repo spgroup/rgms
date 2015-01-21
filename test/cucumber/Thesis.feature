@@ -104,11 +104,11 @@ Feature: Thesis Tests
     When I change the title from "My Thesis" to ""
     Then the existing thesis are not changed by the system
 
-  @ignore
-  Scenario: search a thesis
-    Given the system has one thesis entitled "My Thesis"
-    When I search for thesis entitled "My Thesis"
-    Then the existing thesis are not changed by the system
+  Scenario: search for an existing thesis
+    Given the system has a thesis entitled "TCS-01"
+    And I am at the thesis search page
+    When I search for "TCS-01"
+    Then My thesis list contains the thesis entitled "TCS-01"
 
   @ignore
   Scenario: upload thesis with a file
