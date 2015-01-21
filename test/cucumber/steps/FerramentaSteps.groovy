@@ -25,7 +25,7 @@ Then(~'^the ferramenta "([^"]*)" is stored$') { String title ->
     assert tool != null
 }
 
-When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" with the website "([^"]*)"$') { String title, String filename, String website ->
+When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" with website "([^"]*)"$') { String title, String filename, String website ->
     FerramentaTestDataAndOperations.createFerramentaWeb(title, filename, website)
 }
 
