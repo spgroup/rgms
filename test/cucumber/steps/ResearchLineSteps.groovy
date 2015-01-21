@@ -156,3 +156,18 @@ private void goToResearchLineCreatePage(){
 
     at ResearchLineCreatePage
 }
+
+Given(~'^the system has a research lines named "([^"]*)" with a description "([^"]*)"$') { String name, description ->
+    ResearchLineTestDataAndOperations.createResearchLine(name, description)
+    research = ResearchLineTestDataAndOperations.findResearchLineByName(name)
+    assert research != null
+}
+
+When(~'^I create the research lines "([^"]*)" with a description "([^"]*)"$') { String name, description ->
+    ResearchLineTestDataAndOperations.createResearchLine(name, description)
+}
+
+Then(~'^the research line "([^"]*)" is not stored twice$') { String name ->
+    researches = ResearchLineTestDataAndOperations.findAllResearchLineByName(name)
+    assert researches.size() == 1
+}

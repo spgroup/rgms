@@ -44,7 +44,8 @@ Feature: orientations
   #3
   Scenario: create orientation web with invalid year
     Given I am at the create orientation page
-    When I fill the orientation title with "The Book is on the table" and the year with -1
+    When I fill the orientation title with "The Book is on the table"
+    And I fill the year with -1
     Then I am still on the create orientation page with an error message
 
   #5
@@ -69,12 +70,22 @@ Feature: orientations
   Scenario: upload orientation with a file
     Given the system has some orientations stored
     When I upload a new orientation "testelattes.xml"
-    Then the system has more orientations now
+    Then the orientation is properly stored by the system
 
   Scenario: upload orientations without a file
     Given I am at the publications menu
-    When I select the "Orientation" option at the program menu
+    When I select the "Orientation" option at the program orientation menu
     And I select the upload button at the orientations page
     Then I'm still on orientations page
     And the orientations are not stored by the system
   #end
+
+  
+	  
+Scenario: list existing orientations ordered by descending Ano Publicacao
+	Given I am at the publications menu
+	And the system has some orientations created
+	When I select to view the list of orientations
+	And I select the "order by ano publicacao" option at the program menu
+	Then the system orders the orientations list by ano plubicacao
+

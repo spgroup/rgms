@@ -35,3 +35,35 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
+  
+  Scenario: list existing books ordered by publication date in ascending order
+    Given I am at the book page 
+    And the system has some books stored
+    When I select to order the list of books by "Publication Date"
+    Then my book list shows the books ordered by "Publication Date"
+
+  Scenario: download book file
+    Given the book "SPL Development" is stored in the system with file name "NGSPL-0.pdf"
+    And I am at the book page
+    When I select the download button
+    Then I can download the file named "NGSPL-0.pdf"
+
+Scenario: new book web
+    Given I am at the publications menu
+    When I select the "Book" option at the publications menu
+    And I select the new book option at the book page
+    Then I can fill the book details
+
+  # if(listExistingBooksOrderedByVolumeInAscendingOrder)
+  Scenario: list existing books ordered by volume in ascending order
+    Given I am at the books page
+    And the system has some books created
+    When I select to view the list of books
+    And I select to order the list of books by "volume"
+    Then my book list shows the books ordered by "volume"
+  #end
+  Scenario: Create invalid book
+    Given I am at the book page
+    And the system has no book with empty title
+    When I create the book with empty title
+    Then the book with empty title is not stored

@@ -64,4 +64,17 @@ class TechnicalReportTestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+
+    static public void validateReport(report){
+        if(report != null){
+            assert true == true;
+        }
+    }
+
+    static public def findAllByTitle(String title){
+        reports.findAll { report ->
+            report.title == title
+        }
+    }
+
 }

@@ -25,6 +25,7 @@ When(~'^I can add the dissertation with a file "([^"]*)"$'){ String filename->
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + filename
     page.fillDissertationDetailsWithFile(path)
 }
+
 Then((~'^the system has a dissertation entitled "([^"]*)"$')){ String title->
     article = Dissertacao.findByTitle(title)
     assert article != null
@@ -62,13 +63,17 @@ Given(~'^the system has no dissertation entitled "([^"]*)"$') { String title ->
 
 Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     TestDataDissertacao.createDissertacao(title, filename, "UFPE")
-    article = Dissertacao.findByTitle(title)
+    article = TestDataDissertacao.findByTitle(title)
     assert article != null
 }
 
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') { String title, filename, school ->
     TestDataDissertacao.createDissertacao(title, filename, school)
+}
+
+When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+    TestDataDissertacao.createDissertacao(title, filename, "UFPE")
 }
 
 
@@ -78,9 +83,8 @@ Then(~'^the dissertation "([^"]*)" is properly stored by the system$') { String 
 }
 
 Then(~'^the dissertation "([^"]*)" is not stored twice$') { String title ->
-    dissertations = Dissertacao.findAllByTitle(title)
+    dissertations = TestDataDissertacao.findAllByTitle(title)
     assert dissertations.size() == 1
-    //A propriedade title de publication deveria estar unique:true, mas como n�o est�, este teste vai falhar
 }
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" without school$') { String title, filename ->
@@ -156,4 +160,36 @@ Given(~'^the system has no dissertation stored$')   {->
     assert intialSize == 0
 }
 
+
+
+And(~'^the dissertation which name "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+    TestDataDissertacao.createDissertacao(title, filename, "UFPE")
+    dissertacao = TestDataDissertacao.findByTitle(title)
+    assert dissertacao != null
+}
+
+When(~'^I select the download button$') { ->
+    at DissertationPage
+    page.selectDownloadBook()
+}
+
+Then(~'^I can download the file named "([^"]*)" for dissertation$') { String filename ->
+    //at DissertationPage
+    DissertationPage.clickDownloadButton(filename)
+}
+
+
+And(~'^the system has no dissertation with empty title$') { ->
+    memberList = TestDataDissertacao.findByTitle("")
+    assert memberList == null
+}
+
+When(~'^I create the dissertation with empty title$') { ->
+    TestDataDissertacao.createDissertacao("", "teste.pdf", "Colubmia")
+}
+
+Then(~'^the dissertation with empty title is not stored$') { ->
+    memberList = TestDataDissertacao.findByTitle("")
+    assert memberList == null
+}
 

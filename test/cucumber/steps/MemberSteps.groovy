@@ -1,10 +1,15 @@
 import pages.LoginPage
 import pages.RegisterPage
+import pages.member.MemberSearchByUniversityPage
 import pages.member.MemberCreatePage
+import pages.member.MemberPage
 import pages.member.MemberViewPage
+import pages.member.MemberSearchPage
 import rgms.authentication.User
 import rgms.member.Member
 import steps.MemberTestDataAndOperations
+import pages.member.MemberSearchByEmailPage
+
 
 import static cucumber.api.groovy.EN.*
 
@@ -191,4 +196,106 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     MemberTestDataAndOperations.createMemberWithEmail(name, email)
     //member = Member.findByEmail(email)
     //assert member.name == name
+}
+
+Given(~'^The system has a member named "([^"]*)"$') { String name ->
+    user = User.findByName(name);
+    member = user?.author
+    assert member != null
+}
+
+And(~'^I am at the member search page$') { ->
+    to MemberSearchPage
+    at MemberSearchPage
+}
+
+When(~'^I search for "([^"]*)"$') { String name ->
+    page.fillSearchBox(name)
+    page.clickSearchButton()
+}
+
+Then(~'My member list contains the member named "([^"]*)"$') { String name ->
+    assert page.resultsListContains(name)
+}
+
+Given(~'^I am at the members page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to MemberPage
+}
+
+And(~'^the system has no member with empty username$') { ->
+    memberList = MemberTestDataAndOperations.findByName("")
+    assert bookList == null
+}
+
+When(~'^I create the book with empty username$') { ->
+    MemberTestDataAndOperations.createMember("","1234-5678")
+}
+
+Then(~'^the member with empty name is not stored$') { ->
+    memberList = MemberTestDataAndOperations.findByName("")
+    assert memberList == null
+}
+
+
+When(~'^I select the download member button$') { ->
+    at MemberPage
+    page.selectDownloadFunder()
+}
+
+Then(~'^I can download the data file named "([^"]*)"$') { String name->
+    at MemberPage
+    assert page.clickDownloadLink(name)
+}
+
+
+Given(~'^the system has a member named "([^"]*)"$') { String name ->
+	MemberTestDataAndOperations.createMemberWithName(name)
+    member = Member.findByName(name)
+    assert member != null
+}
+
+Given(~'^the system has a member which university is "([^"]*)"$'){ String university->
+    member = MemberTestDataAndOperations.findByUniversity(university)
+    assert member != null
+}
+
+And(~'^I am at the member search page by university$'){->
+
+    to MemberSearchByUniversityPage
+    at MemberSearchByUniversityPage
+
+}
+
+When(~'^I search the members which university is "([^"]*)"$'){ String university->
+    page.fillSearchBox(university)
+    page.selectSearchByUniversityButton()
+}
+
+Then(~'^the member list contains the member which university is "([^"]*)"$'){ String university->
+    page.resultsListContains(university)
+}
+
+
+Given(~'^the system has a member which email is "([^"]*)"$'){ String email->
+    member = MemberTestDataAndOperations.findByEmail(email)
+    assert member != null
+}
+
+And(~'^I am at the member search page by email'){->
+    to MemberSearchByEmailPage
+    at MemberSearchByEmailPage
+
+}
+
+When(~'^I search the members which email is "([^"]*)"$'){ String email->
+    page.fillSearchBox(email)
+    page.selectSearchByUniversityButton()
+}
+
+Then(~'^the member list contains the member which email is "([^"]*)"$'){ String email->
+    page.resultsListContains(email)
 }
