@@ -40,6 +40,8 @@
             <%-- g:sortableColumn property="bibTex" title="${message(code: 'tese.bibTex.label', default: 'Bib Tex')}" / --%>
 
             <g:sortableColumn property="school" title="${message(code: 'tese.school.label', default: 'School')}"/>
+            
+            <g:sortableColumn property="author" title="${message(code: 'tese.author.label', default: 'Author')}"/>
 
         </tr>
         </thead>
@@ -59,6 +61,8 @@
                 <%-- td>${fieldValue(bean: teseInstance, field: "bibTex")}</td --%>
 
                 <td>${fieldValue(bean: teseInstance, field: "school")}</td>
+                
+                <td>${fieldValue(bean: teseInstance, field: "author")}</td>
 
             </tr>
         </g:each>

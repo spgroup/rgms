@@ -44,6 +44,13 @@
 	<g:textField name="school" required="" value="${teseInstance?.school}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: teseInstance, field: 'author', 'error')}">
+	<label for="author">
+		<g:message code="tese.author.label" default="Author" />
+	</label>
+	<g:textField name="author" required="" value="${teseInstance?.author}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: teseInstance, field: 'address', 'error')} required">
 	<label for="address">
 		<g:message code="tese.address.label" default="Address" />
