@@ -51,11 +51,16 @@ Feature: news
 #end
 
 #if($newInvalidNewsInvalidResearchGroup)
+  Scenario: new invalid news (Invalid research group)
+    Given the system has no news with description "noticiaTeste" and date "01-01-2014" for "abc" research group
+    When I create a news with description "noticiaTeste" and date "01-01-2014" for "abc" research group
+    Then the news with description "noticiaTeste", date "01-01-2014" and "abc" research group is not stored by the system because it is invalid
+#end
+
   Scenario: new invalid news
-    Given the system has some news stored
+    Given the system has some stored news
     When I create a news with invalid fields
     Then the news with with the invalid fields is not stored by the system because it is invalid
-#end
 
   Scenario: edit existing news
     Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group

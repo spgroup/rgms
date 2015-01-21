@@ -30,6 +30,12 @@ Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String t
     checkIfOrientationExists(title)
 }
 
+Then(~'^the duplicate orientation "([^"]*)" is not properly stored by the system$') { String title ->
+    checkIfOrientationExists(title)
+    orientation = OrientationTestDataAndOperations.findOrientationByTitle(title)
+    assert orientation != null
+}
+
 //delete
 Given(~'^the system has an orientation entitled "([^"]*)" supervised by someone$') { String title ->
     OrientationTestDataAndOperations.createOrientation(title)
