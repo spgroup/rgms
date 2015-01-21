@@ -121,6 +121,25 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
+Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    book = Book.findByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+And(~'^I am at the book page'){->
+    to BookPage
+    at BookPage
+}
+When(~'^I select the download button$') { ->
+    at BookPage
+    page.downloadFile()
+}
+
+Then(~'^the download the file named "([^"]*) is properly filed"$') { String filename ->
+    at BookPage
+    assert page.downloadFile(book, title)
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
@@ -131,4 +150,8 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     page.clickSaveBook()
     book = Book.findByTitle(title)
     assert book != null
+}
+
+def downloadFile(String filename){
+    return
 }

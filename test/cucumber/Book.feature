@@ -46,3 +46,9 @@ Feature: Book
     Then the book "Next Generation Software Product Line Engineering" is properly removed by the system
 
   # END #
+
+  Scenario: downloadd book file
+    Given the book entitled "Next Generation Software Product Line Engineering" is stored in the system with file name "Ngs.pdf"
+    And I am at the book page
+    When I select the download button
+    Then the download the file named "Ngs.pdf" is properly filed
