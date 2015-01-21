@@ -7,6 +7,7 @@
  */
 
 import pages.BookCreatePage
+import pages.BookEditPage
 import pages.BookPage
 import pages.BookShowPage
 import pages.LoginPage
@@ -21,7 +22,7 @@ Given(~'^the system has no book entitled "([^"]*)"$') { String title ->
     checkIfExists(title)
 }
 
-When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
     BookTestDataAndOperations.createBook(title, filename)
 }
 
@@ -79,6 +80,35 @@ And(~'^I click on Share to share the book on Twitter with "([^"]*)" and "([^"]*)
 Then(~'^a pop-up window with a tweet regarding the new book "([^"]*)" is shown$') { String bookTitle ->
     TwitterTool.addTwitterHistory(bookTitle, "added")
     assert TwitterTool.consult(bookTitle)
+}
+
+Given(~'^the book "([^"]*)" is in the book list with file name "([^"]*)"$') { String title, String filename ->
+    book = Book.findByTitle(title)
+    if (book == null) {
+        page.selectNewBook()
+        at BookCreatePage
+        page.fillBookDetails(BookTestDataAndOperations.path() + filename, title)
+        page.selectCreateBook()
+    }
+
+    to BookPage
+}
+
+When(~'^I select to edit the book "([^"]*)" in resulting list$') { String title ->
+    at BookPage
+    page.selectBook(title)
+
+    at BookShowPage
+    page.select('a', 'edit')
+
+    at BookEditPage
+}
+
+Then(~'^I can change the book details$') { ->
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    page.edit("Next Generation Software Product Line Engineering REVIEWED", path + "NGS2.pdf")
+
+    page.doEdit()
 }
 
 /* END */

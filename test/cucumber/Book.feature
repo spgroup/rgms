@@ -51,4 +51,10 @@ Feature: Book
     And I click on Share to share the book on Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then a pop-up window with a tweet regarding the new book "Next Generation Software Product Line Engineering" is shown
 
+  Scenario: edit book web
+    Given I am at the Book Page
+    And the book "Next Generation Software Product Line Engineering" is in the book list with file name "NGS.pdf"
+    When I select to edit the book "Next Generation Software Product Line Engineering" in resulting list
+    Then I can change the book details
+
   # END #

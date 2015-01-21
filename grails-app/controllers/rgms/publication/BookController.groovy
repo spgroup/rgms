@@ -49,9 +49,9 @@ class BookController {
     }
 
     def edit() {
-        def bookInstance = Book.get(id)
+        def bookInstance = Book.get(params.id)
         if (!bookInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), params.id])
             redirect(action: "list")
             return
         }
