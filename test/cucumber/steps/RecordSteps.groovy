@@ -146,7 +146,7 @@ When(~'^the member press the button cancel$') {->
     page.select("Cancel")
 }
 
-Then(~'^the record won't save the "([^"]*)"$') {status ->
+Then(~'^the record wont save the "([^"]*)"$') {status ->
 	record = RecordTestDataAndOperations.findRecordByStatus(status)
 	assert record == null
 }

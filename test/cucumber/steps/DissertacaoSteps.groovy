@@ -128,6 +128,8 @@ Then(~'^I\'m still on dissertation page$') {->
     at DissertationPage
 }
 
+// esse método tinha sido complicado ao extremo. Como o cenário que eu tinha escolhido havia sido duplicado,
+// resolvi, pelo menos, refazer este método para que ele fosse simplificado.
 // #if($UploadDissertationWithAFile)
 When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') { filename, title ->
 	TestDataDissertacao.createDissertacao(title, filename, "UFPE")
