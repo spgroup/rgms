@@ -182,14 +182,9 @@ And(~'^I am at the thesis search page$'){->
 
 }
 
-When(~'^I search for "([^"]*)"$'){ String title->
-    page.fillSearchBox(title)
-    page.selectSearchByTitleButton()
-}
-
 Then(~'^My thesis list contains the thesis entitled "([^"]*)"$'){ String title->
     page.resultsListContains(title)
-
+}
 //Scenario: create thesis web without a file
 
 
