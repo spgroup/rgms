@@ -96,13 +96,14 @@ Scenario:
   When I directly access the Publications Menu Page
   Then I am redirected to the Login Page
 
-  Scenario: Display user register success message in english
+  #Antes estava: User User1 criado
+  Scenario: Display member register success message in portuguese
     Given I am at the User Register Page
     And I fill the field Name with "User1"
     And I have the others fields filled correctly
     When I press the Register Button
     Then I am redirected to the Login Page
-    And The message User "User1" was created should be displayed
+    And The message Membro "User1" criado should be displayed
 
   Scenario: Display the text to login with facebook in english
     Given I want to create a new user

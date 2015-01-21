@@ -1,5 +1,6 @@
 package steps
 
+import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 import rgms.authentication.User
 import rgms.member.MemberController
 
@@ -87,22 +88,29 @@ class MemberTestDataAndOperations {
         return false;
     }
 
-    static public void createMemberWithoutPhone(String name, String username, String email, String university, String country, String website) {
+
+    static public void createMemberWithoutPhone(String name, String username, String email, String university, String status, String country, String website) {
         def cont = new MemberController()
 
-        cont.params << [name:name, username: username, email: email, university: university, country:country, website: website]
+
+        cont.params << [name: name, username: username, email: email,
+                        status: status, university: university, enabled: true, website: website, country:country
+        ]
         cont.create()
         cont.save()
         cont.response.reset()
     }
 
-    static public void createMemberWithoutWebsite(String name, String username, String email, String university, String country, String phone) {
+    static public void createMemberWithoutWebsite(String name, String username, String email, String university, String status, String country, String phone) {
         def cont = new MemberController()
 
-        cont.params << [name:name, username: username, email: email, university: university, country:country, phone: phone]
+        cont.params << [name: name, username: username, email: email,
+                        status: status, university: university, enabled: true, phone:phone, country:country]
         cont.create()
         cont.save()
         cont.response.reset()
     }
+
+
 
 }

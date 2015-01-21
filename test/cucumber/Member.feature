@@ -86,10 +86,10 @@ Scenario: new member with invalid phone
 
   Scenario: Phone param in blank should not impede the user creation
     Given I'm creating a new user
-    When I create a user with Name, Username, Email, University, Country and Website equals to "userTest", "user1", "user1@ufpe.br", "Federal University of Pernambuco", "Brazil" and "http://www.google.com"
+    When I create a user with Name, Username, Email, University, Status, Country and Website equals to "userTest", "user1", "user1@ufpe.br", "Federal University of Pernambuco", "Graduate Student", "Brazil" and "http://www.google.com"
     Then The User with username "user1" should be stored by the system
 
   Scenario: Website param in blank should not impede the user creation
     Given I'm creating a new user
-    When I create a user with Name, Username, Email, University, Country and Phone equals to "userTest", "user2", "user2@ufpe.br", "Federal University of Pernambuco", "Brazil" and "99887766"
+    When I create a user with Name, Username, Email, University, Status, Country and Phone equals to "userTest", "user2", "user2@ufpe.br", "Federal University of Pernambuco", "Graduate Student", "Brazil" and "99887766"
     Then The User with username "user2" should be stored by the system

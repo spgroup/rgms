@@ -145,7 +145,7 @@ margin-top: 0;
             <tr>
               <td ></td>
               <td style="font-size: 14px;">
-                   <p id="loginWithFacebookLabel">Entre com o Facebook:</p>
+                   <p id="loginWithFacebookLabel">Login with Facebook:</p>
                    <g:render template="../FacebookAuth"/>
               </td>
             </tr>

@@ -53,14 +53,14 @@
   <label for="phone">
     <g:message code="member.phone.label" default="Phone" />
   </label>
-  <g:textField name="phone" maxlength="50" required="" value="${userMemberInstanceList.memberInstance?.phone}"/>
+  <g:textField name="phone" maxlength="50" value="${userMemberInstanceList.memberInstance?.phone}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'website', 'error')} required">
   <label for="website">
     <g:message code="member.website.label" default="Website" />
   </label>
-  <g:textField name="website" maxlength="50" required="" value="${userMemberInstanceList.memberInstance?.website}"/>
+  <g:textField name="website" maxlength="50" value="${userMemberInstanceList.memberInstance?.website}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: userMemberInstanceList.memberInstance, field: 'city', 'error')} required">

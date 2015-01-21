@@ -197,9 +197,9 @@ Given(~'^I\'m creating a new user$') {->
 
 }
 
-When(~'^I create a user with Name, Username, Email, University, Country and Website equals to "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') { String name, String username, String email, String university, String country, String website ->
+When(~'^I create a user with Name, Username, Email, University, Status, Country and Website equals to "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') { String name, String username, String email, String university, String status,String country, String website ->
 
-    MemberTestDataAndOperations.createMemberWithoutPhone(name, username, email, university, country, website)
+    MemberTestDataAndOperations.createMemberWithoutPhone(name, username, email, university, status, country, website)
 }
 
 Then(~'^The User with username "([^"]*)" should be stored by the system$') { String username->
@@ -207,7 +207,7 @@ Then(~'^The User with username "([^"]*)" should be stored by the system$') { Str
     assert MemberTestDataAndOperations.containsMember(username)
 }
 
-When(~'^I create a user with Name, Username, Email, University, Country and Phone equals to "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') { String name, String username, String email, String university, String country, String phone ->
+When(~'^I create a user with Name, Username, Email, University, Status, Country and Phone equals to "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') { String name, String username, String email, String university, String status,String country, String phone ->
 
-    MemberTestDataAndOperations.createMemberWithoutWebsite(name, username, email, university, country, phone)
+    MemberTestDataAndOperations.createMemberWithoutWebsite(name, username, email, university, status, country, phone)
 }

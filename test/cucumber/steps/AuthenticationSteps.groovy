@@ -22,6 +22,7 @@ import rgms.authentication.User
 import rgms.publication.Periodico
 import rgms.member.Member
 import rgms.member.MemberController
+import steps.MemberTestDataAndOperations
 import steps.TestDataAndOperations
 import steps.TestDataAuthentication
 
@@ -258,9 +259,11 @@ When (~'I press the Register Button') { ->
     page.submitForm()
 }
 
-And(~'^The message User "([^"]*)" was created should be displayed') {String name->
+And(~'^The message Membro "([^"]*)" criado should be displayed') {String name->
     at LoginPage
-    assert (page.readFlashMessage() == "User "+name+" was created")
+
+
+    assert (page.readFlashMessage() == "Membro "+name+" criado")
 }
 
 Given(~'I want to create a new user'){ ->
