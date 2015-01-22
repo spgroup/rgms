@@ -45,6 +45,7 @@ When(~'^I select the new article option at the article page$') {->
 Then(~'^I can fill the article details$') {->
 	at ArticleCreatePage
 	page.fillArticleDetails()
+    page.selectCreateArticle()
 }
 
 

@@ -33,9 +33,9 @@ class BookPage extends Page {
 
     def selectBook(String title) {
         def listDiv = $('div', id: 'list-book')
-        def articleTable = (listDiv.find('table'))[0]
-        def articleRow = articleTable.find('tbody').find('tr')
-        def showLink = articleRow.find('td').find([text: title])
+        def bookTable = (listDiv.find('table'))[0]
+        def bookRow = bookTable.find('tbody').find('tr')
+        def showLink = bookRow.find('td').find([text: title])
         showLink.click()
     }
 

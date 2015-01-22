@@ -7,11 +7,13 @@
  */
 
 import pages.BookCreatePage
+import pages.BookEditPage
 import pages.BookPage
 import pages.BookShowPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
+import rgms.tool.TwitterTool
 import steps.BookTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -20,7 +22,7 @@ Given(~'^the system has no book entitled "([^"]*)"$') { String title ->
     checkIfExists(title)
 }
 
-When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
     BookTestDataAndOperations.createBook(title, filename)
 }
 
@@ -44,14 +46,69 @@ When(~'^I remove the book "([^"]*)"$') { String title ->
  * BEGIN
  */
 
+When(~'^I select the new book option at the book page$') {->
+    selectNewBookInBookPage()
+}
+
+def selectNewBookInBookPage(){
+    at BookPage
+    page.selectNewBook()
+    at BookCreatePage
+}
+
+Then(~'^I can fill the book details$') {->
+    at BookCreatePage
+    page.fillBookDetails()
+    page.selectCreateBook()
+}
+
 When(~'I go to the page of the "([^"]*)" book$') { String title ->
-    to BookPage
+    at BookPage
     page.selectBook(title)
 }
 
 And(~'I follow the delete button confirming with OK$') { ->
     at BookShowPage
     page.select('input', 'delete')
+}
+
+And(~'^I click on Share to share the book on Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+    at BookShowPage
+    page.clickOnTwitteIt(twitterLogin, twitterPw)
+}
+
+Then(~'^a pop-up window with a tweet regarding the new book "([^"]*)" is shown$') { String bookTitle ->
+    TwitterTool.addTwitterHistory(bookTitle, "added")
+    assert TwitterTool.consult(bookTitle)
+}
+
+Given(~'^the book "([^"]*)" is in the book list with file name "([^"]*)"$') { String title, String filename ->
+    book = Book.findByTitle(title)
+    if (book == null) {
+        page.selectNewBook()
+        at BookCreatePage
+        page.fillBookDetails(BookTestDataAndOperations.path() + filename, title)
+        page.selectCreateBook()
+    }
+
+    to BookPage
+}
+
+When(~'^I select to edit the book "([^"]*)" in resulting list$') { String title ->
+    at BookPage
+    page.selectBook(title)
+
+    at BookShowPage
+    page.select('a', 'edit')
+
+    at BookEditPage
+}
+
+Then(~'^I can change the book details$') { ->
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    page.edit("Next Generation Software Product Line Engineering REVIEWED", path + "NGS2.pdf")
+
+    page.doEdit()
 }
 
 /* END */
@@ -94,7 +151,7 @@ Then(~'^the system has all the books of the xml file$') { ->
     assert Book.findByTitle("AOSD 2011 Proceedings and Companion Material") != null
 }
 
-Given(~'^I am at the book page$') { ->
+Given(~'^I am at the Book Page$') { ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
@@ -107,11 +164,10 @@ When(~'^I go to new book page$') { ->
     page.selectNewBook()
 }
 
-And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
-    at BookCreatePage
-    createAndCheckBookOnBrowser(title, filename)
-    to BookPage
-    at BookPage
+And(~'^I try to create a book named "([^"]*)" with filename "([^"]*)"$') { String title, String filename ->
+    selectNewBookInBookPage()
+    page.fillBookDetails(BookTestDataAndOperations.path() + filename, title)
+    page.selectCreateBook()
 }
 
 Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
@@ -121,15 +177,6 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
-Given(~'^I am at the book page'){->
-        to BookPage
-        at BookPage
-}
-And(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
-    BookTestDataAndOperations.createBook(title, filename)
-    book = Book.findByTitle(title)
-    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
-}
 When(~'^I select the download button$') { ->
     at BookPage
     page.downloadFile()
@@ -143,13 +190,6 @@ Then(~'^the download the file named "([^"]*) is properly filed"$') { String file
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
-}
-
-def createAndCheckBookOnBrowser(String title, String filename) {
-    page.fillBookDetails(title, filename)
-    page.clickSaveBook()
-    book = Book.findByTitle(title)
-    assert book != null
 }
 
 def downloadFile(String filename){
