@@ -59,9 +59,9 @@ Feature: Book
 
   # END #
 
- Scenario: downloadd book file
-    Given I am at the book page
-    And the book entitled "Next Generation Software Product Line Engineering" is stored in the system with file name "Ngs.pdf"
+ Scenario: download book file
+    Given I am at the Book Page
+    And the book "Next Generation Software Product Line Engineering" is in the book list with file name "NGS.pdf"
     When I select the download button
     Then the download the file named "Ngs.pdf" is properly filed
 
