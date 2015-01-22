@@ -83,5 +83,12 @@ class BookChapterTestDataAndOperations {
         PublicationController.sendPostFacebook(member, title)
     }
 
-
+     //teste
+    static public void editBookChapterTitle(String title, String newTitle) {
+        def book = BookChapter.findByTitle(title)
+        book.title = newTitle
+        def cont = new BookChapterController()
+        cont.params << book.properties
+        cont.update(book.id, book.version)
+    }
 }

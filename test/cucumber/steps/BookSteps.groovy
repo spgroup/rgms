@@ -11,6 +11,7 @@ import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
+import steps.BookChapterTestDataAndOperations
 import steps.BookTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -102,6 +103,38 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     to BookPage
     at BookPage
 }
+
+//simone
+When(~'^I select the option to remove book "([^"]*)"$') {->
+    atBookPage
+    page.select('input', 'delete')
+}
+
+Then(~'^the system removes the book "([^"]*)"$'){String title ->
+    BookChapterTestDataAndOperations.removeBook(title)
+}
+
+//teste jkshfjd
+Then(~'^The system list "([^"]*)" and "([^"]*)" books$') { String title, filename ->
+    books = Book.findAllByTitle(title)
+    assert books.size() == 1
+    books = Book.findAllByTitle(filename)
+    assert books.size() == 1
+}
+
+//end simone
+
+//leo
+
+And(~'^there is already a stored book named "([^"]*)"$') { String title ->
+    book = Book.findByTitle(title)
+    assert book != null
+}
+
+Then(~'^the book "([^"]*)" will not be modified$') { String title ->
+    assert Book.findByTitle(title) == null
+}
+//end leo
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
