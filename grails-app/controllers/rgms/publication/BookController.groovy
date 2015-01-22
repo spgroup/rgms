@@ -1,7 +1,7 @@
 package rgms.publication
 
 class BookController {
-
+    boolean busca= false,v= false,p= false,n = false;
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
     AuxiliarController aux = new AuxiliarController()
 
@@ -11,7 +11,24 @@ class BookController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [bookInstanceList: Book.list(params), bookInstanceTotal: Book.count()]
+    if (busca) {
+        def bookInstanceList = Book.createCriteria().list(params) {
+            if (params.query) {
+                System.out.println("penes")
+                if (v) {
+                    ilike("Volume", "%${params.query}%")
+                }
+                if(p){
+                    ilike("Publisher", "%${params.query}%")
+                }
+                if(n){
+                    ilike("Title", "%${params.query}%")
+                }
+            }
+        }
+    }
+            [bookInstanceList: Book.list(params), bookInstanceTotal: Book.count()]
+
     }
 
     def create() {
@@ -92,5 +109,43 @@ class BookController {
     def delete(Long id) {
         def bookInstance = Book.get(id)
         aux.delete(id, bookInstance, 'book.label', 'Book');
+    }
+   def valores ={
+       def Input1 = params.Input1
+       def Input2 = params.Input2
+       ["Input1": Input1, "Input2": Input2]
+   }
+
+    def listSearchVolume ()
+    {
+        ArrayList<String> lista = new ArrayList<String>()
+        for(book in Book.getAll())
+        {
+
+                if(book.getVolume() == params.volume)
+                {
+                    lista.add(book.getTitle())
+
+
+                }
+
+            [bookInstanceList: lista]
+
+        }
+
+    }
+    def listSearchTitle ()
+    {
+        def bookList = []
+        if(params.volume){
+            def books = Book.findByVolume(params.volume)
+            for(i in books){
+                bookList.add(book: i)
+            }
+
+            [bookInstanceList: bookList]
+
+        }
+
     }
 }

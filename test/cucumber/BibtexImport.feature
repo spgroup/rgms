@@ -7,9 +7,9 @@ Feature: BibtexImport
   Scenario: simple import bibtex
     Given I am on Import Bibtex File Menu
     When  I click "Choose file"
-  #if($BibtexImport)
+ #if($BibtexImport)
     And selected a bibtex file and I click "Import All"
-  #end
+ #end
     Then is created all corresponding publications
     And all of then are stored
     

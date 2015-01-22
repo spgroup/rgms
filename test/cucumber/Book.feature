@@ -18,7 +18,7 @@ Feature: Book
   Scenario: list book
     Given the book "SPL Development" is stored in the system with file name "NGSPL-2.pdf"
     When I create the book "Next Generation Software Product Line Engineering" with file name "NGSPLE.pdf"
-    Then The system list "SPL Development" and "Next Generation Software Product Line Engineering" 
+    Then the system lists "SPL Development" and "Next Generation Software Product Line Engineering"
 #end
 
   Scenario: duplicate book
@@ -74,5 +74,44 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf" and author name "James"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
-    And the message "the book was sucessful stored" is displayed
+    And the message "the book was sucessfully stored" is displayed
+#end
+#if($searchBookByVolume)
+  Scenario: Search Book by Volume web
+    Given I am at the book page
+    And The system has a book entitled "Next Generation Software Product Line Engineering" volume "1"
+    When I fill the webpage search for a book with volume "1" and click the search button
+    Then The system displays the book entitled "Next Generation Software Product Line Engineering" volume "1"
+
+  Scenario: Search Book by Volume
+    Given The book entitled "Next Generation Software Product Line Engineering" volume "1" is stored on the system
+    When I search for a book with volume "1"
+    Then the system lists all books with volume "1"
+#end
+
+#if($searchBookByPublisher)
+  Scenario: Search Book by Publisher web
+    Given I am at the book page
+    And The system has a book with publisher "James"
+    When I fill the webpage search for a book with publisher "James" and click the search button
+    Then The system displays the book with publisher "James"
+
+  Scenario: Search Book by Publisher
+    Given The book with publisher "James" is stored on the system
+    When I search for a book with publisher "James"
+    Then the system lists all books with publisher "James"
+#end
+
+
+#if($searchBookByTitle)
+  Scenario: Search Book by Title web
+    Given I am at the book page
+    And The system has a book entitled "Next Generation Software Product Line Engineering"
+    When I fill the webpage search for a book with title "Next Generation Software Product Line Engineering" and click the search button
+    Then The system displays the book entitled "Next Generation Software Product Line Engineering"
+
+  Scenario: Search Book by Title
+    Given The book entitled "Next Generation Software Product Line Engineering" is stored on the system
+    When I search for a book entitled "Next Generation Software Product Line Engineering"
+    Then the system lists all books entitled "Next Generation Software Product Line Engineering"
 #end

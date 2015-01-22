@@ -176,7 +176,7 @@ When(~'I select the Book Chapter option at the program menu'){ ->
     page.select("Book Chapter")
 }
 
-#if($BookChapter)
+//#if($BookChapter)
 Given(~'^the book chapter entitled "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     BookChapter bc = BookChapter.findByTitle(title)
     assert bc != null
@@ -205,8 +205,13 @@ And(~'^no changes are made by the system$'){->
     at BookChapterPage
     assert page.hasErrorUploadFile()
 }
-#end
+//#end
 
+class NoSuchBookChapterException extends Exception {
+    public NoSuchBookChapterException(String msg) {
+        super(msg);
+    }
+}
 
 def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookChapterDetails(title, filename)
