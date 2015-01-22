@@ -14,6 +14,6 @@ Feature: all bibtex
     Given I am at the publications
     When I select the export bibtex file option at the publications menu
     And I type "Topic" at the search toolbar in export bibtex page
-    And I select Generate BibTex option at the export bibtex page
+    And I select "Generate BibTex" option at the export bibtex page
     Then I can see all the publications related with "Topic"
   #end
