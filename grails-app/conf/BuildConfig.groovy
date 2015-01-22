@@ -46,11 +46,7 @@ grails.project.dependency.resolution = {
         compile('lib:itext-pdfa:5.4.0')
         compile('lib:itext-xtra:5.4.0')
         compile('lib:twitter4j-core:4.0.1')
-<<<<<<< HEAD
 		compile('commons-codec:commons-codec:1.6')
-=======
-        compile('commons-codec:commons-codec:1.6')
->>>>>>> mfl3
 
         compile(group: 'org.apache.poi', name: 'poi', version: '3.7') {
             excludes 'xmlbeans'
@@ -62,7 +58,7 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        //compile ":twitter4j:0.3.2"
+        compile ":twitter4j:0.3.2"
         compile ":remote-control:1.4"
         compile ":codenarc:0.20"
         compile ":gmetrics:0.3.1"
