@@ -10,13 +10,16 @@
 </head>
 <body>
 <div class="nav">
-    <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
+    <span class="menuButton">
+        <a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
+    </span>
 </div>
 <div class="body">
     <h1><g:message code="default.list.label" args="[entityName]" /></h1>
     <g:if test="${flash.message}">
         <div class="message">${flash.message}</div>
     </g:if>
+
     <div class="list">
         <table>
             <thead>
@@ -42,8 +45,13 @@
 
                     <td><a href="mailto:${fieldValue(bean: userMember.member, field: "email")}">${fieldValue(bean: userMember.member, field: "email")}</a></td>
 
-                    <td><g:link action="generateBibTex" id="${userMember.member.id}">Generate All BibTex</g:link></td>
-
+                    <td>
+                        <g:link action="generateBibTex" id="${userMember.member.id}">Generate All BibTex</g:link>
+                        <g:form controller="BibtexGenerateFileController" method="post" action="generateBibTexByTopic" enctype="multipart/form-data">
+                            <g:textField name="searchTextField" value="Digite o tópico"/>
+                            <g:actionSubmit value="Generate BibTex" action="generateBibTexByTopic" id="GenerateBibTex"/>
+                        </g:form>
+                    </td>
                 </tr>
             </g:each>
             </tbody>
@@ -77,7 +85,13 @@
 
                 <td>${ fieldValue(bean: researchGroupInstance, field: "description") } </td>
 
-                <td><g:link action="generateBibTexGroup" id="${researchGroupInstance.id}">Generate All BibTex from Members</g:link></td>
+                <td>
+                    <g:link action="generateBibTexGroup" id="${researchGroupInstance.id}">Generate All BibTex from Members</g:link>
+                    <g:form controller="BibtexGenerateFileController" method="post" action="generateBibTexByTopic" enctype="multipart/form-data">
+                        <g:textField name="searchTextField" value="Digite o tópico"/>
+                        <g:actionSubmit value="Generate BibTex" action="generateBibTexByTopic" id="GenerateBibTex"/>
+                    </g:form>
+                </td>
             </tr>
         </g:each>
         </tbody>

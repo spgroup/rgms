@@ -21,7 +21,7 @@ Given(~'^the system has no book entitled "([^"]*)"$') { String title ->
 }
 
 //Author is not being used right now
-When(~'^I create the book "([^"]*)" with file name "([^"]*)" and author name "([^"]*)"$') { String title, filename, author ->
+When(~'^I create the book "([^"]*)" with file name "([^"]*)" and author name "([^"]*)"$') { String title, String filename, String author ->
     BookTestDataAndOperations.createBook(title, filename)
 }
 
