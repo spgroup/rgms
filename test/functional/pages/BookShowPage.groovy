@@ -6,8 +6,7 @@ import geb.Page
  * Created by Casa on 20/01/2015.
  */
 class BookShowPage extends Page {
-
-    static url = "book/show/1"
+    static url = "book/show"
 
     static at = {
         GetPageTitle gp = new GetPageTitle()
@@ -26,9 +25,5 @@ class BookShowPage extends Page {
         } else {
             $("form").find(e, class: v).click()
         }
-    }
-
-    def selectEdit(String s){
-        $('e', text: s).click()
     }
 }

@@ -26,7 +26,7 @@ When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, 
 }
 
 Then(~'^the book "([^"]*)" is properly stored by the system$') { String title ->
-    book = BookTestDataAndOperations.findBookByTitle(title)
+    book = Book.findByTitle(title)
     assert BookTestDataAndOperations.bookCompatibleTo(book, title)
 }
 
@@ -34,7 +34,7 @@ Then(~'^the book "([^"]*)" is properly stored by the system$') { String title ->
 
 Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
     BookTestDataAndOperations.createBook(title, filename)
-    book = Book.findByTitleAndFile(title, filename)
+    book = Book.findByTitle(title)
     assert BookTestDataAndOperations.bookCompatibleTo(book, title)
 }
 
@@ -171,11 +171,14 @@ And(~'^I press to remove at the book show page$') {->
     page.select('input', 'delete')
 }
 
+Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
+    assert checkIfExists(title)
+}
+
 Then(~'^the book list contains" ([^"]*)"$') { String title ->
     at BookPage
     page.checkArticleAtList(title, 0)
 }
-
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
@@ -186,4 +189,19 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookDetails(title, filename)
     page.clickSaveBook()
     checkIfExists(title)
+}
+
+Given(~'^the system has the book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String file ->
+    book = Book.findByTitleAndFile(title, file)
+    assert book != null
+}
+
+Then(~'^the book "([^"]*)" is removed from the system$') { String title ->
+    book = Book.findByTitle(title)
+    assert book == null
+}
+
+Then(~'^the book list contains "([^"]*)"$') { String title ->
+    book = Book.findByTitle(title)
+    assert book != null
 }
