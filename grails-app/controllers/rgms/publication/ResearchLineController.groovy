@@ -94,11 +94,9 @@ class ResearchLineController {
         old_members = getOldMembers(params.id)
         //#end
         def researchLineInstance = getInstance(params)
-        if (!researchLineInstance)
+        if (!researchLineInstance || !checkInstanceVersion(params, researchLineInstance))
             return
 
-        if (!checkInstanceVersion(params, researchLineInstance))
-            return
         researchLineInstance.properties = params
         if (!params.members) {
             researchLineInstance.properties.members = []
