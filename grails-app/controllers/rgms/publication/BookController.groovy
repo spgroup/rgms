@@ -1,7 +1,7 @@
 package rgms.publication
 
 class BookController {
-    boolean busca= false,v= false,p= false,n = false;
+    boolean busca= false,v= false,p= false,n = false, a = false;
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
     AuxiliarController aux = new AuxiliarController()
 
@@ -23,6 +23,9 @@ class BookController {
                 }
                 if(n){
                     ilike("Title", "%${params.query}%")
+                }
+                if(a){
+                    ilike("Autores", "%${params.query}%")
                 }
             }
         }

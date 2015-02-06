@@ -58,6 +58,15 @@
 					
 				</li>
 				</g:if>
+
+                <g:if test="${teseInstance?.author}">
+                    <li class="fieldcontain">
+                        <span id="author-label" class="property-label"><g:message code="tese.author.label" default="Author" /></span>
+
+                        <span class="property-value" aria-labelledby="author-label"><g:link controller="author" action="show" id="${teseInstance?.author?.id}">${teseInstance?.author?.encodeAsHTML()}</g:link></span>
+
+                    </li>
+                </g:if>
 			
 				<!-- //#if($Bibtex) -->
 				<li class="fieldcontain">

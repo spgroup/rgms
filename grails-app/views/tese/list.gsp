@@ -37,6 +37,8 @@
 
             <th><g:message code="tese.researchLine.label" default="Research Line"/></th>
 
+            <g:sortableColumn property="author" title="${message(code: 'tese.author.label', default: 'Author')}"/>
+
             <%-- g:sortableColumn property="bibTex" title="${message(code: 'tese.bibTex.label', default: 'Bib Tex')}" / --%>
 
             <g:sortableColumn property="school" title="${message(code: 'tese.school.label', default: 'School')}"/>
@@ -55,6 +57,8 @@
                 <td>${fieldValue(bean: teseInstance, field: "file")}</td>
 
                 <td>${fieldValue(bean: teseInstance, field: "researchLine")}</td>
+
+                <td>${fieldValue(bean: teseInstance, field: "author")}</td>
 
                 <%-- td>${fieldValue(bean: teseInstance, field: "bibTex")}</td --%>
 
