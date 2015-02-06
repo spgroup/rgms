@@ -52,10 +52,10 @@ class FerramentaTestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void createFerramenta(String title, filename) {
+    static public void createFerramenta(String title, filename, website = null) {
         def cont = new FerramentaController()
         def date = new Date()
-        cont.params << findFerramentaByTitle(title) << [file: filename]
+        cont.params << findFerramentaByTitle(title) << [file: filename] << [website: website]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
         cont.create()
         cont.save()

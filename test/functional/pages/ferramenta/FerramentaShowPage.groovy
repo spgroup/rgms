@@ -13,6 +13,10 @@ class FerramentaShowPage extends Page{
 	static content = {
 	}
 
+    def select(String s){
+        $('a.' + s).click();
+    }
+
 	def editFerramenta(){
 		$('a.edit').click()
 	}

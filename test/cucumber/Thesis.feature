@@ -5,13 +5,17 @@ Feature: Thesis Tests
 
   Scenario: new thesis duplicated
     Given The thesis "Thesis duplicated" is stored in the system with file name "Thesisduplicated.txt"
-    When  I create the thesis "Thesis duplicated" with file name "Thesisduplicated2.txt" and school "UFPE"
+    When  I create the thesis "Thesis duplicated" with file name "Thesisduplicated2.txt"
     Then  The thesis "Thesis duplicated" is not stored twice
 
-  Scenario: new thesis
-    Given The system has no thesis entitled "New thesis"
-    When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
-    Then  The thesis "New thesis" is properly stored by the system
+	#if($thesis)
+    @vddm
+	Scenario: new thesis
+		Given The system has no thesis entitled "New thesis"
+		When  I create the thesis "New thesis" with file name "NewthesisGUI.txt"
+		And I create the thesis "New thesis2" with file name "NewThesis.pdf"
+        Then  The thesis "New thesis" not is properly stored by the system, but "New thesis2" is
+	#end
 
   Scenario: remove existing thesis
     Given   the system has thesis entitled "New thesis2"
@@ -77,29 +81,33 @@ Feature: Thesis Tests
 
   @ignore
   Scenario: edit thesis title
-    Given the system has thesis entitled "My Thesis"
+    Given The thesis "My Thesis" is stored in the system with file name "Joee.pdf"
     When I change the title from "My Thesis" to "My Thesis Renamed"
     Then the thesis entitled "My Thesis Renamed" is properly renamed by the system
     And the other theses are not changed by the system
 
   @ignore
   Scenario: edit thesis with invalid data
-    Given the system has thesis entitled "My Thesis"
+    Given The thesis "My Thesis" is stored in the system with file name "Joee.pdf"
     When I change the title from "My Thesis" to ""
     Then the existing thesis are not changed by the system
 
-  @ignore
-  Scenario: search a thesis
-    Given the system has one thesis entitled "My Thesis"
-    When I search for thesis entitled "My Thesis"
-    Then the existing thesis are not changed by the system
+	#if($search)
+    @vddm
+	Scenario: search a thesis
+		Given The thesis "My Thesis" is stored in the system with file name "Joee.pdf"
+		When I search for thesis entitled "My Thesis"
+		Then the "My Thesis" thesis is returned by the system
+	#end
 
-  @ignore
-  Scenario: upload thesis with a file
-    Given The system has no thesis entitled "My Thesis"
-    When I upload the file "My Thesis.xml"
-    Then the existing thesis are not changed by the system
-    And the system stores properly the thesis entitled "My Thesis"
+	#if($fileThesis)
+    @vddm
+	Scenario: upload existing thesis with a file
+		Given The thesis "New thesis" is stored in the system with file name "Joee.pdf"
+		When I upload the file "Newthesis.pdf" to "New thesis"
+		Then the file "Joee.pdf" associated with the existing thesis "New thesis" is replaced by "Newthesis.pdf"
+	#end
+	
 # editar dados de uma tese, ordenar lista de teses, filtrar lista de teses,
 # criar tese com dados inválidos, a chave é mesmo o título da tese?, tamanho
 # dos campos, o dia e o arquivo deveriam ser opcional, deveria poder adicionar
