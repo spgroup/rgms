@@ -2,6 +2,7 @@ package steps
 
 import rgms.authentication.User
 import rgms.member.MemberController
+import steps.CommonTestAndDataOperations
 
 /**
  * Created with IntelliJ IDEA.
@@ -56,18 +57,14 @@ class MemberTestDataAndOperations {
         } else {
             cont.params << [username: username, phone: phone]
         }
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        CommonTestAndDataOperations.createAndSave(cont);
     }
 
     //TODO evitar duplicação, depois de resolver toda a confusão conceitual entre user vs member
     static public void createMemberWithEmail(String name, String email) {
         def cont = new MemberController()
         cont.params << findByName(name) << [email: email]
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        CommonTestAndDataOperations.createAndSave(cont);
     }
 
     static public def findByEmail(String email){
@@ -98,8 +95,6 @@ class MemberTestDataAndOperations {
     static public void createMemberWithName(String name) {
         def cont = new MemberController()
         cont.params << findByName(name)
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        CommonTestAndDataOperations.createAndSave(cont);
     }
 }
