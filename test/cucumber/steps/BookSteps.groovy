@@ -47,30 +47,20 @@ When (~'^I edit the book file name from "([^"]*)" to "([^"]*)"$') { String oldFi
 }
 
 When (~'^I edit the book "([^"]*)" file name from "([^"]*)" to "([^"]*)"$'){ String title, oldFilename, newFilename ->
-    to BookPage
-    page.selectNewBook()
-    at BookCreatePage
-    createAndCheckBookOnBrowser(title, oldFilename)
-    to BookPage
     at BookPage
-
     page.selectViewBook(title)
-    //to BookShowPage
-    at BookShowPage
-    page.select('input', 'edit')
+    to BookShowPage
+    //at BookShowPage
+    page.select("input", "edit")
     to BookEditPage
-    //book.setFile(newFilename)
     page.editFilename(newFilename)
-    System.out.print("Edited to: " + book.file)
     page.clickSaveBook()
 }
 
 Then(~'^I have the book entitled "([^"]*)" with file name "([^"]*)" stored on the system$') { String title, String filename ->
-    book = Book.findByTitle(title)
-    System.out.print(book.file)
+    book = Book.findByTitleAndFile(title, filename)
     assert book != null
 }
-
 
 When(~'^I upload the file in the system with name "([^"]*)"$') { String fileName ->
     book.setFile(fileName)
@@ -171,10 +161,6 @@ And(~'^I press to remove at the book show page$') {->
     page.select('input', 'delete')
 }
 
-Then(~'^the article "([^"]*)" is properly removed by the system$') { String title ->
-    assert checkIfExists(title)
-}
-
 Then(~'^the book list contains" ([^"]*)"$') { String title ->
     at BookPage
     page.checkArticleAtList(title, 0)
@@ -193,7 +179,13 @@ def createAndCheckBookOnBrowser(String title, String filename) {
 
 Given(~'^the system has the book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String file ->
     book = Book.findByTitleAndFile(title, file)
-    assert book != null
+    if(book == null){
+        to BookPage
+        page.selectNewBook()
+        at BookCreatePage
+        createAndCheckBookOnBrowser(title, file)
+        to BookPage
+    }
 }
 
 Then(~'^the book "([^"]*)" is removed from the system$') { String title ->
@@ -202,6 +194,5 @@ Then(~'^the book "([^"]*)" is removed from the system$') { String title ->
 }
 
 Then(~'^the book list contains "([^"]*)"$') { String title ->
-    book = Book.findByTitle(title)
-    assert book != null
+    checkIfExists(title)
 }

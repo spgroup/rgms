@@ -17,11 +17,16 @@ class BookShowPage extends Page {
     }
 
     static content = {
+        book {
+            $('input', id: 'book')
+        }
     }
 
     def select(String e, v) {
         if (v == 'delete') {
             assert withConfirm(true) { $("form").find(e, class: v).click() }
+        } else if (v == "edit"){
+            $("form").find(e, class: "edit").click()
         } else {
             $("form").find(e, class: v).click()
         }

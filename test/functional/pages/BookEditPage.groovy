@@ -8,7 +8,7 @@ import steps.BookTestDataAndOperations
  * Created by Gabriela on 04-Feb-15.
  */
 public class BookEditPage extends Page {
-    static url = "book/edit"
+    static url = "book/edit/12"
 
     static at = {
         GetPageTitle gp = new GetPageTitle()
@@ -24,9 +24,8 @@ public class BookEditPage extends Page {
         }
     }
 
-    def editFilename(String filename) {
-        $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
-        clickSaveBook()
+    def editFilename(String newFile) {
+        $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + newFile
     }
 
     def select(String s) {
@@ -34,7 +33,7 @@ public class BookEditPage extends Page {
     }
 
     def clickSaveBook() {
-        $("form").save().click()
+        $("form").find(class: "save").click()
     }
 }
 

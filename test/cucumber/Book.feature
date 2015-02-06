@@ -46,7 +46,7 @@ Feature: Book
 
   #if($updateExistingBookWeb)
   Scenario: update existing book web
-    Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
+    Given the system has the book entitled "SPL Development" with file name "HSPLE.pdf"
     And I am at the book page
     When I edit the book "SPL Development" file name from "HSPLE.pdf" to "newHSPLE.pdf"
     Then I have the book entitled "SPL Development" with file name "newHSPLE.pdf" stored on the system
@@ -68,3 +68,14 @@ Feature: Book
     Then I should see an error message containing "Book without file, it is mandatory"
 #end
 
+  Scenario: list existing book web
+    Given I am at the book page
+    And the system has the book entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
+    Then the book list contains "Next Generation Software Product Line Engineering"
+
+  Scenario: remove existing book web
+    Given I am at the book page
+    And the system has the book entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
+    When I choose to view "Next Generation Software Product Line Engineering" in book list
+    And I press to remove at the book show page
+    Then the book "Next Generation Software Product Line Engineering" is removed from the system
