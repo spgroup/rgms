@@ -7,7 +7,6 @@
  */
 
 import pages.BookCreatePage
-import pages.BookShowPage
 import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
@@ -25,7 +24,7 @@ When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, 
 }
 
 Then(~'^the book "([^"]*)" is properly stored by the system$') { String title ->
-    book = Book.findByTitle(title)
+    book = BookTestDataAndOperations.findBookByTitle(title)
     assert BookTestDataAndOperations.bookCompatibleTo(book, title)
 }
 
@@ -33,6 +32,17 @@ Given(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') 
     BookTestDataAndOperations.createBook(title, filename)
     book = Book.findByTitle(title)
     assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
+
+When (~'^I edit the book file name from "([^"]*)" to "([^"]*)"$') { String oldFile, newFile ->
+    at BookPage
+    page.selectViewBook()
+    BookTestDataAndOperations.editFile(oldFile, newFile)
+    page.clickSaveBook()
+}
+
+Then(~'^I have the book entitled "([^"]*)" with file name "([^"]*)" stored on the system$') { String title, String filename ->
+    book.getFile().equals(filename)
 }
 
 When(~'^I remove the book "([^"]*)"$') { String title ->
@@ -95,6 +105,7 @@ And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$'
     to BookPage
     at BookPage
 }
+
 Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     book = Book.findByTitle(title)
     assert book != null
@@ -102,27 +113,41 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
-
 When(~'^I choose to view "([^"]*)" in book list$') { String title ->
     page.selectViewBook(title)
     at BookShowPage
 }
+
 And(~'^I press to remove at the book show page$') {->
     at BookShowPage
     page.select('input', 'delete')
 }
-
-
-
 
 Then(~'^the book list contains" ([^"]*)"$') { String title ->
     at BookPage
     page.checkArticleAtList(title, 0)
 }
 
+When(~'^I upload the file in the system with name "([^"]*)"$') { String fileName ->
+    book.setFile(fileName)
+    assert Book.findByFile(fileName)
+}
 
+Then(~'^the book "([^"]*)" has the archive file "([^"]*)" updated by the system$') { String title, String filename ->
+    book.getFile().equals(filename)
+}
 
+When(~'^I try to create the book "([^"]*)" without file$') { String title ->
+    !checkIfExists(title)
+}
 
+Then(~'^the book "([^"]*)" is not stored by the system$') {String title ->
+    !checkIfExists(title)
+}
+
+Then (~'I should see an error message containing "([^"]*)"$') {
+    assert !(page.readFlashMessage() == null)
+}
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
@@ -132,22 +157,6 @@ def checkIfExists(String title) {
 def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookDetails(title, filename)
     page.clickSaveBook()
-    book = Book.findByTitle(title)
-    assert book != null
-}
-
-
-Given(~'^the system has the book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String file ->
-    book = Book.findByTitleAndFile(title, file)
-    assert book != null
-}
-
-Then(~'^the book "([^"]*)" is removed from the system$') { String title ->
-    book = Book.findByTitle(title)
-    assert book == null
-}
-
-Then(~'^the book list contains "([^"]*)"$') { String title ->
     book = Book.findByTitle(title)
     assert book != null
 }

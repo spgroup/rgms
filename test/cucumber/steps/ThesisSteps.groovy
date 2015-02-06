@@ -269,7 +269,7 @@ And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
 
 }
 
-Given (~'^I want to add a "New thesis"') { 
+Given (~'^I want to add a "New thesis"') { }
 
 //FUNÇÔES AUXILIARES
 def thesisDoNotExists(title) {

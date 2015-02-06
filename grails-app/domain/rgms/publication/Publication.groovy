@@ -8,7 +8,6 @@ abstract class Publication {
     Date publicationDate
     String file
     ResearchLine researchLine
-    MagazinePublication magPublication
 
     static belongsTo = Member
     static hasMany = [members: Member, authors: String]
@@ -19,7 +18,6 @@ abstract class Publication {
         file maxSize: 100000, nullable: true, blank: true
         researchLine nullable: true, blank: true
         authors nullable: true, blank: true
-        magPublication nullable: true, blank: true
     }
 
     //#if($Bibtex)
