@@ -3,6 +3,7 @@ import pages.LoginPage
 import pages.PublicationsPage
 import pages.ThesisPage
 import pages.thesis.ThesisCreatePage
+import pages.thesis.ThesisEditPage
 import pages.thesis.ThesisShowPage
 import rgms.authentication.User
 import rgms.publication.Tese
@@ -33,22 +34,26 @@ When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]
  * edit existing thesis test
  * BEGIN
  */
-When(~'^I modify the field School to "UFPE"$') {
-    page.fillSchool("UFPE")
+And(~'^I modify the field School to "([^"]*)"$') {
+    String school_name ->
+        at ThesisEditPage
+        page.fillThesisSchool(school_name)
+        page.selectConfirm()
 }
 
-And(~'^I select Confirm$') {
-    page.selectConfirm()
+When(~'^I select to edit thesis "([^"]*)" in resulting list$') { title ->
+    at ThesisPage
+    //to ThesisCreatePage
+    page.selectViewThesis(title)
+    page.edit()
+    at ThesisEditPage
+
 }
 
-Then(~'^I am at the thesis show page~') {
-    to ThesisPage
-}
-
-And(~'^The thesis "([^"]*)" now has "UFPE" in the school field$') {
-    String title ->
+Then(~'^The thesis "([^"]*)" now has "([^"]*)" in the school field$') {
+    String title, String school_name ->
         tese = Tese.findByTitle(title)
-        assert tese.school == "UFPE"
+        assert tese.school == school_name
 }
 /**
  * @author rff2
@@ -56,6 +61,37 @@ And(~'^The thesis "([^"]*)" now has "UFPE" in the school field$') {
  * END
  */
 
+/**
+ * @author rff2
+ * edit existing thesis test
+ * BEGIN
+ */
+When(~'^The user adds a thesis entitled "([^"]*)"$') {
+    title ->
+        at ThesisPage
+        page.selectNewThesis()
+        at ThesisCreatePage
+
+        def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/NewthesisGUI.txt")
+        absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
+        page.fillThesisDetails(title, 01, 01, 1995, "UFPE", "Recife", absolutePath)
+
+}
+
+Then(~'^The thesis "([^"]*)" is properly stored after "([^"]*)"$') {
+    String title1, String title2 ->
+        at ThesisPage
+        thesis1 = Tese.findByTitle(title1)
+        thesis2 = Tese.findByTitle(title2)
+        assert thesis1 == page.getRow(0)
+        assert thesis2 == page.getRow(1)
+}
+
+/**
+ * @author rff2
+ * edit existing thesis test
+ * END
+ */
 
 Then(~'^The thesis "([^"]*)" is not stored twice$') { String title ->
     theses = Tese.findAllByTitle(title)
