@@ -17,7 +17,7 @@ import steps.BookTestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no book entitled "([^"]*)"$') { String title ->
-    checkIfExists(title)
+    assert !checkIfExists(title)
 }
 
 When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
@@ -40,7 +40,7 @@ When(~'^I remove the book "([^"]*)"$') { String title ->
 }
 
 Then(~'^the book "([^"]*)" is properly removed by the system$') { String title ->
-    checkIfExists(title)
+    assert !checkIfExists(title)
 }
 
 Then(~'^the book "([^"]*)" is not stored twice$') { String title ->
@@ -96,8 +96,7 @@ And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$'
     at BookPage
 }
 Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
-    book = Book.findByTitle(title)
-    assert book != null
+    assert checkIfExists(title)
     to BookPage
     at BookPage
 }
@@ -126,14 +125,14 @@ Then(~'^the book list contains" ([^"]*)"$') { String title ->
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
-    assert book == null
+    book != null
 }
+
 
 def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookDetails(title, filename)
     page.clickSaveBook()
-    book = Book.findByTitle(title)
-    assert book != null
+    assert checkIfExists(title)
 }
 
 
@@ -143,11 +142,10 @@ Given(~'^the system has the book entitled "([^"]*)" with file name "([^"]*)"$') 
 }
 
 Then(~'^the book "([^"]*)" is removed from the system$') { String title ->
-    book = Book.findByTitle(title)
-    assert book == null
+
+    assert !checkIfExists(title)
 }
 
 Then(~'^the book list contains "([^"]*)"$') { String title ->
-    book = Book.findByTitle(title)
-    assert book != null
+    assert checkIfExists(title)
 }

@@ -36,6 +36,11 @@ Feature: Book
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
 
+  Scenario: list existing book web
+    Given I am at the book page
+    And the system has the book entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
+    Then the book list contains "Next Generation Software Product Line Engineering"
+
   Scenario: remove existing book web
     Given I am at the book page
     And the system has the book entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
@@ -43,9 +48,4 @@ Feature: Book
     And I press to remove at the book show page
     Then the book "Next Generation Software Product Line Engineering" is removed from the system
 
-  Scenario: list existing book web
-    Given I am at the book page
-    And the system has the book entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
-    Then the book list contains "Next Generation Software Product Line Engineering"
 
-    Testing stuff
