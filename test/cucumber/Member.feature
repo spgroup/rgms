@@ -111,7 +111,7 @@ Scenario: editing member information
 @vddm
 Scenario: editing member
 	Given I am at the member page
-	When I click the first member id
+	When I click the "1" member id
     And I Click the option "edit" on Member Edition Page
     And I change the member's "name" by "Victor Monteiro"
 	Then I can see the member's name is now "Victor Monteiro"

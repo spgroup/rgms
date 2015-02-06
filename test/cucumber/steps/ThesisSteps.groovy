@@ -132,12 +132,6 @@ Then(~'^the thesis "([^"]*)" is removed from the system$') { title ->
     thesisDoNotExists(title)
 }
 
-// #6
-Given(~'^the system has thesis entitled "([^"]*)"$') { title ->
-    ThesisTestDataAndOperations.createTese(title, 'teste.txt', 'UFPE')
-    thesis = Tese.findByTitle(title)
-    assert thesis != null
-}
 
 When(~'^I delete the thesis "([^"]*)"$') { title ->
     ThesisTestDataAndOperations.deleteTeseByTitle(title)
@@ -248,10 +242,6 @@ And(~'^the other theses are not changed by the system$') { ->
 Then(~'^the existing thesis are not changed by the system$') {->
 }
 
-//Scenario: search a thesis
-Given(~'^the system has one thesis entitled "([^"]*)"$') { title ->
-    ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title)
-}
 
 When(~'^I search for thesis entitled "([^"]*)"$') { title ->
     def thesis = Tese.findByTitle(title)
@@ -269,9 +259,8 @@ And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
 
 //new thesis with correct format file
 //BY vddm
-When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and the thesis "([^"]*)" with file name "([^"]*)"$') {String name1, String file1, String name2, String file2 ->
+When(~'^I create the thesis "([^"]*)" with file name "([^"]*)"$') {String name1, String file1 ->
     ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(name1,file1)
-    ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(name2,file2)
 }
 Then(~'^The thesis "([^"]*)" not is properly stored by the system, but "([^"]*)" is$'){String name1, String name2 ->
     def thesis1 = Tese.findByTitle(name1)

@@ -70,34 +70,3 @@ Feature: BookChapter
     Then My resulting book chapter list contains "Next Generation Software Product Line Engineering"
 
 
-  #if ($listBookChaptersWeb)
-  Scenario: list all existing book chapters web
-    Given that I'm at the book chapter page
-    And there are book chapters in the system
-    When	I click to list the book chapters
-    Then the book chapters list will be shown
-#end
-
- #if ($BookChapter)
-  Scenario: edit existing book chapter web
-    Given I am at the book chapter page
-    And the book chapter "Next Generation Software Product Line Engineering" with file name "Ngs.pdf" was created before
-    When I select to view "Next Generation Software Product Line Engineering" in resulting list
-    And I change the book chapter title to "Next Generation Software Product Line Engineering REVIEWED"
-    And I select the "Alterar" option in Book Chapter Show Page
-    Then I am at Book Chapter show page
-    And My resulting book chapter list contains "Next Generation Software Product Line Engineering REVIEWED"
-  #end
-
-  Scenario: upload book chapter with a file
-    Given the system has some book chapters stored
-    When I upload the book chapters of "curriculo.xml"
-    Then the system has all the book chapters of the xml file
-
-  Scenario: upload book chapters without a file
-    Given I am at the publications menu
-    When I select the Book Chapter option at the program menu
-    And I select the upload button at the book chapter page
-    Then I'm still on book chapter page
-    And the book chapters are not stored by the system
-

@@ -96,8 +96,10 @@ Feature: Ferramenta
     Scenario: list ferramenta web
       Given I am at the publications menu
       When I select the "Ferramenta" option at the publications menu
-      And I select the new ferramenta option at the ferramenta page
-      And I can create a ferramenta with name "Joee" and "Joee1"
-      And I select the "list" option at the ferramenta page
+      And I select the "create" option at the ferramenta page
+      Then I can create a ferramenta with name "Joee"
+      And I select the "create" option at the show page
+      And I can create a ferramenta with name "Joee1"
+      When I select the "list" option at the show page
       Then I can see all existing ferramentas in the system and the "Joee" and "Joee1" ferramentas
     #end

@@ -86,14 +86,19 @@ When(~'^I select "([^"]*)" at the ferramenta page$') { String title ->
     page.selectFerramenta(title)
 }
 
-// new ferramenta web
-When(~'^I select the new ferramenta option at the ferramenta page$') {->
+When(~'^I select the "([^"]*)" option at the ferramenta page$') {String option->
     at FerramentaPage
-    page.selectNewFerramenta()
+    page.select(option)
 }
-Then(~'^I can create a ferramenta filling the details$') {->
+
+When(~'^I select the "([^"]*)" option at the show page$') {String option->
+    at FerramentaShowPage
+    page.select(option)
+}
+
+Then(~'^I can create a ferramenta with name "([^"]*)"$') {String name->
     at FerramentaCreatePage
-    page.createNewFerramenta("Joee")
+    page.createNewFerramenta(name)
 }
 
 // new ferramenta without any information
@@ -165,18 +170,6 @@ Then(~'^the ferramenta "([^"]*)" is stored$') { String title ->
 
 //List ferramentas
 //By VDDM
-And (~'^I can create a ferramenta with name "([^"]*)" and "([^"]*)"'){ String name1, String name2 ->
-    at FerramentaCreatePage
-    page.createNewFerramenta(name1)
-    at FerramentaShowPage
-    page.select('create')
-    at FerramentaCreatePage
-    page.createNewFerramenta(name2)
-}
-And(~'^I select the "([^"]*)" option at the ferramenta page$') {String option ->
-    at FerramentaShowPage
-    page.select('list')
-}
 Then(~'^I can see all existing ferramentas in the system and the "([^"]*)" and "([^"]*)" ferramentas$') {String name1,String name2 ->
    at FerramentaPage
    page.checkFerramentaList(name1, name2)

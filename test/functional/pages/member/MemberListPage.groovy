@@ -26,8 +26,8 @@ class MemberListPage extends Page {
         $("a", text: member).click()
     }
 
-    def selectFirstMember(){
-        $('a', text: '1').click()
+    def selectNthMember(String number){
+        $('a', text: number).click()
     }
 
 }

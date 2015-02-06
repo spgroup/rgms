@@ -195,7 +195,7 @@ Scenario: list existing articles in alphabetical order of title web
 	And I select to filter the list of articles by author "Paulo Borba"
 	Then my article list shows only the articles authored by "Paulo Borba"
 
-  Scenario: remove multiple artichttp://localhost:3030/rgmsles web
+  Scenario: remove multiple articles web
 	Given I am at the articles page 
 	And I create 3 articles entitled "A theory of software product line refinement" with file name "TCS-01.pdf", "Modularity analysis of use case implementations" with file name "MACI-03.pdf" and "Algebraic reasoning for object-oriented programming" with file name "AROOP-02.pdf"
 	When I select to view the list of articles	

@@ -10,6 +10,7 @@ import pages.BookCreatePage
 import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
+import pages.ferramenta.BookShowPage
 import rgms.publication.Book
 import steps.BookChapterTestDataAndOperations
 import steps.BookTestDataAndOperations
@@ -111,15 +112,7 @@ When(~'^I select the option to remove book "([^"]*)"$') {->
 }
 
 Then(~'^the system removes the book "([^"]*)"$'){String title ->
-    BookChapterTestDataAndOperations.removeBook(title)
-}
-
-//teste jkshfjd
-Then(~'^The system list "([^"]*)" and "([^"]*)" books$') { String title, filename ->
-    books = Book.findAllByTitle(title)
-    assert books.size() == 1
-    books = Book.findAllByTitle(filename)
-    assert books.size() == 1
+    BookTestDataAndOperations.removeBook(title)
 }
 
 //end simone
@@ -135,6 +128,7 @@ Then(~'^the book "([^"]*)" will not be modified$') { String title ->
     assert Book.findByTitle(title) == null
 }
 //end leo
+
 
 def checkIfExists(String title) {
     book = Book.findByTitle(title)

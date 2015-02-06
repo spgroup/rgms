@@ -17,10 +17,6 @@ class FerramentaPage extends Page {
         $('a.' + s).click();
     }
 
-    def selectNewFerramenta() {
-        $('a.create').click()
-    }
-
     def selectFerramenta(String s) {
         $('a', text: s).click()
     }

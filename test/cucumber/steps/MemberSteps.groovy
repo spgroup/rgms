@@ -219,9 +219,9 @@ Given(~'^I am at the member page$'){->
     at PublicationsPage
     page.select("Member")
 }
-When(~'^I click the first member id$'){->
+When(~'^I click the "([^"]*)" member id$'){String number->
     at MemberListPage
-    page.selectFirstMember()
+    page.selectNthMember(number)
 }
 And(~'^I Click the option "([^"]*)" on Member Edition Page$'){String option->
     at MemberPage

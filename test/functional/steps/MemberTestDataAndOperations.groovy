@@ -67,39 +67,66 @@ class MemberTestDataAndOperations {
         cont.response.reset()
     }
 
+    //cscbb
+    static public boolean exist(String usernameToCompare, String username, Member member) {
+        return (usernameToCompare == username && member != null)
+    }
+
+    //cscbb
     static public boolean containsMember(username) {
         def cont = new MemberController()
         def result = cont.list().userMemberInstanceList
         for (i in result) {
-            if (i.user.username == username && i.member != null)
-                return true;
+            if(exist(i.user.username, username, i.member))
+                   return true
+            //if (i.user.username == username && i.member != null)
+            //    return true;
         }
         return false;
     }
 
+    //cscbb
+    static public void changeValue(def member, String option, String value) {
+        switch(option) {
+            case 'name':
+                member.name = value
+                break
+            case 'email':
+                member.email = value
+                break
+            case 'phone':
+                member.phone = value
+                break
+            case 'university':
+                member.university = value
+                break
+            case 'website':
+                member.website = value
+                break
+            case 'country':
+                member.country = value
+                break
+            case 'additionalInfo':
+                member.additionalInfo = value
+                break
+            case 'city':
+                member.city = value
+                break
+            case 'status':
+                member.status = value
+                break
+            case 'active':
+                member.active = (boolean)value
+                break
+            default:
+                break
+        }
+    }
+//cscbb
     static public Member editMember(String emailKey, String option, String value){
         def cont = new MemberController()
         def member = Member.findByEmail(emailKey)
-        if(option == "name")
-            member.name = value
-        else if(option == "email")
-            member.email = value
-        else if(option == "phone")
-            member.phone = value
-        else if(option == "university")
-            member.university = value
-        else if(option == "website")
-            member.website = value
-        else if(option == "country")
-            member.country = value
-        else if(option == "additionalInfo")
-            member.additionalInfo = value
-        else if(option == "city")
-            member.city = value
-        else if(option == "status")
-            member.status = value
-        else if(option == "active")
-            member.active = (boolean)value
+        changeValue(member, option, value)
         cont.params << member.properties
         cont.update()
 

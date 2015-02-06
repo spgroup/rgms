@@ -12,8 +12,9 @@ Feature: Thesis Tests
     @vddm
 	Scenario: new thesis
 		Given The system has no thesis entitled "New thesis"
-		When  I create the thesis "New thesis" with file name "NewthesisGUI.txt" and the thesis "New thesis2" with file name "Newthesis.pdf"
-		Then  The thesis "New thesis" not is properly stored by the system, but "New thesis2" is
+		When  I create the thesis "New thesis" with file name "NewthesisGUI.txt"
+		And I create the thesis "New thesis2" with file name "NewThesis.pdf"
+        Then  The thesis "New thesis" not is properly stored by the system, but "New thesis2" is
 	#end
 
   Scenario: remove existing thesis
@@ -80,21 +81,21 @@ Feature: Thesis Tests
 
   @ignore
   Scenario: edit thesis title
-    Given the system has thesis entitled "My Thesis"
+    Given The thesis "My Thesis" is stored in the system with file name "Joee.pdf"
     When I change the title from "My Thesis" to "My Thesis Renamed"
     Then the thesis entitled "My Thesis Renamed" is properly renamed by the system
     And the other theses are not changed by the system
 
   @ignore
   Scenario: edit thesis with invalid data
-    Given the system has thesis entitled "My Thesis"
+    Given The thesis "My Thesis" is stored in the system with file name "Joee.pdf"
     When I change the title from "My Thesis" to ""
     Then the existing thesis are not changed by the system
 
 	#if($search)
     @vddm
 	Scenario: search a thesis
-		Given the system has one thesis entitled "My Thesis"
+		Given The thesis "My Thesis" is stored in the system with file name "Joee.pdf"
 		When I search for thesis entitled "My Thesis"
 		Then the "My Thesis" thesis is returned by the system
 	#end

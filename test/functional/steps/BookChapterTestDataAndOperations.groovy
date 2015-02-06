@@ -30,6 +30,32 @@ class BookChapterTestDataAndOperations {
         }
     }
 
+
+    static public int isNull (def Ch, BookChapter book) {
+        if(Ch == null && book == null) {
+            return 0;
+        } else if (Ch != null && book != null) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    static public boolean bookChapterCompatibleTo(bookChapter, String title) {
+        def testBookChapter = findBookChapterByTitle(title)
+        def compatible = false
+        if (isNull(testBookChapter, bookChapter) == 0) {
+            compatible = true
+        } else if (isNull(testBookChapter, bookChapter) == 1) {
+            compatible = true
+            testBookChapter.each { key, data ->
+                compatible = compatible && (bookChapter."$key" == data)
+            }
+        }
+        return compatible
+    }
+
+/*
     static public boolean bookChapterCompatibleTo(bookChapter, String title) {
         def testBookChapter = findBookChapterByTitle(title)
         def compatible = false
@@ -43,7 +69,7 @@ class BookChapterTestDataAndOperations {
         }
         return compatible
     }
-
+*/
     static public void uploadBookChapter(String filename) {
         def cont = new XMLController()
         def xml = new File(filename);
