@@ -23,13 +23,7 @@ class MemberController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def userMemberList = []
         def members = Member.list(params)
-        for (i in members) {
-            def user = User.findByAuthor(i)
-            if (user)
-                userMemberList.add([user: user, member: i])
-            else
-                userMemberList.add([member: i])
-        }
+        generateMemberList(userMemberList,members)
 
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
@@ -99,13 +93,7 @@ class MemberController {
         if(params.name){
             def members = Member.findAllByName(params.name)
 
-            for (i in members) {
-                    def user = User.findByAuthor(i)
-                    if (user)
-                        userMemberList.add([user: user, member: i])
-                    else
-                        userMemberList.add([member: i])
-            }
+            generateMemberList(userMemberList,members)
         }
         
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
@@ -234,13 +222,7 @@ class MemberController {
             def members = Member.findAllByUniversity(params.name)
 
 
-            for (i in members) {
-                def user = User.findByAuthor(i)
-                if (user)
-                    userMemberList.add([user: user, member: i])
-                else
-                    userMemberList.add([member: i])
-            }
+            generateMemberList(userMemberList,members)
         }
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
@@ -272,16 +254,19 @@ class MemberController {
         if(params.name){
             def members = Member.findAllByEmail(params.name)
 
-
-            for (i in members) {
-                def user = User.findByAuthor(i)
-                if (user)
-                    userMemberList.add([user: user, member: i])
-                else
-                    userMemberList.add([member: i])
-            }
+            generateMemberList(userMemberList,members)
         }
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+    }
+
+    private void generateMemberList(userMemberList, members){
+        for (i in members) {
+            def user = User.findByAuthor(i)
+            if (user)
+                userMemberList.add([user: user, member: i])
+            else
+                userMemberList.add([member: i])
+        }
     }
 
 
