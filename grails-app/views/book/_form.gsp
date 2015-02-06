@@ -33,7 +33,7 @@
         <g:message code="book.researchLine.label" default="Research Line"/>
 
     </label>
-    <g:select id="researchLine" name="researchLine.id" from="${publication.ResearchLine.list()}" optionKey="id"
+    <g:select id="researchLine" name="researchLine.id" from="${bookInstance?.researchLine?.list()}" optionKey="id"
               value="${bookInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
