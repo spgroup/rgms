@@ -58,7 +58,7 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        //compile ":twitter4j:0.3.2"
+        compile ":twitter4j:0.3.2"
         compile ":remote-control:1.4"
         compile ":codenarc:0.20"
         compile ":gmetrics:0.3.1"

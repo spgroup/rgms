@@ -25,6 +25,7 @@ When(~'^I click "([^"]*)"$') { String arg1 ->
     page.selectButton(arg1)
 }
 
+//#if($BibtexImport)
 When(~'^selected a bibtex file and I click "Import All"$') { ->
     at BibtexImportPage
     page.selectButton("Import All")
@@ -34,15 +35,19 @@ When(~'^I click "Choose file" and select a file') {
     at BibtexImportPage
     page.selectButton("Escolher arquivo")
 }
+//#end
 
 When(~'^selected a bibtex file and I click "([^"]*)"$') { String arg1 ->
 }
 
+
+//#if($BibtexImport)
 Then(~'^a list of publications extracted from the bibtex file is shown on the same screen$') { ->
     BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("test//cucumber//steps//sample.bibtex")
     at BibtexImportPage
     TestDataBibTexFile.listPublications(bibtexFile)
 }
+//#end
 
 Then(~'^is created all corresponding publications$') {->
     BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("test//cucumber//steps//sample.bibtex")

@@ -125,7 +125,7 @@ Feature: journal article
     Then I'm still on article page
     And the articles are not stored by the system
 
-#if($Report)  
+#if($Report)
   Scenario:	report existing article
 	Given the system has article entitled "A theory of software product line refinement" with file name "TCS-1401.pdf"
 	When the system reports the existing articles
@@ -160,7 +160,7 @@ Feature: journal article
 	Then the system removes the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 	And the system contains the "Algebraic reasoning for object-oriented programming" article
 
-#if($Report)  
+#if($Report)
   Scenario:	report existing article web
 	Given I am at the articles page
 	And the article "A theory of software product line refinement" is stored in the system with file name "TCS-88.pdf"

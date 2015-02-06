@@ -33,7 +33,7 @@
 		<g:message code="tese.researchLine.label" default="Research Line" />
 		
 	</label>
-	<g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id" value="${teseInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
+	<g:select id="researchLine" name="researchLine.id" from="${teseInstance?.researchLine?.list()}" optionKey="id" value="${teseInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: teseInstance, field: 'school', 'error')} required">
@@ -59,6 +59,14 @@
 	<g:textField name="address" required="" value="${teseInstance?.address}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: teseInstance, field: 'author', 'error')} required">
+    <label for="author">
+        <g:message code="tese.author.label" default="Author" />
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="author" required="" value="${teseInstance?.author}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: teseInstance, field: 'members', 'error')} required">
 	<label for="members">
 		<g:message code="tese.members.label" default="Members" />
@@ -66,8 +74,8 @@
 	</label>
 	
 <!-- #if( $contextualInformation ) -->
-     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${teseInstance?.members.id}" />
-<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${teseInstance?.members.id}" /> -->
+     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${teseInstance?.members?.id}" />
+<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${teseInstance?.members?.id}" /> -->
 <!-- #end -->
 
 </div>

@@ -35,6 +35,7 @@ Then(~'^the record with status "([^"]*)" is not removed by the system$') { Strin
 	assert record != null
 }
 
+//#if($Record)
 class RecordIsNotAssociatedException extends Exception {
     public RecordIsNotAssociatedException(String msg) {
         super(msg)
@@ -44,6 +45,7 @@ class RecordIsNotAssociatedException extends Exception {
 And(~'^The system outputs the error message "([^"]*)"') { String errMsg ->
     throw new RecordIsNotAssociatedException(errMsg)
 }
+//#end
 
 Given(~'^the system has only one record with status "([^"]*)" and this record has a null end date$') { String status ->
 	def records = Record.findAllByStatus_H(status)
