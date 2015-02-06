@@ -58,26 +58,22 @@ class BookController {
         redirect(action: "show", id: bookInstance.id)
     }
 
-    def showOrEdit(Long id) {
+    def showOrEditAux(Long id){
         def bookInstance = Book.get(id)
         if (!bookInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
             redirect(action: "list")
             return
         }
-
         [bookInstance: bookInstance]
     }
 
-    def edit(Long id) {
-        def bookInstance = Book.get(id)
-        if (!bookInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
-            redirect(action: "list")
-            return
-        }
+    def showOrEdit(Long id) {
+        showOrEditAux(id)
+    }
 
-        [bookInstance: bookInstance]
+    def edit(Long id) {
+        showOrEditAux(id)
     }
 
     def update(Long id, Long version) {
