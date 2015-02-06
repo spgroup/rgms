@@ -40,17 +40,15 @@ class BookController {
 
     def show(Long id) {
         def bookInstance = Book.get(id)
-        if (!bookInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [bookInstance: bookInstance]
+        bookInstanceRedirectIfItsNull(id, bookInstance)
     }
 
     def edit(Long id) {
         def bookInstance = Book.get(id)
+        bookInstanceRedirectIfItsNull(id, bookInstance)
+    }
+    
+    private def bookInstanceRedirectIfItsNull(Long id, Book bookInstance) {
         if (!bookInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
             redirect(action: "list")
@@ -68,14 +66,12 @@ class BookController {
             return
         }
 
-        if (version != null) {
-            if (bookInstance.version > version) {
+        if (version != null && bookInstance.version > version) {
                 bookInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'book.label', default: 'Book')] as Object[],
                         "Another user has updated this Book while you were editing")
                 render(view: "edit", model: [bookInstance: bookInstance])
                 return
-            }
         }
 
         bookInstance.properties = params
