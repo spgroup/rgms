@@ -7,7 +7,8 @@ import pages.thesis.ThesisShowPage
 import rgms.authentication.User
 import rgms.publication.Tese
 import steps.TestDataAndOperationsPublication
-import steps.ThesisTestDataAndOperations
+import steps    .ThesisTestDataAndOperations
+import steps.ThesisOrDissertationTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -181,6 +182,11 @@ And(~'^I am at the thesis search page$'){->
     at TeseSearchByTitlePage
 
 }
+
+When(~'^I search  for "([^"]*)"$'){ String title->
+        page.fillSearchBox(title)
+        page.selectSearchByTitleButton()
+    }
 
 Then(~'^My thesis list contains the thesis entitled "([^"]*)"$'){ String title->
     page.resultsListContains(title)

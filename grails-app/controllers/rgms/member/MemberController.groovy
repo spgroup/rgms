@@ -51,7 +51,7 @@ class MemberController {
     def save = {
 //#if($Auth)
         if (!grailsApplication.config.grails.mail.username) {
-            throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured'))
+           // throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured'))
         }
 //#end
 
@@ -226,26 +226,6 @@ class MemberController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'member.label', default: 'Member'), params.id])
             redirect(action: "show", id: params.id)
         }
-    }
-
-    def remove = {
-        def userMemberList = []
-        if(params.name){
-            def members = Member.findAllByUniversity(params.name)
-
-           
-
-
-
-            for (i in members) {
-                def user = User.findByAuthor(i)
-                if (user)
-                    userMemberList.add([user: user, member: i])
-                else
-                    userMemberList.add([member: i])
-            }
-        }
-        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
 
     def searchByUniversity = {

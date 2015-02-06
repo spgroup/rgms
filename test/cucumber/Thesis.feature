@@ -107,7 +107,7 @@ Feature: Thesis Tests
   Scenario: search for an existing thesis
     Given the system has a thesis entitled "TCS-01"
     And I am at the thesis search page
-    When I search for "TCS-01"
+    When I search  for "TCS-01"
     Then My thesis list contains the thesis entitled "TCS-01"
 
   @ignore

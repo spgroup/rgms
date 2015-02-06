@@ -119,6 +119,10 @@ Given(~'^I am at the create member page$') { ->
     at MemberCreatePage
 }
 
+Given(~'^I am at the member page$') { ->
+    at MemberPage
+}
+
 When(~'^I fill the user details with "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"$') { String name, username, email, university ->
     page.fillMemberDetails(name, username, email, university, "")
 }
@@ -222,8 +226,8 @@ Given(~'^I am at the members page$') { ->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-    to MemberPage
+    to MemberCreatePage
+    at MemberCreatePage
 }
 
 And(~'^the system has no member with empty username$') { ->
