@@ -120,22 +120,6 @@ Then(~'^the book list contains" ([^"]*)"$') { String title ->
 }
 
 
-
-
-
-def checkIfExists(String title) {
-    book = Book.findByTitle(title)
-    book != null
-}
-
-
-def createAndCheckBookOnBrowser(String title, String filename) {
-    page.fillBookDetails(title, filename)
-    page.clickSaveBook()
-    assert checkIfExists(title)
-}
-
-
 Given(~'^the system has the book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String file ->
     book = Book.findByTitleAndFile(title, file)
     assert book != null
@@ -149,3 +133,16 @@ Then(~'^the book "([^"]*)" is removed from the system$') { String title ->
 Then(~'^the book list contains "([^"]*)"$') { String title ->
     assert checkIfExists(title)
 }
+
+def checkIfExists(String title) {
+    book = Book.findByTitle(title)
+    book != null
+}
+
+
+def createAndCheckBookOnBrowser(String title, String filename) {
+    page.fillBookDetails(title, filename)
+    page.clickSaveBook()
+    assert checkIfExists(title)
+}
+
