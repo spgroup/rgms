@@ -131,11 +131,4 @@ class ArticlesPage extends Page {
 		listcheckbox[0].click()
 		listcheckbox[2].click()
 	}
-
-    //if($newMagazinePublication)
-     def newMagazinePublication(){
-
-     }
-
-    //end
 }

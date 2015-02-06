@@ -23,7 +23,22 @@ Feature: Book
     Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
     When I edit the book title from "SPL Development" to "New Title"
     Then the book "New Title" is properly updated by the system
-    
+
+  Scenario: upload book with a file
+    Given the system has no books stored
+    When I upload the books of "curriculo.xml"
+    Then the system has all the books of the xml file
+
+
+
+  Scenario: new book web
+    Given I am at the book page
+    And the system has no book entitled "Next Generation Software Product Line Engineering"
+    When I go to new book page
+    And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
+    Then the book "Next Generation Software Product Line Engineering" was stored by the system
+
+
 #if($updateExistingBook)
   Scenario: update existing book
     Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
@@ -31,11 +46,11 @@ Feature: Book
     Then the book "SPL Development" has the archive file "newHSPLE.pdf" updated by the system
 #end
 
-#if($updateExistingBookWeb)
+  #if($updateExistingBookWeb)
   Scenario: update existing book web
     Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
     And I am at the book page
-    When I edit the book file name from "HSPLE.pdf" to "newHSPLE.pdf"
+    When I edit the book "SPL Development" file name from "HSPLE.pdf" to "newHSPLE.pdf"
     Then I have the book entitled "SPL Development" with file name "newHSPLE.pdf" stored on the system
 #end
 
@@ -49,20 +64,9 @@ Feature: Book
 #if($newBookWithoutFileWeb)
   Scenario: new book without file web
     Given I am at the book page
-    And the system has no book entitled "SPL Development"
+    And the system has no book entitled "Design de Interação"
     When I go to new book page
-    And I try to create the book "SPL Development" without file
+    And I use the webpage to create the book "Design de Interação" with file name ""
     Then I should see an error message containing "Book without file, it is mandatory"
 #end
 
-  Scenario: upload book with a file
-    Given the system has no books stored
-    When I upload the books of "curriculo.xml"
-    Then the system has all the books of the xml file
-
-  Scenario: new book web
-    Given I am at the book page
-    And the system has no book entitled "Next Generation Software Product Line Engineering"
-    When I go to new book page
-    And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
-    Then the book "Next Generation Software Product Line Engineering" was stored by the system

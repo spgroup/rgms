@@ -52,21 +52,22 @@ class BookTestDataAndOperations {
     static public Book editBook(oldtitle, newtitle) {
         def book = Book.findByTitle(oldtitle)
         book.setTitle(newtitle)
+        createEditedBookAndUpdate(book)
+        def updatedBook = Book.findByTitle(newtitle)
+        return updatedBook
+    }
+
+    private static createEditedBookAndUpdate(Book book) {
         def cont = new BookController()
         cont.params << book.properties
         cont.update()
-
-        def updatedBook = Book.findByTitle(newtitle)
-        return updatedBook
     }
 
     //created/modified by @gml
     static public Book editFile(oldFile, newFile) {
         def book = Book.findByFile(oldFile)
         book.setFile(newFile)
-        def cont = new BookController()
-        cont.params << book.properties
-        cont.update()
+        createEditedBookAndUpdate(book)
 
         def updatedBook = Book.findByFile(newFile)
         return updatedBook

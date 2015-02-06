@@ -29,4 +29,13 @@ class BookPage extends Page {
     def selectNewBook() {
         $('a.create').click()
     }
+
+    def selectViewBook(title) {
+        def listDiv = $('div', id: 'list-book')
+        def articleTable = (listDiv.find('table'))[0]
+        def articleRow = articleTable.find('tbody').find('tr')
+        def showLink = articleRow.find('td').find([text: title])
+        showLink.click()
+    }
+
 }
