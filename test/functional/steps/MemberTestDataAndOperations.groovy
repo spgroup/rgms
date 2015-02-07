@@ -151,14 +151,7 @@ class MemberTestDataAndOperations {
 
     static private boolean isNullOrEmpty(param)
     {
-        if(param==null || param=="")
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
+        return (param==null || param=="")
 
     }
 
