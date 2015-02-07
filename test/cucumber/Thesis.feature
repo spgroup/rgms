@@ -11,6 +11,12 @@ Feature: Thesis Tests
   Scenario: new thesis
     Given The system has no thesis entitled "New thesis"
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
+    And   With publication date "10", "08", Publication year "1998" 
+    Then  The thesis "New thesis" is properly stored by the system
+
+  Scenario: new thesis with author
+    Given The system has no thesis entitled "New thesis"
+    When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
     And   With publication date "10", "08", Publication year "1998" and author name "Pressman" 
     Then  The thesis "New thesis" is properly stored by the system
    
@@ -26,9 +32,15 @@ Feature: Thesis Tests
     When    I delete the thesis "New thesis2"
     Then    the thesis "New thesis2" is properly removed by the system
 
-  Scenario: create thesis web
+Scenario: create thesis web
     Given I am at the create thesis page
     When  I fill the thesis details with "Software Engineering", "10", "8", "1998", "Pressman", "UFPE" and "Recife"
+    Then  I am on the thesis show page
+    And   The thesis "Software Engineering" is properly stored by the system
+
+  Scenario: create thesis web with author
+    Given I am at the create thesis page
+    When  I fill the thesis details with "Software Engineering", "10", "8", "1998", "UFPE" and "Recife"
     Then  I am on the thesis show page
     And   The thesis "Software Engineering" is properly stored by the system
 
