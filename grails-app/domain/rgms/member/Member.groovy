@@ -38,7 +38,7 @@ class Member {
         status(nullable: false, inList: ["Graduate Student", "MSc Student", "PhD Student", "Professor", "Researcher"])
     	university(blank:false)
     	phone(nullable: true)
-    	website(nullable:true)
+    	website(nullable:true, url: true)
     	city(nullable: true)
     	country(nullable: true)
     	active(nullable: true)
