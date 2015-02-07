@@ -1,7 +1,7 @@
 package rgms.publication
 
 class BookController {
-    boolean busca= false,v= false,p= false,n = false;
+    boolean busca= false,v= false,p= false,n = false, a = false;
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
     AuxiliarController aux = new AuxiliarController()
 
@@ -23,6 +23,9 @@ class BookController {
                 }
                 if(n){
                     ilike("Title", "%${params.query}%")
+                }
+                if(a){
+                    ilike("Autores", "%${params.query}%")
                 }
             }
         }
@@ -55,26 +58,22 @@ class BookController {
         redirect(action: "show", id: bookInstance.id)
     }
 
-    def show(Long id) {
+    def showOrEditAux(Long id){
         def bookInstance = Book.get(id)
         if (!bookInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
             redirect(action: "list")
             return
         }
-
         [bookInstance: bookInstance]
     }
 
-    def edit(Long id) {
-        def bookInstance = Book.get(id)
-        if (!bookInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
-            redirect(action: "list")
-            return
-        }
+    def showOrEdit(Long id) {
+        showOrEditAux(id)
+    }
 
-        [bookInstance: bookInstance]
+    def edit(Long id) {
+        showOrEditAux(id)
     }
 
     def update(Long id, Long version) {

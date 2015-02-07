@@ -40,6 +40,7 @@ When(~'^I click "Choose file" and select a file') {
 When(~'^selected a bibtex file and I click "([^"]*)"$') { String arg1 ->
 }
 
+
 //#if($BibtexImport)
 Then(~'^a list of publications extracted from the bibtex file is shown on the same screen$') { ->
     BibtexFile bibtexFile = TestDataBibTexFile.openBibTexFile("test//cucumber//steps//sample.bibtex")

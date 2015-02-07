@@ -16,6 +16,7 @@ public class StrategyParseTese implements StrategyParse {
         Tese tese = new Tese();
         tese.setTitle(entry.getField(BibTeXEntry.KEY_TITLE).toUserString());
         tese.setSchool(entry.getField(BibTeXEntry.KEY_SCHOOL).toUserString());
+        tese.setAuthor(entry.getField(BibTeXEntry.KEY_AUTHOR).toUserString());
         tese.setAddress(entry.getField(BibTeXEntry.KEY_ADDRESS).toUserString());
         tese.setPublicationDate(new Date());//TODO transformar o date para setar no objeto
         tese.setFile("file");//TODO settar corretamente este atributo

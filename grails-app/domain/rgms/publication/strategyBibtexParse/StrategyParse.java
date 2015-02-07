@@ -1,7 +1,9 @@
 package rgms.publication.strategyBibtexParse;
 
 import org.jbibtex.BibTeXEntry;
+
 import rgms.publication.Publication;
+
 
 /**
  * @author Diogo Vinicius
