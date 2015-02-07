@@ -45,6 +45,7 @@ When(~'^I select the new article option at the article page$') {->
 Then(~'^I can fill the article details$') {->
 	at ArticleCreatePage
 	page.fillArticleDetails()
+    page.selectCreateArticle()
 }
 
 
@@ -65,12 +66,7 @@ Given(~'^I am at the articles page and the article "([^"]*)" is stored in the sy
 	Login()
 	at PublicationsPage
 	page.select("Periodico")
-	selectNewArticleInArticlesPage()
-	page.fillArticleDetails(ArticleTestDataAndOperations.path() + filename, title)
-	page.selectCreateArticle()
-	assert !periodicoNoExist(title)
-	to ArticlesPage
-	at ArticlesPage
+    addNewArticleWeb(title, filename);
 }
 
 /**

@@ -2,17 +2,11 @@
 Feature: Reports
   I want to generate PDF, HTML or XML report files of Members, Research Groups and News
 
-  Scenario: export existent member report to html
+  Scenario: export existent member report
     Given I am at the Member list page
     When I select the "1" option at the Member list
-    And I can select the option Export to HTML at the Member show
-    Then I can generate a HTML report about Member "1"
-
-  Scenario: export existent member report to xml
-    Given I am at the Member list page
-    When I select the "1" option at the Member list
-    And I can select the option Export to XML at the Member show
-    Then I can generate a XML report about Member "1"
+    And I can select any of the export options at the Member menu
+    Then I can generate a report about Member "1"
 
   Scenario: export recently created member report to pdf
     Given I am at the publications menu
@@ -22,33 +16,14 @@ Feature: Reports
     And I can select the option Export to PDF at the Member show
     Then I can generate a PDF report about Member "2"
 
-  Scenario: export report to pdf of recently created research group
+  Scenario: export report of recently created research group
     Given I am at the publications menu
     When I select the "Research Group" option at the publications menu
     And I select the new research group option at research group list page
     Then I can fill the research group details with name "RGroup" and create a new one
     And I select the "RGroup" option at the Research Group list
-    And I can select the option Export to PDF at the Research Group show
-    And I can generate a PDF report about Research Group "RGroup"
-
-
-  Scenario: export report to html of recently created research group
-    Given I am at the publications menu
-    When I select the "Research Group" option at the publications menu
-    And I select the new research group option at research group list page
-    Then I can fill the research group details with name "RGroup" and create a new one
-    And I select the "RGroup" option at the Research Group list
-    And I can select the option Export to HTML at the Research Group show
-    And I can generate a HTML report about Research Group "RGroup"
-
-  Scenario: export report to xml of recently created research group
-    Given I am at the publications menu
-    When I select the "Research Group" option at the publications menu
-    And I select the new research group option at research group list page
-    Then I can fill the research group details with name "RGroup" and create a new one
-    And I select the "RGroup" option at the Research Group list
-    And I can select the option Export to XML at the Research Group show
-    And I can generate a XML report about Research Group "RGroup"
+    And I can select any of the export options at the Research Group show
+    And I can generate a report about Research Group "RGroup"
 
   Scenario: export existent member report to html and access bibtex from him
     Given I am at the Member list page
@@ -72,12 +47,6 @@ Feature: Reports
     And I can generate a HTML report about Member "3"
     Then I can select the Member "3" option
     And I can see the bibtex details
-
-  Scenario: export existent member report to pdf
-    Given I am at the Member list page
-    When I select the "3" option at the Member list
-    And I can select the option Export to PDF at the Member show
-    Then I can generate a PDF report about Member "3"
 
 #if ($news && $HTML)
   Scenario: export report link not enabled when there are no news stored in the system

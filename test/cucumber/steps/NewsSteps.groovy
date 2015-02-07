@@ -154,6 +154,11 @@ Given(~'^the system has no stored news$') { ->
     assert News.count() == 0
 }
 
+Given(~'^the system has some stored news$') { ->
+    News.withTransaction { status -> News.findAll().each { n -> n.delete() } }
+    assert News.count() > 0
+}
+
 //#if ($Report && $HTML)
 And (~'^I select the option Export to HTML at the News list page$'){ ->
     at NewsPage
@@ -185,14 +190,6 @@ Then(~'^I can fill the news details$') { ->
     page.fillNewDetails("essa eh a descricao")
     page.clickOnCreate()
     assert NewsTestDataAndOperations.checkExistingNewsByDescription("essa eh a descricao")
-}
-
-When(~'^I try to create a news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
-    if(NewsTestDataAndOperations.checkValidDate(date)) {
-        Date dateAsDateObj = Date.parse("dd-MM-yyyy", date)
-        def researchGroup = ResearchGroup.findByName(group)
-        NewsTestDataAndOperations.createNews(description, dateAsDateObj, researchGroup)
-    }
 }
 
 Then(~'^the news with description "([^"]*)", date "([^"]*)" and "([^"]*)" research group is not stored by the system because it is invalid$') { String description, String date, String group ->

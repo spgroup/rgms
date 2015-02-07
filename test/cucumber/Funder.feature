@@ -22,3 +22,11 @@ Feature: Funder
     Given I am at the create funder page
     When I fill the funder code with "12345"
     Then the funder with code "12345" is properly stored by the system
+
+#if(remove funder web)
+  Scenario: remove funder web
+    Given I am the funder page
+    And has funder in the list with code "12345"
+    When I select the funder with code "12345"
+    Then the funder with code "12345" is properly removed by the click on "remove" button
+#end

@@ -130,6 +130,25 @@
         </g:if>
 
     </ol>
+
+    <!--#if( $Twitter ) -->
+        <!-- Twitter start -->
+        <a href="javascript:window.open('https://twitter.com/intent/tweet?button_hashtag=RGMS&text=Book:%20${bookInstance?.title}', 'Tweet it', 'width=450,height=250');"
+           class="twitter-hashtag-button"
+           data-related="rgms_ufpe"
+           id="button_twitter"
+           target="_blank">
+            <img id="share_twitter2"
+                 src="http://www.tabpress.com/fbui_share/share_button.png">
+        </a>
+        <script>
+            $('#button_twitter').live('click', function (e) {
+                jQuery.get("http://localhost:8080/rgms/notifyTwitter/book/${bookInstance?.id}/${bookInstance?.title}");
+            });
+        </script>
+    <!-- Twitter end -->
+    <!--#end -->
+
     <g:form>
         <fieldset class="buttons">
             <g:hiddenField name="id" value="${bookInstance?.id}"/>

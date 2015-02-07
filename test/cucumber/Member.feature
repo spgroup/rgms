@@ -2,11 +2,33 @@
 Feature: member
   As an administrator of the RGMS system
   I want to add, remove and modify users in the system.
-
+#if($newMemberWithValidMailServer)
   Scenario: new member with valid mail server
     Given the system has no member with username "usernametest"
-    When I create a member with username "usernametest"
+    When I create a member with username "usernametest" with valid mail server
     Then the member with username "usernametest" is properly stored by the system
+#end
+
+#if($newMemberWithoutValidMailServer)
+  Scenario: new member without valid mail server
+    Given the system has no member with username "usernametest"
+    When I create a member with username "usernametest" with a invalid mail server "notReal"
+    Then the member with username "usernametest" is not properly stored by the system
+#end
+
+#if($newMemberWithABlankUsername)
+  Scenario: new member with a blank username
+	Given the system without a member ""
+	When I create a member with username ""
+	Then the new member wont be inserted
+#end
+
+#if($deleteInexistentMember)
+  Scenario: delete inexistent member
+	Given the system without a member "username"
+	When I delete a member with username "username"
+	Then the system will throw a message with an error "cannot find member"
+#end
 
   Scenario: list existing member
     Given   the system has member with username "usernametest"
@@ -28,17 +50,26 @@ Feature: member
     When I try to create the member "Rebeca Souza" with email "memberEmail@ufpe.br"
     Then the member named "Rebeca Souza" is not registered
 
+    # User
+
+#if($loginWithCorrectPassword)
+  Scenario: login with correct password
+    Given I am at the login page
+    When I fill username and password with "admin" and "adminadmin"
+    Then I am at the main page logged in
+#end
+
   Scenario: login with incorrect password
     Given I am at the login page
     When I fill username and password with "admin" and "incorrectpassword"
-    Then I am still on the login page with an error message
 
-  Scenario: user registration
+#if($validUserRegistration)
+  Scenario: valid user registration
     Given I am at the register page
-    When I fill the user details with a name, username, passoword1, password2, email, university, status "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student"
+    When I fill the user details with a name "jose", a username "josesilva", a password1 "123456", a password2 "123456", a valid email "jose@ufpe.br", a university "UFPE" and a status "Graduate Student"
     Then I am redirected to the Login Page
     And A message indicating the user was successfully registered is displayed
-
+#end
 
 #  Scenario: create member web
 #    Given I am at the create member page

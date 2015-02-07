@@ -71,10 +71,22 @@ When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" and school 
     TestDataDissertacao.createDissertacao(title, filename, school)
 }
 
+Then(~'^the system will store "([^"]*)" with the file "([^"]*)"$'){ String title, fileName ->
+    dissertation = Dissertacao.findByTitle(title)
+    dissertation2 = Dissertacao.findByFile(fileName)
+    assert dissertation != null
+    assert dissertation == dissertation2
+}
+
 
 Then(~'^the dissertation "([^"]*)" is properly stored by the system$') { String title ->
     dissertation = Dissertacao.findByTitle(title)
     assert dissertation != null
+}
+
+Then(~'^the dissertation "([^"]*)" is not properly stored by the system$') { String title ->
+    dissertation = Dissertacao.findByTitle(title)
+    assert dissertation == null
 }
 
 Then(~'^the dissertation "([^"]*)" is not stored twice$') { String title ->
@@ -101,6 +113,13 @@ Then(~'^the dissertation "([^"]*)" is properly updated by the system$') { String
     assert article == null
 }
 
+Then(~'^the dissertation "([^"]*)" is properly updated by the system to "([^"]*)"$') { String title, newTitle ->
+    def article = Dissertacao.findByTitle(title)
+    def article2 = Dissertacao.findByTitle(newTitle)
+    assert article == null
+    assert article2 != null
+}
+
 When(~'^I select the upload button at the dissertation page$') {->
     at DissertationPage
     page.uploadWithoutFile()
@@ -109,35 +128,20 @@ Then(~'^I\'m still on dissertation page$') {->
     at DissertationPage
 }
 
-When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
-    String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = Dissertacao.findAll().size()
-    TestDataDissertacao.uploadDissertacao(path)
-    finalSize = Dissertacao.findAll().size()
-    assert inicialSize < finalSize
-    //para funcionar é necessario que tenha um FilePath válido
-    // não consegui fazer de uma maneira que todos os passos sejam independentes
+// esse método tinha sido complicado ao extremo. Como o cenário que eu tinha escolhido havia sido duplicado,
+// resolvi, pelo menos, refazer este método para que ele fosse simplificado.
+// #if($UploadDissertationWithAFile)
+When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') { filename, title ->
+	TestDataDissertacao.createDissertacao(title, filename, "UFPE")
+	dissertacao = TestDataDissertacao.findByTitle(title)
+	assert dissertacao != null
 }
-Then(~'the system has more dissertations now$') {->
-    finalSize = Dissertacao.findAll().size()
-
-}
+// #end
 
 Given(~'^the system has some dissertation stored$'){->
     size = Dissertacao.findAll().size()
     assert size > 0
 
-}
-
-
-When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
-    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = Dissertacao.findAll().size()
-    TestDataDissertacao.uploadDissertacao(path)
-    finalSize = Dissertacao.findAll().size()
-    assert inicialSize<finalSize
-    //para funcionar é necessario que tenha um FilePath válido
-    // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
 
 Then(~'^I see my user listed as an author member of dissertation by default$') {->

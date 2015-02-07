@@ -10,6 +10,13 @@ Feature: Ferramenta
         When I create the ferramenta "Target" with file name "target.pdf" without its website
         Then the ferramenta "Target" is not stored
 
+#if($newFerramentaWithWebsite)
+    Scenario: new ferramenta with website
+        Given the system has no ferramenta entitled "WebTarget"
+        When I create the ferramenta "WebTarget" with file name "target.pdf" with website "www.facebook.com"
+        Then the ferramenta "WebTarget" is stored
+#end
+
     Scenario: duplicate ferramenta
         Given the ferramenta "Emergo" is stored in the system with file name "emergo.pdf"
         When I create the ferramenta "Emergo" with file name "emergo.pdf"
@@ -25,7 +32,7 @@ Feature: Ferramenta
         When I create the ferramenta "New" with file name "new.pdf"
         Then The system list "Tool" and "New" ferramentas
 
-    Scenario: upload dissertation with a file
+    Scenario: upload ferramenta with a file
         Given the system has some ferramenta stored
         When I upload a new ferramenta "testelattes.xml"
         Then the system has more ferramenta now
@@ -43,19 +50,21 @@ Feature: Ferramenta
         And I select the new ferramenta option at the ferramenta page
         Then I can create a ferramenta filling the details
 
-    Scenario: new ferramenta without any information
-        Given I am at the publications menu
-        When I select the "Ferramenta" option at the program menu
-        And I select the new ferramenta option at the ferramenta page
+#if($createFerramentaWithoutAnyInformation)
+    Scenario: create ferramenta without any information
+        Given I am at the ferramenta page
         And I click on Criar button
         Then I am still on create new ferramenta page
         And the ferramenta is not displayed in the ferramentas list page
+#end
 
-    Scenario: upload dissertation without a file
+#if($uploadFerramentaWithoutAFile)
+    Scenario: upload ferramenta without a file
         Given I am at the publications menu
         When I select the "Ferramenta" option at the program menu
-        And I select the upload button at the ferramenta page
-        Then I am still on ferramenta page
+        And I select the upload button at the ferramenta page without attaching a file
+        Then the ferramenta won't be inserted into the system.
+#end
 
     #if ($contextualInformation)
     Scenario: new ferramenta filled with user data by default

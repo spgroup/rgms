@@ -13,6 +13,22 @@ Feature: Thesis Tests
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
     Then  The thesis "New thesis" is properly stored by the system
 
+#if ($editExistingThesisWeb)
+   Scenario: edit existing thesis web
+    Given I am at the thesis page and the thesis "Software Engineering" is stored in the system
+    When I select to edit thesis "Software Engineering" in resulting list
+    And  I modify the field School to "UFRPE"
+    Then  The thesis "Software Engineering" now has "UFRPE" in the school field
+#end
+
+#if ($filterThesisList)
+#   Scenario: filter thesis list
+#    Given I am at the thesis show page
+#    When  I select Filter Thesis
+#    And   I fill the field School with "UFPE"
+#    Then  I only see the thesis with the field School equal to "UFPE"
+#end
+
   Scenario: remove existing thesis
     Given   the system has thesis entitled "New thesis2"
     When    I delete the thesis "New thesis2"
@@ -38,7 +54,7 @@ Feature: Thesis Tests
 #if ($contextualInformation)
   Scenario: Add a new thesis with user data already filled by default
     Given I am at the publications menu
-    When I select the "Tese" option at the publications menu
+    When I select the Tese option at the publications menu
     And I select the new thesis option at the thesis page
     Then I see my user listed as an author member of thesis by default
     And I see my school name as school of thesis by default
@@ -50,6 +66,13 @@ Feature: Thesis Tests
     When I click in order thesis by date
     Then the returned thesis list has the same items but it is sorted by date
 
+#if ($SortThesisListInAlphabeticalOrder)
+#    Scenario: sort thesis list in alphabetical order
+#    Given I am at the thesis page and the thesis "Augmented Reality" is stored in the system
+#    When  The user adds a thesis entitled "Software Engineering"
+#    Then  The thesis "Software Engineering" is properly stored after "Augmented Reality"
+#end 
+    
   Scenario: search an existing thesis
     Given the system has one thesis entitled "Software Engineering" with author name "Pressman", year of publication "1998" and university "UFPE"
     And I am at the thesis search page

@@ -32,25 +32,11 @@ class FunderController {
     }
 
     def show(Long id) {
-        def funderInstance = Funder.get(id)
-        if (!funderInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'funder.label', default: 'Funder'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [funderInstance: funderInstance]
+        showOrEdit(id);
     }
 
     def edit(Long id) {
-        def funderInstance = Funder.get(id)
-        if (!funderInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'funder.label', default: 'Funder'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [funderInstance: funderInstance]
+        showOrEdit(id);
     }
 
     def update(Long id, Long version) {
@@ -99,6 +85,16 @@ class FunderController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'funder.label', default: 'Funder'), id])
             redirect(action: "show", id: id)
         }
+    }
+    def showOrEdit(Long id){
+        def funderInstance = Funder.get(id)
+        if (!funderInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'funder.label', default: 'Funder'), id])
+            redirect(action: "list")
+            return
+        }
+
+        [funderInstance: funderInstance]
     }
 }
 //#end

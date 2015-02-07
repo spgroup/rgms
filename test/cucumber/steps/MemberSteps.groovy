@@ -22,11 +22,22 @@ When(~'^I create a member with username, phone "([^"]*)" "([^"]*)"$') { String u
     MemberTestDataAndOperations.createMember(username, phone)
 }
 
+When(~'^I create a member with username "([^"]*)" with a invalid mail server "([^"]*)"$') { String username, mail ->
+    MemberTestDataAndOperations.createMemberWithEmail(username, mail)
+}
+
 Then(~'^the member with username "([^"]*)" is properly stored by the system$') { String username ->
     user = User.findByUsername(username);
     member = user?.author
     //assert TestDataAndOperations.memberCompatibleTo(member, username)
     assert member != null
+}
+
+Then(~'^the member with username "([^"]*)" is not properly stored by the system$') { String username ->
+    user = User.findByUsername(username);
+    member = user?.author
+    //assert TestDataAndOperations.memberCompatibleTo(member, username)
+    assert member == null
 }
 
 Then(~'^the system has no member with a username "([^"]*)"$') { String username ->
@@ -192,3 +203,28 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     //member = Member.findByEmail(email)
     //assert member.name == name
 }
+
+// #if($NewMemberWithABlankUsername)
+Given(~'^the system without the member "([^*])"$'){String blank->
+    member = MemberTestDataAndOperations.findByUsername("")
+    assert member == null
+}
+
+When(~'^I create a member with no username and phone "([^"]*)"$') {String phone ->
+    MemberTestDataAndOperations.createMember("", phone)
+}
+
+Then(~'^the new member wont be inserted$'){->
+    member = Member.findByUsername("")
+
+    if(member != null) {
+        MemberTestDataAndOperations.deleteMember("")
+    }
+}
+// #end
+
+// #if($DeleteInexistentMember)
+Then(~'^the system will throw a message error "([^"]*)"$'){String error ->
+    page.throwError(error)
+}
+// #end

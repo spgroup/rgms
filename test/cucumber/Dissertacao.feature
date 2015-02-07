@@ -3,19 +3,21 @@ Feature: Dissertation Tests
   As a member of a research group
   I want to add, remove and modify dissertations I have added
 
-  Scenario:  first dissertation and delete
+#if($firstDissertationStored)
+  Scenario:  first dissertation stored
     Given the system has no dissertation stored
     When I create the dissertation "New dissertation" with file name "dissertation.txt" and school "federal"
-    And I am at the publications menu
     And I select the "Dissertacao" option at the program menu
-    And I select "Delete dissertation" at the dissertation page
-    And I delete "New dissertation"
-    Then the system has no dissertation stored
+    And I select "Upload dissertation" at the dissertation page
+    Then the dissertation "New dissertation" is properly stored by the system
+#end
 
+#if($newDissertationWithoutSchool)
   Scenario: new dissertation without school
     Given the system has no dissertation entitled "Dissertation without school"
     When I create the dissertation "Dissertation without school" with file name "Dissertationwithoutschool.txt" without school
-    Then the system has no dissertation entitled "Dissertation without school"
+    Then the dissertation "Dissertation without school" is not properly stored by the system
+#end
 
   Scenario: new dissertation without address
     Given the system has no dissertation entitled "Dissertation without address"
@@ -51,11 +53,13 @@ Feature: Dissertation Tests
     And I can add the dissertation with a file "Modularity.pdf"
     Then the system has a dissertation entitled "Dissertacao Teste 1"
 
-  Scenario: edit dissertation
+#if($editDissertationTitle)
+  Scenario: edit dissertation title
     Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt"
-    Given the system has no dissertation entitled "Edit dissertation reviewed"
-    When    I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
-    Then    the dissertation "Edit dissertation" is properly updated by the system
+    And the system has no dissertation entitled "Edit dissertation reviewed"
+    When I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
+    Then the dissertation "Edit dissertation" is properly updated by the system to "Edit dissertation reviewed"
+#end
 
   Scenario: delete dissertation
     Given the dissertation "Delete dissertation" is stored in the system with file name "Deletedissertation.txt"
@@ -71,11 +75,12 @@ Feature: Dissertation Tests
     And I select the upload button at the dissertation page
     Then I'm still on dissertation page
 
+#if($uploadDissertationWithAFile)
   Scenario: upload dissertation with a file
-    Given the system has some dissertation stored
-    Given the system has no dissertation entitled "New dissertation"
+    Given the system has no dissertation entitled "New dissertation" stored
     When I upload a new dissertation "curriculo3.xml" with title "New dissertation"
-    Then the system has more dissertations now
+    Then the system will store "New dissertation" with the file "curriculo3.xml"
+#end
     
   Scenario: upload a dissertation and system has no dissertation stored
     Given the system has no dissertation entitled "New dissertation"

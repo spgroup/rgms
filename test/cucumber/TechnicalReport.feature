@@ -49,6 +49,11 @@ Feature: technical report
     And   The technical report "TC88" details page is shown
 
   Scenario: remove existing technical report
+    Given the system has a techincal report entitled "Joe-E" with file name "Joee.pdf"
+    When  I delete the technical report entitled "Joe-E" with file name "Joee.pdf"
+    Then  he technical report "Joe-E" is properly removed by the system
+
+  Scenario: remove existing technical report
     Given  I am at the technical reports page
     And    The system has an technical report entitled "Joe-E" with file name "Joee.pdf"
     When   I select to view the technical report "Joe-E" in resulting list

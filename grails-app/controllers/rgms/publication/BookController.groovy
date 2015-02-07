@@ -2,7 +2,7 @@ package rgms.publication
 
 class BookController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST", share: "POST"]
     AuxiliarController aux = new AuxiliarController()
 
     def index() {
@@ -23,10 +23,9 @@ class BookController {
     }
 
     def save() {
-        PublicationController pb = new PublicationController()
         def bookInstance = new Book(params)
 
-        bookInstance = pb.extractAuthors(bookInstance)
+        bookInstance = PublicationController.extractAuthors(bookInstance)
 
 
         if (!bookInstance.save(flush: true)) {
@@ -38,10 +37,10 @@ class BookController {
         redirect(action: "show", id: bookInstance.id)
     }
 
-    def show(Long id) {
-        def bookInstance = Book.get(id)
+    def show() {
+        def bookInstance = Book.get(params.id)
         if (!bookInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), params.id])
             redirect(action: "list")
             return
         }
@@ -49,10 +48,10 @@ class BookController {
         [bookInstance: bookInstance]
     }
 
-    def edit(Long id) {
-        def bookInstance = Book.get(id)
+    def edit() {
+        def bookInstance = Book.get(params.id)
         if (!bookInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), params.id])
             redirect(action: "list")
             return
         }
