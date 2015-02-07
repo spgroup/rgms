@@ -20,7 +20,7 @@ class User {
     static hasMany = [roles: Role, permissions: String, ]
 
     static constraints = {
-        username(unique:true,nullable: false, blank: false,size: 3..20)
+        username(unique:true,nullable: false, blank: false,size: 5..20)
         enabled(blank: false)
         author(unique: true, blank:false, nullable: false)
     }
