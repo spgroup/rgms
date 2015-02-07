@@ -64,4 +64,13 @@ class TechnicalReportTestDataAndOperations {
         cont.save()
         cont.response.reset()
     }
+    
+    static private void removeMultipleTechReports (reports){
+	    def cont = new TechnicalReportController()
+	    cont.params.reports
+	    cont.request.setContent(new byte[1000])
+	    cont.delete()
+	    cont.response.reset()
+    }
+    
 }
