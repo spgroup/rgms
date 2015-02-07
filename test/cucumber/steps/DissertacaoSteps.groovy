@@ -27,8 +27,7 @@ When(~'^I can add the dissertation with a file "([^"]*)"$'){ String filename->
     page.fillDissertationDetailsWithFile(path)
 }
 Then((~'^the system has a dissertation entitled "([^"]*)"$')){ String title->
-    article = Dissertacao.findByTitle(title)
-    assert article != null
+    assert checkIfExists(title)
 }
 
 
@@ -63,8 +62,7 @@ Given(~'^the system has no dissertation entitled "([^"]*)"$') { String title ->
 
 Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
     TestDataDissertacao.createDissertacao(title, filename, "UFPE")
-    article = Dissertacao.findByTitle(title)
-    assert article != null
+    assert checkIfExists(title)
 }
 
 
@@ -74,8 +72,7 @@ When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)", school "([
 
 
 Then(~'^the dissertation "([^"]*)" is properly stored by the system$') { String title ->
-    dissertation = Dissertacao.findByTitle(title)
-    assert dissertation != null
+    assert checkIfExists(title)
 }
 
 Then(~'^the dissertation "([^"]*)" is not stored twice$') { String title ->
@@ -104,11 +101,7 @@ Then(~'^the dissertation "([^"]*)" is properly updated by the system$') { String
 
 
 When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
-    String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = Dissertacao.findAll().size()
-    TestDataDissertacao.uploadDissertacao(path)
-    finalSize = Dissertacao.findAll().size()
-    assert inicialSize < finalSize
+    uploadDissertationFile(filename)
     //para funcionar é necessario que tenha um FilePath válido
     // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
@@ -125,11 +118,7 @@ Given(~'^the system has some dissertation stored$'){->
 
 
 When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
-    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = Dissertacao.findAll().size()
-    TestDataDissertacao.uploadDissertacao(path)
-    finalSize = Dissertacao.findAll().size()
-    assert inicialSize<finalSize
+    uploadDissertationFile(filename)
     //para funcionar é necessario que tenha um FilePath válido
     // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
@@ -174,17 +163,27 @@ When(~'^I press to remove "([^"]*)" at the dissertation show page$'){ String tit
 
 When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
     TestDataDissertacao.createDissertacao(title, filename, "UFPE")
-    dissertation = Dissertacao.findByTitle(title)
-    assert dissertation != null
+    assert checkIfExists(title)
 }
 
 Given(~'^the dissertation named "([^"]*)" is stored in the system$') { String title ->
     TestDataDissertacao.createDissertacao(title, "testDissertation.pdf", "UFPE")
-    dissertation = Dissertacao.findByTitle(title)
-    assert dissertation != null
+    assert checkIfExists(title)
 }
 
 When(~'^I select "([^"]*)" at the dissertation list$') { String title ->
     page.selectDissertation(title)
 }
 
+def uploadDissertationFile(filename) {
+    String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    inicialSize = Dissertacao.findAll().size()
+    TestDataDissertacao.uploadDissertacao(path)
+    finalSize = Dissertacao.findAll().size()
+    assert inicialSize < finalSize
+}
+
+def checkIfExists(title){
+    dissertation = Dissertacao.findByTitle(title)
+    return dissertation != null
+}
