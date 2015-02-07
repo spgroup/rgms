@@ -33,8 +33,6 @@ class ResearchLineController {
                     if(member.getName() == params.member)
                     {
                         lista.add(researchline.getName())
-
-
                     }
                 }
                [researchLineInstanceList: lista]
@@ -179,19 +177,22 @@ class ResearchLineController {
                 researchLineInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'researchLine.label', default: 'ResearchLine')] as Object[],
                         message(code: 'default.warningwhileedting.message'))
-                render(view: "edit", model: [researchLineInstance: researchLineInstance])
-                return false
+                        render()
             }
         }
         return true
+    }
+
+    def renderEdit(){
+        render(view: "edit", model: [researchLineInstance: researchLineInstance])
+        return false
     }
 
     def editPublications(researchLineInstance) {
         for (p in researchLineInstance?.publications) {
             p.researchLine = null;
             if (!p.save(flush: true)) {
-                render(view: "edit", model: [researchLineInstance: researchLineInstance])
-                return false
+                renderEdit()
             }
         }
         true

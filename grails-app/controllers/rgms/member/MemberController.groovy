@@ -18,6 +18,8 @@ class MemberController {
         redirect(action: "list", params: params)
     }
 
+
+
     def list = {
 
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -27,6 +29,8 @@ class MemberController {
 
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
+
+
 
     def create = {
         def member = new Member(params)
@@ -42,10 +46,15 @@ class MemberController {
         [userMemberInstanceList: [memberInstance: member, userInstance: user]]
     }
 
+    def renderCreateMember(){
+        render(view: "create", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
+        return
+    }
+
     def save = {
 //#if($Auth)
         if (!grailsApplication.config.grails.mail.username) {
-           // throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured'))
+            // throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured'))
         }
 //#end
 
@@ -62,8 +71,7 @@ class MemberController {
         userInstance.passwordChangeRequiredOnNextLogon = true
 
         if (!memberInstance.save(flush: true)) {
-            render(view: "create", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
-            return
+            renderCreateMember()
         }
 
         userInstance.author = memberInstance;
@@ -72,8 +80,7 @@ class MemberController {
                 println it
             }
             memberInstance.delete(flush: true)
-            render(view: "create", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
-            return
+            renderCreateMember()
         }
 
         def email = memberInstance.email
@@ -87,7 +94,7 @@ class MemberController {
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
     }
-    
+
     def search = {
         def userMemberList = []
         if(params.name){
@@ -95,7 +102,7 @@ class MemberController {
 
             generateMemberList(userMemberList,members)
         }
-        
+
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
 
@@ -186,21 +193,22 @@ class MemberController {
         redirect(action: "show", id: memberInstance.id)
     }
 
+    def redirectNotFound(){
+        flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
+        redirect(action: "list")
+    }
+
     def delete = {
         Member.class
         Member.deleteAll();
         Member.dele
         def memberInstance = Member.get(params.id)
         def userInstance = User.findByAuthor(memberInstance)
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
+        if(!isMemberInstance(memberInstance)) {
             return
         }
-
         if (!userInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
+            redirectNotFound()
             return
         }
 
@@ -237,11 +245,17 @@ class MemberController {
         memberInstance.save()
     }
 
+
+
+    def isMemberInstance(memberInstance){
+        if (!memberInstance) {
+            redirectNotFound()
+        }
+    }
+
     def Get_MemberInstance() {
         def memberInstance = Member.get(params.id)
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
+        if(!isMemberInstance(memberInstance)) {
             return
         }
         def user = User.findByAuthor(memberInstance)
@@ -268,6 +282,4 @@ class MemberController {
                 userMemberList.add([member: i])
         }
     }
-
-
 }
