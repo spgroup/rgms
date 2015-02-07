@@ -192,3 +192,18 @@ Then(~'^The technical report "([^"]*)" with filename "([^"]*)" and institution "
     assert tech != null
 }
 
+//Remove more than one technical report
+When (~'^Î select more than one techincal report '){->
+	at technicalReportsPage
+	page.selectTTechnicalReportsList()	
+
+}
+
+And (~'^Click on the remove confirmation button'){->
+	techReport [] = techinicalReport.findById(ID)
+
+}
+
+Then (~'The system will deleat the reports that were selected'){->
+	assert techReport = null
+}
