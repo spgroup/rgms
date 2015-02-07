@@ -116,36 +116,38 @@ class BookController {
        ["Input1": Input1, "Input2": Input2]
    }
 
-    def listSearchVolume ()
-    {
-        ArrayList<String> lista = new ArrayList<String>()
-        for(book in Book.getAll())
-        {
+    def busca(String tipo){
+        params.max = Math.min(params.max ? params.int('max') : 5, 100)
 
-                if(book.getVolume() == params.volume)
-                {
-                    lista.add(book.getTitle())
-
-
-                }
-
-            [bookInstanceList: lista]
-
+        def bookList = Book.createCriteria().list (params) {
+            if ( params.query ) {
+                ilike(tipo, "%${params.query}%")
+            }
         }
 
+        [bookInstanceList: bookList, bookInstanceTotal: bookList.totalCount]
+    }
+
+    def listSearchVolume ()
+    {
+        params.max = Math.min(params.max ? params.int('max') : 5, 100)
+
+        def bookList = Book.createCriteria().list (params) {
+            if ( params.query ) {
+                ilike(tipo, "%${params.query}%")
+            }
+        }
+
+        [bookInstanceList: bookList, bookInstanceTotal: bookList.totalCount]
     }
     def listSearchTitle ()
     {
-        def bookList = []
-        if(params.volume){
-            def books = Book.findByVolume(params.volume)
-            for(i in books){
-                bookList.add(book: i)
-            }
-
-            [bookInstanceList: bookList]
-
-        }
+        busca("title");
 
     }
+    def listSearchPublisher(){
+        busca("publisher")
+    }
+
+
 }
