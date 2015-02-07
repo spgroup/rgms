@@ -39,21 +39,37 @@ class MemberTestDataAndOperations {
         }
     }
 
-    static public void createMember(String username, String phone) {
+    static public void createMember(String new_username) {
         def cont = new MemberController()
-        if (phone.equals("")) {
-            cont.params << findByUsername(username)
-        } else {
-            cont.params << [username: username, phone: phone]
-        }
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        cont.params << findByUsername(new_username)
+        save_controller(cont)
     }
 
-    static public void createMemberWithEmail(String name, String mail) {
+    static public void createMemberWithPhone(String new_username, String new_phone) {
         def cont = new MemberController()
-        cont.params << [username: name, email: mail]
+        if (if_empty(new_phone)) {
+            cont.params << findByUsername(new_username)
+        } else {
+            cont.params << [username: new_username, phone: new_phone]
+        }
+        save_controller(cont)
+    }
+
+    private static boolean if_empty(String text) {
+        text.equals("")
+    }
+
+    static public void createMemberWithEmail(String new_username, String new_email) {
+        def cont = new MemberController()
+        if (if_empty(new_email)) {
+            cont.params << findByUsername(new_username)
+        } else {
+            cont.params << [username: new_username, email: new_email]
+        }
+        save_controller(cont)
+    }
+
+    private static void save_controller(MemberController cont) {
         cont.create()
         cont.save()
         cont.response.reset()
@@ -64,17 +80,17 @@ class MemberTestDataAndOperations {
         def identificador = User.findByUsername(username)?.author?.id
         cont.params << [id: identificador]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.delete()
-        cont.response.reset()
+        save_controller(cont)
     }
 
-    static public boolean containsMember(username) {
+    static public boolean containsMember(String username) {
         def cont = new MemberController()
         def result = cont.list().userMemberInstanceList
-        for (i in result) {
-            if (i.user.username == username && i.member != null)
+        for (userMember in result) {
+            if (userMember.user.username == username && userMember.member != null)
                 return true;
         }
         return false;
     }
+
 }

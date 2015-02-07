@@ -100,20 +100,6 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
-    static public boolean conferenciaCompatibleTo(conferencia, title) {
-        def testConferencia = findConferenciaByTitle(title)
-        def compatible = false
-        if (testConferencia == null && conferencia == null) {
-            compatible = true
-        } else if (testConferencia != null && conferencia != null) {
-            compatible = true
-            testConferencia.each { key, data ->
-                compatible = compatible && (conferencia."$key" == data)
-            }
-        }
-        return compatible
-    }
-
     static public void createArticle(String title, filename) {
         def cont = new PeriodicoController()
         def date = new Date()
