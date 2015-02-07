@@ -10,6 +10,7 @@ package steps
 import rgms.publication.Book
 import rgms.publication.BookController
 import rgms.publication.XMLController
+import steps.CommonTestAndDataOperations
 
 class BookTestDataAndOperations {
     static books = [
@@ -68,16 +69,7 @@ class BookTestDataAndOperations {
 
     static public boolean bookCompatibleTo(book, String title) {
         def testBook = findBookByTitle(title)
-        def compatible = false
-        if (testBook == null && book == null) {
-            compatible = true
-        } else if (testBook != null && book != null) {
-            compatible = true
-            testBook.each { key, data ->
-                compatible = compatible && (book."$key" == data)
-            }
-        }
-        return compatible
+        return CommonTestAndDataOperations.isCompatible(book, testBook)
     }
 
 
