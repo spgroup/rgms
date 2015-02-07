@@ -76,4 +76,9 @@ class BookTestDataAndOperations {
         }
         return compatible
     }
+
+    static public def path(){
+        return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
+    }
+
 }
