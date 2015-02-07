@@ -91,25 +91,80 @@ class MemberTestDataAndOperations {
 
     static public void createMemberWithoutPhone(String name, String username, String email, String university, String status, String country, String website) {
         def cont = new MemberController()
-
-
-        cont.params << [name: name, username: username, email: email,
-                        status: status, university: university, enabled: true, website: website, country:country
-        ]
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        setMemberParams(cont, name, username,email, university, status, country, "", website)
+        //cont.params << [name: name, username: username, email: email, status: status, university: university, enabled: true, website: website, country:country]
+        createAndSaveCont(cont);
     }
 
     static public void createMemberWithoutWebsite(String name, String username, String email, String university, String status, String country, String phone) {
         def cont = new MemberController()
+        setMemberParams(cont, name, username,email, university, status, country, phone, "")
+        //cont.params << [name: name, username: username, email: email, status: status, university: university, enabled: true, phone:phone, country:country]
+        createAndSaveCont(cont);
+    }
 
-        cont.params << [name: name, username: username, email: email,
-                        status: status, university: university, enabled: true, phone:phone, country:country]
+    static private void createAndSaveCont(cont)
+    {
         cont.create()
         cont.save()
         cont.response.reset()
     }
+
+    static private setMemberParams(cont, String name, String username, String email, String university, String status, String country, String phone, String website)
+    {
+        if(!isNullOrEmpty(name))
+        {
+            cont.params << [name: name]
+        }
+        if(!isNullOrEmpty(username))
+        {
+            cont.params << [username: username]
+        }
+        if(!isNullOrEmpty(email))
+        {
+            cont.params << [email: email]
+        }
+        if(!isNullOrEmpty(university))
+        {
+            cont.params << [university: university]
+        }
+        if(!isNullOrEmpty(status))
+        {
+            cont.params << [status: status]
+        }
+        if(!isNullOrEmpty(country))
+        {
+            cont.params << [nacountryme: country]
+        }
+        if(!isNullOrEmpty(phone))
+        {
+            cont.params << [phone: phone]
+        }
+        if(!isNullOrEmpty(website))
+        {
+            cont.params << [website: website]
+        }
+
+        cont.params << [enabled: true]
+
+    }
+
+    static private boolean isNullOrEmpty(param)
+    {
+        if(param==null || param=="")
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+
+    }
+
+
+
+
 
 
 

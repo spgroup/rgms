@@ -261,8 +261,6 @@ When (~'I press the Register Button') { ->
 
 And(~'^The message Membro "([^"]*)" criado should be displayed') {String name->
     at LoginPage
-
-
     assert (page.readFlashMessage() == "Membro "+name+" criado")
 }
 
