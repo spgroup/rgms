@@ -151,7 +151,10 @@ Then(~'^the system has all the books of the xml file$') { ->
     assert Book.findByTitle("AOSD 2011 Proceedings and Companion Material") != null
 }
 
-And(~'^I am at the Book Page$') { ->
+Given(~'^I am at the Book Page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
     at PublicationsPage
     to BookPage
 }
@@ -174,6 +177,15 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
+Given(~'^I am at the book page'){->
+        to BookPage
+        at BookPage
+}
+And(~'^the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    book = Book.findByTitle(title)
+    assert BookTestDataAndOperations.bookCompatibleTo(book, title)
+}
 When(~'^I select the download button$') { ->
     at BookPage
     page.downloadFile()
@@ -187,8 +199,18 @@ Then(~'^the download the file named "([^"]*) is properly filed"$') { String file
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
+<<<<<<< HEAD
+}
+
+def createAndCheckBookOnBrowser(String title, String filename) {
+    page.fillBookDetails(title, filename)
+    page.clickSaveBook()
+    book = Book.findByTitle(title)
+    assert book != null
 }
 
 def downloadFile(String filename){
     return
+=======
+>>>>>>> droa
 }
