@@ -151,17 +151,15 @@ Then (~'^The system displays the book entitled "([^"]*)" volume "([^"]*)"$'){ St
 
 
 Given (~'^The book entitled "([^"]*)" volume "([^"]*)" is stored on the system$'){ String title, int volume ->
-    book = Book.findByTitle(title)
-    assert book != null && book.volume == volume
+    findVol(title,volume)
 
 }
 When(~'^I search for a book with volume "([^"]*)"$'){ int volume ->
-    book = Book.findByVolume(volume)
+    checkVol(volume)
 
 }
 Then (~'^the system lists all books with volume "([^"]*)"$'){ int volume ->
-    book = Book.findByVolume(volume)
-    assert book.count() >= 1
+    checkVol(volume)
 }
 
 
@@ -179,16 +177,18 @@ Then (~'^The system displays the book with publisher "([^"]*)"$'){ String publis
 
 
 Given (~'^The book with publisher "([^"]*)" is stored on the system$'){String publisher ->
-    assert Book.findByPublisher(publisher) != null
+    findPub(publisher)
 }
 When (~'^I search for a book with publisher "([^"]*)"$'){ String publisher ->
-    assert Book.findByPublisher(publisher) != null
+    findPub(publisher)
 }
 Then (~'^the system lists all books with publisher "([^"]*)"$'){ String publisher ->
-    assert Book.findByPublisher(publisher).count() >= 1
+    checkPub(publisher)
 }
 
-
+def checkPub(publisher){
+    assert Book.findByPublisher(publisher).count() >= 1
+}
 
 
 
@@ -204,19 +204,22 @@ Then (~'^The system displays the book entitled "([^"]*)"$') { String title ->
 }
 
 Given (~'^The book entitled "([^"]*)" is stored on the system$'){ String title ->
-    book = Book.findByTitle(title)
-    assert book != null
+   findTitle(title)
 }
 When (~'^I search for a book entitled "([^"]*)"$'){ String title ->
-    book = Book.findByTitle(title)
-    assert book != null
-
+    findTitle(title)
 }
 Then (~'^the system lists all books entitled "([^"]*)"$'){ String title ->
+   checkTitle(title)
+}
+def findTitle(String title){
+    book = Book.findByTitle(title)
+    assert book != null
+}
+def checkTitle(String title){
     book = Book.findByTitle(title)
     assert book.count() >= 1
 }
-
 
 
 
@@ -250,4 +253,17 @@ def bookVolumeTitle(String title,int volume){
     */
     assert Book.findByTitleAndVolume(title,volume) != null
 
+}
+
+def findVol(string title,int volume) {
+    book = Book.findByTitle(title)
+    assert book != null && book.volume == volume
+}
+def checkVol(int volume){
+    book = Book.findByVolume(volume)
+    assert book.count() >= 1
+}
+
+def findPub(String publisher){
+    assert Book.findByPublisher(publisher) != null
 }
