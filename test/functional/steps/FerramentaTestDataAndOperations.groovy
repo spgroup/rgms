@@ -40,7 +40,6 @@ class FerramentaTestDataAndOperations {
         def cont = new FerramentaController()
         cont.params << ferramenta.properties
         cont.update()
-
         def updatedferramenta = Ferramenta.findByTitle(newtitle)
         return updatedferramenta
     }
@@ -52,32 +51,40 @@ class FerramentaTestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void createFerramenta(String title, filename) {
+    static public void createFerramenta(String new_title, new_filename) {
         def cont = new FerramentaController()
         def date = new Date()
-        cont.params << findFerramentaByTitle(title) << [file: filename]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont = find_and_set_content(cont, new_title, new_filename)
+        save_controller(cont)
+    }
+
+    private static void save_controller(FerramentaController cont) {
         cont.create()
         cont.save()
         cont.response.reset()
     }
 
-    static public void createFerramentaWeb(String title, filename, page) {
+    static public void createFerramentaWithWebsite(String new_title, new_filename, new_website) {
         def cont = new FerramentaController()
         def date = new Date()
-        cont.params << findFerramentaByTitle(title) << [file: filename] << [website: page]
-        cont.request.setContent(new byte[1000]) // Could also vary the request content.
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        cont = find_and_set_content(cont, new_title, new_filename)
+        cont.params << [website: new_website]
+        save_controller(cont)
     }
+
+    private static FerramentaController find_and_set_content(FerramentaController cont, String title, filename) {
+        cont.params << findFerramentaByTitle(title) << [file: filename]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        return cont;
+    }
+
 
     static public void uploadFerramenta(filepath) {
         def cont = new XMLController()
         def xml = new File((String) filepath);
         def records = new XmlParser()
         cont.saveTools(records.parse(xml));
-        cont.response.reset()
+        save_controller(cont);
     }
 
     static public Ferramenta getFerramenta(title){
