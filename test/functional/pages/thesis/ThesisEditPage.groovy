@@ -32,6 +32,9 @@ class ThesisEditPage extends Page {
 
     def fillThesisSchool(school_name) {
         $("form").school = school_name
-        $("input", id: "edit").click()
+    }
+
+    def saveModifications() {
+        $("form").find('input', class: 'save').click()
     }
 }

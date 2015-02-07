@@ -13,8 +13,8 @@ Feature: Thesis Tests
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
     Then  The thesis "New thesis" is properly stored by the system
 
-#if ($editExistingThesis)
-   Scenario: edit existing thesis
+#if ($editExistingThesisWeb)
+   Scenario: edit existing thesis web
     Given I am at the thesis page and the thesis "Software Engineering" is stored in the system
     When I select to edit thesis "Software Engineering" in resulting list
     And  I modify the field School to "UFRPE"
@@ -67,10 +67,10 @@ Feature: Thesis Tests
     Then the returned thesis list has the same items but it is sorted by date
 
 #if ($SortThesisListInAlphabeticalOrder)
-    Scenario: sort thesis list in alphabetical order
-    Given I am at the thesis page and the thesis "Augmented Reality" is stored in the system
-    When  The user adds a thesis entitled "Software Engineering"
-    Then  The thesis "Software Engineering" is properly stored after "Augmented Reality"
+#    Scenario: sort thesis list in alphabetical order
+#    Given I am at the thesis page and the thesis "Augmented Reality" is stored in the system
+#    When  The user adds a thesis entitled "Software Engineering"
+#    Then  The thesis "Software Engineering" is properly stored after "Augmented Reality"
 #end 
     
   Scenario: search an existing thesis

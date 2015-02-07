@@ -13,15 +13,13 @@ import steps.ThesisTestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^The system has no thesis entitled "([^"]*)"$') { String title ->
-    article = Tese.findByTitle(title)
-    assert article == null
+    thesisDoNotExists(title)
 }
 
 Given(~'^The thesis "([^"]*)" is stored in the system with file name "([^"]*)"$') {
     String title, filename ->
         ThesisTestDataAndOperations.createTese(title, filename, "UFPE")
-        article = Tese.findByTitle(title)
-        assert article != null
+        thesisDoExists(title)
 }
 
 When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') {
@@ -31,21 +29,20 @@ When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]
 
 /**
  * @author rff2
- * edit existing thesis test
+ * edit existing thesis test web
  * BEGIN
  */
 And(~'^I modify the field School to "([^"]*)"$') {
     String school_name ->
         at ThesisEditPage
         page.fillThesisSchool(school_name)
-        page.selectConfirm()
+        page.saveModifications()
 }
 
 When(~'^I select to edit thesis "([^"]*)" in resulting list$') { title ->
     at ThesisPage
-    //to ThesisCreatePage
     page.selectViewThesis(title)
-    page.edit()
+    page.select()
     at ThesisEditPage
 
 }
@@ -57,13 +54,13 @@ Then(~'^The thesis "([^"]*)" now has "([^"]*)" in the school field$') {
 }
 /**
  * @author rff2
- * edit existing thesis test
+ * edit existing thesis test web
  * END
  */
 
 /**
  * @author rff2
- * edit existing thesis test
+ * filter Thesis List
  * BEGIN
  */
 When(~'^The user adds a thesis entitled "([^"]*)"$') {
@@ -89,7 +86,7 @@ Then(~'^The thesis "([^"]*)" is properly stored after "([^"]*)"$') {
 
 /**
  * @author rff2
- * edit existing thesis test
+ * filter Thesis List
  * END
  */
 
@@ -99,14 +96,11 @@ Then(~'^The thesis "([^"]*)" is not stored twice$') { String title ->
 }
 
 Then(~'^The thesis "([^"]*)" is properly stored by the system$') { String title ->
-    thesis = Tese.findByTitle(title)
-    assert thesis != null
+    thesisDoExists(title)
 }
 
 Given(~'^I am at the create thesis page$') { ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
+    Login()
     to ThesisCreatePage
     at ThesisCreatePage
 }
@@ -172,8 +166,7 @@ Given(~'^I am at the thesis page and the thesis "([^"]*)" is stored in the syste
         absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
         page.fillThesisDetails(title, "10", "8", "1998", "UFPE", "Recife", absolutePath)
         page.selectCreateThesis()
-        tese = Tese.findByTitle(title)
-        assert tese != null
+        thesisDoExists(title)
 
         at ThesisShowPage
     }
@@ -204,8 +197,7 @@ Then(~'^the thesis "([^"]*)" is removed from the system$') { title ->
 // #6
 Given(~'^the system has thesis entitled "([^"]*)"$') { title ->
     ThesisTestDataAndOperations.createTese(title, 'teste.txt', 'UFPE')
-    thesis = Tese.findByTitle(title)
-    assert thesis != null
+    thesisDoExists(title)
 }
 
 When(~'^I delete the thesis "([^"]*)"$') { title ->
@@ -213,8 +205,7 @@ When(~'^I delete the thesis "([^"]*)"$') { title ->
 }
 
 Then(~'^the thesis "([^"]*)" is properly removed by the system$') { title ->
-    tese = Tese.findByTitle(title)
-    assert tese == null
+    thesisDoNotExists(title)
 }
 
 //Scenario: order thesis list by date
@@ -340,6 +331,10 @@ def thesisDoNotExists(title) {
     assert tese == null
 }
 
+def thesisDoExists(title) {
+    tese = Tese.findByTitle(title)
+    assert tese != null
+}
 
 def Login() {
     to LoginPage
