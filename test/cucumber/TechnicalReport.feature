@@ -65,3 +65,18 @@ End
     And I see my school name as institution of technical report by default
 #end
 
+
+Scenario: Remove multiple existing technical reports
+	Given I am at the list of technical reports
+	And the system has more than one existing technical report
+	When I select more than one technical report
+	And Click on the remove button
+	Then The system show a message of confirmation "Are you sure you want to deleat those technical reports?"
+
+
+Scenario: Remove multiple existing technical reports
+	Given I am at the list of technical reports
+	And the system has more than one existing technical report
+	When I select more than one technical report
+	And Click on the remove confirmation button
+	Then The system will deleat the reports that were selected
