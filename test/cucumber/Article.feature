@@ -58,7 +58,7 @@ Feature: journal article
 
   Scenario: edit existing article web
     Given I am at the articles page and the article "A theory of software product line refinement" is stored in the system with file name "TCS-99.pdf"
-    When I select to view "A theory of software product line refinement" in resulting list
+    When I select to view  "A theory of software product line refinement" in resulting list
     And I change the article title to "REVIEWED"
     And I select the "Alterar" option in Article Show Page
     Then I am at Article show page

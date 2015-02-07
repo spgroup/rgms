@@ -75,18 +75,7 @@ class PublicationController {
             return false
         }
 
-        InputStream inputStream = request.getInputStream()
-        OutputStream outputStream = new FileOutputStream(f)
-        byte[] buffer = new byte[1024 * 10] //buffer de 10MB
-        int length
-
-        while ((length = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, length)
-        }
-        outputStream.close()
-        inputStream.close()
-
-        return true
+        uploadFileStream();
     }
 
     def static newUpload(Publication publicationInstance, flash, request) {
@@ -100,18 +89,7 @@ class PublicationController {
             flash.message = 'File already exists. Please try to use a different file name.'
             return false
         }
-        InputStream inputStream = request.getInputStream()
-        OutputStream outputStream = new FileOutputStream(f)
-        byte[] buffer = new byte[1024 * 10] //buffer de 10MB
-        int length
-
-        while ((length = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, length)
-        }
-        outputStream.close()
-        inputStream.close()
-
-        return true
+        uploadFileStream();
     }
 
     def static extractAuthors(instance) {
@@ -161,4 +139,18 @@ class PublicationController {
 //      return statusLine.getStatusCode();
     }
     //#end
+    def static uploadFileStream() {
+        InputStream inputStream = request.getInputStream()
+        OutputStream outputStream = new FileOutputStream(f)
+        byte[] buffer = new byte[1024 * 10] //buffer de 10MB
+        int length
+
+        while ((length = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, length)
+        }
+        outputStream.close()
+        inputStream.close()
+
+        return true
+    }
 }

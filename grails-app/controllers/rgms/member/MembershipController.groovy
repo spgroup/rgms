@@ -32,25 +32,11 @@ class MembershipController {
     }
 
     def show = {
-        def membershipInstance = Membership.get(params.id)
-        if (!membershipInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [membershipInstance: membershipInstance]
+        showOrEdit();
     }
 
     def edit = {
-        def membershipInstance = Membership.get(params.id)
-        if (!membershipInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
-            redirect(action: "list")
-            return
-        }
-
-        [membershipInstance: membershipInstance]
+        showOrEdit();
     }
 
     def update = {
@@ -118,4 +104,14 @@ class MembershipController {
         }
     }
 	//#end
+    def showOrEdit(){
+        def membershipInstance = Membership.get(params.id)
+        if (!membershipInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'membership.label', default: 'Membership'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [membershipInstance: membershipInstance]
+    }
 }

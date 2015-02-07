@@ -8,6 +8,13 @@ Feature: research line
     When I remove the research line "Novo Padrao Arquitetural MVCE"
     Then the research line "Novo Padrao Arquitetural MVCE" is properly removed by the system
 
+  Scenario: Delete research line web
+    Given I am logged as "admin" and at the visits page
+    And   a research line named "Novo Padrao Arquitetural MVCE" with a description "Nova arquitetura que promete revolucionar a web" is stored in the system
+    When  I select to view the research line named "Novo Padrao Arquitetural MVCE" with a description "Nova arquitetura que promete revolucionar a web" in resulting list
+    Then  the visit details are showed and I can select the option to remove
+    And   the research line named "Novo Padrao Arquitetural MVCE" with a description "Nova arquitetura que promete revolucionar a web" is properly removed by the system
+
   Scenario: Update research line
     Given the system has a research line named "Teoria da informacao - Complexidade no espaco" with a description "P = NP"
     When I update the research line "Teoria da informacao - Complexidade no espaco" with a description "P != NP"

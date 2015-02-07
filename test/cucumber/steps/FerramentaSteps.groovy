@@ -1,7 +1,10 @@
+import pages.PublicationsPage
 import pages.ferramenta.*
 import rgms.publication.Ferramenta
 import steps.FerramentaTestDataAndOperations
 import steps.TestDataAndOperationsPublication
+
+import java.awt.Menu
 
 import static cucumber.api.groovy.EN.*
 
@@ -16,6 +19,14 @@ When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" without its w
 Then(~'^the ferramenta "([^"]*)" is not stored$') { String title ->
     def tool = Ferramenta.findByTitle(title)
     assert tool == null
+}
+Then(~'^the ferramenta "([^"]*)" is stored$') { String title ->
+    def tool = Ferramenta.findByTitle(title)
+    assert tool != null
+}
+
+When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)" with website "([^"]*)"$') { String title, String filename, String website ->
+    FerramentaTestDataAndOperations.createFerramentaWeb(title, filename, website)
 }
 
 // duplicate ferramenta
@@ -101,19 +112,44 @@ And(~'^I click on Criar button$') {->
     at FerramentaCreatePage
     page.clickCreateFerramenta()
 }
+
+Given(~'^I am at the ferramenta page$') {->
+    to FerramentaPage
+    at FerramentaPage
+}
+
 Then(~'^I am still on create new ferramenta page$') {->
     at FerramentaCreatePage
 }
+
 And(~'^the ferramenta is not displayed in the ferramentas list page$') {->
     to FerramentaPage
     at FerramentaPage
-    page.checkAnyFerramentaAtList()
 }
 
-// upload dissertation without a file
-And(~'^I select the upload button at the ferramenta page$') {->
-    // Express the Regexp above with the code you wish you had
+// upload ferramenta without a file
+// #if($UploadFerramentaWithoutAFile)
+Given(~'^I am at publications menu$'){->
+    to PublicationsPage
+    at PublicationsPage
 }
+
+When(~'^I select the upload button at the ferramenta page without attaching a file$'){->
+    to FerramentaPage
+    at FerramentaPage
+    page.click("Upload")
+}
+
+Then(~'^the ferramenta wont be inserted into the system$') {->
+    to FerramentaPage
+    at FerramentaPage
+}
+// #end
+
+And(~'^I select the upload button at the ferramenta page$') {->
+
+}
+
 Then(~'^I am still on ferramenta page$') {->
     at FerramentaPage
 }

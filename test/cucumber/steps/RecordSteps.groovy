@@ -118,3 +118,36 @@ When(~'^I click to remove the record$') {->
 	at RecordVisualizePage
 	page.removeRecord()
 }
+
+// #if($SuccessfullyEditAStatus)
+Given(~'^Given a record with status "([^"]*)"$') {status ->
+    to ProfilePage
+    at ProfilePage
+    record = RecordTestDataAndOperations.findRecordByStatus(status)
+	assert record != null
+}
+
+When(~'^I fill the field of status with "([^"]*)"$'){status ->
+    RecordTestDataAndOperations.updateRecord(status, Date.getTimeString())
+}
+
+When(~'^confirm the edit$') {->
+    page.select("Confirm")
+}
+
+Then(~'^the record will now show "([^"]*)"$'){status ->
+    record = RecordTestDataAndOperations.findRecordByStatus(status)
+	assert record != null
+}
+// #end
+
+// #if($CancelTheEditOfAStatus)
+When(~'^the member press the button cancel$') {->
+    page.select("Cancel")
+}
+
+Then(~'^the record wont save the "([^"]*)"$') {status ->
+	record = RecordTestDataAndOperations.findRecordByStatus(status)
+	assert record == null
+}
+// #end

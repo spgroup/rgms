@@ -5,6 +5,7 @@ import rgms.publication.*
 
 class TestDataDissertacao
 {
+	static dissertacoes = []
 
     static public void createDissertacao(String title, filename, school) {
         def cont = new DissertacaoController()

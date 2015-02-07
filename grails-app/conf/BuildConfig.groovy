@@ -53,6 +53,7 @@ grails.project.dependency.resolution = {
         compile(group: 'org.apache.poi', name: 'poi-ooxml', version: '3.7') {
             excludes 'xmlbeans'
         }
+        compile('commons-codec:commons-codec:1.6')
         // runtime 'mysql:mysql-connector-java:5.1.16'
     }
 
@@ -61,7 +62,6 @@ grails.project.dependency.resolution = {
         compile ":remote-control:1.4"
         compile ":codenarc:0.20"
         compile ":gmetrics:0.3.1"
-
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.7.1"
         runtime ":resources:1.1.6"

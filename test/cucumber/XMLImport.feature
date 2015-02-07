@@ -5,14 +5,13 @@ Feature: XMLImport
   So that the system register the corresponding publications in my profile
 
   @ignore
-  Scenario: invalid file web
+    Scenario: invalid file web
     Given I am at the "Import XML File" Page
     When I select the "upload" button
     And I upload the file "cv.pdf"
-    Then the system outputs an error message
-    And no new publication is stored by the system
-    And the previously stored publications do not change
-
+    Then no new publication is stored by the system
+    And the system outputs an error message
+    
   @ignore
   Scenario: invalid file
     Given the system has some publications stored
