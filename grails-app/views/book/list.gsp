@@ -31,12 +31,33 @@
     </ul>
 </div>
 <!-- #end -->
-
+<div>
+    <form name="input" action="listSearchVolume" method="post">
+        <input type="text" name="volume">
+        <input type="submit" value="Buscar Volume">
+    </form>
+</div>
+<div>
+    <form name="input2" action="listSearchPublisher" method="post">
+        <input type="text" name="Publisher">
+        <input type="submit" value="Buscar Publisher">
+    </form>
+</div>
+<div>
+    <form name="input3" action="listSearchTitle" method="post">
+        <input type="text" name="Title">
+        <input type="submit" value="Buscar Title">
+    </form>
+</div>
 <div id="list-book" class="content scaffold-list" role="main">
     <h1><g:message code="default.list.label" args="[entityName]"/></h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
+
+
+
+
     <table>
         <thead>
         <tr>

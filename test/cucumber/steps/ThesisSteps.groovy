@@ -28,6 +28,14 @@ When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]
         ThesisTestDataAndOperations.createTese(title, filename, school)
 }
 
+/**
+ * @author csf2
+ */
+And (~'^With publication date "([^"]*)", "([^"]*)", Publication year "([^"]*)", and author name "([^"]*)"$') {
+	pub_day, pub_month, pub_year, author ->
+		page.fillSomeThesisDetails(pub_day, pub_month, pub_year, author)
+}
+
 Then(~'^The thesis "([^"]*)" is not stored twice$') { String title ->
     theses = Tese.findAllByTitle(title)
     assert theses.size() == 1
@@ -46,11 +54,11 @@ Given(~'^I am at the create thesis page$') { ->
     at ThesisCreatePage
 }
 
-When(~'^I fill the thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') {
-    title, pub_day, pub_month, pub_year, school, address ->
+When(~'^I fill the thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') {
+    title, pub_day, pub_month, pub_year, author, school, address ->
         def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/NewthesisGUI.txt")
         absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
-        page.fillThesisDetails(title, pub_day, pub_month, pub_year, school, address, absolutePath)
+        page.fillThesisDetails(title, pub_day, pub_month, pub_year, author, school, address, absolutePath)
 }
 
 When(~'^I fill some thesis details with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)"$') {

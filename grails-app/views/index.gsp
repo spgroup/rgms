@@ -11,8 +11,7 @@
         border: .2em solid #fff;
         margin: 2em 2em 1em;
         padding: 1em;
-    / / width : 12 em;
-        12em width : 15 em;
+        width : 12em;
         float: left;
         -moz-box-shadow: 0px 0px 1.25em #ccc;
         -webkit-box-shadow: 0px 0px 1.25em #ccc;

@@ -71,4 +71,25 @@ class BibtexGenerateFileController {
         render(bibtex)
     }
 
+    def generateBibTexByTopic = { String topic ->
+        String bibtex = ""
+        List<ResearchGroup> groupList = ResearchGroup.getAll();
+
+        for(group in groupList) {
+            if(group.getId() == (params.id).toInteger()) {
+                List<Membership> memberList = Membership.getAllMembers(group);
+
+                for(member in memberList) {
+                    String toAppend = memberPublications(member.getId())
+
+                    if(toAppend.contains(topic)) {
+                        bibtex += toAppend
+                    }
+                }
+            }
+        }
+
+        render(bibtex)
+    }
+
 }

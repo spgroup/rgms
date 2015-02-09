@@ -1,7 +1,7 @@
 package rgms.publication
 
 class BookController {
-
+    boolean busca= false,v= false,p= false,n = false, a = false;
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
     AuxiliarController aux = new AuxiliarController()
 
@@ -11,7 +11,27 @@ class BookController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [bookInstanceList: Book.list(params), bookInstanceTotal: Book.count()]
+    if (busca) {
+        def bookInstanceList = Book.createCriteria().list(params) {
+            if (params.query) {
+                System.out.println("penes")
+                if (v) {
+                    ilike("Volume", "%${params.query}%")
+                }
+                if(p){
+                    ilike("Publisher", "%${params.query}%")
+                }
+                if(n){
+                    ilike("Title", "%${params.query}%")
+                }
+                if(a){
+                    ilike("Autores", "%${params.query}%")
+                }
+            }
+        }
+    }
+            [bookInstanceList: Book.list(params), bookInstanceTotal: Book.count()]
+
     }
 
     def create() {
@@ -38,26 +58,22 @@ class BookController {
         redirect(action: "show", id: bookInstance.id)
     }
 
-    def show(Long id) {
+    def showOrEditAux(Long id){
         def bookInstance = Book.get(id)
         if (!bookInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
             redirect(action: "list")
             return
         }
-
         [bookInstance: bookInstance]
     }
 
-    def edit(Long id) {
-        def bookInstance = Book.get(id)
-        if (!bookInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), id])
-            redirect(action: "list")
-            return
-        }
+    def showOrEdit(Long id) {
+        showOrEditAux(id)
+    }
 
-        [bookInstance: bookInstance]
+    def edit(Long id) {
+        showOrEditAux(id)
     }
 
     def update(Long id, Long version) {
@@ -93,4 +109,44 @@ class BookController {
         def bookInstance = Book.get(id)
         aux.delete(id, bookInstance, 'book.label', 'Book');
     }
+   def valores ={
+       def Input1 = params.Input1
+       def Input2 = params.Input2
+       ["Input1": Input1, "Input2": Input2]
+   }
+
+    def busca(String tipo){
+        params.max = Math.min(params.max ? params.int('max') : 5, 100)
+
+        def bookList = Book.createCriteria().list (params) {
+            if ( params.query ) {
+                ilike(tipo, "%${params.query}%")
+            }
+        }
+
+        [bookInstanceList: bookList, bookInstanceTotal: bookList.totalCount]
+    }
+
+    def listSearchVolume ()
+    {
+        params.max = Math.min(params.max ? params.int('max') : 5, 100)
+
+        def bookList = Book.createCriteria().list (params) {
+            if ( params.query ) {
+                ilike(tipo, "%${params.query}%")
+            }
+        }
+
+        [bookInstanceList: bookList, bookInstanceTotal: bookList.totalCount]
+    }
+    def listSearchTitle ()
+    {
+        busca("title");
+
+    }
+    def listSearchPublisher(){
+        busca("publisher")
+    }
+
+
 }
