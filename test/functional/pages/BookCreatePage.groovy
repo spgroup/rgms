@@ -27,28 +27,24 @@ class BookCreatePage extends FormPage {
         }
     }
 
-    def fillBookDetails(title, filename) {
-        fillTitle(title)
-        $("form").publisher = "Person"
-        $("form").volume = 1
-        $("form").pages = "20"
+    def setValues(String title, String publisher, int volume, String pages, String filename) {
+        $('form').title = title
+        $("form").publisher = publisher
+        $("form").volume = volume
+        $("form").pages = pages
         $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+        saveBook()
+    }
+
+    def fillBookDetails(title, filename) {
+        setValues(title, "Person", 1, "20", filename)
     }
 	
 	def fillBookDetails(title, filename, author) {
-		fillTitle(title)
-		$("form").publisher = author
-		$("form").volume = 1
-		$("form").pages = "20"
-		$("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+		setValues(title, author, 1, "20", filename)
 	}
 
-    def clickSaveBook() {
+    def saveBook() {
         $("form").create().click()
-    }
-
-    def fillTitle(title) {
-        $("form").title = title
-        clickSaveBook()
     }
 }
