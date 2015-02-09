@@ -230,13 +230,7 @@ Then(~'^No facebook message was posted$') { ->
 }
 
 Given(~'^I am at the Add Article Page$') {  ->
-	at PublicationsPage
-	page.select("Periodico")
-	to ArticlesPage
-	def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
-	println path
-	def f = new File(path)
-	println "exist Path?" + f.exists()
+    addPage()
 }
 
 
@@ -246,7 +240,6 @@ When(~'^I share the article entitled "([^"]*)" on facebook$') { String title ->
 //#end
 
 def selectNewArticleInArticlesPage(){
-
 	at ArticlesPage
 	page.selectNewArticle()
 	at ArticleCreatePage
