@@ -41,7 +41,9 @@ class TestDataAndOperationsResearchGroup {
 
         try {
             researchGroupController.update()
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            throw e;
+        }
     }
     //#end
 

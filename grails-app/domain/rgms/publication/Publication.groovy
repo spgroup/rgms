@@ -50,7 +50,7 @@ abstract class Publication {
     }
 
     static Set getPublicationsByMembership(membership) {
-        def publications = membership?.member.publications
+        def publications = membership?.member?.publications
         def query = !membership.dateLeft ?
                 { it.publicationDate?.compareTo(membership.dateJoined) > 0 } :
                 {

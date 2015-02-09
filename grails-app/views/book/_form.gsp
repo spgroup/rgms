@@ -33,7 +33,7 @@
         <g:message code="book.researchLine.label" default="Research Line"/>
 
     </label>
-    <g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id"
+    <g:select id="researchLine" name="researchLine.id" from="${bookInstance?.researchLine?.list()}" optionKey="id"
               value="${bookInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
@@ -77,9 +77,9 @@
 
     <!-- #if( $contextualInformation ) -->
     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes"
-              optionKey="id" value="${bookInstance?.members.id}"/>
+              optionKey="id" value="${bookInstance?.members?.id}"/>
     <!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id"
-                         value="${bookInstance?.members.id}"/> -->
+                         value="${bookInstance?.members?.id}"/> -->
     <!-- #end -->
 </div>
 
