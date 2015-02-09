@@ -109,12 +109,16 @@ Then(~'^I\'m still on dissertation page$') {->
     at DissertationPage
 }
 
-When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
+def checkUpload(String filename) {
     String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
     TestDataDissertacao.uploadDissertacao(path)
     finalSize = Dissertacao.findAll().size()
     assert inicialSize < finalSize
+}
+
+When(~'^I upload a new dissertation "([^"]*)"$') { String filename ->
+    checkUpload(filename)
     //para funcionar é necessario que tenha um FilePath válido
     // não consegui fazer de uma maneira que todos os passos sejam independentes
 }
@@ -130,12 +134,8 @@ Given(~'^the system has some dissertation stored$'){->
 }
 
 
-When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
-    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
-    inicialSize = Dissertacao.findAll().size()
-    TestDataDissertacao.uploadDissertacao(path)
-    finalSize = Dissertacao.findAll().size()
-    assert inicialSize<finalSize
+When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') { String filename, String title->
+    checkUpload(filename)
     //para funcionar é necessario que tenha um FilePath válido
     // não consegui fazer de uma maneira que todos os passos sejam independentes
 }

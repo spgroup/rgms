@@ -61,6 +61,22 @@ class PublicationController {
         }
     }
 //#end
+    static def write(file, request) {
+        InputStream inputStream = request.getInputStream()
+        OutputStream outputStream = new FileOutputStream(file)
+        byte[] buffer = new byte[1024 * 10] //buffer de 10MB
+        int length
+
+        while ((length = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, length)
+        }
+        outputStream.close()
+        inputStream.close()
+    }
+
+    def write(file) {
+        write(file, request)
+    }
 
     def upload(Publication publicationInstance) {
 
@@ -75,16 +91,7 @@ class PublicationController {
             return false
         }
 
-        InputStream inputStream = request.getInputStream()
-        OutputStream outputStream = new FileOutputStream(f)
-        byte[] buffer = new byte[1024 * 10] //buffer de 10MB
-        int length
-
-        while ((length = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, length)
-        }
-        outputStream.close()
-        inputStream.close()
+        write(f)
 
         return true
     }
@@ -100,16 +107,8 @@ class PublicationController {
             flash.message = 'File already exists. Please try to use a different file name.'
             return false
         }
-        InputStream inputStream = request.getInputStream()
-        OutputStream outputStream = new FileOutputStream(f)
-        byte[] buffer = new byte[1024 * 10] //buffer de 10MB
-        int length
 
-        while ((length = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, length)
-        }
-        outputStream.close()
-        inputStream.close()
+        write(f, request)
 
         return true
     }

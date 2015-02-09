@@ -7,9 +7,19 @@ Feature: BibtexImport
   Scenario: simple import bibtex
     Given I am on Import Bibtex File Menu
     When  I click "Choose file"
-    And selected a bibtex file and I click "Import"
+ #if($BibtexImport)
+    And selected a bibtex file and I click "Import All"
+ #end
     Then is created all corresponding publications
     And all of then are stored
+    
+  #if($BibtexImport)
+  Scenario: list extracted publications from a bibtex file
+    Given I am on Import Bibtex File Menu
+    When I click "Choose file"
+    And I select a bibtex file
+    Then a list of publications extracted from the bibtex file is shown on the same screen
+  #end
 
   Scenario: bibtex file unformatted
     Given I am on Import Bibtex File Menu
@@ -25,3 +35,4 @@ Feature: BibtexImport
     Then is created one Dissertation publication
     And is created two Thesis publications
     And one Dissertation is stored and two Thesis is stored
+    

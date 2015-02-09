@@ -51,7 +51,7 @@ class BibtexExport {
 
     public String generateBibtexTese(Tese tese) {
 
-        return "@phdthesis{" + "author=\"" + BibtexAux.organizeAuthors(tese.members) + "\",\n title=\"" + tese.title + "\",\n school=\"" + tese.school + "\",\n year=\"" + tese.publicationDate.getAt(Calendar.YEAR) + "\",\n address=\"" + tese.address + "\"}"
+        return "@phdthesis{" + "author=\"" + BibtexAux.organizeAuthors(tese.members) + "\",\n title=\"" + tese.title + "\",\n school=\"" + tese.school + "\",\n author=\"" + tese.author + "\",\n year=\"" + tese.publicationDate.getAt(Calendar.YEAR) + "\",\n address=\"" + tese.address + "\"}"
     }
 }
 

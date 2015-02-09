@@ -23,6 +23,30 @@ class ThesisCreatePage extends FormPage {
         $("form").file = path
         fillSomeThesisDetails(title, pub_day, pub_month, pub_year, school, address)
     }
+	
+	def fillThesisDetails(title, pub_day, pub_month, pub_year, author, school, address, path) {
+		$("form").file = path
+		fillSomeThesisDetails(title, pub_day, pub_month, pub_year, author, school, address)
+	}
+	
+	def fillSomeThesisDetails(title, pub_day, pub_month, pub_year, author, school, address) {
+		$("form").title = title
+		$("form").publicationDate_day = pub_day
+		$("form").publicationDate_month = pub_month
+		$("form").publicationDate_year = pub_year
+		$("form").author = author
+		$("form").school = school
+		$("form").address = address
+		$("input", id: "create").click()
+	}
+	
+	def fillSomeThesisDetails(pub_day, pub_month, pub_year, author){
+		$("form").publicationDate_day = pub_day
+		$("form").publicationDate_month = pub_month
+		$("form").publicationDate_year = pub_year
+		$("form").author = author
+		$("input", id: "create").click()
+	}
 
     def fillSomeThesisDetails(title, pub_day, pub_month, pub_year, school, address) {
         $("form").title = title

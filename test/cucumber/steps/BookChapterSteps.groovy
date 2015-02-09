@@ -3,8 +3,10 @@ import pages.BookChapterPage
 import pages.LoginPage
 import pages.PublicationsPage
 import pages.*
+import rgms.publication.Book
 import rgms.publication.BookChapter
 import steps.BookChapterTestDataAndOperations
+import steps.BookTestDataAndOperations
 import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
@@ -82,7 +84,7 @@ Then(~'my book chapter list contains "([^"]*)"$') { String title ->
     bookChapterList = BookChapter.findAll()
     assert BookChapterTestDataAndOperations.containsBookChapter(title)
 }
-And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$') { String title, filename ->
+And(~'^the book chapter "([^"]*)" with file name "([^"]*)" was created before$') { String title, String filename ->
     page.selectNewBookChapter()
     to BookChapterCreatePage
     at BookChapterCreatePage
@@ -105,7 +107,7 @@ When(~'^I go to new book chapter page$') { ->
     page.selectNewBookChapter()
     at BookChapterCreatePage
 }
-And(~'^I use the webpage to create the book chapter "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
+And(~'^I use the webpage to create the book chapter "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
     at BookChapterCreatePage
     createAndCheckBookOnBrowser(title, filename)
     to BookChapterPage
@@ -163,8 +165,8 @@ And(~'^the system has a book chapter entitled "([^"]*)" with file name "([^"]*)"
 }
 
 Then(~'^the book chapter "([^"]*)" was not stored twice$') { String entitled ->
-    bookChapter = BookChapter.findAllByPublisher(entitled)
-    assert bookChapter.size() < 2
+    List<BookChapter> bcList = BookChapter.findAllByPublisher(entitled)
+    assert bcList.size() < 2
 }
 
 And(~'^the system shows an error message$') { ->
@@ -176,6 +178,48 @@ When(~'I select the Book Chapter option at the program menu'){ ->
     page.select("Book Chapter")
 }
 
+//#if($BookChapter)
+Given(~'^the book chapter entitled "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+    BookChapter bc = BookChapter.findByTitle(title)
+    assert bc != null
+}
+Given(~'^the book chapter entitled "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, String filename ->
+    BookChapterTestDataAndOperations.createBookChapter(title,filename)
+    to BookChapterCreatePage
+    checkIfExists(title)
+}
+
+When(~'^I change the book chapter\'s title from "([^"]*)" to "([^"]*)"$') {String oldTitle, String newTitle ->
+    BookChapter bc = BookChapter.findByTitle(oldTitle)
+    assert bc?.getTitle() == oldTitle
+    bc?.setTitle(newTitle)
+}
+
+Then(~'^the book chapter\'s name is properly updated to "([^"]*)" by the system$') {String newTitle ->
+    BookChapter bc = BookChapter.findByTitle(newTitle)
+    assert bc?.getTitle() == newTitle
+}
+
+Given(~'^no book chapter entitled "([^"]*)" is stored in the system$') { String title ->
+    checkIfExists(title)
+}
+
+Then(~'^an error message is shown$') { ->
+   // throw new NoSuchBookChapterException("Capítulo inexistente!")
+    System.out.println("Capítulo inexistente!")
+}
+
+And(~'^no changes are made by the system$'){->
+    at BookChapterPage
+    assert page.hasErrorUploadFile()
+}
+//#end
+
+class NoSuchBookChapterException extends Exception {
+    public NoSuchBookChapterException(String msg) {
+        super(msg);
+    }
+}
 
 def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookChapterDetails(title, filename)

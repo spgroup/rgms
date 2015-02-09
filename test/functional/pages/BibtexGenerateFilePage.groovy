@@ -19,4 +19,12 @@ class BibtexGenerateFilePage extends FormPage {
     def showBibtex() {
         $('a.Generate All BibTex').click()
     }
+
+    def fillTextField(String str) {
+        $("form").searchTextField = str
+    }
+
+    def selectButton(String btnName) {
+        $("input", id:"GenerateBibTex").click()
+    }
 }
