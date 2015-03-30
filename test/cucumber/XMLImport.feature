@@ -327,6 +327,23 @@ Feature: XMLImport
     When I cancel the import of the master's orientation entitled "Structuring Adaptive Aplications using AspectJ" with status "conflicted"
     And the master's orientation entitled "Structuring Adaptive Aplications using AspectJ" with status "conflicted" is removed from the list of imported orientations
     And the previously stored orientations do not change
+
+  @ignore
+  Scenario: publications with similar names should be considered as duplicates, according to the tolerance level
+    Given the system has a master's orientation entitled "Intraprocedural Dataflow Analysis for Software Product Lines" with year "2013", among several orientations
+    And the similarity tolerance is configured to "5"
+    When  I upload the file "cv-duplicatedOrientationC.xml" which contains a master's orientation entitled "Intraprocedurall dataflow analysis for software product lines" with year "2014"
+    Then the system outputs a list of imported orientations which contains the master's orientation entitled "Intraprocedural Dataflow Analysis for Software Product Lines" with status "conflicted"
+    And no new orientation is stored by the system
+    And the previously stored orientations do not change
+
+  @ignore
+  Scenario: the tolerance level is not informed
+    Given I am at the "Import XML File" Page
+    And I have selected a xml file
+    When I click on "upload" without inform the tolerance level
+    Then the system outputs an error message
+
 #end
 # o que acontece quando o arquivo tem publicações já cadastradas? e
 # publicações com mesmos títulos mas outras partes diferentes? e
