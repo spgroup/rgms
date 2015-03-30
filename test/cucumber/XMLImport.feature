@@ -10,8 +10,6 @@ Feature: XMLImport
     When I select the "upload" button
     And I upload the file "cv.pdf"
     Then the system outputs an error message
-    And no new publication is stored by the system
-    And the previously stored publications do not change
 
   @ignore
   Scenario: invalid file
@@ -30,20 +28,15 @@ Feature: XMLImport
   @ignore
   Scenario: no file web
     Given I am at the "Import XML File" Page
-    And the system has some publications stored
     When I click on "upload" without select a xml file
     Then the system outputs an error message
-    And no new publication is stored by the system
-    And the previously stored publications do not change
 
   @ignore
-  Scenario: new publication
+  Scenario: create a new publication
     Given the system has some publications stored
-    And the system has no journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me
-    When  I upload the file "cv.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models" authored by me
-    Then the system outputs a list of imported publications which contains the journal article entitled "An Abstract Equivalence Notion for Object Models" with status "stable"
-    And no new publication is stored by the system
-    And the previously stored publications do not change
+    And the system has no journal article entitled "An Abstract Equivalence Notion for Object Models”
+    When  I upload the file "cv.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models”
+    Then a journal article entitled "An Abstract Equivalence Notion for Object Models” is stored by the system
 
   @ignore
   Scenario: confirm import of new publication
@@ -328,6 +321,9 @@ Feature: XMLImport
     And the master's orientation entitled "Structuring Adaptive Aplications using AspectJ" with status "conflicted" is removed from the list of imported orientations
     And the previously stored orientations do not change
 
+
+
+  #if($ToleranceLevel)
   @ignore
   Scenario: publications with similar names should be considered as duplicates, according to the tolerance level
     Given the system has a master's orientation entitled "Intraprocedural Dataflow Analysis for Software Product Lines" with year "2013", among several orientations
