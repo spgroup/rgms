@@ -164,3 +164,21 @@ Scenario: remove article
     Then I can remove the article
 
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
+
+
+  Scenario: new article from an existing conference
+    Given the conference "I International Conference on software Engineering" is stored in the system
+    When I type the letter "I" in the conference field to publish a new article
+    Then the system suggests  "I International Conference on software Engineering"
+
+  Scenario:  author suggestion for a new article (existing author)
+    Given I am adding a new article
+    When I type the first letter in the Author field
+    Then a list is displayed suggesting names from Authors who already published an article
+    And I select the name I want
+
+  Scenario: Search conference web by existing Author
+    Given I am at the Search Conference page
+    When I write a name from an Author who already published an article at the Search field
+    And I click on the Search button
+    Then a list of all conferences with articles from that Author are displayed
