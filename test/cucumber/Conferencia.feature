@@ -162,8 +162,8 @@ Scenario: new article
 
 Scenario: remove article
     Given I am at the publications menu
-    When I select the conferencia option at the publications menu
-    And I select the conferencia that i want to remove the article    
+    And I select the conferencia option at the publications menu
+    When I selected the conference at which I want to remove the article    
     And a list of articles stored by the system is displayed at the conferencia page
     Then I can remove one article
     
