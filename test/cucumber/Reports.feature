@@ -94,3 +94,51 @@ Feature: Reports
     And I select the option Export to HTML at the News list page
     Then The system generate a HTML report with the news "The first news" in it
 #end
+
+  Scenario: export a existent research group report to html
+    Given I am in research group list page
+    When I select "RGMSGroup" option at the resourch group list
+    And I select the option export to html at the resourch group show
+    Then I export a html report about resourch group "RGMSGroup"
+
+  Scenario: export a existent news report to html
+    Given I am in News list page
+    When I select "RGMSNews" option at the News list
+    And I select the option export to html at the News show
+    Then I export a html report about News "RGMSNews"
+
+  Scenario: export a existent research group report to pdf
+    Given I am in research group list page
+    When I select "RGMSGroup" option at the resourch group list
+    And I select the option export to PDF at the resourch group show
+    Then I export a PDF report about resourch group "RGMSGroup"
+
+  Scenario: export a existent news report to PDF
+    Given I am in News list page
+    When I select "RGMSNews" option at the News list
+    And I select the option export to PDF at the News show
+    Then I export a PDF report about News "RGMSNews"
+
+  Scenario: export a existent research group report to xml
+    Given I am in research group list page
+    When I select "RGMSGroup" option at the resourch group list
+    And I select the option export to XML at the resourch group show
+    Then I export a XML report about resourch group "RGMSGroup"
+
+  Scenario: export a existent news report to xml
+    Given I am in News list page
+    When I select "RGMSNews" option at the News list
+    And I select the option export to XML at the News show
+    Then I export a XML report about News "RGMSNews"
+
+  Scenario: export report to html link not enable when there is not resourch group created
+    Given I am in resourch group list page
+    And there is not resourch group created
+    When I try to select the Export to html option at the resourch group list page
+    Then I can not select the option Export to HTML at the News list page
+
+  Scenario: export report to html link not enable when there is not members report created
+    Given I am at the member list page
+    And there is not Member created
+    When I try to select the Export to html option at the Member list page
+    Then I can not select the option Export to HTML at the Member list page
