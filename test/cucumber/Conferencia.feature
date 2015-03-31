@@ -144,4 +144,23 @@ Feature: conferencia
     And I select the option Serach for Conference at the conference page
     Then a list of all conferences containing that date will be presented in the conference screen
 
+Scenario: Publish a new article
+    Given I am at the article registration page  
+    When I am filling in the author field
+    And As I type the name, they come up suggestions of names containing the string entered as "And" may appear names like " Anderson " or " Candido "
+    Then I choose the right name if it appears , otherwise we fill the whole field
+
+Scenario: new article
+    Given I am at the publications
+    When I select the "conferencia" option at the publications menu
+    And I select the new article
+    Then I can fill the article details
+
+Scenario: remove article
+    Given I am at the publications menu
+    When I select the "conferencia" option at the publications menu
+    And a list of articles stored by the system is displayed at the conferencia page
+    Then I select the desired article
+    Then I can remove the article
+
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
