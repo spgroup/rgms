@@ -144,4 +144,27 @@ Feature: conferencia
     And I select the option Serach for Conference at the conference page
     Then a list of all conferences containing that date will be presented in the conference screen
 
+Scenario: Publish a new article
+    Given I am at the article registration page  
+    When I am filling in the fields
+    Then as they'll filling in the fields, they come up suggestions for self-complete the fields
+
+Scenario: Publish a new conferencia
+    Given I am at the conferencia registration page  
+    When I am filling in the fields
+    Then as they'll filling in the fields, they come up suggestions for self-complete the fields
+
+Scenario: new article
+    Given I am at the publications
+    When I select the conferencia option at the publications menu
+    And I select the new article option at the conferencia page
+    Then I can fill the article details
+
+Scenario: remove article
+    Given I am at the publications menu
+    When I select the conferencia option at the publications menu
+    And I select the conferencia that i want to remove the article    
+    And a list of articles stored by the system is displayed at the conferencia page
+    Then I can remove one article
+    
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
