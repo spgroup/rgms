@@ -1,8 +1,8 @@
 @i9n
 Feature: conferencia
   As a member of a research group
-  I want to add, remove and modify conferencias I have published
-  so that I can generate web pages and reports containing these conferencias
+  So that I can add, remove and modify conferencias I had published
+  I want to generate web pages and reports containing these conferencias
 
   Scenario: new conferencia
     Given the system has no conferencia entitled "IV Conference on Software Product Lines"
@@ -144,27 +144,24 @@ Feature: conferencia
     And I select the option Serach for Conference at the conference page
     Then a list of all conferences containing that date will be presented in the conference screen
 
-Scenario: Publish a new article
+  Scenario: Publish a new article  
     Given I am at the article registration page  
     When I am filling in the author field
     And As I type the name, they come up suggestions of names containing the string entered as "And" may appear names like " Anderson " or " Candido "
     Then I choose the right name if it appears , otherwise we fill the whole field
 
-Scenario: new article
+  Scenario: new article
     Given I am at the publications
     When I select the "conferencia" option at the publications menu
     And I select the new article
     Then I can fill the article details
 
-Scenario: remove article
+  Scenario: remove article
     Given I am at the publications menu
     When I select the "conferencia" option at the publications menu
     And a list of articles stored by the system is displayed at the conferencia page
     Then I select the desired article
     Then I can remove the article
-
-# voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
-
 
   Scenario: new article from an existing conference
     Given the conference "I International Conference on software Engineering" is stored in the system
@@ -182,3 +179,29 @@ Scenario: remove article
     When I write a name from an Author who already published an article at the Search field
     And I click on the Search button
     Then a list of all conferences with articles from that Author are displayed
+
+  Scenario: System can suggest one author for new conferencia being created (good path)
+    Given I am at Add new conferencia page
+      And I had previously published only with "Júnior"
+    When I try to fill "J" in Authors
+    Then the system should suggest "Júnior" as an possible author
+    When I select "Júnior"
+    Then "Júnior" should be added in "Authors"
+
+  Scenario: System can suggest many authors for new conferencia being created (good path)
+    Given I am at Add new conferencia page
+      And I had previously published with "Jorge", "Junior Lima" and "Fábio Jr"
+    When I try to fill "J" in Authors
+    Then the system should suggest "Jorge", "Junior Lima" and "Fábio Jr" as possible authors in lexicographical order
+    When I select "Jorge" and other suggested authors
+    Then the selected authors should be added in "Authors"
+
+  Scenario: System can try to suggest many authors for new conferencia being created (bad path)
+    Given I am at Add new conferencia page
+      And I had previously published with "Jorge", "Junior Lima" and "Fábio Jr"
+    When I try to fill "K" in Authors
+    Then the system should suggest the latest 5 authors I had published as possible authors
+    When I select any suggested author
+    Then the selected author should be added in "Authors"
+	
+# voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista, verificar se alguns campos podem ser opcionais, etc.
