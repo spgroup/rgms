@@ -182,23 +182,23 @@ Feature: conferencia
 
   Scenario: System can suggest one author for new conferencia being created (good path)
     Given I am at Add new conferencia page
-      And I had previously published only with "Júnior"
+    And I had previously published only with "Júnior"
     When I try to fill "J" in Authors
     Then the system should suggest "Júnior" as an possible author
     When I select "Júnior"
     Then "Júnior" should be added in "Authors"
 
-  Scenario: System can suggest many authors for new conferencia being created (good path)
+  Background: Start from the Add new conferencia page with conferencias yet published
     Given I am at Add new conferencia page
-      And I had previously published with "Jorge", "Junior Lima" and "Fábio Jr"
+    And I had previously published with "Jorge", "Junior Lima" and "Fábio Jr"  
+	
+  Scenario: System can suggest some authors for new conferencia being created (good path)
     When I try to fill "J" in Authors
     Then the system should suggest "Jorge", "Junior Lima" and "Fábio Jr" as possible authors in lexicographical order
     When I select "Jorge" and other suggested authors
     Then the selected authors should be added in "Authors"
 
-  Scenario: System can try to suggest many authors for new conferencia being created (bad path)
-    Given I am at Add new conferencia page
-      And I had previously published with "Jorge", "Junior Lima" and "Fábio Jr"
+  Scenario: System can try to suggest some authors for new conferencia being created (bad path)
     When I try to fill "K" in Authors
     Then the system should suggest the latest 5 authors I had published as possible authors
     When I select any suggested author
