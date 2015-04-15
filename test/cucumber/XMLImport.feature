@@ -34,7 +34,7 @@ Feature: XMLImport
   @ignore
   Scenario: create a new publication
     Given the system has some publications stored
-    And the system has no journal article entitled "An Abstract Equivalence Notion for Object Models”
+    And the system has no journal article entitled "An Abstract Equivalence Notion for Object Models” authored by me
     When  I upload the file "cv.xml" which contains a journal article entitled "An Abstract Equivalence Notion for Object Models”
     Then a journal article entitled "An Abstract Equivalence Notion for Object Models” is stored by the system
 
@@ -336,8 +336,8 @@ Feature: XMLImport
   @ignore
   Scenario: the tolerance level is not informed
     Given I am at the "Import XML File" Page
-    And I have selected a xml file
-    When I click on "upload" without inform the tolerance level
+    And I select a xml file
+    When I click on "upload" without informing the tolerance level
     Then the system outputs an error message
 
 #end
