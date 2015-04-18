@@ -59,4 +59,28 @@ class TestDataDissertacao
         cont.delete()
     }
 
+    static public boolean verifySimilarityTolerance(int value)
+    {
+        def cont = new XMLController()
+        if(cont.similarityTolerance == value)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+        //cont.setSimilarityTolerance(value)
+    }
+
+    static public boolean verifyDissertationXML(String title, String filename)
+    {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        boolean result = cont.verifyDissertations(title, records.parse(xml));
+        cont.response.reset()
+        return result;
+    }
+
 }
