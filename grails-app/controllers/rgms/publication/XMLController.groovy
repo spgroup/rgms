@@ -116,7 +116,7 @@ class XMLController {
     def uploadOrientationXML() {
         String flashMessage = 'default.orientation.imported.message'
 
-        if (!XMLService.Import(this.&saveOrientations, returnWithMessage, flashMessage, "Orientation", request))
+        if (!XMLService.Import(saveOrientations, returnWithMessage, flashMessage, "Orientation", request))
             return
     }
 
