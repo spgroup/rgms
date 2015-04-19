@@ -209,7 +209,7 @@ Scenario: Fill in the field "Author Name"
    And I'm filling the field " Author Name"
    When I type "and" if there author names as " Anderson " or " Candido " registered in the system
    And the names " Anderson " and " Candido " will be suggested by the system
-   The I choose between " Anderso " and " Candido " or if it is not neither I fill with the desired name
+   Then I choose between " Anderso " and " Candido " or if it is not neither I fill with the desired name
 
 Scenario: Remove Article Web
    Given I want to remove the article "A theory of software" with the file name "ATOS.pdf"
