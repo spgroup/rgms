@@ -324,18 +324,16 @@ Feature: XMLImport
 
 
   #if($ToleranceLevel)
-  @ignore
-  Scenario: publications with similar names should be considered as duplicates, according to the tolerance level
-    Given the system has a master's orientation entitled "Intraprocedural Dataflow Analysis for Software Product Lines" with year "2013", among several orientations
-    And the similarity tolerance is configured to "5"
-    When  I upload the file "cv-duplicatedOrientationC.xml" which contains a master's orientation entitled "Intraprocedurall dataflow analysis for software product lines" with year "2014"
-    Then the system outputs a list of imported orientations which contains the master's orientation entitled "Intraprocedural Dataflow Analysis for Software Product Lines" with status "conflicted"
-    And no new orientation is stored by the system
-    And the previously stored orientations do not change
 
-  @ignore
+  Scenario: dissertations with similar names should be considered as duplicates, according to the tolerance level
+    Given the system has a dissertation entitled "Semantics and Refinement for a Concurrent Object Oriented Language" stored
+    And the similarity tolerance is configured to "5"
+    When  I upload the file "curriculo5.xml" which contains a dissertation entitled "Semantics an refinement for a concurrent object oriented Language"
+    Then the system outputs a list of imported dissertations which contains the dissertation entitled "Semantics and Refinement for a Concurrent Object Oriented Language"
+    And no new dissertation entitled "Semantics an refinement for a concurrent object oriented Language" is stored by the system
+
   Scenario: the tolerance level is not informed
-    Given I am at the "Import XML File" Page
+    Given I am at the XMLImport Page
     And I select a xml file
     When I click on "upload" without informing the tolerance level
     Then the system outputs an error message

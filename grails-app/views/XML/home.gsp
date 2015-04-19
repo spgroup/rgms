@@ -17,7 +17,7 @@
     </div>
     <br/>
     <g:form controller="XML" method="post" action="upload" enctype="multipart/form-data">
-        <input type="file" name="file"/>
+        <input type="file" id="fileInput" name="file"/>
         <input type="submit"/>
     </g:form>
 </div>

@@ -203,5 +203,20 @@ Feature: conferencia
     Then the system should suggest the latest 5 authors I had published as possible authors
     When I select any suggested author
     Then the selected author should be added in "Authors"
+
+Scenario: Fill in the field "Author Name"
+   Given I'm registering a new Article
+   And I'm filling the field " Author Name"
+   When I type "and" if there author names as " Anderson " or " Candido " registered in the system
+   And the names " Anderson " and " Candido " will be suggested by the system
+   Then I choose between " Anderso " and " Candido " or if it is not neither I fill with the desired name
+
+Scenario: Remove Article Web
+   Given I want to remove the article "A theory of software" with the file name "ATOS.pdf"
+   When I click on "A theory of software" that is on the list of articles published in the conference page
+   And I click with the mouse in the article "A theory of software"
+   And appear the options to edit or remove the article
+   Then I click the button to remove and the "A theory of software" is removed from the list of articles
+   And the aquirvo "ATOS.pdf" is removed from the system
 	
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista, verificar se alguns campos podem ser opcionais, etc.

@@ -20,11 +20,24 @@ class XMLImportPage extends Page {
         title ==~ currentTitle
     }
 
+    static content = {
+        readFlashMessage(){ $("div .message").text() }
+        readErrorsMessage() { $("div.errors").text() }
+    }
+
     def selectButton(String name) {
         $('form').find('a', text: name).click()
     }
 
     def uploadWithoutFile(){
+        $('input.save').click()
+    }
+
+    def selectFile(){
+        $("fileInput").value("C:\\fakepath\\curriculo5.xml")
+    }
+
+    def uploadClick(){
         $('input.save').click()
     }
 }
