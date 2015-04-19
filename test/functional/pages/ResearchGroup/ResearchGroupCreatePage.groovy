@@ -17,7 +17,22 @@ class ResearchGroupCreatePage extends Page {
         $("form").twitter = "spg"
         $("form").description = "A research group called " + name
     }
-    
+
+    def fillResearchGroupName(String name) {
+        $("form").name = name
+    }
+
+    def fillResearchGroupTwitter(String twitter) {
+        $("form").twitter = twitter
+    }
+
+    def fillResearchGroupDescription(String description) {
+        $("form").description = description
+    }
+
+    def fillResearchGroupSigla(String sigla) {
+        $("form").sigla = sigla
+    }
 
     def clickOnCreate() {
         $("input", name: "create").click()
