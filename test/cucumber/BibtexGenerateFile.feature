@@ -15,15 +15,16 @@ Feature: all bibtex
     When I generate a BibTex file
     Then the BibTex file has unique citation-keys for each article
 
-  Scenario: Generate new BibTex from a subset of publications
+  Scenario: Generate new BibTex from a subset of publications web
     Given I am on the "Publications" menu
-    When I select the "Generate BibTex" option
-    Then I can select which files to include in the BibTex generation
+    When I select a subset of publications
+    And I click on the "Generate BibTex" option
+    Then the system generates a BibTex file containing only the publications from the selected subset
 
-  Scenario: Publications with multiple authors must have authors' names separated by an and
+  Scenario: Publications with multiple authors must have authors' names separated by and
     Given I have an article with multiple authors
     When I generate a BibTex file
-    Then the BibTex file author field must have the authors' names separated by an and
+    Then the BibTex file author field must have the authors' names separated by "and"
 
  #if ($InvalidEntryOfBibtex)
   Scenario: Tags of entry of BibTex are not separated by commas
