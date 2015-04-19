@@ -23,7 +23,7 @@ Feature: Reports
     And I can select the option Export to PDF at the Member show
     Then I can generate a PDF report about Member "1"
 
-  Scenario: create a new Menber
+  Scenario: create a new Member
     Given I am at the Member list page
     When I select the Novo Member option
     And I can fill the Member "Name" with "John Smith"
@@ -33,18 +33,18 @@ Feature: Reports
     And I can select "Criar" option
     Then I can see the new user in Member Listagem
 
-  Scenario: missing field error when creating a new Menber
+  Scenario: missing field error when creating a new Member
     Given I am at the Member list page
     When I select the Novo Member option
     And I dont fill a field with "*" symbol
     And I can select "Criar" option
     Then I can see a error message
 
-  Scenario: invalid value in field error when creating a new Menber
+  Scenario: invalid value in field error when creating a new Member
     Given I am at the Member list page
-    When I select the Novo Member option
-    And I can fill a field with an invalid value
-    And I can select "Criar" option
+    When I select the "Novo Member" option
+    And I can fill a field with an invalid value "&%(#@"
+    And I select "Create" option
     Then I can see a error message
 
   Scenario: export recently created member report to pdf
@@ -63,15 +63,16 @@ Feature: Reports
     Then I can export to HTML the existent member named "João Paulo Silva"
 
   Scenario: create a new research group
-    Given I am at the publications menu
-    When I select the "Research Group" option at the publications menu
-    And I select the new research group option at research group list page
-    And I can fill the field "Nome" with value "Grupo1"
+    Given I am at the publications menu page
+    When I select the "Research Group" option at the publications menu page
+    And I select the "New Research Group" at research group list page
+    Then I can fill the field "Nome" with value "Grupo1"
     And I can fill the field "Twitter" with value "@Grupo1"
     And I can fill the field "Descrição" with value "Grupo de pesquisa 1"
-    And I can select some members at member list
-    And I can select "Criar" option
-    Then I can see the new research group in Research Group list
+    And I can fill the field "Sigla" with value "G1"
+    And I select a member "1" at member list
+    And I select "Criar" option
+    Then I should see the new research group named "Grupo1" in Research Group list
 
 
   Scenario: missing field error when creating a research group

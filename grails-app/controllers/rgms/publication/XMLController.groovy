@@ -14,6 +14,7 @@ import rgms.member.Member
  */
 class XMLController {
 
+
     def home() {}
 
     def upload() {
@@ -95,6 +96,11 @@ class XMLController {
             XMLService.createDissertations(xmlFile)
     }
 
+    def boolean verifyDissertations(String title, Node xmlFile)
+    {
+        return XMLService.verifyDissertations(title, xmlFile)
+    }
+
     def enviarConferenciaXML() {
         String flashMessage = message(code: 'default.importedMsg.message')
 
@@ -163,4 +169,12 @@ class XMLController {
         User user = User.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
         return user?.author
     }
+
+    int similarityTolerance = 0
+
+    def setSimilarityTolerance(int value) {
+        similarityTolerance = value;
+    }
+
+
 }

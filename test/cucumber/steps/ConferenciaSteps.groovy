@@ -145,3 +145,39 @@ And(~'^the conferencias are not stored by the system$') {->
     page.checkIfConferenciaListIsEmpty()
 
 }
+
+
+Given(~'^I'm registering a new Article$') {String authorName ->
+	at articleResgitrationPage
+	page.fillArticleAuthorName(authorName, null)
+}
+
+When(~'^I type "([^"]*)" if there author names as "([^"]*)" or "([^"]*)" registered in the system) { String authorName ->
+	page.fillArticleAuthorName(ArticleTestDataAndOperations.path() + authorName)
+	at page.fillArticleAuthorName.suggest("([^"]*)" for aurthorName)
+}
+
+Then(~'^I choose between " Anderso " and " Candido " or if it is not neither I fill with the desired name) { String authorName ->
+	at page.fillArticleAuthorName("([^"*])" or type "authorName")
+}
+
+
+Given(~'^I want to remove the article "([^"]*)" with the file name "([^"]*)") { String title, filename ->
+        
+	ArticleTestDataAndOperations.createArticle(title, filename,null,null)
+        assert Periodico.findByTitle(title) != null
+}
+
+When(~'^I click on "([^"]*)" that is on the list of articles published in the conference page) { String title ->
+	ArticleTestDataAndOperations.removeArticles(title)
+
+	def testDeleteArticle1 = Periodico.findByTitle(title)
+	assert testDeleteArticle == null
+}
+
+Then(~'^I click the button to remove and the "A theory of software" is removed from the list of articles) { string title ->
+	assert periodicoNoExist(title)
+}
+And(~'^the aquirvo "ATOS.pdf" is removed from the system) {String fileName ->
+  	assert fileNoExist(fileName)
+}

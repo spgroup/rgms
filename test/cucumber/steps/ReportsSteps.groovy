@@ -204,6 +204,89 @@ When(~'^I can fill the Conferencia details$') {->
 
 //---------------------------------------------------------------------------------------------------
 
+#if ($createanewresearchgroup)
+    Given(~'^I am at the publications menu page$') { ->
+        to LoginPage
+        at LoginPage
+        page.add("admin","adminadmin")
+        at PublicationsPage
+    }
+
+When(~'^I select the "([^"]*)" option at the publications menu page$') { String option ->
+    at PublicationsPage
+    page.select(option)
+}
+
+And(~'^I select the "New Research Group" option at research group list page$') { ->
+    at ResearchGroupListPage
+    page.select("create")
+}
+
+Then(~'^I can fill the field "Nome" with value "([^"]*)"$') { String field, String name ->
+    at ResearchGroupCreatePage
+    page.fillResearchGroupName(name)
+}
+
+And(~'I can fill the field "Twitter" with value "([^"]*)"$') { String field, String twitter ->
+    at ResearchGroupCreatePage
+    page.fillResearchGroupTwitter(twitter)
+}
+
+And(~'^I can fill the field "Descrição" with value "([^"]*)"$') {  String field, String description ->
+    at ResearchGroupCreatePage
+    page.fillResearchGroupDescription(description)
+}
+
+And(~'^I can fill the field "Sigla" with value "([^"]*)"$') {  String field, String sigla ->
+    at ResearchGroupCreatePage
+    page.fillResearchGroupSigla(sigla)
+}
+
+And(~'^I select a member "([^"]*)" at member list') { String memberId ->
+    at ResearchGroupCreatePage
+    page.selectMember(memberId)
+    page.clickOnCreate()
+}
+
+Then(~'^I should see the new research group named "([^"]*)" in Research Group list$') { String groupName ->
+    at ResearchGroupPage
+    assert page.findByName(groupName) != null       /* Checando se o grupo foi criado */
+}
+
+#end
+
+//---------------------------------------------------------------------------------------------------
+
+#if ($invalidvalueinfielderrorwhencreatinganewMember)
+// invalid value in field error when creating a new Member
+    Given(~'^I am at the Member list page$') { ->
+        to MemberListPage
+        at MemberListPage
+    }
+
+When(~'^I select the "([^"]*)" option$') { String option ->
+    at MemberListPage
+    page.getMenuOption(option)
+}
+
+And(~'^I can fill a field with an invalid value "([^"]*)"') { String value ->
+    at MemberCreatePage
+    page.fillMemberDetails(value)
+}
+
+And(~'^I select "([^"]*)" option') { String value ->
+    at MemberCreatePage
+    page.clickOnCreate()
+}
+
+Then(~'^I should see an error message'){ ->
+    at MemberListPage
+}
+
+#end
+
+//---------------------------------------------------------------------------------------------------
+
 def Login(String user, String password) {
     to LoginPage
     at LoginPage
