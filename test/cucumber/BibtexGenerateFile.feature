@@ -26,54 +26,53 @@ Feature: all bibtex
     Then the BibTex file author field must have the authors' names separated by an and
 
  #if ($InvalidEntryOfBibtex)
-  Scenario: Tags are not separated by commas
+  Scenario: Tags of entry of BibTex are not separated by commas
     Given: I am logged into the system
-    And: I am at the main menu
+    And: I am at the "Main menu"
     And: A BibTeX entry is "@article{mrx05
                             auTHor = "Mr. X",
                             Title = {Something Great},
                             publisher = "nob" # "ody",
                             YEAR = 2005,
                             }"
-    When: I click to "generate BibTex"
-    Then: the request is not done by the system because are not separated by commas
+    When: I click to "Generate BibTex"
+    Then: I see an error message
 
-  Scenario: Incompatible tags for type of publication chosen
-    Given: I am logged into the system
-    And: I am at the main menu
-    And: A BibTeX entry is "@article{mrx05,
+  Scenario: Tags of entry of BibTex are incompatible with type of publication chosen
+    Given: I am logged int the system
+    And: I am at the "Main menu"
+    And: A BibTex entry is "@article{mrx05,
                             auTHor = "Mr. X",
                             Title = {Something Great},
                             publisher = "nob" # "ody",
                             YEAR = 2005,
                             chapter = 8,
                             }"
-    When: I click to "generate BibTex"
-    Then: the request is not done by the system because these tags are incompatible
+    When: I click to "Generate BibTex"
+    Then: I see an error message
 
-  Scenario: Lack mandatory tags for type of publication chosen
+  Scenario: Lack mandatory tags in entry of BibTex with type of publication chosen
     Given: I am logged into the system
-    And: I am at the main menu
+    And: I am at the "Main menu"
     And: A BibTeX entry is "@article{mrx05,
                             auTHor = "Mr. X",
                             Title = {Something Great},
                             publisher = "nob" # "ody",
                             }"
-    When: I click to "generate BibTex"
-    Then: the request is not done by the system because mandatory tags are not complete
+    When: I click to "Generate BibTex"
+    Then: I see an error message
  #end
 
  #if ($CorrectEntryOfBibtex)
-  Scenario: Bibtex file is generated
+  Scenario: BibTex file is generated
     Given: I am logged into the system
-    And: I am at the main menu
+    And: I am at the "Main menu"
     And: A Bibtex entry is "@article{mrx05,
                             auTHor = "Mr. X",
                             Title = {Something Great},
                             publisher = "nob" # "ody",
                             YEAR = 2005,
                             }"
-    When: I click to "generate BibTex"
-    Then: the request is done by the system
-    And: a BibTex file is generated
+    When: I click to "Generate BibTex"
+    Then: a BibTex file is generated
  #end
