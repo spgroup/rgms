@@ -1,6 +1,7 @@
 import pages.Conferencia.ConferenciaCreatePage
 import pages.Conferencia.ConferenciaPage
 import pages.LoginPage
+import pages.ResearchGroup.ResearchGroupCreatePage
 import pages.member.MemberListPage
 import pages.member.MemberPage
 import pages.member.MemberCreatePage
@@ -10,6 +11,9 @@ import pages.Report.ReportHTMLPage
 import pages.ResearchGroup.ResearchGroupPage
 import pages.ResearchGroup.ResearchGroupListPage
 import pages.ResearchGroup.ResearchGroupShowPage
+import rgms.member.Member
+import rgms.member.ResearchGroup
+import rgms.member.ResearchGroupController
 
 import static cucumber.api.groovy.EN.*
 
@@ -287,6 +291,69 @@ Then(~'^I should see an error message'){ ->
 
 //---------------------------------------------------------------------------------------------------
 
+//created by marcio mendes github: marciojr
+
+//if ($createanewMember)
+
+    Given(~'^I am at the Member menu page$') { ->
+        to LoginPage
+        at LoginPage
+        page.add("admin","adminadmin")
+        to MemberPage
+    }
+
+When(~'^I select the "New Member" option$') {  ->
+    at MemberPage
+    MemberPage.select("create")
+    to MemberCreatePage
+}
+
+And(~'^I can fill the Member "Name" with "([^"]*)"$') { String field, String name, String username, String email, String university ->
+    at MemberCreatePage
+    MemberCreatePage.fillSomeMemberDetails(name,username,email,university)
+    // all fields was created and the input "create" was called on the fillSomeMem... methods
+}
+
+Then(~'^I should see the new user at the Member list$') { String MemberName ->
+    at MemberPage
+}
+
+//end
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// created by marcio mendes github: marciojr
+
+//if ($export a existent research group report to html)
+
+    Given(~'^I am at the Research Group List page$') { ->
+        to LoginPage
+        at LoginPage
+        page.add("admin","adminadmin")
+        to ResearchGroupListPage
+    }
+
+When(~'^I select the "([^"]*)" option at the Research Group List$') { String name ->
+    at ResearchGroupListPage
+    ResearchGroupListPage.selectResearchGroup(name)
+}
+
+And(~'^I select the option "([^"]*)" at the research group show$') { String name->
+    at ResearchGroupListPage
+    ResearchGroupShowPage.checkHtml(name) // check if there is the name created
+}
+
+Then(~'^I export a html report about resourch group "([^"]*)"$') { ->
+    at ResearchGroupListPage
+    ResearchGroupController.show() // show html using the own params.id
+}
+
+//end
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//-------------------------------------------------------------------------
 def Login(String user, String password) {
     to LoginPage
     at LoginPage
