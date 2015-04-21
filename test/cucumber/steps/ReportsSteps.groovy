@@ -350,6 +350,62 @@ Then(~'^I export a html report about resourch group "([^"]*)"$') { ->
 
 //end
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//if ($missing field error when creating a new Member)
+
+Given(~'^I am at the Member list page$'){ ->
+    at MemberListPage
+}
+
+When(~'^I select the Novo Member option$') { ->
+    to MemberCreatePage
+}
+
+And(~'^I dont fill a field with * symbol$'){ ->
+    assert (page.name.value()  != null &&
+            page.username.value() != null &&
+            page.email.value() != null &&
+            page.university.value() != null)
+}
+
+And(~'^I can select Criar option$'){ ->
+    page.select("create")
+}
+
+Then(~'^I can see a error message$'){ ->
+    assert (page.readFlashMessage() != null)
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//if ($missing field error when creating a research group)
+
+
+Given(~'^I am at the publications menu$'){ ->
+    at PublicationsPage
+}
+
+When(~'^I select the "Research Group" option at the publications menu') { ->
+    to ResearchGroupListPage
+}
+
+And(~'^I select the new research group option at research group list page'){->
+    to ResearchGroupCreatePage
+}
+
+And(~'^I dont fill a field with * symbol$'){ ->
+    assert (page.name.value()  != null &&
+            page.twitter.value() != null &&
+            page.description.value() != null)
+}
+
+And(~'^I can select Criar option$'){ ->
+    page.select("create")
+}
+
+Then(~'^I can see a error message$'){ ->
+    assert (page.readFlashMessage() != null)
+}
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 
 

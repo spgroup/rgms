@@ -36,8 +36,8 @@ Feature: Reports
   Scenario: missing field error when creating a new Member
     Given I am at the Member list page
     When I select the Novo Member option
-    And I dont fill a field with "*" symbol
-    And I can select "Criar" option
+    And I dont fill a field with * symbol
+    And I can select Criar option
     Then I can see a error message
 
   Scenario: invalid value in field error when creating a new Member
