@@ -19,12 +19,6 @@ Given(~'^I have an article named "([^"]*)"$') {String title ->
     assert article != null
 }
 
-Given(~'I am logged into the system$') {->
-    to LoginPage
-    at LoginPage
-    page.add("admin","adminadmin")
-}
-
 And(~'^I have an article named "([^"]*)"$') {String title ->
     article = Periodico.findByTitle(title)
     assert article != null
@@ -57,7 +51,15 @@ And(~'^I click on the "([^"]*)" option$') {String o ->
 Then(~'^the system generates a BibTex file containing only the publications from the selected subset$') {->
     // Do something that I have no idea at the moment
     // I guess I am mixing GUI and controller stuff here
-}And(~'I am at the "([^"]*)"$') {->
+}
+
+Given(~'I am logged into the system$') {->
+    to LoginPage
+    at LoginPage
+    page.add("admin","adminadmin")
+}
+
+And(~'I am at the "([^"]*)"$') {->
     at BibTexMainMenuPage
 }
 
