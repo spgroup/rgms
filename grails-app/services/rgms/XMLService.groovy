@@ -294,6 +294,52 @@ class XMLService {
         createDissertation(doutorado)
     }
 
+    static void createDissertationsWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+
+        List<Dissertacao> dissertations = Dissertacao.findAll();
+
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node mestrado = (Node) formacaoAcademica.children()[1]
+        Node doutorado = (Node) formacaoAcademica.children()[2]
+
+        String dissertacaoMestrado = getAttributeValueFromNode(mestrado, "TITULO-DA-DISSERTACAO-TESE")
+
+        String dissertacaoDoutorado = getAttributeValueFromNode(doutorado, "TITULO-DA-DISSERTACAO-TESE")
+
+        boolean mestradoOK = true
+        boolean doutoradoOK = true
+
+        for (int i = 0; i < dissertations.size(); i++)
+        {
+            String current = dissertations.get(i)
+            int distanciaMestrado = Levenshtein.distance(current, dissertacaoMestrado)
+            if (( distanciaMestrado> toleranceLevel) && distanciaMestrado <= 10)
+            {
+                mestradoOK = false
+
+            }
+
+            int distanciaDoutorado = Levenshtein.distance(current, dissertacaoDoutorado)
+            if(distanciaDoutorado > toleranceLevel && distanciaDoutorado <=10)
+            {
+                doutoradoOK = false
+
+            }
+        }
+
+        if(mestradoOK)
+        {
+            createDissertation(mestrado)
+        }
+
+        if(doutoradoOK)
+        {
+            createDissertation(doutorado)
+        }
+
+    }
+
     private static void createDissertation(Node xmlNode) {
         Dissertacao newDissertation = new Dissertacao()
         newDissertation.title = getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")

@@ -14,7 +14,7 @@ import rgms.member.Member
  */
 class XMLController {
 
-    int similarityTolerance = 0
+    static int similarityTolerance = 0
 
     def home() {}
 
@@ -96,6 +96,11 @@ class XMLController {
     private Closure saveDissertations = {
         Node xmlFile ->
             XMLService.createDissertations(xmlFile)
+    }
+
+    private Closure saveDissertationsWithSimilarityAnalisys = {
+        Node xmlFile ->
+            XMLService.createDissertationsWithSimilarityAnalysis(xmlFile, similarityTolerance)
     }
 
     def boolean verifyDissertations(String title, Node xmlFile)

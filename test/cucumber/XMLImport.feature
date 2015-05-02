@@ -328,9 +328,9 @@ Feature: XMLImport
   Scenario: dissertations with similar names should be considered as duplicates, according to the tolerance level
     Given the system has a dissertation entitled "Semantics and Refinement for a Concurrent Object Oriented Language" stored
     And the similarity tolerance is configured to "5"
-    When  I upload the file "curriculo5.xml" which contains a dissertation entitled "Semantics an refinement for a concurrent object oriented Language"
+    When  I upload the file "curriculo5.xml" which contains a dissertation entitled "Semantics an refinement for a concurrent object oriented language"
     Then the system outputs a list of imported dissertations which contains the dissertation entitled "Semantics and Refinement for a Concurrent Object Oriented Language"
-    And no new dissertation entitled "Semantics an refinement for a concurrent object oriented Language" is stored by the system
+    And no new dissertation entitled "Semantics an refinement for a concurrent object oriented language" is stored by the system
 
   Scenario: the tolerance level is not informed
     Given I am at the XMLImport Page

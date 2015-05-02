@@ -51,6 +51,14 @@ class TestDataDissertacao
         cont.response.reset()
     }
 
+    static public void uploadDissertacaoWithSimilarityAnalisys(filename) {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.saveDissertationsWithSimilarityAnalisys(records.parse(xml));
+        cont.response.reset()
+    }
+
     static public void removeDissertacao(String title) {
         def testDissertation = Dissertacao.findByTitle(title)
         def cont = new DissertacaoController()
@@ -59,18 +67,9 @@ class TestDataDissertacao
         cont.delete()
     }
 
-    static public boolean verifySimilarityTolerance(int value)
+    static public void setSimilarityTolerance(int value)
     {
-        def cont = new XMLController()
-        if(cont.similarityTolerance == value)
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
-        //cont.setSimilarityTolerance(value)
+        XMLController.similarityTolerance = value
     }
 
     static public boolean verifyDissertationXML(String title, String filename)

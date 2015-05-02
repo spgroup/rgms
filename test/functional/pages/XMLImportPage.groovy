@@ -2,6 +2,7 @@ package pages
 
 import geb.Page
 
+
 /**
  * User: Raony Benjamim [RBAA]
  * Date: 29/08/13
@@ -39,5 +40,9 @@ class XMLImportPage extends Page {
 
     def uploadClick(){
         $('input.save').click()
+    }
+
+    boolean isRequiredEnabledOnToleranceSelect(){
+        return $("#toleranceSelect").getAttribute("required")
     }
 }

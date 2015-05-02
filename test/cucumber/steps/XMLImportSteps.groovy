@@ -118,13 +118,13 @@ Given(~'^the system has a dissertation entitled "([^"]*)" stored$') { String tit
 }
 
 And(~'^the similarity tolerance is configured to "([^"]*)"$') { int similarityTolerance->
-    assert TestDataDissertacao.verifySimilarityTolerance(similarityTolerance)
+    TestDataDissertacao.setSimilarityTolerance(similarityTolerance)
 }
 
 When(~'^I upload the file "([^"]*)" which contains a dissertation entitled "([^"]*)"$') { String filename, title->
 
-
     String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    TestDataDissertacao.uploadDissertacaoWithSimilarityAnalisys(path)
     boolean result = TestDataDissertacao.verifyDissertationXML(title, path)
     assert result
 
@@ -157,5 +157,6 @@ When(~'^I click on "upload" without informing the tolerance level$') { ->
 }
 
 Then(~'^the system outputs an error message$') { ->
-    assert page.readFlashMessage() != null
+    //qualquer navegador por padrão mostra uma mensagem de erro quando o atributo "required" está configurado
+    assert page.isRequiredEnabledOnToleranceSelect()
 }
