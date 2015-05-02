@@ -14,13 +14,15 @@ import rgms.member.Member
  */
 class XMLController {
 
+    int similarityTolerance = 0
 
     def home() {}
 
     def upload() {
+        similarityTolerance = Integer.parseInt(params.tolerance)
         String flashMessage = 'Publications imported!'
         String controller = "Publication"
-        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request))
+        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request, similarityTolerance))
             return
     }
 
@@ -169,8 +171,6 @@ class XMLController {
         User user = User.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
         return user?.author
     }
-
-    int similarityTolerance = 0
 
     def setSimilarityTolerance(int value) {
         similarityTolerance = value;
