@@ -183,44 +183,61 @@ And(~'^the aquirvo "ATOS.pdf" is removed from the system) {String fileName ->
 }
 
 
-Given(~'^I am at the conferece articles page') {->
+
+/*
+Given(~'^I am at the Conferece Articles page$') {->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin","adminadmin")
     at ConferenciaPage
 }
-And(~'^the system has some conference articles authored  by "([^"]*)", among several publications') { -> String author
-    assert article = TestDataAndOperationsPublication.containsUser(author) != null
+And(~'^the system has some conference articles authored  by "([^"]*)", among several publications$') { String author ->
+    article = TestDataAndOperationsPublication.containsUser(author)
     assert article != null
 }
-When(~'^I write the name "([^"]*)" at the search field') {-> String author
+When(~'^I write "([^"]*)" at the Search field$') { String author ->
     at ConferenciaPage
     page.fillSearch(author)
 }
-And (~'^I click on the search button'){
+And (~'^I click on the Search button$'){
     page.select("search")
 }
-Then (~'^a list of all conference articles by "([^"]*)" is displayed'){-> String author
+Then (~'^a list of all conference articles by "([^"]*)" is displayed$'){ String author ->
+    author = TestDataAndOperationsPublication.containsUser(author)
+    assert author != null
     page.listConferenceArticles(author)
 }
 
-Given(~'^I am at the Conference page'){
+Given(~'^I am at the Conference page$'){
     to LoginPage
     at LoginPage
     page.fillLoginData("admin","adminadmin")
     at ConferenciaPage
         }
-And(~'^an Author named ([^"]*)" had published 3 article for 3 different confereces') {-> String author
-    assert article = TestDataAndOperationsPublication.containsUser(author) != null
-    assert article != null
+And(~'^an Author named "([^"]*)" had published the articles  "([^"]*)",  "([^"]*)" and "([^"]*)" for the conferences "([^"]*)", "([^"]*)" and "([^"]*)"$'){ String author ->
+    assert Conferencia.findByTitle("International Conference on Software Engineering") != null
+    assert Conferencia.findByTitle("Information and Software Technology") != null
+    assert Conferencia.findByTitle("Scenario: Search for conferences which an Author have published web") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("An Analysis and Survey of the Development of Mutation Testing") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("A Systematic Survey of Program Comprehension through Dynamic Analysis") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("Engineering Privacy") != null
+    author = TestDataAndOperationsPublication.containsUser(author)
+    assert author != null
 }
-When(~'^I write ([^"]*)" at the search field') {-> String author
+When(~'^I write ([^"]*)" at the search field$') { String author ->
     at ConferenciaPage
     page.fillSearch(author)
 }
-And(~'^ I click on the search button'){
+And(~'^I click on the search button$'){
     page.select("search")
 }
-Then(~'^a list of all conferences that ([^"]*)" published an article is displayed') {-> String author
+Then(~'^a list of all conferences, composed by "([^"]*)",  "([^"]*)" and "([^"]*)", that "([^"]*)" published an article is displayed$') { String author ->
+    assert ArticleTestDataAndOperations.findArticleByTitle("An Analysis and Survey of the Development of Mutation Testing") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("A Systematic Survey of Program Comprehension through Dynamic Analysis") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("Engineering Privacy") != null
+    author = TestDataAndOperationsPublication.containsUser(author)
+    assert author != null
     page.listConferencia(author)
 }
+*/
+
