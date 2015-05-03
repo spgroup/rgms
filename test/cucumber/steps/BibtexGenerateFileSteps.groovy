@@ -1,4 +1,9 @@
 import pages.BibtexGenerateFilePage
+import pages.LoginPage
+import pages.PublicationsPage
+import rgms.publication.Periodico
+import rgms.publication.BibtexGenerateFile
+
 
 import static cucumber.api.groovy.EN.*
 
@@ -19,17 +24,25 @@ Given(~'^I have an article named "([^"]*)"$') {String title ->
     assert article != null
 }
 
-And(~'^I have an article named "([^"]*)"$') {String title ->
+And(~'^I have another article named "([^"]*)"$') {String title ->
     article = Periodico.findByTitle(title)
     assert article != null
 }
 
-When(~'^I generate a BibTex file$') {->
-    // Do something that I have no idea at the moment
+When(~'^I generate a BibTex file from articles named "([^"]*)" and "([^"]*)"$') { String title1, String title2 ->
+    article1 = Periodico.findByTitle(title1)
+    article2 = Periodico.findByTitle(title2)
+    bib1 = generateBibtexPeriodico(article1)
+    assert bib1 != null
+    bib2 = generateBibtexPeriodico(article2)
+    assert bib2 != null
+    bibtexFile = bib1 + "\n" + bib2
+    assert bibtexFile != null
 }
 
-Then(~'^the BibTex file has unique citation-keys for each article$') {->
-    // Do something that I have no idea at the moment
+Then(~'^the BibTex file has unique citation-keys for the articles "([^"]*)" and "([^"]*)"$') { String title1, String title2 ->
+    // The method that generates a BibTex does not include a citation-key
+    // Need to fix this issue first
 }
 
 Given(~'^I am on the "Publications" menu$') {->
@@ -39,8 +52,8 @@ Given(~'^I am on the "Publications" menu$') {->
     at PublicationsPage
 }
 
-When(~'^I select a subset of publications$') {->
-    // Do something that I have no idea at the moment
+When(~'^I select the publications "([^"]*)" and "([^"]*)"$') { String p1, String p2 ->
+    // Need to adjust the BibTex Export page in order to implement this
 }
 
 And(~'^I click on the "([^"]*)" option$') {String o ->
@@ -48,9 +61,12 @@ And(~'^I click on the "([^"]*)" option$') {String o ->
     page.select(o)
 }
 
-Then(~'^the system generates a BibTex file containing only the publications from the selected subset$') {->
-    // Do something that I have no idea at the moment
-    // I guess I am mixing GUI and controller stuff here
+Then(~'^the BibTex details are showed$') {->
+
+}
+
+And(~'^It only contains the articles "([^"]*)" and "([^"]*)"$') { String title1, String title2 ->
+
 }
 
 Given(~'I am logged into the system$') {->
