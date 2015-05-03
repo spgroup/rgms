@@ -11,19 +11,20 @@ Feature: all bibtex
 
   Scenario: Duplicate citation-key generation
     Given I have an article named "A theory of software product line refinement"
-    And I have an article named "A new approach to large-scale software development"
-    When I generate a BibTex file
-    Then the BibTex file has unique citation-keys for each article
+    And I have another article named "Modularity analysis of use case implementations"
+    When I generate a BibTex file from articles named "A theory of software product line refinement" and "Modularity analysis of use case implementations"
+    Then the BibTex file has unique citation-keys for the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 
   Scenario: Generate new BibTex from a subset of publications web
     Given I am on the "Publications" menu
-    When I select a subset of publications
+    When I select the publications "A theory of software product line refinement" and "Modularity analysis of use case implementations"
     And I click on the "Generate BibTex" option
-    Then the system generates a BibTex file containing only the publications from the selected subset
+    Then the BibTex details are showed
+    And It only contains the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 
   Scenario: Publications with multiple authors must have authors' names separated by and
-    Given I have an article with multiple authors
-    When I generate a BibTex file
+    Given I have an article named "A theory of software product line refinement" with multiple authors
+    When I generate a BibTex file from the article named "A theory of software product line refinement"
     Then the BibTex file author field must have the authors' names separated by "and"
 
  #if ($InvalidEntryOfBibtex)
