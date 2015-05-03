@@ -3,25 +3,29 @@ package pages
 import geb.Page
 
 /**
- * Created by luisdelgado on 18/04/15.
+ * Created by Luís Delgado on 18/04/15.
  */
-class BibTexMainMenuPage extends Page{
-    static url = "/bibtexMainMenu/home"
+class BibTexMainMenuPage extends Page {
+    static url = "/bibtexmainmenu/home"
 
     static at = {
         title ==~ /Member Listagem/
     }
 
     static content = {
-
-
+        bibTexEntry {
+            $("textarea", id: "bibtextManual")
+        }
+        buttonEntry {
+            $("input", id: "botao")
+        }
     }
 
-    def verificarEntrada(entrada){
-        $(entrada).click()
+    def verificarEntrada(String bibtexManual){
+        $(id: "bibtextManual").value()
     }
 
-    def select(o){
-        $(o).click()
+    def select(String s) {
+        $(id: "botao").find('b', text: s).click()
     }
 }

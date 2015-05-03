@@ -29,19 +29,21 @@ Feature: all bibtex
  #if ($InvalidEntryOfBibtex)
   Scenario: Tags of entry of BibTex are not separated by commas
     Given: I am logged into the system
-    And: I am at the "Main menu"
+    And: I am at the BibTexGenerateFile page
+    When: I click to "Generate BibTex manually"
     And: A BibTeX entry is "@article{mrx05
                             auTHor = "Mr. X",
                             Title = {Something Great},
                             publisher = "nob" # "ody",
                             YEAR = 2005,
                             }"
-    When: I click to "Generate BibTex"
+    And: I click on the other button "Generate BibTex"
     Then: I see an error message
 
   Scenario: Tags of entry of BibTex are incompatible with type of publication chosen
-    Given: I am logged int the system
-    And: I am at the "Main menu"
+    Given: I am logged into the system
+    And: I am at the BibTexGenerateFile page
+    When: I click to "Generate BibTex manually"
     And: A BibTex entry is "@article{mrx05,
                             auTHor = "Mr. X",
                             Title = {Something Great},
@@ -49,31 +51,33 @@ Feature: all bibtex
                             YEAR = 2005,
                             chapter = 8,
                             }"
-    When: I click to "Generate BibTex"
+    And: I click on the other button "Generate BibTex"
     Then: I see an error message
 
   Scenario: Lack mandatory tags in entry of BibTex with type of publication chosen
     Given: I am logged into the system
-    And: I am at the "Main menu"
+    And: I am at the BibTexGenerateFile page
+    When: I click to "Generate BibTex manually"
     And: A BibTeX entry is "@article{mrx05,
                             auTHor = "Mr. X",
                             Title = {Something Great},
                             publisher = "nob" # "ody",
-                            }"
-    When: I click to "Generate BibTex"
+                            }
+    And: I click on the other button "Generate BibTex"
     Then: I see an error message
  #end
 
  #if ($CorrectEntryOfBibtex)
-  Scenario: BibTex file is generated
+  Scenario: BibTex file is generated manually
     Given: I am logged into the system
-    And: I am at the "Main menu"
+    And: I am at the BibTexGenerateFile page
+    When: I click to "Generate BibTex manually"
     And: A Bibtex entry is "@article{mrx05,
                             auTHor = "Mr. X",
                             Title = {Something Great},
                             publisher = "nob" # "ody",
                             YEAR = 2005,
                             }"
-    When: I click to "Generate BibTex"
+    And: I click on the other button "Generate BibTex"
     Then: a BibTex file is generated
  #end

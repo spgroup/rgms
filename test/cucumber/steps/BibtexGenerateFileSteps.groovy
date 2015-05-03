@@ -53,29 +53,45 @@ Then(~'^the system generates a BibTex file containing only the publications from
     // I guess I am mixing GUI and controller stuff here
 }
 
-Given(~'I am logged into the system$') {->
+#if ($InvalidEntryOfBibtex)
+Given(~'^I am logged into the system$') {->
     to LoginPage
     at LoginPage
     page.add("admin","adminadmin")
 }
 
-And(~'I am at the "([^"]*)"$') {->
-    at BibTexMainMenuPage
+And(~'^I am at the BibTexGenerateFile page$') {->
+    to BibtexGenerateFilePage
+    at BibtexGenerateFilePage
 }
 
-And(~'A BibTeX entry is "([^"]*)"$') {String entrada ->
-    at BibTexMainMenuPage
-    page.verificarEntrada(entrada)
-}
-
-When(~'I click to "([^"]*)"$') {String o ->
-    at BibTexMainMenuPage
+When(~'^I click to "([^"]*)"$') {String o ->
+    at BibtexGenerateFilePage
     page.select(o)
 }
 
-Then(~'I see an error message$'){->
-    at BibTexMainMenuPage
+And(~'^A BibTeX entry is "([^"]*)"$') {String entrada ->
+    to BibtexMainMenuPage
+    at BibtexMainMenuPage
 }
 
-Then(~'a BibTex file is generated$'){->
+And(~'^I click on the other button "([^"]*)"$') {String botao ->
+    at BibtexMainMenuPage
+    page.verificarEntrada(entrada)
+    page.select(botao)
 }
+
+Then(~'^I see an error message$'){->
+    at BibtexMainMenuPage
+    assert entrada == null
+    to BibtexGenerateFilePage
+
+}
+#end
+
+#if ($CorrectEntryOfBibtex)
+Then(~'^a BibTex file is generated$'){->
+    at BibtexMainMenuPage
+    assert true == true
+}
+#end
