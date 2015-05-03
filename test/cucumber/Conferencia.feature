@@ -221,28 +221,16 @@ Scenario: Remove Article Web
 	
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista, verificar se alguns campos podem ser opcionais, etc.
 
-@ignore
-  Scenario: new article from an existing conference
-    Given the conference "I International Conference on software Engineering" is stored in the system
-    When I type the letter "I" in the conference field to publish a new article
-    Then the system suggests  "I International Conference on software Engineering"
-@ignore
-  Scenario:  author suggestion for a new article (existing author)
-    Given I am adding a new article
-    When I type the first letter in the Author field
-    Then a list is displayed suggesting names from Authors who already published an article
-    And I select the name I want
-
   Scenario: Search conference articles by Author web
     Given I am at the Conference Articles page
-    And the system has some conference articles authored  by "Junior", among several publications
+    And the system has some conference articles authored  by "Jose", among several publications
     When I write "J" at the Search field
     And I click on the Search button
-    Then a list of all conference articles by "Junior" is displayed
+    Then a list of all conference articles by "Jose" is displayed
 
   Scenario: Search for conferences which an Author have published web
     Given I am at the Conference page
-    And an Author named "Junior" had published 3 article for 3 different conferences
+    And an Author named "Junior" had published the articles "An Analysis and Survey of the Development of Mutation Testing", "A Systematic Survey of Program Comprehension through Dynamic Analysis", and "Engineering Privacy", for the conferences "International Conference on Software Engineering", "Information and Software Technology" and "International Symposium on Software Testing and Analysis"
     When I write "Junior" at the search field
     And I click on the search button
-    Then a list of all conferences that "Junior" published an article is displayed
+    Then a list of all conferences, composed by "International Conference on Software Engineering", "Information and Software Technology" and "International Symposium on Software Testing and Analysis", that "Junior" published an article is displayed
