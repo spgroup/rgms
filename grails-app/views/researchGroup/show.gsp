@@ -1,40 +1,13 @@
-<!-- #literal() -->
 <%@ page import="rgms.member.ResearchGroup" %>
 <!doctype html>
 <html>
 <head>
     <meta name="layout" content="main">
-    <g:set var="entityName" value="${message(code: 'researchGroup.label', default: 'Research Group')}"/>
+    <g:set var="entityName" value="${message(code: 'researchGroup.label', default: 'ResearchGroup')}"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
 </head>
 
 <body>
--<!-- #if($XML) -->
--  <br>
--  <g:jasperReport jasper="report" format="XML" name="export">
-    <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
-</g:jasperReport>
-<!-- #end -->
-
--<!-- #if($HTML)  -->
--  <br>
--  <g:jasperReport jasper="report" format="HTML" name="export">
-    <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}" />
-</g:jasperReport>
-<!--#end -->
-
- <!-- #if($PDF) -->
--<br>
--<g:jasperReport jasper="report" format="PDF" name="export">
-    <input type="hidden" name="research_group_id" value="${researchGroupInstance?.id}"/>
-</g:jasperReport>
-<!--#end -->
-
-<g:link class="edit" action="updateNewsFromTwitter" id="${researchGroupInstance?.id}">
-    <g:message code="default.button.update.twitter.label" default="xxx"/>
-</g:link>
-
-
 <a href="#show-researchGroup" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
                                                                     default="Skip to content&hellip;"/></a>
 
@@ -65,17 +38,6 @@
             </li>
         </g:if>
 
-        <g:if test="${researchGroupInstance?.name}">
-            <li class="fieldcontain">
-                <span id="name-label" class="property-label"><g:message code="researchGroup.twitter.label"
-                                                                        default="Twitter"/></span>
-
-                <span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${researchGroupInstance}"
-                                                                                        field="twitter"/></span>
-
-            </li>
-        </g:if>
-
         <g:if test="${researchGroupInstance?.description}">
             <li class="fieldcontain">
                 <span id="description-label" class="property-label"><g:message code="researchGroup.description.label"
@@ -86,8 +48,29 @@
 
             </li>
         </g:if>
-    <!--#end -->
-    <!-- #if($researchGroupHierarchy) -->
+
+        <g:if test="${researchGroupInstance?.twitter}">
+            <li class="fieldcontain">
+                <span id="twitter-label" class="property-label"><g:message code="researchGroup.twitter.label"
+                                                                           default="Twitter"/></span>
+
+                <span class="property-value" aria-labelledby="twitter-label"><g:fieldValue
+                        bean="${researchGroupInstance}" field="twitter"/></span>
+
+            </li>
+        </g:if>
+
+        <g:if test="${researchGroupInstance?.sigla}">
+            <li class="fieldcontain">
+                <span id="sigla-label" class="property-label"><g:message code="researchGroup.sigla.label"
+                                                                         default="Sigla"/></span>
+
+                <span class="property-value" aria-labelledby="sigla-label"><g:fieldValue bean="${researchGroupInstance}"
+                                                                                         field="sigla"/></span>
+
+            </li>
+        </g:if>
+
         <g:if test="${researchGroupInstance?.childOf}">
             <li class="fieldcontain">
                 <span id="childOf-label" class="property-label"><g:message code="researchGroup.childOf.label"
@@ -100,54 +83,38 @@
             </li>
         </g:if>
 
-
-    <!-- #end -->
-    <!-- #literal() -->
-        <g:if test="${currentMemberships}">
+        <g:if test="${researchGroupInstance?.memberships}">
             <li class="fieldcontain">
-                <span id="members-label" class="property-label"><g:message code="researchGroup.members.label"
-                                                                           default="Members"/></span>
+                <span id="memberships-label" class="property-label"><g:message code="researchGroup.memberships.label"
+                                                                               default="Memberships"/></span>
 
-                <g:each in="${currentMemberships}" var="m">
-                    <span class="property-value" aria-labelledby="members-label"><g:link controller="member"
-                                                                                         action="show"
-                                                                                         id="${m.member.id}">${m.member?.encodeAsHTML()}</g:link></span>
-
+                <g:each in="${researchGroupInstance.memberships}" var="m">
+                    <span class="property-value" aria-labelledby="memberships-label"><g:link controller="membership"
+                                                                                             action="show"
+                                                                                             id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
                 </g:each>
 
             </li>
         </g:if>
 
-        <g:if test="${currentNews}">
+        <g:if test="${researchGroupInstance?.news}">
             <li class="fieldcontain">
-                <span id="members-label" class="property-label"><g:message code="researchGroup.news.label"
-                                                                           default="News"/></span>
+                <span id="news-label" class="property-label"><g:message code="researchGroup.news.label"
+                                                                        default="News"/></span>
 
-                <table>
-
-                    <g:each in="${currentNews}" var="n" status="index">
-                        <tr>
-                            <td>${index + 1} -</td><td>${n.description?.encodeAsHTML()}</td>
-                        </tr>
-                    </g:each>
-                </table>
+                <g:each in="${researchGroupInstance.news}" var="n">
+                    <span class="property-value" aria-labelledby="news-label"><g:link controller="news" action="show"
+                                                                                      id="${n.id}">${n?.encodeAsHTML()}</g:link></span>
+                </g:each>
 
             </li>
         </g:if>
 
     </ol>
-    <ol class="property-list researchGroup">
-        <li class="fieldcontain">
-            <label>Inference:</label>
-            <g:select name="members" from="${publicationsInstance}" multiple="multiple" optionKey="id" size="5"
-                      value="${publicationsInstance*.id}" id="${researchGroupInstance?.id}" class="many-to-many"/>
-        </li>
-    </ol>
-
     <g:form>
         <fieldset class="buttons">
             <g:hiddenField name="id" value="${researchGroupInstance?.id}"/>
-            <g:link class="edit" action="edit" name="botaoEditar" id="${researchGroupInstance?.id}"><g:message
+            <g:link class="edit" action="edit" id="${researchGroupInstance?.id}"><g:message
                     code="default.button.edit.label" default="Edit"/></g:link>
             <g:actionSubmit class="delete" action="delete"
                             value="${message(code: 'default.button.delete.label', default: 'Delete')}"
@@ -157,4 +124,3 @@
 </div>
 </body>
 </html>
-<!-- #end -->
