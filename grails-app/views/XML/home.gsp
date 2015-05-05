@@ -18,6 +18,7 @@
     <br/>
     <g:form controller="XML" method="post" action="upload" enctype="multipart/form-data">
         <input type="file" id="fileInput" name="file"/>
+        <g:select id="toleranceSelect" name="tolerance" from="${0..10}" required="" noSelection="['':'-tolerance level-']"/>
         <input type="submit"/>
     </g:form>
 </div>
