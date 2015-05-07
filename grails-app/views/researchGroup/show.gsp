@@ -8,6 +8,36 @@
 </head>
 
 <body>
+<style>
+    .my_div{
+        display: inline;
+    }
+
+</style>
+
+<!--  #if($XML) -->
+<div class="my_div"><g:jasperReport jasper="report" format="XML" name="export" style="display: block">
+    <input type="hidden" name="researchGroup_id" value="${researchGroupInstance?.id}"/>
+</g:jasperReport>
+</div>
+<!-- #end -->
+
+<!-- #if($HTML) -->
+<div class="my_div"><g:jasperReport jasper="report" format="HTML" name="export" style="display: block">
+    <input type="hidden" name="researchGroup_id" value="${researchGroupInstance?.id}"/>
+</g:jasperReport>
+</div>
+<!-- #end -->
+
+<!-- #if($PDF) -->
+<div class="my_div"><g:jasperReport jasper="report" format="PDF" name="export" style="display: block">
+    <input type="hidden" name="researchGroup_id" value="${researchGroupInstance?.id}"/>
+</g:jasperReport>
+</div>
+<!-- #end -->
+
+
+
 <a href="#show-researchGroup" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
                                                                     default="Skip to content&hellip;"/></a>
 
