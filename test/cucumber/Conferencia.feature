@@ -254,3 +254,10 @@ Scenario: Remove Article Web
     When I create the conference article "A Systematic Survey of Program Comprehension through Dynamic Analysis" with file name "FileName.pdf"
     Then the conference article "A Systematic Survey of Program Comprehension through Dynamic Analysis" is not stored twice
 
+  Scenario: Search conference articles by Author web
+    Given I am at the Conference Articles page
+    And the system has some conference articles authored  by "Jose", among several publications
+    When I write "J" at the Search field
+    And I click on the Search button
+    Then a list of all conference articles by "Jose" is displayed
+
