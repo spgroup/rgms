@@ -237,7 +237,13 @@ Scenario: Remove Article Web
 
 
 
-
+  Scenario: Remove conference article that does not exist
+    Given the system has no conference article entitled "An Analysis and Survey of the Development of Mutation Testing"
+    When I try to remove the conference article "An Analysis and Survey of the Development of Mutation Testing"
+    Then nothing happens
+    
+    
+    
   Scenario: Search for conferences which an Author have published web
     Given I am at the Conference page
     And an Author named "Junior" had published the articles "An Analysis and Survey of the Development of Mutation Testing", "A Systematic Survey of Program Comprehension through Dynamic Analysis" and "Engineering Privacy" for the conferences "International Conference on Software Engineering", "Information and Software Technology" and "International Symposium on Software Testing and Analysis"
@@ -245,7 +251,3 @@ Scenario: Remove Article Web
     And I click on the Search button
     Then a list of all conferences, composed by "International Conference on Software Engineering", "Information and Software Technology" and "International Symposium on Software Testing and Analysis", that "Junior" published an article is displayed
 
-  Scenario: Remove conference article that does not exist
-    Given the system has no conference article entitled "An Analysis and Survey of the Development of Mutation Testing"
-    When I try to remove the conference article "An Analysis and Survey of the Development of Mutation Testing"
-    Then nothing happens
