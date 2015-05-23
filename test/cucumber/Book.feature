@@ -36,6 +36,7 @@ Feature: Book
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
 
+
 #if ($aumentandoFuncionalidadesBook)
   Scenario List existing books by title in alphabetical order
     Given the system has book entitled "A theory of software product line refinement" with file name "TCS-1401.pdf"
