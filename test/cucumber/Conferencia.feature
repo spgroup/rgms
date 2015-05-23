@@ -234,3 +234,30 @@ Scenario: Remove Article Web
     When I write "Junior" at the search field
     And I click on the search button
     Then a list of all conferences, composed by "International Conference on Software Engineering", "Information and Software Technology" and "International Symposium on Software Testing and Analysis", that "Junior" published an article is displayed
+
+
+
+  Scenario: Remove conference article that does not exist
+    Given the system has no conference article entitled "An Analysis and Survey of the Development of Mutation Testing"
+    When I try to remove the conference article "An Analysis and Survey of the Development of Mutation Testing"
+    Then nothing happens
+    
+  Scenario: Search for conferences which an Author have published web
+    Given I am at the Conference page
+    And an Author named "Junior" had published the articles "An Analysis and Survey of the Development of Mutation Testing", "A Systematic Survey of Program Comprehension through Dynamic Analysis" and "Engineering Privacy" for the conferences "International Conference on Software Engineering", "Information and Software Technology" and "International Symposium on Software Testing and Analysis"
+    When I write "Junior" at the search field
+    And I click on the Search button
+    Then a list of all conferences, composed by "International Conference on Software Engineering", "Information and Software Technology" and "International Symposium on Software Testing and Analysis", that "Junior" published an article is displayed
+
+  Scenario: Duplicate conference article
+    Given the conference article "A Systematic Survey of Program Comprehension through Dynamic Analysis" is stored in the system with file name "FileName.pdf"
+    When I create the conference article "A Systematic Survey of Program Comprehension through Dynamic Analysis" with file name "FileName.pdf"
+    Then the conference article "A Systematic Survey of Program Comprehension through Dynamic Analysis" is not stored twice
+
+  Scenario: Search conference articles by Author web
+    Given I am at the Conference Articles page
+    And the system has some conference articles authored  by "Jose", among several publications
+    When I write "J" at the Search field
+    And I click on the Search button
+    Then a list of all conference articles by "Jose" is displayed
+
