@@ -244,3 +244,8 @@ Scenario: Remove Article Web
     When I write "Junior" at the search field
     And I click on the Search button
     Then a list of all conferences, composed by "International Conference on Software Engineering", "Information and Software Technology" and "International Symposium on Software Testing and Analysis", that "Junior" published an article is displayed
+
+  Scenario: Remove conference article that does not exist
+    Given the system has no conference article entitled "An Analysis and Survey of the Development of Mutation Testing"
+    When I try to remove the conference article "An Analysis and Survey of the Development of Mutation Testing"
+    Then nothing happens
