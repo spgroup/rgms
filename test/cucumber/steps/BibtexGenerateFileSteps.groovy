@@ -69,7 +69,6 @@ And(~'^It only contains the articles "([^"]*)" and "([^"]*)"$') { String title1,
 
 }
 
-#if ($InvalidEntryOfBibtex)
 Given(~'^I am logged into the system$') {->
     to LoginPage
     at LoginPage
@@ -103,11 +102,8 @@ Then(~'^I see an error message$'){->
     to BibtexGenerateFilePage
 
 }
-#end
 
-#if ($CorrectEntryOfBibtex)
 Then(~'^a BibTex file is generated$'){->
     at BibtexMainMenuPage
     assert true == true
 }
-#end

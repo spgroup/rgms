@@ -103,6 +103,27 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
+Given(~'^the system has book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    assert Book.findByTitle(title) != null
+}
+
+And(~'^the system has book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    assert Book.findByTitle(title) != null
+}
+
+When(~'^the system orders the book list by title$') { ->
+    booksSorted = Book.listOrderByTitle(order: "asc")
+    assert BookTestDataAndOperations.isSorted(booksSorted, "title")
+}
+
+Then(~'^the system book list content is not modified$') { ->
+    assert Book.findAll().size() == 2
+    assert !bookNoExist('Modularity analysis of use case implementations')
+    assert !bookNoExist('A theory of software product line refinement')
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null

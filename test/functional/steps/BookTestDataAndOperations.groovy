@@ -76,4 +76,15 @@ class BookTestDataAndOperations {
         }
         return compatible
     }
+
+    static public def isSorted(books,sortType) {
+        def isSorted = false
+        switch (sortType) {
+            case 'title':
+                isSorted = (books.size() < 2 || (1..<books.size()).every { (books[it - 1].title).compareTo(books[it].title) < 0})
+                break
+        }
+        return isSorted
+    }
+
 }
