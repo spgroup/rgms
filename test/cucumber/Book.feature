@@ -35,3 +35,8 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
+
+  Scenario: List existing books by title in alphabetical order web
+    Given I am on the "Book" page
+    When I select to sort the books by "Title"
+    Then the books are ordered by "Title" in alphabetical order
