@@ -37,6 +37,6 @@ Feature: Book
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
 
   Scenario: List existing books by title in alphabetical order web
-    Given I am on the "Book" page
-    When I select to sort the books by "Title"
-    Then the books are ordered by "Title" in alphabetical order
+    Given I am on the book page
+    When I select to sort the books by "title"
+    Then the books are ordered by "title" in alphabetical order

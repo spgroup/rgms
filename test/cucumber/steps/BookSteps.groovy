@@ -103,6 +103,23 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
+Given(~'^I am on the book page$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at BookPage
+}
+
+When(~'^I select to sort the books by "([^"]*)"$') { String sortType ->
+    at BookPage
+    page.selectOrderBy(sortType)
+}
+
+Then(~'^the books are ordered by "([^"]*)" in alphabetical order$') { String sortType ->
+    at BookPage
+    page.checkOrderedBy(sortType)
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
