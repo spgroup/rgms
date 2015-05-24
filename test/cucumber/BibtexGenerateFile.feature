@@ -24,8 +24,8 @@ Feature: all bibtex
 
   Scenario: Publications with multiple authors must have authors' names separated by and
     Given I am at the article page
-    When I select the article with id "1"
-    Then I should see the article with id "1" details
+    When I select the article with title "A theory of software product line refinement"
+    Then I should see the article with id title "A theory of software product line refinement" details
     When I click the Bibtex button
     Then I should see each authors' name at the author field separated by "and"
 

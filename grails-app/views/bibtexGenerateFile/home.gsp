@@ -96,12 +96,9 @@
 
             <g:sortableColumn property="title" title="${message(code: 'periodico.title.label', default: 'Title')}"/>
 
-            <g:sortableColumn property="publicationDate"
-                              title="${message(code: 'periodico.publicationDate.label', default: 'Publication Date')}"/>
+            <g:sortableColumn property="Publication Date" title="${message(code: 'periodico.publicationDate', default: 'Publication Date')}"/>
 
             <g:sortableColumn property="file" title="${message(code: 'periodico.file.label', default: 'File')}"/>
-
-            <th><g:message code="periodico.researchLine.label" default="Research Line"/></th>
 
             <g:sortableColumn property="autores"
                               title="${message(code: 'periodico.authors.label', default: 'Autores')}"/>
@@ -109,6 +106,7 @@
             <g:sortableColumn property="journal"
                               title="${message(code: 'periodico.journal.label', default: 'Journal')}"/>
 
+            <th>Extra</th>
         </tr>
         </thead>
         <tbody>
@@ -122,12 +120,11 @@
 
                 <td>${fieldValue(bean: periodicoInstance, field: "file")}</td>
 
-                <td>${fieldValue(bean: periodicoInstance, field: "researchLine")}</td>
-
                 <td>${fieldValue(bean: periodicoInstance, field: "authors")}</td>
 
                 <td>${fieldValue(bean: periodicoInstance, field: "journal")}</td>
 
+                <td><g:link action="generateBibtexPeriodico" id="${periodicoInstance.id}">Generate BibTex</g:link></td>
             </tr>
         </g:each>
         </tbody>
