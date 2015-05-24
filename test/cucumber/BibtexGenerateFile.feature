@@ -23,9 +23,11 @@ Feature: all bibtex
     And It only contains the articles "A theory of software product line refinement" and "Modularity analysis of use case implementations"
 
   Scenario: Publications with multiple authors must have authors' names separated by and
-    Given I have an article named "A theory of software product line refinement" with multiple authors
-    When I generate a BibTex file from the article named "A theory of software product line refinement"
-    Then the BibTex file author field must have the authors' names separated by "and"
+    Given I am at the article page
+    When I select the article with id "1"
+    Then I should see the article with id "1" details
+    When I click the Bibtex button
+    Then I should see each authors' name at the author field separated by "and"
 
  #if ($InvalidEntryOfBibtex)
   Scenario: Tags of entry of BibTex are not separated by commas

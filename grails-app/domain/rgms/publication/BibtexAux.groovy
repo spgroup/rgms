@@ -8,8 +8,15 @@ class BibtexAux {
 
     static String organizeAuthors(Set<Member> members) {
         def returning = ""
-        for (Member member : members) {
-            returning = returning + member.name + " and "
+        int count = 0;
+        for (Member member : members.iterator()) {
+            returning = returning + member.name
+            count = count + 1
+
+            /* Tomando cuidado para não adicionar um and depois do último autor*/
+            if (count < members.size()) {
+                returning = returning + " and "
+            }
         }
         return returning.substring(0, returning.length())
     }

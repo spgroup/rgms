@@ -2,8 +2,7 @@ import pages.BibtexGenerateFilePage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Periodico
-import rgms.publication.BibtexGenerateFile
-
+import pages.ArticlePages.*
 
 import static cucumber.api.groovy.EN.*
 
@@ -111,3 +110,31 @@ Then(~'^a BibTex file is generated$'){->
     assert true == true
 }
 #end
+
+
+---------------------------------------------------------------
+
+//#if (PublicationsWithMultipleAuthorsMustHaveAuthorNamesSeparatedByAnd)
+
+Given (~'^And I am at the article page$') {
+    to ArticlesPage
+    at ArticlesPage
+}
+
+When(~'^I select the article with title "([^"]*)"$') {String articleTitle ->
+    ArticlesPage.selectViewArticle(articleTitle)
+}
+
+Then(~'^I should see the article with title "([^"]*)" details$')  { String articleTitle ->
+    at ArticleShowPage
+}
+
+When(~'^I click the Bibtex button$') {
+    ArticleShowPage.select('Bibtex', 'fieldcontain')
+}
+
+Then(~'^I should see each authors\' name at the author field separated by "and"$') {
+    assert true
+}
+
+//#end
