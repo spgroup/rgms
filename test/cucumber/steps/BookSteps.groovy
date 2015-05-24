@@ -107,11 +107,14 @@ Given(~'^I am on the book page$') {->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to BookPage
     at BookPage
 }
 
 When(~'^I select to sort the books by "([^"]*)"$') { String sortType ->
     at BookPage
+    createBooks()
     page.selectOrderBy(sortType)
 }
 
@@ -130,4 +133,17 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     page.clickSaveBook()
     book = Book.findByTitle(title)
     assert book != null
+}
+
+def createBooks(){
+    page.selectNewBook()
+    at BookCreatePage
+    createAndCheckBookOnBrowser("Pattern Recognition", "pr.pdf")
+    to BookPage
+    at BookPage
+    page.selectNewBook()
+    at BookCreatePage
+    createAndCheckBookOnBrowser("Machine Learning", "ml.pdf")
+    to BookPage
+    at BookPage
 }

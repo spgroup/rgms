@@ -40,3 +40,8 @@ Feature: Book
     Given I am on the book page
     When I select to sort the books by "title"
     Then the books are ordered by "title" in alphabetical order
+
+  Scenario: List existing book
+    Given the system has a book entitled "SPL Development" with file name "HSPLE.pdf"
+    When I view the book list
+    Then my book list contains the book "SPL Development"
