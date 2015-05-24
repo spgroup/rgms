@@ -4,6 +4,7 @@ import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Membership
 import rgms.member.ResearchGroup
+import rgms.publication.Periodico
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,7 +33,9 @@ class BibtexGenerateFileController {
             else
                 userMemberList.add([member:i])
         }
-        [researchGroupInstanceList: ResearchGroup.list(params), researchGroupInstanceTotal: ResearchGroup.count(), userMemberInstance: userMemberList, userMemberInstanceTotal: userMemberList.size() ]
+        [researchGroupInstanceList: ResearchGroup.list(params), researchGroupInstanceTotal: ResearchGroup.count(),
+                                userMemberInstance: userMemberList, userMemberInstanceTotal: userMemberList.size(),
+                                periodicoInstanceList: Periodico.list(params), periodicoInstanceTotal: Periodico.count()]
     }
 
     def generateBibTex = {
@@ -69,6 +72,16 @@ class BibtexGenerateFileController {
         }
 
         render(bibtex)
+    }
+
+    def generateBibtexPeriodico = {
+        String bibtex = ""
+        long articleId = (params.id).toLong()
+        def periodico = Periodico.findById(articleId)
+
+        bibtex = bibtex + periodico.generateBib()
+
+        render (bibtex)
     }
 
 }

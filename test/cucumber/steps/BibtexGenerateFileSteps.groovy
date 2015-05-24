@@ -2,9 +2,13 @@ import pages.BibtexGenerateFilePage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Periodico
-import pages.ArticlePages.*
+import pages.ArticlePages.ArticleShowPage
+import pages.ArticlePages.ArticlesPage
+import pages.LoginPage
 
 import static cucumber.api.groovy.EN.*
+import cucumber.*
+
 
 When(~'^I select the export bibtex file option at the publications menu$') {->
     page.select("Export Bibtex File")
@@ -52,8 +56,6 @@ Given(~'^I am on the "Publications" menu$') {->
 }
 
 When(~'^I select the publications "([^"]*)" and "([^"]*)"$') { String p1, String p2 ->
-    // Need to adjust the BibTex Export page in order to implement this
-}
 
 And(~'^I click on the "([^"]*)" option$') {String o ->
     at PublicationsPage
@@ -61,14 +63,12 @@ And(~'^I click on the "([^"]*)" option$') {String o ->
 }
 
 Then(~'^the BibTex details are showed$') {->
-
 }
 
 And(~'^It only contains the articles "([^"]*)" and "([^"]*)"$') { String title1, String title2 ->
-
 }
 
-#if ($InvalidEntryOfBibtex)
+//#if ($InvalidEntryOfBibtex)
 Given(~'^I am logged into the system$') {->
     to LoginPage
     at LoginPage
@@ -76,53 +76,38 @@ Given(~'^I am logged into the system$') {->
 }
 
 And(~'^I am at the BibTexGenerateFile page$') {->
-    to BibtexGenerateFilePage
-    at BibtexGenerateFilePage
+
 }
 
 When(~'^I click to "([^"]*)"$') {String o ->
-    at BibtexGenerateFilePage
-    page.select(o)
+
 }
 
 And(~'^A BibTeX entry is "([^"]*)"$') {String entrada ->
-    to BibtexMainMenuPage
-    at BibtexMainMenuPage
+
 }
 
 And(~'^I click on the other button "([^"]*)"$') {String botao ->
-    at BibtexMainMenuPage
-    page.verificarEntrada(entrada)
-    page.select(botao)
+
 }
 
 Then(~'^I see an error message$'){->
-    at BibtexMainMenuPage
-    assert entrada == null
-    to BibtexGenerateFilePage
 
 }
-#end
-
-#if ($CorrectEntryOfBibtex)
-Then(~'^a BibTex file is generated$'){->
-    at BibtexMainMenuPage
-    assert true == true
-}
-#end
-
+//#end
 
 ---------------------------------------------------------------
 
 //#if (PublicationsWithMultipleAuthorsMustHaveAuthorNamesSeparatedByAnd)
 
 Given (~'^And I am at the article page$') {
+    Login("admin","adminadmin")
     to ArticlesPage
     at ArticlesPage
 }
 
 When(~'^I select the article with title "([^"]*)"$') {String articleTitle ->
-    ArticlesPage.selectViewArticle(articleTitle)
+    page.selectViewArticle(articleTitle)
 }
 
 Then(~'^I should see the article with title "([^"]*)" details$')  { String articleTitle ->
@@ -130,7 +115,8 @@ Then(~'^I should see the article with title "([^"]*)" details$')  { String artic
 }
 
 When(~'^I click the Bibtex button$') {
-    ArticleShowPage.select('Bibtex', 'fieldcontain')
+    at ArticleShowPage
+    page.select('Bibtex', 'fieldcontain')
 }
 
 Then(~'^I should see each authors\' name at the author field separated by "and"$') {
