@@ -123,6 +123,21 @@ Then(~'^the books are ordered by "([^"]*)" in alphabetical order$') { String sor
     page.checkOrderedBy(sortType)
 }
 
+Given(~'^the system has a book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String fileName ->
+    BookTestDataAndOperations.createBook(title, fileName)
+    assert Book.findByTitle(title) != null
+}
+
+When(~'^I view the book list$') {->
+    books = Book.findAll()
+    assert books != null
+}
+
+Then(~'^my book list contains the book "([^"]*)"$') { String title ->
+    books = Book.findAll()
+    assert BookTestDataAndOperations.containsBook(title, books)
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
