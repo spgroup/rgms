@@ -45,3 +45,8 @@ Feature: Book
     Given the system has a book entitled "SPL Development" with file name "HSPLE.pdf"
     When I view the book list
     Then my book list contains the book "SPL Development"
+
+  Scenario: Post an existing book on facebook
+    Given the system has a book entitled "SPL Development" with file name "HSPLE.pdf"
+    When I share the book entitled "SPL Development" on facebook
+    Then a facebook message is posted
