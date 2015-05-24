@@ -29,6 +29,12 @@ Feature: all bibtex
     When I click the Bibtex button
     Then I should see each authors' name at the author field separated by "and"
 
+  Scenario: Users can generate bibtex file from articles at Bibtex Generate File
+    Given I am at the Bibtex Generate File
+    And I have an article named "A theory of software product line refinement"
+    When I select generate Bibtex from the article "A theory of software product line refinement"
+    Then I should see the Bibtex file of the article named "A theory of software product line refinement"
+
  #if ($InvalidEntryOfBibtex)
   Scenario: Tags of entry of BibTex are not separated by commas
     Given: I am logged into the system

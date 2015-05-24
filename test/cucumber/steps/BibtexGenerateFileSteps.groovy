@@ -1,13 +1,16 @@
 import pages.BibtexGenerateFilePage
 import pages.LoginPage
 import pages.PublicationsPage
+import rgms.publication.BibtexGenerateFile
 import rgms.publication.Periodico
 import pages.ArticlePages.ArticleShowPage
 import pages.ArticlePages.ArticlesPage
 import pages.LoginPage
 
-import static cucumber.api.groovy.EN.*
-import cucumber.*
+import static cucumber.runtime.groovy.EN.Then
+import static cucumber.runtime.groovy.EN.When
+import static cucumber.runtime.groovy.EN.And
+import static cucumber.runtime.groovy.EN.Given
 
 
 When(~'^I select the export bibtex file option at the publications menu$') {->
@@ -68,37 +71,8 @@ Then(~'^the BibTex details are showed$') {->
 And(~'^It only contains the articles "([^"]*)" and "([^"]*)"$') { String title1, String title2 ->
 }
 
-//#if ($InvalidEntryOfBibtex)
-Given(~'^I am logged into the system$') {->
-    to LoginPage
-    at LoginPage
-    page.add("admin","adminadmin")
-}
+//---------------------------------------------------------------//
 
-And(~'^I am at the BibTexGenerateFile page$') {->
-
-}
-
-When(~'^I click to "([^"]*)"$') {String o ->
-
-}
-
-And(~'^A BibTeX entry is "([^"]*)"$') {String entrada ->
-
-}
-
-And(~'^I click on the other button "([^"]*)"$') {String botao ->
-
-}
-
-Then(~'^I see an error message$'){->
-
-}
-//#end
-
----------------------------------------------------------------
-
-//#if (PublicationsWithMultipleAuthorsMustHaveAuthorNamesSeparatedByAnd)
 
 Given (~'^And I am at the article page$') {
     Login("admin","adminadmin")
@@ -123,4 +97,23 @@ Then(~'^I should see each authors\' name at the author field separated by "and"$
     assert true
 }
 
-//#end
+/*---------------------------------------------------------------*/
+
+
+Given (~'^I am at the Bibtex Generate File$') {
+    to BibtexGenerateFilePage
+    at BibtexGenerateFilePage
+}
+And (~'^I have an article named "([^"]*)"$') { String articleTitle ->
+    assert Periodico.findByTitle(articleTitle)
+}
+When (~'^I select generate Bibtex from the article "([^"]*)"$') { String articleTitle ->
+    at BibtexGenerateFilePage
+    page.select(Bibtex)
+}
+Then (~'^I should see the Bibtex file of the article named "([^"]*)"$') { String articleTitle ->
+    assert true
+}
+
+
+

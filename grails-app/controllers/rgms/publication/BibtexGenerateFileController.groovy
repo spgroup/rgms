@@ -1,5 +1,6 @@
 package rgms.publication
 
+import cucumber.runtime.PendingException
 import rgms.authentication.User
 import rgms.member.Member
 import rgms.member.Membership
@@ -75,13 +76,19 @@ class BibtexGenerateFileController {
     }
 
     def generateBibtexPeriodico = {
-        String bibtex = ""
         long articleId = (params.id).toLong()
-        def periodico = Periodico.findById(articleId)
 
-        bibtex = bibtex + periodico.generateBib()
+        String bibtex = generateBibtexArticle(articleId)
 
         render (bibtex)
+    }
+
+    def generateBibtexArticle (long articleId) {
+        String bibtex = ""
+        def periodico = Periodico.findById(articleId)
+        bibtex = bibtex + periodico.generateBib()
+
+        return bibtex
     }
 
 }
