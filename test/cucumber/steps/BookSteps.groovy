@@ -12,6 +12,7 @@ import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
 import steps.BookTestDataAndOperations
+import steps.TestDataAndOperationsFacebook
 
 import static cucumber.api.groovy.EN.*
 
@@ -133,9 +134,17 @@ When(~'^I view the book list$') {->
     assert books != null
 }
 
+When(~'^I share the book entitled "([^"]*)" on facebook$') { String title ->
+    TestDataAndOperationsFacebook.ShareArticleOnFacebook(title)
+}
+
 Then(~'^my book list contains the book "([^"]*)"$') { String title ->
     books = Book.findAll()
     assert BookTestDataAndOperations.containsBook(title, books)
+}
+
+Then(~'^a facebook message is posted$') {->
+    assert true
 }
 
 def checkIfExists(String title) {
