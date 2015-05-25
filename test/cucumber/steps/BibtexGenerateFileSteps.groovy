@@ -1,11 +1,17 @@
 import pages.BibtexGenerateFilePage
 import pages.LoginPage
 import pages.PublicationsPage
-import rgms.publication.Periodico
 import rgms.publication.BibtexGenerateFile
+import rgms.publication.Periodico
+import pages.ArticlePages.ArticleShowPage
+import pages.ArticlePages.ArticlesPage
+import pages.LoginPage
+/*
+import static cucumber.runtime.groovy.EN.Then
+import static cucumber.runtime.groovy.EN.When
+import static cucumber.runtime.groovy.EN.And
+import static cucumber.runtime.groovy.EN.Given
 
-
-import static cucumber.api.groovy.EN.*
 
 When(~'^I select the export bibtex file option at the publications menu$') {->
     page.select("Export Bibtex File")
@@ -53,57 +59,61 @@ Given(~'^I am on the "Publications" menu$') {->
 }
 
 When(~'^I select the publications "([^"]*)" and "([^"]*)"$') { String p1, String p2 ->
-    // Need to adjust the BibTex Export page in order to implement this
-}
 
-And(~'^I click on the "([^"]*)" option$') {String o ->
-    at PublicationsPage
-    page.select(o)
-}
+    And(~'^I click on the "([^"]*)" option$') { String o ->
+        at PublicationsPage
+        page.select(o)
+    }
 
-Then(~'^the BibTex details are showed$') {->
+    Then(~'^the BibTex details are showed$') { ->
+    }
 
-}
+    And(~'^It only contains the articles "([^"]*)" and "([^"]*)"$') { String title1, String title2 ->
+    }
 
-And(~'^It only contains the articles "([^"]*)" and "([^"]*)"$') { String title1, String title2 ->
+//---------------------------------------------------------------//
 
-}
 
-Given(~'^I am logged into the system$') {->
-    to LoginPage
-    at LoginPage
-    page.add("admin","adminadmin")
-}
+    Given(~'^And I am at the article page$') {
+        Login("admin", "adminadmin")
+        to ArticlesPage
+        at ArticlesPage
+    }
 
-And(~'^I am at the BibTexGenerateFile page$') {->
-    to BibtexGenerateFilePage
-    at BibtexGenerateFilePage
-}
+    When(~'^I select the article with title "([^"]*)"$') { String articleTitle ->
+        page.selectViewArticle(articleTitle)
+    }
 
-When(~'^I click to "([^"]*)"$') {String o ->
-    at BibtexGenerateFilePage
-    page.select(o)
-}
+    Then(~'^I should see the article with title "([^"]*)" details$') { String articleTitle ->
+        at ArticleShowPage
+    }
 
-And(~'^A BibTeX entry is "([^"]*)"$') {String entrada ->
-    to BibtexMainMenuPage
-    at BibtexMainMenuPage
-}
+    When(~'^I click the Bibtex button$') {
+        at ArticleShowPage
+        page.select('Bibtex', 'fieldcontain')
+    }
 
-And(~'^I click on the other button "([^"]*)"$') {String botao ->
-    at BibtexMainMenuPage
-    page.verificarEntrada(entrada)
-    page.select(botao)
-}
+    Then(~'^I should see each authors\' name at the author field separated by "and"$') {
+        assert true
+    }
 
-Then(~'^I see an error message$'){->
-    at BibtexMainMenuPage
-    assert entrada == null
-    to BibtexGenerateFilePage
+/*---------------------------------------------------------------*/
 
-}
+/*
+    Given(~'^I am at the Bibtex Generate File$') {
+        to BibtexGenerateFilePage
+        at BibtexGenerateFilePage
+    }
+    And(~'^I have an article named "([^"]*)"$') { String articleTitle ->
+        assert Periodico.findByTitle(articleTitle)
+    }
+    When(~'^I select generate Bibtex from the article "([^"]*)"$') { String articleTitle ->
+        at BibtexGenerateFilePage
+        page.select(Bibtex)
+    }
+    Then(~'^I should see the Bibtex file of the article named "([^"]*)"$') { String articleTitle ->
+        assert true
+    }
 
-Then(~'^a BibTex file is generated$'){->
-    at BibtexMainMenuPage
-    assert true == true
-}
+
+*/

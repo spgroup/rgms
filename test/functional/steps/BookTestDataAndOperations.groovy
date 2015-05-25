@@ -77,6 +77,13 @@ class BookTestDataAndOperations {
         return compatible
     }
 
+    static public boolean containsBook(title, books) {
+        def testBook = Book.findByTitle(title)
+        def cont = new BookController()
+        def result = cont.list().bookInstanceList
+        return result.contains(testBook)
+    }
+
     static public def isSorted(books,sortType) {
         def isSorted = false
         switch (sortType) {

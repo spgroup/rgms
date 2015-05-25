@@ -20,10 +20,6 @@ class BibtexGenerateFilePage extends FormPage {
         $('a.Generate All BibTex').click()
     }
 
-    def verificarEntrada(String entrada) {
-
-    }
-
     def select(String s) {
         $('div', id: 'status').find('a', text: s).click()
     }

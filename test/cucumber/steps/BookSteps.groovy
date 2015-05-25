@@ -13,6 +13,7 @@ import pages.PublicationsPage
 import rgms.publication.Book
 import rgms.publication.Periodico
 import steps.BookTestDataAndOperations
+import steps.TestDataAndOperationsFacebook
 
 import static cucumber.api.groovy.EN.*
 
@@ -104,6 +105,49 @@ Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
     at BookPage
 }
 
+Given(~'^I am on the book page$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to BookPage
+    at BookPage
+}
+
+When(~'^I select to sort the books by "([^"]*)"$') { String sortType ->
+    at BookPage
+    createBooks()
+    page.selectOrderBy(sortType)
+}
+
+Then(~'^the books are ordered by "([^"]*)" in alphabetical order$') { String sortType ->
+    at BookPage
+    page.checkOrderedBy(sortType)
+}
+
+Given(~'^the system has a book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String fileName ->
+    BookTestDataAndOperations.createBook(title, fileName)
+    assert Book.findByTitle(title) != null
+}
+
+When(~'^I view the book list$') {->
+    books = Book.findAll()
+    assert books != null
+}
+
+When(~'^I share the book entitled "([^"]*)" on facebook$') { String title ->
+    TestDataAndOperationsFacebook.ShareArticleOnFacebook(title)
+}
+
+Then(~'^my book list contains the book "([^"]*)"$') { String title ->
+    books = Book.findAll()
+    assert BookTestDataAndOperations.containsBook(title, books)
+}
+
+Then(~'^a facebook message is posted$') {->
+    assert true
+}
+
 Given(~'^the system has book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
     BookTestDataAndOperations.createBook(title, filename)
     assert Book.findByTitle(title) != null
@@ -130,6 +174,19 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     page.clickSaveBook()
     book = Book.findByTitle(title)
     assert book != null
+}
+
+def createBooks(){
+    page.selectNewBook()
+    at BookCreatePage
+    createAndCheckBookOnBrowser("Pattern Recognition", "pr.pdf")
+    to BookPage
+    at BookPage
+    page.selectNewBook()
+    at BookCreatePage
+    createAndCheckBookOnBrowser("Machine Learning", "ml.pdf")
+    to BookPage
+    at BookPage
 }
 
 def bookNoExist(String title){

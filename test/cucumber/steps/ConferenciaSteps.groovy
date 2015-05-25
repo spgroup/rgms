@@ -147,7 +147,7 @@ And(~'^the conferencias are not stored by the system$') {->
 }
 
 
-Given(~'^I'm registering a new Article$') {String authorName ->
+/*Given(~'^I'm registering a new Article$') {String authorName ->
 	at articleResgitrationPage
 	page.fillArticleAuthorName(authorName, null)
 }
@@ -181,7 +181,7 @@ Then(~'^I click the button to remove and the "A theory of software" is removed f
 And(~'^the aquirvo "ATOS.pdf" is removed from the system) {String fileName ->
   	assert fileNoExist(fileName)
 }
-
+*/
 
 
 /*
