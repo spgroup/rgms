@@ -36,11 +36,10 @@ Feature: Book
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
 
-
-#if ($aumentandoFuncionalidadesBook)
-  Scenario List existing books by title in alphabetical order
-    Given the system has book entitled "A theory of software product line refinement" with file name "TCS-1401.pdf"
-    And the system has book entitled "Modularity analysis of use case implementations" with file name "MACI.pdf"
+ #if ($implementçãoFuncionalidadesNosMoldesArticle)
+  Scenario: List existing books by title in alphabetical order
+    Given the system has book entitled "Livro de Teste" with file name "TCS-1401.pdf"
+    And the system has book entitled "SPL Development" with file name "MACI.pdf"
     When the system orders the book list by title
     Then the system book list content is not modified
-#end
+ #end

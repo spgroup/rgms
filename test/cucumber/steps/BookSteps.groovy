@@ -11,6 +11,7 @@ import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
+import rgms.publication.Periodico
 import steps.BookTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
@@ -108,11 +109,6 @@ Given(~'^the system has book entitled "([^"]*)" with file name "([^"]*)"$') { St
     assert Book.findByTitle(title) != null
 }
 
-And(~'^the system has book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    BookTestDataAndOperations.createBook(title, filename)
-    assert Book.findByTitle(title) != null
-}
-
 When(~'^the system orders the book list by title$') { ->
     booksSorted = Book.listOrderByTitle(order: "asc")
     assert BookTestDataAndOperations.isSorted(booksSorted, "title")
@@ -120,8 +116,8 @@ When(~'^the system orders the book list by title$') { ->
 
 Then(~'^the system book list content is not modified$') { ->
     assert Book.findAll().size() == 2
-    assert !bookNoExist('Modularity analysis of use case implementations')
-    assert !bookNoExist('A theory of software product line refinement')
+    assert !bookNoExist('SPL Development')
+    assert !bookNoExist('Livro de Teste')
 }
 
 def checkIfExists(String title) {
@@ -134,4 +130,8 @@ def createAndCheckBookOnBrowser(String title, String filename) {
     page.clickSaveBook()
     book = Book.findByTitle(title)
     assert book != null
+}
+
+def bookNoExist(String title){
+    return Book.findByTitle(title) == null
 }
