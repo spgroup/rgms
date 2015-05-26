@@ -59,7 +59,8 @@ Feature: Book
     Then the system book list content is not modified
 
   Scenario: list existing book web
-    Given I am at the books page and the book "Software Engineering" is stored in the system with file name "TCS-88.pdf"
+    Given I am on the book page
+    And there is the book "Software Engineering" stored in the system with file name "TCS-88.pdf"
     Then my resulting books list contains the book "Software Engineering"
 
   Scenario: Filter existing books by author

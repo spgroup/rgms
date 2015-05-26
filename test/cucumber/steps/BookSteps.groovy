@@ -163,12 +163,9 @@ Then(~'^the system book list content is not modified$') { ->
     assert !bookNoExist('Livro de Teste')
 }
 
-Given(~'^I am at the books page and the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-
-    Login()
-    at BookPage
+And(~'^there is the book "([^"]*)" stored in the system with file name "([^"]*)"$') { String title, filename ->
     page.select("Book")
-    selectNewBookInBookPage()
+    selectNewBookInBooksPage()
     page.fillBookDetails(BookTestDataAndOperations.path() + filename, title)
     page.selectCreateBook()
     assert !bookNoExist(title)
@@ -176,7 +173,7 @@ Given(~'^I am at the books page and the book "([^"]*)" is stored in the system w
     at BookPage
 }
 
-Then(~'my resulting articles list contains the book "([^"]*)"$') { String title ->
+Then(~'my resulting books list contains the book "([^"]*)"$') { String title ->
     at BookPage
     page.checkBookAtList(title, 0)
 }
@@ -221,8 +218,9 @@ def bookNoExist(String title){
     return Book.findByTitle(title) == null
 }
 
-def Login(){
-    to LoginPage
-    at LoginPage
-    LoginPage.fillLoginData("admin", "adminadmin")
+def selectNewBookInBooksPage(){
+    at BookPage
+    page.selectNewBook()
+    at BookCreatePage
 }
+
