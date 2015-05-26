@@ -212,3 +212,16 @@ Then (~'^a list of all conference articles by "([^"]*)" is displayed$'){ String 
     page.listConferenceArticles(author)
 }
 */
+
+
+/*
+Given(~'^the system has no conference article entitled "([^"]*)"$') { String article ->
+    assert ArticleTestDataAndOperations.findArticleByTitle(article) == null
+}
+When(~'^I try to remove the conference article "([^"]*)"$'){ String article ->
+    assert ArticleTestDataAndOperations.findArticleByTitle(article) == null
+    ArticleTestDataAndOperations.removeArticle(article)
+}
+
+Then(~'^nothing happens$'){}
+*/
