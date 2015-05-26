@@ -1,10 +1,12 @@
 import cucumber.runtime.PendingException
+import pages.ArticlePages.ArticlesPage
 import pages.Conferencia.ConferenciaCreatePage
 import pages.Conferencia.ConferenciaPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.member.Member
 import rgms.publication.Conferencia
+import steps.ArticleTestDataAndOperations
 import steps.TestDataAndOperations
 import steps.TestDataAndOperationsPublication
 import steps.ConferenciaTestDataAndOperations
@@ -184,8 +186,10 @@ And(~'^the aquirvo "ATOS.pdf" is removed from the system) {String fileName ->
 */
 
 
+
+
 /*
-Given(~'^I am at the Conferece Articles page$') {->
+Given(~'^I am at the Conference articles page$') {->
     to LoginPage
     at LoginPage
     page.fillLoginData("admin","adminadmin")
@@ -207,37 +211,4 @@ Then (~'^a list of all conference articles by "([^"]*)" is displayed$'){ String 
     assert author != null
     page.listConferenceArticles(author)
 }
-
-Given(~'^I am at the Conference page$'){
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin","adminadmin")
-    at ConferenciaPage
-        }
-And(~'^an Author named "([^"]*)" had published the articles  "([^"]*)",  "([^"]*)" and "([^"]*)" for the conferences "([^"]*)", "([^"]*)" and "([^"]*)"$'){ String author ->
-    assert Conferencia.findByTitle("International Conference on Software Engineering") != null
-    assert Conferencia.findByTitle("Information and Software Technology") != null
-    assert Conferencia.findByTitle("Scenario: Search for conferences which an Author have published web") != null
-    assert ArticleTestDataAndOperations.findArticleByTitle("An Analysis and Survey of the Development of Mutation Testing") != null
-    assert ArticleTestDataAndOperations.findArticleByTitle("A Systematic Survey of Program Comprehension through Dynamic Analysis") != null
-    assert ArticleTestDataAndOperations.findArticleByTitle("Engineering Privacy") != null
-    author = TestDataAndOperationsPublication.containsUser(author)
-    assert author != null
-}
-When(~'^I write ([^"]*)" at the search field$') { String author ->
-    at ConferenciaPage
-    page.fillSearch(author)
-}
-And(~'^I click on the search button$'){
-    page.select("search")
-}
-Then(~'^a list of all conferences, composed by "([^"]*)",  "([^"]*)" and "([^"]*)", that "([^"]*)" published an article is displayed$') { String author ->
-    assert ArticleTestDataAndOperations.findArticleByTitle("An Analysis and Survey of the Development of Mutation Testing") != null
-    assert ArticleTestDataAndOperations.findArticleByTitle("A Systematic Survey of Program Comprehension through Dynamic Analysis") != null
-    assert ArticleTestDataAndOperations.findArticleByTitle("Engineering Privacy") != null
-    author = TestDataAndOperationsPublication.containsUser(author)
-    assert author != null
-    page.listConferencia(author)
-}
 */
-
