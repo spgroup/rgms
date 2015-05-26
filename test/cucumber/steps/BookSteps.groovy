@@ -147,6 +147,48 @@ Then(~'^a facebook message is posted$') {->
     assert true
 }
 
+Given(~'^the system has book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+    BookTestDataAndOperations.createBook(title, filename)
+    assert Book.findByTitle(title) != null
+}
+
+When(~'^the system orders the book list by title$') { ->
+    booksSorted = Book.listOrderByTitle(order: "asc")
+    assert BookTestDataAndOperations.isSorted(booksSorted, "title")
+}
+
+Then(~'^the system book list content is not modified$') { ->
+    assert Book.findAll().size() == 2
+    assert !bookNoExist('SPL Development')
+    assert !bookNoExist('Livro de Teste')
+}
+
+And(~'^there is the book "([^"]*)" stored in the system with file name "([^"]*)"$') { String title, filename ->
+    page.select("Book")
+    selectNewBookInBooksPage()
+    page.fillBookDetails(BookTestDataAndOperations.path() + filename, title)
+    page.selectCreateBook()
+    assert !bookNoExist(title)
+    to BookPage
+    at BookPage
+}
+
+Then(~'my resulting books list contains the book "([^"]*)"$') { String title ->
+    at BookPage
+    page.checkBookAtList(title, 0)
+}
+
+Given(~'^the system has some books authored by "([^"]*)"$'){String authorName->
+    BookTestDataAndOperations.createBook('Livro de Teste', 'TCSOS.pdf', 'Paulo Borba')
+    BookTestDataAndOperations.createBook('SPL Development', 'MACI.pdf')
+    assert (!bookNoExist('Livro de Teste') && !bookNoExist('SPL Development'))
+}
+
+When(~'^the system filter the books authored by author "([^"]*)"$') {String authorName->
+    booksFiltered = BookTestDataAndOperations.findAllByAuthor(authorName)
+    assert BookTestDataAndOperations.isFiltered(booksFiltered,authorName)
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
@@ -171,3 +213,14 @@ def createBooks(){
     to BookPage
     at BookPage
 }
+
+def bookNoExist(String title){
+    return Book.findByTitle(title) == null
+}
+
+def selectNewBookInBooksPage(){
+    at BookPage
+    page.selectNewBook()
+    at BookCreatePage
+}
+

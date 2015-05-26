@@ -208,7 +208,7 @@ When(~'^I can fill the Conferencia details$') {->
 
 //---------------------------------------------------------------------------------------------------
 
-#if ($createanewresearchgroup)
+//#if ($createanewresearchgroup)
     Given(~'^I am at the publications menu page$') { ->
         to LoginPage
         at LoginPage
@@ -257,17 +257,17 @@ Then(~'^I should see the new research group named "([^"]*)" in Research Group li
     assert page.findByName(groupName) != null       /* Checando se o grupo foi criado */
 }
 
-#end
+//#end
 
 //---------------------------------------------------------------------------------------------------
 
-#if ($invalidvalueinfielderrorwhencreatinganewMember)
+//#if ($invalidvalueinfielderrorwhencreatinganewMember)
 // invalid value in field error when creating a new Member
-    Given(~'^I am at the Member list page$') { ->
+/*    Given(~'^I am at the Member list page$') { ->
         to MemberListPage
         at MemberListPage
     }
-
+*/
 When(~'^I select the "([^"]*)" option$') { String option ->
     at MemberListPage
     page.getMenuOption(option)
@@ -287,7 +287,7 @@ Then(~'^I should see an error message'){ ->
     at MemberListPage
 }
 
-#end
+//#end
 
 //---------------------------------------------------------------------------------------------------
 
@@ -353,14 +353,14 @@ Then(~'^I export a html report about resourch group "([^"]*)"$') { ->
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 //if ($missing field error when creating a new Member)
 
-Given(~'^I am at the Member list page$'){ ->
+/*Given(~'^I am at the Member list page$'){ ->
     at MemberListPage
 }
 
 When(~'^I select the Novo Member option$') { ->
     to MemberCreatePage
 }
-
+*/
 And(~'^I dont fill a field with * symbol$'){ ->
     assert (page.name.value()  != null &&
             page.username.value() != null &&
@@ -381,10 +381,10 @@ Then(~'^I can see a error message$'){ ->
 //if ($missing field error when creating a research group)
 
 
-Given(~'^I am at the publications menu$'){ ->
+/*Given(~'^I am at the publications menu$'){ ->
     at PublicationsPage
 }
-
+*/
 When(~'^I select the "Research Group" option at the publications menu') { ->
     to ResearchGroupListPage
 }
@@ -393,7 +393,7 @@ And(~'^I select the new research group option at research group list page'){->
     to ResearchGroupCreatePage
 }
 
-And(~'^I dont fill a field with * symbol$'){ ->
+/*And(~'^I dont fill a field with * symbol$'){ ->
     assert (page.name.value()  != null &&
             page.twitter.value() != null &&
             page.description.value() != null)
@@ -405,7 +405,7 @@ And(~'^I can select Criar option$'){ ->
 
 Then(~'^I can see a error message$'){ ->
     assert (page.readFlashMessage() != null)
-}
+}*/
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 
 

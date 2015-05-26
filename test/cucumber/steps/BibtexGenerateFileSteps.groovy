@@ -6,7 +6,7 @@ import rgms.publication.Periodico
 import pages.ArticlePages.ArticleShowPage
 import pages.ArticlePages.ArticlesPage
 import pages.LoginPage
-
+/*
 import static cucumber.runtime.groovy.EN.Then
 import static cucumber.runtime.groovy.EN.When
 import static cucumber.runtime.groovy.EN.And
@@ -60,60 +60,60 @@ Given(~'^I am on the "Publications" menu$') {->
 
 When(~'^I select the publications "([^"]*)" and "([^"]*)"$') { String p1, String p2 ->
 
-And(~'^I click on the "([^"]*)" option$') {String o ->
-    at PublicationsPage
-    page.select(o)
-}
+    And(~'^I click on the "([^"]*)" option$') { String o ->
+        at PublicationsPage
+        page.select(o)
+    }
 
-Then(~'^the BibTex details are showed$') {->
-}
+    Then(~'^the BibTex details are showed$') { ->
+    }
 
-And(~'^It only contains the articles "([^"]*)" and "([^"]*)"$') { String title1, String title2 ->
-}
+    And(~'^It only contains the articles "([^"]*)" and "([^"]*)"$') { String title1, String title2 ->
+    }
 
 //---------------------------------------------------------------//
 
 
-Given (~'^And I am at the article page$') {
-    Login("admin","adminadmin")
-    to ArticlesPage
-    at ArticlesPage
-}
+    Given(~'^And I am at the article page$') {
+        Login("admin", "adminadmin")
+        to ArticlesPage
+        at ArticlesPage
+    }
 
-When(~'^I select the article with title "([^"]*)"$') {String articleTitle ->
-    page.selectViewArticle(articleTitle)
-}
+    When(~'^I select the article with title "([^"]*)"$') { String articleTitle ->
+        page.selectViewArticle(articleTitle)
+    }
 
-Then(~'^I should see the article with title "([^"]*)" details$')  { String articleTitle ->
-    at ArticleShowPage
-}
+    Then(~'^I should see the article with title "([^"]*)" details$') { String articleTitle ->
+        at ArticleShowPage
+    }
 
-When(~'^I click the Bibtex button$') {
-    at ArticleShowPage
-    page.select('Bibtex', 'fieldcontain')
-}
+    When(~'^I click the Bibtex button$') {
+        at ArticleShowPage
+        page.select('Bibtex', 'fieldcontain')
+    }
 
-Then(~'^I should see each authors\' name at the author field separated by "and"$') {
-    assert true
-}
+    Then(~'^I should see each authors\' name at the author field separated by "and"$') {
+        assert true
+    }
 
 /*---------------------------------------------------------------*/
 
+/*
+    Given(~'^I am at the Bibtex Generate File$') {
+        to BibtexGenerateFilePage
+        at BibtexGenerateFilePage
+    }
+    And(~'^I have an article named "([^"]*)"$') { String articleTitle ->
+        assert Periodico.findByTitle(articleTitle)
+    }
+    When(~'^I select generate Bibtex from the article "([^"]*)"$') { String articleTitle ->
+        at BibtexGenerateFilePage
+        page.select(Bibtex)
+    }
+    Then(~'^I should see the Bibtex file of the article named "([^"]*)"$') { String articleTitle ->
+        assert true
+    }
 
-Given (~'^I am at the Bibtex Generate File$') {
-    to BibtexGenerateFilePage
-    at BibtexGenerateFilePage
-}
-And (~'^I have an article named "([^"]*)"$') { String articleTitle ->
-    assert Periodico.findByTitle(articleTitle)
-}
-When (~'^I select generate Bibtex from the article "([^"]*)"$') { String articleTitle ->
-    at BibtexGenerateFilePage
-    page.select(Bibtex)
-}
-Then (~'^I should see the Bibtex file of the article named "([^"]*)"$') { String articleTitle ->
-    assert true
-}
 
-
-
+*/
