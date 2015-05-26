@@ -105,8 +105,7 @@ class BookTestDataAndOperations {
     static public List<Book> findAllByAuthor(authorName) {
         def cont = new BookController()
         cont.params << [authorName: authorName]
-        cont.filterByAuthor()
-        return cont.modelAndView.model.bookInstanceList
+        return cont.filterByAuthor(2, authorName)
     }
 
     static public def isFiltered(books,authorName) {
