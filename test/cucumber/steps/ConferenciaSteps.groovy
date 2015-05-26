@@ -215,13 +215,23 @@ Then (~'^a list of all conference articles by "([^"]*)" is displayed$'){ String 
 
 
 /*
-Given(~'^the system has no conference article entitled "([^"]*)"$') { String article ->
-    assert ArticleTestDataAndOperations.findArticleByTitle(article) == null
+And(~'^an Author named "([^"]*)" had published the articles  "([^"]*)",  "([^"]*)" and "([^"]*)" for the conferences "([^"]*)", "([^"]*)" and "([^"]*)"$'){ String author, String article1, String article2, String article3, String conference1, String conference2, String conference3 ->
+    assert Conferencia.findByTitle(conference1) != null
+    assert Conferencia.findByTitle(conference2) != null
+    assert Conferencia.findByTitle(conference3) != null
+    assert ArticleTestDataAndOperations.findArticleByTitle(article1) != null
+    assert ArticleTestDataAndOperations.findArticleByTitle(article2) != null
+    assert ArticleTestDataAndOperations.findArticleByTitle(article3) != null
+    author = TestDataAndOperationsPublication.containsUser(author)
+    assert author != null
 }
-When(~'^I try to remove the conference article "([^"]*)"$'){ String article ->
-    assert ArticleTestDataAndOperations.findArticleByTitle(article) == null
-    ArticleTestDataAndOperations.removeArticle(article)
 }
-
-Then(~'^nothing happens$'){}
+Then(~'^a list of all conferences, composed by "([^"]*)",  "([^"]*)" and "([^"]*)", that "([^"]*)" published an article is displayed$') { String author, String article1, String article2, String article3 ->
+    assert ArticleTestDataAndOperations.findArticleByTitle(article1) != null
+    assert ArticleTestDataAndOperations.findArticleByTitle(article2) != null
+    assert ArticleTestDataAndOperations.findArticleByTitle(article3) != null
+    author = TestDataAndOperationsPublication.containsUser(author)
+    assert author != null
+    page.listConferencia(author)
+}
 */
