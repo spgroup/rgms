@@ -13,6 +13,7 @@ import pages.PublicationsPage
 import rgms.publication.Book
 import steps.BookTestDataAndOperations
 import steps.TestDataAndOperationsFacebook
+import pages.*
 
 import static cucumber.api.groovy.EN.*
 
