@@ -67,4 +67,11 @@ Feature: Book
     Given the system has some books authored by "Paulo Borba"
     When the system filter the books authored by author "Paulo Borba"
     Then the system book list content is not modified
+
+  Scenario: Post an existing article on facebook web
+    Given I am on the book page
+    And the article "Software Engineering 3" is stored in the system with file name "TCS-04.pdf"
+    When I select to view "Software Engineering 3" in resulting book list
+    And I click on Share on Facebook for book
+    Then A facebook message was posted
  #end

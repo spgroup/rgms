@@ -189,6 +189,17 @@ When(~'^the system filter the books authored by author "([^"]*)"$') {String auth
     assert BookTestDataAndOperations.isFiltered(booksFiltered,authorName)
 }
 
+When(~'^I select to view "([^"]*)" in resulting book list$') { String title ->
+    page.selectViewBook(title)
+    at BookShowPage
+}
+
+When(~'^I click on Share on Facebook for book$') { ->
+    at BookShowPage
+    page.clickOnShareOnFacebook()
+    at BookShowPage
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
