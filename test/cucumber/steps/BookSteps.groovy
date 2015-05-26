@@ -11,11 +11,11 @@ import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
-import rgms.publication.Periodico
 import steps.BookTestDataAndOperations
 import steps.TestDataAndOperationsFacebook
 
 import static cucumber.api.groovy.EN.*
+
 
 Given(~'^the system has no book entitled "([^"]*)"$') { String title ->
     checkIfExists(title)
@@ -164,6 +164,24 @@ Then(~'^the system book list content is not modified$') { ->
     assert !bookNoExist('Livro de Teste')
 }
 
+Given(~'^I am at the books page and the book "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+
+    Login()
+    at BookPage
+    page.select("Book")
+    selectNewBookInBookPage()
+    page.fillBookDetails(BookTestDataAndOperations.path() + filename, title)
+    page.selectCreateBook()
+    assert !bookNoExist(title)
+    to BookPage
+    at BookPage
+}
+
+Then(~'my resulting articles list contains the book "([^"]*)"$') { String title ->
+    at BookPage
+    page.checkBookAtList(title, 0)
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null
@@ -191,4 +209,10 @@ def createBooks(){
 
 def bookNoExist(String title){
     return Book.findByTitle(title) == null
+}
+
+def Login(){
+    to LoginPage
+    at LoginPage
+    LoginPage.fillLoginData("admin", "adminadmin")
 }

@@ -51,10 +51,14 @@ Feature: Book
     When I share the book entitled "SPL Development" on facebook
     Then a facebook message is posted #if ($implementçãoFuncionalidadesNosMoldesArticle)
 
- #if ($implementçãoFuncionalidadesNosMoldesArticle)    
+ #if ($implementçãoNovasFuncionalidades)
   Scenario: List existing books by title in alphabetical order
     Given the system has book entitled "Livro de Teste" with file name "TCS-1401.pdf"
     And the system has book entitled "SPL Development" with file name "MACI.pdf"
     When the system orders the book list by title
     Then the system book list content is not modified
+
+  Scenario: list existing book web
+    Given I am at the books page and the book "Software Engineering" is stored in the system with file name "TCS-88.pdf"
+    Then my resulting books list contains the book "Software Engineering"
  #end
