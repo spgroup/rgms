@@ -37,17 +37,10 @@ Feature: all bibtex
 
  #if ($InvalidEntryOfBibtex)
   Scenario: Tags of entry of BibTex are not separated by commas
-    Given: I am logged into the system
-    And: I am at the BibTexGenerateFile page
-    When: I click to "Generate BibTex manually"
-    And: A BibTeX entry is "@article{mrx05
-                            auTHor = "Mr. X",
-                            Title = {Something Great},
-                            publisher = "nob" # "ody",
-                            YEAR = 2005,
-                            }"
-    And: I click on the other button "Generate BibTex"
-    Then: I see an error message
+    Given: I have a bibtex format string "@article{author="user" title="svd" journal="ny" year="2015" volume="1" month="4" number="1" pages="15"}"
+    And: the string does not have commas
+    When I try to generate a Bibtex file from the string
+    Then The bibtex file is not generate
 
   Scenario: Tags of entry of BibTex are incompatible with type of publication chosen
     Given: I am logged into the system
