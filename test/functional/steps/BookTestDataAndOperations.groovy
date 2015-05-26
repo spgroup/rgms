@@ -27,9 +27,17 @@ class BookTestDataAndOperations {
         }
     }
 
-    static public void createBook(String title, String filename) {
+    static public void createBook(String title, filename) {
+        createBook(title, filename, null)
+    }
+
+    static public void createBook(String title, filename, authorName) {
         def cont = new BookController()
         cont.params << BookTestDataAndOperations.findBookByTitle(title) << [file: filename]
+        if(authorName!=null){
+            cont.params["authors"] = authorName
+
+        }
         cont.request.setContent(new byte[1000])
         cont.create()
         cont.save()
@@ -94,4 +102,18 @@ class BookTestDataAndOperations {
         return isSorted
     }
 
+    static public List<Book> findAllByAuthor(authorName) {
+        def cont = new BookController()
+        cont.params << [authorName: authorName]
+        cont.filterByAuthor()
+        return cont.modelAndView.model.bookInstanceList
+    }
+
+    static public def isFiltered(books,authorName) {
+        for (book in books) {
+            if(!(book.authors).contains(authorName))
+                return false
+        }
+        return true
+    }
 }

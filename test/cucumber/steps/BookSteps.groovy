@@ -16,7 +16,6 @@ import steps.TestDataAndOperationsFacebook
 
 import static cucumber.api.groovy.EN.*
 
-
 Given(~'^the system has no book entitled "([^"]*)"$') { String title ->
     checkIfExists(title)
 }
@@ -180,6 +179,17 @@ Given(~'^I am at the books page and the book "([^"]*)" is stored in the system w
 Then(~'my resulting articles list contains the book "([^"]*)"$') { String title ->
     at BookPage
     page.checkBookAtList(title, 0)
+}
+
+Given(~'^the system has some books authored by "([^"]*)"$'){String authorName->
+    BookTestDataAndOperations.createBook('Livro de Teste', 'TCSOS.pdf', 'Paulo Borba')
+    BookTestDataAndOperations.createBook('SPL Development', 'MACI.pdf')
+    assert (!bookNoExist('Livro de Teste') && !bookNoExist('SPL Development'))
+}
+
+When(~'^the system filter the books authored by author "([^"]*)"$') {String authorName->
+    booksFiltered = BookTestDataAndOperations.findAllByAuthor(authorName)
+    assert BookTestDataAndOperations.isFiltered(booksFiltered,authorName)
 }
 
 def checkIfExists(String title) {

@@ -61,4 +61,9 @@ Feature: Book
   Scenario: list existing book web
     Given I am at the books page and the book "Software Engineering" is stored in the system with file name "TCS-88.pdf"
     Then my resulting books list contains the book "Software Engineering"
+
+  Scenario: Filter existing books by author
+    Given the system has some books authored by "Paulo Borba"
+    When the system filter the books authored by author "Paulo Borba"
+    Then the system book list content is not modified
  #end
