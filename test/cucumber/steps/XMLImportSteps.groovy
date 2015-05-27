@@ -196,3 +196,14 @@ Then(~'^the system outputs a successful message$') { ->
     //se for um erro a mensagem é colocada em readErrorMessage
     assert page.readFlashMessage() != null
 }
+
+Then(~'^the system outputs a list of imported orientations which contains the orientations "([^"]*)" and "([^"]*)"$') { String title1, title2->
+    def orientation1 = Orientation.findByTituloTese(title1)
+    def orientation2 = Orientation.findByTituloTese(title2)
+    assert orientation1 != null && orientation2 != null
+}
+
+And(~'^the new orientation entitled "([^"]*)" is stored by the system$') { String title->
+    def orientation = Orientation.findByTituloTese(title)
+    assert orientation != null
+}
