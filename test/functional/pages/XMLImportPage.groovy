@@ -22,8 +22,17 @@ class XMLImportPage extends Page {
     }
 
     static content = {
-        readFlashMessage(){ $("div .message").text() }
-        readErrorsMessage() { $("div.errors").text() }
+        //readFlashMessage(){ $("div .message").text() }
+        //readErrorsMessage() { $("div.errors").text() }
+    }
+
+    String readFlashMessage(){
+        String str = $("div .message").text().toString()
+        return str
+    }
+
+    String readErrorsMessage() {
+        return $("div .errors").text()
     }
 
     def selectButton(String name) {
@@ -44,5 +53,9 @@ class XMLImportPage extends Page {
 
     boolean isRequiredEnabledOnToleranceSelect(){
         return $("#toleranceSelect").getAttribute("required")
+    }
+
+    def setToleranceValue(int value) {
+        $("#toleranceSelect").value(value)
     }
 }

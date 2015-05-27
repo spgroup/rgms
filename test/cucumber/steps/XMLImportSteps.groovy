@@ -187,3 +187,12 @@ And(~'^no new orientation entitled "([^"]*)" is stored by the system$') { String
     assert orientation == null
 }
 
+When(~'^I click on "upload" informing the tolerance level$') { ->
+    page.setToleranceValue(10)
+    page.uploadClick()
+}
+
+Then(~'^the system outputs a successful message$') { ->
+    //se for um erro a mensagem é colocada em readErrorMessage
+    assert page.readFlashMessage() != null
+}
