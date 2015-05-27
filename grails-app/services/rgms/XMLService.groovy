@@ -3,11 +3,14 @@ package rgms
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import rgms.member.Member
+import rgms.member.MemberController
 import rgms.member.Orientation
+import rgms.member.OrientationController
 import rgms.publication.*
 import rgms.researchProject.Funder
 import rgms.researchProject.ResearchProject
 import rgms.tool.Levenshtein
+
 
 class XMLService {
 
@@ -15,7 +18,7 @@ class XMLService {
         saveEntity - closure que salva a classe de domínio que está usando a importação
      */
 
-
+    static final int MAX_TOLERANCE_LEVEL = 10;
 
     static boolean Import(Closure saveEntity, Closure returnWithMessage,
                           String flashMessage, String controller,
@@ -24,13 +27,22 @@ class XMLService {
 
         try {
             Node xmlFile = parseReceivedFile(request)
-            if(!checkExistenceWithSimilarityAnalysis(xmlFile, similarityTolerance))
+            def result = checkExistenceWithSimilarityAnalysis(xmlFile, similarityTolerance)
+            if(!result.status)
             {
                 saveEntity(xmlFile)
             }
             else
             {
-                flashMessage = 'default.xml.similar.dissertation.message'
+                if(result.type == "Dissertation")
+                {
+                    flashMessage = 'default.xml.similar.dissertation.message'
+                }
+                else if(result.type == "Orientation")
+                {
+                    flashMessage = 'default.xml.similar.orientation.message'
+                }
+
 
                 errorFound = true
             }
@@ -314,14 +326,14 @@ class XMLService {
         {
             String current = dissertations.get(i)
             int distanciaMestrado = Levenshtein.distance(current, dissertacaoMestrado)
-            if (( distanciaMestrado> toleranceLevel) && distanciaMestrado <= 10)
+            if (( distanciaMestrado> toleranceLevel) && distanciaMestrado <= MAX_TOLERANCE_LEVEL)
             {
                 mestradoOK = false
 
             }
 
             int distanciaDoutorado = Levenshtein.distance(current, dissertacaoDoutorado)
-            if(distanciaDoutorado > toleranceLevel && distanciaDoutorado <=10)
+            if(distanciaDoutorado > toleranceLevel && distanciaDoutorado <=MAX_TOLERANCE_LEVEL)
             {
                 doutoradoOK = false
 
@@ -340,6 +352,59 @@ class XMLService {
 
     }
 
+    static void createOrientationsWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+
+        Node outraProducao = (Node) xmlFile.children()[3]
+        List<Orientation> orientations = Orientation.findAll();
+        Node orientacoesConcluidas = (Node) getNodeFromNode(outraProducao, "ORIENTACOES-CONCLUIDAS")
+
+
+        for (int i = 0; i < orientacoesConcluidas.children().size(); i++)
+        {
+            boolean result = true;
+            String title = ""
+
+            for (int h = 0; h < orientations.size(); h++)
+            {
+                String current = orientations.get(h).tituloTese
+                Node currentInXML =  (Node) orientacoesConcluidas.children()[i]
+                Node infoCurrentInXML = (Node) currentInXML.children()[0]
+                String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO")
+                title = titleCurrentInXML
+
+                int distance = Levenshtein.distance(current, titleCurrentInXML )
+
+                if ( distance> toleranceLevel && distance <= MAX_TOLERANCE_LEVEL)
+                {
+                    result = false
+                }
+            }
+
+            if(result)
+            {
+                def members = [[name: "Rodolfo", username: "usernametest", email: "rodolfofake@gmail.com", status: "Graduate Student", university: "UFPE", enabled: true]]
+                def memberCreater = new Member(members[0])
+                def cont = new OrientationController()
+                memberCreater.create()
+                memberCreater.save()
+                def member = Member.findByName(memberCreater.name)
+
+                cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: title, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
+                cont.request.setContent(new byte[1000]) // Could also vary the request content.
+                cont.create()
+                cont.save()
+                cont.response.reset()
+
+                //createOrientations(xmlFile, memberCreater)
+            }
+
+
+        }
+
+
+
+    }
+
     private static void createDissertation(Node xmlNode) {
         Dissertacao newDissertation = new Dissertacao()
         newDissertation.title = getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")
@@ -351,11 +416,15 @@ class XMLService {
         newDissertation.save(flush: false)
     }
 
-    static boolean checkExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel)
+    static def checkExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel)
     {
-        List<Dissertacao> dissertations = Dissertacao.findAll();
+
+        def result = [status: false, type:""]
 
         Node dadosGerais = (Node) xmlFile.children()[0]
+        Node outraProducao = (Node) xmlFile.children()[3]
+
+        List<Dissertacao> dissertations = Dissertacao.findAll();
         Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
         Node mestrado = (Node) formacaoAcademica.children()[1]
         Node doutorado = (Node) formacaoAcademica.children()[2]
@@ -366,17 +435,60 @@ class XMLService {
 
         for (int i = 0; i < dissertations.size(); i++)
         {
+
             String current = dissertations.get(i)
-            if (Levenshtein.distance(current, dissertacaoMestrado) > toleranceLevel)
+
+            int distance1 = Levenshtein.distance(current, dissertacaoMestrado)
+            int distance2 = Levenshtein.distance(current, dissertacaoDoutorado)
+            if (distance1 > toleranceLevel && distance1 <= MAX_TOLERANCE_LEVEL)
             {
-                return true
+                result.status = true
+                result.type = "Dissertation"
+                return result
             }
-            else if(Levenshtein.distance(current, dissertacaoDoutorado) > toleranceLevel)
+            else if(distance2 > toleranceLevel && distance2 <= MAX_TOLERANCE_LEVEL)
             {
-                return true
+                result.status = true
+                result.type = "Dissertation"
+                return result
             }
         }
-        return false
+
+
+        List<Orientation> orientations = Orientation.findAll();
+
+        Node orientacoesConcluidas = (Node) getNodeFromNode(outraProducao, "ORIENTACOES-CONCLUIDAS")
+
+
+        for (int i = 0; i < orientations.size(); i++)
+        {
+
+            for (int h = 0; h < orientacoesConcluidas.children().size(); h++)
+            {
+
+                String current = orientations.get(i).tituloTese
+
+                Node currentInXML =  (Node) orientacoesConcluidas.children()[h]
+
+                Node infoCurrentInXML = (Node) currentInXML.children()[0]
+
+                String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO")
+
+                int distance = Levenshtein.distance(current, titleCurrentInXML )
+
+                if ( distance> toleranceLevel && distance <= MAX_TOLERANCE_LEVEL)
+                {
+
+                    result.status = true
+                    result.type = "Orientation"
+                    return result
+                }
+            }
+        }
+
+        return result
+
+
 
 
     }
@@ -396,6 +508,33 @@ class XMLService {
         {
             return false
         }
+
+    }
+
+    static boolean verifyOrientations (String title, Node xmlFile )
+    {
+
+        Node outraProducao = (Node) xmlFile.children()[3]
+
+        Node orientacoesConcluidas = (Node) getNodeFromNode(outraProducao, "ORIENTACOES-CONCLUIDAS")
+
+        boolean result = false
+        for(int i=0; i<orientacoesConcluidas.children().size();i++)
+        {
+
+            Node currentInXML =  (Node) orientacoesConcluidas.children()[i]
+
+            Node infoCurrentInXML = (Node) currentInXML.children()[0]
+
+            String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO")
+
+            if(title == titleCurrentInXML)
+            {
+                result = true
+                return result
+            }
+        }
+        return result
 
     }
 

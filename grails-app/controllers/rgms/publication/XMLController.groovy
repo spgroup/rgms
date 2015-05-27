@@ -103,9 +103,19 @@ class XMLController {
             XMLService.createDissertationsWithSimilarityAnalysis(xmlFile, similarityTolerance)
     }
 
+    private Closure saveOrientationsWithSimilarityAnalisys = {
+        Node xmlFile ->
+            XMLService.createOrientationsWithSimilarityAnalysis(xmlFile, similarityTolerance)
+    }
+
     def boolean verifyDissertations(String title, Node xmlFile)
     {
         return XMLService.verifyDissertations(title, xmlFile)
+    }
+
+    def boolean verifyOrientations(String title, Node xmlFile)
+    {
+        return XMLService.verifyOrientations(title, xmlFile)
     }
 
     def enviarConferenciaXML() {

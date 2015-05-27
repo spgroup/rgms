@@ -322,7 +322,6 @@ Feature: XMLImport
     And the previously stored orientations do not change
 
 
-
   #if($ToleranceLevel)
 
   Scenario: dissertations with similar names should be considered as duplicates, according to the tolerance level
@@ -341,8 +340,8 @@ Feature: XMLImport
   Scenario: orientations with similar names should be considered as duplicates, according to the tolerance level
     Given the system has a orientation entitled "Design and Evaluation of an Object-Oriented Formal Specification Language" stored
     And the similarity tolerance is configured to "5"
-    When  I upload the file "curriculo5.xml" which contains a orientation entitled "design and evaluation of an object-oriented formal specification Language"
-    Then the system outputs a list of imported dissertations which contains the orientation entitled "Design and Evaluation of an Object-Oriented Formal Specification Language"
+    When  I upload the file "curriculo5.xml" which contains an orientation entitled "design and evaluation of an object-oriented formal specification Language"
+    Then the system outputs a list of imported orientations which contains the orientation entitled "Design and Evaluation of an Object-Oriented Formal Specification Language"
     And no new orientation entitled "design and evaluation of an object-oriented formal specification Language" is stored by the system
 
   Scenario: show a successful message when the tolerance level is informed and no duplicates were found
@@ -354,9 +353,10 @@ Feature: XMLImport
   Scenario: orientations without similar names should not be considered as duplicates, according to the tolerance level
     Given the system has a orientation entitled "Design and Evaluation of an Object-Oriented Formal Specification Language" stored
     And the similarity tolerance is configured to "5"
-    When  I upload the file "curriculo5.xml" which contains a orientation entitled "Design and Evaluation of an Object-oriented formal specification Language"
-    Then the system outputs a list of imported dissertations which contains the orientations "Design and Evaluation of an Object-Oriented Formal Specification Language" and "Design and Evaluation of an Object-oriented formal specification Language"
-    And the new orientation entitled "Design and Evaluation of an Object-oriented formal specification Language" is stored by the system
+    When  I upload the file "curriculo6.xml" which contains an orientation entitled "Design and Evaluation of an Object-oriented formal Specification Languagee"
+    Then the system outputs a list of imported orientations which contains the orientations "Design and Evaluation of an Object-Oriented Formal Specification Language" and "Design and Evaluation of an Object-oriented formal Specification Languagee"
+    And the new orientation entitled "Design and Evaluation of an Object-oriented formal Specification Languagee" is stored by the system
+
 #end
 # o que acontece quando o arquivo tem publicações já cadastradas? e
 # publicações com mesmos títulos mas outras partes diferentes? e

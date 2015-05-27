@@ -160,3 +160,30 @@ Then(~'^the system outputs an error message$') { ->
     //qualquer navegador por padrão mostra uma mensagem de erro quando o atributo "required" está configurado
     assert page.isRequiredEnabledOnToleranceSelect()
 }
+
+Given(~'^the system has a orientation entitled "([^"]*)" stored$') { String title->
+    //TestDataDissertacao.createDissertacao(title, "dissertation.txt", "University of Oxford")
+    OrientationTestDataAndOperations.createOrientation(title)
+    //def dissertation = Dissertacao.findByTitle(title);
+    def orientation = Orientation.findByTituloTese(title);
+    assert orientation != null
+}
+
+When(~'^I upload the file "([^"]*)" which contains an orientation entitled "([^"]*)"$') { String filename, title->
+
+    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    OrientationTestDataAndOperations.uploadOrientationWithSimilarityAnalisys(path)
+    boolean result = OrientationTestDataAndOperations.verifyOrientationXML(title, path)
+    assert result
+}
+
+Then(~'^the system outputs a list of imported orientations which contains the orientation entitled "([^"]*)"$') { String title->
+    def orientation = Orientation.findByTituloTese(title)
+    assert orientation != null
+}
+
+And(~'^no new orientation entitled "([^"]*)" is stored by the system$') { String title->
+    def orientation = Orientation.findByTituloTese(title)
+    assert orientation == null
+}
+
