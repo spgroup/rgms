@@ -24,9 +24,9 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="dateJoined" title="${message(code: 'membership.dateJoined.label', default: 'Date Joined')}" />
-					
 						<g:sortableColumn property="dateLeft" title="${message(code: 'membership.dateLeft.label', default: 'Date Left')}" />
+					
+						<g:sortableColumn property="dateJoined" title="${message(code: 'membership.dateJoined.label', default: 'Date Joined')}" />
 					
 						<th><g:message code="membership.member.label" default="Member" /></th>
 					
@@ -38,9 +38,9 @@
 				<g:each in="${membershipInstanceList}" status="i" var="membershipInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${membershipInstance.id}">${fieldValue(bean: membershipInstance, field: "dateJoined")}</g:link></td>
+						<td><g:link action="show" id="${membershipInstance.id}">${fieldValue(bean: membershipInstance, field: "dateLeft")}</g:link></td>
 					
-						<td><g:formatDate date="${membershipInstance.dateLeft}" /></td>
+						<td><g:formatDate date="${membershipInstance.dateJoined}" /></td>
 					
 						<td>${fieldValue(bean: membershipInstance, field: "member")}</td>
 					

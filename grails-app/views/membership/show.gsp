@@ -23,20 +23,20 @@
 			</g:if>
 			<ol class="property-list membership">
 			
-				<g:if test="${membershipInstance?.dateJoined}">
-				<li class="fieldcontain">
-					<span id="dateJoined-label" class="property-label"><g:message code="membership.dateJoined.label" default="Date Joined" /></span>
-					
-						<span class="property-value" aria-labelledby="dateJoined-label"><g:formatDate date="${membershipInstance?.dateJoined}" /></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${membershipInstance?.dateLeft}">
 				<li class="fieldcontain">
 					<span id="dateLeft-label" class="property-label"><g:message code="membership.dateLeft.label" default="Date Left" /></span>
 					
 						<span class="property-value" aria-labelledby="dateLeft-label"><g:formatDate date="${membershipInstance?.dateLeft}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${membershipInstance?.dateJoined}">
+				<li class="fieldcontain">
+					<span id="dateJoined-label" class="property-label"><g:message code="membership.dateJoined.label" default="Date Joined" /></span>
+					
+						<span class="property-value" aria-labelledby="dateJoined-label"><g:formatDate date="${membershipInstance?.dateJoined}" /></span>
 					
 				</li>
 				</g:if>

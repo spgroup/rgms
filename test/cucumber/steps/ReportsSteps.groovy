@@ -407,6 +407,26 @@ Then(~'^I can see a error message$'){ ->
     assert (page.readFlashMessage() != null)
 }*/
 //-----------------------------------------------------------------------------------------------------------------------------------------------
+//jp start here
+
+Given(~'^I have a ResearchGroup registered in the system$') { ->
+    researchGroup = ResearchGroup.getAll()
+    assert researchGroup.size() == 1
+}
+
+And(~'^I am at ResearchGroupShowPage$') { ->
+    at ResearchGroupShowPage
+}
+
+When(~'^I select XML Export option$') { ->
+    page.clickXML()
+}
+
+Then(~'^I receive a download link to XML Report$') { ->
+
+}
+
+
 
 
 //-------------------------------------------------------------------------
