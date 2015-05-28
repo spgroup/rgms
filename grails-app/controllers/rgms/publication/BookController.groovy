@@ -93,4 +93,13 @@ class BookController {
         def bookInstance = Book.get(id)
         aux.delete(id, bookInstance, 'book.label', 'Book');
     }
+
+    def List<Book> filterByAuthor(Integer max, String authorName) {
+        def List<Book> book = new ArrayList<>()
+        params.max = Math.min(max ?: 10, 100)
+        if (params["authors"] == authorName) {
+            [bookInstanceList: Book.list(params), bookInstanceTotal: Book.count()]
+            return book
+        }
+    }
 }

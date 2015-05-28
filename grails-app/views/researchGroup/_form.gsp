@@ -1,6 +1,5 @@
 <%@ page import="rgms.member.ResearchGroup" %>
 
-<g:javascript library="jquery"/>
 
 
 <div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'name', 'error')} required">
@@ -8,15 +7,7 @@
         <g:message code="researchGroup.name.label" default="Name"/>
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="name" maxlength="50" required="" value="${researchGroupInstance?.name}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'name', 'error')} required">
-    <label for="twitter">
-        <g:message code="researchGroup.twitter.label" default="Twitter"/>
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="twitter" maxlength="50" required="" value="${researchGroupInstance?.twitter}"/>
+    <g:textField name="name" maxlength="10" required="" value="${researchGroupInstance?.name}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'description', 'error')} required">
@@ -28,7 +19,21 @@
                 value="${researchGroupInstance?.description}"/>
 </div>
 
-<!-- #if($researchGroupHierarchy) -->
+<div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'twitter', 'error')} ">
+    <label for="twitter">
+        <g:message code="researchGroup.twitter.label" default="Twitter"/>
+
+    </label>
+    <g:textField name="twitter" value="${researchGroupInstance?.twitter}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'sigla', 'error')} required">
+    <label for="sigla">
+        <g:message code="researchGroup.sigla.label" default="Sigla"/>
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="sigla" maxlength="10" required="" value="${researchGroupInstance?.sigla}"/>
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'childOf', 'error')} ">
     <label for="childOf">
@@ -36,35 +41,42 @@
 
     </label>
     <g:select id="childOf" name="childOf.id" from="${rgms.member.ResearchGroup.list()}" optionKey="id"
-              value="${researchGroupInstance?.childOf?.id}" noSelection="['null': '']" class="many-to-one"/>
+              value="${researchGroupInstance?.childOf?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
-<!-- #end -->
-<div>
 
-    <label>
-        Research Groups
+<div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'memberships', 'error')} ">
+    <label for="memberships">
+        <g:message code="researchGroup.memberships.label" default="Memberships"/>
+
     </label>
-    <ul class="checklist">
-        <g:each in="${rgms.member.ResearchGroup.list()}" var="group">
-            <li>
-                <label for="${group.id}">
-                    <g:checkBox name="${group.id}" value="${true}"
-                                onclick="${remoteFunction(action: 'edit',
-                                        update: [success: 'members_id'],
-                                        params: '\'groups=\' + this.name')}"/>
-                    ${group.name}
-                </label>
-            </li>
+
+    <ul class="one-to-many">
+        <g:each in="${researchGroupInstance?.memberships ?}" var="m">
+            <li><g:link controller="membership" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></li>
         </g:each>
-
+        <li class="add">
+            <g:link controller="membership" action="create"
+                    params="['researchGroup.id': researchGroupInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'membership.label', default: 'Membership')])}</g:link>
+        </li>
     </ul>
+
 </div>
-<!--<label>${deb}</label>-->
-<div id="members_id" class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'members', 'error')} ">
-    <label for="members">
-        <g:message code="researchGroup.members.label" default="Members"/>
+
+<div class="fieldcontain ${hasErrors(bean: researchGroupInstance, field: 'news', 'error')} ">
+    <label for="news">
+        <g:message code="researchGroup.news.label" default="News"/>
 
     </label>
-    <g:select name="members" from="${membersInstance}" multiple="multiple" optionKey="id" size="5"
-              value="${membersInstance*.id}" class="many-to-many"/>
+
+    <ul class="one-to-many">
+        <g:each in="${researchGroupInstance?.news ?}" var="n">
+            <li><g:link controller="news" action="show" id="${n.id}">${n?.encodeAsHTML()}</g:link></li>
+        </g:each>
+        <li class="add">
+            <g:link controller="news" action="create"
+                    params="['researchGroup.id': researchGroupInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'news.label', default: 'News')])}</g:link>
+        </li>
+    </ul>
+
 </div>
+

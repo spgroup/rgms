@@ -37,6 +37,14 @@ class OrientationTestDataAndOperations {
         createOrientationAux(cont, tituloTese, member)
     }
 
+    static public void uploadOrientationWithSimilarityAnalisys(filename) {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.saveOrientationsWithSimilarityAnalisys(records.parse(xml));
+        cont.response.reset()
+    }
+
     private static void createOrientationAux(OrientationController cont, String tituloTese, Member member) {
         cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
@@ -83,5 +91,15 @@ class OrientationTestDataAndOperations {
         def records = new XmlParser()
         cont.saveOrientations(records.parse(xml));
         cont.response.reset()
+    }
+
+    static public boolean verifyOrientationXML(String title, String filename)
+    {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        boolean result = cont.verifyOrientations(title, records.parse(xml));
+        cont.response.reset()
+        return result;
     }
 }

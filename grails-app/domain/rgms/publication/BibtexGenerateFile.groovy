@@ -1,5 +1,6 @@
 package rgms.publication
 
+import cucumber.runtime.PendingException
 import rgms.member.Member
 
 /**
@@ -31,4 +32,5 @@ class BibtexGenerateFile {
         }
         return publicationsFiltered
     }
+
 }

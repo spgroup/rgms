@@ -7,6 +7,7 @@ class ResearchGroup {
     String name
     String description
     String twitter
+    String sigla
 
 //#if($researchGroupHierarchy)
     ResearchGroup childOf;
@@ -15,9 +16,10 @@ class ResearchGroup {
     static hasMany = [memberships: Membership, news: News]
 
     static constraints = {
-        name(maxSize: 10, blank: false, unique: true)
+        name(maxSize: 15, blank: false, unique: true)
         description(maxSize: 1000, blank: false)
         twitter(nullable: true)
+        sigla(maxSize: 10, blank: true, unique: true)
 
 //#if($researchGroupHierarchy)
         childOf(nullable: true, blank: true)

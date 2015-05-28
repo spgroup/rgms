@@ -6,6 +6,7 @@
     <meta name="layout" content="main" />
     <g:set var="entityName" value="${message(code: 'member.label', default: 'Member')}" />
     <g:set var="entityName2" value="${ message(code: 'researchGroup.label', default: 'Research Group') }" />
+    <g:set var="entityName3" value="${message(code: 'periodico.label', default: 'Periodico')}"/>
     <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
@@ -84,7 +85,51 @@
     </table>
 </div>
 
+<div id="list-periodico" class="content scaffold-list" role="main">
+    <h1><g:message code="default.list.label" args="[entityName3]"/></h1>
+    <g:if test="${flash.message}">
+        <div class="message" role="status">${flash.message}</div>
+    </g:if>
+    <table>
+        <thead>
+        <tr>
 
+            <g:sortableColumn property="title" title="${message(code: 'periodico.title.label', default: 'Title')}"/>
+
+            <g:sortableColumn property="Publication Date" title="${message(code: 'periodico.publicationDate', default: 'Publication Date')}"/>
+
+            <g:sortableColumn property="file" title="${message(code: 'periodico.file.label', default: 'File')}"/>
+
+            <g:sortableColumn property="autores"
+                              title="${message(code: 'periodico.authors.label', default: 'Autores')}"/>
+
+            <g:sortableColumn property="journal"
+                              title="${message(code: 'periodico.journal.label', default: 'Journal')}"/>
+
+            <th>Extra</th>
+        </tr>
+        </thead>
+        <tbody>
+        <g:each in="${periodicoInstanceList}" status="i" var="periodicoInstance">
+            <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
+                <td><g:link action="show"
+                            id="${periodicoInstance.id}">${fieldValue(bean: periodicoInstance, field: "title")}</g:link></td>
+
+                <td><g:formatDate date="${periodicoInstance.publicationDate}"/></td>
+
+                <td>${fieldValue(bean: periodicoInstance, field: "file")}</td>
+
+                <td>${fieldValue(bean: periodicoInstance, field: "authors")}</td>
+
+                <td>${fieldValue(bean: periodicoInstance, field: "journal")}</td>
+
+                <td><g:link action="generateBibtexPeriodico" id="${periodicoInstance.id}">Generate BibTex</g:link></td>
+            </tr>
+        </g:each>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>
