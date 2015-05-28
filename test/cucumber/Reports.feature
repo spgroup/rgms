@@ -2,7 +2,14 @@
 Feature: Reports
   I want to generate PDF, HTML or XML report files of Members, Research Groups and News
 
-
+  Scenario: export existent member report to html
+    Given I am at the Member list page
+    When I select the "1" option at the Member list
+    And I can select the option Export to HTML at the Member show
+    Then I can generate a HTML report about Member "1"
+    And I can see a photography of the Member
+    And I can see a description about the member
+    And I can see a list of Menber publications
 
   Scenario: export existent member report to xml
     Given I am at the Member list page
@@ -164,7 +171,11 @@ Feature: Reports
     Then The system generate a HTML report with the news "The first news" in it
 #end
 
-
+  Scenario: export a existent research group report to html
+    Given I am in research group list page
+    When I select "RGMSGroup" option at the research group list
+    And I select the option "export to html" at the research group show
+    Then I export a html report about resourch group "RGMSGroup"
 
   Scenario: export a existent news report to html
     Given I am in News list page
