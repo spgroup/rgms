@@ -74,4 +74,5 @@ Feature: Book
     When I select to view "Software Engineering 3" in resulting book list
     And I click on Share on Facebook for book
     Then A facebook message was posted
+  
  #end
