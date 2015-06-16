@@ -27,6 +27,11 @@ class BookCreatePage extends FormPage {
         }
     }
 
+    def fillBookDetails() {
+        def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "TCS.pdf"
+        fillBookDetails(path, "Livro de Teste")
+    }
+
     def fillBookDetails(title, filename) {
         fillTitle(title)
         $("form").publisher = "Person"

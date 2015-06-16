@@ -1,6 +1,7 @@
 package pages
 
 import geb.Page
+import rgms.publication.Book
 
 /**
  * Created with IntelliJ IDEA.
@@ -60,5 +61,18 @@ class BookPage extends Page {
         def bookRows = bookTable.find('tbody').find('tr')
         def bookColumns = bookRows[row].find('td')
         return bookColumns
+    }
+
+    def select(String s) {
+        $('div', id: 'status').find('a', text: s).click()
+    }
+
+    def checkBookAtList(title, row) {
+        def bookColumns = this.getBookColumns(row)
+        bookColumns[1].text() == "Livro de Teste"
+        bookColumns[2].text() == "[]"
+        bookColumns[3].text() == "TCS-88.pdf"
+        bookColumns[4].text() == "[]"
+
     }
 }

@@ -167,9 +167,9 @@ Then(~'^the system book list content is not modified$') { ->
 And(~'^there is the book "([^"]*)" stored in the system with file name "([^"]*)"$') { String title, filename ->
     page.select("Book")
     selectNewBookInBooksPage()
-    page.fillBookDetails(BookTestDataAndOperations.path() + filename, title)
+    page.fillBookDetails(title, filename)
     page.selectCreateBook()
-    assert !bookNoExist(title)
+    //assert !bookNoExist(title)
     to BookPage
     at BookPage
 }
