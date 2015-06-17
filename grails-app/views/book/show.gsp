@@ -3,6 +3,16 @@
 <html>
 <head>
     <meta name="layout" content="main">
+
+    <!--#if( $Facebook ) -->
+    <script type="text/javascript"
+            src="https://apis.google.com/js/plusone.js"></script>
+    <script
+            src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"
+            type="text/javascript"></script>
+    <!-- Facebook end -->
+    <!--#end -->
+
     <g:set var="entityName" value="${message(code: 'book.label', default: 'Book')}"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
 </head>
@@ -130,6 +140,54 @@
         </g:if>
 
     </ol>
+    <!--#if( $Facebook ) -->
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                //appId: 'precisa requisitar no Facebook',
+                status: true, // check login status
+                cookie: true, // enable cookies to allow the server to access the session
+                xfbml: true  // parse XFBML
+            });
+        };
+
+        (function () {
+            var e = document.createElement('script');
+            e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+            e.async = true;
+            document.getElementById('fb-root').appendChild(e);
+        }());
+    </script>
+    <img id="share_facebook"
+         src="http://www.bateucuriosidade.com/imagem/compartilhar%20fb.png">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var bookTitle = "${bookInstance?.title}"
+            var bookId = "${bookInstance?.id}"
+            var bookPublisher = "${bookInstance?.publisher}"
+            var bookVolume = "${bookInstance?.volume}"
+            var bookPages = "${bookInstance?.pages}"
+            var link = document.URL
+            var callback = "http://localhost:8080/rgms/notifyFacebook/book/" + bookId
+            $('#share_facebook').live('click', function (e) {
+                e.preventDefault();
+                FB.ui(
+                        {
+                            method: 'feed',
+                            name: 'Book in RGMS',
+                            link: link,
+                            caption: 'Title:' + bookTitle,
+                            description: 'Publisher: ' + bookPublisher + ', Volume: ' + bookVolume +
+                            ', Pages: ' + bookPages,
+                            message: 'Personal Message.'
+                        });
+                jQuery.get("http://localhost:8080/rgms/notifyFacebook/book/" + bookId + "/" + bookTitle);
+            });
+        });
+    </script>
+    <!-- Facebook end -->
+    <!--#end -->
     <g:form>
         <fieldset class="buttons">
             <g:hiddenField name="id" value="${bookInstance?.id}"/>
