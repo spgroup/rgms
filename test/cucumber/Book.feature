@@ -70,8 +70,9 @@ Feature: Book
 
   Scenario: Post an existing article on facebook web
     Given I am on the book page
-    And the article "Software Engineering 3" is stored in the system with file name "TCS-04.pdf"
+    And there is the book "Software Engineering 3" stored in the system with file name "TCS-04.pdf"
     When I select to view "Software Engineering 3" in resulting book list
     And I click on Share on Facebook for book
     Then A facebook message was posted
+
  #end
