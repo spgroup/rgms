@@ -201,6 +201,11 @@ When(~'^I click on Share on Facebook for book$') { ->
     at BookShowPage
 }
 
+Then(~'^A Facebook message was posted$') { ->
+    //TODO
+    assert true
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
     assert book == null

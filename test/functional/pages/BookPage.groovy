@@ -75,4 +75,12 @@ class BookPage extends Page {
         bookColumns[4].text() == "[]"
 
     }
+
+    def selectViewBook(String title) {
+        def listDiv = $('div', id: 'list-book')
+        def bookTable = (listDiv.find('table'))[0]
+        def bookRow = bookTable.find('tbody').find('tr')
+        def showLink = bookRow.find('td').find([text: title])
+        showLink.click()
+    }
 }
