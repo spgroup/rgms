@@ -232,3 +232,14 @@ And(~'^the journal article entitled "([^"]*)" still in the system$') { String ti
     def periodico = Periodico.findByTitle(title);
     assert periodico != null
 }
+
+Given(~'^the system has a journal article entitled "([^"]*)" stored with filename "([^"]*)"$') { String title, filename->
+    ArticleTestDataAndOperations.createArticle(title, filename)
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
+}
+
+Then(~'^the system store the journal article entitled "([^"]*)"$') { String title->
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
+}
