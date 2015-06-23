@@ -42,6 +42,10 @@ class XMLService {
                 {
                     flashMessage = 'default.xml.similar.orientation.message'
                 }
+                else if(result.type == "Journal")
+                {
+                    flashMessage = 'default.xml.similar.journal.message'
+                }
 
 
                 errorFound = true
@@ -405,6 +409,75 @@ class XMLService {
 
     }
 
+    static void createJournalsWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+
+        List<Periodico> periodicos = Periodico.findAll();
+
+        Node producaoBibliografica = (Node) xmlFile.children()[1]
+        Node artigosPublicados = (Node) producaoBibliografica.children()[1]
+
+
+        for (int i = 0; i < artigosPublicados.children().size(); i++)
+        {
+            boolean result = true;
+
+            Node currentInXML =  (Node) artigosPublicados.children()[i]
+            Node infoCurrentInXML = (Node) currentInXML.children()[0]
+            String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO-DO-ARTIGO")
+
+            for (int h = 0; h < periodicos.size(); h++)
+            {
+
+                String current = periodicos.get(h).title
+
+                int distance = Levenshtein.distance(current, titleCurrentInXML )
+
+                if ( distance> toleranceLevel && distance <= MAX_TOLERANCE_LEVEL)
+                {
+                    result = false
+                }
+            }
+
+            if(result)
+            {
+                def cont = new PeriodicoController()
+
+                Node detailsCurrentInXML = (Node) currentInXML.children()[1]
+
+                def journal = getAttributeValueFromNode(detailsCurrentInXML, "TITULO-DO-PERIODICO-OU-REVISTA")
+
+                def volume = getAttributeValueFromNode(detailsCurrentInXML, "VOLUME")
+
+                def number = getAttributeValueFromNode(detailsCurrentInXML, "FASCICULO")
+
+                def pages = ""+getAttributeValueFromNode(detailsCurrentInXML, "PAGINA-INICIAL") +"-"+ getAttributeValueFromNode(detailsCurrentInXML, "PAGINA-FINAL")
+
+                def title = titleCurrentInXML
+
+                def file = title + ".pdf"
+
+                def publicationDate = new Date("1 January "+getAttributeValueFromNode(infoCurrentInXML, "ANO-DO-ARTIGO"))
+
+                cont.params << [journal: journal, volume: volume, number: number, pages: pages,
+                                title: title,publicationDate: publicationDate, file: file]
+
+
+                cont.request.setContent(new byte[1000])
+                cont.create()
+                cont.save()
+                cont.response.reset()
+
+
+
+            }
+
+
+        }
+
+
+
+    }
+
     private static void createDissertation(Node xmlNode) {
         Dissertacao newDissertation = new Dissertacao()
         newDissertation.title = getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")
@@ -432,6 +505,7 @@ class XMLService {
         String dissertacaoMestrado = getAttributeValueFromNode(mestrado, "TITULO-DA-DISSERTACAO-TESE")
 
         String dissertacaoDoutorado = getAttributeValueFromNode(doutorado, "TITULO-DA-DISSERTACAO-TESE")
+
 
         for (int i = 0; i < dissertations.size(); i++)
         {
@@ -486,6 +560,42 @@ class XMLService {
             }
         }
 
+
+
+        List<Periodico> periodicos = Periodico.findAll();
+
+        Node producaoBibliografica = (Node) xmlFile.children()[1]
+        Node artigosPublicados = (Node) producaoBibliografica.children()[1]
+
+
+        for (int i = 0; i < periodicos.size(); i++)
+        {
+
+            for (int h = 0; h < artigosPublicados.children().size(); h++)
+            {
+
+                String current = periodicos.get(i).title
+
+                Node currentInXML =  (Node) artigosPublicados.children()[h]
+
+                Node infoCurrentInXML = (Node) currentInXML.children()[0]
+
+                String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO-DO-ARTIGO")
+
+                int distance = Levenshtein.distance(current, titleCurrentInXML )
+
+
+                if ( distance> toleranceLevel && distance <= MAX_TOLERANCE_LEVEL)
+                {
+
+                    result.status = true
+                    result.type = "Journal"
+                    return result
+                }
+
+            }
+        }
+
         return result
 
 
@@ -527,6 +637,35 @@ class XMLService {
             Node infoCurrentInXML = (Node) currentInXML.children()[0]
 
             String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO")
+
+            if(title == titleCurrentInXML)
+            {
+                result = true
+                return result
+            }
+        }
+        return result
+
+    }
+
+    static boolean verifyJournals (String title, Node xmlFile )
+    {
+        Node producaoBibliografica = (Node) xmlFile.children()[1]
+        Node artigosPublicados = (Node) producaoBibliografica.children()[1]
+
+        //getAttributeValueFromNode(dadosBasicos, "TITULO-DO-ARTIGO")
+
+        //Node orientacoesConcluidas = (Node) getNodeFromNode(outraProducao, "ORIENTACOES-CONCLUIDAS")
+
+        boolean result = false
+        for(int i=0; i<artigosPublicados.children().size();i++)
+        {
+
+            Node currentInXML =  (Node) artigosPublicados.children()[i]
+
+            Node infoCurrentInXML = (Node) currentInXML.children()[0]
+
+            String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO-DO-ARTIGO")
 
             if(title == titleCurrentInXML)
             {
