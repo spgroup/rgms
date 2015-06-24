@@ -51,7 +51,7 @@ Feature: Book
     When I share the book entitled "SPL Development" on facebook
     Then a facebook message is posted #if ($implementçãoFuncionalidadesNosMoldesArticle)
 
- #if ($implementçãoNovasFuncionalidades)
+ #if ($implementaçãoNovasFuncionalidades)
   Scenario: List existing books by title in alphabetical order
     Given the system has book entitled "Livro de Teste" with file name "TCS-1401.pdf"
     And the system has book entitled "SPL Development" with file name "MACI.pdf"
@@ -80,5 +80,4 @@ Feature: Book
     When I try to create a book named as "Software Engineering 3" with filename "TCS-101.pdf"
     And I share it in my Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then A tweet is added to my twitter regarding the new book "Software Engineering 3"
-  
  #end

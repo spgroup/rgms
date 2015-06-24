@@ -200,7 +200,7 @@
     </a>
     <script>
         $('#button_twitter').live('click', function (e) {
-            jQuery.get("http://localhost:8080/rgms/notifyTwitter/periodico/${periodicoInstance?.id}/${periodicoInstance?.title}");
+            jQuery.get("http://localhost:8080/rgms/notifyTwitter/book/${bookInstance?.id}/${bookInstance?.title}");
         });
     </script>
 <!-- Twitter end -->

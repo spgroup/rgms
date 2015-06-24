@@ -170,7 +170,6 @@ And(~'^there is the book "([^"]*)" stored in the system with file name "([^"]*)"
     selectNewBookInBooksPage()
     page.fillBookDetails(title, filename)
     page.selectCreateBook()
-    //assert !bookNoExist(title)
     to BookPage
     at BookPage
 }
@@ -256,4 +255,3 @@ def selectNewBookInBooksPage(){
     page.selectNewBook()
     at BookCreatePage
 }
-
