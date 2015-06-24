@@ -68,10 +68,16 @@ Feature: Book
     When the system filter the books authored by author "Paulo Borba"
     Then the system book list content is not modified
 
-  Scenario: Post an existing article on facebook web
+  Scenario: Post an existing book on facebook web
     Given I am on the book page
     And there is the book "Software Engineering 3" stored in the system with file name "TCS-04.pdf"
     When I select to view "Software Engineering 3" in resulting book list
     And I click on Share on Facebook for book
     Then A Facebook message was posted
+
+  Scenario: Add a new book tweeting it web
+    Given I am on the book page
+    When I try to create a book named as "Software Engineering 3" with filename "TCS-101.pdf"
+    And I share it in my Twitter with "rgms_ufpe" and "rgmsadmin2013"
+    Then A tweet is added to my twitter regarding the new book "Software Engineering 3"
  #end
