@@ -41,6 +41,15 @@ class ArticleTestDataAndOperations {
 		cont.response.reset()
 	}
 
+	static public void uploadArticleWithSimilarityAnalysis(filename) {
+
+		def cont = new XMLController()
+		def xml = new File(filename);
+		def records = new XmlParser()
+		cont.saveJournalsWithSimilarityAnalysis(records.parse(xml))
+		cont.response.reset()
+	}
+
 	static public boolean compatibleTo(article, title) {
 		def testarticle = findArticleByTitle(title)
 		def compatible = false
@@ -61,7 +70,11 @@ class ArticleTestDataAndOperations {
 
 	static public void createArticle(String title, filename, date, authorName) {
 		def cont = new PeriodicoController()
-		cont.params << ArticleTestDataAndOperations.findArticleByTitle(title) << [file: filename]
+		def journal = [journal: "Theoretical Computer Science", volume: 455, number: 1, pages: "2-30",
+					  title: title,
+					  publicationDate: (new Date("12 October 2012"))]
+		//cont.params << ArticleTestDataAndOperations.findArticleByTitle(title) << [file: filename]
+		cont.params << journal << [file: filename]
 		if(date!=null){
 			cont.params["publicationDate"] = new Date(date)
 		}
@@ -163,6 +176,16 @@ class ArticleTestDataAndOperations {
 		def cont = new PeriodicoController()
 		cont.params << [check: ids]
 		cont.deleteMultiples()
+	}
+
+	static public boolean verifyJournalXML(String title, String filename)
+	{
+		def cont = new XMLController()
+		def xml = new File(filename);
+		def records = new XmlParser()
+		boolean result = cont.verifyJournals(title, records.parse(xml));
+		cont.response.reset()
+		return result;
 	}
 }
 

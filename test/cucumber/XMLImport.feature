@@ -357,6 +357,20 @@ Feature: XMLImport
     Then the system outputs a list of imported orientations which contains the orientations "Design and Evaluation of an Object-Oriented Formal Specification Language" and "Design and Evaluation of an Object-oriented formal Specification Languagee"
     And the new orientation entitled "Design and Evaluation of an Object-oriented formal Specification Languagee" is stored by the system
 
+  Scenario: journal articles with similar names should be considered as duplicates, according to the tolerance level
+    Given the system has a journal article entitled "A System For Translating Executable VDM Specifications Into Lazy ML" stored
+    And the similarity tolerance is configured to "6"
+    When  I upload the file "curriculo5.xml" which contains a journal article entitled "a system For translating Executable VDM specifications into lazy Ml"
+    Then the system does not store the journal article entitled "a system For translating Executable VDM specifications into lazy Ml"
+    And the journal article entitled "A System For Translating Executable VDM Specifications Into Lazy ML" still in the system
+
+  Scenario: journal articles without similar names should not be considered as duplicates, according to the tolerance level
+    Given the system has a journal article entitled "A System For Translating Executable VDM Specifications Into Lazy ML" stored with filename "ASFTEVSILM.pdf"
+    And the similarity tolerance is configured to "6"
+    When  I upload the file "curriculo6.xml" which contains a journal article entitled "A system For translating Executable VDM specifications into lazy Ml"
+    Then the system store the journal article entitled "A system For translating Executable VDM specifications into lazy Ml"
+    And the journal article entitled "A System For Translating Executable VDM Specifications Into Lazy ML" still in the system
+
 #end
 # o que acontece quando o arquivo tem publicações já cadastradas? e
 # publicações com mesmos títulos mas outras partes diferentes? e

@@ -118,6 +118,11 @@ class XMLController {
         return XMLService.verifyOrientations(title, xmlFile)
     }
 
+    def boolean verifyJournals(String title, Node xmlFile)
+    {
+        return XMLService.verifyJournals(title, xmlFile)
+    }
+
     def enviarConferenciaXML() {
         String flashMessage = message(code: 'default.importedMsg.message')
 
@@ -154,6 +159,11 @@ class XMLController {
     private Closure saveJournals = {
         Node xmlFile ->
             XMLService.createJournals(xmlFile)
+    }
+
+    private Closure saveJournalsWithSimilarityAnalysis = {
+        Node xmlFile ->
+            XMLService.createJournalsWithSimilarityAnalysis(xmlFile,similarityTolerance)
     }
 
     def uploadMemberXML() {

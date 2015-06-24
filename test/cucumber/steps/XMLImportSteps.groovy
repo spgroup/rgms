@@ -8,6 +8,7 @@ import pages.XMLImportPage
 import pages.ferramenta.FerramentaPage
 import rgms.member.Orientation
 import rgms.publication.*
+import steps.ArticleTestDataAndOperations
 import steps.OrientationTestDataAndOperations
 import steps.TestDataAndOperationsPublication
 import steps.TestDataDissertacao
@@ -206,4 +207,39 @@ Then(~'^the system outputs a list of imported orientations which contains the or
 And(~'^the new orientation entitled "([^"]*)" is stored by the system$') { String title->
     def orientation = Orientation.findByTituloTese(title)
     assert orientation != null
+}
+
+Given(~'^the system has a journal article entitled "([^"]*)" stored$') { String title->
+    ArticleTestDataAndOperations.createArticle(title, "article.pdf")
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
+}
+
+When(~'^I upload the file "([^"]*)" which contains a journal article entitled "([^"]*)"$') { String filename, title->
+
+    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    ArticleTestDataAndOperations.uploadArticleWithSimilarityAnalysis(path)
+    boolean result = ArticleTestDataAndOperations.verifyJournalXML(title, path)
+    assert result
+}
+
+Then(~'^the system does not store the journal article entitled "([^"]*)"$') { String title->
+    def periodico = Periodico.findByTitle(title);
+    assert periodico == null
+}
+
+And(~'^the journal article entitled "([^"]*)" still in the system$') { String title->
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
+}
+
+Given(~'^the system has a journal article entitled "([^"]*)" stored with filename "([^"]*)"$') { String title, filename->
+    ArticleTestDataAndOperations.createArticle(title, filename)
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
+}
+
+Then(~'^the system store the journal article entitled "([^"]*)"$') { String title->
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
 }
