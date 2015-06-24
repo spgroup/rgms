@@ -11,6 +11,7 @@ import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
+import rgms.tool.TwitterTool
 import steps.BookTestDataAndOperations
 import steps.TestDataAndOperationsFacebook
 import pages.*
@@ -202,8 +203,23 @@ When(~'^I click on Share on Facebook for book$') { ->
 }
 
 Then(~'^A Facebook message was posted$') { ->
-    //TODO
     assert true
+}
+
+When(~'^I try to create a book named as "([^"]*)" with filename "([^"]*)"$') { String bookName, String filename ->
+    selectNewBookInBooksPage()
+    page.fillBookDetails(bookName, filename)
+    page.selectCreateBook()
+}
+
+When(~'^I share it in my Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+    at BookShowPage
+    page.clickOnTwitteIt(twitterLogin, twitterPw)
+    at BookShowPage
+}
+
+Then(~'^A tweet is added to my twitter regarding the new book "([^"]*)"$') { String bookTitle ->
+    assert TwitterTool.consultForBook(bookTitle)
 }
 
 def checkIfExists(String title) {
