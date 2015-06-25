@@ -53,8 +53,8 @@ Feature: Book
 
  #if ($implementaçãoNovasFuncionalidades)
   Scenario: List existing books by title in alphabetical order
-    Given the system has book entitled "Livro de Teste" with file name "TCS-1401.pdf"
-    And the system has book entitled "SPL Development" with file name "MACI.pdf"
+    Given the system has a book entitled "Livro de Teste" with file name "TCS-1401.pdf"
+    And the system has a book entitled "SPL Development" with file name "MACI.pdf"
     When the system orders the book list by title
     Then the system book list content is not modified
 
@@ -80,4 +80,14 @@ Feature: Book
     When I try to create a book named as "Software Engineering 3" with filename "TCS-101.pdf"
     And I share it in my Twitter with "rgms_ufpe" and "rgmsadmin2013"
     Then A tweet is added to my twitter regarding the new book "Software Engineering 3"
+
+  Scenario: remove multiple books
+    Given the system has a book entitled "Livro de Teste" with file name "TCS-01.pdf"
+    And the system has a book entitled "SPL Development" with file name "AROOP-02.pdf"
+    And the system has a book entitled "Software Engineering" with file name "MACI-03.pdf"
+    When I remove the books "SPL Development" and "Livro de Teste"
+    Then the system removes the book "SPL Development"
+    And the system removes the book "Livro de Teste"
+    And the system contains the "Software Engineering" book
+
  #end
