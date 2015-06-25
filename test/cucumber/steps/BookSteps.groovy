@@ -7,7 +7,6 @@
  */
 
 
-import org.codenarc.rule.logging.PrintlnRule
 import pages.BookCreatePage
 import pages.BookPage
 import pages.LoginPage
