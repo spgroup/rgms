@@ -102,4 +102,10 @@ class BookController {
             return book
         }
     }
+
+    def deleteMultiples(Long id1, Long id2) {
+        def bookInstance1 = Book.get(id1)
+        def bookInstance2 = Book.get(id2)
+        aux.deleteMultiples(id1, bookInstance1, 'book.label', 'Book', id2, bookInstance2);
+    }
 }
