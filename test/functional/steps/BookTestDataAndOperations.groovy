@@ -115,4 +115,12 @@ class BookTestDataAndOperations {
         }
         return true
     }
+
+    static public void removeMultiplesBooks(String title1, String title2) {
+        def testBook1 = Book.findByTitle(title1)
+        def testBook2 = Book.findByTitle(title2)
+        def cont = new BookController()
+        cont.params << [id: testBook1.id, id2: testBook2.id]
+        cont.deleteMultiples(testBook1.id, testBook2.id)
+    }
 }
