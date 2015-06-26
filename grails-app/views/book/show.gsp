@@ -188,6 +188,23 @@
     </script>
     <!-- Facebook end -->
     <!--#end -->
+    <!--#if( $Twitter ) -->
+    <!-- Twitter start -->
+    <a href="javascript:window.open('https://twitter.com/intent/tweet?button_hashtag=RGMS&text=Book:%20${bookInstance?.title}', 'Tweteet It', 'width=450,height=250');"
+       class="twitter-hashtag-button"
+       data-related="rgms_ufpe"
+       id="button_twitter"
+       target="_blank">
+        <img id="share_twitter2"
+             src="http://www.queroviajarmais.com/wp-content/uploads/2015/01/compartilhar-twitter.png">
+    </a>
+    <script>
+        $('#button_twitter').live('click', function (e) {
+            jQuery.get("http://localhost:8080/rgms/notifyTwitter/book/${bookInstance?.id}/${bookInstance?.title}");
+        });
+    </script>
+<!-- Twitter end -->
+<!--#end -->
     <g:form>
         <fieldset class="buttons">
             <g:hiddenField name="id" value="${bookInstance?.id}"/>

@@ -6,11 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 
+
 import pages.BookCreatePage
 import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
+import rgms.tool.TwitterTool
 import steps.BookTestDataAndOperations
 import steps.TestDataAndOperationsFacebook
 import pages.*
@@ -148,11 +150,6 @@ Then(~'^a facebook message is posted$') {->
     assert true
 }
 
-Given(~'^the system has book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
-    BookTestDataAndOperations.createBook(title, filename)
-    assert Book.findByTitle(title) != null
-}
-
 When(~'^the system orders the book list by title$') { ->
     booksSorted = Book.listOrderByTitle(order: "asc")
     assert BookTestDataAndOperations.isSorted(booksSorted, "title")
@@ -169,7 +166,6 @@ And(~'^there is the book "([^"]*)" stored in the system with file name "([^"]*)"
     selectNewBookInBooksPage()
     page.fillBookDetails(title, filename)
     page.selectCreateBook()
-    //assert !bookNoExist(title)
     to BookPage
     at BookPage
 }
@@ -202,8 +198,39 @@ When(~'^I click on Share on Facebook for book$') { ->
 }
 
 Then(~'^A Facebook message was posted$') { ->
-    //TODO
     assert true
+}
+
+When(~'^I try to create a book named as "([^"]*)" with filename "([^"]*)"$') { String bookName, String filename ->
+    selectNewBookInBooksPage()
+    page.fillBookDetails(bookName, filename)
+    page.selectCreateBook()
+}
+
+When(~'^I share it in my Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
+    at BookShowPage
+    page.clickOnTwitteIt(twitterLogin, twitterPw)
+    at BookShowPage
+}
+
+Then(~'^A tweet is added to my twitter regarding the new book "([^"]*)"$') { String bookTitle ->
+    assert TwitterTool.consultForBook(bookTitle)
+}
+
+And(~'^the system contains the "([^"]*)" book$') { String title1 ->
+    assert Book.findByTitle(title1) != null
+}
+
+When(~'^I remove the books "([^"]*)" and "([^"]*)"$') { String title1, title2 ->
+    BookTestDataAndOperations.removeMultiplesBooks(title1, title2)
+    def testDeleteBook1 = Book.findByTitle(title1)
+    def testDeleteBook2 = Book.findByTitle(title2)
+    assert testDeleteBook1 == null
+    assert testDeleteBook2 == null
+}
+
+Then(~'^the system removes the book "([^"]*)"$') { String title ->
+    assert bookNoExist(title)
 }
 
 def checkIfExists(String title) {
@@ -240,4 +267,3 @@ def selectNewBookInBooksPage(){
     page.selectNewBook()
     at BookCreatePage
 }
-
