@@ -98,9 +98,9 @@ class BookController {
         def List<Book> book = new ArrayList<>()
         params.max = Math.min(max ?: 10, 100)
         if (params["authors"] == authorName) {
-            [bookInstanceList: Book.list(params), bookInstanceTotal: Book.count()]
-            return book
+            book << [bookInstanceList: Book.list(params)]
         }
+        return book
     }
 
     def deleteMultiples(Long id1, Long id2) {

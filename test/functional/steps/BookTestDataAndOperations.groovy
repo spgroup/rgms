@@ -110,8 +110,10 @@ class BookTestDataAndOperations {
 
     static public def isFiltered(books,authorName) {
         for (book in books) {
-            if(!(book.authors).contains(authorName))
-                return false
+            if (book.authors!=null) {
+                if (!(book.authors).contains(authorName))
+                    return false
+            }
         }
         return true
     }
