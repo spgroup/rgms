@@ -19,7 +19,7 @@ class XMLController {
     def home() {}
 
     def upload() {
-        similarityTolerance = Integer.parseInt(params.tolerance)
+        setSimilarityTolerance(Integer.parseInt(params.tolerance))
         String flashMessage = 'Publications imported!'
         String controller = "Publication"
         if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request, similarityTolerance))
@@ -197,8 +197,14 @@ class XMLController {
         return user?.author
     }
 
-    def setSimilarityTolerance(int value) {
+    def setSimilarityTolerance(int value)
+    {
         similarityTolerance = value;
+    }
+
+    int getSimilarityToleranec()
+    {
+        return similarityTolerance;
     }
 
 

@@ -328,7 +328,7 @@ class XMLService {
 
         for (int i = 0; i < dissertations.size(); i++)
         {
-            String current = dissertations.get(i)
+            String current = dissertations[i]
             int distanciaMestrado = Levenshtein.distance(current, dissertacaoMestrado)
             if (( distanciaMestrado> toleranceLevel) && distanciaMestrado <= MAX_TOLERANCE_LEVEL)
             {
@@ -370,7 +370,7 @@ class XMLService {
 
             for (int h = 0; h < orientations.size(); h++)
             {
-                String current = orientations.get(h).tituloTese
+                String current = orientations[h].tituloTese
                 Node currentInXML =  (Node) orientacoesConcluidas.children()[i]
                 Node infoCurrentInXML = (Node) currentInXML.children()[0]
                 String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO")
@@ -428,7 +428,7 @@ class XMLService {
             for (int h = 0; h < periodicos.size(); h++)
             {
 
-                String current = periodicos.get(h).title
+                String current = periodicos[h].title
 
                 int distance = Levenshtein.distance(current, titleCurrentInXML )
 
@@ -491,12 +491,37 @@ class XMLService {
 
     static def checkExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel)
     {
+        def finalResult = [status: false, type:""];
 
+        def res = checkDissertationExistenceWithSimilarityAnalysis(xmlFile,toleranceLevel)
+        if(res.status)
+        {
+            finalResult = res;
+        }
+        else
+        {
+            res = checkOrientationExistenceWithSimilarityAnalysis(xmlFile,toleranceLevel)
+            if(res.status)
+            {
+                finalResult = res;
+            }
+            else
+            {
+                finalResult = checkJournalExistenceWithSimilarityAnalysis(xmlFile,toleranceLevel)
+            }
+
+        }
+
+        return finalResult
+
+    }
+
+    @SuppressWarnings(["GroovyBreak", "GroovyBreak", "GroovyBreak", "GroovyBreak"])
+    static def checkDissertationExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel)
+    {
         def result = [status: false, type:""]
 
         Node dadosGerais = (Node) xmlFile.children()[0]
-        Node outraProducao = (Node) xmlFile.children()[3]
-
         List<Dissertacao> dissertations = Dissertacao.findAll();
         Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
         Node mestrado = (Node) formacaoAcademica.children()[1]
@@ -510,24 +535,24 @@ class XMLService {
         for (int i = 0; i < dissertations.size(); i++)
         {
 
-            String current = dissertations.get(i)
+            String current = dissertations[i]
 
             int distance1 = Levenshtein.distance(current, dissertacaoMestrado)
             int distance2 = Levenshtein.distance(current, dissertacaoDoutorado)
-            if (distance1 > toleranceLevel && distance1 <= MAX_TOLERANCE_LEVEL)
+            if ((distance1 > toleranceLevel && distance1 <= MAX_TOLERANCE_LEVEL) || distance2 > toleranceLevel && distance2 <= MAX_TOLERANCE_LEVEL)
             {
                 result.status = true
                 result.type = "Dissertation"
-                return result
-            }
-            else if(distance2 > toleranceLevel && distance2 <= MAX_TOLERANCE_LEVEL)
-            {
-                result.status = true
-                result.type = "Dissertation"
-                return result
+                break;
             }
         }
+        return result
+    }
 
+    static def checkOrientationExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+        def result = [status: false, type: ""]
+
+        Node outraProducao = (Node) xmlFile.children()[3]
 
         List<Orientation> orientations = Orientation.findAll();
 
@@ -540,7 +565,7 @@ class XMLService {
             for (int h = 0; h < orientacoesConcluidas.children().size(); h++)
             {
 
-                String current = orientations.get(i).tituloTese
+                String current = orientations[i].tituloTese
 
                 Node currentInXML =  (Node) orientacoesConcluidas.children()[h]
 
@@ -555,12 +580,15 @@ class XMLService {
 
                     result.status = true
                     result.type = "Orientation"
-                    return result
+                    break;
                 }
             }
         }
+        return result
+    }
 
-
+    static def checkJournalExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+        def result = [status: false, type: ""]
 
         List<Periodico> periodicos = Periodico.findAll();
 
@@ -574,7 +602,7 @@ class XMLService {
             for (int h = 0; h < artigosPublicados.children().size(); h++)
             {
 
-                String current = periodicos.get(i).title
+                String current = periodicos[i].title
 
                 Node currentInXML =  (Node) artigosPublicados.children()[h]
 
@@ -590,18 +618,14 @@ class XMLService {
 
                     result.status = true
                     result.type = "Journal"
-                    return result
+                    break;
                 }
 
             }
         }
-
         return result
-
-
-
-
     }
+
 
     static boolean verifyDissertations (String title, Node xmlFile )
     {
@@ -610,14 +634,7 @@ class XMLService {
         Node mestrado = (Node) formacaoAcademica.children()[1]
         Node doutorado = (Node) formacaoAcademica.children()[2]
 
-        if(analizeDissertationNode(title, mestrado) || analizeDissertationNode(title, doutorado))
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
+        return analizeDissertationNode(title, mestrado) || analizeDissertationNode(title, doutorado)
 
     }
 
@@ -641,7 +658,7 @@ class XMLService {
             if(title == titleCurrentInXML)
             {
                 result = true
-                return result
+                break;
             }
         }
         return result
@@ -670,7 +687,7 @@ class XMLService {
             if(title == titleCurrentInXML)
             {
                 result = true
-                return result
+                break;
             }
         }
         return result
@@ -681,14 +698,7 @@ class XMLService {
     {
         Dissertacao newDissertation = new Dissertacao()
         newDissertation.title = getAttributeValueFromNode(node, "TITULO-DA-DISSERTACAO-TESE")
-        if(newDissertation.title == title)
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
+        return newDissertation.title == title
     }
 
     static void createConferencias(Node xmlFile) {
