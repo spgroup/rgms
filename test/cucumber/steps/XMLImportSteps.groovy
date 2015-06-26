@@ -6,7 +6,13 @@ import pages.LoginPage
 import pages.OrientationPages.OrientationsPage
 import pages.XMLImportPage
 import pages.ferramenta.FerramentaPage
+import rgms.member.Orientation
 import rgms.publication.*
+import steps.ArticleTestDataAndOperations
+import steps.OrientationTestDataAndOperations
+import steps.TestDataAndOperationsPublication
+import steps.TestDataDissertacao
+
 import static cucumber.api.groovy.EN.*
 import steps.TestDataAndOperations
 import CommonSteps
@@ -104,4 +110,136 @@ And(~'^the publications are not stored by the system$') {->
     to OrientationsPage
     at OrientationsPage
     page.checkIfOrientationListIsEmpty()
+}
+
+Given(~'^the system has a dissertation entitled "([^"]*)" stored$') { String title->
+    TestDataDissertacao.createDissertacao(title, "dissertation.txt", "University of Oxford")
+    def dissertation = Dissertacao.findByTitle(title);
+    assert dissertation != null
+}
+
+And(~'^the similarity tolerance is configured to "([^"]*)"$') { int similarityTolerance->
+    TestDataDissertacao.setSimilarityTolerance(similarityTolerance)
+}
+
+When(~'^I upload the file "([^"]*)" which contains a dissertation entitled "([^"]*)"$') { String filename, title->
+
+    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    TestDataDissertacao.uploadDissertacaoWithSimilarityAnalisys(path)
+    boolean result = TestDataDissertacao.verifyDissertationXML(title, path)
+    assert result
+
+}
+
+Then(~'^the system outputs a list of imported dissertations which contains the dissertation entitled "([^"]*)"$') { String title->
+    def dissertation = Dissertacao.findByTitle(title)
+    assert dissertation != null
+}
+
+And(~'^no new dissertation entitled "([^"]*)" is stored by the system$') { String title->
+    def dissertation = Dissertacao.findByTitle(title)
+    assert dissertation == null
+}
+
+Given(~'^I am at the XMLImport Page$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    to XMLImportPage
+    at XMLImportPage
+}
+
+And(~'^I select a xml file$') { ->
+    page.selectFile()
+}
+
+When(~'^I click on "upload" without informing the tolerance level$') { ->
+    page.uploadClick()
+}
+
+Then(~'^the system outputs an error message$') { ->
+    //qualquer navegador por padrão mostra uma mensagem de erro quando o atributo "required" está configurado
+    assert page.isRequiredEnabledOnToleranceSelect()
+}
+
+Given(~'^the system has a orientation entitled "([^"]*)" stored$') { String title->
+    //TestDataDissertacao.createDissertacao(title, "dissertation.txt", "University of Oxford")
+    OrientationTestDataAndOperations.createOrientation(title)
+    //def dissertation = Dissertacao.findByTitle(title);
+    def orientation = Orientation.findByTituloTese(title);
+    assert orientation != null
+}
+
+When(~'^I upload the file "([^"]*)" which contains an orientation entitled "([^"]*)"$') { String filename, title->
+
+    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    OrientationTestDataAndOperations.uploadOrientationWithSimilarityAnalisys(path)
+    boolean result = OrientationTestDataAndOperations.verifyOrientationXML(title, path)
+    assert result
+}
+
+Then(~'^the system outputs a list of imported orientations which contains the orientation entitled "([^"]*)"$') { String title->
+    def orientation = Orientation.findByTituloTese(title)
+    assert orientation != null
+}
+
+And(~'^no new orientation entitled "([^"]*)" is stored by the system$') { String title->
+    def orientation = Orientation.findByTituloTese(title)
+    assert orientation == null
+}
+
+When(~'^I click on "upload" informing the tolerance level$') { ->
+    page.setToleranceValue(10)
+    page.uploadClick()
+}
+
+Then(~'^the system outputs a successful message$') { ->
+    //se for um erro a mensagem é colocada em readErrorMessage
+    assert page.readFlashMessage() != null
+}
+
+Then(~'^the system outputs a list of imported orientations which contains the orientations "([^"]*)" and "([^"]*)"$') { String title1, title2->
+    def orientation1 = Orientation.findByTituloTese(title1)
+    def orientation2 = Orientation.findByTituloTese(title2)
+    assert orientation1 != null && orientation2 != null
+}
+
+And(~'^the new orientation entitled "([^"]*)" is stored by the system$') { String title->
+    def orientation = Orientation.findByTituloTese(title)
+    assert orientation != null
+}
+
+Given(~'^the system has a journal article entitled "([^"]*)" stored$') { String title->
+    ArticleTestDataAndOperations.createArticle(title, "article.pdf")
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
+}
+
+When(~'^I upload the file "([^"]*)" which contains a journal article entitled "([^"]*)"$') { String filename, title->
+
+    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    ArticleTestDataAndOperations.uploadArticleWithSimilarityAnalysis(path)
+    boolean result = ArticleTestDataAndOperations.verifyJournalXML(title, path)
+    assert result
+}
+
+Then(~'^the system does not store the journal article entitled "([^"]*)"$') { String title->
+    def periodico = Periodico.findByTitle(title);
+    assert periodico == null
+}
+
+And(~'^the journal article entitled "([^"]*)" still in the system$') { String title->
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
+}
+
+Given(~'^the system has a journal article entitled "([^"]*)" stored with filename "([^"]*)"$') { String title, filename->
+    ArticleTestDataAndOperations.createArticle(title, filename)
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
+}
+
+Then(~'^the system store the journal article entitled "([^"]*)"$') { String title->
+    def periodico = Periodico.findByTitle(title);
+    assert periodico != null
 }

@@ -1,6 +1,7 @@
 package pages
 
 import geb.Page
+import rgms.publication.Book
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,5 +29,58 @@ class BookPage extends Page {
 
     def selectNewBook() {
         $('a.create').click()
+    }
+
+    def selectOrderBy(sortType){
+        switch (sortType) {
+            case 'title':
+                $('a[href="/rgms/book/list?sort=title&max=10&order=asc"]').click()
+                break
+            case 'publication date':
+                $('a[href="/rgms/book/list?sort=publicationDate&max=10&order=asc"]').click()
+                break
+        }
+    }
+
+    def checkOrderedBy(sortType){
+        def firstBookColumns 	= this.getBookColumns(0)
+        def secondBookColumns 	= this.getBookColumns(1)
+        switch (sortType) {
+            case 'title':
+                assert firstBookColumns[0].text().compareTo(secondBookColumns[0].text()) < 0
+                break
+            case 'publication date':
+                assert firstBookColumns[1].text().compareTo(secondBookColumns[1].text()) < 0
+                break
+        }
+    }
+
+    def getBookColumns(row){
+        def listDiv = $('div', id: 'list-book')
+        def bookTable = (listDiv.find('table'))[0]
+        def bookRows = bookTable.find('tbody').find('tr')
+        def bookColumns = bookRows[row].find('td')
+        return bookColumns
+    }
+
+    def select(String s) {
+        $('div', id: 'status').find('a', text: s).click()
+    }
+
+    def checkBookAtList(title, row) {
+        def bookColumns = this.getBookColumns(row)
+        bookColumns[1].text() == "Livro de Teste"
+        bookColumns[2].text() == "[]"
+        bookColumns[3].text() == "TCS-88.pdf"
+        bookColumns[4].text() == "[]"
+
+    }
+
+    def selectViewBook(String title) {
+        def listDiv = $('div', id: 'list-book')
+        def bookTable = (listDiv.find('table'))[0]
+        def bookRow = bookTable.find('tbody').find('tr')
+        def showLink = bookRow.find('td').find([text: title])
+        showLink.click()
     }
 }

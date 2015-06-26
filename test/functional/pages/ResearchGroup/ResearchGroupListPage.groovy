@@ -15,6 +15,10 @@ class ResearchGroupListPage extends Page {
     static content = {
     }
 
+    def select(String s) {
+        $('div', id: 'status').find('a', text: s).click()
+    }
+
     def selectResearchGroup(String s) {
         $('div').find('a', text: s).click()
     }

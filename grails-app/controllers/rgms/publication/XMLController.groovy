@@ -14,12 +14,15 @@ import rgms.member.Member
  */
 class XMLController {
 
+    static int similarityTolerance = 0
+
     def home() {}
 
     def upload() {
+        setSimilarityTolerance(Integer.parseInt(params.tolerance))
         String flashMessage = 'Publications imported!'
         String controller = "Publication"
-        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request))
+        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request, similarityTolerance))
             return
     }
 
@@ -95,6 +98,31 @@ class XMLController {
             XMLService.createDissertations(xmlFile)
     }
 
+    private Closure saveDissertationsWithSimilarityAnalisys = {
+        Node xmlFile ->
+            XMLService.createDissertationsWithSimilarityAnalysis(xmlFile, similarityTolerance)
+    }
+
+    private Closure saveOrientationsWithSimilarityAnalisys = {
+        Node xmlFile ->
+            XMLService.createOrientationsWithSimilarityAnalysis(xmlFile, similarityTolerance)
+    }
+
+    def boolean verifyDissertations(String title, Node xmlFile)
+    {
+        return XMLService.verifyDissertations(title, xmlFile)
+    }
+
+    def boolean verifyOrientations(String title, Node xmlFile)
+    {
+        return XMLService.verifyOrientations(title, xmlFile)
+    }
+
+    def boolean verifyJournals(String title, Node xmlFile)
+    {
+        return XMLService.verifyJournals(title, xmlFile)
+    }
+
     def enviarConferenciaXML() {
         String flashMessage = message(code: 'default.importedMsg.message')
 
@@ -133,6 +161,11 @@ class XMLController {
             XMLService.createJournals(xmlFile)
     }
 
+    private Closure saveJournalsWithSimilarityAnalysis = {
+        Node xmlFile ->
+            XMLService.createJournalsWithSimilarityAnalysis(xmlFile,similarityTolerance)
+    }
+
     def uploadMemberXML() {
         String flashMessage = 'XML data extracted. Complete the remaining fields'
 
@@ -163,4 +196,16 @@ class XMLController {
         User user = User.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
         return user?.author
     }
+
+    def setSimilarityTolerance(int value)
+    {
+        similarityTolerance = value;
+    }
+
+    int getSimilarityToleranec()
+    {
+        return similarityTolerance;
+    }
+
+
 }

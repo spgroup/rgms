@@ -35,3 +35,58 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
+
+  Scenario: List existing books by title in alphabetical order web
+    Given I am on the book page
+    When I select to sort the books by "title"
+    Then the books are ordered by "title" in alphabetical order
+
+  Scenario: List existing book
+    Given the system has a book entitled "SPL Development" with file name "HSPLE.pdf"
+    When I view the book list
+    Then my book list contains the book "SPL Development"
+
+  Scenario: Post an existing book on facebook
+    Given the system has a book entitled "SPL Development" with file name "HSPLE.pdf"
+    When I share the book entitled "SPL Development" on facebook
+    Then a facebook message is posted #if ($implementçãoFuncionalidadesNosMoldesArticle)
+
+ #if ($implementaçãoNovasFuncionalidades)
+  Scenario: List existing books by title in alphabetical order
+    Given the system has a book entitled "Livro de Teste" with file name "TCS-1401.pdf"
+    And the system has a book entitled "SPL Development" with file name "MACI.pdf"
+    When the system orders the book list by title
+    Then the system book list content is not modified
+
+  Scenario: list existing book web
+    Given I am on the book page
+    And there is the book "Livro de Teste" stored in the system with file name "TCS-88.pdf"
+    Then my resulting books list contains the book "Livro de Teste"
+
+  Scenario: Filter existing books by author
+    Given the system has some books authored by "Paulo Borba"
+    When the system filter the books authored by author "Paulo Borba"
+    Then the system book list content is not modified
+
+  Scenario: Post an existing book on facebook web
+    Given I am on the book page
+    And there is the book "Software Engineering 3" stored in the system with file name "TCS-04.pdf"
+    When I select to view "Software Engineering 3" in resulting book list
+    And I click on Share on Facebook for book
+    Then A Facebook message was posted
+
+  Scenario: Add a new book tweeting it web
+    Given I am on the book page
+    When I try to create a book named as "Software Engineering 3" with filename "TCS-101.pdf"
+    And I share it in my Twitter with "rgms_ufpe" and "rgmsadmin2013"
+    Then A tweet is added to my twitter regarding the new book "Software Engineering 3"
+
+  Scenario: remove multiple books
+    Given the system has a book entitled "Livro de Teste" with file name "TCS-01.pdf"
+    And the system has a book entitled "SPL Development" with file name "AROOP-02.pdf"
+    And the system has a book entitled "Software Engineering" with file name "MACI-03.pdf"
+    When I remove the books "SPL Development" and "Livro de Teste"
+    Then the system removes the book "SPL Development"
+    And the system removes the book "Livro de Teste"
+    And the system contains the "Software Engineering" book
+ #end

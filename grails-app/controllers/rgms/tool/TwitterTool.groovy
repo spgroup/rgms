@@ -42,4 +42,15 @@ public class TwitterTool{
         twitterFound?.status != 0
     }
 
+    static public boolean consultForBook(String bookName) {
+        println "consult="+bookName
+        def twitterFound = twittersHistory.find { bookNameTwitter ->
+            bookNameTwitter.bookName == bookName
+        }
+        if (twitterFound != null){
+            return false
+        }
+        twitterFound?.status != 0
+    }
+
 }

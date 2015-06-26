@@ -93,4 +93,19 @@ class BookController {
         def bookInstance = Book.get(id)
         aux.delete(id, bookInstance, 'book.label', 'Book');
     }
+
+    def List<Book> filterByAuthor(Integer max, String authorName) {
+        def List<Book> book = new ArrayList<>()
+        params.max = Math.min(max ?: 10, 100)
+        if (params["authors"] == authorName) {
+            book << [bookInstanceList: Book.list(params)]
+        }
+        return book
+    }
+
+    def deleteMultiples(Long id1, Long id2) {
+        def bookInstance1 = Book.get(id1)
+        def bookInstance2 = Book.get(id2)
+        aux.deleteMultiples(id1, bookInstance1, 'book.label', 'Book', id2, bookInstance2);
+    }
 }

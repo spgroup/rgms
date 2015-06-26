@@ -1,14 +1,16 @@
 package pages.ResearchGroup
 
 import geb.Page
+import pages.GetPageTitle
 
 class ResearchGroupShowPage extends Page {
     static url = "researchGroup/show/1"
 
     static at = {
-
-        title ==~ /Ver Grupo de Pesquisa/
-
+        GetPageTitle gp = new GetPageTitle()
+        def memberLabel = gp.msg("researchGroup.label")
+        def createLabel = gp.msg("default.create.label", [researchGroupLabel])
+        title ==~ createLabel
     }
 
     static content = {
@@ -31,6 +33,15 @@ class ResearchGroupShowPage extends Page {
         def html = $('form').find([title: "HTML"])
         assert html != null
     }
+
+    def clickHtml() {
+        def html = $('form').find([title: "HTML"]).click()
+    }
+
+    def clickXML() {
+        def html = $('form').find([title: "XML"]).click()
+    }
+
 
     def checkXml() {
         def xml = $('form').find([title: "XML"])

@@ -3,10 +3,14 @@ package rgms
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import rgms.member.Member
+import rgms.member.MemberController
 import rgms.member.Orientation
+import rgms.member.OrientationController
 import rgms.publication.*
 import rgms.researchProject.Funder
 import rgms.researchProject.ResearchProject
+import rgms.tool.Levenshtein
+
 
 class XMLService {
 
@@ -14,14 +18,38 @@ class XMLService {
         saveEntity - closure que salva a classe de domínio que está usando a importação
      */
 
+    static final int MAX_TOLERANCE_LEVEL = 10;
+
     static boolean Import(Closure saveEntity, Closure returnWithMessage,
                           String flashMessage, String controller,
-                          javax.servlet.http.HttpServletRequest request) {
+                          javax.servlet.http.HttpServletRequest request, int similarityTolerance) {
         boolean errorFound = false
 
         try {
             Node xmlFile = parseReceivedFile(request)
-            saveEntity(xmlFile)
+            def result = checkExistenceWithSimilarityAnalysis(xmlFile, similarityTolerance)
+            if(!result.status)
+            {
+                saveEntity(xmlFile)
+            }
+            else
+            {
+                if(result.type == "Dissertation")
+                {
+                    flashMessage = 'default.xml.similar.dissertation.message'
+                }
+                else if(result.type == "Orientation")
+                {
+                    flashMessage = 'default.xml.similar.orientation.message'
+                }
+                else if(result.type == "Journal")
+                {
+                    flashMessage = 'default.xml.similar.journal.message'
+                }
+
+
+                errorFound = true
+            }
         }
         //If file is not XML or if no file was uploaded
         catch (SAXParseException) {
@@ -282,6 +310,174 @@ class XMLService {
         createDissertation(doutorado)
     }
 
+    static void createDissertationsWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+
+        List<Dissertacao> dissertations = Dissertacao.findAll();
+
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node mestrado = (Node) formacaoAcademica.children()[1]
+        Node doutorado = (Node) formacaoAcademica.children()[2]
+
+        String dissertacaoMestrado = getAttributeValueFromNode(mestrado, "TITULO-DA-DISSERTACAO-TESE")
+
+        String dissertacaoDoutorado = getAttributeValueFromNode(doutorado, "TITULO-DA-DISSERTACAO-TESE")
+
+        boolean mestradoOK = true
+        boolean doutoradoOK = true
+
+        for (int i = 0; i < dissertations.size(); i++)
+        {
+            String current = dissertations[i]
+            int distanciaMestrado = Levenshtein.distance(current, dissertacaoMestrado)
+            if (( distanciaMestrado> toleranceLevel) && distanciaMestrado <= MAX_TOLERANCE_LEVEL)
+            {
+                mestradoOK = false
+
+            }
+
+            int distanciaDoutorado = Levenshtein.distance(current, dissertacaoDoutorado)
+            if(distanciaDoutorado > toleranceLevel && distanciaDoutorado <=MAX_TOLERANCE_LEVEL)
+            {
+                doutoradoOK = false
+
+            }
+        }
+
+        if(mestradoOK)
+        {
+            createDissertation(mestrado)
+        }
+
+        if(doutoradoOK)
+        {
+            createDissertation(doutorado)
+        }
+
+    }
+
+    static void createOrientationsWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+
+        Node outraProducao = (Node) xmlFile.children()[3]
+        List<Orientation> orientations = Orientation.findAll();
+        Node orientacoesConcluidas = (Node) getNodeFromNode(outraProducao, "ORIENTACOES-CONCLUIDAS")
+
+
+        for (int i = 0; i < orientacoesConcluidas.children().size(); i++)
+        {
+            boolean result = true;
+            String title = ""
+
+            for (int h = 0; h < orientations.size(); h++)
+            {
+                String current = orientations[h].tituloTese
+                Node currentInXML =  (Node) orientacoesConcluidas.children()[i]
+                Node infoCurrentInXML = (Node) currentInXML.children()[0]
+                String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO")
+                title = titleCurrentInXML
+
+                int distance = Levenshtein.distance(current, titleCurrentInXML )
+
+                if ( distance> toleranceLevel && distance <= MAX_TOLERANCE_LEVEL)
+                {
+                    result = false
+                }
+            }
+
+            if(result)
+            {
+                def members = [[name: "Rodolfo", username: "usernametest", email: "rodolfofake@gmail.com", status: "Graduate Student", university: "UFPE", enabled: true]]
+                def memberCreater = new Member(members[0])
+                def cont = new OrientationController()
+                memberCreater.create()
+                memberCreater.save()
+                def member = Member.findByName(memberCreater.name)
+
+                cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: title, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
+                cont.request.setContent(new byte[1000]) // Could also vary the request content.
+                cont.create()
+                cont.save()
+                cont.response.reset()
+
+                //createOrientations(xmlFile, memberCreater)
+            }
+
+
+        }
+
+
+
+    }
+
+    static void createJournalsWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+
+        List<Periodico> periodicos = Periodico.findAll();
+
+        Node producaoBibliografica = (Node) xmlFile.children()[1]
+        Node artigosPublicados = (Node) producaoBibliografica.children()[1]
+
+
+        for (int i = 0; i < artigosPublicados.children().size(); i++)
+        {
+            boolean result = true;
+
+            Node currentInXML =  (Node) artigosPublicados.children()[i]
+            Node infoCurrentInXML = (Node) currentInXML.children()[0]
+            String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO-DO-ARTIGO")
+
+            for (int h = 0; h < periodicos.size(); h++)
+            {
+
+                String current = periodicos[h].title
+
+                int distance = Levenshtein.distance(current, titleCurrentInXML )
+
+                if ( distance> toleranceLevel && distance <= MAX_TOLERANCE_LEVEL)
+                {
+                    result = false
+                }
+            }
+
+            if(result)
+            {
+                def cont = new PeriodicoController()
+
+                Node detailsCurrentInXML = (Node) currentInXML.children()[1]
+
+                def journal = getAttributeValueFromNode(detailsCurrentInXML, "TITULO-DO-PERIODICO-OU-REVISTA")
+
+                def volume = getAttributeValueFromNode(detailsCurrentInXML, "VOLUME")
+
+                def number = getAttributeValueFromNode(detailsCurrentInXML, "FASCICULO")
+
+                def pages = ""+getAttributeValueFromNode(detailsCurrentInXML, "PAGINA-INICIAL") +"-"+ getAttributeValueFromNode(detailsCurrentInXML, "PAGINA-FINAL")
+
+                def title = titleCurrentInXML
+
+                def file = title + ".pdf"
+
+                def publicationDate = new Date("1 January "+getAttributeValueFromNode(infoCurrentInXML, "ANO-DO-ARTIGO"))
+
+                cont.params << [journal: journal, volume: volume, number: number, pages: pages,
+                                title: title,publicationDate: publicationDate, file: file]
+
+
+                cont.request.setContent(new byte[1000])
+                cont.create()
+                cont.save()
+                cont.response.reset()
+
+
+
+            }
+
+
+        }
+
+
+
+    }
+
     private static void createDissertation(Node xmlNode) {
         Dissertacao newDissertation = new Dissertacao()
         newDissertation.title = getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")
@@ -291,6 +487,218 @@ class XMLService {
         newDissertation.file = 'no File'
         newDissertation.address = 'no Address'
         newDissertation.save(flush: false)
+    }
+
+    static def checkExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel)
+    {
+        def finalResult = [status: false, type:""];
+
+        def res = checkDissertationExistenceWithSimilarityAnalysis(xmlFile,toleranceLevel)
+        if(res.status)
+        {
+            finalResult = res;
+        }
+        else
+        {
+            res = checkOrientationExistenceWithSimilarityAnalysis(xmlFile,toleranceLevel)
+            if(res.status)
+            {
+                finalResult = res;
+            }
+            else
+            {
+                finalResult = checkJournalExistenceWithSimilarityAnalysis(xmlFile,toleranceLevel)
+            }
+
+        }
+
+        return finalResult
+
+    }
+
+    @SuppressWarnings(["GroovyBreak", "GroovyBreak", "GroovyBreak", "GroovyBreak"])
+    static def checkDissertationExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel)
+    {
+        def result = [status: false, type:""]
+
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        List<Dissertacao> dissertations = Dissertacao.findAll();
+        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node mestrado = (Node) formacaoAcademica.children()[1]
+        Node doutorado = (Node) formacaoAcademica.children()[2]
+
+        String dissertacaoMestrado = getAttributeValueFromNode(mestrado, "TITULO-DA-DISSERTACAO-TESE")
+
+        String dissertacaoDoutorado = getAttributeValueFromNode(doutorado, "TITULO-DA-DISSERTACAO-TESE")
+
+
+        for (int i = 0; i < dissertations.size(); i++)
+        {
+
+            String current = dissertations[i]
+
+            int distance1 = Levenshtein.distance(current, dissertacaoMestrado)
+            int distance2 = Levenshtein.distance(current, dissertacaoDoutorado)
+            if ((distance1 > toleranceLevel && distance1 <= MAX_TOLERANCE_LEVEL) || distance2 > toleranceLevel && distance2 <= MAX_TOLERANCE_LEVEL)
+            {
+                result.status = true
+                result.type = "Dissertation"
+                break;
+            }
+        }
+        return result
+    }
+
+    static def checkOrientationExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+        def result = [status: false, type: ""]
+
+        Node outraProducao = (Node) xmlFile.children()[3]
+
+        List<Orientation> orientations = Orientation.findAll();
+
+        Node orientacoesConcluidas = (Node) getNodeFromNode(outraProducao, "ORIENTACOES-CONCLUIDAS")
+
+
+        for (int i = 0; i < orientations.size(); i++)
+        {
+
+            for (int h = 0; h < orientacoesConcluidas.children().size(); h++)
+            {
+
+                String current = orientations[i].tituloTese
+
+                Node currentInXML =  (Node) orientacoesConcluidas.children()[h]
+
+                Node infoCurrentInXML = (Node) currentInXML.children()[0]
+
+                String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO")
+
+                int distance = Levenshtein.distance(current, titleCurrentInXML )
+
+                if ( distance> toleranceLevel && distance <= MAX_TOLERANCE_LEVEL)
+                {
+
+                    result.status = true
+                    result.type = "Orientation"
+                    break;
+                }
+            }
+        }
+        return result
+    }
+
+    static def checkJournalExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+        def result = [status: false, type: ""]
+
+        List<Periodico> periodicos = Periodico.findAll();
+
+        Node producaoBibliografica = (Node) xmlFile.children()[1]
+        Node artigosPublicados = (Node) producaoBibliografica.children()[1]
+
+
+        for (int i = 0; i < periodicos.size(); i++)
+        {
+
+            for (int h = 0; h < artigosPublicados.children().size(); h++)
+            {
+
+                String current = periodicos[i].title
+
+                Node currentInXML =  (Node) artigosPublicados.children()[h]
+
+                Node infoCurrentInXML = (Node) currentInXML.children()[0]
+
+                String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO-DO-ARTIGO")
+
+                int distance = Levenshtein.distance(current, titleCurrentInXML )
+
+
+                if ( distance> toleranceLevel && distance <= MAX_TOLERANCE_LEVEL)
+                {
+
+                    result.status = true
+                    result.type = "Journal"
+                    break;
+                }
+
+            }
+        }
+        return result
+    }
+
+
+    static boolean verifyDissertations (String title, Node xmlFile )
+    {
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node mestrado = (Node) formacaoAcademica.children()[1]
+        Node doutorado = (Node) formacaoAcademica.children()[2]
+
+        return analizeDissertationNode(title, mestrado) || analizeDissertationNode(title, doutorado)
+
+    }
+
+    static boolean verifyOrientations (String title, Node xmlFile )
+    {
+
+        Node outraProducao = (Node) xmlFile.children()[3]
+
+        Node orientacoesConcluidas = (Node) getNodeFromNode(outraProducao, "ORIENTACOES-CONCLUIDAS")
+
+        boolean result = false
+        for(int i=0; i<orientacoesConcluidas.children().size();i++)
+        {
+
+            Node currentInXML =  (Node) orientacoesConcluidas.children()[i]
+
+            Node infoCurrentInXML = (Node) currentInXML.children()[0]
+
+            String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO")
+
+            if(title == titleCurrentInXML)
+            {
+                result = true
+                break;
+            }
+        }
+        return result
+
+    }
+
+    static boolean verifyJournals (String title, Node xmlFile )
+    {
+        Node producaoBibliografica = (Node) xmlFile.children()[1]
+        Node artigosPublicados = (Node) producaoBibliografica.children()[1]
+
+        //getAttributeValueFromNode(dadosBasicos, "TITULO-DO-ARTIGO")
+
+        //Node orientacoesConcluidas = (Node) getNodeFromNode(outraProducao, "ORIENTACOES-CONCLUIDAS")
+
+        boolean result = false
+        for(int i=0; i<artigosPublicados.children().size();i++)
+        {
+
+            Node currentInXML =  (Node) artigosPublicados.children()[i]
+
+            Node infoCurrentInXML = (Node) currentInXML.children()[0]
+
+            String titleCurrentInXML = getAttributeValueFromNode(infoCurrentInXML, "TITULO-DO-ARTIGO")
+
+            if(title == titleCurrentInXML)
+            {
+                result = true
+                break;
+            }
+        }
+        return result
+
+    }
+
+    static boolean analizeDissertationNode(String title, Node node)
+    {
+        Dissertacao newDissertation = new Dissertacao()
+        newDissertation.title = getAttributeValueFromNode(node, "TITULO-DA-DISSERTACAO-TESE")
+        return newDissertation.title == title
     }
 
     static void createConferencias(Node xmlFile) {

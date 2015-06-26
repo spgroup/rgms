@@ -28,6 +28,7 @@ class ArticlesPage extends Page {
 		$('a.create').click()
 	}
 
+
 	def selectViewReports() {
 		def listAnchors  = $('a.list')
 		def reportAnchor = listAnchors[1]
@@ -46,7 +47,7 @@ class ArticlesPage extends Page {
 	/**
 	 * @author Guilherme
 	 */
-	def selectViewArticle(title) {
+	def selectViewArticle(String title) {
 		def listDiv = $('div', id: 'list-periodico')
 		def articleTable = (listDiv.find('table'))[0]
 		def articleRow = articleTable.find('tbody').find('tr')
