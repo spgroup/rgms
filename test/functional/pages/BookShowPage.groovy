@@ -15,7 +15,7 @@ class BookShowPage extends Page {
         //title ==~ /Ver Book/
         GetPageTitle gp = new GetPageTitle()
         def currentBook = gp.getMessageServerLocale("default.book.label")
-        def currentTitle = currentBook + " " + gp.getMessageServerLocale("default.button.list.label")
+        title ==~ gp.msg("default.list.label", [currentBook])
     }
 
     static content = {

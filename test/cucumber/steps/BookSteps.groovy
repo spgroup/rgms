@@ -188,11 +188,12 @@ When(~'^the system filter the books authored by author "([^"]*)"$') {String auth
 
 When(~'^I select to view "([^"]*)" in resulting book list$') { String title ->
     page.selectViewBook(title)
+    to BookShowPage
     at BookShowPage
 }
 
 When(~'^I click on Share on Facebook for book$') { ->
-    at BookShowPage
+    to BookShowPage
     page.clickOnShareOnFacebook()
     at BookShowPage
 }
@@ -208,7 +209,7 @@ When(~'^I try to create a book named as "([^"]*)" with filename "([^"]*)"$') { S
 }
 
 When(~'^I share it in my Twitter with "([^"]*)" and "([^"]*)"$') { String twitterLogin, String twitterPw ->
-    at BookShowPage
+    to BookShowPage
     page.clickOnTwitteIt(twitterLogin, twitterPw)
     at BookShowPage
 }
