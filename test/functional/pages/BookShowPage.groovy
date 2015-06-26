@@ -2,8 +2,8 @@
 package pages
 
 /**
- * Created by Luis on 26/05/2015.
- */
+*  Created by Luis on 26/05/2015.
+*/
 
 import geb.Page
 import pages.GetPageTitle
