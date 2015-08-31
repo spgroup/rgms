@@ -1,4 +1,4 @@
-# ResS_Project
+# RGMS
 
 Grails 2.1.0
 JDK 1.7 SDK 7
