@@ -166,5 +166,25 @@ Scenario: remove article
     When I selected the conference at which I want to remove the article    
     And a list of articles stored by the system is displayed at the conferencia page
     Then I can remove one article
+
+Scenario: Suggest name of author when I am filling in the corresponding field on web
+     Given I am filling in the name of Author field 
+     When I fill the name of Author field with "Paulo"
+     Then Appears suggestions of names with the names "Paul Borba", "Paulo Henrique", "Paulo Viana"
+
+Scenario: Suggest name of author when I am filling in the corresponding field on web
+     Given I am filling in the name of Author field
+     When I fill the Author's name field with "Paulo"
+     Then Not appear suggestions
+     
+Scenario: Suggest name of author when I am filling in the corresponding field (success)
+     Given the system suggested the authors names "Paul Borba", "Paulo Henrique", "Paulo Viana"
+     When I signed up "Paul Bruno" in the system
+     Then the system stores "Paul Borba", "Paulo Henrique", "Paulo Viana", "Paulo Bruno" in cache
+
+Scenario: Suggest name of author when I am filling in the corresponding field (failure)
+     Given the system not suggested the authors names
+     When I signed up "Paul Bruno" in the system
+     Then the system stores "Paul Bruno" in cache
     
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
