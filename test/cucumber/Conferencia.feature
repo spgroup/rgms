@@ -144,47 +144,26 @@ Feature: conferencia
     And I select the option Serach for Conference at the conference page
     Then a list of all conferences containing that date will be presented in the conference screen
 
-Scenario: Publish a new article
-    Given I am at the article registration page  
-    When I am filling in the fields
-    Then as they'll filling in the fields, they come up suggestions for self-complete the fields
+  Scenario: Suggest name of author when I am filling in the corresponding field on web
+    Given I am signing up a new article
+    And the last three authors registered in the system were "Paulo Borba", "Marcelo Dias", "Paulo Viana"
+    When I fill the name of Author field with "Paulo"
+    Then Appears suggestions of names with the names "Paul Borba", "Paulo Viana"
 
-Scenario: Publish a new conferencia
-    Given I am at the conferencia registration page  
-    When I am filling in the fields
-    Then as they'll filling in the fields, they come up suggestions for self-complete the fields
+  Scenario: Suggest name of author when I am filling in the corresponding field on web
+    Given I am signing up a new article
+    And the last three authors registered in the system were "Paulo Borba", "Marcelo Dias", "Paulo Viana"    
+    When I fill the Author's name field with "João"
+    Then Not appear suggestions
 
-Scenario: new article
-    Given I am at the publications
-    When I select the conferencia option at the publications menu
-    And I select the new article option at the conferencia page
-    Then I can fill the article details
+  Scenario: Suggest name of author when I am filling in the corresponding field
+    Given the system suggested the authors names "Paul Borba", "Paulo Henrique", "Paulo Viana"
+    When I signed up "Paul Bruno" in the system
+    Then the system stores "Paulo Henrique", "Paulo Viana", "Paulo Bruno" in cache
 
-Scenario: remove article
-    Given I am at the publications menu
-    And I select the conferencia option at the publications menu
-    When I selected the conference at which I want to remove the article    
-    And a list of articles stored by the system is displayed at the conferencia page
-    Then I can remove one article
+  Scenario: Suggest name of author when I am filling in the corresponding field
+    Given the system not suggested the authors names
+    When I signed up "Paul Bruno" in the system
+    Then the system stores "Paul Bruno" in cache
 
-Scenario: Suggest name of author when I am filling in the corresponding field on web
-     Given I am filling in the name of Author field 
-     When I fill the name of Author field with "Paulo"
-     Then Appears suggestions of names with the names "Paul Borba", "Paulo Henrique", "Paulo Viana"
-
-Scenario: Suggest name of author when I am filling in the corresponding field on web
-     Given I am filling in the name of Author field
-     When I fill the Author's name field with "Paulo"
-     Then Not appear suggestions
-     
-Scenario: Suggest name of author when I am filling in the corresponding field (success)
-     Given the system suggested the authors names "Paul Borba", "Paulo Henrique", "Paulo Viana"
-     When I signed up "Paul Bruno" in the system
-     Then the system stores "Paul Borba", "Paulo Henrique", "Paulo Viana", "Paulo Bruno" in cache
-
-Scenario: Suggest name of author when I am filling in the corresponding field (failure)
-     Given the system not suggested the authors names
-     When I signed up "Paul Bruno" in the system
-     Then the system stores "Paul Bruno" in cache
-    
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
