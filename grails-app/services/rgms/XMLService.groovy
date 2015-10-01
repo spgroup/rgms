@@ -1,7 +1,7 @@
 package rgms
 
 import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
+import org.springframework.web.multipart.MultipartFile
 import rgms.member.Member
 import rgms.member.Orientation
 import rgms.publication.*
@@ -10,18 +10,44 @@ import rgms.researchProject.ResearchProject
 
 class XMLService {
 
+    def sessionFactory
+
+    public static final String PUB_STATUS_STABLE = "stable"
+    public static final String PUB_STATUS_TO_UPDATE = "to update"
+    public static final String PUB_STATUS_CONFLICTED= "conflicted"
+    public static final String PUB_STATUS_DUPLICATED = "duplicated"
+
+    //#if($Article)
+    public static final JOURNAL_KEYS = ["id", "title", "publicationDate", "authors", "journal", "volume", "number", "pages"]
+    //#end
+    public static final TOOL_KEYS = ["id", "title", "publicationDate", "authors", "description"]
+    public static final BOOK_KEYS = ["id", "title", "publicationDate", "authors", "publisher", "volume", "pages"]
+    public static final BOOK_CHAPTER_KEYS = ["id", "title", "publicationDate", "authors", "publisher"]
+    public static final DISSERTATION_KEYS = ["id", "title", "publicationDate", "authors", "school"]
+    public static final CONFERENCE_KEYS = ["id", "title", "publicationDate", "authors", "booktitle", "pages"]
+    //#if($researchLine)
+    public static final RESEARCH_LINE_KEYS = ["id", "name","description"]
+    //#end
+    //#if($researchProject)
+    public static final RESEARCH_PROJECT_KEYS = ["id", "projectName","description", "status", "responsible", "startYear", "endYear", "members", "funders"]
+    //#end
+    //#if($Orientation)
+    public static final ORIENTATION_KEYS = ["id", "tipo", "orientando", "tituloTese", "anoPublicacao", "instituicao", "curso"]
+    //#end
+
     /*
         saveEntity - closure que salva a classe de domínio que está usando a importação
      */
 
-    static boolean Import(Closure saveEntity, Closure returnWithMessage,
-                          String flashMessage, String controller,
-                          javax.servlet.http.HttpServletRequest request) {
+    def boolean Import(Closure saveEntity, Closure returnWithMessage,
+                       String flashMessage, String controller,
+                       javax.servlet.http.HttpServletRequest request) {
         boolean errorFound = false
+        def publications
 
         try {
             Node xmlFile = parseReceivedFile(request)
-            saveEntity(xmlFile)
+            publications = saveEntity(xmlFile)
         }
         //If file is not XML or if no file was uploaded
         catch (SAXParseException) {
@@ -38,352 +64,548 @@ class XMLService {
             errorFound = true
         }
 
-        returnWithMessage(flashMessage, controller)
+        returnWithMessage(flashMessage, controller, publications)
 
         return !errorFound
     }
 
-    static void createPublications(Node xmlFile, Member user) {
-        createFerramentas(xmlFile)
-        createBooksChapters(xmlFile)
-        createDissertations(xmlFile)
-        createConferencias(xmlFile)
-        createOrientations(xmlFile, user)
-        createJournals(xmlFile)
+    def createPublications(Node xmlFile, Member user) {
+        def publications = [:]
+        if(!xmlFile) return publications
+
+        //#if($Article)
+        def journals = createJournals(xmlFile, user.name)
+        if(journals) publications.put("journals", journals)
+        //#end
+
+        def tools = createTools(xmlFile, user.name)
+        if(tools) publications.put("tools", tools)
+
+        def books = createBooks(xmlFile, user.name)
+        if(books) publications.put("books", books)
+
+        def bookChapters = createBooksChapters(xmlFile, user.name)
+        if(bookChapters) publications.put("bookChapters", bookChapters)
+
+        def masterDissertation = createDissertation(xmlFile, user.name)
+        if(masterDissertation) publications.put("masterDissertation", masterDissertation)
+
+        def thesis = createThesis(xmlFile, user.name)
+        if(thesis) publications.put("thesis", thesis)
+
+        def conferences = createConferencias(xmlFile, user.name)
+        if(conferences) publications.put("conferences", conferences)
+
         //#if($researchLine)
-        createResearchLines(xmlFile)
+        def researchLines = createResearchLines(xmlFile, user.name)
+        if(researchLines) publications.put("researchLines", researchLines)
         //#end
+
         //#if($researchProject)
-        createResearchProjects(xmlFile)
+        def researchProjects = createResearchProjects(xmlFile, user.name)
+        if(researchProjects) publications.put("researchProjects", researchProjects)
         //#end
-        println "All imports done!"
+
+        //#if($Orientation)
+        def orientations = createOrientations(xmlFile, user)
+        if(orientations) publications.put("orientations", orientations)
+        //#end
+
+        return publications
     }
 
+    def createTools(Node xmlFile, String authorName) {
+        def softwares = xmlFile.depthFirst().findAll{ it.name() == 'SOFTWARE' }
+        def tools = []
 
-    static void createFerramentas(Node xmlFile) {
-        Node producaoTecnica = (Node) xmlFile.children()[2]
-
-        for (Node currentNode : producaoTecnica.children()) {
-            if (currentNode.name().equals("SOFTWARE"))
-                saveNewFerramenta(currentNode)
+        for (Node currentNode : softwares) {
+            def newTool = createNewTool(currentNode, authorName)
+            def result = checkToolStatus(newTool)
+            if (result?.status && result?.status != PUB_STATUS_DUPLICATED) {
+                def obj = newTool.properties.findAll{it.key in TOOL_KEYS}
+                tools += [obj: obj, status:result.status, id:result.id]
+            }
         }
+
+        return tools
     }
 
-    private static void saveNewFerramenta(Node currentNode) {
-        Node dadosBasicos = (Node) currentNode.children()[0]
-        Node detalhamentoDoSoftware = (Node) currentNode.children()[1]
-        Node informacoesAdicionais = getNodeFromNode(currentNode, "INFORMACOES-ADICIONAIS")
+    private static createNewTool(Node currentNode, String authorName) {
+        Node basicData = (Node) currentNode.children()[0]
+        Node softwareDetails = (Node) currentNode.children()[1]
+        Node additionalInfo = getNodeFromNode(currentNode, "INFORMACOES-ADICIONAIS")
 
         Ferramenta newTool = new Ferramenta()
+        newTool.members = []
+        newTool = (Ferramenta) addAuthors(currentNode, newTool)
+        if(!newTool.authors.contains(authorName)) return null //the user is not author
 
-        fillPublicationDate(newTool, dadosBasicos, "ANO")
-        newTool.file = 'no File'
-        newTool.website = 'no Website'
-        newTool.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-SOFTWARE")
+        fillPublicationDate(newTool, basicData, "ANO")
+        newTool.title = getAttributeValueFromNode(basicData, "TITULO-DO-SOFTWARE")
+        String description = getAttributeValueFromNode(additionalInfo, "DESCRICAO-INFORMACOES-ADICIONAIS")
+        newTool.description = "País: " + getAttributeValueFromNode(basicData, "PAIS") + ", Ambiente: " +
+                getAttributeValueFromNode(softwareDetails, "AMBIENTE") +
+                (description.equals("") ? "" : ", Informacoes adicionais: " + description)
 
-        String descricao = getAttributeValueFromNode(informacoesAdicionais, "DESCRICAO-INFORMACOES-ADICIONAIS")
-        newTool.description = "País: " + getAttributeValueFromNode(dadosBasicos, "PAIS") + ", Ambiente: " + getAttributeValueFromNode(detalhamentoDoSoftware, "AMBIENTE") + (descricao.equals("") ? "" : ", Informacoes adicionais: " + descricao)
-        newTool.save(flush: false)
+        return newTool
     }
 
-    static void createBooks(Node xmlFile) {
-        Node books = (Node) ((Node) ((Node) xmlFile.children()[1]).children()[2]).children()[0]
-        List<Object> bookChildren = books.children()
+    static checkToolStatus(Ferramenta tool){
+        if(!tool) return null
+        def status = PUB_STATUS_STABLE
+        def toolDB = Ferramenta.findByTitle(tool.title)
+        if(toolDB) status = checkPublicationStatus(toolDB, tool)
+        return [status:status, id:toolDB?.id]
+    }
+
+    def createBooks(Node xmlFile, String authorName) {
+        def publishedBooks = xmlFile.depthFirst().findAll{ it.name() == 'LIVRO-PUBLICADO-OU-ORGANIZADO' }
+        def booksList = []
 
         int i = 0
-
-        for (Node currentNode : bookChildren) {
-            List<Object> book = currentNode.children()
-            Node dadosBasicos = (Node) book[0]
-            Node detalhamentoLivro = (Node) book[1]
-
-            Book newBook = new Book()
-
-            for (int j = 2; j < book.size() - 2; ++j) {
-                newBook.addToAuthors(getAttributeValueFromNode(book[j], "NOME-COMPLETO-DO-AUTOR"))
+        for (Node currentNode : publishedBooks) {
+            def newBook = createNewBook(currentNode, i, authorName)
+            def result = checkBookStatus(newBook)
+            if(result?.status && result?.status != PUB_STATUS_DUPLICATED) {
+                def obj = newBook.properties.findAll{it.key in BOOK_KEYS}
+                booksList += [obj: obj, status:result.status, id:result.id]
             }
-
-            createNewBook(newBook, dadosBasicos, detalhamentoLivro, i)
             ++i
         }
+
+        return booksList
     }
 
-    private static void createNewBook(Book newBook, Node dadosBasicos, Node detalhamentoLivro, int i) {
+    private static createNewBook(Node currentNode, int i, String authorName) {
+        List<Object> book = currentNode.children()
+        Node basicData = (Node) book[0]
+        Node bookDetails = (Node) book[1]
 
-        newBook.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-LIVRO")
-        newBook.publisher = getAttributeValueFromNode(detalhamentoLivro, "NOME-DA-EDITORA")
+        Book newBook = new Book()
+        newBook.members = []
+        newBook = (Book) addAuthors(currentNode, newBook)
+        if(!newBook.authors.contains(authorName)) return null //the user is not author
 
-        if (Publication.findByTitle(newBook.title) == null) {
-            fillPublicationDate(newBook, dadosBasicos, "ANO")
+        newBook.title = getAttributeValueFromNode(basicData, "TITULO-DO-LIVRO")
+        newBook.publisher = getAttributeValueFromNode(bookDetails, "NOME-DA-EDITORA")
+        fillPublicationDate(newBook, basicData, "ANO")
+        newBook.pages = getAttributeValueFromNode(bookDetails, "NUMERO-DE-PAGINAS")
+        newBook.volume = getAttributeValueFromNode(bookDetails, "NUMERO-DE-VOLUMES").toInteger()
 
-            newBook.file = 'emptyfile' + i.toString()
-            newBook.pages = getAttributeValueFromNode(detalhamentoLivro, "NUMERO-DE-PAGINAS")
-            newBook.volume = getAttributeValueFromNode(detalhamentoLivro, "NUMERO-DE-VOLUMES").toInteger()
-            newBook.save(flush: false)
-        }
+        return newBook
     }
 
-    //#if($researchLine)
-    static void createResearchLines(Node xmlFile) {
-        //Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
-        List<Node> pro_perf = ((Node) ((Node) xmlFile.children()[0]).children()[4]).children()
-        //Navega ate atuacoes profissionais e extrai a lista de atuacoes
+    static checkBookStatus(Book book){
+        if(!book) return null
+        def status = PUB_STATUS_STABLE
+        def bookDB = Book.findByTitleAndVolume(book.title, book.volume)
+        if(bookDB) status = checkPublicationStatus(bookDB, book)
+        return [status:status, id:bookDB?.id]
+    }
 
-        for (Node i : pro_perf) { //Atuaçao profissional
-            for (Node j : i.children()) { //Atividades de pesquisa e desenvolvimento
-                if (((String) j.name()).equals("ATIVIDADES-DE-PESQUISA-E-DESENVOLVIMENTO")) {
-                    for (Node k : j.children()) { //Pesquisa e desenvolvimento
-                        if (((String) k.name()).equals("PESQUISA-E-DESENVOLVIMENTO")) {
-                            for (Node l : k.children()) { //Linha de pesquisa
-                                saveResearchLine(l)
-                            }
-                        }
-                    }
-                }
+    def createBooksChapters(Node xmlFile, String authorName) {
+        def publishedBookChapters = xmlFile.depthFirst().findAll{ it.name() == 'CAPITULO-DE-LIVRO-PUBLICADO' }
+        def bookChaptersList = []
+
+        for (int i = 0; i < publishedBookChapters?.size(); ++i) {
+            def newBookChapter = createNewBookChapter(publishedBookChapters, i, authorName)
+            def result = checkBookChapterStatus(newBookChapter)
+            if(result?.status && result?.status != PUB_STATUS_DUPLICATED) {
+                def obj = newBookChapter.properties.findAll{it.key in BOOK_CHAPTER_KEYS}
+                bookChaptersList += [obj: obj, status:result.status, id:result.id]
             }
         }
-    }
-    //#end
 
-    //#if($researchLine)
-    private static void saveResearchLine(Node xmlFile) {
-        ResearchLine newResearchLine = new ResearchLine()
-        newResearchLine.name = getAttributeValueFromNode(xmlFile, "TITULO-DA-LINHA-DE-PESQUISA")
-        newResearchLine.description = getAttributeValueFromNode(xmlFile, "OBJETIVOS-LINHA-DE-PESQUISA")
-        newResearchLine.save(flush: false)
-    }
-    //#end
-
-    //#if($researchProject)
-    static void createResearchProjects(Node xmlFile) {
-        //Nesse ponto eu já estou com a lista de Atuacoes Profissionais do XML
-        List<Node> pro_perf = ((Node) ((Node) xmlFile.children()[0]).children()[4]).children()
-        //Navega ate atuacoes profissionais e extrai a lista de atuacoes
-
-        for (Node i : pro_perf) { //Atuaçao profissional
-            for (Node j : i.children()) { //Atividades de pesquisa em projeto
-                if (((String) j.name()).equals("ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO")) {
-                    for (Node k : j.children()) { //Participacao em projeto
-                        if (((String) k.name()).equals("PARTICIPACAO-EM-PROJETO")) {
-                            for (Node l : k.children()) { //Projeto de pesquisa
-                                saveResearchProject(l)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    //#end
-
-    //#if($researchProject)
-    private static void saveResearchProject(Node xmlFile) {
-        String name = getAttributeValueFromNode(xmlFile, "NOME-DO-PROJETO")
-        ResearchProject project = ResearchProject.findByProjectName(name)
-
-        if (project == null) { //Se o projeto de pesquisa ainda nao existe no sistema hora de adiciona-lo
-            ResearchProject newProject = new ResearchProject()
-            newProject.projectName = name
-            newProject.description = getAttributeValueFromNode(xmlFile, "DESCRICAO-DO-PROJETO")
-            newProject.status = getAttributeValueFromNode(xmlFile, "SITUACAO")
-            newProject.startYear = getAttributeValueFromNode(xmlFile, "ANO-INICIO").toInteger()
-            newProject.endYear = getAttributeValueFromNode(xmlFile, "ANO-FIM").equals("") ? 0 : getAttributeValueFromNode(xmlFile, "ANO-FIM").toInteger()
-            fillProjectMembers(getNodeFromNode(xmlFile, "EQUIPE-DO-PROJETO"), newProject)
-            fillFunders(getNodeFromNode(xmlFile, "FINANCIADORES-DO-PROJETO"), newProject)
-            newProject.save(flush: false)
-        }
-    }
-    //#end
-
-    //#if($funder)
-    private static void fillFunders(Node xmlFile, ResearchProject project) {
-        for (Node node : xmlFile?.children()) {
-            String code = getAttributeValueFromNode(node, "CODIGO-INSTITUICAO")
-            Funder funder = Funder.findByCode(code)
-
-            if (funder) {
-                project.addToFunders(funder)
-            } else {
-                Funder newFunder = new Funder()
-                newFunder.code = code
-                newFunder.name = getAttributeValueFromNode(node, "NOME-INSTITUICAO")
-                newFunder.nature = getAttributeValueFromNode(node, "NATUREZA")
-                newFunder.save(flush: false)
-                project.addToFunders(newFunder).save(flush: false)
-            }
-        }
-    }
-    //#end
-
-    //#if($researchProject)
-    private static void fillProjectMembers(Node xmlFile, ResearchProject project) {
-
-        for (Node node : xmlFile?.children()) { //Para cada integrante presente no projeto
-            String name = (String) (node.attribute("NOME-COMPLETO"))
-            Boolean responsavel = ((String) (node.attribute("FLAG-RESPONSAVEL"))).equals("SIM")
-            if (responsavel) project.responsible = name
-            project.addToMembers(name).save(validate: true)
-        }
-    }
-    //#end
-
-    static void createBooksChapters(Node xmlFile) {
-        Node bookChapters = (Node) ((Node) ((Node) xmlFile.children()[1]).children()[2]).children()[1]
-        List<Object> bookChaptersChildren = bookChapters.children()
-
-        for (int i = 0; i < bookChaptersChildren.size(); ++i) {
-            List<Object> bookChapter = ((Node) bookChaptersChildren[i]).children()
-            Node dadosBasicos = (Node) bookChapter[0]
-            Node detalhamentoCapitulo = (Node) bookChapter[1]
-
-            BookChapter newBookChapter = new BookChapter()
-
-            newBookChapter = (BookChapter) addAuthors(bookChapter, newBookChapter)
-
-            createNewBookChapter(newBookChapter, dadosBasicos, detalhamentoCapitulo, i)
-        }
+        return bookChaptersList
     }
 
-    private
-    static void createNewBookChapter(BookChapter newBookChapter, Node dadosBasicos, Node detalhamentoCapitulo, int i) {
+    private static createNewBookChapter(List<Object> bookChaptersChildren, int i, String authorName) {
+        List<Object> bookChapter = ((Node) bookChaptersChildren[i]).children()
+        Node basicData = (Node) bookChapter[0]
+        Node chapterDetails = (Node) bookChapter[1]
 
-        newBookChapter.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-CAPITULO-DO-LIVRO")
-        newBookChapter.publisher = getAttributeValueFromNode(detalhamentoCapitulo, "NOME-DA-EDITORA")
+        BookChapter newBookChapter = new BookChapter()
+        newBookChapter.members = []
+        newBookChapter = (BookChapter) addAuthors(bookChapter, newBookChapter)
+        if(!newBookChapter.authors.contains(authorName)) return null
 
-        if (Publication.findByTitle(newBookChapter.title) == null)
-            fillBookChapterInfo(newBookChapter, dadosBasicos, i)
+        newBookChapter.title = getAttributeValueFromNode(basicData, "TITULO-DO-CAPITULO-DO-LIVRO")
+        newBookChapter.publisher = getAttributeValueFromNode(chapterDetails, "NOME-DA-EDITORA")
+        fillPublicationDate(newBookChapter, basicData, "ANO")
+
+        return newBookChapter
+    }
+
+    static checkBookChapterStatus(BookChapter bookChapter){
+        if(!bookChapter) return null
+        def status = PUB_STATUS_STABLE
+        def bookChapterDB = BookChapter.findByTitleAndChapter(bookChapter.title, bookChapter.chapter)
+        if(bookChapterDB) status = checkPublicationStatus(bookChapterDB, bookChapter)
+        return [status:status, id:bookChapterDB?.id]
     }
 
     private static Publication addAuthors(publication, newPublication) {
-
-        for (int j = 2; j < publication.size() - 4; ++j) {
-            newPublication.addToAuthors(getAttributeValueFromNode(publication[j], "NOME-COMPLETO-DO-AUTOR"))
+        publication.each{
+            if(it.name() == "AUTORES"){
+                newPublication.addToAuthors(getAttributeValueFromNode(it, "NOME-COMPLETO-DO-AUTOR"))
+            }
         }
-
         return newPublication
     }
 
-    private static void fillBookChapterInfo(BookChapter newBookChapter, Node dadosBasicos, int i) {
-        fillPublicationDate(newBookChapter, dadosBasicos, "ANO")
+    def createDissertation(Node xmlFile, String authorName) {
+        def newDissertation = createNewDissertation(xmlFile, authorName)
+        if(!newDissertation) return null
 
-        newBookChapter.file = 'emptyfile' + i.toString()
-        newBookChapter.chapter = 2
-        newBookChapter.save(flush: false)
+        def dissertationDB = Dissertacao.findByTitle(newDissertation?.title)
+        if(dissertationDB?.authors != newDissertation?.authors) dissertationDB = null
+
+        def status = checkDissertationOrThesisStatus(dissertationDB, newDissertation)
+        if(status == PUB_STATUS_DUPLICATED) return null
+        def obj = newDissertation.properties.findAll{it.key in DISSERTATION_KEYS}
+        return [obj: obj, status:status, id:dissertationDB?.id]
     }
 
-    static void createDissertations(Node xmlFile) {
-        Node dadosGerais = (Node) xmlFile.children()[0]
+    private static createNewDissertation(Node xmlFile, String authorName){
+        def mestrado = xmlFile?.depthFirst()?.find{ it.name() == 'MESTRADO' }
+        if(!mestrado) return null
 
-        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
-        Node mestrado = (Node) formacaoAcademica.children()[1]
-        Node doutorado = (Node) formacaoAcademica.children()[2]
+        String author = xmlFile.depthFirst().find{it.name() == 'DADOS-GERAIS'}.'@NOME-COMPLETO'
+        if(author != authorName) return null
 
-        createDissertation(mestrado)
-        createDissertation(doutorado)
-    }
-
-    private static void createDissertation(Node xmlNode) {
         Dissertacao newDissertation = new Dissertacao()
-        newDissertation.title = getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")
+        newDissertation.members = []
+        newDissertation = getDissertationOrThesisDetails(mestrado, newDissertation)
+        newDissertation.addToAuthors(author)
 
-        fillPublicationDate(newDissertation, xmlNode, "ANO-DE-OBTENCAO-DO-TITULO")
-        newDissertation.school = getAttributeValueFromNode(xmlNode, "NOME-INSTITUICAO")
-        newDissertation.file = 'no File'
-        newDissertation.address = 'no Address'
-        newDissertation.save(flush: false)
+        return newDissertation
     }
 
-    static void createConferencias(Node xmlFile) {
-        Node trabalhosEmEventos = (Node) ((Node) xmlFile.children()[1]).children()[0]
-
-        for (Node currentNode : trabalhosEmEventos.children()) {
-            List<Node> nodeConferencia = currentNode.children()
-            saveNewConferencia(nodeConferencia);
-        }
+    static checkDissertationOrThesisStatus(TeseOrDissertacao pubDB, TeseOrDissertacao pub){
+        if(!pub) return null
+        def status = PUB_STATUS_STABLE
+        if(pubDB) status = checkPublicationStatus(pubDB, pub)
+        return status
     }
 
-    private static void saveNewConferencia(List<Node> nodeConferencia) {
-        Node dadosBasicos = (Node) nodeConferencia[0]
-        Node detalhamento = (Node) nodeConferencia[1]
-        String nomeEvento = ""
-        if (((String) detalhamento.name()).equals("DETALHAMENTO-DO-TRABALHO"))
-            nomeEvento = getAttributeValueFromNode(detalhamento, "NOME-DO-EVENTO")
+    def createThesis(Node xmlFile, String authorName) {
+        def newThesis = createNewThesis(xmlFile, authorName)
+        if(!newThesis) return null
 
-        if (nomeEvento.contains("onferenc")) {
-            Conferencia novaConferencia = new Conferencia()
-            novaConferencia.title = nomeEvento
+        def thesisDB = Tese.findByTitle(newThesis?.title)
+        if(thesisDB?.authors != newThesis?.authors) thesisDB = null
 
-            if (Publication.findByTitle(novaConferencia.title) == null) {
-                fillPublicationDate(novaConferencia, dadosBasicos, "ANO-DO-TRABALHO")
+        def status = checkDissertationOrThesisStatus(thesisDB, newThesis)
+        if(status == PUB_STATUS_DUPLICATED) return null
 
-                String tryingToParse = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-TRABALHO")
-                novaConferencia.booktitle = tryingToParse;
-                tryingToParse = getAttributeValueFromNode(detalhamento, "PAGINA-INICIAL")
-                String tryingToParse2 = getAttributeValueFromNode(detalhamento, "PAGINA-FINAL")
-                novaConferencia.pages = tryingToParse + " - " + tryingToParse2
-                novaConferencia.file = 'emptyfile'
-                novaConferencia.save(flush: false)
+        def obj = newThesis.properties.findAll{it.key in DISSERTATION_KEYS}
+        return [obj: obj, status:status, id:thesisDB?.id]
+    }
+
+    private static createNewThesis(Node xmlFile, String authorName){
+        def doutorado = xmlFile.depthFirst().find{ it.name() == 'DOUTORADO' }
+        if(!doutorado) return null
+
+        String author = xmlFile.depthFirst().find{it.name() == 'DADOS-GERAIS'}.'@NOME-COMPLETO'
+        if(author != authorName) return null
+
+        Tese newThesis = new Tese()
+        newThesis.members = []
+        newThesis = getDissertationOrThesisDetails(doutorado, newThesis)
+        newThesis.addToAuthors(author)
+
+        return newThesis
+    }
+
+    private static getDissertationOrThesisDetails(Node xmlNode, TeseOrDissertacao publication) {
+        publication.title = getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")
+        fillPublicationDate(publication, xmlNode, "ANO-DE-OBTENCAO-DO-TITULO")
+        publication.school = getAttributeValueFromNode(xmlNode, "NOME-INSTITUICAO")
+        return publication
+    }
+
+    def createConferencias(Node xmlFile, String authorName) {
+        def conferencePublications = xmlFile.depthFirst().findAll{ it.name() == 'TRABALHO-EM-EVENTOS' }
+        def conferences = []
+
+        for (Node currentNode : conferencePublications) {
+            def newConference = createNewConferencia(currentNode, authorName)
+            def result = checkConferenceStatus(newConference)
+
+            if(result?.status && result?.status != PUB_STATUS_DUPLICATED){
+                def obj = newConference.properties.findAll{it.key in CONFERENCE_KEYS}
+                conferences += [obj: obj, status:result.status, id:result.id]
             }
         }
+
+        return conferences
     }
 
-    static void createOrientations(Node xmlFile, Member user) {
-        List<Object> completedOrientations = findCompletedOrientations(xmlFile)
+    private static createNewConferencia(conferenceNode, authorName) {
+        def newConference = null
+        def basicData = conferenceNode?.depthFirst()?.find{ it.name() == 'DADOS-BASICOS-DO-TRABALHO' }
+        def details = conferenceNode?.depthFirst()?.find{ it.name() == 'DETALHAMENTO-DO-TRABALHO' }
 
-        if (!XMLService.isNullOrEmpty(completedOrientations))
-            for (int i = 0; i < completedOrientations.size(); i++)
-                saveNewOrientation(completedOrientations, i, user)
-    }
+        if (basicData && details) {
+            def eventName = getAttributeValueFromNode(details, "NOME-DO-EVENTO")
 
-    private static void saveNewOrientation(List<Object> completedOrientations, int i, Member user) {
-        Node node = (Node) completedOrientations[i]
-        Orientation newOrientation = new Orientation()
-        String name = (String) node.name()
+            if (eventName.contains("onferenc")) {
+                newConference = new Conferencia()
+                newConference.members = []
+                def authorsNode = conferenceNode.depthFirst().findAll{ it.name() == 'AUTORES'}
+                newConference = (Conferencia) addAuthors(authorsNode, newConference)
+                if(!newConference.authors.contains(authorName)) return null
 
-        fillNewOrientation(name, node, newOrientation, user)
-        saveOrientation(newOrientation)
-    }
-
-    private static void fillNewOrientation(String name, Node node, Orientation newOrientation, Member user) {
-        if (name.toLowerCase().contains("mestrado")) {
-            fillOrientationData(node, newOrientation, user, "Mestrado")
-        } else if (name.toLowerCase().contains("doutorado")) {
-            fillOrientationData(node, newOrientation, user, "Doutorado")
-        } else {
-            Node children = (Node) (node.children()[0])
-            String natureza = (String) children.attribute("NATUREZA")
-
-            if (isUndergraduateResearch(natureza)) {
-                fillOrientationData(node, newOrientation, user, "Iniciação Científica")
+                newConference.title = eventName
+                fillPublicationDate(newConference, basicData, "ANO-DO-TRABALHO")
+                newConference.booktitle = getAttributeValueFromNode(basicData, "TITULO-DO-TRABALHO")
+                String initialPage = getAttributeValueFromNode(details, "PAGINA-INICIAL")
+                String finalPage = getAttributeValueFromNode(details, "PAGINA-FINAL")
+                newConference.pages = initialPage + "-" + finalPage
             }
+        }
+        return newConference
+    }
+
+    static checkConferenceStatus(Conferencia conference){
+        if(!conference) return null
+        def status = PUB_STATUS_STABLE
+        def conferenceDB = Conferencia.findByTitleAndBooktitle(conference.title, conference.booktitle)
+        if(conferenceDB) status = checkPublicationStatus(conferenceDB, conference)
+        return [status:status, id:conferenceDB?.id]
+    }
+
+    //#if($Article)
+    def createJournals(Node xmlFile, String authorName) {
+        def publishedArticles = xmlFile.depthFirst().findAll{ it.name() == 'ARTIGO-PUBLICADO' }
+        def journals = []
+
+        for (int i = 0; i < publishedArticles?.size(); ++i) {
+            def newJournal = createNewJournal(publishedArticles, i, authorName)
+            def result = checkJournalStatus(newJournal)
+
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newJournal.properties.findAll{it.key in JOURNAL_KEYS}
+                journals += [obj: obj, status:result.status, id:result.id]
+            }
+        }
+
+        return journals
+    }
+
+    private static createNewJournal(List publishedArticlesChildren, int i, String authorName) {
+        List<Node> firstArticle = ((Node) publishedArticlesChildren[i]).children()
+        Node basicData = (Node) firstArticle[0]
+        Node articleDetails = (Node) firstArticle[1]
+        Periodico newJournal = new Periodico()
+        getJournalTitle(basicData, newJournal)
+        newJournal.members = []
+        newJournal = (Periodico) addAuthors(firstArticle, newJournal)
+        if(!newJournal.authors.contains(authorName)) return null //the user is not author
+
+        fillPublicationDate(newJournal, basicData, "ANO-DO-ARTIGO")
+        getJournalVolume(articleDetails, newJournal)
+        getJournalNumber(articleDetails, newJournal)
+        getJournalNumberOfPages(articleDetails, newJournal)
+        getPeriodicTitle(articleDetails, newJournal)
+
+        return newJournal
+    }
+
+    static checkJournalStatus(Periodico journal){
+        if(!journal) return null
+        def status = XMLService.PUB_STATUS_STABLE
+        def journalDB = Periodico.findByJournalAndTitle(journal.journal,journal.title)
+        if(journalDB) status = checkPublicationStatus(journalDB, journal)
+        return [status:status, id:journalDB?.id]
+    }
+
+    private static void getJournalTitle(Node basicData, Periodico newJournal) {
+        newJournal.title = getAttributeValueFromNode(basicData, "TITULO-DO-ARTIGO")
+    }
+
+    private static void getPeriodicTitle(Node articleDetails, Periodico newJournal) {
+        newJournal.journal = getAttributeValueFromNode(articleDetails, "TITULO-DO-PERIODICO-OU-REVISTA")
+    }
+
+    private static void getJournalNumberOfPages(Node articleDetails, Periodico newJournal) {
+        String initialPage = getAttributeValueFromNode(articleDetails, "PAGINA-INICIAL")
+        String finalPage = getAttributeValueFromNode(articleDetails, "PAGINA-FINAL")
+        newJournal.pages =  initialPage + "-" + finalPage
+    }
+
+    private static void getJournalNumber(Node articleDetails, Periodico newJournal) {
+        String number = getAttributeValueFromNode(articleDetails, "FASCICULO")
+        if (number.isInteger())
+            newJournal.number = number.toInteger()
+        else
+            newJournal.number = 1   //if not parsed successfully, least value possible
+    }
+
+    private static void getJournalVolume(Node articleDetails, Periodico newJournal) {
+        String volume = getAttributeValueFromNode(articleDetails, "VOLUME")
+        if (volume.isInteger())
+            newJournal.volume = volume.toInteger()
+        else
+            newJournal.volume = 1   //if not parsed successfully, least value possible
+    }
+    //#end
+
+    private static def calculateTotalMissingProperties(propertiesDB, properties){
+        def missingPropertiesTotal = propertiesDB
+        properties.each{
+            if(!missingPropertiesTotal.contains(it)) missingPropertiesTotal += it
+        }
+        return missingPropertiesTotal
+    }
+
+    private static checkPublicationStatus(Publication pubDB, Publication pub){
+        def status = PUB_STATUS_DUPLICATED
+
+        def missingPropertiesDB = pubDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
+        def missingProperties = pub.properties.findAll{it.key != 'id' && !it.value}.keySet()
+        if(missingPropertiesDB != missingProperties){
+            status = PUB_STATUS_TO_UPDATE
+        }
+
+        def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
+        def detailsPropertiesDB = pubDB.properties.findAll{!(it.key in missingPropertiesTotal)}
+        def detailsDB = detailsPropertiesDB.findAll{it.key!='id' && it.key!='publicationDate'}
+        def detailsProperties = pub.properties.findAll{!(it.key in missingPropertiesTotal)}
+        def details = detailsProperties.findAll{it.key!='id' && it.key!='publicationDate'}
+        if(detailsDB != details){
+            status = PUB_STATUS_CONFLICTED
+        }
+
+        def date1 = pubDB?.publicationDate?.toCalendar()?.get(Calendar.YEAR)
+        def date2 = pub?.publicationDate?.toCalendar()?.get(Calendar.YEAR)
+        if(date1 && date2 && date1!=date2){
+            status = PUB_STATUS_CONFLICTED
+        }
+
+        return status
+    }
+
+    //#if($Orientation || $researchLine || $researchProject)
+    static checkItemStatus(itemDB, item){
+        def status = PUB_STATUS_DUPLICATED
+
+        def missingPropertiesDB = itemDB.properties.findAll{it.key != 'id' && !it.value}.keySet()
+        def missingProperties = item.properties.findAll{it.key != 'id' && !it.value}.keySet()
+        if(missingPropertiesDB != missingProperties){
+            status = PUB_STATUS_TO_UPDATE
+        }
+
+        def missingPropertiesTotal = calculateTotalMissingProperties(missingPropertiesDB, missingProperties)
+        def detailsPropertiesDB = itemDB.properties.findAll{!(it.key in missingPropertiesTotal)}
+        def detailsDB = detailsPropertiesDB.findAll{it.key!='id'}
+        def detailsProperties = item.properties.findAll{!(it.key in missingPropertiesTotal)}
+        def details = detailsProperties.findAll{it.key!='id'}
+        if(detailsDB != details){
+            status = PUB_STATUS_CONFLICTED
+        }
+
+        return status
+    }
+    //#end
+
+    static Node parseReceivedFile(MultipartHttpServletRequest request) {
+        MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
+        MultipartFile f = (MultipartFile) mpr.getFile("file");
+        File file = new File("xmlimported.xml");
+        f.transferTo(file)
+        def records = new XmlParser()
+        records.parse(file)
+    }
+
+    static String getAttributeValueFromNode(Node n, String attribute) {
+        n?.attribute attribute
+    }
+
+    static Node getNodeFromNode(Node n, String nodeName) {
+        for (Node currentNodeChild : n?.children()) {
+            if ((currentNodeChild.name() + "").equals((nodeName)))
+                return currentNodeChild
         }
     }
 
-    //Only saves if the orientation does not already exist
-    private static void saveOrientation(Orientation newOrientation) {
-        if (Orientation.findAll().find { it -> newOrientation.equals(it) } == null)
-            newOrientation.save(flush: false)
+    static void fillPublicationDate(Publication publication, Node currentNode, String field) {
+        publication.publicationDate = new Date()
+        String tryingToParse = getAttributeValueFromNode(currentNode, field)
+        if (tryingToParse.isInteger())
+            publication.publicationDate.set(year: tryingToParse.toInteger())
     }
 
-    private static boolean isUndergraduateResearch(String natureza) {
-        natureza.toLowerCase().contains("iniciacao_cientifica")
+    //#if($Orientation)
+    static createOrientations(Node xmlFile, Member user) {
+        def author = xmlFile.depthFirst().find{it.name() == 'DADOS-GERAIS'}.'@NOME-COMPLETO'
+        if(author != user.name) return null
+
+        def orientations = []
+        def completedOrientationNode = xmlFile.depthFirst().find{ it.name() == 'ORIENTACOES-CONCLUIDAS' }
+        orientations = createMasterOrientations(orientations, completedOrientationNode, user)
+        orientations = createThesisOrientations(orientations, completedOrientationNode, user)
+        orientations = createUndergraduateResearch(orientations, completedOrientationNode, user)
+        return orientations
     }
 
-    private static boolean isNullOrEmpty(List<Object> completedOrientations) {
-        completedOrientations == null || completedOrientations.size() == 0
+    static private createMasterOrientations(orientations, completedOrientationNode, user){
+        def masterOrientations = completedOrientationNode?.getAt("ORIENTACOES-CONCLUIDAS-PARA-MESTRADO")
+        for(Node orientation: masterOrientations){
+            def newOrientation = fillOrientationData(orientation, user, "Mestrado")
+            def result = checkOrientationStatus(newOrientation, user)
+
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newOrientation.properties.findAll{it.key in ORIENTATION_KEYS}
+                orientations += ["obj": obj, status:result.status, id:result.id]
+            }
+        }
+        return orientations
     }
 
-    private static List<Object> findCompletedOrientations(Node xmlFile) {
-        def orientations = (Node) xmlFile.children()[3]
-        def completedOrientations = (Node) orientations.children()[0]
-        List<Object> values = completedOrientations.children()
-        values
+    static private createThesisOrientations(orientations, completedOrientationNode, user){
+        def thesisOrientations = completedOrientationNode?.getAt("ORIENTACOES-CONCLUIDAS-PARA-DOUTORADO")
+        for(Node orientation: thesisOrientations){
+            def newOrientation = fillOrientationData(orientation, user, "Doutorado")
+            def result = checkOrientationStatus(newOrientation, user)
+
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newOrientation.properties.findAll{it.key in ORIENTATION_KEYS}
+                orientations += ["obj": obj, status:result.status, id:result.id]
+            }
+        }
+        return orientations
     }
 
-    private static void fillOrientationData(Node node, Orientation newOrientation, Member user, String tipoOrientacao) {
+    static private createUndergraduateResearch(orientations, completedOrientationNode, user){
+        def undergraduateResearch = completedOrientationNode?.getAt("OUTRAS-ORIENTACOES-CONCLUIDAS")?.findAll{
+            it.children()?.get(0)?.'@NATUREZA' == "INICIACAO_CIENTIFICA"
+        }
+
+        for(Node orientation: undergraduateResearch){
+            def newOrientation = fillOrientationData(orientation, user, "Iniciação Científica")
+            def result = checkOrientationStatus(newOrientation, user)
+
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newOrientation.properties.findAll{it.key in ORIENTATION_KEYS}
+                orientations += [obj: obj, status:result.status, id:result.id]
+            }
+        }
+        return orientations
+    }
+
+    static checkOrientationStatus(Orientation orientation, Member user){
+        if(!orientation) return null
+        def status = PUB_STATUS_STABLE
+        def orientationDB = Orientation.findByOrientadorAndTituloTese(user, orientation.tituloTese)
+        if(orientationDB) status = checkItemStatus(orientationDB, orientation)
+        return [status:status, id:orientationDB?.id]
+    }
+
+    private static fillOrientationData(Node node, Member user, String type) {
+        Orientation newOrientation = new Orientation(tipo:type)
         Node basicData = (Node) (node.children()[0])
         Node specificData = (Node) (node.children()[1])
-        newOrientation.tipo = tipoOrientacao
         newOrientation.tituloTese = getAttributeValueFromNode(basicData, "TITULO")
         String ano = getAttributeValueFromNode(basicData, "ANO")
         newOrientation.anoPublicacao = Integer.parseInt(ano)
@@ -391,72 +613,124 @@ class XMLService {
         newOrientation.instituicao = getAttributeValueFromNode(specificData, "NOME-DA-INSTITUICAO")
         newOrientation.orientador = user
         newOrientation.orientando = getAttributeValueFromNode(specificData, "NOME-DO-ORIENTADO")
-    }
-
-    //#if($Article)
-    static void createJournals(Node xmlFile) {
-        Node artigosPublicados = (Node) ((Node) xmlFile.children()[1]).children()[1]
-        List<Object> artigosPublicadosChildren = artigosPublicados.children()
-
-        for (int i = 0; i < artigosPublicadosChildren.size(); ++i)
-            saveNewJournal(artigosPublicadosChildren, i)
-    }
-
-    private static void saveNewJournal(List artigosPublicadosChildren, int i) {
-        List<Object> firstArticle = ((Node) artigosPublicadosChildren[i]).children()
-        Node dadosBasicos = (Node) firstArticle[0]
-        Node detalhamentoArtigo = (Node) firstArticle[1]
-        Periodico newJournal = new Periodico()
-        getJournalTitle(dadosBasicos, newJournal)
-
-        newJournal = (Periodico) addAuthors(firstArticle, newJournal)
-
-        if (Publication.findByTitle(newJournal.title) == null) {
-            fillPublicationDate(newJournal, dadosBasicos, "ANO-DO-ARTIGO")
-            getJournalVolume(detalhamentoArtigo, newJournal)
-            getJournalNumber(detalhamentoArtigo, newJournal)
-            getJournalNumberOfPages(detalhamentoArtigo, newJournal)
-            getPeriodicTitle(detalhamentoArtigo, newJournal)
-            newJournal.file = 'emptyfile' + i.toString() //files are not available on lattes
-            newJournal.save(flush: false)
-        }
-    }
-
-    private static void getJournalTitle(Node dadosBasicos, Periodico newJournal) {
-        newJournal.title = getAttributeValueFromNode(dadosBasicos, "TITULO-DO-ARTIGO")
-    }
-
-    private static void getPeriodicTitle(Node detalhamentoArtigo, Periodico newJournal) {
-        newJournal.journal = getAttributeValueFromNode(detalhamentoArtigo, "TITULO-DO-PERIODICO-OU-REVISTA")
-    }
-
-    private static void getJournalNumberOfPages(Node detalhamentoArtigo, Periodico newJournal) {
-        String tryingToParse = getAttributeValueFromNode(detalhamentoArtigo, "PAGINA-FINAL")
-        String tryingToParse2 = getAttributeValueFromNode(detalhamentoArtigo, "PAGINA-INICIAL")
-        if (tryingToParse.isInteger() && tryingToParse2.isInteger())
-            newJournal.pages = tryingToParse.toInteger() - tryingToParse2.toInteger() + 1
-        else
-            newJournal.pages = 1    //if not parsed successfully, least value possible
-    }
-
-    private static void getJournalNumber(Node detalhamentoArtigo, Periodico newJournal) {
-        String tryingToParse = getAttributeValueFromNode(detalhamentoArtigo, "FASCICULO")
-        if (tryingToParse.isInteger())
-            newJournal.number = tryingToParse.toInteger()
-        else
-            newJournal.number = 1   //if not parsed successfully, least value possible
-    }
-
-    private static void getJournalVolume(Node detalhamentoArtigo, Periodico newJournal) {
-        String tryingToParse = getAttributeValueFromNode(detalhamentoArtigo, "VOLUME")
-        if (tryingToParse.isInteger())
-            newJournal.volume = tryingToParse.toInteger()
-        else
-            newJournal.volume = 1   //if not parsed successfully, least value possible
+        return newOrientation
     }
     //#end
 
-    static void createMember(Node xmlFile, Member newMember) {
+    //#if($researchLine)
+    static createResearchLines(Node xmlFile, String authorName) {
+        def author = xmlFile.depthFirst().find{it.name() == 'DADOS-GERAIS'}.'@NOME-COMPLETO'
+        if(author != authorName) return null
+
+        def researchLinesList = []
+        def researchAndDevelopment = xmlFile.depthFirst().findAll{ it.name() == 'PESQUISA-E-DESENVOLVIMENTO' }
+
+        for(Node i: researchAndDevelopment){
+            def researchLines = i.getAt("LINHA-DE-PESQUISA")
+            for(Node j:researchLines){
+                def newResearchLine = createNewResearchLine(j)
+                def result = checkResearchLineStatus(newResearchLine)
+
+                if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                    def obj = newResearchLine.properties.findAll{it.key in RESEARCH_LINE_KEYS}
+                    researchLinesList += [obj: obj, status:result.status, id:result.id]
+                }
+            }
+        }
+        return researchLinesList
+    }
+
+    private static createNewResearchLine(Node xmlFile) {
+        ResearchLine newResearchLine = new ResearchLine()
+        newResearchLine.members = []
+        newResearchLine.publications = []
+        newResearchLine.name = getAttributeValueFromNode(xmlFile, "TITULO-DA-LINHA-DE-PESQUISA")
+        newResearchLine.description = getAttributeValueFromNode(xmlFile, "OBJETIVOS-LINHA-DE-PESQUISA")
+        return newResearchLine
+    }
+
+    static checkResearchLineStatus(ResearchLine researchLine){
+        if(!researchLine) return null
+        def status = PUB_STATUS_STABLE
+        def rlDB = ResearchLine.findByName(researchLine.name)
+        if(rlDB) status = checkItemStatus(rlDB, researchLine)
+        return [status:status, id:rlDB?.id]
+    }
+    //#end
+
+    //#if($researchProject)
+    static createResearchProjects(Node xmlFile, String authorName) {
+        def author = xmlFile.depthFirst().find{it.name() == 'DADOS-GERAIS'}.'@NOME-COMPLETO'
+        if(author != authorName) return null
+
+        def researchProjectsList = []
+        def researchProjects = xmlFile.depthFirst().findAll{ it.name() == 'PROJETO-DE-PESQUISA' }
+
+        for(Node project: researchProjects){
+            def newProject = createNewResearchProject(project)
+            def result = checkResearchProjectStatus(newProject)
+
+            if(result?.status && result?.status!=PUB_STATUS_DUPLICATED) {
+                def obj = newProject.properties.findAll{ it.key in RESEARCH_PROJECT_KEYS }
+                researchProjectsList += [obj: obj, status:result.status, id:result.id]
+            }
+        }
+        return researchProjectsList
+    }
+
+    static checkResearchProjectStatus(ResearchProject researchProject){
+        if(!researchProject) return null
+        def status = PUB_STATUS_STABLE
+        def researchProjectDB = ResearchProject.findByProjectName(researchProject.projectName)
+        if(researchProjectDB) status = checkItemStatus(researchProjectDB, researchProject)
+        return [status:status, id:researchProjectDB?.id]
+    }
+
+    private static createNewResearchProject(Node xmlFile) {
+        ResearchProject newProject = new ResearchProject()
+        newProject.projectName = getAttributeValueFromNode(xmlFile, "NOME-DO-PROJETO")
+        newProject.description = getAttributeValueFromNode(xmlFile, "DESCRICAO-DO-PROJETO")
+        newProject.status = getAttributeValueFromNode(xmlFile, "SITUACAO")
+        newProject.startYear = getAttributeValueFromNode(xmlFile, "ANO-INICIO").toInteger()
+        newProject.endYear = getAttributeValueFromNode(xmlFile, "ANO-FIM").equals("") ? 0 : getAttributeValueFromNode(xmlFile, "ANO-FIM").toInteger()
+        fillProjectMembers(getNodeFromNode(xmlFile, "EQUIPE-DO-PROJETO"), newProject)
+        //#if($funder)
+        fillFunders(getNodeFromNode(xmlFile, "FINANCIADORES-DO-PROJETO"), newProject)
+        //#end
+        return newProject
+    }
+
+    private static void fillProjectMembers(Node xmlFile, ResearchProject project) {
+        for (Node node : xmlFile?.children()) {
+            String name = (String) (node.attribute("NOME-COMPLETO"))
+            Boolean responsavel = ((String) (node.attribute("FLAG-RESPONSAVEL"))).equals("SIM")
+            if (responsavel) project.responsible = name
+            project.addToMembers(name)
+        }
+    }
+    //#end
+
+    //#if($funder)
+    private static fillFunders(Node xmlFile, ResearchProject project) {
+        for (Node node : xmlFile?.children()) {
+            String code = getAttributeValueFromNode(node, "CODIGO-INSTITUICAO")
+            Funder funder = Funder.findByCode(code)
+            if (funder) {
+                project.addToFunders(funder)
+            }
+            def projectFunders = project.funders?.findAll{it.code = code}
+            if(!projectFunders) {
+                Funder newFunder = new Funder()
+                newFunder.code = code
+                newFunder.name = getAttributeValueFromNode(node, "NOME-INSTITUICAO")
+                newFunder.nature = getAttributeValueFromNode(node, "NATUREZA")
+                project.addToFunders(newFunder)
+            }
+        }
+    }
+    //#end
+
+    static void saveMember(Node xmlFile, Member newMember) {
         Node dadosGerais = (Node) xmlFile.children()[0]
         List<Object> dadosGeraisChildren = dadosGerais.children()
 
@@ -475,33 +749,281 @@ class XMLService {
         newMember.save(flush: false)
     }
 
-    static Node parseReceivedFile(MultipartHttpServletRequest request) {
-        MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
-        CommonsMultipartFile f = (CommonsMultipartFile) mpr.getFile("file");
-        File file = new File("xmlimported.xml");
-        f.transferTo(file)
-        def records = new XmlParser()
-
-        if (file.length() > 0)
-            records.parse(file)
+    private static extractDate(params,name,i,k){
+        def dateString = params[name+i+".$k"]
+        if(!dateString || dateString=="null") return null
+        def date = new Date()
+        date.set(year: dateString as int)
+        return date
     }
 
-    static String getAttributeValueFromNode(Node n, String attribute) {
-        n.attribute attribute
+    private static extractNamesSet(params,name,i,k){
+        def authors = params.keySet()?.findAll{ it.contains(name+i+".$k")}?.sort()
+        if(!authors || authors=="null") return null
+
+        def result = [] as Set
+        authors.each{ author ->
+            result += params[author]
+        }
+
+        return result
     }
 
-    static Node getNodeFromNode(Node n, String nodeName) {
-        for (Node currentNodeChild : n.children()) {
-            if ((currentNodeChild.name() + "").equals((nodeName)))
-                return currentNodeChild
+    //#if($funder)
+    private static extractFunders(params,name,i,k, project){
+        def result = []
+        def funders = params.keySet()?.findAll{ it.contains(name+i+".$k")}?.sort()
+        if(!funders || funders=="null") return result
+
+        def funderKeys = ["name", "code", "nature"]
+        def n = funders.size()/funderKeys.size()
+        for(j in 0..n-1) {
+            def funder = new Funder()
+            funderKeys.each{ fk ->
+                def value = params[name+i+".$k"+j+".$fk"]
+                if(value == "null") value = null
+                funder."$fk" = value
+            }
+
+            def projectFunder = project.funders?.find{ it.code = funder.code }
+            if(!projectFunder) {
+                Funder savedFunder = Funder.findByCode(funder?.code)
+                if (savedFunder) {
+                    project.addToFunders(savedFunder)
+                } else {
+                    funder.save(flush: true)
+                    project.addToFunders(funder)
+                }
+            }
+        }
+    }
+    //#end
+
+    private def countImportedPublications = { importedKeys, keys ->
+        def authors = importedKeys.findAll{ it.contains("authors")}
+        def authorsTotal = (authors) ? authors.size() : 0
+        def n = (importedKeys.size()-authorsTotal)/(keys.size()-1)
+    }
+
+    private static getObject(name, properties){
+        switch(name){
+            case "journals":
+                if(properties) return new Periodico(properties)
+                else return new Periodico()
+            case "tools":
+                if(properties) return new Ferramenta(properties)
+                else return new Ferramenta()
+            case "books":
+                if(properties) return new Book(properties)
+                else return new Book()
+            case "bookChapters":
+                if(properties) return new BookChapter(properties)
+                else return new BookChapter()
+            case "conferences":
+                if(properties) return new Conferencia(properties)
+                else return new Conferencia()
+            case "masterDissertation":
+                if(properties) return new Dissertacao(properties)
+                else return new Dissertacao()
+            case "thesis":
+                if(properties) return new Tese(properties)
+                else return new Tese()
+            //#if($researchLine)
+            case "researchLines":
+                if(properties) return new ResearchLine(properties)
+                else return new ResearchLine()
+            //#end
+            //#if($researchProject)
+            case "researchProjects":
+                def project = new ResearchProject()
+                if(properties){
+                    project.properties = properties
+                    return project
+                }
+                else return project
+            //#end
+            //#if($funder)
+            case "funders":
+                if(properties) return new Funder(properties)
+                else return new Funder()
+            //#end
+            //#if($Orientation)
+            case "orientations":
+                if(properties) return new Orientation(properties)
+                else return new Orientation()
+            //#end
+            default: return null
         }
     }
 
-    static void fillPublicationDate(Publication publication, Node currentNode, String field) {
-        publication.publicationDate = new Date()
-        String tryingToParse = getAttributeValueFromNode(currentNode, field)
-        if (tryingToParse.isInteger())
-            publication.publicationDate.set(year: tryingToParse.toInteger())
+    private static fullImportedPublication(keys, params, name, i){
+        def pub = getObject(name, null)
+        keys.each{ k ->
+            switch (k){
+                case "publicationDate": pub."$k" = extractDate(params,name,i,k)
+                    break
+                case "authors": pub."$k" = extractNamesSet(params,name,i,k)
+                    break
+                case "id":
+                case "volume":
+                case "number":
+                case "startYear":
+                case "endYear":
+                    def value = params[name+i+".$k"]
+                    if(value!="") pub."$k" = value as int
+                    else pub."$k" = null
+                    break
+                //#if($researchProject)
+                case "members": pub."$k" = extractNamesSet(params,name,i,k)
+                    break
+                //#end
+                //#if($funder)
+                case "funders": extractFunders(params,name,i,k, pub)
+                    break
+                //#end
+                //#if($Orientation)
+                case "anoPublicacao": pub."$k" = params[name+i+".$k"] as int
+                    break
+                //#end
+                default: def value = params[name+i+".$k"]
+                    if(value == "null") value = null
+                    pub."$k" =  value
+            }
+        }
+        return pub
     }
 
+    private def extractImportedPublications(name, params, keys, calcImportedPublicationSize, propertyTitle){
+        def pubs = []
+        def pubKeySet = params.keySet()?.findAll{ it.contains(name) && it.contains(".")}
+
+        if(!pubKeySet || !keys) return pubs
+
+        def n = calcImportedPublicationSize(pubKeySet, keys)
+        for(i in 0..n-1){
+            String title = params[name+i+propertyTitle]
+            if(!title || title.isEmpty()) continue
+            def pub = fullImportedPublication(keys, params, name, i)
+            pubs += pub
+        }
+        return pubs
+    }
+
+    //#if($researchLine || $Orientation)
+    private def countImportedElements = { importedKeys, keys ->
+        def n = importedKeys?.size()/keys?.size()
+    }
+    //#end
+
+    //#if($researchProject)
+    private def countImportedResearchProjects = { importedKeys, keys ->
+        def funders = importedKeys.findAll{ it.contains("funders")}
+        def fundersTotal = (funders) ? funders.size() : 0
+        def members = importedKeys.findAll{ it.contains("members")}
+        def membersTotal = (members) ? members.size() : 0
+        def n = (importedKeys.size()-fundersTotal-membersTotal)/(keys.size()-2)
+    }
+    //#end
+
+    def saveImportedPublications(params, user) {
+        def propertyTitle = ".title"
+
+        //#if($Article)
+        def journals = extractImportedPublications("journals", params, JOURNAL_KEYS, countImportedPublications, propertyTitle)
+        journals.each{ if(!it.members) it.members = [] }
+        save(journals)
+        //#end
+
+        def tools = extractImportedPublications("tools", params, TOOL_KEYS, countImportedPublications, propertyTitle)
+        tools.each{ if(!it.members) it.members = [] }
+        save(tools)
+
+        def books = extractImportedPublications("books", params, BOOK_KEYS, countImportedPublications, propertyTitle)
+        books.each{ if(!it.members) it.members = [] }
+        save(books)
+
+        def bookChapters = extractImportedPublications("bookChapters", params, BOOK_CHAPTER_KEYS, countImportedPublications, propertyTitle)
+        bookChapters.each{ if(!it.members) it.members = [] }
+        save(bookChapters)
+
+        def dissertation = extractImportedPublications("masterDissertation", params, DISSERTATION_KEYS, countImportedPublications, propertyTitle)
+        dissertation.each{ if(!it.members) it.members = [] }
+        save(dissertation)
+
+        def thesis = extractImportedPublications("thesis", params, DISSERTATION_KEYS, countImportedPublications, propertyTitle)
+        thesis.each{ if(!it.members) it.members = [] }
+        save(thesis)
+
+        def conferences = extractImportedPublications("conferences", params, CONFERENCE_KEYS, countImportedPublications, propertyTitle)
+        conferences.each{ if(!it.members) it.members = [] }
+        save(conferences)
+
+        //#if($researchLine)
+        def researchLines = extractImportedPublications("researchLines", params, RESEARCH_LINE_KEYS, countImportedElements, ".name")
+        researchLines.each{
+            it.publications = []
+            if(!it.members) it.members = []
+        }
+        save(researchLines)
+        //#end
+
+        //#if($researchProject)
+        def researchProjects = extractImportedPublications("researchProjects", params, RESEARCH_PROJECT_KEYS, countImportedResearchProjects, ".projectName")
+        save(researchProjects)
+        //#end
+
+        //#if($Orientation)
+        def orientations = extractImportedPublications("orientations", params, ORIENTATION_KEYS, countImportedElements, ".tituloTese")
+        orientations.each{ it.orientador = user }
+        save(orientations)
+        //#end
+
+        return 'default.xml.save.message'
+    }
+
+    def save(publications) {
+        publications?.each{ pub ->
+            if(pub.id){
+                def originalPub = Publication.get(pub.id)
+                originalPub.properties = pub.properties
+                originalPub.save(flush:true)
+            }
+            else{
+                pub.save(flush:true)
+            }
+        }
+    }
+
+    /* Esse método deve ser chamado pelo controller para o caso de publicações importadas por telas específicas */
+    def saveImportedPubsOfType(pubs, type) {
+        def objects = []
+        pubs?.each{ p ->
+            def obj = getObject(type, p)
+            objects += obj
+        }
+        save(objects)
+        return objects
+    }
+
+    //#if($researchLine)
+    private static checkContResearch(List researchLine, int i, String researchName) {
+        List<Node> researchs = ((Node) researchLine[i]).children()
+        Node basicData = (Node) researchs[0]
+        List<String> lista = new ArrayList<String>()
+
+        ResearchLine newResearch = new ResearchLine()
+
+        while (!basicData.children().empty){
+            newResearch = getResearchLine(basicData, researchName)
+            lista.add(newResearch)
+            researchs.add(this)
+        }
+        return lista
+    }
+
+    private static String getResearchLine(Node basicData, ResearchLine researchLine) {
+        researchLine.name = getAttributeValueFromNode(basicData, "TITULO-DA-LINHA-DE-PESQUISA")
+        return researchLine.name
+    }
+    //#end
 }

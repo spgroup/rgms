@@ -1,7 +1,7 @@
 import pages.ferramenta.*
 import rgms.publication.Ferramenta
 import steps.FerramentaTestDataAndOperations
-import steps.TestDataAndOperationsPublication
+import steps.PublicationTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -64,7 +64,7 @@ Given(~'^the system has some ferramenta stored$') {->
 When(~'^I upload a new ferramenta "([^"]*)"$') { filename ->
     inicialSize = Ferramenta.findAll().size()
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    FerramentaTestDataAndOperations.uploadFerramenta(path + filename)
+    FerramentaTestDataAndOperations.uploadFerramenta(path + filename, this)
     finalSize = Ferramenta.findAll().size()
     assert inicialSize < finalSize
     //para funcionar é necessario que tenha um FilePath válido
@@ -121,7 +121,7 @@ Then(~'^I am still on ferramenta page$') {->
 // new ferramenta filled with user data by default
 Then(~'^I see my user listed as an author member of ferramenta by default$') {->
     at FerramentaCreatePage
-    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+    assert PublicationTestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 // edit ferramenta

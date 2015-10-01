@@ -1237,4 +1237,39 @@
             <args>test/cucumber/XMLImport.feature</args>
         </transformation>
     </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>XMLImportSteps,test/cucumber/steps/XMLImportSteps.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>test/cucumber/steps/XMLImportSteps.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>XMLImportTestDataAndOperations,test/functional/steps/XMLImportTestDataAndOperations.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>test/functional/steps/XMLImportTestDataAndOperations.groovy</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>XMLImport</expression>
+        <transformation>
+            <name>selectAndMoveComponent</name>
+            <args>XMLImportPage,test/functional/pages/XMLImportPage.groovy</args>
+        </transformation>
+    </configuration>
 </configurationModel>

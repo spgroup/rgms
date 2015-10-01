@@ -62,12 +62,14 @@ class FerramentaTestDataAndOperations {
         cont.response.reset()
     }
 
-    static public void uploadFerramenta(filepath) {
+    static public void uploadFerramenta(filepath, className) {
+        TestDataAndOperations.loginController(className)
         def cont = new XMLController()
         def xml = new File((String) filepath);
         def records = new XmlParser()
         cont.saveTools(records.parse(xml));
         cont.response.reset()
+        TestDataAndOperations.logoutController(className)
     }
 
     static public Ferramenta getFerramenta(title){

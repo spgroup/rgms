@@ -14,7 +14,7 @@ class Funder {
     }
 
     String toString(){
-        return "[" + code + "] " + name
+        return "[" + code + "] " + name + " [" + nature + "]"
     }
 
     boolean equals(Funder other) {

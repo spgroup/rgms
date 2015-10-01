@@ -24,7 +24,17 @@ class ArticleTestDataAndOperations {
 			title: "Modularity analysis of use case implementations",
 			publicationDate: (new Date("12 October 2012"))],
 		[journal: "Science of Computer Programming", volume: 255, pages: "30-50",
-			filename: "TCS-01.pdf", publicationDate: (new Date("12 October 2012"))]
+			filename: "TCS-01.pdf", publicationDate: (new Date("12 October 2012"))],
+        [journal: "Eletronic Notes On Theoretical Computer Science", volume: 14, number: 1, pages: "10-25",
+            title: "Systematic development of concurrent object-oriented programs",
+            publicationDate: (new Date("10 January 1998")), members:[] as Set],
+        [journal: "ACM Sigplan Notices", volume: 37, number: 11, pages: "174-190",
+            title: "Implementing distribution and persistence aspects with AspectJ",
+            publicationDate: (new Date("12 October 2012")), members:[] as Set],
+        [journal: "Eletronic Notes In Theoretical Computer Science", volume: 130, number: 1, pages: "3-21",
+            title: "An Abstract Equivalence Notion for Object Models",
+            publicationDate: (new Date("12 October 2005")), members:[] as Set,
+            authors: ["Paulo Henrique Monteiro Borba", "Tiago Massoni", "Rohit Gheyi"] as Set]    
 	]
 
 	static public def findArticleByTitle(String title) {
@@ -33,12 +43,14 @@ class ArticleTestDataAndOperations {
 		}
 	}
 
-	static public void uploadArticle(filename) {
+	static public void uploadArticle(filename, className) {
+        TestDataAndOperations.loginController(className)
 		def cont = new XMLController()
 		def xml = new File(filename);
 		def records = new XmlParser()
 		cont.saveJournals(records.parse(xml))
 		cont.response.reset()
+        TestDataAndOperations.logoutController(className)
 	}
 
 	static public boolean compatibleTo(article, title) {
@@ -117,6 +129,12 @@ class ArticleTestDataAndOperations {
 	static public def path(){
 		return new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
 	}
+
+    static findArticleByTitleAndAuthor(title, author){
+        Periodico dbPub = Periodico.findAllByTitle(title).find{
+            it.authors.contains(author)
+        }
+    }
 
 	static public def isSorted(articles,sortType) {
 		def isSorted = false

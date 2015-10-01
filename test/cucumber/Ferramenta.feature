@@ -5,6 +5,8 @@ Feature: Ferramenta
 
     # Controller tests
 
+    #Esse cenário não mais se aplica porque website se tornou opcional (dado que a informação nem sempre está disponível no xml)
+    @ignore
     Scenario: new ferramenta without website
         Given the system has no ferramenta entitled "Target"
         When I create the ferramenta "Target" with file name "target.pdf" without its website

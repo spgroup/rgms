@@ -5,7 +5,8 @@ import pages.PublicationsPage
 import pages.*
 import rgms.publication.BookChapter
 import steps.BookChapterTestDataAndOperations
-import steps.TestDataAndOperationsPublication
+import steps.PublicationTestDataAndOperations
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -70,7 +71,7 @@ And(~'^I still on the book chapter create page$') { ->
 
 Then(~'^I see my user listed as a member of book chapter by default$') { ->
     at BookChapterCreatePage
-    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+    assert PublicationTestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 When(~'^I view the book chapter list$') { ->
@@ -128,7 +129,7 @@ Given(~'^the system has some book chapters stored$') { ->
 When(~'^I upload the book chapters of "([^"]*)"$') { filename ->
     String path = "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     initialSize = BookChapter.findAll().size()
-    BookChapterTestDataAndOperations.uploadBookChapter(path)
+    BookChapterTestDataAndOperations.uploadBookChapter(path, this)
     finalSize = BookChapter.findAll().size()
     assert initialSize < finalSize
 }

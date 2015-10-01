@@ -2,7 +2,7 @@ package pages.visit
 
 import geb.Page
 import pages.GetPageTitle
-import steps.TestDataAndOperationsVisit
+import steps.VisitTestDataAndOperations
 
 
 class VisitPage extends Page {
@@ -36,7 +36,7 @@ class VisitPage extends Page {
 
     def selectViewVisit(name, initialDate, finalDate) {
         def visitRows = getVisitRows()
-        def testVisit = TestDataAndOperationsVisit.findVisit(name, initialDate, finalDate)
+        def testVisit = VisitTestDataAndOperations.findVisit(name, initialDate, finalDate)
         def dataInicio = testVisit.initialDate[0].format('dd/MM/yyyy')
         def showLink = visitRows.find('td').find([text:dataInicio])
         showLink.click()
@@ -49,7 +49,7 @@ class VisitPage extends Page {
         def visitRows = getVisitRows()
         def visitColumns = visitRows[row].find('td')
 
-        def testVisit = TestDataAndOperationsVisit.findVisit(name, initialDate, finalDate)
+        def testVisit = VisitTestDataAndOperations.findVisit(name, initialDate, finalDate)
 
         assert testVisit != null
         assert visitColumns[0].text() == testVisit.initialDate[0].format('dd/MM/yyyy')

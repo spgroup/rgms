@@ -1,7 +1,6 @@
 import rgms.publication.ResearchLine
 import steps.ResearchLineTestDataAndOperations
 import steps.TestDataAndOperations
-import steps.TestDataAndOperationsResearchLine
 import pages.ResearchLinePages.ResearchLineCreatePage
 import pages.ResearchLinePages.ResearchLinePage
 import pages.LoginPage
@@ -12,14 +11,14 @@ import pages.ResearchLinePages.ResearchLineEditPage
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has a research line named "([^"]*)" with a description "([^"]*)"$') { String name, description ->
-	TestDataAndOperationsResearchLine.insertsResearchLine(name, description)
+	ResearchLineTestDataAndOperations.insertsResearchLine(name, description)
 	research_line = ResearchLine.findByName(name)
 	assert research_line != null
 }
 
 When(~'^I remove the research line "([^"]*)"$') { String name ->
 	research_line = ResearchLine.findByName(name)
-	TestDataAndOperationsResearchLine.deleteResearchLine(research_line.id)
+	ResearchLineTestDataAndOperations.deleteResearchLine(research_line.id)
 }
 
 Then(~'^the research line "([^"]*)" is properly removed by the system'){String name ->
@@ -29,7 +28,7 @@ Then(~'^the research line "([^"]*)" is properly removed by the system'){String n
 
 
 When(~'^I update the research line "([^"]*)" with a description "([^"]*)"$') { String name, String description ->
-	TestDataAndOperationsResearchLine.updateResearchLine(name,description)
+	ResearchLineTestDataAndOperations.updateResearchLine(name,description)
 }
 
 Then(~'^the research line "([^"]*)" has the description updated to "([^"]*)"$'){String name, description ->
@@ -43,7 +42,7 @@ Given(~'^the system has no research line named "([^"]*)"$') { String name ->
 }
 
 When(~'^I create the research line named "([^"]*)" with empty description$') { String name ->
-	TestDataAndOperationsResearchLine.createResearchLine(name)
+	ResearchLineTestDataAndOperations.createResearchLine(name)
 }
 
 Then(~'^the research line "([^"]*)" is not stored, because is invalid$'){String name ->
@@ -52,7 +51,7 @@ Then(~'^the research line "([^"]*)" is not stored, because is invalid$'){String 
 }
 
 When (~'I create the research line "([^"]*)" with description "([^"]*)" with no member assigned'){String name, description ->
-    TestDataAndOperationsResearchLine.createResearchLine(name)
+    ResearchLineTestDataAndOperations.createResearchLine(name)
 }
 Then (~'the research line "([^"]*)" is properly saved with no error'){String name ->
     research_line = ResearchLine.findByName(name)
@@ -115,10 +114,10 @@ Given(~'^the system has some research line stored$'){ ->
 
 When(~'^I upload new research lines from the file "([^"]*)"$') { filename ->
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator
-    ResearchLineTestDataAndOperations.uploadResearchLine(path + filename)
+    ResearchLineTestDataAndOperations.uploadResearchLine(path + filename, this)
 }
 
-Then(~'^the system has more reseach lines now$'){ ->
+Then(~'^the system has more research lines now$'){ ->
     TestDataAndOperations.logoutController(this)
     finalSize = ResearchLine.findAll().size()
     assert (finalSize - initialSize) == 5 //If all researchlines was imported, we will have 5 more than before

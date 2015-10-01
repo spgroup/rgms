@@ -1,4 +1,4 @@
-import steps.TestDataAndOperationsResearchGroup
+import steps.ResearchGroupTestDataAndOperations
 import static cucumber.api.groovy.EN.*
 import pages.LoginPage
 import pages.PublicationsPage
@@ -14,7 +14,7 @@ Given(~'^the system has no research group entitled "([^"]*)" stored in the syste
 }
 
 When(~'^I create a research group named "([^"]*)" with the description "([^"]*)"$') { String name, description ->
-	TestDataAndOperationsResearchGroup.createResearchGroup(name, description)
+	ResearchGroupTestDataAndOperations.createResearchGroup(name, description)
 }
 
 Then(~'^the research group "([^"]*)" is properly stored by the system$') { String name ->
@@ -23,7 +23,7 @@ Then(~'^the research group "([^"]*)" is properly stored by the system$') { Strin
 }
 
 Given(~'^the system has a research group entitled "([^"]*)" with the description "([^"]*)" stored in the system$' ) { String name, description ->
-    TestDataAndOperationsResearchGroup.createResearchGroup(name, description)
+    ResearchGroupTestDataAndOperations.createResearchGroup(name, description)
 	researchGroup = ResearchGroup.findByName(name)
 	assert researchGroup != null
 }
@@ -44,7 +44,7 @@ Given(~'^the system has no research group with no name stored in the system$') {
 }
 
 When(~'^I create a research group with no name and with the description "([^"]*)" $') { String arg1 ->
-    TestDataAndOperationsResearchGroup.createResearchGroup("", arg1)
+    ResearchGroupTestDataAndOperations.createResearchGroup("", arg1)
 }
 
 Then(~'^the research group is not stored in the system because it has no name$') { ->
@@ -59,7 +59,7 @@ Then(~'^the research group with name "([^"]*)" is not stored in the system becau
 
 When(~'^I modify the research group entitled "([^"]*)" to "([^"]*)" and its description to "([^"]*)"$') { String oldName, String newName, String newDescription ->
 	researchGroup = ResearchGroup.findByName(oldName)
-    TestDataAndOperationsResearchGroup.editResearchGroup(researchGroup, newName, newDescription)
+    ResearchGroupTestDataAndOperations.editResearchGroup(researchGroup, newName, newDescription)
 }
 
 Then(~'^the edited research group "([^"]*)" with description "([^"]*)" is properly stored in the system$') { String name, String description ->
@@ -70,7 +70,7 @@ Then(~'^the edited research group "([^"]*)" with description "([^"]*)" is proper
 
 When(~'^I delete the research group entitled "([^"]*)"$') { String name ->
 	researchGroup = ResearchGroup.findByName(name)
-    TestDataAndOperationsResearchGroup.deleteResearchGroup(researchGroup)
+    ResearchGroupTestDataAndOperations.deleteResearchGroup(researchGroup)
 }
 
 Then(~'^the research group "([^"]*)" is properly deleted of the system$') { String name ->
@@ -79,7 +79,7 @@ Then(~'^the research group "([^"]*)" is properly deleted of the system$') { Stri
 }
 
 When(~'^I create a research group with no name and with the description "([^"]*)"$') { String description ->
-    TestDataAndOperationsResearchGroup.createResearchGroup("", description)
+    ResearchGroupTestDataAndOperations.createResearchGroup("", description)
 }
 
 Then(~'^the research group is not stored in the system because is invalid$') {
@@ -89,7 +89,7 @@ Then(~'^the research group is not stored in the system because is invalid$') {
 }
 
 When(~'^I create a research group with name "([^"]*)" and with no description$') { String name ->
-    TestDataAndOperationsResearchGroup.createResearchGroup(name, "")
+    ResearchGroupTestDataAndOperations.createResearchGroup(name, "")
 }
 
 When(~'^I select the new research group option at research group list page$') {
@@ -150,7 +150,7 @@ Then(~'^I can change the research group name to "([^"]*)" and save it$') { Strin
 
 When(~'^I modify the description of research group entitled "([^"]*)" to none$') { String oldName ->
     researchGroup = ResearchGroup.findByName(oldName)
-    TestDataAndOperationsResearchGroup.editResearchGroup(researchGroup, oldName, "")
+    ResearchGroupTestDataAndOperations.editResearchGroup(researchGroup, oldName, "")
 }
 
 Then(~'^the description of research group entitled "([^"]*)" is not none$') { String name ->
@@ -160,7 +160,7 @@ Then(~'^the description of research group entitled "([^"]*)" is not none$') { St
 
 When(~'^I modify the name of research group entitled "([^"]*)" to none$') { String oldName ->
     researchGroup = ResearchGroup.findByName(oldName)
-    TestDataAndOperationsResearchGroup.editResearchGroup(researchGroup, "", researchGroup.getDescription())
+    ResearchGroupTestDataAndOperations.editResearchGroup(researchGroup, "", researchGroup.getDescription())
 }
 
 Then(~'^there is no research group entitled none$') { ->
@@ -172,7 +172,7 @@ Then(~'^there is no research group entitled none$') { ->
 
 
 Given(~'^the system has a research group entitled "([^"]*)" with childof none$') { String name ->
-    TestDataAndOperationsResearchGroup.createResearchGroup(name, "description")
+    ResearchGroupTestDataAndOperations.createResearchGroup(name, "description")
     researchGroup = ResearchGroup.findByName(name)
     researchGroup.childOf = null
     researchGroup.save()
@@ -183,7 +183,7 @@ Given(~'^the system has a research group entitled "([^"]*)" with childof none$')
 
 When(~'^I modify the childof of research group entitled "([^"]*)" to itself$') { String name ->
     researchGroup = ResearchGroup.findByName(name)
-    TestDataAndOperationsResearchGroup.editResearchGroupChildOf(researchGroup, researchGroup)
+    ResearchGroupTestDataAndOperations.editResearchGroupChildOf(researchGroup, researchGroup)
 }
 
 Then(~'^the childof of research group "([^"]*)" is none$') { String name ->

@@ -12,7 +12,7 @@ class ResearchLine {
 
     static constraints = {
         name(blank: false, unique: true)
-        description(maxSize: 1000, blank: false)
+        description(maxSize: 1000, blank: true)
     }
 
     String toString() {

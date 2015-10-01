@@ -44,12 +44,14 @@ class BookChapterTestDataAndOperations {
         return compatible
     }
 
-    static public void uploadBookChapter(String filename) {
+    static public void uploadBookChapter(String filename, className) {
+        TestDataAndOperations.loginController(className)
         def cont = new XMLController()
         def xml = new File(filename);
         def records = new XmlParser()
         cont.saveBookChapters(records.parse(xml));
         cont.response.reset()
+        TestDataAndOperations.logoutController(className)
     }
 
     static public void createBookChapter(String title, String filename) {

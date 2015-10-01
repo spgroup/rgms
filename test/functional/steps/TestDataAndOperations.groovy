@@ -2,14 +2,10 @@ package steps
 
 import org.apache.shiro.subject.Subject
 import org.apache.shiro.util.ThreadContext
-import org.codehaus.groovy.tools.GroovyClass
 import rgms.authentication.User
 import rgms.member.*
-import rgms.news.News
-import rgms.news.NewsController
 import rgms.publication.*
 import org.apache.shiro.SecurityUtils
-import steps.ThesisOrDissertationTestDataAndOperations
 
 class TestDataAndOperations {
 
@@ -58,7 +54,7 @@ class TestDataAndOperations {
         BibtexFile bibtexFile = bibtexFileController.transform(new File(path))
     }
 
-   /* static public def findResearchLineByName(String name) {
+   /* static public def findResearchLineByNameOrientation(String name) {
         researchLines.find { researchLine ->
             researchLine.name == name
         }
@@ -100,8 +96,9 @@ class TestDataAndOperations {
         cont.response.reset()
     }
 
+    /* ESSE MÉTODO JÁ FOI DEFINIDO EM ConferenciaTestDataAndOperations.groovy */
     static public boolean conferenciaCompatibleTo(conferencia, title) {
-        def testConferencia = findConferenciaByTitle(title)
+        def testConferencia = findConferenciaByTitle(title) //o método não existe
         def compatible = false
         if (testConferencia == null && conferencia == null) {
             compatible = true
@@ -195,7 +192,7 @@ class TestDataAndOperations {
 
  /*   static public void createResearchLine(String name) {
         def cont = new ResearchLineController()
-        def research = TestDataAndOperations.findResearchLineByName(name)
+        def research = TestDataAndOperations.findResearchLineByNameOrientation(name)
         cont.params.name = research.name
         cont.params.description = research.description
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
@@ -208,7 +205,7 @@ class TestDataAndOperations {
 >>>>>>> HEAD~5
         def inserted = ResearchLine.findByName(name)
         if (!inserted) {
-            //def research = TestDataAndOperations.findResearchLineByName(name)
+            //def research = TestDataAndOperations.findResearchLineByNameOrientation(name)
             ResearchLine rl = new ResearchLine()
             rl.setName(name)
             rl.setDescription(description)
@@ -310,7 +307,7 @@ class TestDataAndOperations {
         def cont = new XMLController()
         def xml = new File(filename);
         def records = new XmlParser()
-        cont.savePublication(records.parse(xml));
+        cont.createPublication(records.parse(xml));
         cont.response.reset()
     }
 
@@ -320,6 +317,18 @@ class TestDataAndOperations {
         registry.removeMetaClass(SecurityUtils)
         def subject = [getPrincipal: { "admin" },
                 isAuthenticated: { true }
+        ]as Subject
+        ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
+                [getSubject: { subject } as SecurityManager])
+        SecurityUtils.metaClass.static.getSubject = { subject }
+    }
+
+    static public void loginController(cla, username){
+        def registry = GroovySystem.metaClassRegistry
+        cla.oldMetaClass = registry.getMetaClass(SecurityUtils)
+        registry.removeMetaClass(SecurityUtils)
+        def subject = [getPrincipal: { username },
+                       isAuthenticated: { true }
         ]as Subject
         ThreadContext.put(ThreadContext.SECURITY_MANAGER_KEY,
                 [getSubject: { subject } as SecurityManager])

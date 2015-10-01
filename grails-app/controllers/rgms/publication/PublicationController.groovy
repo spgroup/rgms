@@ -137,13 +137,13 @@ class PublicationController {
      *   Para enviar o post, é preciso esta autenticado com o facebook.
      *      - Para um usuario novo, no momento do registro basta logar com o FB
      *      - Para um usuario ja existente, edit esse usuario e adicione o a conta do FB ao usuario.
-	*/
-	//#if($facebook)
-	def static sendPostFacebook(Member user, String title){
-        def url = "https://graph.facebook.com/me/feed?access_token=" + user?.access_token 
+     */
+    //#if($facebook)
+    def static sendPostFacebook(Member user, String title){
+        def url = "https://graph.facebook.com/me/feed?access_token=" + user?.access_token
         System.out.println(title);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        
+
         HttpPost post = new HttpPost(url);
 
         params.add(new BasicNameValuePair("access_token", user?.access_token));
@@ -153,11 +153,11 @@ class PublicationController {
 
         UrlEncodedFormEntity postEntity = new UrlEncodedFormEntity(params, HTTP.UTF_8);
         post.setEntity(postEntity);
-        
+
         HttpClient client = new DefaultHttpClient();
         HttpResponse response = client.execute(post);
         StatusLine statusLine = response.getStatusLine();
-        
+
 //      return statusLine.getStatusCode();
     }
     //#end

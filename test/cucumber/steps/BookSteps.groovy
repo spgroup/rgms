@@ -12,6 +12,7 @@ import pages.LoginPage
 import pages.PublicationsPage
 import rgms.publication.Book
 import steps.BookTestDataAndOperations
+import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
@@ -63,7 +64,7 @@ Given(~'^the system has no books stored$') { ->
 
 When(~'^I upload the books of "([^"]*)"$') { filename ->
     initialSize = Book.findAll().size()
-    BookTestDataAndOperations.uploadBook(filename)
+    BookTestDataAndOperations.uploadBook(filename, this)
     finalSize = Book.findAll().size()
     assert initialSize < finalSize
 }

@@ -1,7 +1,6 @@
 package rgms.publication
 
 import org.apache.shiro.SecurityUtils
-import rgms.XMLService
 import rgms.authentication.User
 import rgms.member.Member
 
@@ -14,16 +13,18 @@ import rgms.member.Member
  */
 class XMLController {
 
+    def XMLService
+
     def home() {}
 
     def upload() {
-        String flashMessage = 'Publications imported!'
+        String flashMessage = 'default.xml.import.message'
         String controller = "Publication"
-        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request))
+        if (!XMLService.Import(createPublication, returnWithMessage, flashMessage, controller, request))
             return
     }
 
-    private Closure savePublication = {
+    private createPublication = {
         Node xmlFile ->
             Member user = getCurrentUser()
             XMLService.createPublications(xmlFile, user)
@@ -36,9 +37,11 @@ class XMLController {
             return
     }
 
-    private Closure saveTools = {
+    private saveTools = {
         Node xmlFile ->
-            XMLService.createFerramentas(xmlFile)
+            Member user = getCurrentUser()
+            def tools = XMLService.createTools(xmlFile, user.name)*.obj
+            XMLService.saveImportedPubsOfType(tools,"tools")
     }
 
     def uploadXMLBook() {
@@ -48,28 +51,38 @@ class XMLController {
         return
     }
 
-    private Closure saveBook = {
+    private saveBook = {
         Node xmlFile ->
-            XMLService.createBooks(xmlFile)
+            Member user = getCurrentUser()
+            def books = XMLService.createBooks(xmlFile, user.name)*.obj
+            XMLService.saveImportedPubsOfType(books, "books")
     }
 
+    //#if($researchLine)
     def uploadXMLResearchLine() {
         XMLService.Import(saveResearchLine, returnWithMessage, 'default.researchline.import.flashmessage.success', "ResearchLine", request)
     }
 
-    private Closure saveResearchLine = {
+    private saveResearchLine = {
         Node xmlFile ->
-            XMLService.createResearchLines(xmlFile)
+            Member user = getCurrentUser()
+            def researchLines = XMLService.createResearchLines(xmlFile, user.name)*.obj
+            XMLService.saveImportedPubsOfType(researchLines, "researchLines")
     }
+    //#end
 
+    //#if($researchProject)
     def uploadXMLResearchProject() {
         XMLService.Import(saveReseachProject, returnWithMessage, 'default.researchproject.import.flashmessage.success', "ResearchProject", request)
     }
 
-    private Closure saveReseachProject = {
+    private saveReseachProject = {
         Node xmlFile ->
-            XMLService.createResearchProjects(xmlFile)
+            Member user = getCurrentUser()
+            def researchProjects = XMLService.createResearchProjects(xmlFile, user.name)*.obj
+            XMLService.saveImportedPubsOfType(researchProjects, "researchProjects")
     }
+    //#end
 
     def uploadXMLBookChapter() {
         String flashMessage = 'The non existent Book Chapters were successfully imported'
@@ -78,9 +91,11 @@ class XMLController {
             return
     }
 
-    public Closure saveBookChapters = {
+    public saveBookChapters = {
         Node xmlFile ->
-            XMLService.createBooksChapters(xmlFile)
+            Member user = getCurrentUser()
+            def bookChapters = XMLService.createBooksChapters(xmlFile, user.name)*.obj
+            XMLService.saveImportedPubsOfType(bookChapters, "bookChapters")
     }
 
     def uploadXMLDissertacao() {
@@ -90,9 +105,11 @@ class XMLController {
             return
     }
 
-    private Closure saveDissertations = {
+    private saveDissertations = {
         Node xmlFile ->
-            XMLService.createDissertations(xmlFile)
+            Member user = getCurrentUser()
+            def dissertation = XMLService.createDissertation(xmlFile, user.name).obj
+            XMLService.saveImportedPubsOfType([dissertation], "masterDissertation")
     }
 
     def enviarConferenciaXML() {
@@ -102,11 +119,14 @@ class XMLController {
             return
     }
 
-    private Closure saveConferencias = {
+    private saveConferencias = {
         Node xmlFile ->
-            XMLService.createConferencias(xmlFile)
+            Member user = getCurrentUser()
+            def conferences = XMLService.createConferencias(xmlFile, user.name)*.obj
+            XMLService.saveImportedPubsOfType(conferences, "conferences")
     }
 
+    //#if($Orientation)
     def uploadOrientationXML() {
         String flashMessage = 'default.orientation.imported.message'
 
@@ -114,13 +134,15 @@ class XMLController {
             return
     }
 
-    private Closure saveOrientations = {
+    private saveOrientations = {
         Node xmlFile ->
             Member user = getCurrentUser()
-
-            XMLService.createOrientations(xmlFile, user)
+            def orientations = XMLService.createOrientations(xmlFile, user)*.obj
+            XMLService.saveImportedPubsOfType(orientations, "orientations")
     }
+    //#end
 
+    //#if($Article)
     def uploadXMLPeriodico() {
         String flashMessage = 'default.article.imported.message'
 
@@ -128,10 +150,13 @@ class XMLController {
             return
     }
 
-    private Closure saveJournals = {
+    private saveJournals = {
         Node xmlFile ->
-            XMLService.createJournals(xmlFile)
+            Member user = getCurrentUser()
+            def journals = XMLService.createJournals(xmlFile, user.name)*.obj
+            XMLService.saveImportedPubsOfType(journals, "journals")
     }
+    //#end
 
     def uploadMemberXML() {
         String flashMessage = 'XML data extracted. Complete the remaining fields'
@@ -143,24 +168,35 @@ class XMLController {
     private Closure saveMember = {
         Node xmlFile ->
             Member newMember = new Member(params)
-            XMLService.createMember(xmlFile, newMember)
+            XMLService.saveMember(xmlFile, newMember)
     }
 
-    private Closure returnWithMessage = {
-        String msg, String controller ->
-            redirectToList(controller)
+    private returnWithMessage = { String msg, String controller, publications ->
+        //importacao via opcao XMLImport no menu da tela inicial do sistema
+        if (controller == "Publication"){
+            if(msg == 'default.xml.import.message' && (!publications || publications.isEmpty())){
+                request.message = message(code: "xml.import.empty.message")
+            }
+            else request.message = message(code: msg)
+            render(view:"home", model:[publications:publications])
+        }
+        //importacao via outras telas (ainda precisa corrigir)
+        else{
             flash.message = message(code: msg)
-    }
-
-    private def redirectToList(String controllerUsed) {
-        if (controllerUsed == "Publication")
-            redirect(uri: '/')
-        else
-            redirect(controller: controllerUsed, action: "list", params: params)
+            redirect(controller: controller, action: "list")
+        }
     }
 
     private def getCurrentUser() {
         User user = User.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
         return user?.author
+    }
+
+    def save() {
+        def msg = 'default.xml.saveerror.message'
+        Member user = getCurrentUser()
+        msg = XMLService.saveImportedPublications(params, user)
+        flash.message = message(code: msg)
+        redirect(uri: '/')
     }
 }

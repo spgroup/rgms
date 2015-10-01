@@ -60,8 +60,6 @@ class ResearchLineController {
             [researchLineInstanceList: lista]
 
         }
-
-
     }
     //#end
 
@@ -237,6 +235,81 @@ class ResearchLineController {
         }
 
         researchLineInstance
+    }
+
+    def findAllResearchLine(){
+        HashMap<String,String> lista = new HashMap<String, String>()
+        for(researchline in ResearchLine.getAll())
+        {
+            if(!researchline.getDescription().equals("stable")) {
+                researchline.setDescription("stable")
+            }
+                lista.put(researchline.getName(),researchline.getDescription())
+        }
+        [researchLineInstanceList: lista]
+    }
+
+    def findResearchByMember(member){
+        ArrayList<String> lista = new ArrayList<String>()
+        Member actor = new Member()
+        for(research in ResearchLine.getAll())
+        {
+            for(currentMember in research.getMembers()){
+                if(member.equals(currentMember.getName())){
+                    actor = currentMember
+                }
+            }
+        }
+        return actor.getId()
+    }
+
+    def findAllResearchByMember(member, research){
+        HashMap<String, String> listagem = new  HashMap<String, String>()
+        for(researchL in ResearchLine.getAll()){
+            if((researchL.getName().equals(research)) && (researchL.getMembers().contains(member))){
+                listagem.put(member, research)
+            }
+        }
+        return listagem
+    }
+
+    def checkIfResearchLineExists(researchName, list){
+            for (research in list) {
+                if (research.getName().equals(researchName)) {
+                    return true
+                }
+            }
+            return false
+    }
+
+    def checkSavedResearchByDescription(nameOfResearch, status){
+        HashMap<String,String> lista = findAllResearchLine()
+        for(int i; i< lista.size(); i++){
+
+            if(lista.containsKey(nameOfResearch)) {
+               if(lista.containsValue(status)){
+
+                   return  true
+               }
+            }
+        }
+        return  false
+
+    }
+
+    def checkDeletedResearchByDescription(nameOfResearch, status){
+        List<ResearchLine> lista = ResearchLine.findAll()
+        boolean exist = checkSavedResearchByDescription(nameOfResearch, status)
+        for(research in lista){
+            if((exist) && (research.getName().equals(nameOfResearch))){
+                if(research.getDescription().equals(status)){
+                    lista.remove(research)
+                    return true
+                }
+
+            }
+        }
+        return false
     }
 }
 //#end

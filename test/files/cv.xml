@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<CURRICULO-VITAE SISTEMA-ORIGEM-XML="LATTES_OFFLINE" DATA-ATUALIZACAO="24042006" HORA-ATUALIZACAO="163019">
+    <DADOS-GERAIS NOME-COMPLETO="Paulo Henrique Monteiro Borba" NOME-EM-CITACOES-BIBLIOGRAFICAS="BORBA, Paulo"
+                  NACIONALIDADE="B" CPF="68396597472" PAIS-DE-NASCIMENTO="Brasil" UF-NASCIMENTO="PE"
+                  CIDADE-NASCIMENTO="Recife" DATA-NASCIMENTO="04021969" SEXO="MASCULINO" NUMERO-IDENTIDADE="3054285"
+                  ORGAO-EMISSOR="SSP" UF-ORGAO-EMISSOR="PE" DATA-DE-EMISSAO="19091984" NUMERO-DO-PASSAPORTE=""
+                  NOME-DO-PAI="José Neves Borba" NOME-DA-MAE="Maria das Graças Monteiro Borba"
+                  PERMISSAO-DE-DIVULGACAO="NAO" OUTRAS-INFORMACOES-RELEVANTES="">
+        <ENDERECO FLAG-DE-PREFERENCIA="ENDERECO_RESIDENCIAL">
+            <ENDERECO-PROFISSIONAL CODIGO-INSTITUICAO-EMPRESA="002100000009"
+                                   NOME-INSTITUICAO-EMPRESA="Universidade Federal de Pernambuco"
+                                   CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática"
+                                   CODIGO-ORGAO="002103000000" NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                   PAIS="Brasil" UF="PE"
+                                   LOGRADOURO-COMPLEMENTO="Rua Professor Luís Freire s/n, Caixa Postal 7851"
+                                   BAIRRO="Cidade Universitária" CIDADE="Recife" CAIXA-POSTAL="7851" CEP="50732-970"
+                                   DDD="81" TELEFONE="32718430" RAMAL=" 4323" FAX="32718438" E-MAIL="phmb@cin.ufpe.br"
+                                   HOME-PAGE="http://www.cin.ufpe.br/~phmb"/>
+            <ENDERECO-RESIDENCIAL PAIS="Brasil" UF="PE" LOGRADOURO="Rua Capitão Rebelinho 534/901" BAIRRO="Pina"
+                                  CIDADE="Recife" CAIXA-POSTAL="" CEP="51011010" DDD="81" TELEFONE="34665897" RAMAL=""
+                                  FAX="32718438" E-MAIL="phmb@cin.ufpe.br" HOME-PAGE="http://www.cin.ufpe.br/~phmb"/>
+        </ENDERECO>
+        <FORMACAO-ACADEMICA-TITULACAO>
+            <GRADUACAO SEQUENCIA-FORMACAO="7" NIVEL="1" TITULO-DO-TRABALHO-DE-CONCLUSAO-DE-CURSO=""
+                       NOME-DO-ORIENTADOR="" CODIGO-INSTITUICAO="002100000009"
+                       NOME-INSTITUICAO="Universidade Federal de Pernambuco" CODIGO-CURSO="90000001"
+                       NOME-CURSO="Ciência da Computação" CODIGO-AREA-CURSO="10300007" STATUS-DO-CURSO="CONCLUIDO"
+                       ANO-DE-INICIO="1986" ANO-DE-CONCLUSAO="1989" FLAG-BOLSA="NAO" CODIGO-AGENCIA-FINANCIADORA=""
+                       NOME-AGENCIA=""/>
+            <MESTRADO SEQUENCIA-FORMACAO="9" NIVEL="3" CODIGO-INSTITUICAO="002100000009"
+                      NOME-INSTITUICAO="Universidade Federal de Pernambuco" CODIGO-CURSO="22500049"
+                      NOME-CURSO="Ciência da Computação" CODIGO-AREA-CURSO="10300007" STATUS-DO-CURSO="CONCLUIDO"
+                      ANO-DE-INICIO="1990" ANO-DE-CONCLUSAO="1991" FLAG-BOLSA="SIM"
+                      CODIGO-AGENCIA-FINANCIADORA="002200000000"
+                      NOME-AGENCIA="Conselho Nacional de Desenvolvimento Científico e Tecnológico"
+                      ANO-DE-OBTENCAO-DO-TITULO="1991"
+                      TITULO-DA-DISSERTACAO-TESE="De especificações formais para protótipos funcionais"
+                      NOME-COMPLETO-DO-ORIENTADOR="Silvio Lemos Meira">
+                <AREAS-DO-CONHECIMENTO/>
+            </MESTRADO>
+            <DOUTORADO SEQUENCIA-FORMACAO="8" NIVEL="4" CODIGO-INSTITUICAO="127400000006"
+                       NOME-INSTITUICAO="University of Oxford" CODIGO-CURSO="90000004" NOME-CURSO="Computing"
+                       CODIGO-AREA-CURSO="10300007" STATUS-DO-CURSO="CONCLUIDO" ANO-DE-INICIO="1991"
+                       ANO-DE-CONCLUSAO="1995" FLAG-BOLSA="SIM" CODIGO-AGENCIA-FINANCIADORA="045000000000"
+                       NOME-AGENCIA="Coordenação de Aperfeiçoamento de Pessoal de Nível Superior"
+                       ANO-DE-OBTENCAO-DO-TITULO="1995"
+                       TITULO-DA-DISSERTACAO-TESE="Semantics and Refinement for a Concurrent Object Oriented Language"
+                       NOME-COMPLETO-DO-ORIENTADOR="Joseph A Goguen">
+                <AREAS-DO-CONHECIMENTO/>
+            </DOUTORADO>
+        </FORMACAO-ACADEMICA-TITULACAO>
+        <ATUACOES-PROFISSIONAIS>
+            <ATUACAO-PROFISSIONAL CODIGO-INSTITUICAO="127400000006" NOME-INSTITUICAO="University of Oxford"
+                                  SEQUENCIA-ATIVIDADE="1">
+                <VINCULOS SEQUENCIA-HISTORICO="1" TIPO-DE-VINCULO="COLABORADOR" ENQUADRAMENTO-FUNCIONAL="LIVRE"
+                          CARGA-HORARIA-SEMANAL="8" FLAG-DEDICACAO-EXCLUSIVA="SIM" MES-INICIO="10" ANO-INICIO="1992"
+                          MES-FIM="7" ANO-FIM="1994" OUTRAS-INFORMACOES="" FLAG-VINCULO-EMPREGATICIO="SIM"
+                          OUTRO-VINCULO-INFORMADO="" OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO="Tutor"/>
+                <ATIVIDADES-DE-ENSINO>
+                    <ENSINO SEQUENCIA-FUNCAO-ATIVIDADE="1" FLAG-PERIODO="ANTERIOR" TIPO-ENSINO="POS-GRADUACAO"
+                            MES-INICIO="10" ANO-INICIO="1992" MES-FIM="07" ANO-FIM="1994" CODIGO-ORGAO="" NOME-ORGAO=""
+                            CODIGO-CURSO="90000002" NOME-CURSO="Msc In Computing">
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="1">Theorem Proving and Algebra</DISCIPLINA>
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="2">Algebraic Semantics</DISCIPLINA>
+                    </ENSINO>
+                </ATIVIDADES-DE-ENSINO>
+            </ATUACAO-PROFISSIONAL>
+            <ATUACAO-PROFISSIONAL CODIGO-INSTITUICAO="002100000009"
+                                  NOME-INSTITUICAO="Universidade Federal de Pernambuco" SEQUENCIA-ATIVIDADE="2">
+                <VINCULOS SEQUENCIA-HISTORICO="2" TIPO-DE-VINCULO="COLABORADOR" ENQUADRAMENTO-FUNCIONAL="LIVRE"
+                          CARGA-HORARIA-SEMANAL="20" FLAG-DEDICACAO-EXCLUSIVA="NAO" MES-INICIO="8" ANO-INICIO="1986"
+                          MES-FIM="12" ANO-FIM="1989" OUTRAS-INFORMACOES="" FLAG-VINCULO-EMPREGATICIO="SIM"
+                          OUTRO-VINCULO-INFORMADO=""
+                          OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO="Aluno de Iniciação Científica"/>
+                <VINCULOS SEQUENCIA-HISTORICO="3" TIPO-DE-VINCULO="COLABORADOR" ENQUADRAMENTO-FUNCIONAL="LIVRE"
+                          CARGA-HORARIA-SEMANAL="8" FLAG-DEDICACAO-EXCLUSIVA="NAO" MES-INICIO="3" ANO-INICIO="1987"
+                          MES-FIM="12" ANO-FIM="1988" OUTRAS-INFORMACOES="" FLAG-VINCULO-EMPREGATICIO="SIM"
+                          OUTRO-VINCULO-INFORMADO="" OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO="Monitor"/>
+                <VINCULOS SEQUENCIA-HISTORICO="4" TIPO-DE-VINCULO="SERVIDOR_PUBLICO" ENQUADRAMENTO-FUNCIONAL="LIVRE"
+                          CARGA-HORARIA-SEMANAL="40" FLAG-DEDICACAO-EXCLUSIVA="SIM" MES-INICIO="3" ANO-INICIO="1998"
+                          MES-FIM="" ANO-FIM="" OUTRAS-INFORMACOES="" FLAG-VINCULO-EMPREGATICIO="NAO"
+                          OUTRO-VINCULO-INFORMADO="" OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO="Professor Adjunto II"/>
+                <VINCULOS SEQUENCIA-HISTORICO="5" TIPO-DE-VINCULO="LIVRE" ENQUADRAMENTO-FUNCIONAL="LIVRE"
+                          CARGA-HORARIA-SEMANAL="40" FLAG-DEDICACAO-EXCLUSIVA="NAO" MES-INICIO="8" ANO-INICIO="1995"
+                          MES-FIM="7" ANO-FIM="1997" OUTRAS-INFORMACOES="" FLAG-VINCULO-EMPREGATICIO="SIM"
+                          OUTRO-VINCULO-INFORMADO="Bolsista recém-doutor"
+                          OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO="Professor"/>
+                <VINCULOS SEQUENCIA-HISTORICO="6" TIPO-DE-VINCULO="PROFESSOR_VISITANTE" ENQUADRAMENTO-FUNCIONAL="LIVRE"
+                          CARGA-HORARIA-SEMANAL="40" FLAG-DEDICACAO-EXCLUSIVA="NAO" MES-INICIO="8" ANO-INICIO="1997"
+                          MES-FIM="2" ANO-FIM="1998" OUTRAS-INFORMACOES="" FLAG-VINCULO-EMPREGATICIO="SIM"
+                          OUTRO-VINCULO-INFORMADO="" OUTRO-ENQUADRAMENTO-FUNCIONAL-INFORMADO="Professor"/>
+                <ATIVIDADES-DE-DIRECAO-E-ADMINISTRACAO>
+                    <DIRECAO-E-ADMINISTRACAO SEQUENCIA-FUNCAO-ATIVIDADE="3" FLAG-PERIODO="ATUAL" MES-INICIO="9"
+                                             ANO-INICIO="1995" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática"
+                                             FORMATO-CARGO-OU-FUNCAO="LIVRE"
+                                             CARGO-OU-FUNCAO="Membro de colegiado superior"/>
+                    <DIRECAO-E-ADMINISTRACAO SEQUENCIA-FUNCAO-ATIVIDADE="6" FLAG-PERIODO="ANTERIOR" MES-INICIO="8"
+                                             ANO-INICIO="1999" MES-FIM="7" ANO-FIM="2002" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática"
+                                             FORMATO-CARGO-OU-FUNCAO="LIVRE"
+                                             CARGO-OU-FUNCAO="Membro de comissão permanente (GED)"/>
+                    <DIRECAO-E-ADMINISTRACAO SEQUENCIA-FUNCAO-ATIVIDADE="7" FLAG-PERIODO="ATUAL" MES-INICIO="7"
+                                             ANO-INICIO="2002" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática"
+                                             FORMATO-CARGO-OU-FUNCAO="LIVRE"
+                                             CARGO-OU-FUNCAO="Vice-coordenador da Graduação em Ciência da Computação"/>
+                </ATIVIDADES-DE-DIRECAO-E-ADMINISTRACAO>
+                <ATIVIDADES-DE-PESQUISA-E-DESENVOLVIMENTO>
+                    <PESQUISA-E-DESENVOLVIMENTO SEQUENCIA-FUNCAO-ATIVIDADE="1" FLAG-PERIODO="ATUAL" MES-INICIO="8"
+                                                ANO-INICIO="1995" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="002103000000"
+                                                NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                                CODIGO-UNIDADE="002103006008"
+                                                NOME-UNIDADE="Departamento de Informática">
+                        <LINHA-DE-PESQUISA SEQUENCIA-LINHA="1"
+                                           TITULO-DA-LINHA-DE-PESQUISA="Desenvolvimento Sistemático de Sistemas Orientados a Objetos"
+                                           FLAG-LINHA-DE-PESQUISA-ATIVA="NAO" OBJETIVOS-LINHA-DE-PESQUISA="">
+                            <AREAS-DO-CONHECIMENTO/>
+                        </LINHA-DE-PESQUISA>
+                        <LINHA-DE-PESQUISA SEQUENCIA-LINHA="2"
+                                           TITULO-DA-LINHA-DE-PESQUISA="Implementação de Aplicações Orientadas a Objetos Complexas"
+                                           FLAG-LINHA-DE-PESQUISA-ATIVA="NAO" OBJETIVOS-LINHA-DE-PESQUISA="">
+                            <AREAS-DO-CONHECIMENTO/>
+                        </LINHA-DE-PESQUISA>
+                        <LINHA-DE-PESQUISA SEQUENCIA-LINHA="3"
+                                           TITULO-DA-LINHA-DE-PESQUISA="Modularidade Emergente"
+                                           FLAG-LINHA-DE-PESQUISA-ATIVA="NAO" OBJETIVOS-LINHA-DE-PESQUISA="">
+                            <AREAS-DO-CONHECIMENTO/>
+                        </LINHA-DE-PESQUISA>
+                    </PESQUISA-E-DESENVOLVIMENTO>
+                </ATIVIDADES-DE-PESQUISA-E-DESENVOLVIMENTO>
+                <ATIVIDADES-DE-ENSINO>
+                    <ENSINO SEQUENCIA-FUNCAO-ATIVIDADE="2" FLAG-PERIODO="ATUAL" TIPO-ENSINO="GRADUACAO" MES-INICIO="3"
+                            ANO-INICIO="1996" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="" NOME-ORGAO=""
+                            CODIGO-CURSO="90000001" NOME-CURSO="Ciência da Computação">
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="1">Introdução a Programação (Orientada a Objetos com
+                            Java)
+                        </DISCIPLINA>
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="2">Programação Orientada a Objetos (e Java)</DISCIPLINA>
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="3">Engenharia de Software</DISCIPLINA>
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="4">Trabalho de Graduação em Engenharia de Software
+                        </DISCIPLINA>
+                    </ENSINO>
+                    <ENSINO SEQUENCIA-FUNCAO-ATIVIDADE="4" FLAG-PERIODO="ATUAL" TIPO-ENSINO="POS-GRADUACAO"
+                            MES-INICIO="8" ANO-INICIO="1995" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="" NOME-ORGAO=""
+                            CODIGO-CURSO="22500049" NOME-CURSO="Ciência da Computação">
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="1">Paradigmas de Linguagens de Programação</DISCIPLINA>
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="2">Especificação de Sistemas Distribuídos</DISCIPLINA>
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="3">Trabalho Individual em Engenharia de Software
+                        </DISCIPLINA>
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="4">Introdução ao RUP--Rational Unified Process</DISCIPLINA>
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="5">Métodos Formais</DISCIPLINA>
+                        <DISCIPLINA SEQUENCIA-ESPECIFICACAO="6">Programação Orientada a Objetos com AspectJ</DISCIPLINA>
+                    </ENSINO>
+                </ATIVIDADES-DE-ENSINO>
+                <ATIVIDADES-DE-EXTENSAO-UNIVERSITARIA>
+                    <EXTENSAO-UNIVERSITARIA SEQUENCIA-FUNCAO-ATIVIDADE="5" FLAG-PERIODO="ATUAL" MES-INICIO="8"
+                                            ANO-INICIO="1996" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="002103000000"
+                                            NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                            CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática"
+                                            ATIVIDADE-DE-EXTENSAO-REALIZADA="Ensino de cursos de extensão e especialização, consultorias"/>
+                </ATIVIDADES-DE-EXTENSAO-UNIVERSITARIA>
+                <ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO>
+                    <PARTICIPACAO-EM-PROJETO SEQUENCIA-FUNCAO-ATIVIDADE="8" FLAG-PERIODO="ATUAL" MES-INICIO="11"
+                                             ANO-INICIO="2003" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática">
+                        <PROJETO-DE-PESQUISA SEQUENCIA-PROJETO="1" ANO-INICIO="2003" ANO-FIM=""
+                                             NOME-DO-PROJETO="Desenvolvimento da ferramenta de manipulação automática de código Coder"
+                                             SITUACAO="EM_ANDAMENTO" NATUREZA="DESENVOLVIMENTO" NUMERO-GRADUACAO="0"
+                                             NUMERO-ESPECIALIZACAO="0" NUMERO-MESTRADO-ACADEMICO="0"
+                                             NUMERO-MESTRADO-PROF="0" NUMERO-DOUTORADO="0" DESCRICAO-DO-PROJETO=" ">
+                            <EQUIPE-DO-PROJETO>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Paulo Henrique Monteiro Borba"
+                                                        NOME-PARA-CITACAO="BORBA, Paulo" ORDEM-DE-INTEGRACAO="1"
+                                                        FLAG-RESPONSAVEL="SIM"/>
+                            </EQUIPE-DO-PROJETO>
+                            <FINANCIADORES-DO-PROJETO>
+                                <FINANCIADOR-DO-PROJETO SEQUENCIA-FINANCIADOR="1" CODIGO-INSTITUICAO="002200000000"
+                                                        NOME-INSTITUICAO="Conselho Nacional de Desenvolvimento Científico e Tecnológico"
+                                                        NATUREZA="BOLSA"/>
+                                <FINANCIADOR-DO-PROJETO SEQUENCIA-FINANCIADOR="2" CODIGO-INSTITUICAO="002200000000"
+                                                        NOME-INSTITUICAO="Conselho Nacional de Desenvolvimento Científico e Tecnológico"
+                                                        NATUREZA="AUXILIO_FINANCEIRO"/>
+                            </FINANCIADORES-DO-PROJETO>
+                        </PROJETO-DE-PESQUISA>
+                    </PARTICIPACAO-EM-PROJETO>
+                    <PARTICIPACAO-EM-PROJETO SEQUENCIA-FUNCAO-ATIVIDADE="9" FLAG-PERIODO="ATUAL" MES-INICIO="8"
+                                             ANO-INICIO="2003" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática">
+                        <PROJETO-DE-PESQUISA SEQUENCIA-PROJETO="1" ANO-INICIO="2003" ANO-FIM=""
+                                             NOME-DO-PROJETO="Variações em Linhas de Produtos de Software Usando Programação Orientada a Aspectos"
+                                             SITUACAO="EM_ANDAMENTO" NATUREZA="PESQUISA" NUMERO-GRADUACAO="1"
+                                             NUMERO-ESPECIALIZACAO="0" NUMERO-MESTRADO-ACADEMICO="0"
+                                             NUMERO-MESTRADO-PROF="0" NUMERO-DOUTORADO="1" DESCRICAO-DO-PROJETO="  ">
+                            <EQUIPE-DO-PROJETO>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Vander Alves" NOME-PARA-CITACAO="ALVES, Vander"
+                                                        ORDEM-DE-INTEGRACAO="1" FLAG-RESPONSAVEL="NAO"/>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Pedro Matos" NOME-PARA-CITACAO="MATOS, Pedro"
+                                                        ORDEM-DE-INTEGRACAO="2" FLAG-RESPONSAVEL="NAO"/>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Paulo Henrique Monteiro Borba"
+                                                        NOME-PARA-CITACAO="BORBA, Paulo" ORDEM-DE-INTEGRACAO="3"
+                                                        FLAG-RESPONSAVEL="SIM"/>
+                            </EQUIPE-DO-PROJETO>
+                            <FINANCIADORES-DO-PROJETO>
+                                <FINANCIADOR-DO-PROJETO SEQUENCIA-FINANCIADOR="1" CODIGO-INSTITUICAO="876400000009"
+                                                        NOME-INSTITUICAO="Fundação de Amparo à Ciência e Tecnologia do Estado de Pernambuco"
+                                                        NATUREZA="BOLSA"/>
+                            </FINANCIADORES-DO-PROJETO>
+                            <PRODUCOES-CT-DO-PROJETO>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="68"
+                                                        TITULO-DA-PRODUCAO-CT="Using aspects to structure small devices applications"
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos"/>
+                            </PRODUCOES-CT-DO-PROJETO>
+                        </PROJETO-DE-PESQUISA>
+                    </PARTICIPACAO-EM-PROJETO>
+                    <PARTICIPACAO-EM-PROJETO SEQUENCIA-FUNCAO-ATIVIDADE="10" FLAG-PERIODO="ATUAL" MES-INICIO="3"
+                                             ANO-INICIO="2002" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática">
+                        <PROJETO-DE-PESQUISA SEQUENCIA-PROJETO="1" ANO-INICIO="2002" ANO-FIM=""
+                                             NOME-DO-PROJETO="Implementação Progressiva de Aplicações Ubíquas Adaptáveis"
+                                             SITUACAO="EM_ANDAMENTO" NATUREZA="PESQUISA" NUMERO-GRADUACAO="3"
+                                             NUMERO-ESPECIALIZACAO="0" NUMERO-MESTRADO-ACADEMICO="2"
+                                             NUMERO-MESTRADO-PROF="0" NUMERO-DOUTORADO="2" DESCRICAO-DO-PROJETO="  ">
+                            <EQUIPE-DO-PROJETO>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Sérgio Soares" NOME-PARA-CITACAO="SOARES, Sérgio"
+                                                        ORDEM-DE-INTEGRACAO="1" FLAG-RESPONSAVEL="NAO"/>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Vander Alves" NOME-PARA-CITACAO="ALVES, Vander"
+                                                        ORDEM-DE-INTEGRACAO="2" FLAG-RESPONSAVEL="NAO"/>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Ayla Dantas" NOME-PARA-CITACAO="DANTAS, Ayla"
+                                                        ORDEM-DE-INTEGRACAO="3" FLAG-RESPONSAVEL="NAO"/>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Paulo Henrique Monteiro Borba"
+                                                        NOME-PARA-CITACAO="BORBA, Paulo" ORDEM-DE-INTEGRACAO="4"
+                                                        FLAG-RESPONSAVEL="SIM"/>
+                            </EQUIPE-DO-PROJETO>
+                            <FINANCIADORES-DO-PROJETO>
+                                <FINANCIADOR-DO-PROJETO SEQUENCIA-FINANCIADOR="1" CODIGO-INSTITUICAO="002200000000"
+                                                        NOME-INSTITUICAO="Conselho Nacional de Desenvolvimento Científico e Tecnológico"
+                                                        NATUREZA="BOLSA"/>
+                            </FINANCIADORES-DO-PROJETO>
+                            <PRODUCOES-CT-DO-PROJETO>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="50"
+                                                        TITULO-DA-PRODUCAO-CT="Implementing distribution and persistence aspects with AspectJ."
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos(Completo)"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="51"
+                                                        TITULO-DA-PRODUCAO-CT="Concurrency control with Java and relational databases"
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos(Completo)"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="53"
+                                                        TITULO-DA-PRODUCAO-CT="Progressive implementation with aspect-oriented programming"
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos(Completo)"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="56"
+                                                        TITULO-DA-PRODUCAO-CT="AspectJ, programação orientada a aspectos em Java"
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos(Completo)"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="58"
+                                                        TITULO-DA-PRODUCAO-CT="A RUP-based software process supporting progressive implementation"
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos(Completo)"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="63"
+                                                        TITULO-DA-PRODUCAO-CT="Developing adaptive J2ME applications using AspectJ"
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos(Completo)"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="64"
+                                                        TITULO-DA-PRODUCAO-CT="Implementing distribution and persistence aspects with AspectJ"
+                                                        TIPO-PRODUCAO-CT="Artigo publicado em periódicos(Completo)"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="65"
+                                                        TITULO-DA-PRODUCAO-CT="A RUP-Based Software Process Supporting Progressive Implementation"
+                                                        TIPO-PRODUCAO-CT="Capítulo de livro publicado"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="67"
+                                                        TITULO-DA-PRODUCAO-CT="Adaptability aspects: An architectural pattern for structuring adaptive applications with aspects"
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos(Completo)"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="68"
+                                                        TITULO-DA-PRODUCAO-CT="Using aspects to structure small devices applications"
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos"/>
+                                <PRODUCAO-CT-DO-PROJETO SEQUENCIA-PRODUCAO-CT="69"
+                                                        TITULO-DA-PRODUCAO-CT="Aspect-oriented implementation method: Progressive or non-progressive approach."
+                                                        TIPO-PRODUCAO-CT="Trabalho publicado em anais de eventos"/>
+                            </PRODUCOES-CT-DO-PROJETO>
+                            <ORIENTACOES>
+                                <ORIENTACAO SEQUENCIA-ORIENTACAO="49"
+                                            TITULO-ORIENTACAO="Persistence Implementation with AspectJ"
+                                            TIPO-ORIENTACAO="Dissertação de mestrado"/>
+                                <ORIENTACAO SEQUENCIA-ORIENTACAO="61"
+                                            TITULO-ORIENTACAO="Estruturação de Aplicações Enterprise Java Beans"
+                                            TIPO-ORIENTACAO="Dissertação de mestrado"/>
+                                <ORIENTACAO SEQUENCIA-ORIENTACAO="72"
+                                            TITULO-ORIENTACAO="Reestruturando o MobileServer com AspectJ"
+                                            TIPO-ORIENTACAO="Trabalho de conclusão de curso de graduação"/>
+                            </ORIENTACOES>
+                        </PROJETO-DE-PESQUISA>
+                    </PARTICIPACAO-EM-PROJETO>
+                    <PARTICIPACAO-EM-PROJETO SEQUENCIA-FUNCAO-ATIVIDADE="11" FLAG-PERIODO="ATUAL" MES-INICIO="9"
+                                             ANO-INICIO="2001" MES-FIM="" ANO-FIM="" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática">
+                        <PROJETO-DE-PESQUISA SEQUENCIA-PROJETO="1" ANO-INICIO="2001" ANO-FIM=""
+                                             NOME-DO-PROJETO="Development and Application of Refinement Calculus for Object-oriented Programming"
+                                             SITUACAO="EM_ANDAMENTO" NATUREZA="PESQUISA" NUMERO-GRADUACAO="0"
+                                             NUMERO-ESPECIALIZACAO="0" NUMERO-MESTRADO-ACADEMICO="0"
+                                             NUMERO-MESTRADO-PROF="0" NUMERO-DOUTORADO="0" DESCRICAO-DO-PROJETO="  ">
+                            <EQUIPE-DO-PROJETO>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Paulo Henrique Monteiro Borba"
+                                                        NOME-PARA-CITACAO="BORBA, Paulo" ORDEM-DE-INTEGRACAO="1"
+                                                        FLAG-RESPONSAVEL="SIM"/>
+                            </EQUIPE-DO-PROJETO>
+                        </PROJETO-DE-PESQUISA>
+                    </PARTICIPACAO-EM-PROJETO>
+                    <PARTICIPACAO-EM-PROJETO SEQUENCIA-FUNCAO-ATIVIDADE="12" FLAG-PERIODO="ANTERIOR" MES-INICIO="3"
+                                             ANO-INICIO="2000" MES-FIM="2" ANO-FIM="2002" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática">
+                        <PROJETO-DE-PESQUISA SEQUENCIA-PROJETO="1" ANO-INICIO="2000" ANO-FIM="2003"
+                                             NOME-DO-PROJETO="Implementação Progressiva de Aplicações Orientadas a Objetos Complexas"
+                                             SITUACAO="CONCLUIDO" NATUREZA="PESQUISA" NUMERO-GRADUACAO="0"
+                                             NUMERO-ESPECIALIZACAO="0" NUMERO-MESTRADO-ACADEMICO="0"
+                                             NUMERO-MESTRADO-PROF="0" NUMERO-DOUTORADO="0" DESCRICAO-DO-PROJETO="Neste projeto pretendemso definir e validar um método para a implementação de aplicações orientadas a objetos complexas. Em particular, este método deve suportar uma abordagem progressiva para implementação orientada a objetos, de forma que aspectos de distribuição, concorrência, e persistência não sejam inicialmente considerados pelo processo de implementação, mas sejam gradualmente introduzidos, preservando os requisitos funcionais da aplicação.">
+                            <EQUIPE-DO-PROJETO>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Paulo Henrique Monteiro Borba"
+                                                        NOME-PARA-CITACAO="BORBA, Paulo" ORDEM-DE-INTEGRACAO="1"
+                                                        FLAG-RESPONSAVEL="SIM"/>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Rubens Lopes da Silva"
+                                                        NOME-PARA-CITACAO="Rubens Lopes da Silva" ORDEM-DE-INTEGRACAO="2"
+                                                        FLAG-RESPONSAVEL="NAO"/>
+                            </EQUIPE-DO-PROJETO>
+                            <FINANCIADORES-DO-PROJETO>
+                                <FINANCIADOR-DO-PROJETO SEQUENCIA-FINANCIADOR="1" CODIGO-INSTITUICAO="002200000000"
+                                                        NOME-INSTITUICAO="Conselho Nacional de Desenvolvimento Científico e Tecnológico"
+                                                        NATUREZA="BOLSA"/>
+                            </FINANCIADORES-DO-PROJETO>
+                        </PROJETO-DE-PESQUISA>
+                    </PARTICIPACAO-EM-PROJETO>
+                    <PARTICIPACAO-EM-PROJETO SEQUENCIA-FUNCAO-ATIVIDADE="13" FLAG-PERIODO="ANTERIOR" MES-INICIO="8"
+                                             ANO-INICIO="1999" MES-FIM="7" ANO-FIM="2001" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática">
+                        <PROJETO-DE-PESQUISA SEQUENCIA-PROJETO="1" ANO-INICIO="1999" ANO-FIM="2001"
+                                             NOME-DO-PROJETO="Calculus of Object-oriented Programming"
+                                             SITUACAO="CONCLUIDO" NATUREZA="PESQUISA" NUMERO-GRADUACAO="0"
+                                             NUMERO-ESPECIALIZACAO="0" NUMERO-MESTRADO-ACADEMICO="0"
+                                             NUMERO-MESTRADO-PROF="0" NUMERO-DOUTORADO="0" DESCRICAO-DO-PROJETO=" ">
+                            <EQUIPE-DO-PROJETO>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Paulo Henrique Monteiro Borba"
+                                                        NOME-PARA-CITACAO="BORBA, Paulo" ORDEM-DE-INTEGRACAO="1"
+                                                        FLAG-RESPONSAVEL="SIM"/>
+                            </EQUIPE-DO-PROJETO>
+                        </PROJETO-DE-PESQUISA>
+                    </PARTICIPACAO-EM-PROJETO>
+                    <PARTICIPACAO-EM-PROJETO SEQUENCIA-FUNCAO-ATIVIDADE="14" FLAG-PERIODO="ANTERIOR" MES-INICIO="3"
+                                             ANO-INICIO="1998" MES-FIM="2" ANO-FIM="2000" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática">
+                        <PROJETO-DE-PESQUISA SEQUENCIA-PROJETO="1" ANO-INICIO="1998" ANO-FIM="2000"
+                                             NOME-DO-PROJETO="Desenvolvimento Sistem atico de Programas Concorrentes Orientados a Objetos"
+                                             SITUACAO="CONCLUIDO" NATUREZA="PESQUISA" NUMERO-GRADUACAO="0"
+                                             NUMERO-ESPECIALIZACAO="0" NUMERO-MESTRADO-ACADEMICO="0"
+                                             NUMERO-MESTRADO-PROF="0" NUMERO-DOUTORADO="0" DESCRICAO-DO-PROJETO=" ">
+                            <EQUIPE-DO-PROJETO>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Paulo Henrique Monteiro Borba"
+                                                        NOME-PARA-CITACAO="BORBA, Paulo" ORDEM-DE-INTEGRACAO="1"
+                                                        FLAG-RESPONSAVEL="SIM"/>
+                            </EQUIPE-DO-PROJETO>
+                        </PROJETO-DE-PESQUISA>
+                    </PARTICIPACAO-EM-PROJETO>
+                    <PARTICIPACAO-EM-PROJETO SEQUENCIA-FUNCAO-ATIVIDADE="15" FLAG-PERIODO="ANTERIOR" MES-INICIO="3"
+                                             ANO-INICIO="1997" MES-FIM="2" ANO-FIM="1999" CODIGO-ORGAO="002103000000"
+                                             NOME-ORGAO="Centro de Ciências Exatas e da Natureza"
+                                             CODIGO-UNIDADE="002103006008" NOME-UNIDADE="Departamento de Informática">
+                        <PROJETO-DE-PESQUISA SEQUENCIA-PROJETO="1" ANO-INICIO="1997" ANO-FIM="1999"
+                                             NOME-DO-PROJETO="Desenvolvimento Formal de Componentes de Software Reutilizáveis"
+                                             SITUACAO="CONCLUIDO" NATUREZA="PESQUISA" NUMERO-GRADUACAO="0"
+                                             NUMERO-ESPECIALIZACAO="0" NUMERO-MESTRADO-ACADEMICO="0"
+                                             NUMERO-MESTRADO-PROF="0" NUMERO-DOUTORADO="0" DESCRICAO-DO-PROJETO=" ">
+                            <EQUIPE-DO-PROJETO>
+                                <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Paulo Henrique Monteiro Borba"
+                                                        NOME-PARA-CITACAO="BORBA, Paulo" ORDEM-DE-INTEGRACAO="1"
+                                                        FLAG-RESPONSAVEL="SIM"/>
+                            </EQUIPE-DO-PROJETO>
+                            <FINANCIADORES-DO-PROJETO>
+                                <FINANCIADOR-DO-PROJETO SEQUENCIA-FINANCIADOR="1" CODIGO-INSTITUICAO="002200000000"
+                                                        NOME-INSTITUICAO="Conselho Nacional de Desenvolvimento Científico e Tecnológico"
+                                                        NATUREZA="BOLSA"/>
+                            </FINANCIADORES-DO-PROJETO>
+                        </PROJETO-DE-PESQUISA>
+                    </PARTICIPACAO-EM-PROJETO>
+                </ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO>
+            </ATUACAO-PROFISSIONAL>
+        </ATUACOES-PROFISSIONAIS>
+        <AREAS-DE-ATUACAO>
+            <AREA-DE-ATUACAO SEQUENCIA-AREA-DE-ATUACAO="1" NOME-GRANDE-AREA-DO-CONHECIMENTO="CIENCIAS_EXATAS_E_DA_TERRA"
+                             NOME-DA-AREA-DO-CONHECIMENTO="Ciência da Computação"
+                             NOME-DA-SUB-AREA-DO-CONHECIMENTO="Metodologia e Técnicas da Computação"
+                             NOME-DA-ESPECIALIDADE="Engenharia de Software"/>
+            <AREA-DE-ATUACAO SEQUENCIA-AREA-DE-ATUACAO="2" NOME-GRANDE-AREA-DO-CONHECIMENTO="CIENCIAS_EXATAS_E_DA_TERRA"
+                             NOME-DA-AREA-DO-CONHECIMENTO="Ciência da Computação"
+                             NOME-DA-SUB-AREA-DO-CONHECIMENTO="Metodologia e Técnicas da Computação"
+                             NOME-DA-ESPECIALIDADE="Linguagens de Programação"/>
+            <AREA-DE-ATUACAO SEQUENCIA-AREA-DE-ATUACAO="3" NOME-GRANDE-AREA-DO-CONHECIMENTO="CIENCIAS_EXATAS_E_DA_TERRA"
+                             NOME-DA-AREA-DO-CONHECIMENTO="Ciência da Computação" NOME-DA-SUB-AREA-DO-CONHECIMENTO=""
+                             NOME-DA-ESPECIALIDADE=""/>
+        </AREAS-DE-ATUACAO>
+        <IDIOMAS>
+            <IDIOMA IDIOMA="EN" DESCRICAO-DO-IDIOMA="Inglês" PROFICIENCIA-DE-LEITURA="BEM" PROFICIENCIA-DE-FALA="BEM"
+                    PROFICIENCIA-DE-ESCRITA="BEM" PROFICIENCIA-DE-COMPREENSAO="BEM"/>
+            <IDIOMA IDIOMA="FR" DESCRICAO-DO-IDIOMA="Francês" PROFICIENCIA-DE-LEITURA="POUCO"
+                    PROFICIENCIA-DE-FALA="POUCO" PROFICIENCIA-DE-ESCRITA="NAO_INFORMADO"
+                    PROFICIENCIA-DE-COMPREENSAO="POUCO"/>
+            <IDIOMA IDIOMA="ES" DESCRICAO-DO-IDIOMA="Espanhol" PROFICIENCIA-DE-LEITURA="POUCO"
+                    PROFICIENCIA-DE-FALA="NAO_INFORMADO" PROFICIENCIA-DE-ESCRITA="NAO_INFORMADO"
+                    PROFICIENCIA-DE-COMPREENSAO="POUCO"/>
+        </IDIOMAS>
+        <PREMIOS-TITULOS>
+            <PREMIO-TITULO NOME-DO-PREMIO-OU-TITULO="VENCEDOR DO PRIMEIRO CONCURSO INFO DE SOFTWARE EDUCATIVO"
+                           NOME-DA-ENTIDADE-PROMOTORA="Revista INFO e Jornal do Brasil" ANO-DA-PREMIACAO="1987"/>
+            <PREMIO-TITULO
+                    NOME-DO-PREMIO-OU-TITULO="Terceiro colocado no Primeiro Concurso Nacional de Software para Telecomunica coes,"
+                    NOME-DA-ENTIDADE-PROMOTORA="ADETEC e Softex" ANO-DA-PREMIACAO="1998"/>
+        </PREMIOS-TITULOS>
+    </DADOS-GERAIS>
+    <PRODUCAO-BIBLIOGRAFICA>
+        <TRABALHO-EM-EVENTOS>
+            <TRABALHO-EM-EVENTOS SEQUENCIA-PRODUCAO="86">
+                <DADOS-BASICOS-DO-TRABALHO NATUREZA="COMPLETO"
+                                           TITULO-DO-TRABALHO="An Abstract Equivalence Notion for Object Models"
+                                           ANO-DO-TRABALHO="2004" PAIS-DO-EVENTO="Brasil" IDIOMA="Inglês"
+                                           MEIO-DE-DIVULGACAO="IMPRESSO" HOME-PAGE-DO-TRABALHO=""
+                                           FLAG-RELEVANCIA="NAO"/>
+                <DETALHAMENTO-DO-TRABALHO CLASSIFICACAO-DO-EVENTO="NACIONAL"
+                                          NOME-DO-EVENTO="Seventh Brazilian Conference on Formal Methods"
+                                          CIDADE-DO-EVENTO="Recife" ANO-DE-REALIZACAO="2004"
+                                          TITULO-DOS-ANAIS-OU-PROCEEDINGS="Seventh Brazilian Conference on Formal Methods"
+                                          VOLUME="" FASCICULO="" SERIE="" PAGINA-INICIAL="1" PAGINA-FINAL="14" ISBN=""
+                                          NOME-DA-EDITORA="" CIDADE-DA-EDITORA=""/>
+                <AUTORES NOME-COMPLETO-DO-AUTOR="Rohit Gheyi" NOME-PARA-CITACAO="GHEYI, Rohit" ORDEM-DE-AUTORIA="1"/>
+                <AUTORES NOME-COMPLETO-DO-AUTOR="Tiago Massoni" NOME-PARA-CITACAO="MASSONI, Tiago"
+                         ORDEM-DE-AUTORIA="2"/>
+                <AUTORES NOME-COMPLETO-DO-AUTOR="Paulo Henrique Monteiro Borba" NOME-PARA-CITACAO="BORBA, Paulo"
+                         ORDEM-DE-AUTORIA="3"/>
+                <AREAS-DO-CONHECIMENTO>
+                    <AREA-DO-CONHECIMENTO-1 NOME-GRANDE-AREA-DO-CONHECIMENTO="CIENCIAS_EXATAS_E_DA_TERRA"
+                                            NOME-DA-AREA-DO-CONHECIMENTO="Ciência da Computação"
+                                            NOME-DA-SUB-AREA-DO-CONHECIMENTO="Metodologia e Técnicas da Computação"
+                                            NOME-DA-ESPECIALIDADE="Engenharia de Software"/>
+                </AREAS-DO-CONHECIMENTO>
+                <INFORMACOES-ADICIONAIS DESCRICAO-INFORMACOES-ADICIONAIS=""/>
+            </TRABALHO-EM-EVENTOS>
+        </TRABALHO-EM-EVENTOS>
+        <ARTIGOS-PUBLICADOS>
+            <ARTIGO-PUBLICADO SEQUENCIA-PRODUCAO="123">
+                <DADOS-BASICOS-DO-ARTIGO NATUREZA="COMPLETO"
+                                         TITULO-DO-ARTIGO="An Abstract Equivalence Notion for Object Models"
+                                         ANO-DO-ARTIGO="2005" PAIS-DE-PUBLICACAO="Estados Unidos" IDIOMA="Inglês"
+                                         MEIO-DE-DIVULGACAO="MEIO_DIGITAL" HOME-PAGE-DO-TRABALHO=""
+                                         FLAG-RELEVANCIA="NAO"/>
+                <DETALHAMENTO-DO-ARTIGO TITULO-DO-PERIODICO-OU-REVISTA="Eletronic Notes In Theoretical Computer Science"
+                                        ISSN="" VOLUME="130" FASCICULO="" SERIE="" PAGINA-INICIAL="3" PAGINA-FINAL="21"
+                                        LOCAL-DE-PUBLICACAO=""/>
+                <AUTORES NOME-COMPLETO-DO-AUTOR="Rohit Gheyi" NOME-PARA-CITACAO="GHEYI, Rohit" ORDEM-DE-AUTORIA="1"/>
+                <AUTORES NOME-COMPLETO-DO-AUTOR="Tiago Massoni" NOME-PARA-CITACAO="MASSONI, Tiago"
+                         ORDEM-DE-AUTORIA="2"/>
+                <AUTORES NOME-COMPLETO-DO-AUTOR="Paulo Henrique Monteiro Borba" NOME-PARA-CITACAO="BORBA, Paulo"
+                         ORDEM-DE-AUTORIA="3"/>
+                <AREAS-DO-CONHECIMENTO/>
+                <INFORMACOES-ADICIONAIS DESCRICAO-INFORMACOES-ADICIONAIS=""/>
+            </ARTIGO-PUBLICADO>
+        </ARTIGOS-PUBLICADOS>
+    </PRODUCAO-BIBLIOGRAFICA>
+</CURRICULO-VITAE>

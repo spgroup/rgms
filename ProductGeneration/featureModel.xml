@@ -41,7 +41,11 @@
 
     <feature min="0" max="1" name="ResearchLine" type="NONE" id="ResearchLine"></feature>
 
-    <feature min="0" max="1" name="ResearchProject" type="NONE" id="ResearchProject"></feature>
+    <feature min="0" max="1" name="ResearchProject" type="NONE" id="ResearchProject">
+        <featureGroup min="0" max="1" id="projectGroup">
+            <feature min="0" max="1" name="funder" type="NONE" id="funder"></feature>
+        </featureGroup>
+    </feature>
 
     <feature min="0" max="1" name="Orientation" type="NONE" id="Orientation"></feature>
 

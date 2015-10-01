@@ -4,7 +4,7 @@ import rgms.visit.Visit
 import rgms.visit.VisitController
 import rgms.visit.Visitor
 
-class TestDataAndOperationsVisit {
+class VisitTestDataAndOperations {
 
 //#if ( $visit )
 

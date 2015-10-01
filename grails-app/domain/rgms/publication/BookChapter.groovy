@@ -8,7 +8,7 @@ class BookChapter extends Publication {
 
     static constraints = {
         publisher nullable: false, blank: false, unique: ['title', 'file', 'chapter']
-        chapter nullable: false, blank: false, min: 1
+        chapter nullable: false, blank: false, defaultValue:1
     }
 
     //#if($Bibtex)

@@ -221,3 +221,10 @@ ArticleEditPage => test/functional/pages/ArticleEditPage.groovy;
 ArticleShowPage => test/functional/pages/ArticleShowPage.groovy;
 ArticlePage => test/functional/pages/ArticlesPage.groovy;
 UserRegisterPage => test/functional/pages/UserRegisterPage.groovy;
+
+XMLController => grails-app/controllers/rgms/publication/XMLController.groovy;
+XMLService => grails-app/services/rgms/XMLService.groovy;
+XMLImportTest => test/cucumber/XMLImport.feature;
+XMLImportSteps => test/cucumber/steps/XMLImportSteps.groovy;
+XMLImportTestDataAndOperations => test/functional/steps/XMLImportTestDataAndOperations.groovy;
+XMLImportPage => test/functional/pages/XMLImportPage.groovy;

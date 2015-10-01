@@ -4,8 +4,8 @@ import pages.DissertationPage
 import pages.DissertationShowPage
 import rgms.authentication.User
 import rgms.publication.Dissertacao
+import steps.PublicationTestDataAndOperations
 import steps.TestDataDissertacao
-import steps.TestDataAndOperationsPublication
 
 import static cucumber.api.groovy.EN.*
 
@@ -112,7 +112,7 @@ Then(~'^I\'m still on dissertation page$') {->
 When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
     String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
-    TestDataDissertacao.uploadDissertacao(path)
+    TestDataDissertacao.uploadDissertacao(path, this)
     finalSize = Dissertacao.findAll().size()
     assert inicialSize < finalSize
     //para funcionar é necessario que tenha um FilePath válido
@@ -133,7 +133,7 @@ Given(~'^the system has some dissertation stored$'){->
 When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filename, String title ->
     String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
     inicialSize = Dissertacao.findAll().size()
-    TestDataDissertacao.uploadDissertacao(path)
+    TestDataDissertacao.uploadDissertacao(path, this)
     finalSize = Dissertacao.findAll().size()
     assert inicialSize<finalSize
     //para funcionar é necessario que tenha um FilePath válido
@@ -142,7 +142,7 @@ When(~'^I upload a new dissertation "([^"]*)" with title "([^"]*)"$') {  filenam
 
 Then(~'^I see my user listed as an author member of dissertation by default$') {->
     at DissertationCreate
-    assert TestDataAndOperationsPublication.containsUser(page.selectedMembers())
+    assert PublicationTestDataAndOperations.containsUser(page.selectedMembers())
 }
 
 Then(~'^I see my school name as school of dissertation by default$') {->
