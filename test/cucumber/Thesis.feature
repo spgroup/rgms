@@ -12,7 +12,27 @@ Feature: Thesis Tests
     Given The system has no thesis entitled "New thesis"
     When  I create the thesis "New thesis" with file name "Newthesis.txt" and school "UFPE"
     Then  The thesis "New thesis" is properly stored by the system
+    
+#if($addThesisWithSupervisor)
+  Scenario: add Thesis with Supervisor
+    Given I am at the "Thesis" page
+    And the system has no dissertation entitled "New thesis"
+    When I create the dissertation by clicking on "New thesis"
+    And fill in the file name with "Newthesis.txt"
+    And school "UFPE"
+    And the supervisor's "Silvio Meira"
+    Then the dissertation "New thesis" is properly stored by the system
+#end
 
+#if($addThesisWithSupervisor)
+  Scenario: add Thesis with Supervisor
+    Given I want to add a "New thesis"
+    When I create the dissertation "New thesis" with file "Newthesis.txt"
+    And school "UFPE"
+    And the supervisor's "Silvio Meira"
+    Then the dissertation "New thesis" is properly stored by the system
+#end
+    
   Scenario: remove existing thesis
     Given   the system has thesis entitled "New thesis2"
     When    I delete the thesis "New thesis2"
@@ -106,3 +126,4 @@ Feature: Thesis Tests
 # o arquivo depois, address deveria ser opcional, deveria ter universidade e
 # centro/departamento, deveria ter apenas um autor e a possibilidade de um
 # orientador e co-orientador
+

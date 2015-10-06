@@ -26,6 +26,11 @@ When(~'^I create a new orientation entitled "([^"]*)"$') { String tituloTese ->
     OrientationTestDataAndOperations.createOrientation(tituloTese)
 }
 
+When(~'^I create a new orientation entitled "([^"]*)" and with type of "([^"]*)"$') { String tituloTese, String tipo->
+    // Express the Regexp above with the code you wish you had
+    OrientationTestDataAndOperations.createOrientation(tituloTese, tipo)
+}
+
 Then(~'^the orientation "([^"]*)" is properly stored by the system$') { String title ->
     checkIfOrientationExists(title)
 }
@@ -217,6 +222,99 @@ When(~'^I select the option remove at the orientation show page$') { ->
     at OrientationShowPage
     page.delete()
 
+}
+
+def orientationNoExist(String title){
+    return OrientationTestDataAndOperations.findOrientationByTitle(title) == null
+}
+
+//filter
+Given(~'^the system has some orientation with type "([^"]*)"$'){ String tipo ->
+   OrientationTestDataAndOperations.createOrientation('A theory of software product line refinement', tipo)
+   OrientationTestDataAndOperations.createOrientation('Modularity analysis of use case implementations')
+
+   assert (!orientationNoExist('A theory of software product line refinement') && !orientationNoExist('Modularity analysis of use case implementations'))
+}
+
+When(~'^the system filter the orientation with type "([^"]*)"$'){ String tipo ->
+    orientationFiltered = Orientation.findByTipo(tipo)
+    assert Orientation.isFiltered(orientationFiltered, tipo)
+}
+
+Then(~'^the system orientation list content is not modified$'){
+    assert Orientation.findAll().size() == 2
+    assert !orientationNoExist('Modularity analysis of use case implementations')
+    assert !orientationNoExist('A theory of software product line refinement')
+}
+
+And(~'^I create some orientation with type of "([^"]*)"$') {String tipo->
+    at OrientationsPage
+    page.selectNewOrientation()
+    at OrientationCreatePage
+    fillOrientationWithTitleAndCreateThen('Modularity analysis of use case implementations')
+    page.selectCreateOrientation()
+    assert !orientationNoExist('Modularity analysis of use case implementations')
+    to OrientationsPage
+    page.selectNewOrientation()
+    at OrientationCreatePage
+    fillOrientationWithTitleAndCreateThen('A theory of software product line refinement')
+    page.selectCreateOrientation()
+    assert !orientationNoExist('A theory of software product line refinement')
+    to OrientationsPage
+}
+
+When(~'^I select to view the list of orientation$') {->
+    at OrientationsPage
+    page.selectViewOrientation()
+}
+
+And(~'^I select to filter the list of orientation by type of "([^"]*)"$') {String tipo->
+    at OrientationsPage
+    page.fillAndSelectFilter(tipo)
+}
+
+Then(~'^my orientation list shows only the orientation type of by "([^"]*)"$') {String tipo->
+    at OrientationsPage
+    assert page.checkFilteredBy(tipo);
+}
+
+
+Given(~'^the system has some orientation supervised by "([^"]*)"$'){ String leader ->
+    OrientationTestDataAndOperations.createOrientation('The Book is on the table', leader)
+    OrientationTestDataAndOperations.createOrientation('The Book is on the table')
+
+    assert (!orientationNoExist('A theory of software product line refinement') && !orientationNoExist('Modularity analysis of use case implementations'))
+}
+
+When(~'^the system filter the articles supervised by leader "([^"]*)"$'){ String leader ->
+    orientationFiltered = Orientation.findByOrientador(leader)
+    assert Orientation.isFiltered(orientationFiltered, leader, null)
+}
+
+And(~'^I create some orientation supervised by "([^"]*)"$') {String leader->
+    at OrientationsPage
+    page.selectNewOrientation()
+    at OrientationCreatePage
+    fillOrientationWithTitleAndCreateThen('Modularity analysis of use case implementations', leader)
+    page.selectCreateOrientation()
+    assert !orientationNoExist('Modularity analysis of use case implementations')
+    to OrientationsPage
+    page.selectNewOrientation()
+    at OrientationCreatePage
+    fillOrientationWithTitleAndCreateThen('A theory of software product line refinement')
+    page.selectCreateOrientation()
+    assert !orientationNoExist('A theory of software product line refinement')
+    to OrientationsPage
+}
+
+And(~'^I select to filter the list of orientation by leader "([^"]*)"$') {String leader->
+    at OrientationsPage
+    page.fillAndSelectFilter(leader)
+}
+
+Then(~'^my orientation list shows only the orientation supervised by "([^"]*)"$') {String leader->
+    at OrientationsPage
+    assert page.checkFilteredBy(leader);
 }
 
 //FUNCOES AUXILIARES

@@ -67,7 +67,6 @@ class ArticleTestDataAndOperations {
 		}
 		if(authorName!=null){
 			cont.params["authors"] = authorName
-
 		}
 		cont.request.setContent(new byte[1000]) // Could also vary the request content.
 		cont.create()
