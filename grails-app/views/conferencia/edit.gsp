@@ -5,6 +5,9 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'conferencia.label', default: 'Conferencia')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+        <g:javascript library='jquery'/>
+        <r:require modules="jquery"/>
+        <link type="text/css" rel="stylesheet" href="${resource(dir: 'css', file: 'conferencia-authorManager.css')}" />
 	</head>
 	<body>
 		<a href="#edit-conferencia" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

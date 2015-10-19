@@ -1,6 +1,8 @@
-<%@ page import="rgms.member.Member" %>
+<%@ page import="javax.swing.text.Document; rgms.member.Member" %>
 <%@ page import="rgms.publication.Conferencia" %>
+<%@ page import="rgms.publication.ResearchLine" %>
 <%@ page import="rgms.publication.PublicationController" %>
+<%@ page import="rgms.publication.ConferenciaController" %>
 
 
 <div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'title', 'error')} required">
@@ -33,7 +35,7 @@
         <g:message code="conferencia.researchLine.label" default="Research Line"/>
 
     </label>
-    <g:select id="researchLine" name="researchLine.id" from="${rgms.publication.ResearchLine.list()}" optionKey="id"
+    <g:select id="researchLine" name="researchLine.id" from="${ResearchLine.list()}" optionKey="id"
               value="${conferenciaInstance?.researchLine?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
@@ -53,16 +55,26 @@
     <g:textField name="pages" required="" value="${conferenciaInstance?.pages}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'members', 'error')} required">
-    <label for="members">
-        <g:message code="conferencia.members.label" default="Members"/>
-        <span class="required-indicator">*</span>
-    </label>
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'pages', 'error')}">
 
-<!-- #if( $contextualInformation ) -->
-     <g:select name="members" from="${PublicationController.membersOrderByUsually()}" size="10" multiple="yes" optionKey="id" value="${conferenciaInstance?.members.id}"/>
-<!-- #else <g:select name="members" from="${Member.list()}" size="10" multiple="yes" optionKey="id" value="${conferenciaInstance?.members.id}"/> -->
-<!-- #end -->
+    <g:if test="${conferenciaInstance.authors}">
+        ${session.putAt("authors",conferenciaInstance.authors)}
+    </g:if>
+    <g:else>
+        ${session.putAt("authors",ConferenciaController.defaultAuthors)}
+    </g:else>
+
+    <div id="authors">
+        <g:render template="authorTab" />
+    </div>
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: conferenciaInstance, field: 'pages', 'error')}">
+    <label for="addAuthor">
+        <g:message code="conferencia.authorName.label" default="Author Name"/>
+    </label>
+
+    <g:textField name="addAuthor" size="20"/>
+    <input type="button" id="addAuthorButton" value="${message(code: 'conferencia.addAuthor.label', default: 'Add Author')}"/>
+</div>

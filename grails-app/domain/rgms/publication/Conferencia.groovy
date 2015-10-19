@@ -1,6 +1,5 @@
 package rgms.publication
 
-
 class Conferencia extends Publication {
 
     String booktitle
