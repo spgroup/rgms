@@ -14,12 +14,15 @@ import rgms.member.Member
  */
 class XMLController {
 
+    static int similarityTolerance = 0
+
     def home() {}
 
     def upload() {
+        similarityTolerance = Integer.parseInt(params.tolerance)
         String flashMessage = 'Publications imported!'
         String controller = "Publication"
-        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request))
+        if (!XMLService.Import(savePublication, returnWithMessage, flashMessage, controller, request, similarityTolerance))
             return
     }
 
@@ -95,6 +98,16 @@ class XMLController {
             XMLService.createDissertations(xmlFile)
     }
 
+    private Closure saveDissertationsWithSimilarityAnalisys = {
+        Node xmlFile ->
+            XMLService.createDissertationsWithSimilarityAnalysis(xmlFile, similarityTolerance)
+    }
+
+    def boolean verifyDissertations(String title, Node xmlFile)
+    {
+        return XMLService.verifyDissertations(title, xmlFile)
+    }
+
     def enviarConferenciaXML() {
         String flashMessage = message(code: 'default.importedMsg.message')
 
@@ -163,4 +176,10 @@ class XMLController {
         User user = User.findByUsername(SecurityUtils.getSubject()?.getPrincipal().toString())
         return user?.author
     }
+
+    def setSimilarityTolerance(int value) {
+        similarityTolerance = value;
+    }
+
+
 }

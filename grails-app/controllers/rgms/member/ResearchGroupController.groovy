@@ -46,6 +46,10 @@ class ResearchGroupController {
 
     def save() {
         def researchGroupInstance = new ResearchGroup(params)
+
+        /* Checando Caracteres Não Permitidos Nos Nomes*/
+        allowedChar(researchGroupInstance)
+
         //#if($researchGroupHierarchy)
         try {
             validarChildOf(researchGroupInstance, researchGroupInstance.getChildOf())
@@ -266,4 +270,34 @@ class ResearchGroupController {
         researchGroupInstance.save()
         redirect(action: "show", id: researchGroupInstance.id)
     }
+
+    def allowedChar(researchGroupInstance) {
+        def caracteres = ['#','%','*','@','!','$','¨','(',')','-','=']
+
+        boolean pesquisa
+        pesquisa = false
+
+        /* Procurando Caracteres não permitidos */
+        for (x in caracteres){
+            for (y in researchGroupInstance.name){
+                if(x == y)
+                    pesquisa = true;
+            }
+
+            for (y in researchGroupInstance.twitter){
+                if(x == y)
+                    pesquisa = true;
+            }
+
+             for (y in researchGroupInstance.sigla){
+                if(x == y)
+                    pesquisa = true;
+            }
+        } /* Fim for */
+
+        /* Checando se foi achado caracteres não permitidos */
+        if (pesquisa){
+            throw new RuntimeException("Não é possível registrar um grupo com Caracteres Especiais!")
+        }
+    } /* Fim allowedChar method*/
 }

@@ -22,4 +22,8 @@ class PublicationsPage extends Page {
     def getLink(String linkName) {
         $('div#status a', text: linkName)
     }
+
+	def verificarEntrada(String entrada) {
+
+	}
 }

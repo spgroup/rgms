@@ -51,12 +51,35 @@ class TestDataDissertacao
         cont.response.reset()
     }
 
+    static public void uploadDissertacaoWithSimilarityAnalisys(filename) {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        cont.saveDissertationsWithSimilarityAnalisys(records.parse(xml));
+        cont.response.reset()
+    }
+
     static public void removeDissertacao(String title) {
         def testDissertation = Dissertacao.findByTitle(title)
         def cont = new DissertacaoController()
         def date = new Date()
         cont.params << [id: testDissertation.id]
         cont.delete()
+    }
+
+    static public void setSimilarityTolerance(int value)
+    {
+        XMLController.similarityTolerance = value
+    }
+
+    static public boolean verifyDissertationXML(String title, String filename)
+    {
+        def cont = new XMLController()
+        def xml = new File(filename);
+        def records = new XmlParser()
+        boolean result = cont.verifyDissertations(title, records.parse(xml));
+        cont.response.reset()
+        return result;
     }
 
 }

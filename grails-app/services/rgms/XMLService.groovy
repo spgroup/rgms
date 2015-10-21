@@ -7,6 +7,7 @@ import rgms.member.Orientation
 import rgms.publication.*
 import rgms.researchProject.Funder
 import rgms.researchProject.ResearchProject
+import rgms.tool.Levenshtein
 
 class XMLService {
 
@@ -14,14 +15,25 @@ class XMLService {
         saveEntity - closure que salva a classe de domínio que está usando a importação
      */
 
+
+
     static boolean Import(Closure saveEntity, Closure returnWithMessage,
                           String flashMessage, String controller,
-                          javax.servlet.http.HttpServletRequest request) {
+                          javax.servlet.http.HttpServletRequest request, int similarityTolerance) {
         boolean errorFound = false
 
         try {
             Node xmlFile = parseReceivedFile(request)
-            saveEntity(xmlFile)
+            if(!checkExistenceWithSimilarityAnalysis(xmlFile, similarityTolerance))
+            {
+                saveEntity(xmlFile)
+            }
+            else
+            {
+                flashMessage = 'default.xml.similar.dissertation.message'
+
+                errorFound = true
+            }
         }
         //If file is not XML or if no file was uploaded
         catch (SAXParseException) {
@@ -282,6 +294,52 @@ class XMLService {
         createDissertation(doutorado)
     }
 
+    static void createDissertationsWithSimilarityAnalysis(Node xmlFile, int toleranceLevel) {
+
+        List<Dissertacao> dissertations = Dissertacao.findAll();
+
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node mestrado = (Node) formacaoAcademica.children()[1]
+        Node doutorado = (Node) formacaoAcademica.children()[2]
+
+        String dissertacaoMestrado = getAttributeValueFromNode(mestrado, "TITULO-DA-DISSERTACAO-TESE")
+
+        String dissertacaoDoutorado = getAttributeValueFromNode(doutorado, "TITULO-DA-DISSERTACAO-TESE")
+
+        boolean mestradoOK = true
+        boolean doutoradoOK = true
+
+        for (int i = 0; i < dissertations.size(); i++)
+        {
+            String current = dissertations.get(i)
+            int distanciaMestrado = Levenshtein.distance(current, dissertacaoMestrado)
+            if (( distanciaMestrado> toleranceLevel) && distanciaMestrado <= 10)
+            {
+                mestradoOK = false
+
+            }
+
+            int distanciaDoutorado = Levenshtein.distance(current, dissertacaoDoutorado)
+            if(distanciaDoutorado > toleranceLevel && distanciaDoutorado <=10)
+            {
+                doutoradoOK = false
+
+            }
+        }
+
+        if(mestradoOK)
+        {
+            createDissertation(mestrado)
+        }
+
+        if(doutoradoOK)
+        {
+            createDissertation(doutorado)
+        }
+
+    }
+
     private static void createDissertation(Node xmlNode) {
         Dissertacao newDissertation = new Dissertacao()
         newDissertation.title = getAttributeValueFromNode(xmlNode, "TITULO-DA-DISSERTACAO-TESE")
@@ -291,6 +349,68 @@ class XMLService {
         newDissertation.file = 'no File'
         newDissertation.address = 'no Address'
         newDissertation.save(flush: false)
+    }
+
+    static boolean checkExistenceWithSimilarityAnalysis(Node xmlFile, int toleranceLevel)
+    {
+        List<Dissertacao> dissertations = Dissertacao.findAll();
+
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node mestrado = (Node) formacaoAcademica.children()[1]
+        Node doutorado = (Node) formacaoAcademica.children()[2]
+
+        String dissertacaoMestrado = getAttributeValueFromNode(mestrado, "TITULO-DA-DISSERTACAO-TESE")
+
+        String dissertacaoDoutorado = getAttributeValueFromNode(doutorado, "TITULO-DA-DISSERTACAO-TESE")
+
+        for (int i = 0; i < dissertations.size(); i++)
+        {
+            String current = dissertations.get(i)
+            if (Levenshtein.distance(current, dissertacaoMestrado) > toleranceLevel)
+            {
+                return true
+            }
+            else if(Levenshtein.distance(current, dissertacaoDoutorado) > toleranceLevel)
+            {
+                return true
+            }
+        }
+        return false
+
+
+    }
+
+    static boolean verifyDissertations (String title, Node xmlFile )
+    {
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node mestrado = (Node) formacaoAcademica.children()[1]
+        Node doutorado = (Node) formacaoAcademica.children()[2]
+
+        if(analizeDissertationNode(title, mestrado) || analizeDissertationNode(title, doutorado))
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+
+    }
+
+    static boolean analizeDissertationNode(String title, Node node)
+    {
+        Dissertacao newDissertation = new Dissertacao()
+        newDissertation.title = getAttributeValueFromNode(node, "TITULO-DA-DISSERTACAO-TESE")
+        if(newDissertation.title == title)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
     }
 
     static void createConferencias(Node xmlFile) {

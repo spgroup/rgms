@@ -145,3 +145,99 @@ And(~'^the conferencias are not stored by the system$') {->
     page.checkIfConferenciaListIsEmpty()
 
 }
+
+
+Given(~'^I'm registering a new Article$') {String authorName ->
+	at articleResgitrationPage
+	page.fillArticleAuthorName(authorName, null)
+}
+
+When(~'^I type "([^"]*)" if there author names as "([^"]*)" or "([^"]*)" registered in the system) { String authorName ->
+	page.fillArticleAuthorName(ArticleTestDataAndOperations.path() + authorName)
+	at page.fillArticleAuthorName.suggest("([^"]*)" for aurthorName)
+}
+
+Then(~'^I choose between " Anderso " and " Candido " or if it is not neither I fill with the desired name) { String authorName ->
+	at page.fillArticleAuthorName("([^"*])" or type "authorName")
+}
+
+
+Given(~'^I want to remove the article "([^"]*)" with the file name "([^"]*)") { String title, filename ->
+        
+	ArticleTestDataAndOperations.createArticle(title, filename,null,null)
+        assert Periodico.findByTitle(title) != null
+}
+
+When(~'^I click on "([^"]*)" that is on the list of articles published in the conference page) { String title ->
+	ArticleTestDataAndOperations.removeArticles(title)
+
+	def testDeleteArticle1 = Periodico.findByTitle(title)
+	assert testDeleteArticle == null
+}
+
+Then(~'^I click the button to remove and the "A theory of software" is removed from the list of articles) { string title ->
+	assert periodicoNoExist(title)
+}
+And(~'^the aquirvo "ATOS.pdf" is removed from the system) {String fileName ->
+  	assert fileNoExist(fileName)
+}
+
+
+
+/*
+Given(~'^I am at the Conferece Articles page$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin","adminadmin")
+    at ConferenciaPage
+}
+And(~'^the system has some conference articles authored  by "([^"]*)", among several publications$') { String author ->
+    article = TestDataAndOperationsPublication.containsUser(author)
+    assert article != null
+}
+When(~'^I write "([^"]*)" at the Search field$') { String author ->
+    at ConferenciaPage
+    page.fillSearch(author)
+}
+And (~'^I click on the Search button$'){
+    page.select("search")
+}
+Then (~'^a list of all conference articles by "([^"]*)" is displayed$'){ String author ->
+    author = TestDataAndOperationsPublication.containsUser(author)
+    assert author != null
+    page.listConferenceArticles(author)
+}
+
+Given(~'^I am at the Conference page$'){
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin","adminadmin")
+    at ConferenciaPage
+        }
+And(~'^an Author named "([^"]*)" had published the articles  "([^"]*)",  "([^"]*)" and "([^"]*)" for the conferences "([^"]*)", "([^"]*)" and "([^"]*)"$'){ String author ->
+    assert Conferencia.findByTitle("International Conference on Software Engineering") != null
+    assert Conferencia.findByTitle("Information and Software Technology") != null
+    assert Conferencia.findByTitle("Scenario: Search for conferences which an Author have published web") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("An Analysis and Survey of the Development of Mutation Testing") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("A Systematic Survey of Program Comprehension through Dynamic Analysis") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("Engineering Privacy") != null
+    author = TestDataAndOperationsPublication.containsUser(author)
+    assert author != null
+}
+When(~'^I write ([^"]*)" at the search field$') { String author ->
+    at ConferenciaPage
+    page.fillSearch(author)
+}
+And(~'^I click on the search button$'){
+    page.select("search")
+}
+Then(~'^a list of all conferences, composed by "([^"]*)",  "([^"]*)" and "([^"]*)", that "([^"]*)" published an article is displayed$') { String author ->
+    assert ArticleTestDataAndOperations.findArticleByTitle("An Analysis and Survey of the Development of Mutation Testing") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("A Systematic Survey of Program Comprehension through Dynamic Analysis") != null
+    assert ArticleTestDataAndOperations.findArticleByTitle("Engineering Privacy") != null
+    author = TestDataAndOperationsPublication.containsUser(author)
+    assert author != null
+    page.listConferencia(author)
+}
+*/
+
