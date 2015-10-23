@@ -25,13 +25,17 @@ class ThesisCreatePage extends FormPage {
     }
 
     def fillSomeThesisDetails(title, pub_day, pub_month, pub_year, school, address) {
+        fillThesisDetailsWithoutFile(title, pub_day, pub_month, pub_year, school, address)
+        $("input", id: "create").click()
+    }
+
+    def fillThesisDetailsWithoutFile(title, pub_day, pub_month, pub_year, school, address) {
         $("form").title = title
         $("form").publicationDate_day = pub_day
         $("form").publicationDate_month = pub_month
         $("form").publicationDate_year = pub_year
         $("form").school = school
         $("form").address = address
-        $("input", id: "create").click()
     }
 
     def currentSchool() {

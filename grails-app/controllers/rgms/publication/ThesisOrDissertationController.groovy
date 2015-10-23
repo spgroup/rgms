@@ -33,6 +33,37 @@ class ThesisOrDissertationController {
         returnInstance(thesisOrDissertation, instance)
     }
 
+    def searchThesisOrDissertation(String thesisOrDissertation, params) {
+        def instance = getClassByName(thesisOrDissertation).newInstance(params)
+        //#if($contextualInformation)
+        def user = PublicationController.addAuthor(instance as Publication)
+        if (user && !user.university.isEmpty()){
+            instance.school = user.university
+        }
+        //#end
+        returnInstance(thesisOrDissertation, instance)
+    }
+
+    def searchListThesisOrDissertation(String thesisOrDissertation, params) {
+        if (thesisOrDissertation == "Tese") {
+            if(session["previous_search_list"] == null){
+                session["previous_search_list"] = [params.title]
+                session["previous_search_string"] = '"'+params.title+'"'
+            }else{
+                def previousSearchList = session["previous_search_list"]
+                if(previousSearchList instanceof java.util.List){
+                    if(!previousSearchList.contains(params.title)){
+                        previousSearchList.add(params.title)
+                        session["previous_search_string"] = session["previous_search_string"] + ',"'+params.title+'"'
+                    }
+                    session["previous_search_list"] = previousSearchList
+                }
+            }
+            def results = Tese.findAllByTitleLikeAndPublicationDateBetweenAndSchoolLike('%'+params.title+'%', params.publicationInitialDate, params.publicationEndDate, '%'+params.school+'%')
+            render(view:'list', model:[teseInstanceList: results, teseInstanceTotal:results.size()], bean: Tese)
+        }
+    }
+
     def saveThesisOrDissertation(String thesisOrDissertation, params) {
         //noinspection GroovyAssignabilityCheck
         def instance = getClassByName(thesisOrDissertation).newInstance(params)

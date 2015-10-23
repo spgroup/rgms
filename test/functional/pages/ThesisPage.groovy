@@ -28,7 +28,6 @@ class ThesisPage extends Page {
     }
 
     def getRow() {
-
         def listDiv = $('div', id: 'list-tese')
         def thesisTable = (listDiv.find('table'))[0]
         def thesisRow = thesisTable.find('tbody').find('tr')
@@ -45,8 +44,15 @@ class ThesisPage extends Page {
         def teseColumns = getRow()[row].find('td')
 
         def testtese = Tese.findByTitle(title)
-        assert teseColumns[1].text() == testtese.title
-        assert teseColumns[5].text() == testtese.school
+        assert teseColumns[0].text() == testtese.title
+        assert teseColumns[4].text() == testtese.school
     }
 
+    def orderByDate() {
+        def listDiv = $('div', id: 'list-tese')
+        def thesisTable = (listDiv.find('table'))[0]
+        def headers = thesisTable.find('thead').find('tr')[0]
+        def publicationDateOption = headers.find('th')[1].find('a')
+        publicationDateOption.click()
+    }
 }

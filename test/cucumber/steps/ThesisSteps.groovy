@@ -3,6 +3,8 @@ import pages.LoginPage
 import pages.PublicationsPage
 import pages.ThesisPage
 import pages.thesis.ThesisCreatePage
+import pages.thesis.ThesisSearchPage
+import pages.thesis.ThesisSearchListPage
 import pages.thesis.ThesisShowPage
 import rgms.authentication.User
 import rgms.publication.Tese
@@ -122,7 +124,6 @@ When(~'^I select to view thesis "([^"]*)" in resulting list$') { title ->
     page.selectViewThesis(title)
 
     at ThesisShowPage
-
 }
 
 When(~'^I select the remover option at the thesis show page$') { ->
@@ -138,7 +139,7 @@ Then(~'^the thesis "([^"]*)" is removed from the system$') { title ->
 
 // #6
 Given(~'^the system has thesis entitled "([^"]*)"$') { title ->
-    ThesisTestDataAndOperations.createTese(title, 'teste.txt', 'UFPE')
+    ThesisTestDataAndOperations.createTese(title, title+".txt", 'UFPE')
     thesis = Tese.findByTitle(title)
     assert thesis != null
 }
@@ -153,121 +154,182 @@ Then(~'^the thesis "([^"]*)" is properly removed by the system$') { title ->
 }
 
 //Scenario: order thesis list by date
-Given(~'^at least one thesis is stored in the system$') { ->
+Given(~'^at least two thesis is stored in the system$') { ->
+    Login()
 
+    storeThesisWithIndexAndDay(1, 2)
+    storeThesisWithIndexAndDay(2, 1)
 }
 
 And(~'^I am at the thesis list page$') { ->
-
+    //Login()
+    to ThesisPage
+    at ThesisPage
 }
 
 And(~'^I click in order thesis by date$') { ->
-
+    at ThesisPage
+    page.orderByDate()
 }
 
 Then(~'^the returned thesis list has the same items but it is sorted by date$') { ->
+    at ThesisPage
 
+    page.checkTeseAtList("thesis1", 1)
+    page.checkTeseAtList("thesis2", 0)
 }
 
 //Scenario: search an existing thesis
-Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)", year of publication "([^"]*)" and university "([^"]*)"$') { title, author, year, university ->
+Given(~'^the system has one thesis entitled "([^"]*)" with publication year "([^"]*)" and school "([^"]*)"$') { title, year, school ->
+    Login()
 
+    to ThesisCreatePage
+    at ThesisCreatePage
+
+    def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/TCS-03.pdf")
+    absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
+    page.fillThesisDetails(title, "1", "1", year, school, "Cidade Universitaria", absolutePath)
 }
 
 And(~'^I am at the thesis search page$') { ->
-
+    to ThesisSearchPage
+    at ThesisSearchPage
 }
 
-When(~'^I search for "([^"]*)" by "([^"]*)"$') { title, author ->
+When(~'^I search for "([^"]*)" with publication year "([^"]*)" and school "([^"]*)"$') { title, year, school ->
+    at ThesisSearchPage
 
+    page.fillThesisSearchDetails(title, "1", "1", year, "31", "12", year, school)
+    page.searchTheses()
 }
 
-And(~'^I select to view the entry that has university "([^"]*)" and publication year "([^"]*)"$') { university, year ->
-
+And(~'^I select to view the entry that has title "([^"]*)"$') { title ->
+    at ThesisSearchListPage
+    page.selectViewThesis(title)
 }
 
-Then(~'^the thesis "([^"]*)" by "([^"]*)" appears in the thesis view page$') { title, year ->
-
+Then(~'^the thesis "([^"]*)" with publication year "([^"]*)" and school "([^"]*)" appears in the thesis view page$') { title, year, school ->
+    at ThesisShowPage
+    page.checkThesisDetails(title, year, school)
 }
 
-//Scenario: create thesis web without a file
-
-
-When(~'^I fill the thesis fields with "([^"]*)", "([^"]*)", "([^"]*)","([^"]*)", "([^"]*)","([^"]*)"$') { title, date, university, address, author, advisor ->
-
+//Scenario: create thesis without a file
+When(~'^I fill the thesis fields with "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)"$') { title, year, month, day, school, address ->
+    at ThesisCreatePage
+    page.fillThesisDetailsWithoutFile(title, day, month, year, school, address)
 }
 
-And(~'^I click in create button$') { ->
-
+And(~'^I try to create a new thesis$') { ->
+    at ThesisCreatePage
+    page.selectCreateThesis()
 }
 
-Then(~'^the system shows a warning message "([^"]*)"$') { warningmessage ->
-
-}
-
+//Scenario: search an existing thesis filled by default
 //#if($contextualInformation)
-//    Scenario: search an existing thesis filled by default
+Given(~'^the system has one thesis entitled "([^"]*)" with current day and school "([^"]*)"$') { title, school ->
+    Login()
 
-Given(~'^the system has at least one thesis entitled "([^"]*)"$') { title ->
+    to ThesisCreatePage
+    at ThesisCreatePage
 
+    def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/TCS-03.pdf")
+    absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
+    page.fillThesisDetails(title, 1, 1, 2014, school, "Cidade Universitaria", absolutePath)
 }
-
 
 And(~'^I have already done a search about "([^"]*)" previously$') { title ->
+    to ThesisSearchPage
+    at ThesisSearchPage
 
+    page.fillTitleInSearchDetails(title)
+    page.searchTheses()
 }
 
-When(~'^I press "([^"]*)"$') { input ->
-
+When(~'^I enter "([^"]*)" in the title field$') { input->
+    to ThesisSearchPage
+    at ThesisSearchPage
+    page.enterText(input)
 }
 
-And(~'^I choose "([^"]*)" in dropdown search list$') { title ->
-
+And(~'^I choose "([^"]*)" in the displayed list$') { title ->
+    at ThesisSearchPage
+    page.chooseOption(title)
 }
 
-And(~'^I click in search button$') { ->
-
+And(~'^I fill the year "([^"]*)" and school "([^"]*)"$') { year, school ->
+    at ThesisSearchPage
+    page.fillSomeDetaisInSearch(1, 1, year, 1, 1, year, school)
 }
 
-Then(~'^all theses entitled "([^"]*)" are shown$') { title ->
-
+And(~'^I search') { ->
+    at ThesisSearchPage
+    page.searchTheses()
 }
 
+Then(~'^the thesis "([^"]*)" appears in the thesis view page$') { title ->
+    at ThesisSearchListPage
+    page.checkIfThesisWasFound(title)
+}
 //#end
 
 //Scenario: edit thesis title
-When(~'^I change the title from "([^"]*)" to "([^"]*)"$') { String title, newtitle ->
+When(~'^I change the title from "([^"]*)" to "([^"]*)"$') { title, newTitle ->
+    thesesListBeforeModification = Tese.findAll()
+    thesesListBeforeModification.remove(Tese.findByTitle(title))
 
+    def updatedThesis = ThesisTestDataAndOperations.editThesis(title, newTitle)
+
+    thesesListAfterModification = Tese.findAll()
+    thesesListAfterModification.remove(Tese.findByTitle(newTitle))
+
+    assert updatedThesis != null
 }
 
-Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { String title, newtitle ->
-
+Then(~'^the thesis entitled "([^"]*)" is properly renamed by the system$') { newTitle ->
+    def thesis = Tese.findByTitle(newTitle)
+    assert thesis != null
 }
 
 And(~'^the other theses are not changed by the system$') { ->
-
+    assert thesesListBeforeModification.equals(thesesListAfterModification)
 }
 
 //Scenario: edit thesis with invalid data
-Then(~'^the existing thesis are not changed by the system$') { ->
+When(~'^I try to change the title from "([^"]*)" to "([^"]*)"$') { title, newTitle ->
+    thesesListBeforeModification = Tese.findAll()
+    def updatedThesis = ThesisTestDataAndOperations.editThesis(title, newTitle)
+    thesesListAfterModification = Tese.findAll()
+    assert updatedThesis == null
+}
 
+Then(~'^the existing thesis are not changed by the system$') { ->
+    assert thesesListBeforeModification.equals(thesesListAfterModification)
 }
 
 //Scenario: search a thesis
-Given(~'^the system has one thesis entitled "([^"]*)"$') { title ->
-}
-
 When(~'^I search for thesis entitled "([^"]*)"$') { title ->
+    thesesListBeforeModification = Tese.findAll()
+    Tese.findByTitle(title)
+    thesesListAfterModification = Tese.findAll()
 }
 
 //Scenario: upload thesis with a file
-When(~'^I upload the file "([^"]*)"$') { file ->
+When(~'^I upload the file "([^"]*)" with thesis entitled "([^"]*)"$') { filename, title ->
+    thesesListBeforeModification = Tese.findAll()
 
+    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    ThesisTestDataAndOperations.uploadThesis(path)
+
+    thesesListAfterModification = Tese.findAll()
+    thesesListAfterModification.remove(Tese.findByTitle(title))
 }
 
-And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
-
+And(~'^the system properly stores the thesis entitled "([^"]*)"$') { title ->
+    thesis = Tese.findByTitle(title)
+    assert thesis != null
 }
+
+//VARIAVÉIS AUXILIARES
 
 //FUNÇÔES AUXILIARES
 def thesisDoNotExists(title) {
@@ -280,4 +342,13 @@ def Login() {
     to LoginPage
     at LoginPage
     page.fillLoginData("admin", "adminadmin")
+}
+
+def storeThesisWithIndexAndDay(index, day) {
+    to ThesisCreatePage
+    at ThesisCreatePage
+
+    def absolutePath = ServletContextHolder.servletContext.getRealPath("/test/functional/steps/TCS-0" +index +".pdf")
+    absolutePath = absolutePath.replace("\\", "/").replaceAll("/web-app", "")
+    page.fillThesisDetails("thesis"+index, day, "1", "1914", "UFPE", "Cidade Universitaria", absolutePath)
 }
