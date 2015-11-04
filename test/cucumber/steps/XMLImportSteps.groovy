@@ -6,7 +6,12 @@ import pages.LoginPage
 import pages.OrientationPages.OrientationsPage
 import pages.XMLImportPage
 import pages.ferramenta.FerramentaPage
+import rgms.member.Orientation
 import rgms.publication.*
+import steps.OrientationTestDataAndOperations
+import steps.TestDataAndOperationsPublication
+import steps.TestDataDissertacao
+
 import static cucumber.api.groovy.EN.*
 import steps.TestDataAndOperations
 import CommonSteps
@@ -104,4 +109,53 @@ And(~'^the publications are not stored by the system$') {->
     to OrientationsPage
     at OrientationsPage
     page.checkIfOrientationListIsEmpty()
+}
+
+Given(~'^the system has a dissertation entitled "([^"]*)" stored$') { String title->
+    TestDataDissertacao.createDissertacao(title, "dissertation.txt", "University of Oxford")
+    def dissertation = Dissertacao.findByTitle(title);
+    assert dissertation != null
+}
+
+And(~'^the similarity tolerance is configured to "([^"]*)"$') { int similarityTolerance->
+    assert TestDataDissertacao.verifySimilarityTolerance(similarityTolerance)
+}
+
+When(~'^I upload the file "([^"]*)" which contains a dissertation entitled "([^"]*)"$') { String filename, title->
+
+
+    String path = new File(".").getCanonicalPath() + File.separator + "test" +  File.separator + "functional" + File.separator + "steps" + File.separator + filename
+    boolean result = TestDataDissertacao.verifyDissertationXML(title, path)
+    assert result
+
+}
+
+Then(~'^the system outputs a list of imported dissertations which contains the dissertation entitled "([^"]*)"$') { String title->
+    def dissertation = Dissertacao.findByTitle(title)
+    assert dissertation != null
+}
+
+And(~'^no new dissertation entitled "([^"]*)" is stored by the system$') { String title->
+    def dissertation = Dissertacao.findByTitle(title)
+    assert dissertation == null
+}
+
+Given(~'^I am at the XMLImport Page$') {->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    to XMLImportPage
+    at XMLImportPage
+}
+
+And(~'^I select a xml file$') { ->
+    page.selectFile()
+}
+
+When(~'^I click on "upload" without informing the tolerance level$') { ->
+    page.uploadClick()
+}
+
+Then(~'^the system outputs an error message$') { ->
+    assert page.readFlashMessage() != null
 }

@@ -293,6 +293,38 @@ class XMLService {
         newDissertation.save(flush: false)
     }
 
+    static boolean verifyDissertations (String title, Node xmlFile )
+    {
+        Node dadosGerais = (Node) xmlFile.children()[0]
+        Node formacaoAcademica = getNodeFromNode(dadosGerais, "FORMACAO-ACADEMICA-TITULACAO")
+        Node mestrado = (Node) formacaoAcademica.children()[1]
+        Node doutorado = (Node) formacaoAcademica.children()[2]
+
+        if(analizeDissertationNode(title, mestrado) || analizeDissertationNode(title, doutorado))
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+
+    }
+
+    static boolean analizeDissertationNode(String title, Node node)
+    {
+        Dissertacao newDissertation = new Dissertacao()
+        newDissertation.title = getAttributeValueFromNode(node, "TITULO-DA-DISSERTACAO-TESE")
+        if(newDissertation.title == title)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+
     static void createConferencias(Node xmlFile) {
         Node trabalhosEmEventos = (Node) ((Node) xmlFile.children()[1]).children()[0]
 
