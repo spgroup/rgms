@@ -2,6 +2,7 @@ package steps
 
 import rgms.authentication.User
 import rgms.member.MemberController
+import steps.CommonTestAndDataOperations
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,11 +24,21 @@ class MemberTestDataAndOperations {
             ],
             [name: "Rubens Lopes", username: "rlfs", email: "rlfsfake@cin.ufpe.br",
                     status: "Graduate Student", university: "UFPE", enabled: true
-            ]]
+            ],
+            [name: "Rene Leite", username: "reneheaven", email: "rene@cin.ufpe.br",
+             status: "Graduate Student", university: "UFPE", enabled: true
+            ],
+            ]
 
     static public def findByUsername(String username) {
         members.find { member ->
             member.username == username
+        }
+    }
+
+    static public def findByUniversity(String university){
+        members.find{ member ->
+            member.university == university
         }
     }
 
@@ -46,18 +57,20 @@ class MemberTestDataAndOperations {
         } else {
             cont.params << [username: username, phone: phone]
         }
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        CommonTestAndDataOperations.createAndSave(cont);
     }
 
     //TODO evitar duplicação, depois de resolver toda a confusão conceitual entre user vs member
     static public void createMemberWithEmail(String name, String email) {
         def cont = new MemberController()
         cont.params << findByName(name) << [email: email]
-        cont.create()
-        cont.save()
-        cont.response.reset()
+        CommonTestAndDataOperations.createAndSave(cont);
+    }
+
+    static public def findByEmail(String email){
+        members.find{ member ->
+            member.email == email
+        }
     }
 
     static public void deleteMember(String username) {
@@ -77,5 +90,11 @@ class MemberTestDataAndOperations {
                 return true;
         }
         return false;
+    }
+    
+    static public void createMemberWithName(String name) {
+        def cont = new MemberController()
+        cont.params << findByName(name)
+        CommonTestAndDataOperations.createAndSave(cont);
     }
 }
