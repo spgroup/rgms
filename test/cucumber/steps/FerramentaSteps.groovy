@@ -93,7 +93,7 @@ When(~'^I select the new ferramenta option at the ferramenta page$') {->
 }
 Then(~'^I can create a ferramenta filling the details$') {->
     at FerramentaCreatePage
-    page.createNewFerramenta("CCFinder")
+    page.createNewFerramenta("Joee")
 }
 
 // new ferramenta without any information
@@ -150,4 +150,34 @@ And(~'^I fill Titulo with more than (\\d+) caracteres$') { int arg1 ->
 And(~'^fill the others fields with valid values without Titulo$') {->
     at FerramentaCreatePage
     page.fillFerramentaDetailsWithoutTitle("Tool without title")
+}
+
+//new ferramente with website
+//By VDDM
+//Given already implemented
+When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)"  with "([^"]*)" as its  website$') { String title, String filename, String website ->
+    FerramentaTestDataAndOperations.createFerramenta(title, filename,website)
+}
+Then(~'^the ferramenta "([^"]*)" is stored$') { String title ->
+    def tool = Ferramenta.findByTitle(title)
+    assert tool != null
+}
+
+//List ferramentas
+//By VDDM
+And (~'^I can create a ferramenta with name "([^"]*)" and "([^"]*)"'){ String name1, String name2 ->
+    at FerramentaCreatePage
+    page.createNewFerramenta(name1)
+    at FerramentaShowPage
+    page.select('create')
+    at FerramentaCreatePage
+    page.createNewFerramenta(name2)
+}
+And(~'^I select the "([^"]*)" option at the ferramenta page$') {String option ->
+    at FerramentaShowPage
+    page.select('list')
+}
+Then(~'^I can see all existing ferramentas in the system and the "([^"]*)" and "([^"]*)" ferramentas$') {String name1,String name2 ->
+   at FerramentaPage
+   page.checkFerramentaList(name1, name2)
 }

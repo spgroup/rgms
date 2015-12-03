@@ -34,6 +34,11 @@ Feature: news
      When I request to update the news from Twitter to research group "SPG"
      Then news of "SPG" research group has been updated
 
+  Scenario: disintegrate Twitter account
+    Given the research group "SPG" in the system has a Twitter account associated
+    When When I disassociate account "HumanBrainProj" group to "SPG"
+    Then "SPG" research group has a twitter account "@HumanBrainProj" registered
+
   Scenario: consecutive update without duplicate news
     Given the research group "SPG" in the system has a Twitter account "@HumanBrainProj" associated
     And   twitter account associated with "SPG" research group has been updated once
@@ -60,6 +65,14 @@ Feature: news
     When I edit the news with description "noticiaTeste" to "newDescription", date "07-04-2012" and "SPG" research group
     Then the news "newDescription", date "07-04-2012" and "SPG" research group is properly updated by the system
 
+
+  Scenario: edit existing news with a invalid description
+    Given the system has a news with description "noticiaTeste" and date "07-04-2012" for "SPG" research group
+    When I edit the news with description "noticiaTeste" to "newDescription", date "07-04-2012" and "SPG" research group
+    And the news "newDescription", date "07-04-2012" and "SPG" research group already exist
+    Then the news "noticiaTeste", date "07-04-2012" and "SPG" will not be be edited
+
+
   Scenario: remove existing news web
     Given I am at the publications menu
     When I select the news page
@@ -67,7 +80,7 @@ Feature: news
     And I select the option to remove in news show page
     Then the news "Noticia1" is properly removed by the system
 
-  Scenario: new invalid news (invalid date)
+  Scenario: new invalid news (invalid description)
     Given the system has no news with description "teste" and date "31-02-2013" for "SPG" research group
     When I try to create a news with description "teste" and date "31-02-2013" for "SPG" research group
     Then the news with description "teste", date "31-02-2013" and "SPG" research group is not stored by the system because it is invalid

@@ -35,8 +35,11 @@ class ThesisOrDissertationController {
 
     def saveThesisOrDissertation(String thesisOrDissertation, params) {
         //noinspection GroovyAssignabilityCheck
-        def instance = getClassByName(thesisOrDissertation).newInstance(params)
-        PublicationController pb = new PublicationController()
+        def instance = null
+        if(thesisOrDissertation == 'Tese')
+            instance = new Tese(params)
+        else
+            instance = new Dissertacao(params)
         def duplicated
         if (thesisOrDissertation == "Tese") {
             //noinspection GroovyAssignabilityCheck
@@ -50,7 +53,10 @@ class ThesisOrDissertationController {
             render(view: "create", model: [instance: instance])
             return
         }
-        if (!pb.upload(instance as Publication) || !instance.save(flush: true)) {
+        if (!instance.save(flush: true)) {
+            instance.errors.each {
+                println it
+            }
             render(view: "create", model: [instance: instance])
             return
         }

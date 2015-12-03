@@ -19,6 +19,13 @@ Feature: BookChapter
     When I remove the book chapter "Next Generation Software Product Line Engineering"
     * the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
 
+  #if ($BookChapter) 
+  Scenario: modify existing book chapter
+    Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
+    When I edit the book chapter title from "Next Generation Software Product Line Engineering" to "Next Generation Software Product Line Engineering REVIEWED"
+    Then the book chapter "Next Generation Software Product Line Engineering" is properly updated by the system
+  #end
+
   Scenario: register book chapter with invalid data
     Given I am at the book chapter page
     And I select the new book chapter option at the book chapter page
@@ -72,3 +79,21 @@ Feature: BookChapter
     And I select the upload button at the book chapter page
     Then I'm still on book chapter page
     And the book chapters are not stored by the system
+
+#if ($listBookChaptersWeb)
+Scenario: list all existing book chapters web
+   Given that I'm at the book chapter page
+   And there are book chapters in the system
+   When	I click to list the book chapters
+   Then the book chapters list will be shown
+#end
+
+ #if ($BookChapter)
+  Scenario: edit existing book chapter web
+    Given I am at the book chapter page and the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "Ngs.pdf"
+    When I select to view "Next Generation Software Product Line Engineering" in resulting list
+    And I change the book chapter title to "Next Generation Software Product Line Engineering REVIEWED"
+    And I select the "Alterar" option in Book Chapter Show Page
+    Then I am at Book Chapter show page
+    And My resulting book chapter list contains "Next Generation Software Product Line Engineering REVIEWED"
+  #end
