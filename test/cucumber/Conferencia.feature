@@ -145,24 +145,24 @@ Feature: conferencia
     Then a list of all conferences containing that date will be presented in the conference screen
 
   Scenario: Suggest name of author when I am filling in the corresponding field on web
-    Given I am signing up a new article
+    Given I am at the new article page
     And the last three authors registered in the system were "Paulo Borba", "Marcelo Dias", "Paulo Viana"
     When I fill the name of Author field with "Paulo"
-    Then Appears suggestions of names with the names "Paul Borba", "Paulo Viana"
+    Then I can see the following suggestions: "Paulo Borba", "Paulo Viana"
 
   Scenario: Suggest name of author when I am filling in the corresponding field on web
-    Given I am signing up a new article
+    Given I am at the new article page
     And the last three authors registered in the system were "Paulo Borba", "Marcelo Dias", "Paulo Viana"    
     When I fill the Author's name field with "João"
-    Then Not appear suggestions
+    Then I can see no suggestions
 
   Scenario: Suggest name of author when I am filling in the corresponding field
-    Given the system suggested the authors names "Paul Borba", "Paulo Henrique", "Paulo Viana"
-    When I signed up "Paul Bruno" in the system
+    Given the system has the authors names "Paulo Borba", "Paulo Henrique", and "Paulo Viana" in the suggestion's cache
+    When I try to save an article with author "Paul Bruno"
     Then the system stores "Paulo Henrique", "Paulo Viana", "Paulo Bruno" in cache
 
   Scenario: Suggest name of author when I am filling in the corresponding field
-    Given the system not suggested the authors names
+    Given the system has an empty suggestion cache
     When I signed up "Paul Bruno" in the system
     Then the system stores "Paul Bruno" in cache
 
