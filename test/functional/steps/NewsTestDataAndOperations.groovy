@@ -45,22 +45,23 @@ class NewsTestDataAndOperations {
         cont.response.reset()
     }
 
-    static public boolean checkValidDate(String date) {
+       //lrb
+    static public boolean checkdDate(int dia, int mes) {
+        if( (dia > 28) && (mes == 2) ) {
+            return false;
+        }
+        else if ( (dia > 30) && ( (mes == 4) || (mes == 6) || (mes == 7) || (mes == 11) ) ) {
+            return false;
+        }
+    }
 
-        boolean retorno = true
+    static public boolean checkValidDate(String date) {
 
         String diaStr = "" + date.charAt(0) + date.charAt(1)
         String mesStr = "" + date.charAt(3) + date.charAt(4)
         int dia = Integer.valueOf(diaStr)
         int mes = Integer.valueOf(mesStr)
 
-        if( (dia > 28) && (mes == 2) ) {
-            retorno = false
-        }
-        else if ( (dia > 30) && ( (mes == 4) || (mes == 6) || (mes == 7) || (mes == 11) ) ) {
-            retorno = false
-        }
-
-        return retorno
+        return checkdDate(dia, mes);
     }
 }

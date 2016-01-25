@@ -63,12 +63,26 @@ class BookTestDataAndOperations {
         cont.response.reset()
     }
 
+    //scc
+    static public int nullOrNot(def testBook, Book book) {
+        if(testBook == null && book == null) {
+            return 0;
+        } else if (testBook != null && book != null) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    //scc
     static public boolean bookCompatibleTo(book, String title) {
         def testBook = findBookByTitle(title)
         def compatible = false
-        if (testBook == null && book == null) {
+        if (nullOrNot(testBook, book) == 0) {
+            //testBook == null && book == null
             compatible = true
-        } else if (testBook != null && book != null) {
+        } else if (nullOrNot(testBook, book) == 1) {
+            //testBook != null && book != null
             compatible = true
             testBook.each { key, data ->
                 compatible = compatible && (book."$key" == data)

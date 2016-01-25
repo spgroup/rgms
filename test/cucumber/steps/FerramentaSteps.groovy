@@ -86,14 +86,19 @@ When(~'^I select "([^"]*)" at the ferramenta page$') { String title ->
     page.selectFerramenta(title)
 }
 
-// new ferramenta web
-When(~'^I select the new ferramenta option at the ferramenta page$') {->
+When(~'^I select the "([^"]*)" option at the ferramenta page$') {String option->
     at FerramentaPage
-    page.selectNewFerramenta()
+    page.select(option)
 }
-Then(~'^I can create a ferramenta filling the details$') {->
+
+When(~'^I select the "([^"]*)" option at the show page$') {String option->
+    at FerramentaShowPage
+    page.select(option)
+}
+
+Then(~'^I can create a ferramenta with name "([^"]*)"$') {String name->
     at FerramentaCreatePage
-    page.createNewFerramenta("CCFinder")
+    page.createNewFerramenta(name)
 }
 
 // new ferramenta without any information
@@ -150,4 +155,22 @@ And(~'^I fill Titulo with more than (\\d+) caracteres$') { int arg1 ->
 And(~'^fill the others fields with valid values without Titulo$') {->
     at FerramentaCreatePage
     page.fillFerramentaDetailsWithoutTitle("Tool without title")
+}
+
+//new ferramente with website
+//By VDDM
+//Given already implemented
+When(~'^I create the ferramenta "([^"]*)" with file name "([^"]*)"  with "([^"]*)" as its  website$') { String title, String filename, String website ->
+    FerramentaTestDataAndOperations.createFerramenta(title, filename,website)
+}
+Then(~'^the ferramenta "([^"]*)" is stored$') { String title ->
+    def tool = Ferramenta.findByTitle(title)
+    assert tool != null
+}
+
+//List ferramentas
+//By VDDM
+Then(~'^I can see all existing ferramentas in the system and the "([^"]*)" and "([^"]*)" ferramentas$') {String name1,String name2 ->
+   at FerramentaPage
+   page.checkFerramentaList(name1, name2)
 }

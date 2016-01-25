@@ -1,6 +1,7 @@
 package steps
 
 import rgms.authentication.User
+import rgms.member.Member
 import rgms.member.MemberController
 
 /**
@@ -39,13 +40,10 @@ class MemberTestDataAndOperations {
         }
     }
 
-    static public void createMember(String username, String phone) {
+    static public void createMember(String name = null,String username = null, String email = null, String phone = null, String university = null,
+                                    String website = null, String country = null, String status = null) {
         def cont = new MemberController()
-        if (phone.equals("")) {
-            cont.params << findByUsername(username)
-        } else {
-            cont.params << [username: username, phone: phone]
-        }
+        cont.params << [name: name] << [username: username] << [email: email] << [university: university] << [phone: phone] << [website: website] << [country: country] << [status: status]
         cont.create()
         cont.save()
         cont.response.reset()
@@ -69,13 +67,69 @@ class MemberTestDataAndOperations {
         cont.response.reset()
     }
 
+    //cscbb
+    static public boolean exist(String usernameToCompare, String username, Member member) {
+        return (usernameToCompare == username && member != null)
+    }
+
+    //cscbb
     static public boolean containsMember(username) {
         def cont = new MemberController()
         def result = cont.list().userMemberInstanceList
         for (i in result) {
-            if (i.user.username == username && i.member != null)
-                return true;
+            if(exist(i.user.username, username, i.member))
+                   return true
+            //if (i.user.username == username && i.member != null)
+            //    return true;
         }
         return false;
+    }
+
+    //cscbb
+    static public void changeValue(def member, String option, String value) {
+        switch(option) {
+            case 'name':
+                member.name = value
+                break
+            case 'email':
+                member.email = value
+                break
+            case 'phone':
+                member.phone = value
+                break
+            case 'university':
+                member.university = value
+                break
+            case 'website':
+                member.website = value
+                break
+            case 'country':
+                member.country = value
+                break
+            case 'additionalInfo':
+                member.additionalInfo = value
+                break
+            case 'city':
+                member.city = value
+                break
+            case 'status':
+                member.status = value
+                break
+            case 'active':
+                member.active = (boolean)value
+                break
+            default:
+                break
+        }
+    }
+//cscbb
+    static public Member editMember(String emailKey, String option, String value){
+        def cont = new MemberController()
+        def member = Member.findByEmail(emailKey)
+        changeValue(member, option, value)
+        cont.params << member.properties
+        cont.update()
+
+        return member
     }
 }

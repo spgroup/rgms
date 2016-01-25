@@ -3,6 +3,7 @@ import pages.funder.FunderCreatePage
 import pages.funder.FunderPage
 import rgms.researchProject.Funder
 import steps.FunderTestDataAndOperations
+import sun.security.util.PendingException
 
 import static cucumber.api.groovy.EN.*
 
@@ -22,7 +23,7 @@ Then(~'^the funder with code "([^"]*)" is properly stored by the system$') { Str
     checkIfFunderExists(code)
 }
 
-//remove funder
+//remove funder - cscbb
 Given(~'^the system has funder with code "([^"]*)"$'){String code ->
     funder = Funder.findByCode(code)
     if(!funder){
@@ -36,13 +37,13 @@ When(~'^I remove a funder with code "([^"]*)"$'){ String code ->
     funder.delete()
 }
 
-
+//cscbb
 //duplicate funder
 Then(~'^there is only one funder with code "([^"]*)" in the system$') { String code ->
     assert Funder.findAllByCode(code).size() == 1
 }
 
-
+//cscbb
 //new funder web
 Given(~'^I am at the create funder page$'){ ->
     goToFunderCreatePage()

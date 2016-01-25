@@ -7,25 +7,21 @@ import pages.thesis.ThesisShowPage
 import rgms.authentication.User
 import rgms.publication.Tese
 import steps.TestDataAndOperationsPublication
+import steps.ThesisOrDissertationTestDataAndOperations
 import steps.ThesisTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
+import static cucumber.api.groovy.EN.Then
 
 Given(~'^The system has no thesis entitled "([^"]*)"$') { String title ->
     article = Tese.findByTitle(title)
     assert article == null
 }
 
-Given(~'^The thesis "([^"]*)" is stored in the system with file name "([^"]*)"$') {
-    String title, filename ->
-        ThesisTestDataAndOperations.createTese(title, filename, "UFPE")
-        article = Tese.findByTitle(title)
+Given(~'^The thesis "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
+        ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title, filename)
+        def article = Tese.findByTitle(title)
         assert article != null
-}
-
-When(~'^I create the thesis "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') {
-    String title, filename, school ->
-        ThesisTestDataAndOperations.createTese(title, filename, school)
 }
 
 Then(~'^The thesis "([^"]*)" is not stored twice$') { String title ->
@@ -136,12 +132,6 @@ Then(~'^the thesis "([^"]*)" is removed from the system$') { title ->
     thesisDoNotExists(title)
 }
 
-// #6
-Given(~'^the system has thesis entitled "([^"]*)"$') { title ->
-    ThesisTestDataAndOperations.createTese(title, 'teste.txt', 'UFPE')
-    thesis = Tese.findByTitle(title)
-    assert thesis != null
-}
 
 When(~'^I delete the thesis "([^"]*)"$') { title ->
     ThesisTestDataAndOperations.deleteTeseByTitle(title)
@@ -249,15 +239,13 @@ And(~'^the other theses are not changed by the system$') { ->
 }
 
 //Scenario: edit thesis with invalid data
-Then(~'^the existing thesis are not changed by the system$') { ->
-
+Then(~'^the existing thesis are not changed by the system$') {->
 }
 
-//Scenario: search a thesis
-Given(~'^the system has one thesis entitled "([^"]*)"$') { title ->
-}
 
 When(~'^I search for thesis entitled "([^"]*)"$') { title ->
+    def thesis = Tese.findByTitle(title)
+    assert thesis != null
 }
 
 //Scenario: upload thesis with a file
@@ -267,6 +255,33 @@ When(~'^I upload the file "([^"]*)"$') { file ->
 
 And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
 
+}
+
+//new thesis with correct format file
+//BY vddm
+When(~'^I create the thesis "([^"]*)" with file name "([^"]*)"$') {String name1, String file1 ->
+    ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(name1,file1)
+}
+Then(~'^The thesis "([^"]*)" not is properly stored by the system, but "([^"]*)" is$'){String name1, String name2 ->
+    def thesis1 = Tese.findByTitle(name1)
+    def thesis2 = Tese.findByTitle(name2)
+    assert thesis1 == null && thesis2 != null
+}
+//search Thesis
+//By vddm
+Then(~'^the "([^"]*)" thesis is returned by the system$'){String name ->
+    def thesis = Tese.findByTitle(name)
+    assert thesis != null
+}
+
+//upload existing thesis with a file
+//BY vddm
+When(~'^I upload the file "([^"]*)" to "([^"]*)"$') {String file, String name ->
+    ThesisOrDissertationTestDataAndOperations.editThesisOrDissertation("file",file,name)
+}
+Then(~'^the file "([^"]*)" associated with the existing thesis "([^"]*)" is replaced by "([^"]*)"$'){String oldFile, String title, String newFile->
+    def file1 = Tese.findByTitle(title).file
+    assert file1 != oldFile && file1 == newFile
 }
 
 //FUNÇÔES AUXILIARES
