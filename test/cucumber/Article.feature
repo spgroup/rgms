@@ -8,6 +8,7 @@ Feature: journal article
     Given the system has no article entitled "A theory of software product line refinement"
     When I create the article "A theory of software product line refinement" with file name "TCS.pdf"
     Then the article "A theory of software product line refinement" is properly stored by the system
+    
 
   Scenario: new invalid article (number field blank)
     Given the system has no article entitled "Algebraic reasoning for object-oriented programming"
