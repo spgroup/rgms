@@ -145,3 +145,56 @@ And(~'^the conferencias are not stored by the system$') {->
     page.checkIfConferenciaListIsEmpty()
 
 }
+
+
+
+#if($searchBookTitle)
+Given(I am at the Conference page){
+	to LoginPage
+	at LoginPage
+	page.fillLoginData("admin", "adminadmin")
+	at PublicationsPage
+	to ConferencePage
+}
+And(~'^the conference with booktitle "([^"]*)" is stored in the system $'){String title1 ->
+	conference = Book.findByBookTitle(title1)
+	assert conference.size() = 1
+}
+When(~'^I fill the bookTitle field with "([^"]*)" $'){String title1 ->
+	to ConferencePage
+	page.fillBookTitleData(title1)
+}
+And(~'^I click Search for Conference at the conference page $'){
+	to ConferencePage
+	page.selectFindConference()
+}
+Then(~'^a list of all conferences containg this BookTitle will be displayed on the page$'){
+	to ConferencePage
+	page.listConferece()
+}
+#end
+#if(searchPages)
+Given(I am at the Conference page){
+	to LoginPage
+	at LoginPage
+	page.fillLoginData("admin", "adminadmin")
+	at PublicationsPage
+	to ConferencePage
+}
+And(~'^the conference with pages "([^"]*)" is stored in the system $'){String title1 ->
+	conference = Book.findByPages(title1)
+	assert conference.size() = 1
+}
+When(~'^I fill the pages field with "([^"]*)" $'){String title1 ->
+	to ConferencePage
+	page.fillPagesData(title1)
+}
+And(~'^I click Search for Conference at the conference page $'){
+	to ConferencePage
+	page.selectFindConference()
+}
+Then(~'^a list of all conferences containg this Pages will be displayed on the page$'){
+	to ConferencePage
+	page.listConferece()
+}
+#end

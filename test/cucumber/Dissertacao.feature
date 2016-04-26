@@ -16,12 +16,17 @@ Feature: Dissertation Tests
     Given the system has no dissertation entitled "Dissertation without school"
     When I create the dissertation "Dissertation without school" with file name "Dissertationwithoutschool.txt" without school
     Then the system has no dissertation entitled "Dissertation without school"
+  #if($Dissertation)
+    And a failure message is shown
+  #end
 
   Scenario: new dissertation without address
     Given the system has no dissertation entitled "Dissertation without address"
     When I create the dissertation "Dissertation without address" with file name "Dissertationwithoutaddress.txt" without address
     Then the system has no dissertation entitled "Dissertation without address"
-
+  #if($Dissertation)
+    And a failure message is shown
+  #end
   Scenario: new dissertation
     Given the system has no dissertation entitled "New dissertation"
     When I create the dissertation "New dissertation" with file name "Newdissertation.txt" and school "UFPE"

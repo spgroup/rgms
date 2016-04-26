@@ -143,5 +143,26 @@ Feature: conferencia
     When I write "2007" at the date field
     And I select the option Serach for Conference at the conference page
     Then a list of all conferences containing that date will be presented in the conference screen
+    
+ #if($conferencia)
+  Scenario: Search for conference by research line
+    Given I am at the Seach Conference page
+    And The system has some conferences of "Data Security" research line
+    When I write "Data Security" at the research line field
+    And I select the option Search for Conference at the conference page
+    Then a list of all conferencer containg that research line will be presented in the conference screen
+ #end
+ 
+ #if($conferencia)
+  Scenario: Search for conference by Researcher
+    Given I am at the Seach Conference page
+    And The system has a conference with "Paulo Borba" as one of its researchers
+    When I write "Paulo Borba" at the researcher
+    And I select the option Search for Conference at the conference page
+    Then a list of all conferencer containg that researcher will be presented in the conference screen
+ #end
+ 
+ 
+    
 
 # voces podem criar cenários para ordenar a lista de conferencia, filtrar a lista,  verificar se alguns campos podem ser opcionais, etc.
