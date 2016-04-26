@@ -7,6 +7,7 @@
  */
 
 import pages.BookCreatePage
+import pages.BookShowPage
 import pages.BookPage
 import pages.LoginPage
 import pages.PublicationsPage
@@ -16,7 +17,7 @@ import steps.BookTestDataAndOperations
 import static cucumber.api.groovy.EN.*
 
 Given(~'^the system has no book entitled "([^"]*)"$') { String title ->
-    checkIfExists(title)
+    assert !checkIfExists(title)
 }
 
 When(~'^I create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
@@ -39,7 +40,7 @@ When(~'^I remove the book "([^"]*)"$') { String title ->
 }
 
 Then(~'^the book "([^"]*)" is properly removed by the system$') { String title ->
-    checkIfExists(title)
+    assert !checkIfExists(title)
 }
 
 Then(~'^the book "([^"]*)" is not stored twice$') { String title ->
@@ -88,29 +89,60 @@ When(~'^I go to new book page$') { ->
     to BookPage
     page.selectNewBook()
 }
-
 And(~'^I use the webpage to create the book "([^"]*)" with file name "([^"]*)"$') { String title, filename ->
     at BookCreatePage
     createAndCheckBookOnBrowser(title, filename)
     to BookPage
     at BookPage
 }
-
 Then(~'^the book "([^"]*)" was stored by the system$') { String title ->
-    book = Book.findByTitle(title)
-    assert book != null
+    assert checkIfExists(title)
     to BookPage
     at BookPage
 }
 
+
+When(~'^I choose to view "([^"]*)" in book list$') { String title ->
+    page.selectViewBook(title)
+    at BookShowPage
+}
+And(~'^I press to remove at the book show page$') {->
+    at BookShowPage
+    page.select('input', 'delete')
+}
+
+
+
+
+Then(~'^the book list contains" ([^"]*)"$') { String title ->
+    at BookPage
+    page.checkArticleAtList(title, 0)
+}
+
+
+Given(~'^the system has the book entitled "([^"]*)" with file name "([^"]*)"$') { String title, String file ->
+    book = Book.findByTitleAndFile(title, file)
+    assert book != null
+}
+
+Then(~'^the book "([^"]*)" is removed from the system$') { String title ->
+
+    assert !checkIfExists(title)
+}
+
+Then(~'^the book list contains "([^"]*)"$') { String title ->
+    assert checkIfExists(title)
+}
+
 def checkIfExists(String title) {
     book = Book.findByTitle(title)
-    assert book == null
+    book != null
 }
+
 
 def createAndCheckBookOnBrowser(String title, String filename) {
     page.fillBookDetails(title, filename)
     page.clickSaveBook()
-    book = Book.findByTitle(title)
-    assert book != null
+    assert checkIfExists(title)
 }
+
