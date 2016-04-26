@@ -49,4 +49,3 @@ class ArticleShowPage extends Page {
     }
 //#end
 }
-//#end

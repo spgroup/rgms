@@ -6,7 +6,8 @@ import rgms.authentication.User
 import rgms.publication.Dissertacao
 import steps.TestDataDissertacao
 import steps.TestDataAndOperationsPublication
-
+import pages.LoginPage
+import pages.PublicationsPage
 import static cucumber.api.groovy.EN.*
 
 
@@ -67,8 +68,8 @@ Given(~'^the dissertation "([^"]*)" is stored in the system with file name "([^"
 }
 
 
-When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)" and school "([^"]*)"$') { String title, filename, school ->
-    TestDataDissertacao.createDissertacao(title, filename, school)
+When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)", school "([^"]*)" and supervisor "([^"]*)"$') { String title, filename, school, supervisor ->
+    TestDataDissertacao.createDissertacao(title, filename, school, supervisor)
 }
 
 
@@ -101,13 +102,6 @@ Then(~'^the dissertation "([^"]*)" is properly updated by the system$') { String
     assert article == null
 }
 
-When(~'^I select the upload button at the dissertation page$') {->
-    at DissertationPage
-    page.uploadWithoutFile()
-}
-Then(~'^I\'m still on dissertation page$') {->
-    at DissertationPage
-}
 
 When(~'^I upload a new dissertation "([^"]*)"$') { filename ->
     String path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
@@ -156,4 +150,41 @@ Given(~'^the system has no dissertation stored$')   {->
     assert intialSize == 0
 }
 
+
+Given(~'^I am at the dissertation page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to DissertationPage
+}
+When(~'^I select the upload button with no file selected$') {->
+    page.uploadWithoutFile()
+}
+Then(~'^I stay on dissertation page with an error message$') { ->
+    at DissertationPage
+	assert page.readFlashMessage() != null
+}
+
+
+When(~'^I press to remove "([^"]*)" at the dissertation show page$'){ String title->
+    at DissertationShowPage
+	page.select('input', 'delete')
+}
+
+When(~'^I create the dissertation "([^"]*)" with file name "([^"]*)"$') { String title, String filename ->
+    TestDataDissertacao.createDissertacao(title, filename, "UFPE")
+    dissertation = Dissertacao.findByTitle(title)
+    assert dissertation != null
+}
+
+Given(~'^the dissertation named "([^"]*)" is stored in the system$') { String title ->
+    TestDataDissertacao.createDissertacao(title, "testDissertation.pdf", "UFPE")
+    dissertation = Dissertacao.findByTitle(title)
+    assert dissertation != null
+}
+
+When(~'^I select "([^"]*)" at the dissertation list$') { String title ->
+    page.selectDissertation(title)
+}
 

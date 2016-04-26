@@ -35,3 +35,47 @@ Feature: Book
     When I go to new book page
     And I use the webpage to create the book "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
     Then the book "Next Generation Software Product Line Engineering" was stored by the system
+
+
+#if($updateExistingBook)
+  Scenario: update existing book
+    Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
+    When I upload the file in the system with name "newHSPLE.pdf"
+    Then the book "SPL Development" has the archive file "newHSPLE.pdf" updated by the system
+#end
+
+  #if($updateExistingBookWeb)
+  Scenario: update existing book web
+    Given the system has the book entitled "SPL Development" with file name "HSPLE.pdf"
+    And I am at the book page
+    When I edit the book "SPL Development" file name from "HSPLE.pdf" to "newHSPLE.pdf"
+    Then I have the book entitled "SPL Development" with file name "newHSPLE.pdf" stored on the system
+#end
+
+#if($newBookWithoutFile)
+  Scenario: new book without file
+    Given the system has no book entitled "SPL Development"
+    When I try to create the book "SPL Development" without file
+    Then the book "SPL Development" is not stored by the system
+#end
+
+#if($newBookWithoutFileWeb)
+  Scenario: new book without file web
+    Given I am at the book page
+    And the system has no book entitled "Design de Interação"
+    When I go to new book page
+    And I use the webpage to create the book "Design de Interação" with file name ""
+    Then I should see an error message containing "Book without file, it is mandatory"
+#end
+
+  Scenario: list existing book web
+    Given I am at the book page
+    And the system has the book entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
+    Then the book list contains "Next Generation Software Product Line Engineering"
+
+  Scenario: remove existing book web
+    Given I am at the book page
+    And the system has the book entitled "Next Generation Software Product Line Engineering" with file name "Ngs.pdf"
+    When I choose to view "Next Generation Software Product Line Engineering" in book list
+    And I press to remove at the book show page
+    Then the book "Next Generation Software Product Line Engineering" is removed from the system

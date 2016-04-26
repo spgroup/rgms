@@ -28,11 +28,14 @@ class BookCreatePage extends FormPage {
     }
 
     def fillBookDetails(title, filename) {
-        fillTitle(title)
+        $("form").title = title
         $("form").publisher = "Person"
         $("form").volume = 1
         $("form").pages = "20"
-        $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+        if(!filename.equals("")){
+            $("form").file = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "functional" + File.separator + "steps" + File.separator + filename
+        }
+        clickSaveBook()
     }
 
     def clickSaveBook() {

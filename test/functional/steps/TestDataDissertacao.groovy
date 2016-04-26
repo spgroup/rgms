@@ -55,7 +55,7 @@ class TestDataDissertacao
         def testDissertation = Dissertacao.findByTitle(title)
         def cont = new DissertacaoController()
         def date = new Date()
-        cont.params << [id: testDissertation.id]
+        cont.params << [id: testDissertation?.id]
         cont.delete()
     }
 

@@ -37,6 +37,24 @@ class OrientationTestDataAndOperations {
         createOrientationAux(cont, tituloTese, member)
     }
 
+    static public void createOrientation(String tituloTese, String tipo) {
+
+        def cont = new OrientationController()
+        def memberCreater = new Member(members[0])
+        memberCreater.create()
+        memberCreater.save()
+        def member = Member.findByName(memberCreater.name)
+        createOrientationAux(cont, tituloTese, member, tipo)
+    }
+
+    private static void createOrientationAux(OrientationController cont, String tituloTese, Member member, String tipo) {
+        cont.params << [tipo: tipo, orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
+        cont.request.setContent(new byte[1000]) // Could also vary the request content.
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
     private static void createOrientationAux(OrientationController cont, String tituloTese, Member member) {
         cont.params << [tipo: "Mestrado", orientando: "Tomaz", tituloTese: tituloTese, anoPublicacao: 2013, instituicao: "UFPE", orientador: member]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.

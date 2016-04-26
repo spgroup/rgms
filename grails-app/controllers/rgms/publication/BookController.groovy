@@ -28,14 +28,7 @@ class BookController {
 
         bookInstance = pb.extractAuthors(bookInstance)
 
-
-        if (!bookInstance.save(flush: true)) {
-            render(view: "create", model: [bookInstance: bookInstance])
-            return
-        }
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'book.label', default: 'Book'), bookInstance.id])
-        redirect(action: "show", id: bookInstance.id)
+        saveAndNotify(bookInstance, "create", 'default.created.message')
     }
 
     def show(Long id) {
@@ -80,12 +73,16 @@ class BookController {
 
         bookInstance.properties = params
 
+        saveAndNotify(bookInstance, "edit", 'default.updated.message')
+    }
+
+    private saveAndNotify(Book bookInstance, viewParameter, codeParameter ) {
         if (!bookInstance.save(flush: true)) {
-            render(view: "edit", model: [bookInstance: bookInstance])
+            render(view: viewParameter, model: [bookInstance: bookInstance])
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'book.label', default: 'Book'), bookInstance.id])
+        flash.message = message(code: codeParameter, args: [message(code: 'book.label', default: 'Book'), bookInstance.id])
         redirect(action: "show", id: bookInstance.id)
     }
 
