@@ -1,5 +1,6 @@
 package rgms.member
 
+import grails.converters.JSON
 import org.apache.shiro.crypto.hash.Sha256Hash
 import org.springframework.dao.DataIntegrityViolationException
 import rgms.EmailService
@@ -9,26 +10,27 @@ import java.security.SecureRandom
 
 class MemberController {
 
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
 
     def index = {
         redirect(action: "list", params: params)
     }
 
+
+
     def list = {
+
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         def userMemberList = []
         def members = Member.list(params)
-        for (i in members) {
-            def user = User.findByAuthor(i)
-            if (user)
-                userMemberList.add([user: user, member: i])
-            else
-                userMemberList.add([member: i])
-        }
+        generateMemberList(userMemberList,members)
 
         [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
     }
+
+
 
     def create = {
         def member = new Member(params)
@@ -41,14 +43,18 @@ class MemberController {
         member.setUniversity(params.university ?: grailsApplication.getConfig().getProperty("defaultUniversity") as String);
         member.setCity(params.city ?: grailsApplication.getConfig().getProperty("defaultCity") as String);
 //#end
-
         [userMemberInstanceList: [memberInstance: member, userInstance: user]]
+    }
+
+    def renderCreateMember(){
+        render(view: "create", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
+        return
     }
 
     def save = {
 //#if($Auth)
         if (!grailsApplication.config.grails.mail.username) {
-            throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured'))
+            // throw new RuntimeException(message(code: 'mail.plugin.not.configured', 'default': 'Mail plugin not configured'))
         }
 //#end
 
@@ -65,8 +71,7 @@ class MemberController {
         userInstance.passwordChangeRequiredOnNextLogon = true
 
         if (!memberInstance.save(flush: true)) {
-            render(view: "create", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
-            return
+            renderCreateMember()
         }
 
         userInstance.author = memberInstance;
@@ -75,8 +80,7 @@ class MemberController {
                 println it
             }
             memberInstance.delete(flush: true)
-            render(view: "create", model: [userMemberInstanceList: [memberInstance: memberInstance, userInstance: userInstance]])
-            return
+            renderCreateMember()
         }
 
         def email = memberInstance.email
@@ -90,6 +94,21 @@ class MemberController {
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)
     }
+
+    def search = {
+        def userMemberList = []
+        if(params.name){
+            def members = Member.findAllByName(params.name)
+
+            generateMemberList(userMemberList,members)
+        }
+
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+    }
+
+
+
+
 
 
     def show = {
@@ -174,18 +193,22 @@ class MemberController {
         redirect(action: "show", id: memberInstance.id)
     }
 
+    def redirectNotFound(){
+        flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
+        redirect(action: "list")
+    }
+
     def delete = {
+        Member.class
+        Member.deleteAll();
+        Member.dele
         def memberInstance = Member.get(params.id)
         def userInstance = User.findByAuthor(memberInstance)
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
+        if(!isMemberInstance(memberInstance)) {
             return
         }
-
         if (!userInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
+            redirectNotFound()
             return
         }
 
@@ -201,6 +224,18 @@ class MemberController {
         }
     }
 
+    def searchByUniversity = {
+        def userMemberList = []
+        if(params.name){
+            def members = Member.findAllByUniversity(params.name)
+
+
+            generateMemberList(userMemberList,members)
+        }
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+    }
+
+
     private void saveHistory(def memberInstance, String status) {
 
         def hist = new Record(start: new Date(), status_H: status)
@@ -210,14 +245,41 @@ class MemberController {
         memberInstance.save()
     }
 
+
+
+    def isMemberInstance(memberInstance){
+        if (!memberInstance) {
+            redirectNotFound()
+        }
+    }
+
     def Get_MemberInstance() {
         def memberInstance = Member.get(params.id)
-        if (!memberInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'member.label', default: 'Member'), params.id])
-            redirect(action: "list")
+        if(!isMemberInstance(memberInstance)) {
             return
         }
         def user = User.findByAuthor(memberInstance)
         [userMemberInstanceList: [memberInstance: memberInstance, userInstance: user]]
+    }
+
+
+    def searchByEmail = {
+        def userMemberList = []
+        if(params.name){
+            def members = Member.findAllByEmail(params.name)
+
+            generateMemberList(userMemberList,members)
+        }
+        [userMemberInstanceList: userMemberList, memberInstanceTotal: Member.count()]
+    }
+
+    private void generateMemberList(userMemberList, members){
+        for (i in members) {
+            def user = User.findByAuthor(i)
+            if (user)
+                userMemberList.add([user: user, member: i])
+            else
+                userMemberList.add([member: i])
+        }
     }
 }

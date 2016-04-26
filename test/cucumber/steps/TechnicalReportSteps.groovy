@@ -185,3 +185,21 @@ Then(~'^The technical report "([^"]*)" with filename "([^"]*)" and institution "
     assert tech != null
 }
 
+
+////////////////////
+
+Given(~'^the system has a technical report  entitled "([^"]*)"$'){ String title ->
+    report = TechnicalReportTestDataAndOperations.findTechnicalReportByTitle(title)
+    TechnicalReportTestDataAndOperations.validateReport(report);
+}
+
+And(~'^I create the technical report "([^"]*)"$') { String title->
+    TechnicalReportTestDataAndOperations.createTechnicalReport(title,"Test")
+}
+
+Then(~'^the technical report "([^"]*)" is not stored twice$'){String title->
+    report = TechnicalReportTestDataAndOperations.findAllByTitle(title)
+    assert report.size() == 1
+}
+
+

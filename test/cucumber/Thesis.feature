@@ -50,6 +50,22 @@ Feature: Thesis Tests
     When I click in order thesis by date
     Then the returned thesis list has the same items but it is sorted by date
 
+    #if($Thesis Tests)
+      Scenario: list existing articles in alphabetical order of name
+
+        Given the system has thesis with file name "TCS-1401.pdf" and school"UFPB"
+        And the system has article with file name "MACI.pdf" and school "UFPE"
+        When the system orders the article list by name
+        Then the system article list content is not modified
+        
+        Scenario: list existing articles in alphabetical order of school
+        
+        Given the system has thesis with file name "TCS-1401.pdf" and school"UFPB"
+        And the system has article with file name "MACI.pdf" and school "UFPE"
+        When the system orders the article list by name
+        Then the system article list content is not modified
+    #end
+
   Scenario: search an existing thesis
     Given the system has one thesis entitled "Software Engineering" with author name "Pressman", year of publication "1998" and university "UFPE"
     And I am at the thesis search page
@@ -88,11 +104,11 @@ Feature: Thesis Tests
     When I change the title from "My Thesis" to ""
     Then the existing thesis are not changed by the system
 
-  @ignore
-  Scenario: search a thesis
-    Given the system has one thesis entitled "My Thesis"
-    When I search for thesis entitled "My Thesis"
-    Then the existing thesis are not changed by the system
+  Scenario: search for an existing thesis
+    Given the system has a thesis entitled "TCS-01"
+    And I am at the thesis search page
+    When I search  for "TCS-01"
+    Then My thesis list contains the thesis entitled "TCS-01"
 
   @ignore
   Scenario: upload thesis with a file
@@ -100,9 +116,17 @@ Feature: Thesis Tests
     When I upload the file "My Thesis.xml"
     Then the existing thesis are not changed by the system
     And the system stores properly the thesis entitled "My Thesis"
+
+    
 # editar dados de uma tese, ordenar lista de teses, filtrar lista de teses,
 # criar tese com dados inválidos, a chave é mesmo o título da tese?, tamanho
 # dos campos, o dia e o arquivo deveriam ser opcional, deveria poder adicionar
 # o arquivo depois, address deveria ser opcional, deveria ter universidade e
 # centro/departamento, deveria ter apenas um autor e a possibilidade de um
 # orientador e co-orientador
+  #if(downloadThesisListFile)
+  Scenario: download thesis list file
+    Given I am the thesis list page and the system has thesis
+    When I select the thesis list download button for thesis
+    Then I can download the file named "TL-0.pdf" that contains the thesis list
+  #end

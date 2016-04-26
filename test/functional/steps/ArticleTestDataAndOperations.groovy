@@ -3,6 +3,7 @@ package steps
 import rgms.publication.Periodico
 import rgms.publication.PeriodicoController
 import rgms.publication.XMLController
+import steps.CommonTestAndDataOperations
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,16 +44,7 @@ class ArticleTestDataAndOperations {
 
 	static public boolean compatibleTo(article, title) {
 		def testarticle = findArticleByTitle(title)
-		def compatible = false
-		if (testarticle == null && article == null) {
-			compatible = true
-		} else if (testarticle != null && article != null) {
-			compatible = true
-			testarticle.each { key, data ->
-				compatible = compatible && (article."$key" == data)
-			}
-		}
-		return compatible
+		return CommonTestAndDataOperations.isCompatible(article, testarticle)
 	}
 
 	static public void createArticle(String title, filename) {

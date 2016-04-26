@@ -31,26 +31,19 @@ class FunderController {
         redirect(action: "show", id: funderInstance.id)
     }
 
-    def show(Long id) {
-        def funderInstance = Funder.get(id)
-        if (!funderInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'funder.label', default: 'Funder'), id])
-            redirect(action: "list")
-            return
-        }
+    def getFunderInstance(Long id){
+            def funderInstance = Funder.get(id)
+            if (!funderInstance) {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'funder.label', default: 'Funder'), id])
+                redirect(action: "list")
+                return
+            }
 
         [funderInstance: funderInstance]
     }
 
-    def edit(Long id) {
-        def funderInstance = Funder.get(id)
-        if (!funderInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'funder.label', default: 'Funder'), id])
-            redirect(action: "list")
-            return
-        }
-
-        [funderInstance: funderInstance]
+    def show(Long id) {
+        getFunderInstance(id)
     }
 
     def update(Long id, Long version) {
@@ -82,6 +75,10 @@ class FunderController {
         redirect(action: "show", id: funderInstance.id)
     }
 
+    def edit(Long id) {
+        getFunderInstance(id)
+    }
+
     def delete(Long id) {
         def funderInstance = Funder.get(id)
         if (!funderInstance) {
@@ -102,3 +99,4 @@ class FunderController {
     }
 }
 //#end
+

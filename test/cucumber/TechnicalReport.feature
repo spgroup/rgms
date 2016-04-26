@@ -65,3 +65,8 @@ Feature: technical report
     And I see my school name as institution of technical report by default
 #end
 
+
+  Scenario: duplicate technical report
+    Given the system has a technical report  entitled "Evaluating Natural Languages System"
+    When I create the technical report "Evaluating Natural Languages System"
+    Then the technical report "Evaluating Natural Languages System" is not stored twice

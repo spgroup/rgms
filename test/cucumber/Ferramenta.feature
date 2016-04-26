@@ -28,7 +28,7 @@ Feature: Ferramenta
     Scenario: upload dissertation with a file
         Given the system has some ferramenta stored
         When I upload a new ferramenta "testelattes.xml"
-        Then the system has more ferramenta now
+        Then the system has same ferramenta  and a new ferramenta "testelattes.xm"
 
     Scenario: remove existing ferramenta
         Given the system has a ferramenta entitled "ToolDelete" with file name "tooldelete.pdf"
