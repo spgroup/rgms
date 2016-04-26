@@ -41,12 +41,24 @@ class ArticleTestDataAndOperations {
 		cont.response.reset()
 	}
 
+    //scc
+    static public int nullOrNot(def testarticle, article) {
+        if(testarticle == null && article == null) {
+            return 0;
+        } else if (testarticle != null && article != null) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    //scc
 	static public boolean compatibleTo(article, title) {
 		def testarticle = findArticleByTitle(title)
 		def compatible = false
-		if (testarticle == null && article == null) {
+		if (nullOrNot(testarticle, article) == 0) {
 			compatible = true
-		} else if (testarticle != null && article != null) {
+		} else if (nullOrNot(testarticle, article)) {
 			compatible = true
 			testarticle.each { key, data ->
 				compatible = compatible && (article."$key" == data)
@@ -54,6 +66,7 @@ class ArticleTestDataAndOperations {
 		}
 		return compatible
 	}
+
 
 	static public void createArticle(String title, filename) {
 		createArticle(title,filename, null,null)

@@ -32,7 +32,14 @@ Feature: member
     Given I am at the login page
     When I fill username and password with "admin" and "incorrectpassword"
     Then I am still on the login page with an error message
-
+	
+#if($nonexisting)
+  Scenario: login with nonexisting username
+    Given I am at the login page
+	When I fill username and password with "nonexistingusername" and "password"
+	Then I am still on the login page with an error message
+#end
+	
   Scenario: user registration
     Given I am at the register page
     When I fill the user details with a name, username, passoword1, password2, email, university, status "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student"
@@ -51,22 +58,39 @@ Feature: member
     When I fill some user details with "jose" "josesilva" "jose@ufpe.br" "UFPE"
     Then I am still on the create member page with the error message
 
-  Scenario: register user with invalid data
+#if($longUsername)
+  Scenario: register user with long username
     Given I am at the create member page
-    When I fill the user details with "jose" "josesilva" "jose@com" "UFPE"
-    Then I am still on the create member page with the error message
+    When I fill the username with "josedmskejfjsdifejfje"
+    Then I am still on the create member page
+	#And	a long username error message is displayed
+#end
 
+#if($invalidEmail)
+  Scenario: register member with invalid email
+    Given I am at the create member page
+	When I fill the email with "lalala.la"
+	Then I am still on the create member page
+	And a invalid email error message is displayed
+#end
 
-#Scenario: register member invalid aditional info
-#   Given  I am at the create member page
-#   When   I fill many user details with "berg" "bergU" "jus@cin.ufpe.br" "UFPE" "ajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-#   Then   I am still on the create member page with the error message
-
-#Scenario: new member with invalid phone
-#   Given the system has no member with username "userwithinvalidphone"
-#   When I create a member with username "userwithinvalidphone"
-#   Then I am still on the create member page with the error message
-
+#if($invalid info)
+Scenario: register member invalid info
+  Given I am at the create member page
+  When I fill city with "321"
+  And I fill country with "123"
+  Then I am still on the create member page 
+  And a "no numbers in city and country allowed" error message is displayed
+#end
+  
+#if($invalidPhone)
+Scenario: new member with invalid phone
+  Given I am at the create member page
+  When I fill the phone with "camilasouto"
+  Then I am still on the create member page 
+  And a invalid phone message is displayed
+#end
+  
 #if ($contextualInformation)
   Scenario: new member filled with default data
     Given I am at the create member page
@@ -76,3 +100,28 @@ Feature: member
     Given I am at the register page
     Then I see default data filled on register form
 #end
+
+#if($memberInfo)
+@vddm
+Scenario: editing member information
+	Given the system has member with "Victor Monteiro","rgmsTest", "rgmsTest@gmail.com", "UFPE", "12345", "www.g.com.br", "Brazil", "Graduate Student"
+	When I edit the "rgmsTest@gmail.com"'s "email" for "rgms@gmail.com"
+	Then "rgms@gmail.com"'s information is updated and saved in the system
+
+@vddm
+Scenario: editing member
+	Given I am at the member page
+	When I click the "1" member id
+    And I Click the option "edit" on Member Edition Page
+    And I change the member's "name" by "Victor Monteiro"
+	Then I can see the member's name is now "Victor Monteiro"
+#end
+
+#if($loginfacebook)
+  Scenario: new member with facebook account
+    Given I am at the create member page
+	And I am logged on "Camila Souto" facebook
+	When I click on "register with facebook"
+	Then the member "Camila Souto" is properly stored by the system
+#end
+

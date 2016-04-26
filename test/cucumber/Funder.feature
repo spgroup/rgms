@@ -18,6 +18,7 @@ Feature: Funder
     When I create a funder with code "12345"
     Then there is only one funder with code "12345" in the system
 
+
   Scenario: new funder web
     Given I am at the create funder page
     When I fill the funder code with "12345"

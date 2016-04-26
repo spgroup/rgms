@@ -1,6 +1,10 @@
 import pages.LoginPage
+import pages.PublicationsPage
 import pages.RegisterPage
 import pages.member.MemberCreatePage
+import pages.member.MemberEditionPage
+import pages.member.MemberListPage
+import pages.member.MemberPage
 import pages.member.MemberViewPage
 import rgms.authentication.User
 import rgms.member.Member
@@ -191,4 +195,43 @@ When(~'^I try to create the member "([^"]*)" with email "([^"]*)"$') { String na
     MemberTestDataAndOperations.createMemberWithEmail(name, email)
     //member = Member.findByEmail(email)
     //assert member.name == name
+}
+
+//Edit editing member information
+//By VDDM
+Given(~'^the system has member with "([^"]*)","([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)"$'){String name, String username, String email, String IES, String phone, String website, String country, String status->
+    MemberTestDataAndOperations.createMember(name,username,email,phone,IES,website,country,status)
+}
+When (~'^I edit the "([^"]*)"\'s "([^"]*)" for "([^"]*)"$'){ String emailKey, String option, String value ->
+    def newMember = MemberTestDataAndOperations.editMember(emailKey,option,value)
+    assert newMember != null
+}
+Then (~'^"([^"]*)"\'s information is updated and saved in the system$'){ String emailKey ->
+    def newMember = Member.findByEmail(emailKey)
+    assert newMember != null
+}
+// editing member
+//BY VDDM
+Given(~'^I am at the member page$'){->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    page.select("Member")
+}
+When(~'^I click the "([^"]*)" member id$'){String number->
+    at MemberListPage
+    page.selectNthMember(number)
+}
+And(~'^I Click the option "([^"]*)" on Member Edition Page$'){String option->
+    at MemberPage
+    page.select(option)
+}
+And(~'^I change the member\'s "([^"]*)" by "([^"]*)"$'){String option, String value->
+    at MemberEditionPage
+    page.editMemberInformation(option,value)
+}
+Then(~'^I can see the member\'s name is now "([^"]*)"$'){String name->
+    at MemberPage
+    page.checkName(name)
 }

@@ -19,6 +19,14 @@ Feature: BookChapter
     When I remove the book chapter "Next Generation Software Product Line Engineering"
     * the book chapter "Next Generation Software Product Line Engineering" is properly removed by the system
 
+  #if ($BookChapter)
+  @mjgfl
+  Scenario: modify existing book chapter
+    Given the book chapter "Next Generation Software Product Line Engineering" is stored in the system with file name "NGSPL-2.pdf"
+    When I edit the book chapter title from "Next Generation Software Product Line Engineering" to "Next Generation Software Product Line Engineering REVIEWED"
+    Then the book chapter "Next Generation Software Product Line Engineering" is properly updated by the system
+  #end
+
   Scenario: register book chapter with invalid data
     Given I am at the book chapter page
     And I select the new book chapter option at the book chapter page
@@ -61,14 +69,4 @@ Feature: BookChapter
     And the book chapter "Next Generation Software Product Line Engineering" with file name "Ngs.pdf" was created before
     Then My resulting book chapter list contains "Next Generation Software Product Line Engineering"
 
-  Scenario: upload book chapter with a file
-    Given the system has some book chapters stored
-    When I upload the book chapters of "curriculo.xml"
-    Then the system has all the book chapters of the xml file
 
-  Scenario: upload book chapters without a file
-    Given I am at the publications menu
-    When I select the Book Chapter option at the program menu
-    And I select the upload button at the book chapter page
-    Then I'm still on book chapter page
-    And the book chapters are not stored by the system

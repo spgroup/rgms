@@ -37,37 +37,58 @@ Feature: research group
     When I modify the name of research group entitled "modcs-3" to none
     Then the research group is not stored in the system because it has no name
 
+  #if ($ResearchGroup)
+  Scenario: editing the researchgroup's name to a invalid name by size 
+    Given the system has a research group entitled "modcs-3" with the description "modcs-3 research group" stored in the system
+    When I modify the name of research group entitled "modcs-3" to "modcs 123456789"
+    Then the research group "modcs 123456789" is not stored in the system because exceeds the number of characters allowed
+  #end
 
-    Scenario:edit research group
+  #if ($ResearchGroup)
+  Scenario:edit research group
     Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
-    When I modify the research group entitled "modcs" to "modcs 123" and its description to "modcs research group 1234"
+    When I modify the research group entitled "modcs" to "modcs 123" 
+    And I modify its description to "modcs research group 1234"
     Then the edited research group "modcs 123" with description "modcs research group 1234" is properly stored in the system
-    
+  #end 
+
 	Scenario:delete research group
     Given the system has a research group entitled "modcs" with the description "modcs research group" stored in the system
     When I delete the research group entitled "modcs"
     Then the research group "modcs" is properly deleted of the system
- 
+    
+
     Scenario: new research group and show via web browser
     Given I am at the publications menu
     When I select the "Research Group" option at the publications menu
     And I select the new research group option at research group list page
     Then I can fill the research group details with name "modcs" and create a new one
+
+    #if($ResearchGroup)
+    Scenario: new invalid search group web (name field exceeded the limit of characters)
+    Given I am at the new Research Group page
+    When I fill all group information 
+    And I fill the field name with "mdocs 123456789"
+    And I select to create the group
+    Then an error message is showed for the name field
+    #end
     
+    #if($ResearchGroup)
     Scenario: show research group via web browser
-    Given I am at the publications menu
+    Given I am at Research Group list menu
     And the system has a Research Group named "grupo" stored in the system
-    And I am at Research Group list menu
     And I select a research group called "grupo"
     Then the system will show the details of this research group
+    #end
     
+    #if($ResearchGroup)
     Scenario: edit research group via web browser
-    Given I am at the publications menu
+    Given I am at Research Group list menu
     And the system has a Research Group named "PESQUISA" stored in the system
-    And I am at Research Group list menu
     When I select a research group called "PESQUISA"
     And I select the edit option
     Then I can change the research group name to "rgms" and save it
+    #end
 
 
 
