@@ -38,6 +38,13 @@ Feature: member
     When I fill the user details with a name, username, passoword1, password2, email, university, status "jose" "josesilva" "123456" "123456" "jose@ufpe.br" "UFPE" "Graduate Student"
     Then I am redirected to the Login Page
     And A message indicating the user was successfully registered is displayed
+    
+  Scenario: change password
+    Given the system has member with username "usernametest"
+    And the member has the password "12345"
+    When I change password of "usernametest" to "5555"
+    And I confirm the decision
+    Then the member named "usernametest" will have password "5555"
 
 
 #  Scenario: create member web

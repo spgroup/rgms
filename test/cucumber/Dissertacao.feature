@@ -16,12 +16,17 @@ Feature: Dissertation Tests
     Given the system has no dissertation entitled "Dissertation without school"
     When I create the dissertation "Dissertation without school" with file name "Dissertationwithoutschool.txt" without school
     Then the system has no dissertation entitled "Dissertation without school"
+  #if($Dissertation)
+    And a failure message is shown
+  #end
 
   Scenario: new dissertation without address
     Given the system has no dissertation entitled "Dissertation without address"
     When I create the dissertation "Dissertation without address" with file name "Dissertationwithoutaddress.txt" without address
     Then the system has no dissertation entitled "Dissertation without address"
-
+  #if($Dissertation)
+    And a failure message is shown
+  #end
   Scenario: new dissertation
     Given the system has no dissertation entitled "New dissertation"
     When I create the dissertation "New dissertation" with file name "Newdissertation.txt" and school "UFPE"
@@ -81,6 +86,21 @@ Feature: Dissertation Tests
     Given the system has no dissertation entitled "New dissertation"
     When I upload a new dissertation "curriculo2.xml" with title "New dissertation"
     Then the system has more dissertations now
+    
+  Scenario: seek a dissertation through keywords
+    Given there is a dissertation called "curriculo2" with the word "redes neurais" in it is stored.
+    When I select the option "search with keywords"
+    And I write "redes neurais" in it
+    Then a list with "curriculo2" is displayed
+    
+  Scenario: upload a dissertation with a incorrect file type
+    Given I am at the publications menu
+    When I select the "Dissertacao" option at the program menu
+    And I select the new dissertation option at the dissertation page
+    And I add the dissertation with "curriculo4.png"
+    Then the system has no new dissertation
+    And I am back at the publications menu
+
     
 #if ($contextualInformation)
 

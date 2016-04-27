@@ -66,8 +66,20 @@ Feature: news
     And the news "Noticia1" is stored in the system
     And I select the option to remove in news show page
     Then the news "Noticia1" is properly removed by the system
-
+  
+  
   Scenario: new invalid news (invalid date)
     Given the system has no news with description "teste" and date "31-02-2013" for "SPG" research group
     When I try to create a news with description "teste" and date "31-02-2013" for "SPG" research group
     Then the news with description "teste", date "31-02-2013" and "SPG" research group is not stored by the system because it is invalid
+  #if($news) 
+    And the error message "Cannot create news: invalid date." is displayed
+  #end
+  
+  #if($news)
+    Scenario: export news to pdf
+      Given the system has a news with description "noticia para teste"
+      When I request this news "noticia para teste" download
+      Then the system creates a pdf file containing the description, date and research group of this news
+      And the system send this file for the client
+  #end
