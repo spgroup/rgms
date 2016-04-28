@@ -27,6 +27,15 @@ Feature: orientations
     And I select the change option at the orientation edit page
     Then the edited orientation "Hexa" is properly stored by the system
 
+#if(Orientation)    
+  Scenario:	Edit existing orientation web
+  	Given	I am at the orientation page    
+  	And 	The orientation "The Book of Software Engineering" is stored in the system
+  	When 	I select to view orientation "The Book of Software Engineering" in the result list
+  	And 	I edit the orientation title to "Hexa"
+  	Then 	the edited orientaion "Hexa" shows a message "Your orientation was edited with success!"    
+  end	
+
   #1 This scenario test are not working well, please check they implementation before undo the comment
   #Scenario: new orientation with registered member orientated
   #  Given the system has no orientations entitled "The Book is on the table 2"
@@ -48,14 +57,14 @@ Feature: orientations
     Then I am still on the create orientation page with an error message
 
   #5
-  Scenario: edit existing orientation web with invalid year
-    Given I am at the orientation page
-    And the orientation "The Book is on the table" is stored in the system
-    When I select to view orientation "The Book is on the table" in resulting list
-    And I change the orientation title to "Hexa"
-    And I fill the orientation publication year with -1
-    And I select the change option at the orientation edit page
-    Then I am still on the change orientation page with an error message
+  #if (Orientation)
+  Scenario:	Edit existing orientation web with invalid year
+  	Given	I am at orientation page
+  	And 	The orientation "The book is on the table" is stored in the system
+  	When 	I select to view the orientation "The book is on the table" in the result list
+  	And 	I edit the orientation publication year with "-1"
+  	Then 	The system show me an error message "This year is invalid, please give a valid year!"
+  end	
 
   #9 extra
   Scenario: remove orientation web

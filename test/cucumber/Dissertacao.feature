@@ -73,15 +73,15 @@ Feature: Dissertation Tests
 
   Scenario: upload dissertation with a file
     Given the system has some dissertation stored
-    Given the system has no dissertation entitled "New dissertation"
+    And the system has no dissertation entitled "New dissertation"
     When I upload a new dissertation "curriculo3.xml" with title "New dissertation"
     Then the system has more dissertations now
-    
+
   Scenario: upload a dissertation and system has no dissertation stored
     Given the system has no dissertation entitled "New dissertation"
     When I upload a new dissertation "curriculo2.xml" with title "New dissertation"
     Then the system has more dissertations now
-    
+
 #if ($contextualInformation)
 
   Scenario: create a new dissertation with user data already filled by default
@@ -91,3 +91,21 @@ Feature: Dissertation Tests
     Then I see my user listed as an author member of dissertation by default
     And I see my school name as school of dissertation by default
 #end
+
+#if($listDissertationsAlphabetical)
+  Scenario:	list existing dissertation in alphabetical order of title
+    Given the system has dissertation entitled "dissertacao"
+    And the system has other dissertation entitled "teste"
+    When the system orders the dissertation list by title
+    Then the system dissertation list contains first the "dissertacao" dissertation after "teste" dissertation.
+    #end
+
+
+ # if($listDissertationsAlphabeticalWeb)
+  Scenario:	list existing dissertation in alphabetical order of title web
+    Given I am at the dissertation option at the program menu
+    And I create one dissertation entitled "dissertacao"
+    And I create one dissertation entitled "teste"
+    When I click to the title ordenation option
+    Then I can see a list of the dissertations ordered by title.
+ # end

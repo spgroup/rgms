@@ -6,7 +6,7 @@ import rgms.publication.TeseController
 
 class ThesisOrDissertationTestDataAndOperations {
 
-    static protected void createThesisOrDissertation(String title, filename, school, cont) {
+    static public void createThesisOrDissertation(String title, filename, school, cont) {
         cont.params << [title: title, publicationDate: new Date(2013, 03, 02),
                 school: school, address: "Boa Viagem", file: filename]
         cont.request.setContent(new byte[1000]) // Could also vary the request content.
@@ -15,7 +15,7 @@ class ThesisOrDissertationTestDataAndOperations {
         cont.response.reset()
     }
 
-    static protected void deleteThesisOrDissertation(String title, cont) {
+    static public void deleteThesisOrDissertation(String title, cont) {
         def test
         if (cont instanceof TeseController) {
             test = Tese.findByTitle(title)

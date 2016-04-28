@@ -52,59 +52,66 @@ Then(~'^The technical report "([^"]*)" is not updated by the system$') { String 
 }
 
 //new valid technical report
-Given(~'^I am at the technical reports page$') { ->
-    to LoginPage
-    at LoginPage
-    page.fillLoginData("admin", "adminadmin")
-    at PublicationsPage
-    page.select("Technical Report")
-    at TechnicalReportPage
+Given (~'I am at the technical report page'){->
+	to LoginPage
+	at Login Page
+	page.add("admin", "adminadmin")
+	at PublicationPage
+	page.select("Technical Report")
+	at TechinicalReportPage
+}
+And (~'The system has no technical report entitled "([^"]*)" '){String tittle
+	page.selectTechincalReport()
+	at TechnicalReportPage
+	
 }
 
-When(~'^I select the new technical report button$'){ ->
-    page.selectNewTechnicalReport()
-    at TechnicalReportCreatePage
+When(~'I click the "([^"]*)" button'){String buttonName
+	page.selectButton()
+	at TechnicalReportPage
 }
 
-And(~'^I fill the technical report details with title "([^"]*)" file name "([^"]*)" and institution "([^"]*)"$'){String title, filename, institution ->
-    page.fillTechnicalReportDetails(TestDataAndOperations.getTestFilesPath(filename), title, institution)
+And (~'The report is saved after I filled the details with tittle "([^"]*)", file name "([^"]*)" and institution "([^"]*)"'){String tittle, filename, institution
+	page.selectNewTechnicalReport()
+	page.fillTechnicalReportDetails(TestDataAndOperations.getTestFilesPath(filename), title, instutution)
+	at TechnicalReportPage
+	
 }
 
-And(~'^I select the save technical report button$'){ ->
-    page.selectCreateTechnicalReport()
+Then(~'The technical report "([^"]*)" is saved on the system'){String tittle
+	page.selectSaveFile(tittle)
+	at technicalReportPage
+
 }
 
-Then(~'^The technical report "([^"]*)" details page is shown$') { String title ->
-    at TechnicalReportShowPage
-}
 
 // edit existing technical report with invalid title web
 
-And(~'^the technical report "([^"]*)" is stored in the system with file name "([^"]*)"$') { String title, filename ->
-    page.selectNewTechnicalReport()
-    at TechnicalReportCreatePage
-    page.fillTechnicalReportDetails(TestDataAndOperations.getTestFilesPath(filename), title)
-    page.selectCreateTechnicalReport()
-    techReport = TechnicalReport.findByTitle(title)
-    assert techReport != null
-    to TechnicalReportPage
-    at TechnicalReportPage
+And (~'The technical report "([^"]*)" is stored in the system with the file name "([^"]*)"'){String title, filename
+	page.selectTechincalReport()
+	at TechnicalReportPage
+	page.fillTechnicalReportDetails(TestDataAndOperations.getTestFilesPath(filename), title)
+	page.selectEditTechincalReport()
+	techReport = TechinicalReport.findByTittle(title)
+	assert techReport != null
+	to TechnicalReportPage
+	at TechnicalReportPage
+	
 }
 
-When(~'^I select to view "([^"]*)" in technical reports resulting list$') { String oldtitle ->
-    page.selectViewTechnicalReport(oldtitle)
-    at TechnicalReportShowPage
+When(~'I change the title report to a blank one'){
+	at TechincalReportPage
+	page.edit("")
 }
 
-And(~'^I change the technical report title to a blank one$')  {  ->
-    at TechnicalReportEditPage
-    page.edit("")
+Then(~'The technical report is not saved by the system'){
+	at TechnicalReportPage
+
 }
 
-Then(~'^I cannot select the "([^"]*)" option$') { String option ->
-    at TechnicalReportEditPage
-    page.select(option)
-    at TechnicalReportEditPage
+And(~'I remain at the technical report edit page'){
+	at technicalReportPage
+	to technicalReportEditPage
 }
 
 //remove existing technical report
@@ -185,3 +192,18 @@ Then(~'^The technical report "([^"]*)" with filename "([^"]*)" and institution "
     assert tech != null
 }
 
+//Remove more than one technical report
+When (~'^Î select more than one techincal report '){->
+	at technicalReportsPage
+	page.selectTTechnicalReportsList()	
+
+}
+
+And (~'^Click on the remove confirmation button'){->
+	techReport [] = techinicalReport.findById(ID)
+
+}
+
+Then (~'The system will deleat the reports that were selected'){->
+	assert techReport = null
+}

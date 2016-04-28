@@ -1,5 +1,6 @@
 package steps
 
+import org.codehaus.groovy.grails.plugins.web.taglib.ValidationTagLib
 import rgms.authentication.User
 import rgms.member.MemberController
 
@@ -39,12 +40,20 @@ class MemberTestDataAndOperations {
         }
     }
 
-    static public void createMember(String username, String phone) {
+    static public void createMember(String username, String phone, String university) {
         def cont = new MemberController()
-        if (phone.equals("")) {
+        if (phone.equals("") && university.equals("")) {
             cont.params << findByUsername(username)
-        } else {
-            cont.params << [username: username, phone: phone]
+        } else if(university.equals("")){
+            cont.params << [name: "Rodolfo", username: username, email: "rodolfofake@gmail.com",
+                             status: "Graduate Student", university: "UFPE", enabled: true, phone: phone
+                            ]
+        }
+        else
+        {
+            cont.params << [name: "Rodolfo", username: username, email: "rodolfofake@gmail.com",
+                            status: "Graduate Student", university: university, enabled: true, phone: "123456"
+            ]
         }
         cont.create()
         cont.save()
@@ -78,4 +87,78 @@ class MemberTestDataAndOperations {
         }
         return false;
     }
+
+
+    static public void createMemberWithoutPhone(String name, String username, String email, String university, String status, String country, String website) {
+        def cont = new MemberController()
+        setMemberParams(cont, name, username,email, university, status, country, "", website)
+        //cont.params << [name: name, username: username, email: email, status: status, university: university, enabled: true, website: website, country:country]
+        createAndSaveCont(cont);
+    }
+
+    static public void createMemberWithoutWebsite(String name, String username, String email, String university, String status, String country, String phone) {
+        def cont = new MemberController()
+        setMemberParams(cont, name, username,email, university, status, country, phone, "")
+        //cont.params << [name: name, username: username, email: email, status: status, university: university, enabled: true, phone:phone, country:country]
+        createAndSaveCont(cont);
+    }
+
+    static private void createAndSaveCont(cont)
+    {
+        cont.create()
+        cont.save()
+        cont.response.reset()
+    }
+
+    static private setMemberParams(cont, String name, String username, String email, String university, String status, String country, String phone, String website)
+    {
+        if(!isNullOrEmpty(name))
+        {
+            cont.params << [name: name]
+        }
+        if(!isNullOrEmpty(username))
+        {
+            cont.params << [username: username]
+        }
+        if(!isNullOrEmpty(email))
+        {
+            cont.params << [email: email]
+        }
+        if(!isNullOrEmpty(university))
+        {
+            cont.params << [university: university]
+        }
+        if(!isNullOrEmpty(status))
+        {
+            cont.params << [status: status]
+        }
+        if(!isNullOrEmpty(country))
+        {
+            cont.params << [nacountryme: country]
+        }
+        if(!isNullOrEmpty(phone))
+        {
+            cont.params << [phone: phone]
+        }
+        if(!isNullOrEmpty(website))
+        {
+            cont.params << [website: website]
+        }
+
+        cont.params << [enabled: true]
+
+    }
+
+    static private boolean isNullOrEmpty(param)
+    {
+        return (param==null || param=="")
+
+    }
+
+
+
+
+
+
+
 }

@@ -1,3 +1,4 @@
+import pages.LoginPage
 import pages.PublicationsPage
 import pages.ResearchGroup.ResearchGroupCreatePage
 import pages.ResearchGroup.ResearchGroupPage
@@ -10,6 +11,14 @@ import steps.NewsTestDataAndOperations
 import steps.TestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
+
+
+def Login(){
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+}
+
 
 Given(~'^the system has no news with description "([^"]*)" and date "([^"]*)" for "([^"]*)" research group$') { String description, String date, String group ->
     assert !NewsTestDataAndOperations.checkExistingNews(description,date,group)
@@ -251,3 +260,57 @@ And(~'^I create a research group because it is necessary$') {->
     to PublicationsPage
     at PublicationsPage
 }
+
+
+//if($listNews)
+Given(~'^the system has one new with description "([^"]*)"$') { String description ->
+    Date dateAsDateObj
+    (dateAsDateObj, researchGroup) = createAndGetResearchGroup("31-02-2013", "grupo")
+    NewsTestDataAndOperations.createNews(description, new Date(10,12,2014), researchGroup)
+   assert News.findByDescription(description)
+}
+
+And(~'^the system has other new with description "([^"]*)"$') { String description ->
+    Date dateAsDateObj
+    ResearchGroup researchGroup
+    (dateAsDateObj, researchGroup) = createAndGetResearchGroup("31-02-2013", "grupo")
+    NewsTestDataAndOperations.createNews(description, new Date(10,12,2014), researchGroup)
+    assert News.findByDescription(description)
+}
+When(~'^the system list the news$') { ->
+    news = News.list()
+    assert news.size() != 0
+}
+
+Then(~'^the list has a new with description "([^"]*)"$') { String description ->
+   new1 = News.findByDescription(description)
+   assert new1.description == description
+}
+
+//end
+
+
+//if($listNews)
+
+
+And(~'^I create a new with description "([^"]*)"$') { String description ->
+    at PublicationsPage
+    to NewsPage
+    at NewsPage
+    $('a.create').click()
+    at NewsCreatePage
+    $("form").description = description
+    $("a.create").click()
+    to PublicationsPage
+    at PublicationsPage
+}
+When(~'^I select the News option at the publications menu$') { ->
+    at PublicationsPage
+    page.select("News")
+    at NewsPage
+}
+Then(~'^I can see the new with description "([^"]*)" in the list$') { String description ->
+    assert $('a', text: description) != null
+
+}
+//end

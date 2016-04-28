@@ -19,23 +19,23 @@ Feature: technical report
     When    I edit the technical report title from "NFL Languages System" to ""
     Then    The technical report "NFL Languages System" is not updated by the system
 
-  Scenario: new valid technical report
-    Given   I am at the technical reports page
-    And    The system has no technical report entitled "TechRepo"
-    When    I select the new technical report button
-    And     I fill the technical report details with title "TechRepo" file name "TechRepo.pdf" and institution "UFPE"
-    And    I select the save technical report button
-    Then    The technical report "TechRepo" details page is shown
+#if(TechinicalReport)
+Scenario:	New valid technical report
+  	Given	I am at the technical reports page
+  	And 	The system has no technical report entitled "TechRepo"
+  	When 	I click the "Add new Technical report" button
+  	And 	The report is saved after I filled the details with title "TechRepo", file name "TechRepo.pdf" and institution "UFPE"
+  	Then 	The technical report "TechRepo" is saved on the system
+end
 
-  Scenario: edit existing technical report with invalid title web
-    Given  I am at the technical reports page
-    And    the technical report "Joe-E" is stored in the system with file name "Joee.pdf"
-    When   I select to view "Joe-E" in technical reports resulting list
-    And    I select the option to edit
-    And    I change the technical report title to a blank one
-    And    I press the button alterar
-    Then   The technical report is not saved by the system
-    And    I remain at the technical report edit page
+#if(TechinicalReport)
+Scenario: 	Edit existing technical report with invalid tittle
+	Given 	I am at the technical report "Joe-E" is stored in the system with the file name "Joee.pdf"
+	And 	I am at the edit page of the same report
+	When	I change the title report to a blank one
+	Then 	The technical report is not saved by the system
+	And 	I remain at the technical report edit page
+End
 
   @ignore
   Scenario: edit existing technical report with valid title, a valid filename and valid institution
@@ -65,3 +65,18 @@ Feature: technical report
     And I see my school name as institution of technical report by default
 #end
 
+
+Scenario: Remove multiple existing technical reports
+	Given I am at the list of technical reports
+	And the system has more than one existing technical report
+	When I select more than one technical report
+	And Click on the remove button
+	Then The system show a message of confirmation "Are you sure you want to deleat those technical reports?"
+
+
+Scenario: Remove multiple existing technical reports
+	Given I am at the list of technical reports
+	And the system has more than one existing technical report
+	When I select more than one technical report
+	And Click on the remove confirmation button
+	Then The system will deleat the reports that were selected

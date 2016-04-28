@@ -1,14 +1,30 @@
+import pages.ArticlePages.ArticleCreatePage
 import pages.DissertationCreate
 import pages.DissertationEditPage
 import pages.DissertationPage
 import pages.DissertationShowPage
+import pages.LoginPage
+import pages.PublicationsPage
 import rgms.authentication.User
 import rgms.publication.Dissertacao
+import rgms.publication.DissertacaoController
+import rgms.publication.Periodico
+import steps.ArticleTestDataAndOperations
 import steps.TestDataDissertacao
 import steps.TestDataAndOperationsPublication
+import steps.ThesisOrDissertationTestDataAndOperations
 
 import static cucumber.api.groovy.EN.*
 
+def Login(){
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+}
+
+def dissertacaoNoExist(String title){
+    return Dissertacao.findByTitle(title) == null
+}
 
 When(~'^I select the new dissertation option at the dissertation page$') {->
     at DissertationPage
@@ -24,10 +40,6 @@ When(~'^I can add the dissertation with a file "([^"]*)"$'){ String filename->
     at DissertationCreate
     def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + filename
     page.fillDissertationDetailsWithFile(path)
-}
-Then((~'^the system has a dissertation entitled "([^"]*)"$')){ String title->
-    article = Dissertacao.findByTitle(title)
-    assert article != null
 }
 
 
@@ -156,4 +168,63 @@ Given(~'^the system has no dissertation stored$')   {->
     assert intialSize == 0
 }
 
+//if($listDissertationsAlphabetical)
 
+Given(~'^the system has dissertation entitled "([^"]*)"$') {String title ->
+    def controller = new DissertacaoController()
+    ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title, "arquivo", "escola", controller)
+    assert Dissertacao.findByTitle(title)
+}
+
+And(~'^the system has other dissertation entitled "([^"]*)"$') {String title ->
+    def controller = new DissertacaoController()
+    ThesisOrDissertationTestDataAndOperations.createThesisOrDissertation(title, "arquivo2", "escola2", controller)
+    assert Dissertacao.findByTitle(title)
+}
+
+When(~'^the system orders the dissertation list by title$') {->
+    dissertacao = Dissertacao.listOrderByTitle(order: "asc")
+    assert dissertacao.size() != 0
+}
+
+Then(~'^the system dissertation list contains first the "([^"]*)" dissertation after "([^"]*)" dissertation.$') {String title, String title2 ->
+    dissertacao = Dissertacao.listOrderByTitle(order: "asc")
+    assert (dissertacao[0].title == title)
+}
+//end
+
+//if($listDissertationsAlphabeticalWeb)
+Given(~'^I am at the dissertation option at the program menu$') { ->
+    Login()
+    at PublicationsPage
+    page.select("Dissertacao")
+    at DissertationPage
+}
+
+And(~'^I create one dissertation entitled "([^"]*)"$'){String title ->
+    at DissertationPage
+    page.selectNewArticle()
+    at DissertationCreate
+    def path = new File(".").getCanonicalPath() + File.separator + "test" + File.separator + "files" + File.separator + "dissertacao"
+    page.fillDissertationDetailsWithFile(title,path)
+    assert !dissertacaoNoExist(title)
+    to DissertationPage
+    at DissertationPage
+}
+
+When(~'^I click to the title ordenation option$') {->
+    at DissertationPage
+    page.selectOrderByTitle("/rgms/dissertacao/list?sort=title&max=10&order=asc")
+}
+
+Then(~'^I can see a list of the dissertations ordered by title.$'){->
+    at DissertationPage
+    page.checkOrderedBy("title")
+}
+//end
+
+Then(~'^the system has a dissertation entitled "([^"]*)"$') { String title ->
+    dissertacao = Dissertacao.findByTitle(title)
+    assert dissertacao != null
+    TestDataDissertacao.removeDissertacao(title)
+}

@@ -4,13 +4,14 @@ Feature: Authentication Process
 
 Scenario: Login with user that doesn't exist fail message
   Given I am at the Login Page
-  When I try to login with an user that does not exist
+  When I try to login with "usuarioInvalido" user that does not exist
   Then I am redirected to the Login Page
   And A login failure message is displayed
 
 Scenario: Login with user's wrong password fail message
   Given I am at the Login Page
-  When I try to login with an existent user, though with wrong password
+  When I try to login with an existent user
+  And I fill the password field with a wrong password
   Then I am redirected to the Login Page
   And A login failure message is displayed
 
@@ -48,13 +49,13 @@ Scenario: Unpermitted go to "Principal" Menu from Member Listagem
   When I select the "Principal" menu option
   Then I am redirected to the Publications Menu page
 
- Scenario: Invalid password validation registration data remaining
-   Given I am at Register Page registering myself
-   And I mistype my confirmation password at Register Page
-   When I submit the form
-   Then I am redirected to the User Register Page
-   And The password fields are empty
-   And My remaining user data is still at their corresponding fields
+Scenario: Invalid password validation registration data remaining
+  Given I am at Register Page registering a New User
+  And I mistype my confirmation password at Register Page
+  When I submit the form
+  Then I am redirected to the User Register Page
+  And The password fields are empty
+  And My remaining user data is still at their corresponding fields
 
 Scenario:  User unabilited receive not permitted message
   Given I am at the Login Page
@@ -94,3 +95,17 @@ Scenario:
   Given I am not logged
   When I directly access the Publications Menu Page
   Then I am redirected to the Login Page
+
+  #Antes estava: User User1 criado
+  Scenario: Display member register success message in portuguese
+    Given I am at the User Register Page
+    And I fill the field Name with "User1"
+    And I have the others fields filled correctly
+    When I press the Register Button
+    Then I am redirected to the Login Page
+    And The message Membro "User1" criado should be displayed
+
+  Scenario: Display the text to login with facebook in english
+    Given I want to create a new user
+    When I am at the Register Page
+    Then The text "Login with Facebook:" above the login button should be displayed

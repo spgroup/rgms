@@ -9,17 +9,17 @@ Feature: member
     Then the member with username "usernametest" is properly stored by the system
 
   Scenario: list existing member
-    Given   the system has member with username "usernametest"
-    When    I view the member list
-    Then    my list members contains member "usernametest"
+    Given   the system has a member with username "usernametest"
+    When    the list members is displayed
+    Then    the list members contains member "usernametest"
 
   Scenario: delete member
-    Given the system has member with username "usernametest"
+    Given the system has a member stored with username "usernametest"
     When I delete a member with username "usernametest"
-    Then the member with "usernametest" doesnt exist
+    Then the member with "usernametest" is removed from the system storage
 
   Scenario: new member with existing username
-    Given the system has member with username "usernametest"
+    Given the system has a member with username "usernametest"
     When I create the member with username "usernametest"
     Then the member "usernametest" is not registered
 
@@ -62,10 +62,17 @@ Feature: member
 #   When   I fill many user details with "berg" "bergU" "jus@cin.ufpe.br" "UFPE" "ajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajsdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 #   Then   I am still on the create member page with the error message
 
-#Scenario: new member with invalid phone
-#   Given the system has no member with username "userwithinvalidphone"
-#   When I create a member with username "userwithinvalidphone"
-#   Then I am still on the create member page with the error message
+Scenario: new member with invalid phone
+   Given the system has no member with username "userwithinvalidphone"
+   When I create a member with username, phone "userwithinvalidphone" "telefone Invalido"
+   Then the member "userwithinvalidphone" is not stored by the system
+
+
+  Scenario: new member with invalid University
+    Given the system has no member with username "userwithinvaliduniversity"
+    When I create a member with username, university "userwithinvalidphone" "123456"
+    Then the member "userwithinvaliduniversity" is not stored by the system
+
 
 #if ($contextualInformation)
   Scenario: new member filled with default data
@@ -76,3 +83,13 @@ Feature: member
     Given I am at the register page
     Then I see default data filled on register form
 #end
+
+  Scenario: Phone param in blank should not impede the user creation
+    Given I'm creating a new user
+    When I create a user with Name, Username, Email, University, Status, Country and Website equals to "userTest", "user1", "user1@ufpe.br", "Federal University of Pernambuco", "Graduate Student", "Brazil" and "http://www.google.com"
+    Then The User with username "user1" should be stored by the system
+
+  Scenario: Website param in blank should not impede the user creation
+    Given I'm creating a new user
+    When I create a user with Name, Username, Email, University, Status, Country and Phone equals to "userTest", "user2", "user2@ufpe.br", "Federal University of Pernambuco", "Graduate Student", "Brazil" and "99887766"
+    Then The User with username "user2" should be stored by the system

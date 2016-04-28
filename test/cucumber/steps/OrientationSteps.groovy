@@ -160,6 +160,40 @@ Then(~'^I am still on the create orientation page with an error message$') { ->
     assert page.readFlashMessage() != null
 }
 
+//Edit existing orientation with invalid year
+//#if(Orientation)
+Given (~'I am at orientation page'){->
+	to LoginPage
+	at Login Page
+	page.add("admin", "adminadmin")
+	at PublicationPage
+	page.select("Orientation")
+	at OrientationPage
+}
+
+
+And (~'The Orientation "([^"]*)" is stored in the system'){String title ->
+	fillOrientationWithTitleAndCreateThen(title)
+    checkIfOrientationExists(title)
+}
+
+When (~'I select to view the orientation "([^"]*)" in the result list'){String title ->
+	at OrientationsPage
+    page.selectViewOrientation(OrientationTestDataAndOperations.getOrientationIdAsString(title))
+	
+}
+
+And (~'I edit the orientation publication with title "([^"]*)"'){String title ->
+	at OrientationEditPage
+    page.editTitle(title)
+}
+
+Then (~'The edited orientation "([^"]*)" shows a message$ '){String title ->
+	at OrientationEditPage
+    assert page.readFlashMessage() != null
+}
+
+
 //new orientation with registered member orientated
 /**
  * @author rlfs

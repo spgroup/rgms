@@ -11,7 +11,7 @@
   border: .2em solid #fff;
   margin: 2em 2em 1em;
   padding: 1em;
-  //  width: 12em; 12em
+  /*  width: 12em; */
   width: 15em;
   float: left;
   -moz-box-shadow: 0px 0px 1.25em #ccc;
@@ -144,7 +144,8 @@ margin-top: 0;
             <!--#if($facebook)-->
             <tr>
               <td ></td>
-              <td style="font-size: 14px;">Entre com o Facebook:
+              <td style="font-size: 14px;">
+                   <p id="loginWithFacebookLabel">Login with Facebook:</p>
                    <g:render template="../FacebookAuth"/>
               </td>
             </tr>

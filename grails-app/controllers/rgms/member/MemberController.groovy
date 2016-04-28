@@ -52,6 +52,8 @@ class MemberController {
         }
 //#end
 
+
+
         def memberInstance = new Member(params)
         def userInstance = new User(params)
 
@@ -84,8 +86,9 @@ class MemberController {
         def title = message(code: 'mail.title.create.account')
         def content = message(code: 'mail.body.create.account', args: [memberInstance.name, params.username, password, createLink(absolute: true, uri: '/')])
 
-        EmailService emailService = new EmailService();
-        emailService.sendEmail(email, mailSender, title, content)
+        //NAO ESTÁ FUNCIONANDO
+        //EmailService emailService = new EmailService();
+        //emailService.sendEmail(email, mailSender, title, content)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'member.label', default: 'Member'), memberInstance.id])
         redirect(action: "show", id: memberInstance.id)

@@ -45,5 +45,6 @@ class MemberCreatePage extends Page {
     def compareMemberCity(String city){
         $("form").city ==~ /${city}/
     }
+
 }
 

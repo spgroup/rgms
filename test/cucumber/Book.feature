@@ -16,8 +16,8 @@ Feature: Book
 
   Scenario: duplicate book
     Given the book "SPL Development" is stored in the system with file name "NGSPL-0.pdf"
-    When I create the book "SPL Development" with file name "NGSPL-0.pdf"
-    Then the book "SPL Development" is not stored twice
+    When I create the book "SPL Development" with file name "NGSPL-0_copy.pdf"
+    Then the book "SPL Development" is stored twice
 
   Scenario: edit existing book
     Given the book "SPL Development" is stored in the system with file name "HSPLE.pdf"
