@@ -170,26 +170,21 @@ Then(~'^the returned thesis list has the same items but it is sorted by date$') 
 }
 
 //Scenario: search an existing thesis
-Given(~'^the system has one thesis entitled "([^"]*)" with author name "([^"]*)", year of publication "([^"]*)" and university "([^"]*)"$') { title, author, year, university ->
+Given(~'^the system has a thesis entitled "([^"]*)"$'){ String title->
+    tese = ThesisOrDissertationTestDataAndOperations.findByTitle(title)
+    assert tese != null
+}
+
+And(~'^I am at the thesis search page$'){->
+
+    to TeseSearchByTitlePage
+    at TeseSearchByTitlePage
 
 }
 
-And(~'^I am at the thesis search page$') { ->
-
+Then(~'^My thesis list contains the thesis entitled "([^"]*)"$'){ String title->
+    page.resultsListContains(title)
 }
-
-When(~'^I search for "([^"]*)" by "([^"]*)"$') { title, author ->
-
-}
-
-And(~'^I select to view the entry that has university "([^"]*)" and publication year "([^"]*)"$') { university, year ->
-
-}
-
-Then(~'^the thesis "([^"]*)" by "([^"]*)" appears in the thesis view page$') { title, year ->
-
-}
-
 //Scenario: create thesis web without a file
 
 
@@ -269,6 +264,56 @@ And(~'^the system stores properly the thesis entitled "([^"]*)"$') { title ->
 
 }
 
+Given(~'^I am at the thesis page$') { ->
+    to LoginPage
+    at LoginPage
+    page.fillLoginData("admin", "adminadmin")
+    at PublicationsPage
+    to ThesisPage
+}
+
+When(~'^I select the download button for thesis$') { ->
+    at ThesisPage
+    page.selectDownloadThesis()
+}
+
+Then(~'^I can download the file named "([^"]*)" that contains the thesis list$') { String name->
+    at ThesisPage
+    assert page.clickDownloadLink(name)
+}
+
+Given(~'^the system has thesis with file name "([^"]*)" and school "([^"]*)"$'){String filename, school->
+	  ThesisTestDataAndOperations.createThesis(filename, school, null)
+	  assert Thesis.findByName(name) != null
+  }
+  
+  When(~'^the system orders the thesis list by name$') {->
+	  thesisSorted = Thesis.listOrderByName(order: "asc")
+	  assert ThesisTestDataAndOperations.isSorted(ThesisSorted, "name")
+  }
+
+  Then(~'^the system thesis list content is not modified$') {->
+	  assert Thesis.findAll().size() == 2
+	  assert !ThesisNoExist('TCS-1401.pdf')
+	  assert !ThesisNoExist('MACI.pdf')
+  }
+  
+  Given(~'^the system has thesis entitled "([^"]*)" with file title "([^"]*)" school "([^"]*)"$'){String title, filename, school->
+	  ThesisTestDataAndOperations.createThesis(filename, school, null)
+	  assert Thesis.findBySchool(school) != null
+  }
+  
+  When(~'^the system orders the thesis list by school$') {->
+	  thesisSorted = Thesis.listOrderBySchool(order: "asc")
+	  assert ThesisTestDataAndOperations.isSorted(ThesisSorted, "school")
+  }
+
+  Then(~'^the system thesis list content is not modified $') {->
+	  assert Thesis.findAll().size() == 2
+	  assert !ThesisNoExist('TCS-1401.pdf')
+	  assert !ThesisNoExist('MACI.pdf')
+  }
+  
 //FUNÇÔES AUXILIARES
 def thesisDoNotExists(title) {
     tese = Tese.findByTitle(title)

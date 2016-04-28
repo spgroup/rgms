@@ -19,7 +19,7 @@ Feature: Reports
     When I select the Novo Member option
     Then I fill the Member details with "John Smith" "JohnSmith" "JohnSmith@gmail.cin.ufpe.br" "UFPE" and create a new one
     Then I select the "2" option at the Member list
-    And I can select the option Export to PDF at the Member show
+    And I select the option Export to PDF at the Member show
     Then I can generate a PDF report about Member "2"
 
   Scenario: export report to pdf of recently created research group

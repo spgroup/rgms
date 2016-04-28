@@ -5,6 +5,21 @@ import rgms.news.News
 import rgms.news.NewsController
 
 class NewsTestDataAndOperations {
+/*
+*
+*     String description
+    Date date
+*/
+    static news = [
+            [description: "New software", date: (new Date("12 October 2012"))],
+            [description: "SQL changes", date: (new Date("13 October 2012"))],
+            [description: "Software changes", date: (new Date("11 October 2011"))],
+    ]
+
+    static public List<News> findAll() {
+        return news.asList()
+    }
+
 
     static public void createNews(String descriptionParam, Date dateParam, ResearchGroup groupParam) {
         def cont = new NewsController()

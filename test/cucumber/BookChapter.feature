@@ -47,7 +47,7 @@ Feature: BookChapter
 
   Scenario: new book chapter filled with user data by default
     Given I am at the book chapter page
-    And I select the new book chapter option at the book chapter page
+    When I select the new book chapter option at the book chapter page
     Then I see my user listed as a member of book chapter by default
 #end
 

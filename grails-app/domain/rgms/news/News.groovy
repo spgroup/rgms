@@ -15,7 +15,6 @@ class News {
         researchGroup nullable: false
     }
 
-
     static List getCurrentNews(researchGroup) {
         def list
         list = News.findAllByResearchGroup(researchGroup)
@@ -24,6 +23,11 @@ class News {
 
     static List getCurrentNewsOrderByMostRecentDate(researchGroup){
         return getCurrentNews(researchGroup).sort{a , b -> b.date <=> a.date}
+    }
+
+    static List findAll() {
+        List<News> list = new ArrayList<>()
+        return list
     }
 
 }

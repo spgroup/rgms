@@ -12,7 +12,7 @@ class RecordTestDataAndOperations {
   static public def findRecordByStatus(def status) {
       records.find { record ->
       record.status_H == status
-    }
+     }
   }
 
   static public boolean recordIsAssociated(def status, def shallBe = true) {

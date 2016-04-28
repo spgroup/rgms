@@ -27,6 +27,7 @@ Feature: Dissertation Tests
     When I create the dissertation "New dissertation" with file name "Newdissertation.txt" and school "UFPE"
     Then the dissertation "New dissertation" is properly stored by the system
 
+@ignore
   Scenario: new dissertation duplicated
     Given the dissertation "Dissertation duplicated" is stored in the system with file name "Dissertationduplicated.txt"
     When I create the dissertation "Dissertation duplicated" with file name "Dissertationduplicated2.txt" and school "UFPE"
@@ -53,7 +54,7 @@ Feature: Dissertation Tests
 
   Scenario: edit dissertation
     Given the dissertation "Edit dissertation" is stored in the system with file name "Editdissertation.txt"
-    Given the system has no dissertation entitled "Edit dissertation reviewed"
+    And the system has no dissertation entitled "Edit dissertation reviewed"
     When    I edit the dissertation title from "Edit dissertation" to "Edit dissertation reviewed"
     Then    the dissertation "Edit dissertation" is properly updated by the system
 
@@ -86,8 +87,26 @@ Feature: Dissertation Tests
 
   Scenario: create a new dissertation with user data already filled by default
     Given I am at the publications menu
-    When I select the "Dissertacao" option at the program menu
-    And I select the new dissertation option at the dissertation page
+    When I select the "Dissertacao" button at the program menu
+    And I select button the new dissertation at the dissertation page
     Then I see my user listed as an author member of dissertation by default
     And I see my school name as school of dissertation by default
 #end
+
+	Scenario: download a dissertation
+		Given I am at the publications menu
+		And the dissertation which name "SQL Development" is stored in the system with file name "teste.txt"
+		When I select the download button
+		Then I can download the file named "dissertation.txt" for dissertation
+
+
+    Scenario: new dissertation with invalid title
+      Given I am at the publications menu
+      And  the system has no dissertation with empty title
+      When I create the dissertation with empty title
+      Then the dissertation with empty title is not stored
+
+    Scenario: duplicate dissertation
+      Given the dissertation "Mendoin" is stored in the system with file name "mendoin.pdf"
+      When I create the dissertation "Mendoin" with file name "Mendoin.pdf"
+      Then the dissertation "Mendoin" is not stored twice

@@ -54,12 +54,12 @@ Feature: research group
     And I select the new research group option at research group list page
     Then I can fill the research group details with name "modcs" and create a new one
     
-    Scenario: show research group via web browser
+  Scenario: show research group via web browser
     Given I am at the publications menu
-    And the system has a Research Group named "grupo" stored in the system
-    And I am at Research Group list menu
-    And I select a research group called "grupo"
-    Then the system will show the details of this research group
+    And the system has a Research Group named "Software Productivity Group" stored in the system
+    When I select the Research Group option
+    And I select the research group named "Software Productivity Group"
+    Then the system will show the details of “Software Productivity Group” research group
     
     Scenario: edit research group via web browser
     Given I am at the publications menu
