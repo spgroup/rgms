@@ -191,5 +191,48 @@ class PeriodicoController {
         render(journalsFound as JSON)
     }
     //#end
+	
+	//#if($FilterArticlesByAuthor)
+	def filterByAuthor() {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		def articles = Periodico.list(params)
+		def authorName = params.authorName
+		if(authorName!="")
+			articles = articles.findAll{it.authors.contains(authorName)}
+		render(view: "list", model: [periodicoInstanceList: articles, periodicoInstanceTotal: articles.size()])
+	}
+	//#end
+
+	//#if($RemoveMultiplesArticles)
+	def deleteMultiples() {
+		def instancesId = params?.check
+		if (instancesId) {
+			if (instancesId.toString().indexOf("]") > 0 ) {
+				deletingFromMultipleSelectedCheckboxes(instancesId)
+			} else {
+				deletingFromUniqueSelectedCheckbox(instancesId)
+			}
+		}else {
+			flash.message = message(code: 'default.not.selected.message')
+		}
+		redirect(action: "list")
+	}
+	
+	private def deletingFromMultipleSelectedCheckboxes(instancesId){
+		for (String instanceid: instancesId) {
+			Periodico periodicoInstance = Periodico.get(Long.parseLong(instanceid))
+			periodicoInstance.removeFromPublications()
+			periodicoInstance.discardMembers()
+			periodicoInstance.discard()
+			periodicoInstance?.delete(flush: true)
+		}
+	}
+	
+	private def deletingFromUniqueSelectedCheckbox(instancesId){
+		def periodicoInstance = Periodico.get(Long.parseLong(instancesId))
+		periodicoInstance.removeFromPublications()
+		periodicoInstance?.delete(flush: true)
+	}
+	//#end
 }
 //#end

@@ -105,6 +105,20 @@
         </transformation>
     </configuration>
     <configuration>
+        <expression>removeMultiplesArticles</expression>
+        <transformation>
+            <name>createBuildEntries</name>
+            <args>removeMultiplesArticles</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>filterArticlesByAuthor</expression>
+        <transformation>
+            <name>createBuildEntries</name>
+            <args>filterArticlesByAuthor</args>
+        </transformation>
+    </configuration>
+    <configuration>
         <expression>rgms</expression>
         <transformation>
             <name>selectAndMoveComponent</name>
@@ -367,6 +381,13 @@
         <transformation>
             <name>selectAndMoveComponent</name>
             <args>listPeriodico,grails-app/views/periodico/list.gsp</args>
+        </transformation>
+    </configuration>
+    <configuration>
+        <expression>Article</expression>
+        <transformation>
+            <name>preprocessFiles</name>
+            <args>grails-app/views/periodico/list.gsp</args>
         </transformation>
     </configuration>
     <configuration>

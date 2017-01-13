@@ -19,7 +19,9 @@ abstract class Publication {
         researchLine nullable: true, blank: true
         authors nullable: true, blank: true
     }
-
+	
+	static mapping = { members lazy:false }
+	
     //#if($Bibtex)
     abstract String generateBib()
     //#end
