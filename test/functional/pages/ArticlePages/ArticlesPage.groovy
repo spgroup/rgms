@@ -81,10 +81,10 @@ class ArticlesPage extends Page {
 		def secondArticleColumns 	= this.getArticleColumns(1)
 		switch (sortType) {
 			case 'title':
-				assert firstArticleColumns[0].text().compareTo(secondArticleColumns[0].text()) < 0
+				assert firstArticleColumns[1].text().compareTo(secondArticleColumns[1].text()) < 0
 				break
 			case 'publication date':
-				assert firstArticleColumns[1].text().compareTo(secondArticleColumns[1].text()) < 0
+				assert firstArticleColumns[2].text().compareTo(secondArticleColumns[2].text()) < 0
 				break
 		}
 	}
